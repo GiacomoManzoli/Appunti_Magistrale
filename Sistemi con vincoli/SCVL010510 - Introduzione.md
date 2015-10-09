@@ -1,20 +1,4 @@
 #Sistemi con vincoli
-```
-Muchele Lombardi
-
-Università di Bologna
-
-michele.lombardi2@unibo.it
-```
-http://ai.unibo.it/ > Teaching > Sistemi con Vincoli
-
-http://ai.unibo.it/node/524
-
-28 Ottobre non c'è lezione
-
-Corso molto diverso rispetto a quello degli anni scorsi
-
-Anche qui Python
 
 ##Introduzione
 
