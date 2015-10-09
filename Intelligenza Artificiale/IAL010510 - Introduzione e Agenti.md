@@ -1,12 +1,5 @@
 #Intellegenza Artificiale
 
-Il libro è quello classico: Artificial Intelligence - A Modern Approach.
-Non copriremo tutto il libro, per ovvi motivi di tempo.
-
-Il sito del corso è sempre quello.
-
-Progetto + orale oppure Progetto + compitini
-
 ##Introduzione
 
 __Intelligenza artificiale forte__: si vuole sostituire all'uomo la macchina. IBM Watson si avvicina molto a questo ambito.
