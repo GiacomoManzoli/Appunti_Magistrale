@@ -1,4 +1,4 @@
-#AA - Lezione 2
+#Lezione 2 - Ripasso di probabilità
 
 (Kaggle)[https://www.kaggle.com/], sito che offre sfide con problemi di machine learing sponsorizzati da grandi compagnie.
 
