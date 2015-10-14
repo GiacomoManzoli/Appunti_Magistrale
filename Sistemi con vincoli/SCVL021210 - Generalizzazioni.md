@@ -2,7 +2,7 @@
 
 __Restrizione di domini__
 
-A partire da un'insieme di domini D0,D1,... si arriva ad un'insieme D0',D1'... tale che D0' < D0,...
+A partire da un'insieme di domini D<sub>0</sub>,D<sub>1</sub>,... si arriva ad un'insieme D<sub>0</sub>',D<sub>1</sub>'... tale che D<sub>0</sub>' < D<sub>0</sub>,...
 
 __Vincolo risolto__
 
@@ -12,7 +12,7 @@ __Soluzione CSP__
 
 È una restrizione di domini tali che tutti i vincoli vengono risolti.
 
-D′(xi) ∀xi∈X : ∀cj∈C, cj=∏xi∈X(cj)D′(xi)
+D′(x<sub>i</sub>) ∀x<sub>i</sub>∈X : ∀c<sub>j</sub>∈C, c<sub>j</sub>=∏x<sub>i</sub>∈X(c<sub>j</sub>)D′(x<sub>i</sub>)
 
 Una generalizzazione della soluzione sono tutti domini che sono dei singoletti.
 
@@ -112,7 +112,8 @@ Filtrare per l'uguaglianza richiede un tempo linare.
 
 __Generalizzazione di supporto__: un valore di un certo dominio è supportato se per tutte le altre variabili nello scope del vincolo esisten un altro valore tale che l'insieme dei valori riesce a soddisfare il vincolo.
 
-__Generalizzazione dell'Arc Consinstency__: A constraint c is eneralized arc consistent if ∀xi∈X(c) every v∈D(xi) has a support.
+__Generalizzazione dell'Arc Consinstency__: 
+Un vincolo c è consistente sugli archi in modo generalizzato se ∀xi ∈ X(c) allora è possibile trovare un valore v ∈ D(xi) che ha supporto.
 
 Fare filtering per il vincola della somma ha una complessita cubica, tuttavia con un po' di ottimizzazioni si reisce a tornare ad una complessità quadratica (questo perché nel nostro sistema fare il look-up di un valore ha complessità costante).
 
