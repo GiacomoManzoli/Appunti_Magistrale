@@ -31,13 +31,79 @@ Infine, sapendo che `t = Num -> Num` allora `t = u -> s ==> u = Num, s = Num`.
 
 Possono verificarsi delle situazioni *circolari* in cui non si riesce ad inferire in modo automatico i tipo. Questo perché una variabile di tipo può dipendere da un'altra variabile di tipo che a sua volta dipende dalla prima.
 
----
 
-Immagine desktop
+![alt text](./immagini/L09-inferenza.png "Logo Title Text 1")
 
----
 
 _La profondità dell'albero viene influenzata dal fatto che le funzioni sono currificate_.
+
+###Creazione dell'albero
+
+L'albero dell'inferenza è creato da due tipi di nodi, i nodi lambda che hanno come simbolo `\` e i nodi applicazione che hanno come simbolo `@`.
+
+####Nodi lambda
+
+Quando si sta analizzando la definizione di una funzione viene creato un nodo `\`.
+Questo nodo sempre come figlio sinistro un parametro della funzione preso in sequenza, cioè il primo nodo `\` ha il primo parametro, il secondo nodo `\` ha il secondo parametro e così via.
+
+Il figlio destro di un nodo `\` può essere o un'altro nodo `\` nel caso la funzione abbia più di un parametro, oppure un nodo `@`.
+
+Un nodo di questo tipo da origine ad un vincolo del tipo:
+
+```
+TipoNodoRadice = TipoNodoFiglioSinistro -> TipoFiglioNodoDestro
+
+ad esempio, facendo riferimento all'esempio di prima
+
+r = t -> w
+```
+
+####Nodi applicazione
+
+Questi nodi vengono creati quando si valuta l'applicazione di una funzione.
+
+Al contrario dei nodi lambda, in questo caso se la funzione ha più parametri, si espande l'albero a sinistra, questo deriva dal fatto che in Haskell tutte le funzioni sono currificate.
+
+Il figlio sinistro di un nodo applicazione può essere o un'altro nodo applicazione, nel caso la funzione abbia più parametri, oppure una funzione.
+
+Sempre nell'esempio sopra, il nodo `@` s rappresenta l'applicazione di `f x`, e da quel nodo si deriva il vincolo `t = u -> s`.
+
+Che generalizzato diventa:
+
+```
+TipoNodoFiglioSinistro = TipoNodoFiglioDestro -> TipoNodoPadre
+```
+
+Nel caso la funzione richiede l'invocazione di una funzione utilizzi più parametri, come già detto, si espande a sinistra.
+
+Ad esempio l'albero per l'applicazione della funzione `f a b` porta al seguente albero.
+
+```
+Fare un'immagine
+
+				  (@)
+				/     \
+			(@)			 b
+		  /		\
+		f		 a
+```
+
+
+Cioè il figlio destro rappresenta l'ultimo dei parametri dell'applicazione, mentre il figlio sinistro è un'altro nodo applicazione.
+
+Complicando ancora le cose, l'applicazione della funzione `f a (g b)` diventa abbastanza divertente, inquanto entrambi i figli del primo nodo sono entrambi nodi applicazione.
+
+```
+Fare un'immagine
+
+				  (@)
+				/     \
+			(@)			(@)
+		  /		\	  /   \
+		f		 a  g		 b
+```
+
+Questo perché l'ultimo parametro è il risultato dell'applicazione della funzione `g` sul valore `b`
 
 ##Inferenza di tipo per funzioni ricorsive
 
