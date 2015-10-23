@@ -1,4 +1,4 @@
-#Lezione 7
+#Lezione 6
 
 In haskell non è necessario andare a specificare i tipi, si occupa il compilatore di fare *inferenza* di tipo.
 

@@ -130,20 +130,22 @@ Questo vuol dire che σ<sub>1</sub> è **più generale** di σ<sub>2</sub>, allo
 
 Ad esempio:
 
-```
-σ_1 = {x/y}
-σ_2 = {x/[Int]}
+> σ<sub>1</sub> = {x/y}
+> σ<sub>2</sub> = {x/[Int]}
+>
+> allora
+>  
+> σ<sub>1</sub> >= σ<sub>2</sub>
+>
+> e
+>  
+> σ<sub>3</sub> = {y/[Int]}
+>
+> σ<sub>1</sub> 𝜸 σ<sub>3</sub> = σ<sub>2</sub>
+> 
+> (anche se Filè dice che non è del tutto vero)
 
-allora 
-σ_1 >= σ_2
-
-e 
-σ_3 = {y/[Int]}
-σ_1 𝜸 σ_3 = σ_2
-(anche se Filè dice che non è del tutto vero)
-```
-
-Se `σ_1 𝜸 σ_2 = σ_2` e `σ_2 𝜸 σ_1 = σ_1` allora si dice che le due sostituzioni sono equivalenti.
+Se σ<sub>1</sub> 𝜸 σ<sub>2</sub> = σ<sub>2</sub> e σ<sub>2</sub> 𝜸 σ<sub>1</sub> = σ<sub>1</sub> allora si dice che le due sostituzioni sono **equivalenti**.
 
 Una sostituzione è **ground** se non ha variabili nelle parti destre dei binding.
 
@@ -163,7 +165,7 @@ Questo vuol dire che σ<sub>E</sub> è la soluzione più generale di tutte e di 
 
 ##Unificazione
 
-Si parte da due insiemi di equazioni e si cerca di andare a fare delle sostituziomi e si cerca di arrivare ad un unico insieme di equazioni in forma risolta, facendo in modo che il numero di soluzioni ground non cambi.
+Si parte da due insiemi di equazioni e si cerca di andare a fare delle sostituzioni, in modo da arrivare ad un unico insieme di equazioni in forma risolta, facendo in modo che il numero di soluzioni ground non cambi.
 
 1. f(t<sub>1</sub>,...,t<sub>n</sub>) = f(s<sub>1</sub>, ... , s<sub>n</sub>) --> {t<sub>1</sub> = s<sub>1</sub>, ... , t<sub>n</sub> = s<sub>n</sub>} : *pealing*: si passa da due termini con arietà *n* e si costruiscono *n* nuove equazioni per i tipi figli.
 2. f(t<sub>1</sub>, ..., t<sub>n</sub>) = g(s<sub>1</sub>, ..., s<sub>k</sub>) --> stop con fallimento, perché ci sono dei termini che devono essere ground (???).

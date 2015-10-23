@@ -40,7 +40,7 @@ H frammenta un certo insieme S se è possibile trovare un iperpiano che raccogli
 
 Ovvero per tutte le dicotomie di S esiste un iperpiano che riesce a realizzarle.
 
-**VC (Vapnik-Chervonenkis) Dimension**: è la dimensione di uno spazio delle ipotesi H definito su uno spadio delle istanze X è data dalla cardinalità del sottoinsieme più grande frammentato da H.
+**VC (Vapnik-Chervonenkis) Dimension**: è la dimensione di uno spazio delle ipotesi H definito su uno spazio delle istanze X è data dalla cardinalità del sottoinsieme più grande frammentato da H.
 
 > VC(H) = max<sub>S ⊆ X</sub>|S| : H frammenta S
 > VC(H) = ∞ se S non è limitato
@@ -59,9 +59,19 @@ Prendendo uno spazio delle ipotesi di cardinalità finita, allora
 
 > VC(H) ≤ log<sub>2</sub>(|H|)
 
-Questo perché per ogni S frammentata da H, abbiamo |H| > = 2<sup>|S|</sup> (cioè per ogni dicotomia in S esite un ipotesi in H che la realizza), ovvero devono essere disponibili in H tante ipotesi quanti sono le dicotomie in H.
+Questo perché per ogni S frammentata da H, abbiamo |H| >= 2<sup>|S|</sup> (cioè per ogni dicotomia in S esite un ipotesi in H che la realizza), ovvero devono essere disponibili in H tante ipotesi quanti sono le dicotomie in H.
 
 Scegliendo un S tale che |S| = VC(H), si ottiene |H| >= 2<sup>VC(H)</sup>, prendendo il logaritmo si trova quello che si stava cercando, ovvero VC(H) <= log<sub>2</sub>(|H|).
+
+**Dal libro**:
+
+Se un dataset contiene *N* elementi, questi N elementi possono essere etichettati con degli 0 e 1 in 2<sup>N</sup> modi diversi.
+
+Se per ognuno di questi modi è possibile trovare un ipotesi h € H che separa tutte le istanze negative da quelle positivi allora si dice che H frammenta il dataset N. Il che vuol dire che il dataset N può essere appreso con un errore empirico nullo.
+
+Il massimo numero di punti che possono essere frammentati da H è detto VC(H) e fornisce una misura della capacità di H.
+
+
 
 ##Bound sull'errore di generalizzazione
 
