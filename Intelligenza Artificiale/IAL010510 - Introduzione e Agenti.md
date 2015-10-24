@@ -15,7 +15,7 @@ Un agente razionale (o intelligente) cerca di raggiungere i suoi obiettivi data 
 
 Un agente può essere considerato come una funzione che da tutte le possibili sequenze di percezzioni estrae delle azioni ammissibili.
 
-Sequenza di percezioni --> conoscenza a disposizione dell'agente.
+> Sequenza di percezioni --> conoscenza a disposizione dell'agente.
 
 Tra tutte le classi di ambienti e compiti si va a cercare sempre l'agente che offre le prestazioni migliri, tenendo in considerazione anche tutte le limitazioni computazionali che impediscono la realizzazione di una razionalità parfetta.
 
@@ -37,7 +37,7 @@ La misura delle prestazioni deve essere effettauta sulla sequenza delle percezio
 
 Per lo stesso motivo la razionalità e le prestazioni non sono influenzate dal successo.
 
-###Peas - Performance Enviroment Actuatos Sensors
+###PEAS - Performance Enviroment Actuatos Sensors
 
 Sono le caratteristiche da tenere a mente quanto ci si trova a progettare un'ambiente intelligente.
 
