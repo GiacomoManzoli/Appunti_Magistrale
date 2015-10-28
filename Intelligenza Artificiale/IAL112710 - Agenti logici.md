@@ -106,7 +106,7 @@ Codifica della brezza causata dalla trappole:
 
 Con queste informazioni è possibile andare a creare una tabella di verità, con le colonne per i vari letterali, le informazioni presenti nella base di conoscenza e una colonna per l'affermazione 𝜶_1 che vogliamo dedurre.
 
-*Immagine slide pagina 32*
+![](./immagini/l11-tabella.png)
 
 Per controllare l'inferenza di 𝜶_1 è necessario andare a verificare tutti i possibili valori di verità.
 
