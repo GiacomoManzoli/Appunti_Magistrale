@@ -1,4 +1,4 @@
-#Lezione 9
+#Lezione 9 - Ricerca con avversari
 
 Ovvero algoritmi per i giochi.
 
@@ -52,14 +52,14 @@ function MaxValue(state) returns a utility value
     if TerminalTest(state) then return Utility(state)
     v <- -∞
     for a,s in Successors(state) do
-        v <- Max(v, MinValue(s)
+        v <- Max(v, MinValue(s))
     return v
     
 function MinValue(state) returns a utility value
     if TerminalTest(state) then retrun Utility(state)
     v <- ∞
     for a,s in Successors(state) do
-        v <- Min(v, MaxValue(state)
+        v <- Min(v, MaxValue(s))
     return v
 ```
 
@@ -73,7 +73,7 @@ Nel caso in cui l'albero è infinito non è mai possible raggiungere le foglie e
 
 L'algoritmo risulta ottimo sia se si entrambi i giocatori giocano in modo ottimo, sia nel caso l'avversario giochi in modo non ottimo.
 
-Questo perché Max quando può vincere va a vincere e se l'avversario gioca in modo sub-ottimo, Max riesce a vincere anche in situazioni in cui non avrebbe vinto.
+Questo perché Max quando può vincere, va a vincere e se l'avversario gioca in modo sub-ottimo, Max riesce a vincere anche in situazioni in cui non avrebbe vinto.
 
 La complessità in tempo è *O(b<sup>m</sup>)*, dove *b* è il fattore di branching e *m* la profondità della soluzione.
 
@@ -87,7 +87,7 @@ Si suppone di avere un limite al tempo per calcolare le mosse.
 
 Serve quindi una **funzione di valutazione** che può essere applicabile sia ad una foglia e in questo caso funziona da funzione di utilità, sia ad uno stato centrale e in questo caso fornisce una *desiderabilità* dello stato in cui si trova, una sorta di funzione euristica.
 
-Serve inoltre un **test di taglio (cutoff)** che pone un limite all'albero di ricerca e, raggiunto il quale viene calcolata la funzione di valutazione.
+Serve inoltre un **test di taglio (cutoff)** che pone un limite all'albero di ricerca, raggiunto il quale viene calcolata la funzione di valutazione.
 
 Con il cutoff c'è un problema in quanto può capitare che per raggiungere uno stato molto favorevole è necessario andare a sacrificare dei pezzi, passando cioè per degli stati svantaggiosi. (Ad esempio il sacrificio di un pezzo nel gioco degli scacchi).
 
@@ -109,7 +109,7 @@ Tipicamente si preferisce la profondità.
 
 ####Digressione
 
-La cosa importante della funzione di valutazione non è la stima precisa ma l'importante è che valuti correttamente la "bontà" di uno stato, cioè che il calcolo sia monotona dato che deve semplicemente esplicitare il vantaggio di un giocatore piuttosto che dell'altro.
+La cosa importante della funzione di valutazione non è la stima precisa ma la valutazione corretta della "bontà" di uno stato, cioè che la funzione sia monotona, questo perché la funzione deve semplicemente esplicitare il vantaggio di un giocatore piuttosto che dell'altro.
 
 Infatti, quello che conta è solamente l'ordine di vista degli stati. 
 
@@ -132,7 +132,7 @@ Vengono fatte delle considerazioni per evitare di espandere dei rami che portano
 
 Vengono quindi creati degli upper bound per Min e lower bound per Max in modo da poter evitare di espandere alcuni nodi.
 
-Nel caso ottimo in cui le mosse sono ordinate per funzione di utilità (decresente per max, cresente per min ma non ne sono sicuro) si riesce a raddoppiare la profondità raggiungibile, mentre nel caso pessimo non si ha nessun miglioramento.
+Nel caso ottimo in cui le mosse sono ordinate per funzione di utilità (decrescente quando cerca max, *(trovo subito il massimo)*, crescente quando cerca min *(trovo subito il minimo)*) si riesce a raddoppiare la profondità raggiungibile, mentre nel caso pessimo non si ha nessun miglioramento.
 
 Questa strategia non va a modificare il risultato finale in quanto vengono scartate solamente stati non ottimi.
 

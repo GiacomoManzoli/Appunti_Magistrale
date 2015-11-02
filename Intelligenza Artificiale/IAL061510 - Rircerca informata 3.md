@@ -1,6 +1,4 @@
-#Lezione 6
-
-15 Ottobre 2015.
+#Lezione 6 - Ricerca Infomrata 3
 
 Verificare che quando per HC si parla di soluzione ottima, si intenda una soluzione ottima globale.
 
@@ -12,11 +10,11 @@ Quando è necessario aggiungere nodi nuovi, scarta dalla coda quelli meno promet
 
 In particolare:
 
-- viene sempre scartato il nodo foglia peggiore (quello con f-valore più alto).
-- l'f valore del nodo scartato viene riportato sul nodo padre, un po' come avviene con Best First.
-- si espande il nodo padre di un nodo già scartato solamente quando tutti gli altri cammini sono risultati peggiori.
+- Viene sempre scartato il nodo foglia peggiore (quello con f-valore più alto);
+- L'f valore del nodo scartato viene riportato sul nodo padre, un po' come avviene con Best First;
+- Si espande il nodo padre di un nodo già scartato solamente quando tutti gli altri cammini sono risultati peggiori.
 
-Problema: possono esserci blocchi di foglie con lo stesso f-valore. Si rischierebbe di scegliere lo stesso nodo sia per la cancellazione, sia per l'espansione.
+**Problema**: possono esserci blocchi di foglie con lo stesso f-valore. Si rischierebbe di scegliere lo stesso nodo sia per la cancellazione, sia per l'espansione.
 
 Viene quindi adottata una politica di "giovinezza", viene scartato il nodo più vecchio e viene espanso il nodo più recente.
 
@@ -53,7 +51,7 @@ Questo perché Hill climbing si ferma su una spalla (punto in cui la funzione ob
 Si possono trovare delle soluzioni:
 
 - **plateau**: si fa una mossa laterale, cioè ci si sposta in uno stato che ha lo stesso valore di `h`.
-	- Bisogna evitare dei cicli, specialmente nel caso di massimi e minimi locali
+	- Bisogna evitare dei cicli, specialmente nel caso di massimi e minimi locali;
 	-  Si può porre un limite al numero massimo di mosse laterali consecutive, risulta più semplice che andare a tenere traccia degli stati già visitati (trade-off come per la definizione di una funzione euristica).
 - **massimi o minimi locali**: si possono eseguire delle ricerca stocastiche o iniziare le ricerca da stati diversi:
 	- _Hill climibing stocastico_: si sceglie a caso tra tutte le mosse che migliorano `h`, tipicamente si ottiene una convergenza più lenta ma spesso si trovano soluzioni migliori. La distribuzione delle probabilità deve essere tale per cui sia più probabile trovare uno stato migliore.
@@ -61,8 +59,9 @@ Si possono trovare delle soluzioni:
 
 ###Numero di ricerche prima di trovare una soluzione ottima
 
-> x<sub>i</sub> 	= 0 se la i-esima ricerca non trova una soluzione ottima
-> 					= 1 se trova una solzione ottima
+> x<sub>i</sub> = 0 se la i-esima ricerca non trova una soluzione ottima
+> 
+> x<sub>i</sub> = 1 se trova una solzione ottima
 
 Sappiamo che per ogni i, P(x<sub>i</sub> = 1) = p e P(x<sub>i</sub> = 0) = 1 - p.
 

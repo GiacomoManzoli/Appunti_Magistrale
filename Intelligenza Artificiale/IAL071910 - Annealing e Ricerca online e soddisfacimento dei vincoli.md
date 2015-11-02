@@ -26,7 +26,7 @@ function SimulatedAnnealing(problema, velocità_raffreddamento) returns uno stat
 
 A temperatura fissata `T` la probabilità di occuppazione degli stati segue la distrubuzione di Boltzmann.
 
-Se `T` viene distriuito abbastanza lentamente si raggiunge sempre lo stato migliore.
+Se `T` viene diminuito abbastanza lentamente si raggiunge sempre lo stato migliore.
 
 Questo viene usato ampiamente nelle applicazioni pratiche come la definizione degli orari dei voli delle linee aeree.
 
@@ -82,11 +82,11 @@ Ad esempio nel caso il numero di archi che si allontanano dal goal è maggiore r
 
 Altre strategie come l'HillClimbing con memoria o LRTA\* permettono di ottenere risultati migliori.
 
-###Learnin Real Time A* - LRTA*
+###Learning Real Time A* - LRTA*
 
 L'idea di base consiste nel memorizzare la migliore stima corrente `H(s)` del costo per raggiungere il goal da ogni stato visitato.
 
-`H(s)` inizialmente con `h(s)` ma durante l'esecuzione viene aggiornata con l'esperienza.
+`H(s)` inizialmente coincide con `h(s)` ma durante l'esecuzione viene aggiornata con l'esperienza.
 
 ```
 function LRTA*-Agent(s') returns an action

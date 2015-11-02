@@ -2,12 +2,14 @@
 
 L'utilizzo di funzioni *tail recursive* sono più semplici da gestire dal punto di vista del compilatore, questo perché al termine della chiamata ricorsiva non vengono effettuate altre operazioni.
 
+Grazie a questo fatto è possibile utilizzare un solo record di attivazione per tutte le chiamate ricorsive. Questo record ha come indirizzo di ritorno, l'indirizzo dell'istruzione dopo la prima chiamata e il valore dei parametri viene via via aggiornato, anziché andare ad aggiungere un nuovo blocco.
+
 ##Variabili globali nel corpo delle funzioni
 
 Per la gestione delle variabili globali possono essere utilizzate due regole:
 
-- **static scope**: cerchiamo nei blocchi che racchiudono la definizione delle funzione;
-- **dynamic scope**: cerchiamo nei blocchi che racchiudono l'invocazione della funzione.
+- **static scope**: il compilatore va a cercare la variabile nei blocchi che racchiudono la definizione delle funzione;
+- **dynamic scope**: il compilatore va a cercare la variabile nei blocchi che racchiudono l'invocazione della funzione.
 
 In ogni caso si cerca sempre nel blocco più vicino.
 

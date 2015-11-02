@@ -1,8 +1,8 @@
-#Lezione 10
+#Lezione 10 - Giochi non deterministici e ad infomrazioni parziale
 
 ##𝜶-𝜷 pruning (best case)
 
-Per avere il valore esatto di uno stato occorre conosce il valore estatto di utilità per uno stato figlio e conosce un buon sull'utilità di tutti gli stati figli rimanenti.
+Per avere il valore esatto di uno stato occorre conosce il valore estatto di utilità per uno stato figlio e conosce un bound sull'utilità di tutti gli stati figli rimanenti.
 
 Mentre per derivare un buond sull'utilità di uno stato occorre conoscere il valore esatto di utilità di ogni stato figlio.
 
@@ -33,11 +33,11 @@ Da cui trovo che generalmente
 
 Sono giochi in cui sono presenti degli eventi casuali (*chance*) introdotti mediente dadi, carte prese a caso, lancio in una moneta, ecc.
 
-Nei giochi deterministici, si riesce a propagare il valore di utilità dalle foglie ai nodi interni, a causa del non determinismo non si riesce ad avere la certezza ma una probabilità.
+Nei giochi deterministici si riesce a propagare il valore di utilità dalle foglie ai nodi interni, mentre nei giochi non terministici, a causa del non determinismo, non si riesce ad avere la certezza ma una probabilità.
 
 Nell'albero viene introdotta una nuova tipologia dei nodi detti *chance* e che Max utilizza per valutare la mossa da fare.
 
-//Immagine slide.
+![](./immagini/l11-albero-chance)
 
 Il valore aspettato di uno nodo chance dipende dalla propabilità dei vari valori dei figli del nodo chance.
 
@@ -70,13 +70,13 @@ L'uso dei dadi aumenta il valore del fattore di branching *b* e questo va ad inf
 
 Nonostante la complessità aumenti si riesce comunque ad ottenere dei risultati buoni (sfruttando anche alcune cose non ancora affrontate).
 
-In questo caso è importante che la funzione di valutazioni sia composta da trasformazioni lineari e positive, altrimenti non si riesce a preservare l'ordine dei nodi chance.
+In questo caso è importante che la funzione di valutazione sia composta da trasformazioni lineari e positive, altrimenti non si riesce a preservare l'ordine dei nodi chance.
 
 Nei giochi deterministici basta che la funzione di valutazione sia monotona.
 
 ## Giochi ad informazione parziale
 
-In questa tipologia di giochi non si hanno tutte le informazioni riguardo le mosse che può fare l'avversario (esempio tipco sono i giochi di carte).
+In questa tipologia di giochi non si hanno tutte le informazioni riguardo le mosse che può fare l'avversario (esempio tipico sono i giochi di carte).
 
 C'è stata la proposta di ridurre questi giochi in giochi non deterministici, considerando tutte le possibili smazzate come se si avesse un dato con tante facce.
 

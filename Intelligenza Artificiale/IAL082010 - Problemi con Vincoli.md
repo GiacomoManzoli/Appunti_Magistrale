@@ -1,4 +1,4 @@
-#Lezione 8
+#Lezione 8 - Problemi con vincoli
 
 **CSP Binario**: ogni vincolo si riferisce ad al più due variabili.
 
@@ -20,16 +20,16 @@ C'è anche la possibilità di utilizzare variabili continue con vincoli lineari,
 
 I vincoli possono essere:
 
-- **unari**: coinvologono una sola variabile
-- **binari**: coinvologono due variabili
-- **di ordine superiore**: coinvolgono più di due variabili.
-- **Prefenze (o soft)**: trammile l'assegnamento di un costo ad ogni variabile, un esempio di questo vincolo è preferire il rosso al verde nel problema della colorazione di una cartina. (il problema diventa un problema di ottimizzazione vincolata, vengono prefreite le soluzioni di costo minore)
+- **unari**: coinvologono una sola variabile;
+- **binari**: coinvologono due variabili:
+- **di ordine superiore**: coinvolgono più di due variabili;
+- **prefenze (o soft)**: trammite l'assegnamento di un costo ad ogni variabile, un esempio di questo vincolo è preferire il rosso al verde nel problema della colorazione di una cartina. (il problema diventa un problema di ottimizzazione vincolata, vengono prefreite le soluzioni di costo minore)
 
 ##Formulazione di ricerca standard
 
 Gli stati vengono definiti dai valori assegnati fino ad un dato momento.
 
-**Stato inizilae**: l'assegnamento vuoto.
+**Stato iniziale**: l'assegnamento vuoto.
 
 **Funzione successore**: assegna un valore ad una variabile non ancora assegnata che è compatibile con l'assegnamento corrente. Questa funzione fallisce se non esiste un assegnamento legale.
 
@@ -38,7 +38,7 @@ Gli stati vengono definiti dai valori assegnati fino ad un dato momento.
 Proprietà:
 
 1. Valido per tutti i CSP;
-2. Ogni soluzione appare a profondità n con n variabili (tutti gli stati a profondità n sono soluzioni, questo per costruzione, perché altrimenti non sarei riuscito a scendere fino a tale profondità), conviene quindi usare la ricerca depth-first;
+2. Ogni soluzione appare a profondità *n* con *n* variabili (tutti gli stati a profondità n sono soluzioni, questo per costruzione, perché altrimenti non sarei riuscito a scendere fino a tale profondità), conviene quindi usare la ricerca depth-first;
 3. Il cammino è irrilevante, interessa solo lo stato (anche una soluzione locale può andare bene);
 4. A profondità `l` il fattore di branching (cioè nodi nella frontiera) è tipicamente `(n-l)*d`.
 
@@ -46,7 +46,7 @@ Proprietà:
 
 Gli assegnamenti sono tra loro commutativi.
 
-Utilizzare il backtracking nella ricerca depth-first consiste nel tornare indietro di un nodo e utilizzare un altro varlore per l'assegnamento.
+Utilizzare il backtracking nella ricerca depth-first consiste nel tornare indietro di un nodo e utilizzare un altro valore per l'assegnamento.
 
 La ricerca con backtracking è l'algoritmo non informato di base per risolvere i CSP.
 

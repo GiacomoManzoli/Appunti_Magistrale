@@ -1,6 +1,6 @@
 #Lezione 10 - Gestione dei dati a Runtime
 
-Capitolo 7 del libro.
+*Capitolo 7 del libro.*
 
 Fortran nel 60 non permetteva invocazioni ricorsive, ogni variabile e ogni parametro formale avevano una locazione fissa che conteneva il valore.
 
@@ -34,9 +34,9 @@ Un record di attivazione contiene:
 
 Segue che ogni record di attivazione (RA) ha una lunghezza variabile.
 
-Da notare che il codice prodotto daal compilatore deve fare riferimento ad indirizzi dello stack dei RA, questo vuol dire che il compilatore deve avere un modello preciso di come sarà lo stack al momento in cui viene eseguito ciascuna operazione.
+Da notare che il codice prodotto dal compilatore deve fare riferimento ad indirizzi dello stack dei RA, questo vuol dire che il compilatore deve avere un modello preciso di come sarà lo stack al momento in cui viene eseguito ciascuna operazione.
 
-Inoltre, dato che lo stack cambia durante l'esecuzione del programma, il compilatore deve essere comunque in grado di andare a calcolare gli indirizzi corretti.
+Inoltre, dato che lo stack cambia durante l'esecuzione del programma, il compilatore deve essere in grado di andare a calcolare gli indirizzi corretti.
 
 ![](./immagini/L10-funzione.png)
 
@@ -44,13 +44,13 @@ Quando si entra in un blocco è necessario che il compilatore faccia il push del
 
 ###Discesa nello stack
 
-Se all'interno di un blocco vengono utilizzate delle variabili del blocco che lo contiene, il compilatore deve essere in grado di andare a calcolare l'indirizzo corretto.
+Se all'interno di un blocco vengono utilizzate delle variabili di un altro blocco che contiene il blocco corrente, il compilatore deve essere in grado di andare a calcolare l'indirizzo corretto.
 
 Generalmente la variabile da cercare si trova *n* record indietro ed è la variabile alla posizione *P*.
 
 Di conseguenza è possibile indicare l'indirizzo della variabile *z* con la coppia *(n,P)*.
 
-Questo funziona perché il compilatore si costruisce uno stack stastico che ha esattamente la stessa struttura dello stack dinamico.
+Questo è possibile perché il compilatore si costruisce uno stack stastico che ha esattamente la stessa struttura dello stack dinamico.
 
 Nello **stack dinamico** (quello usato durante l'esecuzione del programma) ci sono solo gli R-Valori delle variabili.
 
@@ -60,7 +60,7 @@ Di conseguenza l'indirizzo statico di una variabile è uguale all'indirizzo dina
 
 ## I blocchi in Haskell
 
-Ogni dichirazione in Haskell definisce un blocco e nel caso si utilizzi `let x ... in ...` va a creare un blocco che è lo scopo di `x`.
+Ogni dichirazione in Haskell definisce un blocco e nel caso si utilizzi `let x ... in ...` va a creare un blocco che è lo scope di `x`.
 
 ```
 f x = x+1
@@ -72,7 +72,7 @@ diventa qualcosa di simile a
 
 ```
 {
-    f x = x +1
+    f x = x + 1
     {
         g y = (f y)+ 2
         {
@@ -84,13 +84,13 @@ diventa qualcosa di simile a
 
 ##Gestione dello stack statico
 
-Finché non il programma è sequenziale e senza costrutti iterativi la situazione è semplice, basta che il compilatore analizzi il codice in modo da identificare i vari blocchi.
+Finché il programma è sequenziale e senza costrutti iterativi la situazione è semplice, basta che il compilatore analizzi il codice in modo da identificare i vari blocchi.
 
 Nel caso ci sia un'istruzione iterativa, c'è il record che associato al blocco del ciclo che viene ripetuto varie volte.
 
-Durante l'esecuzione verrà sempre fatto un push e pop dello stesso record di attivazione, di conseguenza gli indirizzi delle variabili presenti nel blocco sarà sempre quello.
+Durante l'esecuzione verrà sempre fatto un push e pop dello stesso record di attivazione e di conseguenza gli indirizzi delle variabili presenti nel blocco sarà sempre quello.
 
-Inoltre non è importante sapere quante volte viene ripetuto il ciclo, dato che ci sarà sempre al massimo un record per volta.
+Inoltre, non è importante sapere quante volte viene ripetuto il ciclo, dato che ci sarà sempre al massimo un record per volta.
 
 ###Stack statico per le funzioni
 
@@ -100,16 +100,16 @@ Il problema è che le funzioni possono utilizzare delle variabili globali e anda
 
 Per risolvere questo problema si sfrutta il fatto che la definizione della funzione deve essere all'interno di un blocco (globale o no) e che l'invocazione delle funzione viene fatta in un blocco che è contenuto dal blocco che contiene le definizione delle funzioni.
 
-In questo modo per recuperare il valore delle variabili globali usate dentro una funzione viene utilizzata la prima occorrenza a partire **dal blocco della definizione**, questo prende il nome di **scoping statico**.
+In questo modo per recuperare il valore delle variabili globali usate dentro una funzione viene utilizzata **la prima occorrenza a partire dal blocco della definizione**, questo prende il nome di **scoping statico**.
 
 Il record di attivazione di una funzione deve contenere più dati rispetto ad un record normale:
 
-- Control link
-- Indirizzo di ritorno: indirizzo dell'istruzione successiva, l'indirizzo è sempre un indirizzo ma riferisce un istruzione del codice sorgente e non un dato della memoria;
-- Indirizzo del risultato: è un indirizzo di una locazione intera allo stack dei dati nel quale si andrà ad inserire l'eventuale valore di ritorno;
-- Parametri formali: nello stack statico ci saranno i nomi dei parametri, nello stack dinamico ci saranno gli effettivi valori;
--  Variabili locali
--  Spazio per i risultati parziali.
+- **Control link**;
+- **Indirizzo di ritorno**: indirizzo dell'istruzione successiva, l'indirizzo è sempre un indirizzo ma riferisce un istruzione del codice sorgente e non un dato della memoria;
+- **Indirizzo del risultato**: è un indirizzo di una locazione intera allo stack dei dati nel quale si andrà ad inserire l'eventuale valore di ritorno;
+- **Parametri formali**: nello stack statico ci saranno i nomi dei parametri, nello stack dinamico ci saranno gli effettivi valori;
+-  **Variabili locali**;
+-  **Spazio per i risultati parziali**.
 
 Quando si hanno chiamate ricorsive, il codice della funzione esiste in un solo posto e, cosa molto importante, tutti i record di attivazioni causati dalle chiamate ricorsive devono avere la stessa struttura.
 

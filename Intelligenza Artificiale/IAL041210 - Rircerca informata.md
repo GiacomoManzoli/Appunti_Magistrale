@@ -86,17 +86,17 @@ Questo perché A* cerca la soluzione ottima.
 
 ####Ottimalità di A* (su un albero)
 
-Supponiamo che un goal sub-ottimo G2 sia stato generato e che si trovi nella coda (frontiera).
+Supponiamo che un goal sub-ottimo G<sub>2</sub> sia stato generato e che si trovi nella coda (frontiera).
 
 Sia n un nodo non ancora espanso su un cammino minimo verso il goal ottimo G.
 
-> f(G2)	= g(G2)	-- perché h(G2) = 0
+> f(G<sub>2</sub>)	= g(G<sub>2</sub>)	-- perché h(G<sub>2</sub>) = 0
 >
-> f(G2)   > g(G)		-- perché G2 non è ottimo
+> f(G<sub>2</sub>)   > g(G)		-- perché G<sub>2</sub> non è ottimo
 > 
-> f(G2)	>= f(n)	-- perché h è ammissibile
+> f(G<sub>2</sub>)	>= f(n)	-- perché h è ammissibile
 
-A* quindi non selezionerà mai G2 per l'espansione e di conseguenza verrà estratto prima G di G2.
+A* quindi non selezionerà mai G<sub>2</sub> per l'espansione e di conseguenza verrà estratto prima G di G<sub>2</sub>.
 
 
 
