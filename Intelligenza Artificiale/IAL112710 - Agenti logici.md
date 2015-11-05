@@ -11,13 +11,17 @@ Un agente logico è composto da due componenti che possono essere modificati:
 - Inference Engine (motore inferenziale): è indipendete dal dominio applicativo e permette di utilizzare un linguaggio dichiarativo in quanto è in grado di andare a valutare dei simboli.
 - Knowledge base (base di conoscenza): contiene le informazioni specifiche del problema.
 
-Queste due parti sono tra loro intercambiabili, lo stesso motore inferenziale può essere utilizzato in più domini specifici e allo stesso modo la stessa base di conoscenza può essere trattata da vari tipi di motori inferenziale disponibilie.
+Queste due parti sono tra loro intercambiabili, lo stesso motore inferenziale può essere utilizzato in più domini specifici e allo stesso modo la stessa base di conoscenza può essere trattata da vari tipi di motori inferenzial.
 
 **Base di conoscenza**: insieme di sentenze espresse in un linguaggio formale che permette di utilizzare un approccio dichiarativo per definire degli agenti logici.
 
+Le formule o sentenze contenute nella base di conoscenza di un agente rappresentano configurazioni fisiche di una parte dell’agente stesso, il ragionamento svolto dall'agente coinvolgerà la generazione e manipolazione di tali configurazioni.
+
+Tutte le sentenze contenute nella base di conoscenza possono essere espresse come un'unica congiunzione, in questo modo si assume che tutta l'informazione presente nella base di conoscenza sia vera.
+
 Sulla base di conoscenza è possibile eseguire un `Tell` o `Dire` per aggiungere informazioni alla base di conosceza oppure è possibile andare a cercare delle inforazioni `Ask` o `Chiedere`.
 
-Ogni agente può essere descritto al *livello di conoscenza* cioè per quello che sanno e indipendentemente dall'implementazione oppure a *livello implementativo* così considerando le stutture dati e gli algoritmi che le manipolano.
+Ogni agente può essere descritto a *livello di conoscenza* cioè per quello che sa e indipendentemente dall'implementazione oppure a *livello implementativo* così considerando le stutture dati e gli algoritmi che le manipolano.
 
 ## Agente bastato sulla conoscenza
 
@@ -42,7 +46,7 @@ L'agente deve essere capace di:
 
 ## Il magico mondo dei Wumpus
 
-**PEAS**: Performance Enviroment "Attuatori" Sensors.
+**PEAS**: Performance Enviroment "Attuatori" Sensors, sono le caratteristiche di valutazione di un ambiente.
 
 **Misura della prestazione**: +1000 Oro, -1000 Morte, -1 per ogni spostamento, -10 per l'uso della freccia.
 
@@ -72,13 +76,13 @@ In questo caso si sa che c'è un Wumpus vicino e si lancia una freccia. Se dove 
 
 ## Modelli
 
-I logici tipicamente pensano in termini di modelli, che formalmente sono mondi strutturati rispetto ai quai si può valutare se un'affermazione è vera o falsa.
+I logici tipicamente pensano in termini di modelli, che formalmente sono mondi strutturati rispetto ai quali si può valutare se un'affermazione è vera o falsa.
 
-Diciamo che *m* è un modello di una sentenza 𝜶 se 𝜶 è vera in *m*.
+Formalmente i modelli possibili non sono altro che tutti i modi in cui si possono assegnare i valori alle varie variabili presenti nella sentenza.
 
-*M(𝜶)* è l'insieme di tutti i modelli di 𝜶.
+Diciamo che *m* è un modello di una sentenza 𝜶 se 𝜶 è vera in *m* e con *M(𝜶)* indichiamo l'insieme di tutti i modelli di 𝜶.
 
-Allora KB (KnowledgeBase) |= 𝜶 se e sole se *M(KB) ⊆ M(𝜶)* (𝜶 è deducibile dalla base di conosceza).
+Allora KB (la base di conoscenza) |= 𝜶 se e sole se *M(KB) ⊆ M(𝜶)* (𝜶 è deducibile dalla base di conosceza).
 
 Questo perché la KB può essere vista come una concatenazione di varie sequenze.
 
@@ -86,29 +90,33 @@ Per verificare la deducibilità è necessario andare ad enumerare tutte le possi
 
 Si assume sempre che la base di conoscenza sia vera. In questo modo si può dedurre i letterali 𝜶 dalla base, da notare anche che se KB|=𝜶 allora si sa che 𝜶 è vera, però se KB|/=𝜶 allora non si sa se 𝜶 è vera o falsa.
 
+**Implicazione logica**: tra due formule significa che una *segue logicamenete* l'altra (entailment), in notazione si usa il simbolo 𝜶|=𝜷 e si dice che "𝜶 **implica** 𝜷". La definizione formale di implicazione è la seguete: 𝜶 implica 𝜷 se e solo se, in ogni modello in cui 𝜶 è vera, anche 𝜷 lo è.
+
+L'**inferenza** invece è il processo con il quale da una proposizione accolta come vera si passa ad una seconda proposizione la cui verità deriva dal contenuto della prima. L'inferenza è quindi il processo che porta a trovare l'implicazione tra due formule.
+ 
 ### Modellazione per il Wumpus (lite)
 
-P_i,j = vero se c'è una trappola in (i,j)
+P<sub>i,j</sub> = vero se c'è una trappola in (i,j)
 
-B_i,j = vero se c'è brezza in (i,j)
+B<sub>i,j</sub> = vero se c'è brezza in (i,j)
 
 Codifica di alcune percezioni:
 
-- not(P_1,1)
-- not(B_1,1)
-- B_2,1
+- not(P<sub>1,1</sub>)
+- not(B<sub>1,1</sub>)
+- B<sub>2,1</sub>
 
 Codifica della brezza causata dalla trappole:
 
-- B_1,1 sse (P_1,2 \/ P_2,1)
-- B_2,1 sse (P_1,1 \/ P_2,2 \/ P_3,1)
+- B<sub>1,1</sub> sse (P<sub>1,2</sub>  \/ P<sub>2,1</sub> )
+- B<sub>2,1</sub> sse (P<sub>1,1</sub>  \/ P<sub>2,2</sub>  \/ P<sub>3,1</sub>)
 - ...
 
-Con queste informazioni è possibile andare a creare una tabella di verità, con le colonne per i vari letterali, le informazioni presenti nella base di conoscenza e una colonna per l'affermazione 𝜶_1 che vogliamo dedurre.
+Con queste informazioni è possibile andare a creare una tabella di verità, con le colonne per i vari letterali, le informazioni presenti nella base di conoscenza e una colonna per l'affermazione 𝜶<sub>1</sub> che vogliamo dedurre.
 
 ![](./immagini/l11-tabella.png)
 
-Per controllare l'inferenza di 𝜶_1 è necessario andare a verificare tutti i possibili valori di verità.
+Per controllare l'inferenza di 𝜶<sub>1</sub> è necessario andare a verificare tutti i possibili valori di verità (**model checking**).
 
 ### Inferenza per mezzo di enumerazione
 
