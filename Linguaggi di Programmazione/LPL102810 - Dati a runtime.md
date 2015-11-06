@@ -8,10 +8,10 @@ Questa strategia di gestione della memoria non permette di andare a definire fun
 
 (Per lo stesso motivo non esistevano neanche i blocchi)
 
-Algol60 essendo strutturato a blocchi ha utilizzato una stratefgia di gestione diversa:
+Algol60 essendo strutturato a blocchi ha utilizzato una strategia di gestione diversa:
 
-- Le variabili venivano dichiarate all'interno di un blocco
-- Ogni dichiarazione esiste in un solo blocco
+- Le variabili venivano dichiarate all'interno di un blocco;
+- Ogni dichiarazione esiste in un solo blocco;
 - Quando inizia l'esecuzione di un blocco viene allocata la memoria necessaria per contenere le nuove variabili, questa memoria viene poi deallocata all'uscita del blocco.
 
 ##Runtime
@@ -22,9 +22,9 @@ Questo stack cresce dall'alto verso il basso.
 
 ![](./immagini/L10-computer.png)
 
-Nella parte bassa della memoria virtuale c'è l'heap che va a contenerei dati dinamici.
+Nella parte bassa della memoria virtuale c'è l'heap, l'area della memoria adibita a contenere i dati dinamici.
 
-L'indirizzo dell'ultimo record di attivazione (quello che si trova in cima allo stack) viene gestito dal **eviroment pointer**, un registro fisico della macchina.
+L'indirizzo dell'ultimo record di attivazione (quello che si trova in cima allo stack) viene gestito dal **enviroment pointer**, un registro fisico della macchina.
 
 Un record di attivazione contiene:
 

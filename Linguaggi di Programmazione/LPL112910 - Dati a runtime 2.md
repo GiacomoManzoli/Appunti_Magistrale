@@ -1,6 +1,6 @@
 #Lezione 12 - Dati a runtime 2
 
-L'utilizzo di funzioni *tail recursive* sono più semplici da gestire dal punto di vista del compilatore, questo perché al termine della chiamata ricorsiva non vengono effettuate altre operazioni.
+Le funzioni *tail recursive* sono più semplici da gestire dal punto di vista del compilatore, questo perché al termine della chiamata ricorsiva non vengono effettuate altre operazioni.
 
 Grazie a questo fatto è possibile utilizzare un solo record di attivazione per tutte le chiamate ricorsive. Questo record ha come indirizzo di ritorno, l'indirizzo dell'istruzione dopo la prima chiamata e il valore dei parametri viene via via aggiornato, anziché andare ad aggiungere un nuovo blocco.
 
@@ -17,7 +17,7 @@ Ovviamente l'utilizzo del dynamic scope comporta che la stessa variabile globale
 
 Per la gestione delle eccezioni è preferibile avere la gestione dello scope dinamica in modo da utilizzare sempre le infomrazioni "di contesto" delle eccezioni piuttosto che quelle statiche presenti dove è stata definita l'eccezione.
 
-L'implementazione dello scope dinamico è semplice, basta avere a disposizione il control link dei vari record di attivazione, in modo da poter risalire tra i record di attivazione per cercare le variabili.
+L'implementazione dello scope dinamico è semplice, basta avere a disposizione il control link dei vari record di attivazione in modo da poter risalire tra i record di attivazione per cercare le variabili.
 
 Lo static scope invece è più complesso da implementare, è infatti necessario andare ad aggiungere un nuovo puntantore **access link** (detto anche link statico) che permette di arrivare direttamente al blocco corrispondende alla definizione della funzione che è stata invocata. Una volta raggiunto il blocco, si risale lo stack utilizzando il control link per trovare la prima occorrenza della variabile globale.
 
