@@ -4,7 +4,7 @@ Per poter fare inferenza è necessario trovare un modo per trattare i vari quant
 
 ##Istanziazione unviersale
 
-Nel caso del quantificatore universale è possibile dare una rappresenteazione con un enumerazione di tutte le possibili istanzazioni del termine in and tra loro.
+Nel caso del quantificatore universale è possibile dare una rappresenteazione con un enumerazione di tutte le possibili istanzazioni del termine in ⋀ tra loro.
 
 In questo caso si va a sostiturire ogni vabiarbile *v* con i vari **termini ground** (termini in cui non compaiono variabili).
 
@@ -39,11 +39,11 @@ L'istanziazione esistenziale può essere applicata una sola volta per sentenza e
 L'idea è quella di istanziare i vari quantificatori, per poi considerare i vari predicati applicati ai termini ground come se fossero dei letterali nella logica proposizionale.
 Questo procedimento prende il nome di **proposizionalizzazione**.
 
-L'istanziazione del quantificatore esistenziale avviene utilizzando una costante di Skolem, mentre per quello universale avviene applicato tutte le possibili sostutizione di termini ground presenti nella KB.
+L'istanziazione del quantificatore esistenziale avviene utilizzando una costante di Skolem, mentre per quello universale avviene applicato tutte le possibili sostutizioni di termini ground presenti nella KB.
 
 Il tutto funziona finché non abbiamo simboli di funzione, perché in quel caso possono essere generati infiniti simboli.
 
-Una sentenza ground è conoscenza logica della nuova KB se e solo se è conseguenza logica della KB originaria.
+Una sentenza ground è conseguenza logica della nuova KB se e solo se è conseguenza logica della KB originaria.
 
 Di fatto, ogni KB espressa nella logica di primo ordine può essere proposizionalizzata in modo da preservarne le conseguenze logiche.
 
@@ -73,7 +73,7 @@ Questo perché può capitare che variabili che si trovano in "*scope*" diversi a
 L'unificazione è quel processo che trova le sostituzioni che rendono identiche espressioni logiche diverse.
 
 Applicando l'unificazione può capitare che si ottenga solamente l'uguaglianza sintattica, con dei predicati che contengono termini che non sono ground. 
-In questo caso l'algoritmo funziona comunque, tantè che il predicato ottenuto applciando la sostituzione rappresenta un sottinsieme dei termini ground, che può essere anche infinito.
+In questo caso l'algoritmo funziona comunque, tantè che il predicato ottenuto appplicando la sostituzione rappresenta un sottinsieme dei termini ground, che può essere anche infinito.
 
 Con le sostituzioni che hanno dei termini non ground c'è un'ordinanento parziale dato dalla quantità di termini ground generabili a partire dalle varie sostituzioni.
 

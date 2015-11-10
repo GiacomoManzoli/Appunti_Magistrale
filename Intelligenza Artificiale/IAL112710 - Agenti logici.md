@@ -2,14 +2,12 @@
 
 ![](./immagini/l2-agente-goal.png)
 
-Logica proposizionale: vengono associati dei simboli a ...
-
 ##Base di conoscenza
 
 Un agente logico è composto da due componenti che possono essere modificati:
 
-- Inference Engine (motore inferenziale): è indipendete dal dominio applicativo e permette di utilizzare un linguaggio dichiarativo in quanto è in grado di andare a valutare dei simboli.
-- Knowledge base (base di conoscenza): contiene le informazioni specifiche del problema.
+- **Inference Engine** (motore inferenziale): è indipendete dal dominio applicativo e permette di utilizzare un linguaggio dichiarativo in quanto è in grado di andare a valutare dei simboli.
+- **Knowledge base** (base di conoscenza): contiene le informazioni specifiche del problema.
 
 Queste due parti sono tra loro intercambiabili, lo stesso motore inferenziale può essere utilizzato in più domini specifici e allo stesso modo la stessa base di conoscenza può essere trattata da vari tipi di motori inferenzial.
 
@@ -59,7 +57,7 @@ L'agente deve essere capace di:
 Questo ambiente:
 
 - **Non è osservabile**: si hanno solo percezioni locali per la casella su cui ci si trova.
-- **Deterministico**: i risutlati delle azioni sono specificati.
+- **Deterministico**: i risultati delle azioni sono specificati.
 - **Episodico**: no, è necessario scegliere una sequenza di azioni.
 - **Statico**: sia il Wumpus sia le trappole non si muovono.
 - **Discreto**
@@ -82,7 +80,7 @@ Formalmente i modelli possibili non sono altro che tutti i modi in cui si posson
 
 Diciamo che *m* è un modello di una sentenza 𝜶 se 𝜶 è vera in *m* e con *M(𝜶)* indichiamo l'insieme di tutti i modelli di 𝜶.
 
-Allora KB (la base di conoscenza) |= 𝜶 se e sole se *M(KB) ⊆ M(𝜶)* (𝜶 è deducibile dalla base di conosceza).
+Allora KB (la base di conoscenza) |= 𝜶 se e solo se *M(KB) ⊆ M(𝜶)* (𝜶 è deducibile dalla base di conosceza).
 
 Questo perché la KB può essere vista come una concatenazione di varie sequenze.
 
@@ -143,4 +141,4 @@ function TVVerificaTtto(KB, 𝜶, s, modello) returns true oppure false
 Ci sono due tipologie di prove che si possono fare:
 
 - **Model Checking**: viene fatta l'enumerazioe delle tabelle di verita, con una complessità esponenziale in *n* (numero di simboli nella KB), può essere migliorata con euristiche o Hill climbing, ma in questo caso si perde la completezza.
-- **Applicazione di regole di inverenza**: si inizia ad estendere la base di conoscenza utilizzando i dati attuali, se 𝜶 è tra queste nuove sentenze allora viene inferito, altrimenti ripeto il passo utilizzando le nuove informazioni inferite. L'utilizzo di questa strategia risulta più efficiente ma le sentenze devono essere scritte in una forma normale.
+- **Applicazione di regole di inferenza**: si inizia ad estendere la base di conoscenza utilizzando i dati attuali, se 𝜶 è tra queste nuove sentenze allora viene inferito, altrimenti ripeto il passo utilizzando le nuove informazioni inferite. L'utilizzo di questa strategia risulta più efficiente ma le sentenze devono essere scritte in una forma normale.

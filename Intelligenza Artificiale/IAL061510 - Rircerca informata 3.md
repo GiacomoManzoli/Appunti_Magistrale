@@ -1,20 +1,18 @@
-#Lezione 6 - Ricerca Infomrata 3
-
-Verificare che quando per HC si parla di soluzione ottima, si intenda una soluzione ottima globale.
+#Lezione 6 - Ricerca Informata (Cont'd x2)
 
 ##Simplified MA*
 
-Questa versione di A* espande la foglia migliore fino a quando la memoria è piena.
+Questa versione di A\* espande la foglia migliore fino a quando la memoria è piena.
 
 Quando è necessario aggiungere nodi nuovi, scarta dalla coda quelli meno promettenti.
 
 In particolare:
 
-- Viene sempre scartato il nodo foglia peggiore (quello con f-valore più alto);
-- L'f valore del nodo scartato viene riportato sul nodo padre, un po' come avviene con Best First;
+- Viene sempre scartato il nodo foglia peggiore (quello con *f-valore* più alto);
+- L'*f-valore* del nodo scartato viene riportato sul nodo padre, un po' come avviene con Best First;
 - Si espande il nodo padre di un nodo già scartato solamente quando tutti gli altri cammini sono risultati peggiori.
 
-**Problema**: possono esserci blocchi di foglie con lo stesso f-valore. Si rischierebbe di scegliere lo stesso nodo sia per la cancellazione, sia per l'espansione.
+**Problema**: possono esserci blocchi di foglie con lo stesso *f-valore*. Si rischierebbe di scegliere lo stesso nodo sia per la cancellazione, sia per l'espansione.
 
 Viene quindi adottata una politica di "giovinezza", viene scartato il nodo più vecchio e viene espanso il nodo più recente.
 
@@ -32,6 +30,10 @@ Il problema principale di questi algoritmi è la completezza, in quanto si cerca
 
 ##Hill-climbing
 
+L'idea è quella di partire da uno stato del problema e cercare di raggiungere una soluzione spostandosi nel migliore stato vicino.
+
+*È come scalare l'Everest, prendendo la strada più ripida, in un nebbione e soffrendo di amnesia.*
+
 ```
 function HillClimbing(problema) returns uno stato che è un massimo locale
 	inputs: problema, un problema
@@ -46,12 +48,12 @@ function HillClimbing(problema) returns uno stato che è un massimo locale
 
 In alcuni casi Hill climbing non riesce ad arrivare ad una soluzione.
 
-Questo perché Hill climbing si ferma su una spalla (punto in cui la funzione obiettivo è costante) o su un massimo locale, e non è neanche detto che il massimo locale coincida con un massimo globale.
+Questo perché l'algoritmo si blocca su una spalla (punto in cui la funzione obiettivo è costante) o su un massimo locale e non riesce a continuare (lo stato in cui si ferma non è detto che sia una soluzione). 
 
 Si possono trovare delle soluzioni:
 
 - **plateau**: si fa una mossa laterale, cioè ci si sposta in uno stato che ha lo stesso valore di `h`.
-	- Bisogna evitare dei cicli, specialmente nel caso di massimi e minimi locali;
+	- Bisogna evitare di ciclare, specialmente nel caso di massimi e minimi locali;
 	-  Si può porre un limite al numero massimo di mosse laterali consecutive, risulta più semplice che andare a tenere traccia degli stati già visitati (trade-off come per la definizione di una funzione euristica).
 - **massimi o minimi locali**: si possono eseguire delle ricerca stocastiche o iniziare le ricerca da stati diversi:
 	- _Hill climibing stocastico_: si sceglie a caso tra tutte le mosse che migliorano `h`, tipicamente si ottiene una convergenza più lenta ma spesso si trovano soluzioni migliori. La distribuzione delle probabilità deve essere tale per cui sia più probabile trovare uno stato migliore.
@@ -63,7 +65,7 @@ Si possono trovare delle soluzioni:
 > 
 > x<sub>i</sub> = 1 se trova una solzione ottima
 
-Sappiamo che per ogni i, P(x<sub>i</sub> = 1) = p e P(x<sub>i</sub> = 0) = 1 - p.
+Sappiamo che per ogni I, P(x<sub>i</sub> = 1) = p e P(x<sub>i</sub> = 0) = 1 - p.
 
 Le variabili x<sub>i</sub> sono tra loro indipendenti in quanto il risultato di una ricerca non influenza le altre ricerche.
 

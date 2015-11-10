@@ -33,14 +33,14 @@ Gli stati vengono definiti dai valori assegnati fino ad un dato momento.
 
 **Funzione successore**: assegna un valore ad una variabile non ancora assegnata che è compatibile con l'assegnamento corrente. Questa funzione fallisce se non esiste un assegnamento legale.
 
-**test di goal**: l'assegnamento corrente è completo, tutti i vincoli sono soddisfatti.
+**Test di goal**: l'assegnamento corrente è completo, tutti i vincoli sono soddisfatti.
 
 Proprietà:
 
 1. Valido per tutti i CSP;
-2. Ogni soluzione appare a profondità *n* con *n* variabili (tutti gli stati a profondità n sono soluzioni, questo per costruzione, perché altrimenti non sarei riuscito a scendere fino a tale profondità), conviene quindi usare la ricerca depth-first;
+2. Ogni soluzione appare a profondità *n* con *n* variabili (tutti gli stati a profondità *n* sono soluzioni, questo per costruzione, perché altrimenti non sarei riuscito a scendere fino a tale profondità), conviene quindi usare la ricerca depth-first;
 3. Il cammino è irrilevante, interessa solo lo stato (anche una soluzione locale può andare bene);
-4. A profondità `l` il fattore di branching (cioè nodi nella frontiera) è tipicamente `(n-l)*d`.
+4. A profondità *l* il fattore di branching (cioè nodi nella frontiera) è tipicamente *(n-l)\*d*.
 
 ## Ricerca con Backtracking
 
@@ -78,7 +78,7 @@ Aggiungendo degli accorgimenti ai vari assegnamenti è possibile andare a miglio
 
 Una euristica che porta ad un miglioramento è quella di scegliere come prossima variabile da assegnare quella **più vincolata** cioè con il minor numero di valori possibili. In questo modo scopro prima se sto andando verso un assegnamento che non può essere completato.
 
-Se ci sono più variabile con lo stesso numero di vincoli, tra queste conviene scegliere quella che ha **più vincoli con variabili non assegnate**, perché è quella che scegliendo un valore vincola maggiormente la scelta delle altre.
+Se ci sono più variabili con lo stesso numero di vincoli, tra queste conviene scegliere quella che ha **più vincoli con variabili non assegnate**, perché è quella che scegliendo un valore vincola maggiormente la scelta delle altre.
 
 Una volta scelta la variabile, posso scegliere di assegnarle il valore **meno vincolante**, cioè quello che esclude meno valori tra quelli possibili delle variabili non ancora assegnate.
 
@@ -98,7 +98,7 @@ Se il grafo è composto da sotto-problemi tra loro indipendenti, conviene risolv
 
 In alcuni casi il guadagno temporale risulta estremo, si passa da miliardi di anni a qualche secondo.
 
-Inoltre, se il grafo associato al CSP ha una struttura ad albero, ovvero non ha vincoli, il CSP può essere risolto in *O(n\*d<sup>2</sup>)*.
+Inoltre, se il grafo associato al CSP ha una struttura ad albero, ovvero non ha vincoli, il CSP può essere risolto in *O(nd<sup>2</sup>)*.
 
 Questo perché si può scegliere un ordine delle variabili che sia consistente con la topologia del grafo.
 
@@ -106,7 +106,7 @@ Questo perché si può scegliere un ordine delle variabili che sia consistente c
 
 Per risolvere un CSP è possibile utilizzare sia Hill-Climbing che Simulated Annealing, in quanto questi lavorano con stati "completi", cioè che hanno tutte le variabili assegnate.
 
-Per applicarli ad un CSP è necessario permettere stati con vincoli non soddisfatto e degli operatore che permettono di riassegnare valori ad una variabile.
+Per applicarli ad un CSP è necessario permettere stati con vincoli non soddisfatto e degli operatori che permettono di riassegnare valori ad una variabile.
 
 La selezione della variabile viene fatta in modo casuale tra quelle che hanno dei conflitti, mentre come valore per la variabile si usa l'euristica del minimo conflitto, utilizzando quindi la funzione classica `h(n) = numero totale di vincoli violati`.
 

@@ -31,7 +31,7 @@ Da 1 e 2 si riesce a ricarvare *q𝜃* usando il Modus Ponens ordinario.
 
 ##Forward Chaining in FOL
 
-L'algoritmo è analogo a quello utilizzato nella logia proposizionale cone la differenza che c'è da tener conto della presenza delle variabili e che queste vengono istanziate il più tardi possibile.
+L'algoritmo è analogo a quello utilizzato nella logica proposizionale con la differenza che c'è da tener conto della presenza delle variabili e che queste vengono istanziate il più tardi possibile.
 
 Partendo dai fatti noti si fanno scattare tutte le regole presenti nella KB le cui premesse sono soddisfatte, aggiungendo le varie conclusioni ai fatti noti. Si ripete il processo finché non si trova una risposta oppure non è più possibile aggiungere fatti.
 

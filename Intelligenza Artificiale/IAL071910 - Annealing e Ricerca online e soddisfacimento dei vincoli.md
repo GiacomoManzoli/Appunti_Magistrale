@@ -28,11 +28,11 @@ A temperatura fissata `T` la probabilità di occuppazione degli stati segue la d
 
 Se `T` viene diminuito abbastanza lentamente si raggiunge sempre lo stato migliore.
 
-Questo viene usato ampiamente nelle applicazioni pratiche come la definizione degli orari dei voli delle linee aeree.
+Questo viene usato largamente nelle applicazioni pratiche come la definizione degli orari dei voli delle linee aeree.
 
 ##Ricerca online
 
-Quando l'ambiente è dinamico o non deterministico, non è possibile pianificare a priori le operazioni da compiere.
+Quando l'ambiente è dinamico o non deterministico non è possibile pianificare a priori le operazioni da compiere.
 
 In questo caso è necessario interagire con l'ambiente per recuperare le informazioni mancanti.
 
@@ -49,6 +49,8 @@ Il problema principale di questo tipo di ricerca è che non esiste un algoritmo 
 Questi algoritmi non sono (ovviamente) completi.
 
 ###Ricerca in profondità online
+
+L'idea è quella di esplorare l'ambiente alla ricerca di un goal.
 
 ```
 function OnlineDFSAgent(s') returns an action
@@ -69,12 +71,13 @@ function OnlineDFSAgent(s') returns an action
 	s <- s'
 	return a
 ```
+Perché l'algoritmo funzioni è necessario che l'agente possa tornare indietro dopo aver fatto un'azione.
 
 Questo algoritmo può comunque finire in cammini infinti o in vicoli cechi.
 
 ###Ricerca casuale
 
-L'idea è quella di andare ad esplorare l'abiente in modo da andare a recuperare la maggior quantità possibile di informazioni per poi andare applicare altri algoritmi.
+L'idea è quella di esplorare l'ambiente in modo da recuperare la maggior quantità possibile di informazioni per poi andare applicare altri algoritmi.
 
 Questa tipologia di ricerca termina con un successo se lo spazio è finito, ma in ogni caso può essere molto lenta.
 
@@ -82,7 +85,7 @@ Ad esempio nel caso il numero di archi che si allontanano dal goal è maggiore r
 
 Altre strategie come l'HillClimbing con memoria o LRTA\* permettono di ottenere risultati migliori.
 
-###Learning Real Time A* - LRTA*
+###Learning Real Time A\* - LRTA\*
 
 L'idea di base consiste nel memorizzare la migliore stima corrente `H(s)` del costo per raggiungere il goal da ogni stato visitato.
 

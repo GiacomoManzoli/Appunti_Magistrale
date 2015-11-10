@@ -1,4 +1,4 @@
-#Intelligenza Artificale - Lezione 3
+#Lezione 3 - Ricerca non informata
 
 _Altre informazioni sul progetto, come l'estensione di un sistema con elementi di intelligenza artificiale.
 Oppure studio sperimentale di algoritmi diversi. La presentazione pubblica del progetto dovrebbe dare un bonus, la presentazione di una 20-ina di minuti_
@@ -101,7 +101,7 @@ Espande il nodo a profondità minore, la frontiera viene implementata con una co
 
 C'è un'ambiguità nella definizione dell'ordine dei successori di un dato nodo, che diventa arbitraria.
 
-Questa ricerca risulta completa se il fattore di branching è finito. Il tempo di esplorazione è esponenziale (1 + b + b<sup>2</sup> + ... + b<sup>d-1</sup> --> O(b<sup>d+1</sup>). 
+Questa ricerca risulta completa se il fattore di branching è finito. Il tempo di esplorazione è esponenziale (1 + b + b<sup>2</sup> + ... + b<sup>d</sup> + b(b<sup>d</sup>-1) --> O(b<sup>d+1</sup>). 
 
 C'è un problema anche per lo spazio, in quanto devo tenere in memoria tutti i nodi che ho analizzato. 
 
@@ -131,7 +131,7 @@ Il tempo necessario è *O(b<sup>m</sup>)*, il che risulta terribile se _m_ è pi
 
 Lo spazio richiesto è invece __lineare__ secondo *O(b\*m)* in quanto per ogni nodo che viene visitato è necessario tenere in memoria solamente i fratelli del nodo espanso.
 
-L'algoritmo non è ottimo, in quanto cerca una soluzione generica andando in profondità che non è garantito che sia ottima.
+L'algoritmo **non è ottimo**, in quanto cerca una soluzione generica andando in profondità e non è garantito che la soluzione che trova sia ottima.
 
 #####Ricerca a profondità limitata
 
@@ -158,7 +158,7 @@ Tuttavia, l'analisi dell'albero a profondità limitata risulta più efficiente d
 
 #####Rircerca a profondità limitata iterativa
 
-Viene fissato un limite e se dentro il limite non viene trovata una soluzione, si re-inizia la ricerca con un limite più profondo, ripetendo il procedimento finché non viene trovata una soluzione.
+Viene fissato un limite e se entro il limite non viene trovata una soluzione, si re-inizia la ricerca con un limite più profondo, ripetendo il procedimento finché non viene trovata una soluzione.
 
 ```
 function RicercaApprofondimentoIterativo(problema) returns una soluzione o il fallimento
@@ -167,7 +167,7 @@ function RicercaApprofondimentoIterativo(problema) returns una soluzione o il fa
         if risultato != taglio then return risultato
 ```
 
-Si ottiene così un compromesso tra lo spazio e il tempo (O(b<sup>d</sup>)) che risulta più vantaggioso rispetto all'utilizzo di uno dei due algoritmi in modo "puro".
+Si ottiene così un compromesso tra lo spazio e il tempo (*O(b<sup>d</sup>)*) che risulta più vantaggioso rispetto all'utilizzo di uno dei due algoritmi in modo "puro".
 
 Questa modalità di ricerca è **completa**.
 

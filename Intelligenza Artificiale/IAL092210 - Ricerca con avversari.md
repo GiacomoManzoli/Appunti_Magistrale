@@ -40,6 +40,8 @@ L'idea è quella di scegliere la mossa che conduce alla posizione con valore *mi
 
 *ply*: mossa di un giocatore, un turno di gioco è composto da 2 ply.
 
+![](./immagini/l9-minimax.png)
+
 Con questo algoritmo si cerca di massimizzare l'utilità nel caso pessimo in quanto si suppone che l'avversario stia giocando in modo ottimo.
 
 ```
@@ -76,6 +78,8 @@ L'algoritmo risulta ottimo sia se si entrambi i giocatori giocano in modo ottimo
 Questo perché Max quando può vincere, va a vincere e se l'avversario gioca in modo sub-ottimo, Max riesce a vincere anche in situazioni in cui non avrebbe vinto.
 
 La complessità in tempo è *O(b<sup>m</sup>)*, dove *b* è il fattore di branching e *m* la profondità della soluzione.
+
+Questo perché l'algortimo deve esaminare tutto l'albero fino alle foglie per poter calcolare i valori per i nodi interni. 
 
 La complessità in spazio invece è *O(bm)* con esplorazione depth-first.
 
@@ -130,7 +134,11 @@ Deep Blue e Kasparov arrivavano ad *12-ply*
 
 Vengono fatte delle considerazioni per evitare di espandere dei rami che portano a situazioni disastrose.
 
-Vengono quindi creati degli upper bound per Min e lower bound per Max in modo da poter evitare di espandere alcuni nodi.
+𝜶 = valore della scelta migliore per Max al di fuori del cammino corrente
+
+𝜷 = valore della scelta migliore per Min al di fuori del cammino corrente
+
+Questa ricerca aggiorna i valori di 𝜶 e 𝜷 man mano che procene e pota i rami restanti, non appena il valore del nodo è perggio di quello di 𝜶 quanto tocca a Max e 𝜷 per Min.
 
 Nel caso ottimo in cui le mosse sono ordinate per funzione di utilità (decrescente quando cerca max, *(trovo subito il massimo)*, crescente quando cerca min *(trovo subito il minimo)*) si riesce a raddoppiare la profondità raggiungibile, mentre nel caso pessimo non si ha nessun miglioramento.
 

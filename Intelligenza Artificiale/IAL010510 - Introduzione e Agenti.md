@@ -13,7 +13,7 @@ Un agente è una entità che percepisce un certo input e riesce a generare un ce
 
 Un agente razionale (o intelligente) cerca di raggiungere i suoi obiettivi data l'informazione disponibile. Non è detto che nel raggiungere il suo obiettivo, l'agente esegua sempre l'azione migliore, in quanto potrebbe non avere una certa conoscenza.
 
-Un agente può essere considerato come una funzione che da tutte le possibili sequenze di percezzioni estrae delle azioni ammissibili.
+Un agente può essere considerato come una funzione che da tutte le possibili sequenze di percezioni estrae delle azioni ammissibili.
 
 > Sequenza di percezioni --> conoscenza a disposizione dell'agente.
 
@@ -23,7 +23,7 @@ Bisogna quindi cercare di progettare il miglior programma date le risorse dispon
 
 ###Agente e ambiente
 
-L'agente riceve delle percezioni dall'ambiente delle informazioni mediante dei sensori, e in base a queste percezioni esegue delle azioni con degli attuatori.
+L'agente riceve delle percezioni dall'ambiente delle informazioni mediante dei sensori e in base a queste percezioni esegue delle azioni con degli attuatori.
 
 La funzione agente mappa quindi tutte le possibili sequenze di percezioni ad un insieme di azioni.
 

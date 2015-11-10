@@ -17,9 +17,9 @@ Il letterale positivo prende il nome di testa e quelli negativi formano il corpo
 Una clausola definita senza letterali negativi si limita ad asserire una determinata proposizione e viene chiamata fatto.
 Una clausola di Horn senza letterali positivi può essere scritta in forma di implicazione la cui conclusione vale False (utili per definire dei vincoli di integrità, come quello che il Wumpus si trova in una sola stanza).
 
-**Modus Ponens**: per la forma di Horn: date due formule 𝜶 => 𝜷 e 𝜶, si può inferirei la formula 𝜷. (cioè se l’implicazione e la promessa sono vere, allora anche 𝜷 deve essere vera). È completo per basi di coscenza espresse nella forma di Horn.
+**Modus Ponens**: per la forma di Horn: date due formule 𝜶 => 𝜷 e 𝜶, si può inferire la formula 𝜷. (cioè se l’implicazione e la promessa sono vere, allora anche 𝜷 deve essere vera). È completo per basi di coscenza espresse nella forma di Horn.
 
-La correttezza di questa regola si dimostra considerando i possibili balori di verità delle formule.
+La correttezza di questa regola si dimostra considerando i possibili valori di verità delle formule.
 
 ![](./immagini/l12-pones.png)
 
@@ -54,9 +54,9 @@ function CP-CA-Implica(KB, q) returns true or false
 
 `Testa[c]` rappresenta quello che la clausola di Horn implica.
 
-Un'osservazione che si può fare su questo algoritmo è che non viene tenuta in considerazione il goal che si vuole raggiungere, semplicemente si va a dedurre il più possibile dalla KB nella speranza che il goal q sia deducibile da KB.
+Un'osservazione che si può fare su questo algoritmo è che non viene tenuto in considerazione il goal che si vuole raggiungere, semplicemente si va a dedurre il più possibile dalla KB nella speranza che il goal *q* sia deducibile da KB.
 
-Però se nella KB la query q non è già soddisfatta (non è un fatto noto) e non ci sono regole di Horn che hanno come conseguenza la query, allora non c'è speranza di riuscire a dedurre q dalla KB e quindi l'algoritmo potrebbe terminare subito.
+Però se nella KB la query *q* non è già soddisfatta (non è un fatto noto) e non ci sono regole di Horn che hanno come conseguenza la query, allora non c'è speranza di riuscire a dedurre *q* dalla KB e quindi l'algoritmo potrebbe terminare subito.
 
 ###Completezza
 
@@ -78,7 +78,7 @@ L'idea è quello di lavorare all'indietro a partire dalla query *q*.
 
 Per provare *q* attraverso la KB, prima si controlla che *q* non sia già conosciuta e nel caso questa non sia conisciuta, si provano trammite la KB tutte le premesse si una regola che deriva *q*.
 
-È importante evitare i cicli, bisogna quindi controllare se un nuivo sotto goal è già presente nella pila dei goal.
+È importante evitare i cicli, bisogna quindi controllare se un nuovo sotto goal è già presente nella pila dei goal.
 
 Si può anche ottimizzare il lavoro, se ho un nuovo sottogoal posso controllare se l'ho già provato vero o se è già fallito.
 
@@ -102,30 +102,26 @@ La **risoluzione** è una regola di inferenza per CNF completa e corretta per la
 
 In pratica si va a togliere un *l<sub>i</sub>* e *m<sub>j</sub>* che sono tra loro complementari (lo stesso letterale sia negato che non).
 
-Questo procedimento esegue la verifica del modello perché vuol dire che se *L* e *M* sono vere e anche la proposizione che si deduce è vera, vuol dire che il letterale tolto non influenzava la verità di *L* e *M*.
+Questo procedimento esegue la verifica del modello perché vuol dire che se *L* e *M* sono vere e anche la proposizione che si deduce è vera, quindi vuol dire che il letterale tolto non influenzava la verità di *L* e *M*.
 
-La **correttezza** di questa regola è semplice, se tolgo dalla clausola L il letterale l e dalla clausola M il letterale m che è complementare a l, allora se l è vero allora m è falso e quindi M deve essere vero e non a causa di m. Se l è falso, allora L deve essere vero senza l. Il valore di l quindi non incide ne in una clausola ne nell’altra, quindi la sua eliminazione non altera il valore delle clausole.
+La **correttezza** di questa regola è semplice, se tolgo dalla clausola *L* il letterale *l* e dalla clausola *M* il letterale *m* che è complementare a *l*, allora se *l* è vero allora *m* è falso e quindi *M* deve essere vero e non a causa di *m*. Se *l* è falso, allora *L* deve essere vero senza *l*. Il valore di *l* quindi non incide ne in una clausola ne nell’altra, quindi la sua eliminazione non altera il valore delle clausole.
 
 
 ###Conversione in CNF
 
-> B_1,1 <==> (P_1,2 ⋁ P_2,1)
+> B<sub>1,1</sub> <==> (P<sub>1,2</sub> ⋁ P<sub>2,1</sub>)
 
 1. Eliminare il se e solo se
-
-> (B_1,1 => (P_1,2 ⋁ P_2,1)) ⋀ ((P_1,2 ⋁ P_2,1) => B_1,1)
+> (B<sub>1,1</sub> => (P<sub>1,2</sub> ⋁ P<sub>2,1</sub>)) ⋀ ((P<sub>1,2</sub> ⋁ P<sub>2,1</sub>) => B<sub>1,1</sub>)
 
 2. Eliminare il => rimpiazzando A => B con !A ⋁ B
-
-> (!B_1,1 ⋁ P_1,2 ⋁ P_2,1) ⋀ (!(P_1,2 ⋁ P_2,1) ⋁ B_1,1) 
+> (!B<sub>1,1</sub> ⋁ P_1,2 ⋁ P_2,1) ⋀ (!(P_1,2 ⋁ P_2,1) ⋁ B_1,1) 
 
 3. Spostare la negazione all'interno delle parentesi usando le regole di De Morgan
-
-> (!B_1,1 ⋁ P_1,2 ⋁ P_2,1) ⋀ ((!P_1,2 ⋀ !P_2,1) ⋁ B_1,1) 
+> (!B<sub>1,1</sub> ⋁ P<sub>1,2</sub> ⋁ P<sub>2,1</sub>) ⋀ ((!P<sub>1,2</sub> ⋀ !P<sub>2,1</sub>) ⋁ B<sub>1,1</sub>) 
 
 4. Si applica la legge distrubutiva dell'OR sull'AND
-
-> (!B_1,1 ⋁ P_1,2 ⋁ P_2,1) ⋀ (!P_1,2 ⋁ B_1,1) ⋀ (!P_2,1) ⋁ B_1,1) 
+> (!B<sub>1,1</sub> ⋁ P<sub>1,2</sub> ⋁ P<sub>2,1</sub>) ⋀ (!P<sub>1,2</sub> ⋁ B<sub>1,1</sub>) ⋀ (!P<sub>2,1</sub>) ⋁ B<sub>1,1</sub>) 
 
 A questo punto abbiamo la CNF.
 
@@ -162,5 +158,5 @@ Il processo continua finché:
 
 - non è più possibile aggiungere alcuna clausola, in questo caso KB non implica 𝜶
 - la risoluzione applicata a due clausole da come risultato la clausola vuota, in questo caso KB implica 𝜶
-- 
+ 
 La clausola vuota, una disgiunzione senza alcun disgiunto è equivalente a *False* perché una disgiunzione è vera solo se è vero almeno uno dei disgiunti.

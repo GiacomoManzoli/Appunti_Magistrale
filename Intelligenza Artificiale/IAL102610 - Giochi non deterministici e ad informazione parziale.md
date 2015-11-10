@@ -12,13 +12,17 @@ Mentre per derivare un buond sull'utilità di uno stato occorre conoscere il val
 - *B(d)*: numero minimo di stati da considerare per conoscere il bound sul valore di utilità di uno stato a distanza *d* ply dalla frontiera.
 
 > E(d+1) = E(d) + (b-1)B(d)
+> 
 > B(d+1) = E(d)
 
 Espandendo per *E(d+2)*
 
 > E(d+2) = E(d+1) + (b-1)B(d+1)
+> 
 > E(d+2) = (E(d) + (b-1)B(d)) + (b-1)E(d)
+> 
 > E(d+2) = bE(d) + (b-1)B(d)
+> 
 > E(d+2) = bE(d) + (b-1)E(d-1)
 
 Considerando che *E(0) = B(0) = 1* e che *E(d-1) < E(d)*, ottengo che:
@@ -33,13 +37,13 @@ Da cui trovo che generalmente
 
 Sono giochi in cui sono presenti degli eventi casuali (*chance*) introdotti mediente dadi, carte prese a caso, lancio in una moneta, ecc.
 
-Nei giochi deterministici si riesce a propagare il valore di utilità dalle foglie ai nodi interni, mentre nei giochi non terministici, a causa del non determinismo, non si riesce ad avere la certezza ma una probabilità.
+Nei giochi deterministici si riesce a propagare il valore di utilità dalle foglie ai nodi interni, mentre nei giochi non deterministici, a causa del non determinismo, non si riesce ad avere la certezza ma una probabilità.
 
 Nell'albero viene introdotta una nuova tipologia dei nodi detti *chance* e che Max utilizza per valutare la mossa da fare.
 
-![](./immagini/l11-albero-chance)
+![](./immagini/l10-albero-chance.png)
 
-Il valore aspettato di uno nodo chance dipende dalla propabilità dei vari valori dei figli del nodo chance.
+Il valore aspettato di uno nodo chance dipende dalla probabilità dei vari valori dei figli del nodo chance.
 
 La strategia sta quindi nel scegliere le mosse che massimizzano il valore aspettato di utilità.
 
@@ -78,7 +82,7 @@ Nei giochi deterministici basta che la funzione di valutazione sia monotona.
 
 In questa tipologia di giochi non si hanno tutte le informazioni riguardo le mosse che può fare l'avversario (esempio tipico sono i giochi di carte).
 
-C'è stata la proposta di ridurre questi giochi in giochi non deterministici, considerando tutte le possibili smazzate come se si avesse un dato con tante facce.
+C'è stata la proposta di ridurre questi giochi in giochi non deterministici, considerando tutte le possibili smazzate come se si avesse un dado con tante facce.
 
 Questa strategia funziona, ma non è corretta.
 

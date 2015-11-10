@@ -1,4 +1,4 @@
-#Intelligenza Arificale - Lezione 2
+#Lezione 2 - Ambiente e Formulazione di problemi
 
 _le slide vecchie sembrano migliori di quelle nuove._
 
@@ -6,14 +6,14 @@ _le slide vecchie sembrano migliori di quelle nuove._
 
 Bot che compra su internet.
 
-- Misura di prestazioni: risparmio, affidabilità del venditore, tempo di spedizione;
-- Ambiente operativo: motori di ricerca, siti di e-commerce, aste on-line;
-- Attuatori: sistema di pagamento, indirizzo di spedizione e intestatario;
-- Sensori: protocolli di accesso ad internet e di pagamento.
+- **Misura di prestazioni**: risparmio, affidabilità del venditore, tempo di spedizione;
+- **Ambiente operativo**: motori di ricerca, siti di e-commerce, aste on-line;
+- **Attuatori**: sistema di pagamento, indirizzo di spedizione e intestatario;
+- **Sensori**: protocolli di accesso ad internet e di pagamento.
 
 ##Tipi di ambiente
 
-Alcune caratteristiche degli ambienti possono permettere ipotesi semplificative, andando così ad influenzare la progettazione.
+Alcune caratteristiche degli ambienti possono permettere ipotesi semplificative andando così ad influenzare la progettazione.
 
 - **Osservabile**: si ha accesso a tutta l'informazione che caratterizza l'ambiente. Avere o non avere tutta l'informazione influisce nelle varie azioni, perché potrebbero essere intraprese delle decisioni solamente per ottenere ulteriori informazioni
 - **Determinstico**: quando l'esecuzione di un'azione porta sempre lo stesso effetto nell'ambiente. Lavorare in un ambiente deterministioco è più semplice in quanto si riesce a prevedere i risultati.
@@ -26,7 +26,7 @@ Il mondo reale tipicamente è parzialmente osservabile, stocastico (non determin
 
 ##Tipi di agenti
 
-Un agente può essere visto come un'_architettura_ e _programma_ che permette di effettuare un'azione a seguito di una percezione (software specifico per un determinato problema).
+Un agente può essere visto come un'_architettura_ e un _programma_ che permette di effettuare un'azione a seguito di una percezione (software specifico per un determinato problema).
 
 Ogni agente può essere trasformato in un agente in grado di apprendere.
 
@@ -114,7 +114,7 @@ Un problema è definito da 4 elementi:
 
 - __Stato iniziale__: stato iniziale, ad esempio 'Arad' (una citta della Romania).
 - __Funzione successore__: funzione che dato uno stato fornisce tutti gli stati vicini allo stato dato e l'azione che permette di raggiungerli.
-- __Test per il goal__: che può essere _esplicito_ (raggingo Bucharest) oppure può essere _implicito_ che descrive una caratteristica (città con una determinata officina), è una funzione che dato uno stato specifica se lo stato soddisfa o meno la proprità che mi interessa.
+- __Test per il goal__: che può essere _esplicito_ (raggiungo Bucharest) oppure può essere _implicito_ che descrive una caratteristica (città con una determinata officina), è una funzione che dato uno stato specifica se lo stato soddisfa o meno la proprità che mi interessa.
 - __Costo di un cammino__: è la somma dei costi del cammino che sto considerando, a partire dallo stato iniziale fino allo stato attuale.
 
 _Una soluzione è quindi una sequenza di azioni che conduce da uno stato iniziale ad uno stato di goal._

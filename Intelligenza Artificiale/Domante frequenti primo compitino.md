@@ -6,15 +6,66 @@ Note:
 - A* ed euristiche sembrano esserci quasi sempre
 
 
-##Domanda 1 (20130404-d1)
+##Ricerca non informata
 
-Descrivere le principali strategie di ricerca non infomrate e confrontarle dal punto di vista della loro correttezza, completezza, ottimilità e complessità in tempo e spazio.
+###Domanda 1 (20130404-d1)
 
-Considerare l'albero della figura e mostrare la seeuqnza di visita dei nodi per la ricerca in prodonfità, in ampiezza e con un costo uniforme, prima di arrivare ad uno dei due nodi goal (indidicati con la G).
+Descrivere le principali strategie di ricerca non infomrate e confrontarle dal punto di vista della loro correttezza, completezza, ottimalità e complessità in tempo e spazio.
+
+Considerare l'albero della figura e mostrare la sequenza di visita dei nodi per la ricerca in prodonfità, in ampiezza e con un costo uniforme, prima di arrivare ad uno dei due nodi goal (indidicati con la G).
 
 ![](./immagini/c1-tree.png)
 
-##Domanda 2 (20130404-d2)
+####Soluzione
+
+L'idea alla base di queste strategie è quella di andare a simulare l'esplorazione dei vari stati generando i successori degli stati già visitati.
+Viene quindi creato un albero di ricerca dove ogni nodo rappresenta un determinato stato e i nodi che sono candidati per l'espansione vengono memorizzati in una struttura dati che prende il nome di frontiera.
+
+L'implementazione della frontiera varia da algoritmo ad algoritmo.
+
+La ricerca **breadth-first** (ampiezza) va ad espandere il nodo primo nodo non ancora espanso a profondità minore, utilizzando come frontiera una coda FIFO.
+
+Questa soluzione è completa solamente se il fattore di branching dell'albero *b* è finito ed è ottima solamente se tutti gli archi hanno lo stesso costo, questo perché viene trovata la soluzione a profondità minima.
+
+Per quanto riguarda la complessità temporale è esponenziale rispetto la profondità della prima soluzione *d*: *O(b<sup>d+1</sup>)*, questo perché nel caso pessimo può essere che il nodo goal venga espanso come ultimo nodo del livello.
+Anche la complessità in termini di spazio è la stessa in quanto è necessario tenere in memoria tutti i nodi che sono stati espansi.
+
+La ricerca a **costo uniforme** va ad espandere il nodo che ha il costo di cammino inferiore.
+
+Questa ricerca risulta essere sia completa sia ottima, a condizione che il costo di ogni arco dell'albero sia maggiore di 0.
+
+Sia la complessità in tempo che quella in spazio dipendono dal numero di nodi che hanno un costo di cammino minore del costo della soluzione ottima, la complessità è quindi *O(b<sup>C\*/ϵ</sup>)* dove _C*_ è il costo della soluzione ottima e *ϵ* è il costo di arco minimo.
+
+La ricerca **depth-first** va ad espandere il nodo a profondità massima.
+
+Questa ricerca generalmente non è completa in quanto può trovare un cammino di profondità infinita o un ciclo, tuttavia se lo spazio degli stati è finito allora è completa.
+
+La soluzione trovata da questa ricerca non è garantito che sia ottima, dal momento che l'algoritmo ritorna la prima che trova.
+
+Tuttavia il vantaggio di questo algoritmo sta nella complessità.
+La complessità temporale è *O(b<sup>m</sup>)* con *m* profondità massima di cammino e la complessità spaziale è lineare *O(b\*m)*.
+
+Delle strategie di ricerca non informate quella più interessante è quella depth-first in quanto garantisce una complessità in termini di spazio lineare, il problema è che generalemnte non è ne ottima ne completa.
+
+Esite una variante detta **iterative-deepening** che consiste nell'applicare DFS fino ad una profondità limitata (**Depth Limited**) e nel caso non venga trovata aumentare il limite, finché non ne viene trovata una.
+
+In questo modo si ottiene una ricerca completa, in tempo *O(b<sup>d</sup>)* e con complessità in spazio lineare. La soluzione trovata risulta anche ottima se tutti gli archi hanno lo stesso costo.
+
+![](./immagini/c1-tree-1.png)
+![](./immagini/c1-tree-2.png)
+![](./immagini/c1-tree-3.png)
+
+###Domanda 7 (20110214-d1)
+
+Descrivere le principali strategie di ricerca non informate e confrontale dal punto di vista della loro correttezza, completezza e complessità in tempo e spazio.
+
+Se volete fate esempi del loro uso su un problema di ricerca.
+
+**Duplicata.**
+
+## Ricerca informata
+
+###Domanda 2 (20130404-d2)
 
 Descrivere l'algoritmo A* e la nozione di euristica ammissibile e consistente, e discutere a cosa serva avere un'euristica con una di queste proprietà.
 
@@ -25,6 +76,139 @@ Discutere le caratteristiche di questa euristica.
 Mostrare la sequenza di visita dei nodi per la ricerca A* prima di arrivare ad uno dei due nodi goal (indicati con la G).
 
 ![](./immagini/c1-tree.png)
+
+#### Soluzione
+
+L'algoritmo A\* utilizza una **funzione di valutazione** per calcolare quanto è desiderabile visitare un determinato nodo.
+
+In particolare la funzione di valutazione di un nodo è data dalla somma di altre due funzioni:
+
+- `g(n)` che rappresenta il costo del cammino per raggiungere il nodo n
+- `h(n)` che prende il nome di **funzione euristica**, una funzione che approssima il costo stimato per raggiungere il nodo goal a partire dal nodo n.
+
+Se la funzione euristica è **ammissibile** se è una sotto-stima del costo effettivo per raggiungere il nodo n allora la ricerca A* su un albero è ottima.
+
+Questo si dimostra supponendo che un goal sub-ottimo G<sub>2</sub> sia stato generato e che si trovi nella coda (frontiera) e che ci sia un nodo *n* non ancora espanso su un cammino minimo verso il goal ottimo G.
+
+> f(G<sub>2</sub>)  = g(G<sub>2</sub>)	-- perché h(G<sub>2</sub>) = 0
+>
+> f(G<sub>2</sub>)  > g(G)		-- perché G<sub>2</sub> non è ottimo
+> 
+> f(G<sub>2</sub>)	>= f(n)	-- perché h è ammissibile
+
+A* quindi non selezionerà mai G<sub>2</sub> per l'espansione e di conseguenza verrà estratto prima G di G<sub>2</sub>.
+
+Perché A* sia ottimo anche nella ricerca su un grafo è necessario che la funzione euristica sia anche **consinstente** cioè, la funzione euristica calcolata per un nodo *n* deve essere minore o uguale a quella di un nodo *n'* sommata al costo per passare da *n* a *n'*: `h(n) <= c(n,a,n') + h(n')`, ottenendo così una funzione di valutazione non decrescente.
+In questo modo si evita di scartare alcuni cammini del grafo che possono portare a soluzioni ottime.
+
+La ricerca A* è **completa** se il numero di nodi con `f <= f(G)` è finito.
+
+Il tempo necessario per completare la ricerca è esponenziale rispetto la lunghezza della soluzione e l'errore commesso dall'euristica.
+
+La complessità in spazio invece dipende dal numero di nodi con funzione di valutazione <= al costo della soluzione ottima.
+
+A* è quindi applicabile a problemi reali ma è necessario tenere sotto controllo l'occupazione della memoira, ed è per questo che sono state proposte delle varianti come IDA\*, MA\* (memory bounded) e SMA\*.
+
+L'euristica *distanza dalle foglie* applicata all'esempio **non** è ammissibile in quanto non è una sottostima del costo per raggiungere un nodo goal. Ad esempio, applicando questa euristica ad una foglia che non è un nodo goal si ottiene 0 come risultato il quale non può essere una sottostima del costo per raggiungere un nodo goal.
+
+![](./immagini/c1-tree-4.png)
+
+###Domanda 8 (20110214-d2)
+
+Descrivere l'algoritmo A* e la notazione di euristica ammissibie e consistente, e provare formalemente la sua ottimalità.
+
+**Duplicata**
+
+###Domanda 14 (20061103-d2)
+
+Si definisca il concetto di euristica e si dia la definizione formale di euristica ammissibile e consistente.
+
+Si scelga un dominio e si faccia un esempio di due euristiche h1 e h2, definite in modo che tutte e due siano ammissibili e che h1 domini h2.
+
+#### Soluzione
+
+Un euristica è una funzione che viene utilizzata nella ricerca informata per stimare il costo per raggiungere un nodo goal a partire da un nodo *n*.
+
+Perché sia efficace è necessario che l'euristica sia **ammissibile** cioè sia una sottostima della costo effettivo per raggiungere il nodo.
+
+Nel caso la ricerca venga fatta su un grafo è necessario che l'euristica sia anche **consistente** cioè che dato la funzione euristica calcolata sul nodo *n* sia minore o uguale dell'euristica calcolata sul nodo *n'* sommata al costo per passare dal nodo *n* a *n'*.
+
+Ad esempio per il problema 8-puzzle è possibile utilizzare due euristiche:
+
+- h1(n): numero di tasselli fuori posto
+- n2(n): distanza di manhattan, cioè la distanza dalla posizione desiderata di ogni tassello del puzzle.
+
+In questo caso entrambe le euristiche sono ammissibili perché sono una sottostima del numero di mosse per completare il puzzle, ma in particolare h2 è sempre maggiore di h1 per ogni nodo, in questo caso di dice che h2 **domina** h1.
+
+L'euristica dominante è migliore per la ricerca dal momento che è più precisa, tuttavia può essere complessa da calcolare e per tanto utilizzare l'euristica dominante non sempre è vantaggioso. 
+
+###Domanda 20 (20090218-d1)
+
+Definire il concetto di euristica, incluse le definizioni di euristica ammissibile e euristica consistente.
+
+Discutere il concetto di dominanza fra euristiche e del perché questo concetto sia utile.
+
+Infine, discutere di come si possa deriviare il modo sistematico un euristica.
+
+#### Soluzione
+
+Un modo sistematico per derivare delle euristiche ammissibili è quello di risolvere una versione rilassata del problema, cioè andare a risolvere lo stesso problema per il quale si vuole trovare un euristica, senza però andare a considerare alcune regole.
+
+Ad esempio la distanza di Manhattan per 8-puzzle può essere calcolata andando a rilassare 8-puzzle, permettendo ad ogni tassello di spostarsi in un quadrato anche se questo è occupato.
+ 
+###Domanda 18 (20061103b-d1)
+
+Descrivere in modo preciso l'algoritmo di ricerca generico e dire come si istanzia per ottenere la ricerca A*.
+
+Dire anche le proprietà di cui A* gode, motivandole in modo preciso, in particolare dimostrare perché A* è ottimo.
+
+####Soluzione
+
+L'algoritmo di ricerca generico cerca di costruire un albero utilizzando una struttura di supporto chiamata *frontiera*.
+
+L'algoritmo inizia costruendo il nodo radice dell'albero con lo stato iniziale del problema e lo inserisce nella frontiera.
+
+Dopodiché, finché la frontiera non è vuota, estrae un nodo dalla frontiera, verifica se questo nodo è un nodo goal e nel caso costruisce e ritorna una soluzione.
+Se invece il nodo non è goal, lo espande, andando a creare e ad insereire nella frontiera un nodo per ogni suo successore.
+
+Se la frontiera si svuota, vuol dire che il problema non ha soluzione e quindi ritorna un fallimento.
+
+La scelta del nodo che viene estratto dalla frontiera determina la strategia di ricerca.
+
+Da notare che un nodo dell'albero è un riferimento ad un determinato stato del problema al quale vengono aggiunte delle informazioni riguardanti le azioni disponibili, il costo di cammino, il padre, ecc. Inoltre lo stesso stato può essere associato a più nodi dell'albero. 
+
+**A\* è già stato trattato**
+
+###Domanda 21 (20090218-d2)
+
+Dimostrare formalmente l'ottimalità dell'algoritmo di ricerca informato A* e presentare (nel maggior dettaglio possibile) le varianti viste a lezione che tentano di ridurre l'occupazione di memoria.
+
+Discutere in modo comparativo i vantaggi/svantaggi di tali varianti.
+
+#### Soluzione 
+
+**L'ottimalità è già stata trattata**
+
+L'idea più semplice è quella di andare a limitare il numero di nodi che possono finire nella frontiera, **IDA\*** non inserisce nella frontiera i nodi che hanno una funzione di valutazione maggiore di un certo valore detto *cutof f*.
+
+Se non viene trovata una soluzione, allora si ripete la ricerca utilizzando come valore di *cutof* il minimo valore della funzione di valutazione precedentemente scartato.
+
+In questo modo verranno espansi in memoria solamente un numero limitato di nodi, sorgono però due problemi:
+
+1. C'è la possibilità di fare molte iterazioni, e tra un'iterazione e l'altra vengono scartati tutti i nodi
+2. Non viene sfruttata al massimo la memoria disponbile, specialemente nelle prime iterazioni.
+
+Un'altra strategia è quella utilizzata da *SMA\** (la versione modificata di MA*), che espande i nodi come la versione normale di A\*, con la differenza che quando la non c'è più spazio, scarta dalla coda i nodi peggiori, cioè quelli con funzione di valutazione più alta.
+
+Quando viene scartato un nodo dalla coda, viene memorizzato sul padre del nodo il suo valore delle funzione di valutazione, in questo modo è possibile sapere il valore del figlio migliore nel caso sia necessaria una seconda espansione.
+
+Se tutti i nodi nella coda hanno lo stesso valore di funzione di valutazione vengono scartati quelli più vecchi. 
+
+Questa ricerca risulta completa solo se la soluzione può essere contenuta nella memoria e ottima se la soluzione è raggiungibile, sennò è possibile modificare l'algoritmo in modo che ritorni la miglior soluzione raggiungibile.
+
+Segue che SMA\* risulta migliore di IDA\* perché non sono necessarie iterazioni e sfrutta al meglio la memoria disponbile.
+
+---
 
 ##Domanda 3 (20130404-d3)
 
@@ -66,15 +250,7 @@ Definire la regola di risoluzione e provare la completezza e corretteza dell'alg
 
 Considerando la base di conoscenza della domanda 5 (20130404-d5), descrivere il comportamento dell'algoritmo di risoluzione per porvare se *f* è una sua conseguenza logica.
 
-##Domanda 7 (20110214-d1)
 
-Descrivere le principali stratefia di ricerca non informate e confrontale dal punto di vista della loro correttezza, completezza e complessità in tempo e spazio.
-
-Se volete fate esempi del loro uso su un problema di ricerca.
-
-##Domanda 8 (20110214-d2)
-
-Descrivere l'algoritmo A* e la notazione di euristica ammissibie e consistente, e provare formalemente la sua ottimalità.
 
 ##Domanda 9 (20110214-d3)
 
@@ -127,11 +303,7 @@ Far vedere come può essere usata nella base di conoscenza della domanda  201102
 
 Si definisca l'algoritmo di Hill-Climbing, spiegandono in quali casi sia ragionevole adottarlo e discuntendo i problemi a cui va incontro.
 
-##Domanda 14 (20061103-d2)
 
-Si definisca il concetto di euristica e si dia la definizione formale di euristica ammissibile e consistente.
-
-Si scelga un dominio e si faccia un esempio di due euristiche h1 e h2, definite in modo che tutte e due siano ammissibili e che h1 domini h2.
 
 ##Domanda 15 (20061103-d3)
 
@@ -145,11 +317,6 @@ Si definisca in modo preciso e formale l'algoritmo di Forward-Chaining per la lo
 
 ![](./immagini/c1-agente.png)
 
-##Domanda 18 (20061103b-d1)
-
-Descrivere in modo preciso l'algoritmo di ricerca generico e dire come si istanzia per ottenere la ricerca A*.
-
-Dire anche le proprietà di cui A* gode, motivandole in modo preciso, in particolare dimostrare perché A* è ottimo.
 
 ##Domanda 19 (20061103b-d2)
 
@@ -159,19 +326,6 @@ Descrivere nel dettaglio l'architettura del software di un agente basato su goal
 
 Si descriva formalmente l'algoritmo di enumerazione di modelli nella lofica proposizionale per vericare se una senza 𝜶 è conseguenza logica di una base di conoscenza KB, si dica anche qual'è la complessità in tempo e spazio.
 
-##Domanda 20 (20090218-d1)
-
-Definire il concetto di euristica, incluse le definizioni di euristica ammissibile e euristica consistente.
-
-Discutere il concetto di dominanta fra euristiche e del perché questo concetto sia utile.
-
-Infine, discutere di come si possa deriviare il modo sistematico un euristica.
-
-##Domanda 21 (20090218-d2)
-
-Dimostrare formalmente l'ottimalità dell'algoritmo di ricerca infomrato A* e presentare (nel maggior dettaglio possibile) le varianti viste a lezione che tentano di ridurre l'occupazione di memoria.
-
-Discutre in modo comparativo i vantaggi/svantaggi di tali varianti.
 
 ##Domanda 22 (20090218-d3)
 
@@ -186,10 +340,6 @@ Discutere perché non è ragionevole modellare giochi ad informazione parziale t
 ##Domanda 24 (20090218-d5)
 
 Nel contesto della inferenza nella logica proposizionale, presentare l'algortimo di risoluzione, discuterne le proprietà computazionali, e spiegare perché utilizza sentenze in forma normale congiuntiva.
-
-##Domanda 25 (esempio_compitino-d1)
-
-Si dia la definizione formale di euristica ammissibile e consistente
 
 ##Domanda 26 (esempio_compitino-d2)
 
