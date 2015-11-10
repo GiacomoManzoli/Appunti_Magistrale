@@ -1,4 +1,4 @@
-#Lezione 12 - Dati a runtime 2
+#Lezione 11 - Dati a runtime 2
 
 Le funzioni *tail recursive* sono più semplici da gestire dal punto di vista del compilatore, questo perché al termine della chiamata ricorsiva non vengono effettuate altre operazioni.
 
@@ -15,7 +15,7 @@ In ogni caso si cerca sempre nel blocco più vicino.
 
 Ovviamente l'utilizzo del dynamic scope comporta che la stessa variabile globale può essere associata a valori diversi, dal momento che il valore dipende dal contesto di esecuzione della funzione.
 
-Per la gestione delle eccezioni è preferibile avere la gestione dello scope dinamica in modo da utilizzare sempre le infomrazioni "di contesto" delle eccezioni piuttosto che quelle statiche presenti dove è stata definita l'eccezione.
+Per la gestione delle eccezioni è preferibile avere la gestione dello scope dinamica in modo da utilizzare sempre le informazioni "di contesto" delle eccezioni piuttosto che quelle statiche presenti dove è stata definita l'eccezione.
 
 L'implementazione dello scope dinamico è semplice, basta avere a disposizione il control link dei vari record di attivazione in modo da poter risalire tra i record di attivazione per cercare le variabili.
 

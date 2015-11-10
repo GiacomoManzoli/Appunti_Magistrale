@@ -138,6 +138,20 @@ Le variabili di f2 hanno indirizzo:
 
 Codice per h: (si intende il codice per creare il record di attivazione per h)
 
-```
-...
+```javascript
+//Codice per la creazione del RA per l'invocazione di h
+15 [14, 5, rit="fine di f1", ris=EP->CL->h(f2), a=(14,f2), a(x) = _, a(y*2) = _]
+//In cima alla pila c'è il record
+14 [13, 12*, rit="handle di p", ris=EP->CL->CL->w1(x), z1 = 2, f2 = (14,f2), h(f2) = _]
+
+EP+7 = EP //CL
+EP+8 = first(EP->AL->AL->CL->h) //AL, vado a recuperare il primo valore della chiusura di h
+EP+9 = ind(*)
+EP+10 = EP+6
+EP+11 = val(EP->f2) //Valore per il parametro a
+EP+12 = 0 //Spazio per a(x)
+EP+13 = 0 //Spazio per a(y*2)
+EP = EP+7
+JUMP code_h //Eseguo il codice della funzione
+*
 ```

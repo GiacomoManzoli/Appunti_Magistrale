@@ -62,7 +62,7 @@ Di conseguenza l'indirizzo statico di una variabile è uguale all'indirizzo dina
 
 Ogni dichirazione in Haskell definisce un blocco e nel caso si utilizzi `let x ... in ...` va a creare un blocco che è lo scope di `x`.
 
-```
+```haskell
 f x = x+1
 g y = (f y)+ 2
 z = g 3
@@ -70,7 +70,7 @@ z = g 3
 
 diventa qualcosa di simile a 
 
-```
+```haskell
 {
     f x = x + 1
     {
@@ -104,20 +104,20 @@ In questo modo per recuperare il valore delle variabili globali usate dentro una
 
 Il record di attivazione di una funzione deve contenere più dati rispetto ad un record normale:
 
-- **Control link**;
-- **Indirizzo di ritorno**: indirizzo dell'istruzione successiva, l'indirizzo è sempre un indirizzo ma riferisce un istruzione del codice sorgente e non un dato della memoria;
+- **Control link**: indirizzo del record di attivazione sottostante;
+- **Indirizzo di ritorno**: indirizzo dell'istruzione successiva, l'indirizzo è sempre un indirizzo ma riferisce un istruzione del codice sorgente e non un dato nella memoria;
 - **Indirizzo del risultato**: è un indirizzo di una locazione intera allo stack dei dati nel quale si andrà ad inserire l'eventuale valore di ritorno;
 - **Parametri formali**: nello stack statico ci saranno i nomi dei parametri, nello stack dinamico ci saranno gli effettivi valori;
 -  **Variabili locali**;
 -  **Spazio per i risultati parziali**.
 
-Quando si hanno chiamate ricorsive, il codice della funzione esiste in un solo posto e, cosa molto importante, tutti i record di attivazioni causati dalle chiamate ricorsive devono avere la stessa struttura.
+Quando si hanno chiamate ricorsive, il codice della funzione esiste in un solo posto e, cosa molto importante, tutti i record di attivazione creati dalle chiamate ricorsive devono avere la stessa struttura.
 
 Questo perché viene sempre eseguito lo **stesso codice** utilizzando **record di attivazione diversi**.
 
 ####Creazione di un record di attivazione per la chiamata di una funzione ricorsiva
 
-```
+```haskell
 fun fact(n) = if n <= 1 then 1 else n*fact(n-1)
 ```
 

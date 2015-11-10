@@ -1,6 +1,6 @@
-#Lezione 6
+#Lezione 6 - Inferenza dei tipi
 
-In haskell non è necessario andare a specificare i tipi, si occupa il compilatore di fare *inferenza* di tipo.
+In Haskell non è necessario andare a specificare i tipi, si occupa il compilatore di fare *inferenza* di tipo.
 
 ##Inferenza di tipo
 
@@ -9,7 +9,7 @@ let f x = 2 + x
 f :: Num -> Num
 ```
 
-In questo caso il compilatore inferisce che `x` è di tipo `Num` in quanto `2` è una costatnte di tipo `Num`.
+In questo caso il compilatore inferisce che `x` è di tipo `Num` in quanto `2` è una costante di tipo `Num`.
 
 Il compilatore traforma `fun f x = 2 + x` in `*lamba*x.((+2)x)` e crea una specie di albero.
 
@@ -17,11 +17,11 @@ Vengono poi valutati i tipi delle foglie, che in questo caso sono `Num -> Num ->
 
 L'albero è composto da due tipi di nodi: `lambda` o vincoli per astrazione e `@` per i vincoli applicazione.
 
-Vincolo per astrazione: `(lambda x.y)` se `x` è di tipo `a` e `y` è di tipo `b`, allora il tipo è `a -> b`.
+**Vincolo per astrazione**: `(lambda x.y)` se `x` è di tipo `a` e `y` è di tipo `b`, allora il tipo è `a -> b`.
 
-Vincolo per applicazione: se `f` ha tipo `a`, il suo argomento `e` ha tipo `b` e `(f e)` ha tipo `c` allora: `a = b -> c`.
+**Vincolo per applicazione**: se `f` ha tipo `a`, il suo argomento `e` ha tipo `b` e `(f e)` ha tipo `c` allora: `a = b -> c`.
 
-Il nodo `labmda` è associato alla funzione anonima e genera un vincolo `r = u -> s`, con `u` che è una variabile di tipo per `x` e `s` è il tipo del valore di ritorno.
+Il nodo `lambda` è associato alla funzione anonima e genera un vincolo `r = u -> s`, con `u` che è una variabile di tipo per `x` e `s` è il tipo del valore di ritorno.
 
 Quando viene valutato il nodo `@` per `+` e `2` il compilatore genera il vincolo `Num -> Num -> Num = Num -> t`. Perché il vincolo sia soddisfatto `t` deve essere uguale a `Num -> Num`
 
@@ -66,7 +66,7 @@ Al contrario dei nodi lambda, in questo caso se la funzione ha più parametri, s
 
 Il figlio sinistro di un nodo applicazione può essere o un'altro nodo applicazione, nel caso la funzione abbia più parametri, oppure una funzione.
 
-Sempre nell'esempio sopra, il nodo `@` s rappresenta l'applicazione di `f x`, e da quel nodo si deriva il vincolo `t = u -> s`.
+Sempre nell'esempio sopra, il nodo `@` rappresenta l'applicazione di `f x`, e da quel nodo si deriva il vincolo `t = u -> s`.
 
 Che generalizzato diventa:
 

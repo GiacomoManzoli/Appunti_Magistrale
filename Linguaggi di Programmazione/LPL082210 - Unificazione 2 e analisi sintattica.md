@@ -1,24 +1,30 @@
-#Lezione 8
+#Lezione 8 - Unificazione 2 e Analisi Sintattica
 
 ##Unificazione (cont'd)
 
 *Dimostrazione della correttezza dell'algoritmo di unione*
 
-Dimostrazione del punto (2): per ogni passo E<sub>1</sub> -> E<sub>2</sub> che ha successo vale che i due insiemi hanno le stesse soluzioni ground.
+###Dimostrazione del punto (2)
+Per ogni passo E<sub>1</sub> -> E<sub>2</sub> che ha successo vale che i due insiemi hanno le stesse soluzioni ground.
 
-Passo (1): f(u<sub>1</sub>,..., u<sub>n</sub>) = f(v<sub>1</sub>,..., v<sub>n</sub>) -> u<sub>1</sub> = v<sub>1</sub> ... u<sub>n</sub> = v<sub>n</sub>
-prendendo una soluzione σ e facendo u<sub>1</sub> σ, questo deve essere uguale a v<sub>1</sub> σ, il che applicato a tutte le varie equazioni le rende trivialmente verificiate.
+**Passo (1)**: f(u<sub>1</sub>,..., u<sub>n</sub>) = f(v<sub>1</sub>,..., v<sub>n</sub>) --> u<sub>1</sub> = v<sub>1</sub> ... u<sub>n</sub> = v<sub>n</sub>
 
-Passo (5): applicazione delle uguaglianze `x = t`.
+Prendendo una soluzione σ e applicandola u<sub>1</sub> σ, questo deve essere uguale a v<sub>1</sub> σ, il che applicato a tutte le varie equazioni le rende trivialmente verificiate.
 
-Se l'applicazione ha successo, per ogni soluzione σ di E<sub>1</sub> deve essere che `x σ = t σ` quindi per ogni equazione in E<sub>1</sub> contentente x possiamo sostiturla con t mantenendo la soluzione σ.
+**Passo (3)**: `t = x` --> `x = t`, questo perché è un'equazione.
+
+**Passo (5)**: applicazione delle uguaglianze `x = t`.
+
+Se l'applicazione ha successo, per ogni soluzione σ di E<sub>1</sub> deve essere che `x σ = t σ` quindi per ogni equazione in E<sub>1</sub> contentente `x` possiamo sostiturla con `t` mantenendo la soluzione σ.
 Bisogna comunque dimostrare che le soluzioni ground rimangono, ma se applico σ al risultato, se una soluzione è ground per il risultato, questa deve essere una soluzione valida anche per il sistema di equazioni originario.
 
-Alla fine del processo, se non c'è un fallimento, si raggiunge E<sub>1</sub> che è n forma risolta, questo perché se non fosse vero potri applicare delle atlre regole e quindi non avrei terminato.
+Alla fine del processo, se non c'è un fallimento, si raggiunge E<sub>2</sub> che è in forma risolta, questo perché se non fosse vero potrei applicare delle altre regole e quindi non avrei terminato.
+
+**Forma risolta**: sistema composto da equazioni che nella parte sinistra hanno solo una variabile. Quando un sistema è espresso in questa forma diventa una rappresentazione compatta di tutte le sue possibili soluzioni.
 
 *dimostrazione in qualche modo di quello che c'è scritto sopra*
 
-{x<sub>1</sub>, ..., x<sub>n</sub>} sono tutte distinte e {x<sub>1</sub>,..,x<sub>n</sub>} ∩ l'unione Var(t<sub>i</sub>) = ∅:
+{x<sub>1</sub>, ..., x<sub>n</sub>} sono tutte distinte e {x<sub>1</sub>,..,x<sub>n</sub>} ∩ l'unione di Var(t<sub>i</sub>) = ∅:
 
 1. parte a destra non variabile --> non può essere, potrei applicare il passo 1 e quindi non ho terminato
 2. le x<sub>i</sub> non sono tutte diverse --> ci sono due x<sub>i</sub> uguali, posso ancora applicare il passo (5) quindi non ho terminato
@@ -26,11 +32,13 @@ Alla fine del processo, se non c'è un fallimento, si raggiunge E<sub>1</sub> ch
 
 Se va tutto bene, l'algoritmo termina e il sistema di equazioni è già in forma risolta e consiste anche in una possibile soluzione generale per il sistema di equazioni di partenza.
 
-*dimostrazione dei casi di fallimento dell'algoritmo*
+###Dimostrazione dei casi di fallimento dell'algoritmo
 
-Fallimento dovuto al caso (2): è ovvio che non ci sono soluzioni per `f(...) = g(...)` non ci sono neanche soluzione per il sistema.
+**Fallimento dovuto al caso (2)**: è ovvio che non ci sono soluzioni per `f(...) = g(...)` non ci sono neanche soluzione per il sistema.
 
-Fallimento dovuto al caso (5): E<sub>1</sub> contiene `x = t` con t non vuoto e che contiene x, questa equazione quindi non ha soluzione, pertanto anche E<sub>1</sub> non ha soluzione.
+**Fallimento dovuto al caso (5)**: E<sub>1</sub> contiene `x = t` con `t` non vuoto e che contiene `x`, questa equazione quindi non ha soluzione, pertanto anche E<sub>1</sub> non ha soluzione.
+
+###Considerazioni finali
 
 In caso di successo E' è in forma risolta e quindi lo possiamo vedere come una soluzione σ<sub>E'</sub> e funziona sia come soluzione di E' (banalmente perché è in forma risolta e istanziando ulteriormente σ<sub>E'</sub> otteniamo tutte le soluzioni ground di E') sia come soluzione di E, perché tutte le soluzioni ground di E' sono anche soluzioni di E (per costruzione di E').
 
@@ -51,7 +59,7 @@ Per la cronaca: le cose si complicano se si considerano sostituzioni non idempot
 Cosa abbiamo dimostrato sulla type inference di Haskell?
 
 - È sempre decidibile;
-- Come drerivare il tipo principale (che coincidce con l'unificatore più generale).
+- Come derivare il tipo principale (che coincide con l'unificatore più generale).
 
 ##Analisi sintattica
 

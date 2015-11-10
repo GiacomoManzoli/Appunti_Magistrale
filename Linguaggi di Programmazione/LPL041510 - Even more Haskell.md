@@ -1,10 +1,10 @@
-#Lezione 4
+#Lezione 4 - Even more Haskell
 
 Ancora più haskell.
 
 ##Algebric data types
 
-O tipi definiti dall'utente.
+Tipi definiti dall'utente.
 
 ```haskell
 data Shape = Circle Float Float Float | Rectangle Float Float Float Float
@@ -52,7 +52,7 @@ Circle :: Point -> Float -> Shape
 Prelude> let p = Point 10 20
 Prelude> Circle p 20
 Circle (Point 10.0 20.0) 20.0
-\- da notare che Circle 2 3 4 non funziona più
+-- da notare che Circle 2 3 4 non funziona più
 Prelude> Circle (Point 10 20) 5
 Circle (Point 10.0 20.0) 5.0
 ```
@@ -298,7 +298,7 @@ Ovunque ci sia un "involucro" che contiene dei valori deve essere possibile "spa
 ###Funtori su Maybe
 
 ```haskell
-instance Func	tor Maybe where
+instance Functor Maybe where
 	fmap f (Just x) = Just (f x)
 	fmap f Nothing = Nothing
 ```

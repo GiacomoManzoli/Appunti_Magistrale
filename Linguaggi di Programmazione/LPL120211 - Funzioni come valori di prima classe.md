@@ -14,7 +14,7 @@ Il punto **2** implica che passare una funzione *f* ad un'altra funzione signifi
 
 C'è una differenza tra l'uso di una funzione passata come parametro ad un'altra funzione e l'utilizzo di una funzione globale all'interno di un'altra funzione. 
 
-Nel primo caso il compilatore sa che la funzione invocata riceverà una chiusura, mentre nel secondo caso il compilatore sa la funzione esatta che verrà invocata.
+Nel primo caso il compilatore sa che la funzione invocata riceverà una chiusura, mentre nel secondo caso il compilatore sa esattamente quale funzione verrà invocata.
 
 Con lo scoping dinamico il compilatore riesce a raggiungere una variabile globale calcolandosi direttamente un offset a partire dalla cima dello stack, questo perché ha un modello preciso della struttura dello stack durante l'esecuzione.
 
@@ -37,4 +37,3 @@ make_counter x =
 ```
 
 In questo caso se rimuovo il blocco relativo all'invocazione di `make_counter` andrei a perdere la locazione di memoria della variabile globale `count` che usa la funzione `counter`.
-

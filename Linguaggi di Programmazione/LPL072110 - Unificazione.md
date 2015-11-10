@@ -81,7 +81,7 @@ In questo caso non cambia nulla, ma è sempre preferibile tenere sempre lo stess
 
 Una volta trovato un *binding* si devono fare le sostituzioni nei due alberi, se dopo le sostituzioni i due alberi sono uguali, allora ho trovato una soluzione.
 
-Nelle esperessioni di binding, alla sinistra devono comparire solo variabili distince non non compaiono mai a destra.
+Nelle espressioni di binding, alla sinistra devono comparire solo variabili distinte che non compaiono mai a destra.
 
 Per indicare che si applica una sostituzione ad un albero si usa la notazione `T σ`.
 
@@ -155,12 +155,9 @@ Dato un sistema di equazioni `E`, si indica con `Gsol(E) o Grosol(E)` l'insieme 
 
 Se `Gsol(E)` non è vuoto allora `E` è **risolvibile**, mentre se `Gsol(E) == Gsol(E')` allora si dice che `E` è **equivalente** ad `E'`.
 
-Sistema di equazioni in forma risolta: `E = {x = f(y), z = f(g(y))}`, questo sistema è idempotente e le parti sinistre delle equazioni sono solo variabili.
-
+**Sistema di equazioni in forma risolta**: `E = {x = f(y), z = f(g(y))}`, questo sistema è idempotente e le parti sinistre delle equazioni sono solo variabili.
 σ<sub>E</sub> = {x/f(y), z/f(g(y))} è una soluzione di `E`, quindi `E` è una rappresentazione compatta di tutte le sue soluzioni, comprese quelle ground.
-
 Se σ è una soluzione di ground di `E` allora σ <= σ<sub>E</sub>, cioè esiste una soluzione σ' tale che σ = σ<sub>E</sub> 𝜸 σ.
-
 Questo vuol dire che σ<sub>E</sub> è la soluzione più generale di tutte e di conseguenza espire tutto `Grosol(E)`.
 
 ##Unificazione
@@ -227,8 +224,8 @@ posso riespandere la notazione per ottenere i due alberi
 
 Dimostrazione:
 
-1. Ogni trasformazione (1), (3) e (4) diminusice strettamente il numero di simboli nelle parti sinistre delle equazioni, quindi dopo un numero finito di applicazione di questi passi, o si termina o si applica il passo (5). Il che vuol dire che o si fallisce oppure vengono eliminate tutte le occorrenze di una variabile, meno una (ne viene lasciata una sola). Di conseguenza, il passo (5) si può applicare solo una volta per ogni variabile, da cui segue che il passo (5) può essere applicato al massimo tante volte quante sono le variabili distinte in `E`.
+1. Ogni trasformazione (1), (3) e (4) diminusice strettamente il numero di simboli nelle parti sinistre delle equazioni, quindi dopo un numero finito di applicazione di questi passi, o si termina o si applica il passo (5). Quindi il passo (5) può fallire oppure elimina tutte le occorrenze di una variabile, meno una (ne viene lasciata una sola). Di conseguenza, il passo (5) si può applicare solo una volta per ogni variabile, da cui segue che il passo (5) può essere applicato al massimo tante volte quante sono le variabili distinte in `E`.
 2. Per ogni passo E<sub>1</sub> --> E<sub>2</sub> che ha successo vale che hanno le stesse soluzioni.
-    - (1): `f(u) = f(v) --> u = v`, questo perché una soluzione ground per la prima equazione porrebbe le variabili `u` e `v` ad uno stesso tipo, soddisfando anche la seconda equazione. Se le due equazioni sono più complesse, si applica lo stesso ragiornamento, ricorsivamente tra i vari sotto-termini.
+    - (1): `f(u) = f(v) --> u = v`, questo perché una soluzione ground per la prima equazione porrebbe le variabili `u` e `v` ad uno stesso tipo, soddisfacendo anche la seconda equazione. Se le due equazioni sono più complesse, si applica lo stesso ragiornamento, ricorsivamente tra i vari sotto-termini.
     - (3): `t = x` --> `x = t`, questo perché è un'equazione.
     - (5): se viene applicato con successo con `x = t`, per ogni soluzione σ di E<sub>1</sub> deve essere che `(x) σ = (t) σ`, quindi dovunque in E<sub>1</sub> si trova `x`, questa può essere sostituita con `t`, mantenendo comunque la soluzione σ. (Manca la dimostrazione del fallimento, sarà nella prossima lezione).

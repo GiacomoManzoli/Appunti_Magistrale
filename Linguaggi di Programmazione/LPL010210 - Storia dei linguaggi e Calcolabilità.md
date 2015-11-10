@@ -2,13 +2,13 @@
 
 I primi linguaggi importanti per la storia sono il C/C++, Java e Haskell.
 
-Il controllo dei tipi è iniziato dal Fortran (anni 50) con la gestione statica dei valorei delle variabili. La prima versione del Fortran tuttavia non ammetteva ricorsinoe.
+Il controllo dei tipi è iniziato dal Fortran (anni 50) con la gestione statica dei valori delle variabili. La prima versione del Fortran tuttavia non ammetteva ricorsinoe.
 
 _I linguaggi operativi hanno un approccio più ingegneristico mentre quelli funzionali sono più matematici e astratti._
 
 Al giorno d'oggi i linguaggi hanno caratteristiche miste, sia imperative che funzionali. Questo perché si cerca di andare verso un mondo parallelo e distribuito.
 
->Il JavaScript è più ad oggetti che funzionale.
+> Il JavaScript è più ad oggetti che funzionale.
 
 ##Processo di esecuzione
 
@@ -16,7 +16,7 @@ Codice Sorgente --> Compilatore --> Programma Oggetto --> Interprete
 
 Ci sono sempre due fasi: quella di compilazione e quella di interpretazione.
 
-Se è più importaten la fase di compiulazione si ottiene una maggiore efficienza e in alcuni casi il programma può essere eseguito direttamente (come nel C++).
+Se è più importante la fase di compilazione si ottiene una maggiore efficienza e in alcuni casi il programma può essere eseguito direttamente (come nel C++).
 
 Se è più importante la parte di interpetazione il programma è più sicuro e dinamico (meno crash), come Java.
 
@@ -28,9 +28,9 @@ La non terminazione è un modo per creare un funzione parziale, cioè una funzio
 
 Tutte le funzioni sono calcolabili? No. Kurt Göedel (anni '30).
 
-QUesta domanta è nata prima ancora dei computer attuali, questo perché erano presenti dei modelli di calcolo formale:
+Questa domanta è nata prima ancora dei computer attuali, questo perché erano presenti dei modelli di calcolo formale:
 
-* Macchine di turin, macchine a registri, macchine di Post;
+* Macchine di Turing, macchine a registri, macchine di Post;
 * Linguaggi funzionali, come il Lambda calcolo;
 * Regole di composizione di funzioni a partire da funzioni elementari.
 
@@ -38,9 +38,9 @@ Tutti i modelli precedenti definiscono la stessa classi di funzionie --> formazi
 
 __Tesi di Church__: Tutte le funzioni parziali ricorsive sono calcolabili. Non è un teorema, ma una tesi in quanto è un concetto intuitivo che non è ancora stato dimostrato.
 
-Tutto quello che può fare un computer moderno lo può fare anche una macchina di turin, il che vuol dire che tutti i linguaggi moderni sono turin completi, cioè sono in grado di calolcare tutte le funzioni calcolabili (funzioni parziali ricorsive).
+Tutto quello che può fare un computer moderno lo può fare anche una macchina di turing, il che vuol dire che tutti i linguaggi moderni sono turing completi, cioè sono in grado di calolcare tutte le funzioni calcolabili (funzioni parziali ricorsive).
 
-La turin completezza non aiuta quindi a confrontare tra loro i linguaggi di programmazione, perciò si preferisce utilizzare l'esperessività di un linguaggio come criterio di confronto ed è per questo che utilizziamo Java e non una macchina di turing.
+La Turing completezza non aiuta quindi a confrontare tra loro i linguaggi di programmazione, perciò si preferisce utilizzare l'esperessività di un linguaggio come criterio di confronto ed è per questo che utilizziamo Java e non una macchina di turing.
 
 L'espressività ha però un prezzo in efficienza e di conseguenza non è possibile creare il linguaggio di programmazione perfetto.
 
