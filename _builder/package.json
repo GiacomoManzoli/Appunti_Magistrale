@@ -1,0 +1,24 @@
+{
+  "name": "appunti-magistrale",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "glob": "^5.0.15",
+    "marked": "^0.3.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiacomoManzoli/Appunti_Magistrale.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GiacomoManzoli/Appunti_Magistrale/issues"
+  },
+  "homepage": "https://github.com/GiacomoManzoli/Appunti_Magistrale#readme"
+}
