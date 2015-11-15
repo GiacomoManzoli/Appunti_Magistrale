@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "glob": "^5.0.15",
+    "highlight.js": "^8.9.1",
     "marked": "^0.3.5"
   },
   "devDependencies": {},

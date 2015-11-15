@@ -64,7 +64,10 @@ function parseFile(file){
 }
 
 function buildHtmlPage(body){
-  return "<html><head>"+'<meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"></head><body>'
+  return "<html><head>"+'<meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css">'
+    +'<link rel="stylesheet" href="_builder/highlight/styles/default.css">'
+    +'<script src="_builder/highlight/highlight.pack.js"></script>'
+    +'<script>hljs.initHighlightingOnLoad();</script></head><body>'
     + body +
     '</body></html>';
 }
@@ -90,7 +93,5 @@ glob(''+dirName+'/'+tag.toUpperCase()+'*.md', options, function (er, files) {
   htmlBody = htmlBody.replace(/&lt;\/sub&gt;/g,'</sub>');
 
   fs.writeFileSync(dirName+'.html', buildHtmlPage(htmlBody), 'utf8');
-
-
 });
  
