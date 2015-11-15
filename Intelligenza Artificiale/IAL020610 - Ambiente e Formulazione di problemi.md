@@ -17,7 +17,7 @@ Alcune caratteristiche degli ambienti possono permettere ipotesi semplificative 
 
 - **Osservabile**: si ha accesso a tutta l'informazione che caratterizza l'ambiente. Avere o non avere tutta l'informazione influisce nelle varie azioni, perché potrebbero essere intraprese delle decisioni solamente per ottenere ulteriori informazioni
 - **Determinstico**: quando l'esecuzione di un'azione porta sempre lo stesso effetto nell'ambiente. Lavorare in un ambiente deterministioco è più semplice in quanto si riesce a prevedere i risultati.
-- **Episodico**: _la percezione attuale dell'ambiente non è influenzata dallo storico delle percezioni._ Anche in questo caso, un ambiente episodico permette di effettuare alcune assunzioni semplificative in quanto non è necessario tenere conto dello storico delle percezioni. Se l'ambiente non è episodico è necessario tenere scegliere quante percezioni tenere in memoria, dal momento che non è possibile immagazzinarli tutti.
+- **Episodico**: _la percezione attuale dell'ambiente non è influenzata dallo storico delle percezioni._ Anche in questo caso, un ambiente episodico permette di effettuare alcune assunzioni semplificative in quanto non è necessario tenere conto dello storico delle percezioni. Se l'ambiente non è episodico è necessario scegliere quante percezioni tenere in memoria, dal momento che non è possibile immagazzinarle tutte.
 - **Statico** (o stazionario): se le relazioni tra le entità che definiscono il problema stesso restano intalterate o meno nel tempo.
 - **Discreto**: se le quantità che vengono osservate sono discrete o continue.
 - **Agente singolo**: c'è un solo agente che modifica l'ambiente o possono esserci più agenti che operano nello stesso ambiente?

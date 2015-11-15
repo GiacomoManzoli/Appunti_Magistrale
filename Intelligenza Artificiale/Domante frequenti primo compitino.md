@@ -208,13 +208,49 @@ Questa ricerca risulta completa solo se la soluzione può essere contenuta nella
 
 Segue che SMA\* risulta migliore di IDA\* perché non sono necessarie iterazioni e sfrutta al meglio la memoria disponbile.
 
----
+##Giochi
 
-##Domanda 3 (20130404-d3)
+###Domanda 3 (20130404-d3)
 
 Nell'ambito dei giochi, descrivere l'algoritmo minimax e la potatura alfa-beta per giochi deterministici e per giochi stocastici.
 
 Discutere la condizione in cui la potatura alfa-beta è più conveniente.
+
+####Soluzione
+
+L'algortimo Minimax viene utilizzato per creare una strategia di gioco tra due avversari che giocano in modo perfetto.
+
+L'idea alla base dell'algortimo è quella di andare a massimizzare l'utilità di una mossa considerando che l'avversario Min giochi in modo perfetto.
+
+Per Max viene quindi scelta la mossa che porta a massimizzare il valore di utilità considerando che la mossa di Min cercherà di minimizzarlo.
+
+L'algoritmo espande l'albero fino ad arrivare alle foglie, una volta raggiunte le foglie, propaga il loro valore di utilità nei nodi interni dell'albero.
+
+Il valore di utilità di un nodo interno associato ad una mossa di Min è pari al minimo valore d'utilità delle foglie del nodo, viceversa per max.
+
+Questo algoritmo è completo solo se è possibile raggiungere le foglie e la complessità in tempo che è esponenziale secondo O(b<sup>m</sup>), trattandosi di una ricerca in profondità la complessità in spazio è O(bm).
+
+L'algoritmo però è ottimo sia nel caso in cui l'avversario giochi in modo ottimo, sia nel caso in cui l'avversario giochi in modo sub-ottimo.
+
+Una variante di questo algoritmo utilizza una funzione di valutazione che può essere calcolata anche per i nodi interni, in questo modo è possibile terminare prima la ricerca.
+
+Per migliorare le prestazioni dell'algoritmo è possibile utilizzare la potatura 𝜶-𝜷.
+
+Durante la ricerca nell'albero viene tenuta traccia del massimo valore per Max finora incontrato (𝜶) e del minimo valore per Min 𝜷.
+
+![](./immagini/c1-potatura.png)
+
+In questo modo, quando si sta esaminando un nodo è possibile scartare un'interno sotto-albero.
+
+Quando si sta valutando un nodo Max viene aggiornato il valore di 𝜶 con il massimo valore dei figli e se 𝜶 è maggiore di 𝜷 allora viene eseguita la potatura.
+
+Viceversa se si sta esaminando un nodo Min, viene aggiornato il valore di 𝜷 e se questo risulta essere minore di 𝜶 viene fatta una potatura.
+
+Questa potatura permette di evitare di esplorare parti dell'albero che sono associate a delle mosse svantaggiose, inoltre, se i nodi sono ordinati in modo ottimo, cioè quando cerca Min sono in ordine cresente e quando cerca Max sono in ordine decrescente, la complessità di Minimax con la potatura diventa O(b<sup>m/2</sup>).
+
+In caso di giochi stocastici, è possibile applicare sia Minimax che la potatura 𝜶-𝜷, con la differenza che l'albero contiene anche dei nodi "chance" il cui laore di utilità è pari alla media del valore di utilità dei suoi successori.
+
+---
 
 ##Domanda 4 (20130404-d4)
 
@@ -324,12 +360,12 @@ Descrivere nel dettaglio l'architettura del software di un agente basato su goal
 
 ##Domanda 19 (20061103b-d3)
 
-Si descriva formalmente l'algoritmo di enumerazione di modelli nella lofica proposizionale per vericare se una senza 𝜶 è conseguenza logica di una base di conoscenza KB, si dica anche qual'è la complessità in tempo e spazio.
+Si descriva formalmente l'algoritmo di enumerazione di modelli nella logica proposizionale per vericare se una senza 𝜶 è conseguenza logica di una base di conoscenza KB, si dica anche qual'è la complessità in tempo e spazio.
 
 
 ##Domanda 22 (20090218-d3)
 
-Nel contesto della teoria del gioco perfetto, descrivere l'algoritmo alfa-beta pruning, dimostrandone formalempente la complessità nel caso più favorevole.
+Nel contesto della teoria del gioco perfetto, descrivere l'algoritmo alfa-beta pruning, dimostrandone formalemente la complessità nel caso più favorevole.
 
 ##Domanda 23 (20090218-d4)
 

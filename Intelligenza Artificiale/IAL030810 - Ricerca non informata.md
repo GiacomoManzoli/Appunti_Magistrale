@@ -36,9 +36,9 @@ _La soluzione di questo problema è NP-Hard_
 
 L'idea di base è quella di simulare l'esplorazione dello spazio degli stati generando successori degli stati già esplorati (espansione di uno stato).
 
-Si parte calcolando la funzione successore dello stato iniziale, ottenendo dei nuovi stati che e questi diventano i figli del nodo radice, e via via, finché non esploro tutti i possibili cammini.
+Si parte calcolando la funzione successore dello stato iniziale, ottenendo dei nuovi stati che diventano i figli del nodo radice, e via via, finché non esploro tutti i possibili cammini.
 
-Una **soluzione** è un cammino dallo stato iniziale ad uno stato goal e non è detto che questa venga trovata.
+Una **soluzione** è un cammino dallo stato iniziale ad uno stato goal e non è detto che sia sempre possibile trovare questo cammino.
 
 Durante la creazione dell'albero entra in gioco anche una _strategia_ che sceglie tra i vari nodi ancora da esplorare ne sceglie uno secondo determinati criteri.
 
@@ -52,7 +52,7 @@ Le informazioni presenti in un nodo sono variabili e dipendono dalla strategia d
 
 **Frontiera**: struttura dati che rappresenta la strategia di esplorazione dell'albero, nell'esempio è l'insieme dei figli ancora da esaminare. In alcuni casi è una coda a priorità.
 
-```
+```javascript
 function RicercaAlbero(problema, frontiera) returns una soluzione o un fallimento
     frontiera <- Inserisce(CreaNodo(StatoIniziale[problema], frontiera)
     loop do
@@ -129,7 +129,7 @@ Questa strategia di ricerca **non è completa** perché può essere che ci sia u
 
 Il tempo necessario è *O(b<sup>m</sup>)*, il che risulta terribile se _m_ è più grande di _d_, ma se le soluzioni sono dense (vicine tra loro) risulta migliore del breadth-first.
 
-Lo spazio richiesto è invece __lineare__ secondo *O(b\*m)* in quanto per ogni nodo che viene visitato è necessario tenere in memoria solamente i fratelli del nodo espanso.
+Lo spazio richiesto è invece __lineare__ secondo _O(b\*m)_ in quanto per ogni nodo che viene visitato è necessario tenere in memoria solamente i fratelli del nodo espanso.
 
 L'algoritmo **non è ottimo**, in quanto cerca una soluzione generica andando in profondità e non è garantito che la soluzione che trova sia ottima.
 
@@ -137,7 +137,7 @@ L'algoritmo **non è ottimo**, in quanto cerca una soluzione generica andando in
 
 Vengono ignorati tutti i figli al di sotto di un certo livello _l_.
 
-```
+```javascript
 function RicercaProfonditàLimitata(problema, limite) returns una soluzione o il fallimento/taglio
     return RPL-Ricorsiva(CreaNodo(StatoIniziale[proplema]), problema, limite)
 
@@ -160,7 +160,7 @@ Tuttavia, l'analisi dell'albero a profondità limitata risulta più efficiente d
 
 Viene fissato un limite e se entro il limite non viene trovata una soluzione, si re-inizia la ricerca con un limite più profondo, ripetendo il procedimento finché non viene trovata una soluzione.
 
-```
+```javascript
 function RicercaApprofondimentoIterativo(problema) returns una soluzione o il fallimento
     for profondità <- 0 to ∞ do
         risultato <- RicercaProfonditàLimitata(problema, profondità)

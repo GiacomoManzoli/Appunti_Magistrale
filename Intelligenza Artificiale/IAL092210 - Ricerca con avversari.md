@@ -18,7 +18,7 @@ In alcuni casi ci sono anche dei limiti di tempo codificati nelle regole del gio
 - Informazione completa e non deterministici: backgammon, monopoli;
 - Informazione parziale e non deterministici: poker, risiko, briscola.
 
-Possono essere aggiunte anche altre infomrazioni, come online/offline.
+Possono essere aggiunte anche altre informazioni, come online/offline.
 
 ##TicTacToe
 
@@ -44,7 +44,7 @@ L'idea è quella di scegliere la mossa che conduce alla posizione con valore *mi
 
 Con questo algoritmo si cerca di massimizzare l'utilità nel caso pessimo in quanto si suppone che l'avversario stia giocando in modo ottimo.
 
-```
+```javascript
 function MiniMaxDecision(state) returns an action
     inputs: state, current state in game
     v <- MaxValue(state)
@@ -73,7 +73,7 @@ L'algoritmo è completo solo se l'albero degli stati è finito.
 
 Nel caso in cui l'albero è infinito non è mai possible raggiungere le foglie e quindi non è garantita la completezza, da notare che se l'albero è infinito la strategia di gioco può essere finita.
 
-L'algoritmo risulta ottimo sia se si entrambi i giocatori giocano in modo ottimo, sia nel caso l'avversario giochi in modo non ottimo.
+L'algoritmo risulta ottimo sia se entrambi i giocatori giocano in modo ottimo, sia nel caso l'avversario giochi in modo non ottimo.
 
 Questo perché Max quando può vincere, va a vincere e se l'avversario gioca in modo sub-ottimo, Max riesce a vincere anche in situazioni in cui non avrebbe vinto.
 
@@ -138,8 +138,8 @@ Vengono fatte delle considerazioni per evitare di espandere dei rami che portano
 
 𝜷 = valore della scelta migliore per Min al di fuori del cammino corrente
 
-Questa ricerca aggiorna i valori di 𝜶 e 𝜷 man mano che procene e pota i rami restanti, non appena il valore del nodo è perggio di quello di 𝜶 quanto tocca a Max e 𝜷 per Min.
-
+Questa ricerca aggiorna i valori di 𝜶 e 𝜷 man mano che procene e pota i rami restanti non appena il valore del nodo è minore di quello di 𝜶 quanto tocca a Min e maggiore di 𝜷 per Max.
+ 
 Nel caso ottimo in cui le mosse sono ordinate per funzione di utilità (decrescente quando cerca max, *(trovo subito il massimo)*, crescente quando cerca min *(trovo subito il minimo)*) si riesce a raddoppiare la profondità raggiungibile, mentre nel caso pessimo non si ha nessun miglioramento.
 
 Questa strategia non va a modificare il risultato finale in quanto vengono scartate solamente stati non ottimi.
@@ -150,34 +150,34 @@ Questa strategia non va a modificare il risultato finale in quanto vengono scart
 
 ####Codice
 
-```
+```javascript
 function AlphaBetaSearch(state) return an action
     inputs: state, current state in game
     v <- MaxValue(state, -∞, +∞)
     return the action in Successros(state) with value
 
-function MaxValue(state, alpha, beta) retrun a utility value
+function MaxValue(state, 𝜶, 𝜷) retrun a utility value
     inputs: state, current state in game
-            alfa, the value of the best alternative for Max along the path to state
-            beta, the value of the best alternative for Min alogn the path to state
+            𝜶, the value of the best alternative for Max along the path to state
+            𝜷, the value of the best alternative for Min alogn the path to state
     if TerminalTest(state) then return Utility(state)
     v <- -∞
     for a, s in Successors(state) do
-        v <- max (v, MinValue(s, alfa, beta))
-        if v >= beta then return v
-        alfa = Max(alfa, v)
+        v <- max(v, MinValue(s, 𝜶, 𝜷))
+        if v >= 𝜷 then return v
+        alfa = Max(𝜶, v)
     return v
 
-function MinValue(state, alfa, beta) returns a utility value
+function MinValue(state, 𝜶, 𝜷) returns a utility value
     inputs: state, current state in game
-            alfa, the value of the best alternative for Max along the path to state
-            beta, the value of the best alternative for Min alogn the path to state
+            𝜶, the value of the best alternative for Max along the path to state
+            𝜷, the value of the best alternative for Min alogn the path to state
     if TerminalTest(state) then return Utility(state)
     v <- +∞
     for a, s in Successors(state) do
-        v <- max (v, MaxValue(s, alfa, beta))
-        if v <= alfa then return v
-        beta = Min(beta, v)
+        v <- min(v, MaxValue(s, 𝜶,𝜷))
+        if v <= 𝜶 then return v
+        beta = Min(𝜷, v)
     return v
 
 ```

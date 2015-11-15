@@ -21,7 +21,7 @@ function SimulatedAnnealing(problema, velocità_raffreddamento) returns uno stat
 	successivo <- un successore di nodo_corrente scelto a caso
 	DeltaE <- Valore[successivo] - Valore[nodo_corrente]
 	if DeltaE > 0 then nodo_corrente <- successivo
-	else nodo_corrente <- successivo con probabilità e^(DeltaE/t)
+	else nodo_corrente <- successivo con probabilità e^(DeltaE/T)
 ```
 
 A temperatura fissata `T` la probabilità di occuppazione degli stati segue la distrubuzione di Boltzmann.

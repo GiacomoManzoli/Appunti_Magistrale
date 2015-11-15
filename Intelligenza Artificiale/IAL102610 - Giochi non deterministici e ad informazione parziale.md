@@ -8,7 +8,7 @@ Mentre per derivare un buond sull'utilità di uno stato occorre conoscere il val
 
 
 - *d*: distanza in ply dagli stati terminali
-- *E(d)*: minimo numero di stati da considerare (esplorare) per conoscere il valore esatti di utilità di uno stato ad una distanza *d* play dalla frontiera
+- *E(d)*: minimo numero di stati da considerare (esplorare) per conoscere il valore esatto di utilità di uno stato ad una distanza *d* play dalla frontiera
 - *B(d)*: numero minimo di stati da considerare per conoscere il bound sul valore di utilità di uno stato a distanza *d* ply dalla frontiera.
 
 > E(d+1) = E(d) + (b-1)B(d)
