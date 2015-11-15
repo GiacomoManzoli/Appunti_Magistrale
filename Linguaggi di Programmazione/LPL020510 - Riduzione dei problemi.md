@@ -12,7 +12,7 @@ Cioè per ogni istanza I di R si cerca di costruire un istanza I' di R' tale che
 > 
 > R(I) = NO se e solo se R'(I') = NO
 
-###HALT_PEROGNI (HALT_V)
+###HALT\_PEROGNI (HALT\_V)
 
 Data una macchina di turing P:
 
@@ -24,7 +24,7 @@ Questo problema è indecidibile e si dimostra per riduzione, riducendo HALT ad H
 
 > HALT 	   HALT_V
 > 
-> <P, x> --> P_x
+> \<P, x\> --\> P<sub>x</sub>
 
 Bisogna quindi riuiscre a trasformare <P, x> in P<sub>x</sub> in modo che i risultati dei due problemi coincidano.
 
