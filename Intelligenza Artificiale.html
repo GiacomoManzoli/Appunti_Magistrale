@@ -1,0 +1,1299 @@
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="intellegenza-artificiale">Intellegenza Artificiale</h1>
+<h2 id="introduzione">Introduzione</h2>
+<p><strong>Intelligenza artificiale forte</strong>: si vuole sostituire all&#39;uomo la macchina. IBM Watson si avvicina molto a questo ambito.</p>
+<p><strong>Intelligenza artificiale debole</strong>: abilità particolari che una macchina può riprodurre (robot, auto che si guidano da sole).
+Attività che possono anche essere semplici da fare ma che sono difficili da eseguire con algoritmi stabiliti a priori.</p>
+<h2 id="agente-intelligente">Agente Intelligente</h2>
+<p>Un agente è una entità che percepisce un certo input e riesce a generare un certo output (agisce).</p>
+<p>Un agente razionale (o intelligente) cerca di raggiungere i suoi obiettivi data l&#39;informazione disponibile. Non è detto che nel raggiungere il suo obiettivo, l&#39;agente esegua sempre l&#39;azione migliore, in quanto potrebbe non avere una certa conoscenza.</p>
+<p>Un agente può essere considerato come una funzione che da tutte le possibili sequenze di percezioni estrae delle azioni ammissibili.</p>
+<blockquote>
+<p>Sequenza di percezioni --&gt; conoscenza a disposizione dell&#39;agente.</p>
+</blockquote>
+<p>Tra tutte le classi di ambienti e compiti si va a cercare sempre l&#39;agente che offre le prestazioni migliri, tenendo in considerazione anche tutte le limitazioni computazionali che impediscono la realizzazione di una razionalità parfetta.</p>
+<p>Bisogna quindi cercare di progettare il miglior programma date le risorse disponibili.</p>
+<h3 id="agente-e-ambiente">Agente e ambiente</h3>
+<p>L&#39;agente riceve delle percezioni dall&#39;ambiente delle informazioni mediante dei sensori e in base a queste percezioni esegue delle azioni con degli attuatori.</p>
+<p>La funzione agente mappa quindi tutte le possibili sequenze di percezioni ad un insieme di azioni.</p>
+<p>E&#39; sempre possibile fare assunzioni sull&#39;ambiente in modo da semplificare l&#39;agente, ma questo non sempre è conventiente in quanto l&#39;agente diventa più fragile.</p>
+<h3 id="razionlit-">Razionlità</h3>
+<p>Fissata una misura per la presetazione che valuta la sequenza di percezioni, un agente razionale cerca di massimizzare il valore della misura delle prestazioni.</p>
+<p>La misura delle prestazioni deve essere effettauta sulla sequenza delle percezioni ottenute, questo perché l&#39;agente deve essere valutato in basa alla sua conoscenza (non è omniscente/chiaroveggente).</p>
+<p>Per lo stesso motivo la razionalità e le prestazioni non sono influenzate dal successo.</p>
+<h3 id="peas-performance-enviroment-actuatos-sensors">PEAS - Performance Enviroment Actuatos Sensors</h3>
+<p>Sono le caratteristiche da tenere a mente quanto ci si trova a progettare un&#39;ambiente intelligente.</p>
+<p><strong>Pensando ad un taxi automatizzato</strong></p>
+<ul>
+<li>Misura delle prestazioni? <em>sicurezza, destinazione, profitto</em></li>
+<li>Ambiente operativo? <em>strade, traffico, pedoni, condizioni meteo</em></li>
+<li>Attuatori? <em>volante, acceleratore, freni, ...</em></li>
+<li>Sensori? <em>telecamera, accelerometro, GPS, ...</em></li>
+</ul>
+<h1 id="lezione-2-ambiente-e-formulazione-di-problemi">Lezione 2 - Ambiente e Formulazione di problemi</h1>
+<p><em>le slide vecchie sembrano migliori di quelle nuove.</em></p>
+<h2 id="esempio-di-agente-intelligente">Esempio di agente intelligente</h2>
+<p>Bot che compra su internet.</p>
+<ul>
+<li><strong>Misura di prestazioni</strong>: risparmio, affidabilità del venditore, tempo di spedizione;</li>
+<li><strong>Ambiente operativo</strong>: motori di ricerca, siti di e-commerce, aste on-line;</li>
+<li><strong>Attuatori</strong>: sistema di pagamento, indirizzo di spedizione e intestatario;</li>
+<li><strong>Sensori</strong>: protocolli di accesso ad internet e di pagamento.</li>
+</ul>
+<h2 id="tipi-di-ambiente">Tipi di ambiente</h2>
+<p>Alcune caratteristiche degli ambienti possono permettere ipotesi semplificative andando così ad influenzare la progettazione.</p>
+<ul>
+<li><strong>Osservabile</strong>: si ha accesso a tutta l&#39;informazione che caratterizza l&#39;ambiente. Avere o non avere tutta l&#39;informazione influisce nelle varie azioni, perché potrebbero essere intraprese delle decisioni solamente per ottenere ulteriori informazioni</li>
+<li><strong>Determinstico</strong>: quando l&#39;esecuzione di un&#39;azione porta sempre lo stesso effetto nell&#39;ambiente. Lavorare in un ambiente deterministioco è più semplice in quanto si riesce a prevedere i risultati.</li>
+<li><strong>Episodico</strong>: <em>la percezione attuale dell&#39;ambiente non è influenzata dallo storico delle percezioni.</em> Anche in questo caso, un ambiente episodico permette di effettuare alcune assunzioni semplificative in quanto non è necessario tenere conto dello storico delle percezioni. Se l&#39;ambiente non è episodico è necessario scegliere quante percezioni tenere in memoria, dal momento che non è possibile immagazzinarle tutte.</li>
+<li><strong>Statico</strong> (o stazionario): se le relazioni tra le entità che definiscono il problema stesso restano intalterate o meno nel tempo.</li>
+<li><strong>Discreto</strong>: se le quantità che vengono osservate sono discrete o continue.</li>
+<li><strong>Agente singolo</strong>: c&#39;è un solo agente che modifica l&#39;ambiente o possono esserci più agenti che operano nello stesso ambiente?</li>
+</ul>
+<p>Il mondo reale tipicamente è parzialmente osservabile, stocastico (non deterministico), sequenzaile, dinamico, continuo e multi-agente.</p>
+<h2 id="tipi-di-agenti">Tipi di agenti</h2>
+<p>Un agente può essere visto come un&#39;<em>architettura</em> e un <em>programma</em> che permette di effettuare un&#39;azione a seguito di una percezione (software specifico per un determinato problema).</p>
+<p>Ogni agente può essere trasformato in un agente in grado di apprendere.</p>
+<h3 id="agente-a-riflesso-reattivi-semplice">Agente a riflesso (reattivi) semplice</h3>
+<p>Data una percezione si sa già che azione andare ad intraprendere</p>
+<p><img src="Intelligenza Artificiale/immagini/l2-agente-semplice.png" alt="alt text" title="Agente semplice"></p>
+<p>Il programma è una serie di regole <code>if-then-else</code> necessarie per scegliere l&#39;azione da fare.</p>
+<p>Questo tipo di agente è molto semplice da realizzare ed efficace, però funziona solamente nel caso le assunzioni fatte siano corrette.</p>
+<p>Un miglioramento a questa tipologia di agente è quello di introdurre alcune scelte casuali, in modo da cercare di rompere alcuni loop infiniti.</p>
+<h3 id="agente-a-riflesso-con-stato">Agente a riflesso con stato</h3>
+<p>Per eseguire un&#39;azione è necessario andare a considerare sia la percezione corrente, sia lo storico.</p>
+<p><img src="Intelligenza Artificiale/immagini/l2-agente-riflesso.png" alt="alt text" title="Agente a riflesso con stato"></p>
+<p>L&#39;attivazione delle regole viene influenzata anche dallo stato interno.</p>
+<p>In questo caso è però necessario che l&#39;agente abbia conoscenza riguardo le leggi che regolano l&#39;ambiente e come le azioni che svolge influenzano l&#39;ambiente.</p>
+<p>Sulla base di queste informazioni vengono poi applicate le regole per la scelta dell&#39;azione da svolgere.</p>
+<p>Si riesce quindi a gestire meglio situazioni parzialmente osservabile, tuttavia le scelte sono <em>hard coded</em> nelle regole.</p>
+<h3 id="agenti-basati-su-goal-obiettivi-">Agenti basati su goal (obiettivi)</h3>
+<p>Agenti più flessibili che cercano di raggiungere un determinato obiettivo.</p>
+<p><img src="Intelligenza Artificiale/immagini/l2-agente-goal.png" alt="alt text" title="Agente con goal"></p>
+<p>In questo caso le regole vengono sostituite da degli obiettivi.</p>
+<p>La modifica principale sta nell&#39;aggiunta di un componente che cerca di prevedere come il mondo cambia se vado ad effettuare una derterminata azione.</p>
+<p>Viene quindi cercata la sequenza di azioni migliori da svolgere per raggiungere il proprio obiettivo, tenendo sempre in considerazione la percezione attuale dell&#39;ambiente.</p>
+<p>Ci sono però dei problemi nel caso il goal prefissato dall&#39;agente non sia pienamente raggiungibile oppure ci sono più goal in constrasto tra loro.</p>
+<h3 id="agenti-a-misura-di-utilit-">Agenti a misura di utilità</h3>
+<p>Agente che sceglie le azioni da intraprendere in modo che siano le più convenienti per una data misura di utilità.</p>
+<p><img src="Intelligenza Artificiale/immagini/l2-agente-utilita.png" alt="alt text" title="Agente a misura di utilità"></p>
+<p>Il concetto di goal viene sostituito da una funzione che calcola quando l&#39;agente è <em>&quot;contento&quot;</em> di essere in un determinato stato.</p>
+<p>Quando viene valutato l&#39;effetto dell&#39;azione sull&#39;ambiente si tiene conto anche di quanto quello stato è <em>&quot;buono&quot;</em> per l&#39;agente. Tenendo anche conto delle varie probabilità di raggiungere con successo lo stato.</p>
+<h2 id="agenti-in-grado-di-apprendere">Agenti in grado di apprendere</h2>
+<p><img src="Intelligenza Artificiale/immagini/l2-agente-apprende.png" alt="alt text" title="Agente in grado di apprendere"></p>
+<p>Per garantire l&#39;apprendimento deve essere presente un <strong>elemento critico</strong> che sia in grado di valutare le azioni dell&#39;agente in modo critico. Serve quindi un modo per valutare le prestazioni dell&#39;agente.</p>
+<p>L&#39;emento critico genera quindi un feedback per l&#39;<strong>elemento di apprendimento</strong> che è quello che influenza il <strong>performance element</strong>.</p>
+<p>Il performance element è l&#39;elemento che decide quale azione andare a prendere in base alle informazioni ottenute dai sensori.</p>
+<p>C&#39;è anche un <strong>problem geneator</strong> che fa in modo che tutte le casistiche possibili vengano affrontate dall&#39;elemento di apprendimento, in modo che anche queste vengano considerate.</p>
+<p>Questo perché l&#39;apprendimento potrebbe essere come quello di uno studente, che cerca di imparare le domande tipiche di un compito, il problem generator è quello che genere le domande che non sono mai comparse in un compito.</p>
+<p>Il problem generator risulta particolarmente importante nelle fasi iniziali.</p>
+<h2 id="ricerca-in-uno-spazio-di-soluzioni">Ricerca in uno spazio di soluzioni</h2>
+<p>Esempio della vacanza in Romania.</p>
+<p><strong>Goal:</strong> Andare a Bucharest;</p>
+<p><strong>Stati:</strong> varie città rumene;</p>
+<p><strong>Azioni:</strong> viaggi tra una città e l&#39;altra;</p>
+<p>Trovare una soluzione vuol dire quindi trovare una sequenza di viaggi che permette di raggiungere Bucharest in tempo.</p>
+<h3 id="formulazione-di-un-problema-single-state-">Formulazione di un problema (single state)</h3>
+<p>Un problema è definito da 4 elementi:</p>
+<ul>
+<li><strong>Stato iniziale</strong>: stato iniziale, ad esempio &#39;Arad&#39; (una citta della Romania).</li>
+<li><strong>Funzione successore</strong>: funzione che dato uno stato fornisce tutti gli stati vicini allo stato dato e l&#39;azione che permette di raggiungerli.</li>
+<li><strong>Test per il goal</strong>: che può essere <em>esplicito</em> (raggiungo Bucharest) oppure può essere <em>implicito</em> che descrive una caratteristica (città con una determinata officina), è una funzione che dato uno stato specifica se lo stato soddisfa o meno la proprità che mi interessa.</li>
+<li><strong>Costo di un cammino</strong>: è la somma dei costi del cammino che sto considerando, a partire dallo stato iniziale fino allo stato attuale.</li>
+</ul>
+<p><em>Una soluzione è quindi una sequenza di azioni che conduce da uno stato iniziale ad uno stato di goal.</em></p>
+<p>Questa formulazione è limitata in quanto non è possibile andare a specificare delle preferenze riguardo la ricerca delle città.</p>
+<p>Tuttavia permette di astrarre il problema che risulterebbe troppo complesso nel mondo reale.</p>
+<p>Nell&#39;esempio della Romania vengono astratti sia gli stati sia le azioni, questo perché le città non sono un semplice punto ma hanno una certa aerea e allo stesso modo da una città all&#39;altra posso essere disponibili molte più strade.</p>
+<p>Di conseguenza anche la soluzione ottenuta sarà una soluzione astratta.</p>
+<h1 id="lezione-3-ricerca-non-informata">Lezione 3 - Ricerca non informata</h1>
+<p><em>Altre informazioni sul progetto, come l&#39;estensione di un sistema con elementi di intelligenza artificiale.
+Oppure studio sperimentale di algoritmi diversi. La presentazione pubblica del progetto dovrebbe dare un bonus, la presentazione di una 20-ina di minuti</em></p>
+<h2 id="ambiente-cont-d-">Ambiente (Cont&#39;d)</h2>
+<p><strong>Ambiente semi-dinamico</strong>: ambiente che cambia lentemante, in un breve periodo l&#39;ambiente può essere considerato statico.</p>
+<p><strong>Ambiente stocastico</strong>: sono disponibili delle informazioni relative alla probabilità di un certo output. Quando invece è non deterministico, non si ha neanche questa informazione.</p>
+<h2 id="formulazione-di-un-problema">Formulazione di un problema</h2>
+<p>Problema definito da 4 elementi:</p>
+<ul>
+<li>Stato iniziale;</li>
+<li>Funzione successore generica;</li>
+<li>Test goal, per sapere se è stato raggiunto l&#39;obiettivo;</li>
+<li>Soluzione come sequenza di azioni che porta dallo stato iniziale ad uno stato goal.</li>
+</ul>
+<h3 id="esempio-del-puzzle">Esempio del Puzzle</h3>
+<p><img src="Intelligenza Artificiale/immagini/l3-puzzle.png" alt="alt text" title="Puzzle"></p>
+<p><strong>Azioni</strong>: spostamento dello spazio vuoto, che non può essere spostato ovunque, la funzione successore deve contenere di questo vincolo;</p>
+<p><strong>Stati</strong>: locazione interne dei tasselli;</p>
+<p><strong>Test goal</strong>: è lo stato con i tasselli ordinati (<em>esplicito</em>), può essere fornito anche come test implicito.</p>
+<p><strong>Costo del cammino</strong>: si può considerare un +1 per ogni spostamento, in questo caso si cerca di minimizzare il costo.</p>
+<p><em>La soluzione di questo problema è NP-Hard</em></p>
+<h2 id="algoritmi-di-ricerca-ad-albero">Algoritmi di ricerca ad albero</h2>
+<p>L&#39;idea di base è quella di simulare l&#39;esplorazione dello spazio degli stati generando successori degli stati già esplorati (espansione di uno stato).</p>
+<p>Si parte calcolando la funzione successore dello stato iniziale, ottenendo dei nuovi stati che diventano i figli del nodo radice, e via via, finché non esploro tutti i possibili cammini.</p>
+<p>Una <strong>soluzione</strong> è un cammino dallo stato iniziale ad uno stato goal e non è detto che sia sempre possibile trovare questo cammino.</p>
+<p>Durante la creazione dell&#39;albero entra in gioco anche una <em>strategia</em> che sceglie tra i vari nodi ancora da esplorare ne sceglie uno secondo determinati criteri.</p>
+<p>È importante andare a differenziare il concetto di stato da quello di nodo:</p>
+<ul>
+<li>uno <strong>stato</strong> è una rappresentazione di una configurazione fisica;</li>
+<li>un <strong>nodo</strong> è una struttura dati che appartiene ad un albero di ricerca e che rappresenta un particolare stato.
+Il nodo porta anche l&#39;informazione relativa al suo genitore e all&#39;azione da compiere per tornare ad esso.</li>
+</ul>
+<p>Le informazioni presenti in un nodo sono variabili e dipendono dalla strategia di ricerca utilizzata.</p>
+<p><strong>Frontiera</strong>: struttura dati che rappresenta la strategia di esplorazione dell&#39;albero, nell&#39;esempio è l&#39;insieme dei figli ancora da esaminare. In alcuni casi è una coda a priorità.</p>
+<pre><code class="lang-javascript">function RicercaAlbero<span class="hljs-list">(<span class="hljs-keyword">problema</span>, frontiera)</span> returns una soluzione o un fallimento
+    frontiera &lt;- Inserisce<span class="hljs-list">(<span class="hljs-keyword">CreaNodo</span><span class="hljs-list">(<span class="hljs-keyword">StatoIniziale</span>[problema], frontiera)</span>
+    loop do
+       if Vuota?<span class="hljs-list">(<span class="hljs-keyword">frontiera</span>)</span> then return fallimento
+       nodo &lt;- RimuoviPrimo<span class="hljs-list">(<span class="hljs-keyword">frontiera</span>)</span> //Dipende dalla strategia
+       if TestObiettivo[problema] applicato a Stato[nodo] then return Soluzione<span class="hljs-list">(<span class="hljs-keyword">Nodo</span>)</span>
+       frontiera &lt;- InserisciTutti<span class="hljs-list">(<span class="hljs-keyword">Espandi</span><span class="hljs-list">(<span class="hljs-keyword">nodo</span>,problema)</span>, frontiera)</span>.
+
+function Espandi<span class="hljs-list">(<span class="hljs-keyword">nodo</span>, problema)</span> return insimeme di nodi
+    for each <span class="hljs-list">(<span class="hljs-keyword">azione</span>, risultato)</span> in FunzioneSuccessore[Problema]<span class="hljs-list">(<span class="hljs-keyword">Stato</span>[Nodo])</span> do
+       s &lt;- un nuovo Nodo
+       Stato[s] &lt;- risultato
+       NodoPadre[s] &lt;- Nodo
+       Azione[s] &lt;- azione
+       CostoDiCammino[s] &lt;- CostoDiCammino[nodo] + CostoDiPasso<span class="hljs-list">(<span class="hljs-keyword">nodo</span>, azione, s)</span>
+       aggiungi s a successori
+    return succerssori</span>
+</code></pre>
+<h3 id="strategie-di-ricerca">Strategie di ricerca</h3>
+<p>Rappresenta la scelta dell&#39;ordine di espansione dei nodi.</p>
+<p>Le strategie possono essere valutate secondo vari criteri:</p>
+<ul>
+<li><strong>Completezza</strong>: la strategia trova sempre una soluzione</li>
+<li><strong>Complessità in tempo</strong>: quanto tempo è necessario per trovare una soluzione (se esiste).</li>
+<li><strong>Complessità in spazio</strong>: quanta memoria è richiesta per trovare una soluzione.</li>
+<li><strong>Ottimalità</strong>: trova sempre una soluzione di costo minimo.</li>
+</ul>
+<p>La complessità in spazio e tempo viene misurata in termini di:</p>
+<ul>
+<li><strong>b</strong>: massimo fattore di branching dell&#39;albero di ricerca, quanti figli può avere un nodo.</li>
+<li><strong>d</strong>: profondità della soluzione di costo minimo, a che livello dell&#39;albero la trovo (possono esserci più soluzioni di costo minimo anche a livelli diversi).</li>
+<li><strong>m</strong>: massima profondità dell&#39;albero, che può essere anche infinita.</li>
+</ul>
+<h3 id="strategie-di-ricerca-non-informate">Strategie di ricerca non informate</h3>
+<p>Sono strategie che usano solo l&#39;informazione disponibile nella definizione del problema.</p>
+<p>Non vengono usate infomrazioni a priori per ottimizzare la ricerca.</p>
+<h4 id="ricerca-a-ventaglio-breadth-first-in-ampiezza-">Ricerca a ventaglio (breadth-first, in ampiezza)</h4>
+<p>Espande il nodo a profondità minore, la frontiera viene implementata con una coda FIFO. </p>
+<p>C&#39;è un&#39;ambiguità nella definizione dell&#39;ordine dei successori di un dato nodo, che diventa arbitraria.</p>
+<p>Questa ricerca risulta completa se il fattore di branching è finito. Il tempo di esplorazione è esponenziale (1 + b + b<sup>2</sup> + ... + b<sup>d</sup> + b(b<sup>d</sup>-1) --&gt; O(b<sup>d+1</sup>). </p>
+<p>C&#39;è un problema anche per lo spazio, in quanto devo tenere in memoria tutti i nodi che ho analizzato. </p>
+<p>Infine risulta ottima solo se il costi degli archi è identico, perché trovo la soluzione al livello più basso, quindi prendo sempre il cammino minimo.</p>
+<h4 id="ricerca-a-costo-uniforme">Ricerca a costo uniforme</h4>
+<p>Espande il nodo a costo di cammino inferiore, la frontiera viene quindi implementata come una coda ordinata per costo di cammino. </p>
+<p>Questa ricerca è completa se tutti i passi costano qualcosa, se c&#39;è un passo che costa 0 o con costo negativo, sorgono alcuni problemi. </p>
+<p>Il costo in tempo è limitato dal costo del trovare il nodo, dal momento che prima di trovare il nodo goal trovo i nodi più &quot;<em>economici</em>&quot; e che non sono goal.</p>
+<p>Allo stesso modo il costo in spazio è limitato dal costo della soluzione ottima.</p>
+<p>L&#39;algoritmo riuslta ottima nel caso tutti i costi siano &gt; 0, in qunato tutti i nodi vengono espansi nel modo &quot;più promettente&quot;.</p>
+<h4 id="ricerca-a-profondit-depth-first-">Ricerca a profondità (depth-first)</h4>
+<p>Può essere anche limitata e iterativa.</p>
+<p>La frotinera diventa una coda LIFO.</p>
+<p>Questa strategia di ricerca <strong>non è completa</strong> perché può essere che ci sia un cammino di profondità infinita o con un ciclo. Se non ci sono cicli e lo spazio degli stati è finito, allora è completa.</p>
+<p>Il tempo necessario è <em>O(b<sup>m</sup>)</em>, il che risulta terribile se <em>m</em> è più grande di <em>d</em>, ma se le soluzioni sono dense (vicine tra loro) risulta migliore del breadth-first.</p>
+<p>Lo spazio richiesto è invece <strong>lineare</strong> secondo <em>O(b*m)</em> in quanto per ogni nodo che viene visitato è necessario tenere in memoria solamente i fratelli del nodo espanso.</p>
+<p>L&#39;algoritmo <strong>non è ottimo</strong>, in quanto cerca una soluzione generica andando in profondità e non è garantito che la soluzione che trova sia ottima.</p>
+<h5 id="ricerca-a-profondit-limitata">Ricerca a profondità limitata</h5>
+<p>Vengono ignorati tutti i figli al di sotto di un certo livello <em>l</em>.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">RicercaProfondit</span>à<span class="hljs-title">Limitata</span><span class="hljs-params">(problema, limite)</span></span> returns una soluzione o il fallimento/taglio
+    <span class="hljs-keyword">return</span> RPL-Ricorsiva(CreaNodo(StatoIniziale[proplema]), problema, limite)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">RPL</span>-<span class="hljs-title">Ricorsiva</span><span class="hljs-params">(nodo, problema, limite)</span></span> returns una soluzione o il fallimento/taglio
+    avvenuto_taglio &lt;- <span class="hljs-keyword">false</span>
+    <span class="hljs-keyword">if</span> TestObiettivo[problema](Stato[nodo]) <span class="hljs-keyword">then</span> retrun Soluzione(Nodo)
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> Profondità[Nodo] = limite <span class="hljs-keyword">then</span> retrun Taglio
+    <span class="hljs-keyword">else</span> foreach successore <span class="hljs-keyword">in</span> Espandi(nodo, problema) <span class="hljs-keyword">do</span>
+        risultato &lt;- RPL-Ricorsiva(successore, limite, problema)
+        <span class="hljs-keyword">if</span> result = taglio <span class="hljs-keyword">then</span> avvenuto_taglio &lt;- <span class="hljs-keyword">true</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> risultato != fallimento <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> risultato
+    <span class="hljs-keyword">if</span> avvenuto_taglio <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> taglio <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> fallimento
+</code></pre>
+<p>Ovviamente questa strategia è ancora meno completa, in quanto tutte le soluzioni possono essere ancora più profonde.</p>
+<p>Tuttavia, l&#39;analisi dell&#39;albero a profondità limitata risulta più efficiente della ricerca breadth-first.</p>
+<h5 id="rircerca-a-profondit-limitata-iterativa">Rircerca a profondità limitata iterativa</h5>
+<p>Viene fissato un limite e se entro il limite non viene trovata una soluzione, si re-inizia la ricerca con un limite più profondo, ripetendo il procedimento finché non viene trovata una soluzione.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">RicercaApprofondimentoIterativo</span>(<span class="hljs-title">problema</span>) <span class="hljs-title">returns</span> <span class="hljs-title">una</span> <span class="hljs-title">soluzione</span> <span class="hljs-title">o</span> <span class="hljs-title">il</span> <span class="hljs-title">fallimento</span></span>
+    <span class="hljs-keyword">for</span> profondità &lt;- <span class="hljs-number">0</span> <span class="hljs-built_in">to</span> ∞ <span class="hljs-built_in">do</span>
+        risultato &lt;- RicercaProfonditàLimitata(problema, profondità)
+        <span class="hljs-keyword">if</span> risultato != taglio <span class="hljs-keyword">then</span> <span class="hljs-constant">return</span> risultato
+</code></pre>
+<p>Si ottiene così un compromesso tra lo spazio e il tempo (<em>O(b<sup>d</sup>)</em>) che risulta più vantaggioso rispetto all&#39;utilizzo di uno dei due algoritmi in modo &quot;puro&quot;.</p>
+<p>Questa modalità di ricerca è <strong>completa</strong>.</p>
+<p>Il tempo necessario è un <em>O(b<sup>d</sup>)</em> e lo spazio necessario rimane lineare.</p>
+<p>La strategia risulta anche ottima solo nel caso i costi di tutti gli archi siano gli stessi.</p>
+<h1 id="lezione-4-rircerca-informata-e-non">Lezione 4 - Rircerca informata e non</h1>
+<p>Tabella riassuntiva delle proprietà degli algoritmi non informati:</p>
+<p><img src="Intelligenza Artificiale/immagini/l4-riassunto.png" alt="alt text" title="Tabella riassuntiva"></p>
+<h2 id="ricerca-non-informata-stati-ripetuti">Ricerca non informata - stati ripetuti</h2>
+<p>Se non si utilizzano delle strategie per evitare di visitare più volte lo stesso stato si possono generare un numero esponenziale di stati.</p>
+<p>Possono essere usate alcune strategie per gestire questo problema:</p>
+<ul>
+<li>Si può evitare di generare il nuovo nodo se lo stato del nuovo nodo è ugale allo stato del nodo corrente o di uno dei successori del nodo corrente. La complessità di questa strategia è costante o al più lineare rispetto al numero dei successori del nodo corrente. Se viene trovato due volte lo stesso stato è necessario aggiornare i costi in modo di tenere il nodo migliore. In questo modo non è garantita l&#39;assenza di ripetizioni.</li>
+<li>Si può evitare di generare un nuovo nodo se ha lo stesso stato di uno degli avi (ha lo stesso stato di un nodo presente nel cammino che ha portato al nodo corrente). La complessità questa volta è lineare rispetto alla lunghezza del cammino e non garantisce ancora che lo stesso stato non venga ripetuto, dal momento che lo stesso stato può ancora comparire in due cammini diversi.</li>
+<li>Si può evitare di generare un nuovo nodo se è già stato generato (si può fare con una hash table). La complessità di questa strategia è lineare rispetto al numero totale degli stati, ma garantisce che lo stesso stato non venga incotrato più volte.</li>
+</ul>
+<h3 id="ricerca-su-grafo">Ricerca su grafo</h3>
+<p>Al posto di creare un albero con la replica degli stati si va a sostituire l&#39;albero con un grafo dove i nodi rappresentano gli stati e gli archi sono dati dal collegamento dei due stati.</p>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">RicercaGrafo</span>(<span class="hljs-title">problema</span>,<span class="hljs-title">frontiera</span>) <span class="hljs-title">returns</span> <span class="hljs-title">una</span> <span class="hljs-title">soluzione</span> <span class="hljs-title">o</span> <span class="hljs-title">il</span> <span class="hljs-title">fallimento</span></span>
+    chiuso = insieme vuoto<span class="hljs-comment"> //insieme dei nodi già esplorati</span>
+    frontiera = Inserisci(CreaNodo(StatoIniziale[problema])),frontiera)
+    loop <span class="hljs-built_in">do</span>
+        <span class="hljs-keyword">if</span> Vuoto(frontiera) <span class="hljs-keyword">then</span> <span class="hljs-constant">return</span> fallimento
+        nodo = RimuoviPrimo(frontiera)
+        <span class="hljs-keyword">if</span> TestObiettivo[problema](Stato[nodo]) <span class="hljs-keyword">then</span> <span class="hljs-constant">return</span> Soluzione(nodo)
+        <span class="hljs-keyword">if</span> Stato[nodo] non è <span class="hljs-operator">in</span> chiuso <span class="hljs-keyword">then</span>
+            aggiungi Stato[nodo] <span class="hljs-operator">a</span> chiuso
+            frontiera = InserisciTutti(Espandi(nodo,problema),frontiera)
+    <span class="hljs-keyword">end</span>
+</code></pre><h2 id="ricerca-informata">Ricerca Informata</h2>
+<p>Nella ricerca non informata la strategia di ricerca delle soluzioni è data dall&#39;ordine di espansione dei nodi.</p>
+<p>Nella ricerca informata viene utilizzata una <strong>funzione di valutazione</strong> <em>f(n)</em> per ogni nodo <em>n</em> che indica quanto è <em>desiderabile</em> espandere il dato nodo.</p>
+<p>In questo modo è possible utilizzare la funzione per ordinare la coda dei nodi dell frontiera secondo desiderabilità.</p>
+<p>La ricerca <strong>greedy</strong> e <strong>A*</strong> utilizzano questi ragionamenti.</p>
+<p>Nell&#39;esempio del viaggio da Arad a Bucharest la distanza della soluzione ottima non può essere minore della distanza in linea d&#39;aria.
+Inoltre, le città intermedie migliori sono quelle più vicine in linea d&#39;aria alla destinazione.</p>
+<p>Tenendo conto di queste considerazioni è possibile utilizzare una funzione di valutazione che, dato uno stato, ritorni la distanza in linea d&#39;aria dal dato stato a Bucharest.</p>
+<h3 id="rircerca-greedy">Rircerca Greedy</h3>
+<p>Utilizza una funzione di valutazione definita sulla base di una funzione euristica.</p>
+<blockquote>
+<p><strong>h(n)</strong> = stima del costo dal nodo n al goal più vicino</p>
+</blockquote>
+<p>La ricerca greedy espande il nodo che <strong>appare</strong> essere il più vicino al goal, senza tenere traccia del cammino effettuato.</p>
+<p>Questa ricerca <strong>non è completa</strong> in quanto può rimanere intrappolata nei cicli. Se viene introdotto un controllo per gli stati ripetuti può diventare completa (gli stati devono comunque essere finiti).</p>
+<p>Il tempo è O(b<sup>m</sup>) dove <em>m</em> è la profondità della soluzione ottima, ma l&#39;utilizzo di una buona euristica può portare dei miglioramenti.</p>
+<p>Lo stesso discroso vale per lo spazio in quanto per ogni nodo deve essere tenuta la stima della funzione di valutazione.</p>
+<p>Non è inoltre garantito che la soluzione trovata sia ottima.</p>
+<h3 id="ricerca-a-">Ricerca A*</h3>
+<p>L&#39;idea alla base è quella di evitare di espandere cammini che sono già costosi.</p>
+<blockquote>
+<p><strong>f(n)</strong> = h(n) + g(n)</p>
+<p><strong>h(n)</strong> --&gt; funzione euristica per il costo dal nodo n al goal</p>
+<p><strong>g(n)</strong> --&gt; costo sostenuto per raggiungere il nodo (n)</p>
+<p><strong>f(n)</strong> --&gt; costo totale stimato del cammino che passa da n al goal</p>
+</blockquote>
+<p>A* usa una euristica <em>ammissibile</em>, cioè la funzione <em>h(n)</em> è una sottostima di <em>h\</em>(n)<em> (costo effettivo per raggiungere il nodo goal a partire da </em>n*).</p>
+<p>La funzione <em>h(n)</em> deve ritornare sempre un valore <em>≥ 0</em> altrimenti si potrebbero avere dei problemi, in quanto un costo non può essere negativo (il costo non negativo permette di non preoccuparsi degli stati ripetuti).</p>
+<p>Di conseguenza la ricerca A* su un albero è <strong>ottima</strong>.</p>
+<p>Durante l&#39;esecuzione di A* può comparire all&#39;interno della frontiera un nodo goal, tuttavia se c&#39;è un nodo che viene stimato di costo inferiore, viene espanso quello al posto del nodo goal.
+Questo perché A* cerca la soluzione ottima ed espande il nodo con la funzione di valutazione migliore.</p>
+<h4 id="ottimalit-di-a-su-un-albero-">Ottimalità di A* (su un albero)</h4>
+<p>Supponiamo che un goal sub-ottimo G<sub>2</sub> sia stato generato e che si trovi nella coda (frontiera).</p>
+<p>Sia <em>n</em> un nodo non ancora espanso su un cammino minimo verso il goal ottimo <em>G</em>.</p>
+<blockquote>
+<p>f(G<sub>2</sub>)    = g(G<sub>2</sub>)    -- perché h(G<sub>2</sub>) = 0</p>
+<p>f(G<sub>2</sub>)   &gt; g(G)        -- perché G<sub>2</sub> non è ottimo</p>
+<p>f(G<sub>2</sub>)    ≥ f(n)    -- perché h è ammissibile</p>
+</blockquote>
+<p>A* quindi non selezionerà mai G<sub>2</sub> per l&#39;espansione e di conseguenza verrà estratto prima G di G<sub>2</sub>.</p>
+<h1 id="lezione-5-ricerca-informata-cont-d-">Lezione 5 - Ricerca Informata (Cont&#39;d)</h1>
+<h2 id="ottimalit-di-a-su-un-grafo">Ottimalità di A* su un grafo</h2>
+<p>la stessa prova di A* su un albero non va bene per il grafo.</p>
+<p>La condizione che <em>h</em> sia ammissibile (deve sottostimare il costo effettivo) non è sufficiente.</p>
+<p>Le eristiche devono essere anche <strong>consistenti</strong>:</p>
+<blockquote>
+<p>h(n) ≤ c(n,a,n&#39;) + h(n&#39;)</p>
+</blockquote>
+<p>Il valore della funzione euristica calcolata per <em>n</em> deve essere minore o uguale della funzione euristica di <em>n&#39;</em> sommata al costo per spostarsi da <em>n</em> a <em>n&#39;</em>.</p>
+<p>In questo modo si ottiene una funzione di valutazione <em>f</em> non decrescente.</p>
+<p>A* espande i nodi in ordine di valore rispetto alla funzione di valutazione dei nodi.</p>
+<h2 id="propriet-di-a-">Proprietà di A*</h2>
+<p>L&#39;algoritmo è <strong>completo</strong> a meno che non ci sia un numero infinito di nodi con la funzione di valutazione minore e uguale della funzione di valutazione dello stato di goal.</p>
+<p>Il tempo di esecuzione è in ogni caso esponsenziale in quanto è necessario andare ad espandere tutti i nodi che hanno la funzione di valutazione più piccola del nodo di goal.</p>
+<p>Nel caso pessimo è necessario avere memoria per tutti i nodi del problema.</p>
+<p>L&#39;algoritmo però è <strong>ottimo</strong>, in quanto non può espandere un nodo che ha un determinato valore della funzione di valutazione finché non sono stati espansi i nodi con funzione di valutazione minore.</p>
+<p>L&#39;algoritmo non è solamente ottimo, non esite algoritmo che trova la soluzione ottima espandendo meno nodi rispetto ad A*.
+Questo perché se un altro algoritmo esplorasse meno nodi allora rischierebbe di andare a scartare dei nodi che potrebbero essere ottimo. (I due algoritmi devono però avere la stessa euristica, altrimenti le cose cambiano).</p>
+<h2 id="generare-euristiche-ammissibili">Generare euristiche ammissibili</h2>
+<p>Considerando l&#39;esempio del puzzle da 8 tasselli.</p>
+<p>Per quel problema possono essere trovate due euristiche:</p>
+<blockquote>
+<p>h<sub>1</sub>(n) = numero di tasselli in posizione errata</p>
+<p>h<sub>2</sub>(n) = distanza di Manhattan, cioè il numero di mosse necessarie per portare ogni tassello nella posizione corretta.</p>
+</blockquote>
+<p><em>h<sub>1</sub></em> è una euristica più semplice da calcolare ma da una sottostima tanto bassa, mentre <em>h<sub>2</sub></em> da una sottostima più accurata rispetto ad <em>h<sub>1</sub></em>.</p>
+<p>Conseguentemente è meglio <em>h<sub>2</sub></em> così considero meno nodi e trovo prima il nodo associato ad uno stato ottimo.</p>
+<p>Dal momento che <em>h<sub>2</sub>(n)</em> è sempre maggiore o uguale di <em>h<sub>1</sub>(n)</em> si dice che <em>h<sub>2</sub></em> <strong>domina</strong> <em>h<sub>1</sub></em>.</p>
+<p>Tipicamente ha più senso usare l&#39;euristica dominante, c&#39;è però da considerare il tempo necessario per calcolare l&#39;euristica, in alcuni casi può essere più performante usare un&#39;euristica &quot;peggiore&quot; ma che è molto efficente da calolcare.</p>
+<h3 id="problemi-rilassati">Problemi rilassati</h3>
+<p>Per facilitare il calcolo si possono togliere alcuni vincoli al problema per applicare una ricerca non informata, in modo da poter usare il valore riscontrato dalla ricerca rilassata come euristica per il problema completo.</p>
+<p>Il costo della solzione ottima di un problema rilassato non è più grande del costo della soluzione ottima del problema originario, ed è quindi un euristica ammissibile.</p>
+<p>Un esempio dell&#39;uso di questa tecnica è la risoluzione del problema del commesso viaggiatore che può utilizzare un albero di copertura minimo per trovare un limite inferiore al percorso più breve.</p>
+<h2 id="considerazioni-finali-su-a-">Considerazioni finali su A*</h2>
+<p>Si può limitare il consumo della memoria in una modo simile all&#39;iterative deeping al contesto delle euristiche.</p>
+<p>Questo si può fare andando ad aggiungere un limite al valore dalla funzione di valutazione.</p>
+<h3 id="ida-">IDA*</h3>
+<p>Non inserisce nella coda dei nodi con valore di <em>f</em> maggiore di un certo valore <em>cutof f</em>.</p>
+<p>Questo valore di <em>cutof f</em> alla iterazione successiva viene posto uguale al minomo valore di <em>f</em> dei nodi non inseriti in coda.</p>
+<p>(Ad ogni iterazione prendo il nodo di che non ho inserito in coda e con funzione di valutazione minima e assegno a <em>cutof f</em> il su f-valore, in questo modo quel nodo verrà preso in cosiderazione alla prossima iterazione dell&#39;algoritmo)</p>
+<p>Viene così limitato l&#39;uso della memoria.</p>
+<p>Ad ogni aggiornamento di <em>cutof</em> devo comunque reiniziare la ricerca da capo.</p>
+<p><em>Possibile tema di progetto: utilizzo di A* e IDA* per la risulzione di 8-puzzle</em></p>
+<p>Esistono comunque soluzioni migliori: RBFS, MA*, SMA*.</p>
+<h2 id="ricerca-best-first-ricorsiva-rbfs">Ricerca Best First Ricorsiva - RBFS</h2>
+<p>Algoritmo che imita una ricerca in profontidà utilizzando uno spazio lineare.</p>
+<p>Invece di seguire indefinitamente il cammino corrente, tiene traccia dell&#39;<em>f-valore</em> del miglior cammino alternativo che parte da uno degli avi.</p>
+<p>Se il nodo corrente supera l<em>&#39;f-valore</em> (valore della funzione di valutazione), la ricorsione torna indietro al cammino alternativo.</p>
+<p>Durante il ritorno, si sotistuisce l&#39;<em>f-valore</em> di ogni nodo lungo il cammino con il miglior <em>f-valore</em> dei suoi nodi figli.</p>
+<p>Come per A*, la ricerca è ottima se la funzione euristica è ammissibile.</p>
+<p>La complessità spaziale è lineare ma la complessità spaziale è difficile da definire, nel caso pessimo è sempre esponenziale.</p>
+<p>Anche questo algoritmo soffre di un problema simile ad IDA*, cioè non usano tutta la memoria a disposizione.</p>
+<h1 id="lezione-6-ricerca-informata-cont-d-x2-">Lezione 6 - Ricerca Informata (Cont&#39;d x2)</h1>
+<h2 id="simplified-ma-">Simplified MA*</h2>
+<p>Questa versione di A* espande la foglia migliore fino a quando la memoria è piena.</p>
+<p>Quando è necessario aggiungere nodi nuovi, scarta dalla coda quelli meno promettenti.</p>
+<p>In particolare:</p>
+<ul>
+<li>Viene sempre scartato il nodo foglia peggiore (quello con <em>f-valore</em> più alto);</li>
+<li>L&#39;<em>f-valore</em> del nodo scartato viene riportato sul nodo padre, un po&#39; come avviene con Best First;</li>
+<li>Si espande il nodo padre di un nodo già scartato solamente quando tutti gli altri cammini sono risultati peggiori.</li>
+</ul>
+<p><strong>Problema</strong>: possono esserci blocchi di foglie con lo stesso <em>f-valore</em>. Si rischierebbe di scegliere lo stesso nodo sia per la cancellazione, sia per l&#39;espansione.</p>
+<p>Viene quindi adottata una politica di &quot;giovinezza&quot;, viene scartato il nodo più vecchio e viene espanso il nodo più recente.</p>
+<p>Questo algoritmo è completo solo se la soluzione può essere contenuta in memoria, e risulta ottima solo se la soluzione rimane raggiungibile.</p>
+<h2 id="algoritmi-di-miglioramento-iterativo">Algoritmi di miglioramento iterativo</h2>
+<p>In molti problemi di ottimizzazione non è rilevante come si arriva alla soluzione.</p>
+<p>Gli algoritmi di miglioramento iterativo mangentono un singolo stato corrente e tentano di migliorarlo.</p>
+<p>Impiegando così spazio costante e quindi sono adatti in maggiori ambiti.</p>
+<p>Il problema principale di questi algoritmi è la completezza, in quanto si cercano le soluzioni localmente.</p>
+<h2 id="hill-climbing">Hill-climbing</h2>
+<p>L&#39;idea è quella di partire da uno stato del problema e cercare di raggiungere una soluzione spostandosi nel migliore stato vicino.</p>
+<p><em>È come scalare l&#39;Everest, prendendo la strada più ripida, in un nebbione e soffrendo di amnesia.</em></p>
+<pre><code>function <span class="hljs-function"><span class="hljs-title">HillClimbing</span><span class="hljs-params">(problema)</span></span> returns uno stato che è un massimo locale
+    inputs: problema, un problema
+    variabili locali:     nodo_corrente, un nodo
+                              vicino, un nodo
+    nodo_corrente = <span class="hljs-function"><span class="hljs-title">CreaNodo</span><span class="hljs-params">(StatoIniziale[problema])</span></span>
+    loop do
+        vicino = il successore <span class="hljs-tag">del</span> nodo_corrente di valore più alto
+        <span class="hljs-keyword">if</span> (Valore[vicino] &lt;= Valore[nodo_corrente] then return Stato[NodoCorrente]
+        nodo_corrente = vicino
+</code></pre><p>In alcuni casi Hill climbing non riesce ad arrivare ad una soluzione.</p>
+<p>Questo perché l&#39;algoritmo si blocca su una spalla (punto in cui la funzione obiettivo è costante) o su un massimo locale e non riesce a continuare (lo stato in cui si ferma non è detto che sia una soluzione). </p>
+<p>Si possono trovare delle soluzioni:</p>
+<ul>
+<li><strong>plateau</strong>: si fa una mossa laterale, cioè ci si sposta in uno stato che ha lo stesso valore di <code>h</code>.<ul>
+<li>Bisogna evitare di ciclare, specialmente nel caso di massimi e minimi locali;</li>
+<li>Si può porre un limite al numero massimo di mosse laterali consecutive, risulta più semplice che andare a tenere traccia degli stati già visitati (trade-off come per la definizione di una funzione euristica).</li>
+</ul>
+</li>
+<li><strong>massimi o minimi locali</strong>: si possono eseguire delle ricerca stocastiche o iniziare le ricerca da stati diversi:<ul>
+<li><em>Hill climibing stocastico</em>: si sceglie a caso tra tutte le mosse che migliorano <code>h</code>, tipicamente si ottiene una convergenza più lenta ma spesso si trovano soluzioni migliori. La distribuzione delle probabilità deve essere tale per cui sia più probabile trovare uno stato migliore.</li>
+<li><em>Hill climbing con riavvio casuale</em>: esegue ricerca a partire da stati iniziali diversi (scelti a caso). In questo modo se <em>p</em> è la possibilità di trovare una soluzione ottima per una singola ricerca, il numero di ricerche atteso prima di trovare una soluzione ottima globale è <em>1/p</em>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="numero-di-ricerche-prima-di-trovare-una-soluzione-ottima">Numero di ricerche prima di trovare una soluzione ottima</h3>
+<blockquote>
+<p>x<sub>i</sub> = 0 se la i-esima ricerca non trova una soluzione ottima</p>
+<p>x<sub>i</sub> = 1 se trova una solzione ottima</p>
+</blockquote>
+<p>Sappiamo che per ogni I, P(x<sub>i</sub> = 1) = p e P(x<sub>i</sub> = 0) = 1 - p.</p>
+<p>Le variabili x<sub>i</sub> sono tra loro indipendenti in quanto il risultato di una ricerca non influenza le altre ricerche.</p>
+<p>Quindi su una serie di <em>k</em> ricerche sia la <em>k</em>-esima ricerca sia una soluzione ottima è <em>1/p</em>.</p>
+<p>Perché? Dimostrazione della probabilità, ci sono serie e derivate.</p>
+<h3 id="hill-climbing-contro-le-8-regine-">Hill climbing contro le 8 regine.</h3>
+<p>Il numero di stati è 8<sup>8</sup>.</p>
+<p>Con HC standard, il 14% delle volte si trova una soluzione ottima (globale).</p>
+<p>Con HC laterale (max 100), la soluzione ottima viene trovata il 94% delle volte. In media servono circa 21 passi per trovare una soluzione.</p>
+<p>Con HC a riavvio casuale, la soluzione ottima ha <em>p = 0,14</em>, Servono quindi 6 fallimenti ed un successo per trovare una soluzione ottima, con una media di 22 passi.</p>
+<p>Con HC a riavvio casuale e mosse laterali, si ha <em>p=0,94</em> e servono quindi 1,06 ricerche per trovare la soluzione ottima globale, con una media di 25 passi.</p>
+<h1 id="lezione-7-ricerca-online-e-soddisfacimento-di-vincoli">Lezione 7 - Ricerca online e soddisfacimento di vincoli</h1>
+<p>Nelle precedenti puntante: Hill climbing con la risalita per trovare una funzione globale.</p>
+<h2 id="simulated-annealing">Simulated Annealing</h2>
+<p>L&#39;idea è quella di permettere delle mosse cattive per eviatre i massimi locali.</p>
+<p>La frequenza di queste mosse va via via a calare e viene determinata da una distribuzione di probabilità nota che deriva da come le molecole di un metallo si muovono al variare della temperatura.</p>
+<pre><code><span class="hljs-title">function</span> <span class="hljs-type">SimulatedAnnealing</span>(problema, velocità_raffreddamento) returns uno stato soluzione
+    inputs: problema, un problema
+              velocità_raffreddamento, una corrispondenta dal tempo alla temperatura
+    variabili locali: nodo_corrente, un nodo
+                          successivo, un nodo
+                          <span class="hljs-type">T</span>, una temperatura che controlla la provbabilità di compiere passi verso il basso.
+    nodo_corrente &lt;- <span class="hljs-type">CreaNodo</span>(<span class="hljs-type">StatoIniziale</span>[<span class="hljs-type">Prolema</span>])
+    <span class="hljs-type">T</span> &lt;- velocità_raffreddamento[t]
+    <span class="hljs-keyword">if</span> <span class="hljs-type">T</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> return nodo_corrente
+    successivo &lt;- un successore di nodo_corrente scelto a caso
+    <span class="hljs-type">DeltaE</span> &lt;- <span class="hljs-type">Valore</span>[successivo] - <span class="hljs-type">Valore</span>[nodo_corrente]
+    <span class="hljs-keyword">if</span> <span class="hljs-type">DeltaE</span> &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> nodo_corrente &lt;- successivo
+    <span class="hljs-keyword">else</span> nodo_corrente &lt;- successivo con probabilità e^(<span class="hljs-type">DeltaE</span>/<span class="hljs-type">T</span>)
+</code></pre><p>A temperatura fissata <code>T</code> la probabilità di occuppazione degli stati segue la distrubuzione di Boltzmann.</p>
+<p>Se <code>T</code> viene diminuito abbastanza lentamente si raggiunge sempre lo stato migliore.</p>
+<p>Questo viene usato largamente nelle applicazioni pratiche come la definizione degli orari dei voli delle linee aeree.</p>
+<h2 id="ricerca-online">Ricerca online</h2>
+<p>Quando l&#39;ambiente è dinamico o non deterministico non è possibile pianificare a priori le operazioni da compiere.</p>
+<p>In questo caso è necessario interagire con l&#39;ambiente per recuperare le informazioni mancanti.</p>
+<p>Si parla quindi di <em>ricerca online</em>.</p>
+<p>Si assume che l&#39;agente conosca solo:</p>
+<ul>
+<li>Azioni(<em>s</em>): le azioni permesse nello stato <em>s</em>;</li>
+<li>c(<em>s,a,s&#39;</em>): il costo dell&#39;azione <em>a</em> per passare dallo stato <em>s</em> a <em>s&#39;</em> (lo stato di arrivo non è noto finché non è stata applicata l&#39;azione);</li>
+<li>TestObiettivo(<em>s</em>): per sapere se lo stato <em>s</em> è un obiettivo.</li>
+</ul>
+<p>Il problema principale di questo tipo di ricerca è che non esiste un algoritmo che permette di evitare vicoli cechi. Questo perché tipicamente non ci sono abbastanza infomrazioni riguardo l&#39;ambiente di esecuzione.</p>
+<p>Questi algoritmi non sono (ovviamente) completi.</p>
+<h3 id="ricerca-in-profondit-online">Ricerca in profondità online</h3>
+<p>L&#39;idea è quella di esplorare l&#39;ambiente alla ricerca di un goal.</p>
+<pre><code>function <span class="hljs-type">OnlineDFSAgent</span>(s') returns an action
+    inputs: s' una percezione che identifica lo stato corrente
+    <span class="hljs-keyword">static</span>:    <span class="hljs-literal">result</span>, una tabella indicizzata per azioni e stati, inizialmente vuota
+                unexplored, una tabella che contiene, per ogni stato visitato, tutte le azioni che non sono ancora state eseguite
+                unbacktracked, una tabella che contiene, per ogni stato visitato, i backtrack che non è ancora sono ancora stati provati
+                s,a, lo stato precedente e l'azione precedentemente eseguita.
+    <span class="hljs-keyword">if</span> <span class="hljs-type">GoalTest</span>(s') <span class="hljs-keyword">return</span> stop
+    <span class="hljs-keyword">if</span> s' <span class="hljs-keyword">is</span> a new state then unexplored[s'] &lt;- <span class="hljs-type">Actions</span>[s']
+    <span class="hljs-keyword">if</span> s <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> null then <span class="hljs-keyword">do</span>
+        <span class="hljs-literal">result</span>[a,s] &lt;- s'
+        add s to the front <span class="hljs-keyword">of</span> unbacktracked[s']
+    <span class="hljs-keyword">if</span> unexplored[s'] then
+        <span class="hljs-keyword">if</span> unbacktracked[s'] <span class="hljs-keyword">is</span> empty then <span class="hljs-keyword">return</span> stop
+        <span class="hljs-keyword">else</span> a &lt;- an action b tale che <span class="hljs-literal">result</span>[b,s'] = <span class="hljs-type">Pop</span>(unbacktracked[s'])
+    <span class="hljs-keyword">else</span> a &lt;- <span class="hljs-type">Pop</span>(unexplored[s'])
+    s &lt;- s'
+    <span class="hljs-keyword">return</span> a
+</code></pre><p>Perché l&#39;algoritmo funzioni è necessario che l&#39;agente possa tornare indietro dopo aver fatto un&#39;azione.</p>
+<p>Questo algoritmo può comunque finire in cammini infinti o in vicoli cechi.</p>
+<h3 id="ricerca-casuale">Ricerca casuale</h3>
+<p>L&#39;idea è quella di esplorare l&#39;ambiente in modo da recuperare la maggior quantità possibile di informazioni per poi andare applicare altri algoritmi.</p>
+<p>Questa tipologia di ricerca termina con un successo se lo spazio è finito, ma in ogni caso può essere molto lenta.</p>
+<p>Ad esempio nel caso il numero di archi che si allontanano dal goal è maggiore rispetto a quelli che vanno nel verso corretto.</p>
+<p>Altre strategie come l&#39;HillClimbing con memoria o LRTA* permettono di ottenere risultati migliori.</p>
+<h3 id="learning-real-time-a-lrta-">Learning Real Time A* - LRTA*</h3>
+<p>L&#39;idea di base consiste nel memorizzare la migliore stima corrente <code>H(s)</code> del costo per raggiungere il goal da ogni stato visitato.</p>
+<p><code>H(s)</code> inizialmente coincide con <code>h(s)</code> ma durante l&#39;esecuzione viene aggiornata con l&#39;esperienza.</p>
+<pre><code>function <span class="hljs-type">LRTA</span>*-<span class="hljs-type">Agent</span>(s') returns an action
+    inputs:    s', una percezione dello stato corrente
+    <span class="hljs-keyword">static</span>:    <span class="hljs-literal">result</span>, una tabella indicizzata per azione e stato inizialmente vuota
+                H, una tabella dei costi stimati inidicizzati secondo lo stato, inizialmente vuota
+                s,a, lo stato e l'azione precendente
+    <span class="hljs-keyword">if</span> <span class="hljs-type">GoalTest</span>(s') then <span class="hljs-keyword">return</span> stop
+    <span class="hljs-keyword">if</span> s' <span class="hljs-keyword">is</span> a new state (<span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> H) then H[s']&lt;-h(s')
+    unless s <span class="hljs-keyword">is</span> null
+        <span class="hljs-literal">result</span>[a,s] &lt;- s'
+        H[s] &lt;- <span class="hljs-type">Min</span> tra <span class="hljs-type">Actions</span>(s) tra <span class="hljs-type">LTRA</span>*-<span class="hljs-type">Cost</span>(s,b,<span class="hljs-literal">result</span>[b,s],H)
+    a &lt;- an action b <span class="hljs-keyword">in</span> <span class="hljs-type">Action</span>(s') minimizing <span class="hljs-type">LTRA</span>*-<span class="hljs-type">Cost</span>(s',b, <span class="hljs-literal">result</span>[b,s'],H)
+    s &lt;- s'
+    <span class="hljs-keyword">return</span> a
+
+function <span class="hljs-type">LTRA</span>*-<span class="hljs-type">Cost</span>(s,a,s',H) returns a cost estimate
+    <span class="hljs-keyword">if</span> s' <span class="hljs-keyword">is</span> undefined then <span class="hljs-keyword">return</span> h(s)
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> c(s,a,s') + H[s']
+</code></pre><p>Anche in questo caso si ha la garanzia di trovare una soluzione solo se gli stati sono finiti e le azioni sono revesibili, altrimenti non può essere completo.</p>
+<p><em>Questo termina la parte riguardante gli algoritmi generici</em></p>
+<h2 id="problemi-di-soddisfacimento-dei-vincoli">Problemi di soddisfacimento dei vincoli</h2>
+<p>In questa tipologia di problemi lo stato è una black box, una qualunque struttura dati che supporta il test di goal, la funzione di valutazione e la funzione successore.</p>
+<p>In un CSP (<em>constraint satisfaction problem</em>) lo stato è definito da delle variabili <code>X</code>, con valori di domino <code>D</code> (ogni variabile x<sub>i</sub> ha come dominio D<sub>i</sub>).</p>
+<p>Il test di goal è un insieme di vincoli che specificano combiniazioni ammissibili di valori per sottoinsieme di variabili.</p>
+<p>È possibile definire degli algoritmi specializzati più potenti di quelli generici.</p>
+<p><em>esempio della colorazione di una cartina</em></p>
+<h1 id="lezione-8-problemi-con-vincoli">Lezione 8 - Problemi con vincoli</h1>
+<p><strong>CSP Binario</strong>: ogni vincolo si riferisce ad al più due variabili.</p>
+<p><strong>Grado dei vincoli</strong>: i nodi del grafo sono le variabili del CSP e gli archi rappresentano i vincoli.</p>
+<p>Considerando un CSP come un grafo è possibile utilizzare le proprietà del grafo per velocizzare la ricerca di una soluizone.</p>
+<h2 id="variet-di-csp">Varietà di CSP</h2>
+<p>Tipicamente le variabili dei problemi CSP sono discrete.</p>
+<p>I loro domini possono essere <em>finiti</em> o <em>infiniti</em>.</p>
+<p>In alcuni casi è necessario utilizzare un linguaggio per definire vincoli.</p>
+<p>Solamente i vincoli lineari sono risolvibili, mentre la risolvibilità di quelli non lineari non è decidibile.</p>
+<p>C&#39;è anche la possibilità di utilizzare variabili continue con vincoli lineari, in questo caso la risoluzione dei vincoli avviene con il metodo del simplesso (programmazione lineare) con complessità esponenziale nel caso pessimo (polinomiale tipicamente).</p>
+<p>I vincoli possono essere:</p>
+<ul>
+<li><strong>unari</strong>: coinvologono una sola variabile;</li>
+<li><strong>binari</strong>: coinvologono due variabili:</li>
+<li><strong>di ordine superiore</strong>: coinvolgono più di due variabili;</li>
+<li><strong>prefenze (o soft)</strong>: trammite l&#39;assegnamento di un costo ad ogni variabile, un esempio di questo vincolo è preferire il rosso al verde nel problema della colorazione di una cartina. (il problema diventa un problema di ottimizzazione vincolata, vengono prefreite le soluzioni di costo minore)</li>
+</ul>
+<h2 id="formulazione-di-ricerca-standard">Formulazione di ricerca standard</h2>
+<p>Gli stati vengono definiti dai valori assegnati fino ad un dato momento.</p>
+<p><strong>Stato iniziale</strong>: l&#39;assegnamento vuoto.</p>
+<p><strong>Funzione successore</strong>: assegna un valore ad una variabile non ancora assegnata che è compatibile con l&#39;assegnamento corrente. Questa funzione fallisce se non esiste un assegnamento legale.</p>
+<p><strong>Test di goal</strong>: l&#39;assegnamento corrente è completo, tutti i vincoli sono soddisfatti.</p>
+<p>Proprietà:</p>
+<ol>
+<li>Valido per tutti i CSP;</li>
+<li>Ogni soluzione appare a profondità <em>n</em> con <em>n</em> variabili (tutti gli stati a profondità <em>n</em> sono soluzioni, questo per costruzione, perché altrimenti non sarei riuscito a scendere fino a tale profondità), conviene quindi usare la ricerca depth-first;</li>
+<li>Il cammino è irrilevante, interessa solo lo stato (anche una soluzione locale può andare bene);</li>
+<li>A profondità <em>l</em> il fattore di branching (cioè nodi nella frontiera) è tipicamente <em>(n-l)\</em>d*.</li>
+</ol>
+<h2 id="ricerca-con-backtracking">Ricerca con Backtracking</h2>
+<p>Gli assegnamenti sono tra loro commutativi.</p>
+<p>Utilizzare il backtracking nella ricerca depth-first consiste nel tornare indietro di un nodo e utilizzare un altro valore per l&#39;assegnamento.</p>
+<p>La ricerca con backtracking è l&#39;algoritmo non informato di base per risolvere i CSP.</p>
+<pre><code>function <span class="hljs-type">BacktrackinSearch</span>(csp) returns solutions/failure
+    <span class="hljs-keyword">return</span> <span class="hljs-type">RecursiveBacktracking</span>([],csp)
+
+function <span class="hljs-type">RecursiveBacktracking</span>(assigned, csp) <span class="hljs-keyword">return</span> sorultion/failure
+    <span class="hljs-keyword">if</span> assigned <span class="hljs-keyword">is</span> complete then retun assigned
+    <span class="hljs-keyword">var</span> &lt;- <span class="hljs-type">SelectUnassignedVariable</span>(<span class="hljs-type">Variables</span>[csp], assignd, csp)
+    <span class="hljs-keyword">for</span> each value <span class="hljs-keyword">in</span> <span class="hljs-type">OrderDomainValue</span>(<span class="hljs-keyword">var</span>, assigned, csp) <span class="hljs-keyword">do</span>
+        <span class="hljs-keyword">if</span> value <span class="hljs-keyword">is</span> consistent <span class="hljs-keyword">with</span> assigned according to <span class="hljs-type">Constraints</span>[csp] then
+            <span class="hljs-literal">result</span> &lt;- <span class="hljs-type">RecursiveBackracking</span>([<span class="hljs-keyword">var</span> = value | assigned], csp)
+            <span class="hljs-keyword">if</span> <span class="hljs-literal">result</span> != failure then <span class="hljs-keyword">return</span> <span class="hljs-literal">result</span>
+    <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">return</span> failure
+</code></pre><h3 id="miglioramenti-dell-efficienza">Miglioramenti dell&#39;efficienza</h3>
+<p>Aggiungendo degli accorgimenti ai vari assegnamenti è possibile andare a migliorare l&#39;efficienza dell&#39;algoritmo.</p>
+<ol>
+<li>Quale variabile si deve assegnare al prossimo passo?</li>
+<li>In quale ordine testare i valori del dominio?</li>
+<li>È possibile rilevare a priori dei fallimenti inevitabili?</li>
+<li>È possibile sfruttare la stuttura del problema? (es: il problema è composto da più sotto-problemi tra loro indipendenti oppure la stuttura dei vincoli è simmetrica)</li>
+</ol>
+<h4 id="assegnamenti-delle-variabili">Assegnamenti delle variabili</h4>
+<p>Una euristica che porta ad un miglioramento è quella di scegliere come prossima variabile da assegnare quella <strong>più vincolata</strong> cioè con il minor numero di valori possibili. In questo modo scopro prima se sto andando verso un assegnamento che non può essere completato.</p>
+<p>Se ci sono più variabili con lo stesso numero di vincoli, tra queste conviene scegliere quella che ha <strong>più vincoli con variabili non assegnate</strong>, perché è quella che scegliendo un valore vincola maggiormente la scelta delle altre.</p>
+<p>Una volta scelta la variabile, posso scegliere di assegnarle il valore <strong>meno vincolante</strong>, cioè quello che esclude meno valori tra quelli possibili delle variabili non ancora assegnate.</p>
+<h4 id="foward-checking">Foward checking</h4>
+<p><em>attività di propagazione dei vincoli</em></p>
+<p>L&#39;idea è quella di tenere traccia dei rimanenti valori legati per le variabili non assegnate. Viene terminata la ricerca se c&#39;è qualche variabile che rimane senza valori legali.</p>
+<p>Dopo un assegnamento si va a controllare come cambiano i domini delle altre variabili.</p>
+<p>Questa cosa prende il nome di <strong>constraint propagation</strong> e ci sono vari algortimi che permettono questi, vedi corso di Sistemi Con Vincoli.</p>
+<h4 id="struttura-del-grafo">Struttura del grafo</h4>
+<p>Se il grafo è composto da sotto-problemi tra loro indipendenti, conviene risolverli separatamente e poi combinare tra loro le soluzioni.</p>
+<p>In alcuni casi il guadagno temporale risulta estremo, si passa da miliardi di anni a qualche secondo.</p>
+<p>Inoltre, se il grafo associato al CSP ha una struttura ad albero, ovvero non ha vincoli, il CSP può essere risolto in <em>O(nd<sup>2</sup>)</em>.</p>
+<p>Questo perché si può scegliere un ordine delle variabili che sia consistente con la topologia del grafo.</p>
+<h2 id="algoritmi-iterativi-per-csp">Algoritmi iterativi per CSP</h2>
+<p>Per risolvere un CSP è possibile utilizzare sia Hill-Climbing che Simulated Annealing, in quanto questi lavorano con stati &quot;completi&quot;, cioè che hanno tutte le variabili assegnate.</p>
+<p>Per applicarli ad un CSP è necessario permettere stati con vincoli non soddisfatto e degli operatori che permettono di riassegnare valori ad una variabile.</p>
+<p>La selezione della variabile viene fatta in modo casuale tra quelle che hanno dei conflitti, mentre come valore per la variabile si usa l&#39;euristica del minimo conflitto, utilizzando quindi la funzione classica <code>h(n) = numero totale di vincoli violati</code>.</p>
+<h3 id="presetazioni-di-min-conflicts">Presetazioni di min-conflicts</h3>
+<p>Dato una stato iniziale random, si può risolvere n-regine per n arbitrario in un tempo costante con alta probabilità.</p>
+<p>Questo sembra essere vero per ogni CSP generato a caso, tranne che per un intervallo ristretto, del rapporto:</p>
+<pre><code>R = numero <span class="hljs-keyword">di</span> vincoli / numero <span class="hljs-keyword">di</span> variabili
+</code></pre><h1 id="lezione-9-ricerca-con-avversari">Lezione 9 - Ricerca con avversari</h1>
+<p>Ovvero algoritmi per i giochi.</p>
+<h2 id="differenza-con-i-problemi-di-ricerca">Differenza con i problemi di ricerca</h2>
+<p>Non c&#39;è più uno spazio di ricerca statico, perché si ha a che fare con un avversario che è un&#39;entità imprevedibile, quindi la soluzione al problema non è più un cammino da uno stato iniziale ad uno stato finale (questo perché non è più il singolo giocatore che effettua tuttele mosse).</p>
+<p>In questo caso c&#39;è un altro agente che decide in autonomia come contrastare il cammino del primo giocatore.</p>
+<p>La soluzione diventa quindi una strategia, una funzione che specifica una mossa per ogni possibile mossa dell&#39;avversario.</p>
+<p>In alcuni casi ci sono anche dei limiti di tempo codificati nelle regole del gioco, le possibilità di ricerca sono quindi limitate e non sempre è possibile arrivare ad una strategia ottima.</p>
+<h2 id="tipi-di-giochi">Tipi di giochi</h2>
+<ul>
+<li>Informazione completa e deterministici: come la dama, gli scacchi, othello;</li>
+<li>Informazione completa e non deterministici: backgammon, monopoli;</li>
+<li>Informazione parziale e non deterministici: poker, risiko, briscola.</li>
+</ul>
+<p>Possono essere aggiunte anche altre informazioni, come online/offline.</p>
+<h2 id="tictactoe">TicTacToe</h2>
+<p><em>Nelle slide c&#39;è un esempio di albero di gioco</em></p>
+<p>Sono presenti due funzioni, Max(x), Min(o) che rappresentano i due giocatori, i quali a turno mettono il loro simbolo nella griglia. </p>
+<p>Vince il primo che riesce ad allineare 3 simboli uguali, altrimenti c&#39;è una patta.</p>
+<p>I nomi derivano dal fatto che Max cerca di massimizzare la funzione di utilità mentre Min cerca di minimizzarla.</p>
+<p>Questo gioco viene detto a <strong>somma zero</strong> o costante, questo perché il vantaggio di un giocatore equivale allo svantaggio dell&#39;avversario.</p>
+<h2 id="minimax">Minimax</h2>
+<p>Gioco perfetto per giochi deterministici e ad informazione perfetta.</p>
+<p>L&#39;idea è quella di scegliere la mossa che conduce alla posizione con valore <em>minimax</em> più alto che equivale al miglior vantaggio raggiungibile con un avversario che gioca in modo ottimo.</p>
+<p><em>ply</em>: mossa di un giocatore, un turno di gioco è composto da 2 ply.</p>
+<p><img src="Intelligenza Artificiale/immagini/l9-minimax.png" alt=""></p>
+<p>Con questo algoritmo si cerca di massimizzare l&#39;utilità nel caso pessimo in quanto si suppone che l&#39;avversario stia giocando in modo ottimo.</p>
+<pre><code class="lang-javascript">function <span class="hljs-function"><span class="hljs-title">MiniMaxDecision</span><span class="hljs-params">(state)</span></span> returns an action
+    inputs: state, current state <span class="hljs-keyword">in</span> game
+    v &lt;- <span class="hljs-function"><span class="hljs-title">MaxValue</span><span class="hljs-params">(state)</span></span>
+    return the action <span class="hljs-keyword">in</span> <span class="hljs-function"><span class="hljs-title">Successor</span><span class="hljs-params">(state)</span></span> with value v
+
+function <span class="hljs-function"><span class="hljs-title">MaxValue</span><span class="hljs-params">(state)</span></span> returns <span class="hljs-tag">a</span> utility value
+    <span class="hljs-keyword">if</span> <span class="hljs-function"><span class="hljs-title">TerminalTest</span><span class="hljs-params">(state)</span></span> then return <span class="hljs-function"><span class="hljs-title">Utility</span><span class="hljs-params">(state)</span></span>
+    v &lt;- -∞
+    <span class="hljs-keyword">for</span> <span class="hljs-tag">a</span>,s <span class="hljs-keyword">in</span> <span class="hljs-function"><span class="hljs-title">Successors</span><span class="hljs-params">(state)</span></span> do
+        v &lt;- <span class="hljs-function"><span class="hljs-title">Max</span><span class="hljs-params">(v, MinValue(s)</span></span>)
+    return v
+
+function <span class="hljs-function"><span class="hljs-title">MinValue</span><span class="hljs-params">(state)</span></span> returns <span class="hljs-tag">a</span> utility value
+    <span class="hljs-keyword">if</span> <span class="hljs-function"><span class="hljs-title">TerminalTest</span><span class="hljs-params">(state)</span></span> then retrun <span class="hljs-function"><span class="hljs-title">Utility</span><span class="hljs-params">(state)</span></span>
+    v &lt;- ∞
+    <span class="hljs-keyword">for</span> <span class="hljs-tag">a</span>,s <span class="hljs-keyword">in</span> <span class="hljs-function"><span class="hljs-title">Successors</span><span class="hljs-params">(state)</span></span> do
+        v &lt;- <span class="hljs-function"><span class="hljs-title">Min</span><span class="hljs-params">(v, MaxValue(s)</span></span>)
+    return v
+</code></pre>
+<p>La funzione <code>MaxValue</code> cerca di massimizzare la funzione d&#39;utilità quando gioca Max, mentre <code>MinValue</code> cerca di minimizzare la funzione funzione d&#39;utilità quando gioca Min.</p>
+<h3 id="propriet-">Proprietà</h3>
+<p>L&#39;algoritmo è completo solo se l&#39;albero degli stati è finito.</p>
+<p>Nel caso in cui l&#39;albero è infinito non è mai possible raggiungere le foglie e quindi non è garantita la completezza, da notare che se l&#39;albero è infinito la strategia di gioco può essere finita.</p>
+<p>L&#39;algoritmo risulta ottimo sia se entrambi i giocatori giocano in modo ottimo, sia nel caso l&#39;avversario giochi in modo non ottimo.</p>
+<p>Questo perché Max quando può vincere, va a vincere e se l&#39;avversario gioca in modo sub-ottimo, Max riesce a vincere anche in situazioni in cui non avrebbe vinto.</p>
+<p>La complessità in tempo è <em>O(b<sup>m</sup>)</em>, dove <em>b</em> è il fattore di branching e <em>m</em> la profondità della soluzione.</p>
+<p>Questo perché l&#39;algortimo deve esaminare tutto l&#39;albero fino alle foglie per poter calcolare i valori per i nodi interni. </p>
+<p>La complessità in spazio invece è <em>O(bm)</em> con esplorazione depth-first.</p>
+<p>Il gioco degli scacchi ha in media <em>b = 35</em> e <em>m = 100</em> in caso di avversari normali, non è quindi possibile trovare una soluzione perfetta.</p>
+<h2 id="limiti-alle-risorse">Limiti alle risorse</h2>
+<p>Si suppone di avere un limite al tempo per calcolare le mosse.</p>
+<p>Serve quindi una <strong>funzione di valutazione</strong> che può essere applicabile sia ad una foglia e in questo caso funziona da funzione di utilità, sia ad uno stato centrale e in questo caso fornisce una <em>desiderabilità</em> dello stato in cui si trova, una sorta di funzione euristica.</p>
+<p>Serve inoltre un <strong>test di taglio (cutoff)</strong> che pone un limite all&#39;albero di ricerca, raggiunto il quale viene calcolata la funzione di valutazione.</p>
+<p>Con il cutoff c&#39;è un problema in quanto può capitare che per raggiungere uno stato molto favorevole è necessario andare a sacrificare dei pezzi, passando cioè per degli stati svantaggiosi. (Ad esempio il sacrificio di un pezzo nel gioco degli scacchi).</p>
+<p>Conviene quindi utilizzare una ricerca di <strong>quiescienza</strong> cioè tagliando la ricerca solamente quando la funzione di valutazione per una serie di nodi non cambia di molto.</p>
+<p>Se invece tra nodi successivi c&#39;è un cambio notevole tra le funzioni di valutazioni, allora si tengono delle risorse per andare ad esplorare quell&#39;area dell&#39;albero.</p>
+<h3 id="funzione-di-valutazione">Funzione di valutazione</h3>
+<p>È una funzione usata per calcolare il valore degli stati.</p>
+<p>Negli scacchi la funzione risulta essere un combinazione lineare pesata di varie caratteristiche.</p>
+<p>La funzione lineare garantisce l&#39;indipendenza del valore di ogni componente, mentre con le funzioni non lineari questo non succede in quanto possono essere considerate coppie di pezzi.</p>
+<p>Come per la funzione euristica c&#39;è un trade-off sulla bontà dell&#39;euristica, perché può capitare che sia necessario tagliare prima per avere più tempo a disposizione in modo da poter calcolare un euristica buona, oppure si può scegliere di esplorare più nodi ed avere una stima più grossolana e veloce da calcolare.</p>
+<p>Tipicamente si preferisce la profondità.</p>
+<h4 id="digressione">Digressione</h4>
+<p>La cosa importante della funzione di valutazione non è la stima precisa ma la valutazione corretta della &quot;bontà&quot; di uno stato, cioè che la funzione sia monotona, questo perché la funzione deve semplicemente esplicitare il vantaggio di un giocatore piuttosto che dell&#39;altro.</p>
+<p>Infatti, quello che conta è solamente l&#39;ordine di vista degli stati. </p>
+<p>Il guadagno in giochi deterministici agisce come una funzione di utilità <em>ordinale</em>.</p>
+<h3 id="ricerca-con-taglio">Ricerca con taglio</h3>
+<p><code>MinimaxCutoff</code> è identico a <code>MinimaxValue</code> con la differenza che:</p>
+<ul>
+<li><code>Terminal</code> viene rimpiazzata da <code>Cutoff</code>: non arrivo alla fine ma mi fermo ad un certo punto;</li>
+<li><code>Utility</code> viene rimpiazzata da <code>Eval</code>: la funzione di utilità viene sostituita con la funzione di valutazione.</li>
+</ul>
+<p>Ad esempio nel gioco degli scacchi si può fare un <em>4 ply</em> che corrisponde al livello di un giocatore pessimo.</p>
+<p>Deep Blue e Kasparov arrivavano ad <em>12-ply</em></p>
+<h3 id="-pruning">𝜶 - 𝜷 pruning</h3>
+<p>Vengono fatte delle considerazioni per evitare di espandere dei rami che portano a situazioni disastrose.</p>
+<p>𝜶 = valore della scelta migliore per Max al di fuori del cammino corrente</p>
+<p>𝜷 = valore della scelta migliore per Min al di fuori del cammino corrente</p>
+<p>Questa ricerca aggiorna i valori di 𝜶 e 𝜷 man mano che procene e pota i rami restanti non appena il valore del nodo è minore di quello di 𝜶 quanto tocca a Min e maggiore di 𝜷 per Max.</p>
+<p>Nel caso ottimo in cui le mosse sono ordinate per funzione di utilità (decrescente quando cerca max, <em>(trovo subito il massimo)</em>, crescente quando cerca min <em>(trovo subito il minimo)</em>) si riesce a raddoppiare la profondità raggiungibile, mentre nel caso pessimo non si ha nessun miglioramento.</p>
+<p>Questa strategia non va a modificare il risultato finale in quanto vengono scartate solamente stati non ottimi.</p>
+<h4 id="perch-">Perché 𝜶 - 𝜷?</h4>
+<p>𝜶 è il miglior valore per Max trovato al di fuori del cammino corrente, se V è peggiore di Max questo verrò evitato, lo stesso vale per 𝜷.</p>
+<h4 id="codice">Codice</h4>
+<pre><code class="lang-javascript">function <span class="hljs-function"><span class="hljs-title">AlphaBetaSearch</span><span class="hljs-params">(state)</span></span> return an action
+    inputs: state, current state <span class="hljs-keyword">in</span> game
+    v &lt;- <span class="hljs-function"><span class="hljs-title">MaxValue</span><span class="hljs-params">(state, -∞, +∞)</span></span>
+    return the action <span class="hljs-keyword">in</span> <span class="hljs-function"><span class="hljs-title">Successros</span><span class="hljs-params">(state)</span></span> with value
+
+function <span class="hljs-function"><span class="hljs-title">MaxValue</span><span class="hljs-params">(state, 𝜶, 𝜷)</span></span> retrun <span class="hljs-tag">a</span> utility value
+    inputs: state, current state <span class="hljs-keyword">in</span> game
+            𝜶, the value of the best alternative <span class="hljs-keyword">for</span> Max along the path to state
+            𝜷, the value of the best alternative <span class="hljs-keyword">for</span> Min alogn the path to state
+    <span class="hljs-keyword">if</span> <span class="hljs-function"><span class="hljs-title">TerminalTest</span><span class="hljs-params">(state)</span></span> then return <span class="hljs-function"><span class="hljs-title">Utility</span><span class="hljs-params">(state)</span></span>
+    v &lt;- -∞
+    <span class="hljs-keyword">for</span> <span class="hljs-tag">a</span>, s <span class="hljs-keyword">in</span> <span class="hljs-function"><span class="hljs-title">Successors</span><span class="hljs-params">(state)</span></span> do
+        v &lt;- <span class="hljs-function"><span class="hljs-title">max</span><span class="hljs-params">(v, MinValue(s, 𝜶, 𝜷)</span></span>)
+        <span class="hljs-keyword">if</span> v &gt;= 𝜷 then return v
+        alfa = <span class="hljs-function"><span class="hljs-title">Max</span><span class="hljs-params">(𝜶, v)</span></span>
+    return v
+
+function <span class="hljs-function"><span class="hljs-title">MinValue</span><span class="hljs-params">(state, 𝜶, 𝜷)</span></span> returns <span class="hljs-tag">a</span> utility value
+    inputs: state, current state <span class="hljs-keyword">in</span> game
+            𝜶, the value of the best alternative <span class="hljs-keyword">for</span> Max along the path to state
+            𝜷, the value of the best alternative <span class="hljs-keyword">for</span> Min alogn the path to state
+    <span class="hljs-keyword">if</span> <span class="hljs-function"><span class="hljs-title">TerminalTest</span><span class="hljs-params">(state)</span></span> then return <span class="hljs-function"><span class="hljs-title">Utility</span><span class="hljs-params">(state)</span></span>
+    v &lt;- +∞
+    <span class="hljs-keyword">for</span> <span class="hljs-tag">a</span>, s <span class="hljs-keyword">in</span> <span class="hljs-function"><span class="hljs-title">Successors</span><span class="hljs-params">(state)</span></span> do
+        v &lt;- <span class="hljs-function"><span class="hljs-title">min</span><span class="hljs-params">(v, MaxValue(s, 𝜶,𝜷)</span></span>)
+        <span class="hljs-keyword">if</span> v &lt;= 𝜶 then return v
+        beta = <span class="hljs-function"><span class="hljs-title">Min</span><span class="hljs-params">(𝜷, v)</span></span>
+    return v
+</code></pre>
+<h1 id="lezione-10-giochi-non-deterministici-e-ad-infomrazioni-parziale">Lezione 10 - Giochi non deterministici e ad infomrazioni parziale</h1>
+<h2 id="-pruning-best-case-">𝜶-𝜷 pruning (best case)</h2>
+<p>Per avere il valore esatto di uno stato occorre conosce il valore estatto di utilità per uno stato figlio e conosce un bound sull&#39;utilità di tutti gli stati figli rimanenti.</p>
+<p>Mentre per derivare un buond sull&#39;utilità di uno stato occorre conoscere il valore esatto di utilità di ogni stato figlio.</p>
+<ul>
+<li><em>d</em>: distanza in ply dagli stati terminali</li>
+<li><em>E(d)</em>: minimo numero di stati da considerare (esplorare) per conoscere il valore esatto di utilità di uno stato ad una distanza <em>d</em> play dalla frontiera</li>
+<li><em>B(d)</em>: numero minimo di stati da considerare per conoscere il bound sul valore di utilità di uno stato a distanza <em>d</em> ply dalla frontiera.</li>
+</ul>
+<blockquote>
+<p>E(d+1) = E(d) + (b-1)B(d)</p>
+<p>B(d+1) = E(d)</p>
+</blockquote>
+<p>Espandendo per <em>E(d+2)</em></p>
+<blockquote>
+<p>E(d+2) = E(d+1) + (b-1)B(d+1)</p>
+<p>E(d+2) = (E(d) + (b-1)B(d)) + (b-1)E(d)</p>
+<p>E(d+2) = bE(d) + (b-1)B(d)</p>
+<p>E(d+2) = bE(d) + (b-1)E(d-1)</p>
+</blockquote>
+<p>Considerando che <em>E(0) = B(0) = 1</em> e che <em>E(d-1) &lt; E(d)</em>, ottengo che:</p>
+<blockquote>
+<p>E(d+2) &lt; 2bE(d)</p>
+</blockquote>
+<p>Da cui trovo che generalmente</p>
+<blockquote>
+<p>E(m) &lt; (2b)<sup>m/2</sup> </p>
+</blockquote>
+<h2 id="giochi-non-deterministici">Giochi non deterministici</h2>
+<p>Sono giochi in cui sono presenti degli eventi casuali (<em>chance</em>) introdotti mediente dadi, carte prese a caso, lancio in una moneta, ecc.</p>
+<p>Nei giochi deterministici si riesce a propagare il valore di utilità dalle foglie ai nodi interni, mentre nei giochi non deterministici, a causa del non determinismo, non si riesce ad avere la certezza ma una probabilità.</p>
+<p>Nell&#39;albero viene introdotta una nuova tipologia dei nodi detti <em>chance</em> e che Max utilizza per valutare la mossa da fare.</p>
+<p><img src="Intelligenza Artificiale/immagini/l10-albero-chance.png" alt=""></p>
+<p>Il valore aspettato di uno nodo chance dipende dalla probabilità dei vari valori dei figli del nodo chance.</p>
+<p>La strategia sta quindi nel scegliere le mosse che massimizzano il valore aspettato di utilità.</p>
+<p>La presenza dei nodi chance fa aumentare il numero di nodi dell&#39;albero, perché adesso data una mossa di Max ho due o più possibili mosse di Min.</p>
+<h3 id="expectminimax">ExpectMiniMax</h3>
+<p>Funziona come Minimax con l&#39;eccezione che si devono trattare anche gli eventi casuali.</p>
+<pre><code>...
+if <span class="hljs-keyword">state</span> is a Max node then
+    return the highest ExpectiMiniMax-Value of Successors(<span class="hljs-keyword">state</span>)
+if <span class="hljs-keyword">state</span> is a M<span class="hljs-keyword">in</span> node then
+    return the lowest ExpectiMiniMax-Value of Successors(<span class="hljs-keyword">state</span>)r
+if <span class="hljs-keyword">state</span> is a Chance node then
+    return average ExpectiMiniMax-Value of Successors(<span class="hljs-keyword">state</span>)
+...
+</code></pre><h3 id="potatura-in-alberi-da-gioco-non-deterministici">Potatura in alberi da gioco non deterministici</h3>
+<p>Si riesce comunque a fare una potatura 𝜶-𝜷 solo che risulta meno efficace.</p>
+<h3 id="giochi-non-deterministici-in-pratica">Giochi non deterministici in pratica</h3>
+<p>L&#39;uso dei dadi aumenta il valore del fattore di branching <em>b</em> e questo va ad influire sul valore di lookahead.</p>
+<p>Nonostante la complessità aumenti si riesce comunque ad ottenere dei risultati buoni (sfruttando anche alcune cose non ancora affrontate).</p>
+<p>In questo caso è importante che la funzione di valutazione sia composta da trasformazioni lineari e positive, altrimenti non si riesce a preservare l&#39;ordine dei nodi chance.</p>
+<p>Nei giochi deterministici basta che la funzione di valutazione sia monotona.</p>
+<h2 id="giochi-ad-informazione-parziale">Giochi ad informazione parziale</h2>
+<p>In questa tipologia di giochi non si hanno tutte le informazioni riguardo le mosse che può fare l&#39;avversario (esempio tipico sono i giochi di carte).</p>
+<p>C&#39;è stata la proposta di ridurre questi giochi in giochi non deterministici, considerando tutte le possibili smazzate come se si avesse un dado con tante facce.</p>
+<p>Questa strategia funziona, ma non è corretta.</p>
+<p>Perché nel caso di informazione parziale una strategia ottima potrebbe fare delle mosse solamente per acquisire ulteriori informazioni, mentre nel caso non deterministico questa tipologia di mosse non viene presa in considerazione in quanto si da per scontato di avere a diposizione tutta l&#39;informazione.</p>
+<p>È più corretto che il valore di un azione dipenda dallo stato di informazione o <strong>stato di credenza</strong> in cui si trova l&#39;agente ed è possibile generare e ricercare all&#39;interno di un albero di stati di credenza.</p>
+<p>Questo conduce a comportamenti razionali quali:</p>
+<ul>
+<li>Agire con lo scopo di ottenere infomrazione;</li>
+<li>Trasmettere informazione al proprio compagno di gioco;</li>
+<li>Agire in modo casuale per minimizzare la perdita di informazione (fornire informazioni agli avversari).</li>
+</ul>
+<h2 id="riassumendo-i-giochi">Riassumendo i giochi</h2>
+<p>I giochi sono stati i primi esempi di intelligenza artificiale, si è partiti dai giochi deterministici sfruttando anche lo sviluppo tecnologico.</p>
+<p>Le cose si complicano notevolmente quando l&#39;informazione è parziale o il gioco non è deterministico.</p>
+<p>L&#39;approssimazione risulta quindi molto importante dal momento che non è possibile raggiungere la perfezione per motivi computazionali.</p>
+<h1 id="lezione-11-agenti-logici">Lezione 11 - Agenti logici</h1>
+<p><img src="Intelligenza Artificiale/immagini/l2-agente-goal.png" alt=""></p>
+<h2 id="base-di-conoscenza">Base di conoscenza</h2>
+<p>Un agente logico è composto da due componenti che possono essere modificati:</p>
+<ul>
+<li><strong>Inference Engine</strong> (motore inferenziale): è indipendete dal dominio applicativo e permette di utilizzare un linguaggio dichiarativo in quanto è in grado di andare a valutare dei simboli.</li>
+<li><strong>Knowledge base</strong> (base di conoscenza): contiene le informazioni specifiche del problema.</li>
+</ul>
+<p>Queste due parti sono tra loro intercambiabili, lo stesso motore inferenziale può essere utilizzato in più domini specifici e allo stesso modo la stessa base di conoscenza può essere trattata da vari tipi di motori inferenzial.</p>
+<p><strong>Base di conoscenza</strong>: insieme di sentenze espresse in un linguaggio formale che permette di utilizzare un approccio dichiarativo per definire degli agenti logici.</p>
+<p>Le formule o sentenze contenute nella base di conoscenza di un agente rappresentano configurazioni fisiche di una parte dell’agente stesso, il ragionamento svolto dall&#39;agente coinvolgerà la generazione e manipolazione di tali configurazioni.</p>
+<p>Tutte le sentenze contenute nella base di conoscenza possono essere espresse come un&#39;unica congiunzione, in questo modo si assume che tutta l&#39;informazione presente nella base di conoscenza sia vera.</p>
+<p>Sulla base di conoscenza è possibile eseguire un <code>Tell</code> o <code>Dire</code> per aggiungere informazioni alla base di conosceza oppure è possibile andare a cercare delle inforazioni <code>Ask</code> o <code>Chiedere</code>.</p>
+<p>Ogni agente può essere descritto a <em>livello di conoscenza</em> cioè per quello che sa e indipendentemente dall&#39;implementazione oppure a <em>livello implementativo</em> così considerando le stutture dati e gli algoritmi che le manipolano.</p>
+<h2 id="agente-bastato-sulla-conoscenza">Agente bastato sulla conoscenza</h2>
+<pre><code>funciton <span class="hljs-function"><span class="hljs-title">KB-Agente</span><span class="hljs-params">(percezione)</span></span> retruns una azione
+    static: KB, una base di conoscenza
+            t, un contatore inizializzato <span class="hljs-tag">a</span> <span class="hljs-number">0</span> che indica il tempo
+    <span class="hljs-function"><span class="hljs-title">Tell</span><span class="hljs-params">(KB, CostruisciFormulaPercezione(percezione, t)</span></span>)
+    azione &lt;- <span class="hljs-function"><span class="hljs-title">Ask</span><span class="hljs-params">(KB, CostruisciInterrogazioneAzione(t)</span></span>)
+    <span class="hljs-function"><span class="hljs-title">Tell</span><span class="hljs-params">(KB, CostruisciForumlaAzione(azione, t)</span></span>
+    t &lt;- t +<span class="hljs-number">1</span>
+    return azione
+</code></pre><p>L&#39;agente deve essere capace di:</p>
+<ul>
+<li>Rappresentare stati, azioni, ecc.</li>
+<li>Incorporare nuove percezioni</li>
+<li>Aggiornare le rappresentazioni interne del mondo (ambiente)</li>
+<li>Dedurre proprietà nascoste del mondo</li>
+<li>Dedurre le azioni appropriate da intraprendere</li>
+</ul>
+<h2 id="il-magico-mondo-dei-wumpus">Il magico mondo dei Wumpus</h2>
+<p><strong>PEAS</strong>: Performance Enviroment &quot;Attuatori&quot; Sensors, sono le caratteristiche di valutazione di un ambiente.</p>
+<p><strong>Misura della prestazione</strong>: +1000 Oro, -1000 Morte, -1 per ogni spostamento, -10 per l&#39;uso della freccia.</p>
+<p><strong>Ambiente</strong>: Scacchiera 4x4 con determinate caratteristiche (vedi slide)</p>
+<p><strong>Attuatori</strong>: Spostamento a DX/SX/UP/DOWN, prendi, lascia, lancia freccia.</p>
+<p><strong>Sensori</strong>: Brezza, Luccichio, Puzza.</p>
+<p>Questo ambiente:</p>
+<ul>
+<li><strong>Non è osservabile</strong>: si hanno solo percezioni locali per la casella su cui ci si trova.</li>
+<li><strong>Deterministico</strong>: i risultati delle azioni sono specificati.</li>
+<li><strong>Episodico</strong>: no, è necessario scegliere una sequenza di azioni.</li>
+<li><strong>Statico</strong>: sia il Wumpus sia le trappole non si muovono.</li>
+<li><strong>Discreto</strong></li>
+<li><strong>Agente singolo</strong>: il Wumpus fa parte dell&#39;ambiente.</li>
+</ul>
+<p>Per muoversi nell&#39;ambiente l&#39;agente deve valutare se è sicuro spostarsi in una determinata cella in base alle percezioni che ha nello stato corrente.</p>
+<p>In base a queste percezioni deve essere in grado di inferire quali sono le mosse sicure per poi sceglierne una di queste.</p>
+<p>In alcune situazioni non è possibile andare ad inferire la pericolosità di una mossa, in questo caso è necessario passare all&#39;<strong>inferenza probabilitstica</strong>. (Vado a caso ma con il buon senso).</p>
+<p>In altri scenari, come quando subito all&#39;inizio si percepisce la puzza del Wumpus, si possono usare strategia di <strong>coercizione</strong>.
+In questo caso si sa che c&#39;è un Wumpus vicino e si lancia una freccia. Se dove ho lanciato la freccia c&#39;era il Wumpus, questo ora è morto ed è possibile andarci, se invece la freccia è andata a vuoto, ho solamente sprecato la freccia ma ho la certezza che il quadrato è sicuro.</p>
+<h2 id="modelli">Modelli</h2>
+<p>I logici tipicamente pensano in termini di modelli, che formalmente sono mondi strutturati rispetto ai quali si può valutare se un&#39;affermazione è vera o falsa.</p>
+<p>Formalmente i modelli possibili non sono altro che tutti i modi in cui si possono assegnare i valori alle varie variabili presenti nella sentenza.</p>
+<p>Diciamo che <em>m</em> è un modello di una sentenza 𝜶 se 𝜶 è vera in <em>m</em> e con <em>M(𝜶)</em> indichiamo l&#39;insieme di tutti i modelli di 𝜶.</p>
+<p>Allora KB (la base di conoscenza) |= 𝜶 se e solo se <em>M(KB) ⊆ M(𝜶)</em> (𝜶 è deducibile dalla base di conosceza).</p>
+<p>Questo perché la KB può essere vista come una concatenazione di varie sequenze.</p>
+<p>Per verificare la deducibilità è necessario andare ad enumerare tutte le possibili combinazioni. Il che vuol dire che se 𝜶 contiene <em>n</em> simboli è necessario verificare tutte le 2<sup><em>n</em></sup> combinazioni.</p>
+<p>Si assume sempre che la base di conoscenza sia vera. In questo modo si può dedurre i letterali 𝜶 dalla base, da notare anche che se KB|=𝜶 allora si sa che 𝜶 è vera, però se KB|/=𝜶 allora non si sa se 𝜶 è vera o falsa.</p>
+<p><strong>Implicazione logica</strong>: tra due formule significa che una <em>segue logicamenete</em> l&#39;altra (entailment), in notazione si usa il simbolo 𝜶|=𝜷 e si dice che &quot;𝜶 <strong>implica</strong> 𝜷&quot;. La definizione formale di implicazione è la seguete: 𝜶 implica 𝜷 se e solo se, in ogni modello in cui 𝜶 è vera, anche 𝜷 lo è.</p>
+<p>L&#39;<strong>inferenza</strong> invece è il processo con il quale da una proposizione accolta come vera si passa ad una seconda proposizione la cui verità deriva dal contenuto della prima. L&#39;inferenza è quindi il processo che porta a trovare l&#39;implicazione tra due formule.</p>
+<h3 id="modellazione-per-il-wumpus-lite-">Modellazione per il Wumpus (lite)</h3>
+<p>P<sub>i,j</sub> = vero se c&#39;è una trappola in (i,j)</p>
+<p>B<sub>i,j</sub> = vero se c&#39;è brezza in (i,j)</p>
+<p>Codifica di alcune percezioni:</p>
+<ul>
+<li>not(P<sub>1,1</sub>)</li>
+<li>not(B<sub>1,1</sub>)</li>
+<li>B<sub>2,1</sub></li>
+</ul>
+<p>Codifica della brezza causata dalla trappole:</p>
+<ul>
+<li>B<sub>1,1</sub> sse (P<sub>1,2</sub>  \/ P<sub>2,1</sub> )</li>
+<li>B<sub>2,1</sub> sse (P<sub>1,1</sub>  \/ P<sub>2,2</sub>  \/ P<sub>3,1</sub>)</li>
+<li>...</li>
+</ul>
+<p>Con queste informazioni è possibile andare a creare una tabella di verità, con le colonne per i vari letterali, le informazioni presenti nella base di conoscenza e una colonna per l&#39;affermazione 𝜶<sub>1</sub> che vogliamo dedurre.</p>
+<p><img src="Intelligenza Artificiale/immagini/l11-tabella.png" alt=""></p>
+<p>Per controllare l&#39;inferenza di 𝜶<sub>1</sub> è necessario andare a verificare tutti i possibili valori di verità (<strong>model checking</strong>).</p>
+<h3 id="inferenza-per-mezzo-di-enumerazione">Inferenza per mezzo di enumerazione</h3>
+<p>Enumerazioni a scandaglio (depth first) di tutti i modelli, è un algoritmo corretto e completo.</p>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TVImplica</span>?<span class="hljs-params">(KB, 𝜶)</span></span> returns <span class="hljs-keyword">true</span> o <span class="hljs-keyword">false</span>
+    s &lt;- una lista di simboli proposizioniali contenuti sia <span class="hljs-keyword">in</span> KB che 𝜶
+    <span class="hljs-keyword">return</span> TVVerificaTutto(KB, 𝜶, s, [])
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TVVerificaTtto</span><span class="hljs-params">(KB, 𝜶, s, modello)</span></span> returns <span class="hljs-keyword">true</span> oppure <span class="hljs-keyword">false</span>
+    <span class="hljs-keyword">if</span> Vuoto(s) <span class="hljs-keyword">then</span>
+        <span class="hljs-keyword">if</span> CPVero(KB, modello) <span class="hljs-keyword">then</span> 
+            <span class="hljs-keyword">return</span> CPVero(𝜶, modello)
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">do</span>
+        P &lt;- Primo(s); resto &lt;- Resto(s)
+        <span class="hljs-keyword">return</span> TVVerificaTutto(KB, a, resto, Estendi(P, <span class="hljs-keyword">true</span>, modello)) <span class="hljs-keyword">and</span> TVVerificaTutto(KB, 𝜶, resto, Estendi(P, <span class="hljs-keyword">false</span>, modello))
+</code></pre><h2 id="metodi-di-prova">Metodi di prova</h2>
+<p>Ci sono due tipologie di prove che si possono fare:</p>
+<ul>
+<li><strong>Model Checking</strong>: viene fatta l&#39;enumerazioe delle tabelle di verita, con una complessità esponenziale in <em>n</em> (numero di simboli nella KB), può essere migliorata con euristiche o Hill climbing, ma in questo caso si perde la completezza.</li>
+<li><strong>Applicazione di regole di inferenza</strong>: si inizia ad estendere la base di conoscenza utilizzando i dati attuali, se 𝜶 è tra queste nuove sentenze allora viene inferito, altrimenti ripeto il passo utilizzando le nuove informazioni inferite. L&#39;utilizzo di questa strategia risulta più efficiente ma le sentenze devono essere scritte in una forma normale.</li>
+</ul>
+<h1 id="lezione-12-forward-e-backward-chainging-e-risoluzione">Lezione 12 - Forward e Backward Chainging e Risoluzione</h1>
+<p>Un algoritmo di inferenza si è <strong>completo</strong> quando riesce a derivare tutte le formule derivabili ed è <strong>corretto</strong> (o sounded) se preserva la verità delle formule.</p>
+<p><strong>Forma di Horn</strong>: KB espressa come congiunzione di clausole di Horn.</p>
+<blockquote>
+<p>C ⋀ (B =&gt; A) ⋀ (C ⋀ D =&gt; B) <em>espressione nella forma di horn</em></p>
+</blockquote>
+<p><strong>Clausola di Horn</strong>: è un simbolo proposizionale o una congiunzione di simboli che implica un altro simbolo. Una formula è una clausola di Horn quando è una disgiunzione di letterali nella quale al massimo un letterale è positivo. Ogni clausola di Horn può essere scritta come un&#39;implicazione in cui la premessa è una congiunzione di letterali positivi e la conclusione èè un singolo letterale positivo.</p>
+<blockquote>
+<p>(not(A) ⋁ not(B) ⋁ C) è una clausola di Horn</p>
+<p>(A ⋀ B) =&gt; C è la stessa clausola di Horn espressa come implicazione</p>
+</blockquote>
+<p>Le clausole di Horn che hanno esattamente un letterale positivo sono chiamate clausole definite.
+Il letterale positivo prende il nome di testa e quelli negativi formano il corpo della clausola.
+Una clausola definita senza letterali negativi si limita ad asserire una determinata proposizione e viene chiamata fatto.
+Una clausola di Horn senza letterali positivi può essere scritta in forma di implicazione la cui conclusione vale False (utili per definire dei vincoli di integrità, come quello che il Wumpus si trova in una sola stanza).</p>
+<p><strong>Modus Ponens</strong>: per la forma di Horn: date due formule 𝜶 =&gt; 𝜷 e 𝜶, si può inferire la formula 𝜷. (cioè se l’implicazione e la promessa sono vere, allora anche 𝜷 deve essere vera). È completo per basi di coscenza espresse nella forma di Horn.</p>
+<p>La correttezza di questa regola si dimostra considerando i possibili valori di verità delle formule.</p>
+<p><img src="Intelligenza Artificiale/immagini/l12-pones.png" alt=""></p>
+<p>Questo modo dice che se le precondizioni di una regola sono vere allora è vera anche la regola.</p>
+<p>Può essere utilizzato per fare <em>forward chaining</em> o <em>backward chaining</em>, che sono entrambi algoritmi con complessità lineare in tempo.</p>
+<h2 id="foward-chaining">Foward Chaining</h2>
+<p><img src="Intelligenza Artificiale/immagini/l12-albero.png" alt=""></p>
+<p>L&#39;idea è quella di applicare ogni regola le cui premesse sono soddisfattte nella KB, una volta fatto ciò può essere che alcune regole della KB hanno le promesse soddisfatte grazi alle nuove informazioni precedentemente inserite, fino a quando non viene raggiunto il goal.</p>
+<p>Se questo non viene raggiunto vuol dire che non è conseguenza logia della KB.</p>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CP</span>-<span class="hljs-title">CA</span>-<span class="hljs-title">Implica</span><span class="hljs-params">(KB, q)</span></span> returns <span class="hljs-keyword">true</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">false</span>
+    locals: conto, una tabella indicizzata per clausola, che contiene inizialmente <span class="hljs-keyword">in</span> numero di premesse
+            inferiti: una tabella indicizzata per simbolo <span class="hljs-keyword">in</span> cui ogni elemento è inizialmente <span class="hljs-keyword">false</span>
+            agenda: una lista di simboli che contiene inizlamente quelli noti come veri nella KB
+    <span class="hljs-keyword">while</span> agenda non è vuota <span class="hljs-keyword">do</span>
+        p &lt;- Pop(agenda)
+        unless inferiti[p] <span class="hljs-keyword">do</span>
+            inferiti[p] &lt;- <span class="hljs-keyword">true</span>
+            foreach clausola di Horn c <span class="hljs-keyword">in</span> cui appare la premessa p <span class="hljs-keyword">do</span>
+                decrementa conto[c]
+                <span class="hljs-keyword">if</span> conto[c] == <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                    <span class="hljs-keyword">if</span> Testa[c] == q <span class="hljs-keyword">then</span> retrun <span class="hljs-keyword">true</span>
+                    Push(Testa[c],agenda)
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
+</code></pre><p><code>Testa[c]</code> rappresenta quello che la clausola di Horn implica.</p>
+<p>Un&#39;osservazione che si può fare su questo algoritmo è che non viene tenuto in considerazione il goal che si vuole raggiungere, semplicemente si va a dedurre il più possibile dalla KB nella speranza che il goal <em>q</em> sia deducibile da KB.</p>
+<p>Però se nella KB la query <em>q</em> non è già soddisfatta (non è un fatto noto) e non ci sono regole di Horn che hanno come conseguenza la query, allora non c&#39;è speranza di riuscire a dedurre <em>q</em> dalla KB e quindi l&#39;algoritmo potrebbe terminare subito.</p>
+<h3 id="completezza">Completezza</h3>
+<p>Il forward chaining applicato con il <em>modus ponens</em> deriva tutte le conseguenza della KB.</p>
+<p>FC raggiunge un punto fisso dove nessuna nuova sentenza atomica è derivata, questo perché il numero di simboli è finito.</p>
+<p>Lo stato finale che si raggiunge applicando l&#39;algoritmo si può considerare come un modello <em>m</em>, assegnando vero o falso ai simboli che sono stati inferiti.</p>
+<p>Ogni clausola definita nella KB originale è vera nel modello creato con questo algoritmo.
+Per verificare questo punto basta assumere l’ipotesi opposta, e cioè che qualche clausola <em>a<sub>1</sub>⋀ ... ⋀ a<sub>k</sub> =&gt; b</em> sia falsa nel modello. 
+Allora la premessa deve essere vera e <em>b</em> falsa, ma questo contraddice l’assunto che l’algoritmo abbia raggiunto un punto fisso.</p>
+<p>Quindi <em>m</em> è un modello per KB e se KB |= q, allora q è vere in ogni modello della KB, incluso anche <em>m</em>.</p>
+<h2 id="backward-chaining">Backward chaining</h2>
+<p>L&#39;idea è quello di lavorare all&#39;indietro a partire dalla query <em>q</em>.</p>
+<p>Per provare <em>q</em> attraverso la KB, prima si controlla che <em>q</em> non sia già conosciuta e nel caso questa non sia conisciuta, si provano trammite la KB tutte le premesse si una regola che deriva <em>q</em>.</p>
+<p>È importante evitare i cicli, bisogna quindi controllare se un nuovo sotto goal è già presente nella pila dei goal.</p>
+<p>Si può anche ottimizzare il lavoro, se ho un nuovo sottogoal posso controllare se l&#39;ho già provato vero o se è già fallito.</p>
+<h2 id="forward-vs-backward">Forward VS Backward</h2>
+<p>Forward è più orientata ai dati e viene utilizzata per l&#39;elaborazione incoscia e automatica, come il riconoscimento dei dati.</p>
+<p>A causa dell&#39;approccio utilizzato viene eseguito del lavoro irrilevante per il goal.</p>
+<p>Backward è invece focalizzato sul goal, per questo motivo è più adatto al problem solving e la complessità di questa strategia può essere molto minore che lineare nella complessità di KB (Forward è lineare). </p>
+<h2 id="regola-di-risoluzione">Regola di risoluzione</h2>
+<p><strong>Forma normale congiuntiva (CNF)</strong>: forme di scrittura che utilizza congiunzione di disgiunzione di letterali (dove la disgiunzione di letterali è una clausa di Horn).</p>
+<blockquote>
+<p>(A ⋁ !B) ⋀ (B ⋁ !C ⋁ !B)</p>
+</blockquote>
+<p>La <strong>risoluzione</strong> è una regola di inferenza per CNF completa e corretta per la logia proposizionale.</p>
+<p><img src="Intelligenza Artificiale/immagini/l12-risoluzione.png" alt=""></p>
+<p>In pratica si va a togliere un <em>l<sub>i</sub></em> e <em>m<sub>j</sub></em> che sono tra loro complementari (lo stesso letterale sia negato che non).</p>
+<p>Questo procedimento esegue la verifica del modello perché vuol dire che se <em>L</em> e <em>M</em> sono vere e anche la proposizione che si deduce è vera, quindi vuol dire che il letterale tolto non influenzava la verità di <em>L</em> e <em>M</em>.</p>
+<p>La <strong>correttezza</strong> di questa regola è semplice, se tolgo dalla clausola <em>L</em> il letterale <em>l</em> e dalla clausola <em>M</em> il letterale <em>m</em> che è complementare a <em>l</em>, allora se <em>l</em> è vero allora <em>m</em> è falso e quindi <em>M</em> deve essere vero e non a causa di <em>m</em>. Se <em>l</em> è falso, allora <em>L</em> deve essere vero senza <em>l</em>. Il valore di <em>l</em> quindi non incide ne in una clausola ne nell’altra, quindi la sua eliminazione non altera il valore delle clausole.</p>
+<h3 id="conversione-in-cnf">Conversione in CNF</h3>
+<blockquote>
+<p>B<sub>1,1</sub> &lt;==&gt; (P<sub>1,2</sub> ⋁ P<sub>2,1</sub>)</p>
+</blockquote>
+<ol>
+<li><p>Eliminare il se e solo se</p>
+<blockquote>
+<p>(B<sub>1,1</sub> =&gt; (P<sub>1,2</sub> ⋁ P<sub>2,1</sub>)) ⋀ ((P<sub>1,2</sub> ⋁ P<sub>2,1</sub>) =&gt; B<sub>1,1</sub>)</p>
+</blockquote>
+</li>
+<li><p>Eliminare il =&gt; rimpiazzando A =&gt; B con !A ⋁ B</p>
+<blockquote>
+<p>(!B<sub>1,1</sub> ⋁ P_1,2 ⋁ P_2,1) ⋀ (!(P_1,2 ⋁ P_2,1) ⋁ B_1,1) </p>
+</blockquote>
+</li>
+<li><p>Spostare la negazione all&#39;interno delle parentesi usando le regole di De Morgan</p>
+<blockquote>
+<p>(!B<sub>1,1</sub> ⋁ P<sub>1,2</sub> ⋁ P<sub>2,1</sub>) ⋀ ((!P<sub>1,2</sub> ⋀ !P<sub>2,1</sub>) ⋁ B<sub>1,1</sub>) </p>
+</blockquote>
+</li>
+<li><p>Si applica la legge distrubutiva dell&#39;OR sull&#39;AND</p>
+<blockquote>
+<p>(!B<sub>1,1</sub> ⋁ P<sub>1,2</sub> ⋁ P<sub>2,1</sub>) ⋀ (!P<sub>1,2</sub> ⋁ B<sub>1,1</sub>) ⋀ (!P<sub>2,1</sub>) ⋁ B<sub>1,1</sub>) </p>
+</blockquote>
+</li>
+</ol>
+<p>A questo punto abbiamo la CNF.</p>
+<h3 id="algoritmo-risolutivo">Algoritmo risolutivo</h3>
+<p>La <strong>regola di risoluzione</strong> è le regola di inferenza precedentemente vista, l&#39;aloritmo di risoluzione è quello che applica più volte la regola di risoluzione per andare a risolvere il problema.</p>
+<p>L&#39;algoritmo funziona per contraddizione, cioè va a dimostrare che <em>KB ⋀ !𝜶</em> è insoddisfacibile.</p>
+<p>Se risolvendo KB ⋀ !𝜶 viene trovata la clausola vuota, allora vuol dire che KB ⋀ !𝜶 è insoddisfacibile e di conseguenza KB |= 𝜶.</p>
+<p>Da notare che l&#39;algoritmo dice se 𝜶 è conseguenza logica o meno dalla KB, senza fornire una prova del risultato.</p>
+<pre><code><span class="hljs-keyword">function</span> CP-Risoluzione(KB, 𝜶) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span> oppure <span class="hljs-literal">false</span>
+    clausole &lt;- insieme di clausole nella rappresentazione CNF di KB ⋀ !𝜶
+    <span class="hljs-keyword">new</span> &lt;- {}
+    <span class="hljs-keyword">loop</span> <span class="hljs-keyword">do</span>
+        foreach C_i C_j <span class="hljs-keyword">in</span> clausole <span class="hljs-keyword">do</span>
+            resolvents &lt;- CP-Risolvi(C_i, C_j)
+            <span class="hljs-keyword">if</span> resolvents contiene la clausola vuota <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+            <span class="hljs-keyword">new</span> &lt;- <span class="hljs-keyword">new</span> ∪ resolvents
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">new</span> ⊆ clausole <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+        clausole &lt;- clausole ∪ <span class="hljs-keyword">new</span>
+</code></pre><p><code>CP-Risolvi(C_i, C_j)</code> restituisce l&#39;insieme dei risolventi ottenuti applicando la regola di risoluzione in tutti i modi possibili per le due clausole. Questo perché data una coppia di clausole è possibile risolverle in più modi diversi. </p>
+<p>Per prima cosa è necessario convertire il tutto in CNF, quindi si applica la regola di risoluzione alle clausole risultati. </p>
+<p>Ogni coppia che contiene letterali complementari è risolta per produrre una nuovo clausola che viene aggiunta all’insieme.</p>
+<p>Il processo continua finché:</p>
+<ul>
+<li>non è più possibile aggiungere alcuna clausola, in questo caso KB non implica 𝜶</li>
+<li>la risoluzione applicata a due clausole da come risultato la clausola vuota, in questo caso KB implica 𝜶</li>
+</ul>
+<p>La clausola vuota, una disgiunzione senza alcun disgiunto è equivalente a <em>False</em> perché una disgiunzione è vera solo se è vero almeno uno dei disgiunti.</p>
+<h1 id="lezione-13-riduzione-2-e-logica-del-primo-ordine">Lezione 13 - Riduzione 2 e logica del primo ordine</h1>
+<p>La complessità dell&#39;algoritmo di risoluzione è esponenziale per il numero di simboli nella base di conoscenza e in 𝜶.</p>
+<h2 id="completezza-della-risoluzione">Completezza della Risoluzione</h2>
+<p><strong>Completezza</strong>: riesce a dedurre tutto quello che può essere dedotto dalla base di conoscenza.</p>
+<p>Il teorema di completezza per la risoluzione nella logica proposizionale è chiamato <strong>ground resolution theorem</strong>: se un insieme di clausole S è insoddisfacibile, allora la chiusura della risoluzione di tali clausole RC(S) contiene la clausola vuota.</p>
+<p>Nel nostro caso S è la base di conoscenza in ⋀ con la negazione di 𝜶.</p>
+<p><strong>insoddisfacible</strong>: non esite un modello per l&#39;insieme di clausole, ovvero non esiste una combinazione dei letterali che rende vero l&#39;insieme delle clausole.</p>
+<p>La dimostrazione di questo teorema si ottiene dimostrando che se la chiusura RC(S) non contiene la clausola vuota, allora S è soddisfacibile.</p>
+<p>Se la chiusura di S <strong>non contiene</strong> la clasusola vuota si può costruire un modello per S, perché se c&#39;è una clausola vuota vuol dire che c&#39;è una contrattiddizione e quindi non è possibile costruire un modello.</p>
+<p>Si può provare quindi a costruire un modello a partire dai vari letterali P<sub>1</sub>, ..., P<sub>k</sub> che compaiono in S.</p>
+<p>Quindi, per ogni P<sub>i</sub>:</p>
+<ul>
+<li>Se esiste una clausola in RC(S) contiene not(P<sub>i</sub>) e tale che tutti gli altri letterali della clausola sono falsi a causa dei valori di verità già assegnati ai P precedendi, allora assegna il valore di verità falso a P<sub>i</sub>.</li>
+<li>altrimenti assegna a P<sub>i</sub> vero.</li>
+</ul>
+<p>Questo perché sto cercando di creare un modello per RC(S) e ad ogni passo cerco un valore per P<sub>i</sub> in modo che non ci siano clausole che non sono soddisfatte.</p>
+<p>Tenendo presente che in RC(S) non c&#39;è la clausola vuota per ipotesi, rimane da dimostrare che tale procedura termina sempre e produce un modello per S.</p>
+<p>Questo si dimostra per induzione su i: supponiamo che sia possibile costruire il modello parziale per i simboli fino a P<sub>i-1</sub> e mostriamo che tale modello può essere esteso fino a P<sub>i</sub>.</p>
+<p><strong>Caso base: i = 1</strong></p>
+<p>In questo caso, in S non possono essere presenti sia P<sub>1</sub> sia not(P<sub>1</sub>), perché altrimenti l&#39;applicazione dell&#39;algoritmo di risuluzione non sarebbe terminata, questo perché le due clausole P<sub>1</sub> e not(P<sub>1</sub>) possono essere risolte con la clausola vuota. Quindi è presente solo o P<sub>1</sub> o not(P<sub>1</sub>) e di conseguenza P<sub>1</sub> vale falso se è presente not(P<sub>i</sub>), altrimenti vero. </p>
+<p>Questa scelta è vincolata perché stiamo cercando di costruire un modello per S. </p>
+<p><strong>Caso induttivo:</strong></p>
+<p>Consideriamo una clausola C in RC(S) che contiene P<sub>i</sub>, si hanno dei problemi ad assegnare un valore di verità a P<sub>i</sub> solo se C equivale a B ⋁ not(P<sub>i</sub>), con B clausola che contiene solo simboli P<sub>j</sub> con <em>j &lt; i</em>, cioè simboli ai quali ho già fissato un valore di verità, ed esiste C&#39; in RC(S) ed equivalente a B&#39; ⋁ P<sub>i</sub> con B&#39; clausola che contiene solamente simboli P<sub>j</sub> con <em>j &lt; i</em>.</p>
+<p>Il problema della scelta del valore è che, per rendere vera sia C che C&#39;, P<sub>i</sub> dovrebbe essere sia vero sia falso, e quindi non si sa cosa scegliere.</p>
+<p>Ma, se esistono queste due clasuole, in RC(S) deve essere presente anche la clausola B ⋁ B&#39; altrimenti RC(S) non è la chiusura, questo perché se riduco C con C&#39; ottengo B ⋁ B&#39;.</p>
+<p>Per l&#39;ipotesi induttiva, l&#39;assegnamento parziale fino a P<sub>i-1</sub> non può rendere falsa sia B che B&#39; (questo per come sono stati scelti i valori).</p>
+<p>Quindi, se B è falsa allora P<sub>i</sub> è falso e se invece B&#39; è falso allora P<sub>i</sub> è vero, ottenendo così un modello parziale fino all&#39;indice <em>i</em>.</p>
+<p>Quando <em>i</em> coincdice con <em>k</em> si ottiene un modello completo per <em>S</em> e di conseguenza <em>S</em> è soddisfacibile.</p>
+<h2 id="riassunto">Riassunto</h2>
+<p>Gli agenti logici applicano l&#39;inferenza ad una base di conoscenza per derivare nuova informazione e prendere decisioni.</p>
+<p>Forward e Backward chaining sono lineari, completi e corretti per le clausole di Horn, mentre la Risoluzione è completa e corretta, ma nel caso pessimo ha una complessità esponenziale.</p>
+<p>Manca però del potere espressivo.</p>
+<h2 id="pro-e-contro-della-logica-proposizionale">Pro e contro della logica proposizionale</h2>
+<p>La logica proposizionale è dichiarativa e i pezzi di sintassi corrispondono a fatti.</p>
+<p>Permette anche di esprimere infomrazione parziale/disgiuntiva/negata, al contrario di basi di dati o strutture dati dove vengon utilizzati solo i fatti.</p>
+<p>La logica Proposizionale è composizionale, il significato di B ⋀ P è conseguenza del significato di B e P, non ci sono valori di contesto che influenzano il valore di verità.</p>
+<p>Il significato di questa logica è <strong>indipendente dal contesto</strong>, al contrario del linguaggio naturale dove il significato dipende dal contesto.</p>
+<p>Tuttavia la potenza espressiva di questa logica è molto limitata.
+Ad esempio non si può esprimere &quot;le trappole causano la brezza in quadrati adiacenti se non scrivendo&quot; una sentenza per quadrato.</p>
+<h2 id="logica-del-primo-ordine">Logica del primo ordine</h2>
+<p>In quasta logica, come nel linguaggio naturale, si assume che il mondo contenga:</p>
+<ul>
+<li><strong>Oggetti</strong>: persone, case, ecc...</li>
+<li><strong>Relazioni</strong>: predicati che mettono in relazione gli oggetti tra di loro. Pssono essere unarie (proprietà) o n-arie. Es: è ventosa, è andiacente a, ...</li>
+<li><strong>Funzioni</strong>: relazioni particolari che hanno un solo valore per ogni input. Es: miglior amico di, padre di, ...</li>
+</ul>
+<h3 id="sintassi">Sintassi</h3>
+<ul>
+<li><strong>Costanti</strong>: rappresentano gli oggetti come: ReGiacomo, 2, UP...</li>
+<li><strong>Predicati</strong>: rappresentano le varie relazioni: Fratello, &gt;,...</li>
+<li><strong>Funzioni</strong>: Sqrt, GambaSinistraDi, ...</li>
+<li><strong>Variabili</strong>: x,y,a...</li>
+<li><strong>Connettivi</strong>: ⋁, ⋀</li>
+<li><strong>Ugualianza</strong>: =</li>
+<li><strong>Quantificatori</strong>: ∀, ∃</li>
+</ul>
+<p>Ogni simbolo di funzione e di predicato ha una sua specifica arietà che specficia il numero di parametri che riceve</p>
+<h3 id="sentenze-atomiche-e-complesse">Sentenze atomiche e complesse</h3>
+<p><strong>Termine</strong>: <em>funzione(termine<sub>1</sub>,...)</em> o costante o variabile, cioè un&#39;espressione logica che si riferisce ad un oggetto.</p>
+<p>Un termine complesso è un modo di dare un nome ad un oggetto combinando uno o più termini semplici utilizzando una funzione.</p>
+<p>Consideriamo un termine <em>f(t<sub>1</sub>, ..., t<sub>n</sub>)</em>, il simbolo di funzione <em>f</em> si riferisce ad una qualche funzione del modello che chiameremo <em>F</em>. I termini usati come argomento danno un riferimento agli oggetti del dominio che indicheremo con <em>d<sub>1</sub> ... d<sub>n</sub></em>, nella sua interezza il termine indica quindi l’oggetto che corrisponde al valore della funzione <em>F</em> applicata a <em>d<sub>1</sub> ... d<sub>n</sub></em>.</p>
+<p><strong>Sentenza (formula) atomica</strong>: <em>predicato(termine<sub>1</sub>, termine<sub>2</sub>, ...)</em> o <em>termine<sub>1</sub> = termine<sub>2</sub></em>. Permettono di asserire dei fatti.</p>
+<p>Una formula atomica è vera in un dato modello sotto una determinata interpretazione se la relazione a cui far riferimento il simbolo di predicato è verificata tra gli oggetti a cui fanno riferimento gli argomenti.</p>
+<p>Le <strong>sentenze complesse</strong> sono delle combinazioni di sentenze atomiche create utilizzando i connettivi logici.</p>
+<h3 id="verit-nella-logica-del-primo-ordine">Verità nella logica del primo ordine</h3>
+<p>Le sentenze sono vere rispetto ad un <strong>modello</strong> e ad una <strong>interpretazione</strong>.</p>
+<p>Il <strong>modello</strong> contiene degli oggetti (elementi di dominio), delle relazioni definite tra loro e delle funzioni che possono esservi applicate.</p>
+<p>L&#39;<strong>interpretazione</strong> invece specifica i referenti per le costanti (oggetti), i predicati (relazioni) e le funzioni (relazioni funzionali). Forniscono cioè le informazioni di contesto. L&#39;interpretazione specifica quindi una corrispondenza tra i simboli e il modello.</p>
+<p>Una sentenza atomica <em>predicato(termine<sub>1</sub>, ..., termine<sub>n</sub>)</em> è vera se e solo se gli oggetti riferiti da <em>termine<sub>1</sub>, ..., termine<sub>n</sub></em> sono nella relazione definita dal predicato. </p>
+<p>Segue che non è possibile andare a calcolare le conseguenze logiche enumerando tutti i modelli possibili, perché ci sono troppe combinazioni possibili.</p>
+<h3 id="quatificatori-universali-e-esistenziali">Quatificatori universali e esistenziali</h3>
+<p>Con il quantificatore ∀ è possibile definrire il concetto che un predicato P è vero per ogni <em>x</em> in un modello <em>m</em> se e sole se P è vero  per ogni possibile valore di <em>x</em>.</p>
+<blockquote>
+<p>Chiunque è a Padova è intelligente</p>
+<p>∀x Luogo(x,Padova) =&gt; Intelligente(x)</p>
+</blockquote>
+<p>In prima apporsimazione l&#39;esistenza è equivalente alla congiunzione di istanziazioni di P. (Tutti devono essere veri)</p>
+<p>Se nel modello è presente anche un solo simbolo di funzione, l&#39;enumerazione delle possibili istanziazioni di P è infinita.</p>
+<p>Tipicamente =&gt; è il connettivo principale utilizzato con i ∀, l&#39;uso di ⋀ è tipicamente sbagliato:</p>
+<blockquote>
+<p>∀x Luogo(x,Padova) ⋀ Intelligente(x)</p>
+</blockquote>
+<p>vuol dire che chiunque è a Padova e chiunque è intelligente, che non è la stessa cosa che si voleva dire.</p>
+<p>Diverso è il discorso per il quantificatore esistenziale ∃.</p>
+<p><em>∃x P</em> è vero in un modello <em>m</em> se e solo se P è vero essendo <em>x</em> un qualche possibile valore di un oggetto nel modello.</p>
+<blockquote>
+<p>Qualcuno a Bologna è intelligente</p>
+<p>∃x Luogo(x,Bologna) ⋀ Intelligente(x)</p>
+</blockquote>
+<p>In prima apporsimazione l&#39;esistenza è equivalente alla disgiunzione di istanziazioni di P. (Basta che ce ne sia uno di vero).</p>
+<p>Anche in questo caso l&#39;enumerazione con una funzione è infinita.</p>
+<p>Il connettivo principale da usare con l&#39;esistenza è ⋀ e tipicamente utilizzare =&gt; è sbagliato.</p>
+<h4 id="propriet-dei-quantificatori-">Proprietà dei quantificatori:</h4>
+<ul>
+<li>∀x ∀y è commutativo, così come ∃x ∃y;</li>
+<li>∃x ∀y non è la stessa cosa di ∀y ∃x.</li>
+</ul>
+<p><strong>Dualità</strong>: ogni quantificatore può essere espresso usando la negazione dell&#39;altro.</p>
+<blockquote>
+<p>∀x Piace(x,Gelato) == !∃x !Piace(x,Gelato)</p>
+</blockquote>
+<h3 id="uguaglianza">Uguaglianza</h3>
+<p>Una sentenza atomica può essere anche un&#39;uguaglianza tra due termini.</p>
+<p><em>termine<sub>1</sub> = termine<sub>2</sub></em> è vero per una data interpretazione se e solo se <em>termine<sub>1</sub></em> e <em>termine<sub>2</sub></em> si riferiscono allo stesso oggetto.</p>
+<h1 id="lezione-14-inferenza-nella-logica-del-primo-ordine">Lezione 14 - Inferenza nella logica del primo ordine</h1>
+<p>Per poter fare inferenza è necessario trovare un modo per trattare i vari quantificatori.</p>
+<h2 id="istanziazione-unviersale">Istanziazione unviersale</h2>
+<p>Nel caso del quantificatore universale è possibile dare una rappresenteazione con un enumerazione di tutte le possibili istanzazioni del termine in ⋀ tra loro.</p>
+<p>In questo caso si va a sostiturire ogni vabiarbile <em>v</em> con i vari <strong>termini ground</strong> (termini in cui non compaiono variabili).</p>
+<p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-1.png" alt=""></p>
+<p>Il risultato diella trasfomrazione viene rappresentato con <code>Subst(𝜃,𝜶)</code> e indica il risultato dell’applicazione della sostituzione 𝜃 alla formula 𝜶.</p>
+<p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-2.png" alt=""></p>
+<p>Se non ci sono simboli di funzione allora il numero di istanziazioni è finito.</p>
+<h2 id="istanziazione-esistenziale">Istanziazione esistenziale</h2>
+<p>L&#39;idea è quella di andare a generare una nuova costante <em>k</em> che non appartiene alla base di conoscenza che va a prende il posto del simbolo che soddisfa l&#39;esistenza.</p>
+<p>Non è noto qual&#39;è l&#39;entità associata a <em>k</em>, ma sappiamo che <em>k</em> riferisce un&#39;entità che soddisfa la condizione esistenzale.</p>
+<p>Questo perché la formula esistenziale afferma che esiste un qualche oggetto che soffisfa una certa condizione.</p>
+<p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-3.png" alt=""></p>
+<p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-4.png" alt=""></p>
+<p>Se una sentenza contiene entrambi i quantificatori, in particolare <em>∀y ∃x</em>, non è possibile utilizzare una singola costante di <strong>Skolem</strong> per istanziare <em>x</em>, questo perché dovrei avere infinite costanti, in questo caso viene usata una <strong>funzione di Skolem</strong> che genera le varie costanti. (<em>verrà approfondito più avanti</em>)</p>
+<p>Mentre l&#39;istanziazione di un quantificatore universale può essere applicata più volte per aggiungere nuove sentenza alla base di conoscenza e la nuova KB è logicamente equivalente a quella vecchia.</p>
+<p>L&#39;istanziazione esistenziale può essere applicata una sola volta per sentenza esistenziale e la nuova KB non è equivalente a quella vecchia, ma è soddisfacibile se e solo se la vecchia KB era soddisfacibile.</p>
+<h2 id="riduzione-alla-inferenza-proposizionale">Riduzione alla inferenza proposizionale</h2>
+<p>L&#39;idea è quella di istanziare i vari quantificatori, per poi considerare i vari predicati applicati ai termini ground come se fossero dei letterali nella logica proposizionale.
+Questo procedimento prende il nome di <strong>proposizionalizzazione</strong>.</p>
+<p>L&#39;istanziazione del quantificatore esistenziale avviene utilizzando una costante di Skolem, mentre per quello universale avviene applicato tutte le possibili sostutizioni di termini ground presenti nella KB.</p>
+<p>Il tutto funziona finché non abbiamo simboli di funzione, perché in quel caso possono essere generati infiniti simboli.</p>
+<p>Una sentenza ground è conseguenza logica della nuova KB se e solo se è conseguenza logica della KB originaria.</p>
+<p>Di fatto, ogni KB espressa nella logica di primo ordine può essere proposizionalizzata in modo da preservarne le conseguenze logiche.</p>
+<p>L&#39;idea è quindi quella di andare a proposizinalizzare sia KB che la query, applicare la riduzione e restituire il riusltato.</p>
+<p><strong>Teorema di Herbrand</strong>: se una sentenza 𝜶 è conseguenza logica di una FOL (logica di primo ordine) KB essa è conseguenza logica di un sottoinsieme finito della KB in versione proposizionale.</p>
+<p>Per ottenere ciò prima si considerano solo le costanti della FOL-KB e si verifica se 𝜶 è conseguenza logica, se questa non lo è si prendono in considerazioni anche i termini ground generati da una sola invocazione di funzioni, e se anche in questo caso non è conseguenza logica, si considerano fino a due invocazioni di funzioni, e così via finché non si trova che 𝜶 è conseguenza logica.</p>
+<p>Quindi questo metodo di fare inferenza è sia <strong>corretto</strong> che <strong>completo</strong> per le basi di conoscenza che non hanno funzioni.</p>
+<p>Prima o poi questo algorito riesce a dimostrare che 𝜶 è conoscenza logica, ma se 𝜶 non è conseguenza logica l&#39;algoritmo non temrina.</p>
+<p>Con <em>p</em> predicati <em>k</em>-ari e <em>n</em> costanti, ci sono <em>p </em> n<sup>k</sup>* istanziazioni, considerando che poi l&#39;algoritmo di riduzione ha complessità esponenziale, la situazione è disastrosa.</p>
+<p>C&#39;è anche un&#39;altro problema con la proposizionalizzazione, legato al fatto che dei quantificatori universali generano tanti fatti che sono irrilevanti.
+Conviene quindi andare ad applicare l&#39;istanziazione universale solo quanddo è strettamente necessario.</p>
+<h2 id="unificazione">Unificazione</h2>
+<p>Si può ottenere l&#39;inferenza immediatamente se è possibile trovare una sostituzione 𝜃 tale che <code>Re(x)</code> e <code>Avido(x)</code> corrispondano a<code>Re(Giovanni)</code> e <code>Avido(y)</code>.</p>
+<p><img src="Intelligenza Artificiale/immagini/l14-unificazione-1.png" alt=""></p>
+<p>Questo perché può capitare che variabili che si trovano in &quot;<em>scope</em>&quot; diversi abbiano lo stesso nome.</p>
+<p>L&#39;unificazione è quel processo che trova le sostituzioni che rendono identiche espressioni logiche diverse.</p>
+<p>Applicando l&#39;unificazione può capitare che si ottenga solamente l&#39;uguaglianza sintattica, con dei predicati che contengono termini che non sono ground. 
+In questo caso l&#39;algoritmo funziona comunque, tantè che il predicato ottenuto appplicando la sostituzione rappresenta un sottinsieme dei termini ground, che può essere anche infinito.</p>
+<p>Con le sostituzioni che hanno dei termini non ground c&#39;è un&#39;ordinanento parziale dato dalla quantità di termini ground generabili a partire dalle varie sostituzioni.</p>
+<p>Quando c&#39;è la scelta tra più sostituzioni conviene tenere quella più generale in modo da avere maggiori possibilità di scelta (<strong>most general unifier</strong>).</p>
+<p>Si dice che una sostituzione 𝜃<sub>1</sub> è più generale di una sostituzione 𝜃<sub>2</sub> se 𝜃<sub>1</sub> impone meno vincoli sul valore delle variabili, per ogni coppia di di espressioni unificabili esiste un singolo unificatore più generale MGU.</p>
+<p>In questo modo è possible rimandare il più possibile l&#39;istanziazione del quantificatore universale.</p>
+<h3 id="algoritmo-di-unificazione">Algoritmo di unificazione</h3>
+<p><strong>Standardizzazione separata</strong>: può capitare che in due formule distinte ci siano variabili con lo stesso nome, durante il processo di unificazione questo può creare dei problemi, è necessario quindi standardizzare prima le formule in modo che non ci siano conflitti sul nome delle variabili.</p>
+<p>Dati due predicati:</p>
+<p><em>Predicato<sub>1</sub>(arg<sub>1,1</sub>, ...arg<sub>1,n</sub>)</em></p>
+<p><em>Predicato<sub>2</sub>(arg<sub>2,1</sub>, ...,arg<sub>2,m</sub>)</em></p>
+<p>Per poter unificare è necessario che i due predicati siano uguali sintatticamente e che abbiano la stessa lunghezza (n = m).</p>
+<p>Bisogna poi porre uguali tra loro i vari argomenti dei predicati, tenendo in considerazione che la stessa variabile può compararire in più argomenti dello stesso predicato.</p>
+<p><img src="Intelligenza Artificiale/immagini/l14-unificazione-alg.png" alt=""></p>
+<p>Questo algoritmo ritorna sempre la <strong>MGU</strong></p>
+<p>Due sostituzioni possono essere tra loro composte, applicando prima una sostituzione all&#39;altra e poi andando ad aggiungere alla prima gli elementi della seconda sostituzione.</p>
+<p>Per poter comporre due sostsituzioni è necessario che queste siano compatibili tra di loro.</p>
+<h1 id="lezione-15-gmp-e-forward-chaining">Lezione 15 - GMP e Forward Chaining</h1>
+<h2 id="modus-ponens-generalizzato">Modus Ponens Generalizzato</h2>
+<p><img src="Intelligenza Artificiale/immagini/l15-gmp.png" alt=""></p>
+<p>Se i vari <em>p&#39;<sub>i</sub>𝜃</em> sono uguali ai <em>p<sub>i</sub>𝜃</em> per una determinata sostituzione 𝜃 allora si possono ridurre ad un unico <em>q𝜃</em>.</p>
+<p>A noi interessa usare la sostituzione più generale possibile in quanto a noi vogliamo arrivare ad avere il maggior numero possibile di soluzioni ground.</p>
+<p>GMP viene utilizzato con una base di conoscenza in clausole definite.</p>
+<p>Le <strong>clausole definite</strong> del primo ordine sono le clausole di Horn riportate nella logica proposizionale, con la differenza che possono includere delle variabili, le quali vengono considerate quantificate universalmente, dal momento che quelle quantificate esistenzialmente vengono sostituite con una costante di Skolem.</p>
+<h3 id="correttezza-di-gmp">Correttezza di GMP</h3>
+<p>Bisogna dimostrare che se <em>p&#39;<sub>1</sub>...p&#39;<sub>n</sub></em> e <em>p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> =&gt; q</em> allora si può inferire <em>q𝜃</em>, dato che <em>p&#39;<sub>i</sub>𝜃 = p<sub>i</sub>𝜃</em> per ogni <em>i</em>.</p>
+<p>Lemma: per ogni clausola definita <em>p</em> abbiamo <em>p |= p𝜃</em> per mezzo di UI:</p>
+<ol>
+<li><em>p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> =&gt; q |= (p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> =&gt; q)𝜃 = p<sub>1</sub>𝜃 ⋀ ... ⋀ p<sub>n</sub>𝜃 =&gt; q𝜃</em></li>
+<li><em>p&#39;<sub>1</sub> ... p&#39;<sub>n</sub> |= p&#39;<sub>1</sub> ⋀ ... ⋀ p&#39;<sub>n</sub> |= p&#39;<sub>1</sub>𝜃 ⋀ ... ⋀ p&#39;<sub>n</sub>𝜃</em></li>
+</ol>
+<p>Da 1 e 2 si riesce a ricarvare <em>q𝜃</em> usando il Modus Ponens ordinario.</p>
+<h3 id="esempio-di-base-di-conoscenza">Esempio di base di conoscenza</h3>
+<p><img src="Intelligenza Artificiale/immagini/l15-esempio-1.png" alt=""></p>
+<p><img src="Intelligenza Artificiale/immagini/l15-esempio-2.png" alt=""></p>
+<h2 id="forward-chaining-in-fol">Forward Chaining in FOL</h2>
+<p>L&#39;algoritmo è analogo a quello utilizzato nella logica proposizionale con la differenza che c&#39;è da tener conto della presenza delle variabili e che queste vengono istanziate il più tardi possibile.</p>
+<p>Partendo dai fatti noti si fanno scattare tutte le regole presenti nella KB le cui premesse sono soddisfatte, aggiungendo le varie conclusioni ai fatti noti. Si ripete il processo finché non si trova una risposta oppure non è più possibile aggiungere fatti.</p>
+<p>La base di conoscenza è in forma di Horn, con i quantificatori esistenziali istanziati e i quantificatori universali non ancora istanziati.</p>
+<p><img src="Intelligenza Artificiale/immagini/l15-folfc.png" alt=""></p>
+<p><strong>Standardizzazione separata</strong>: serve per evitare conflitti con i nomi delle variabili.</p>
+<h3 id="esempio-di-applicazione">Esempio di applicazione</h3>
+<p><img src="Intelligenza Artificiale/immagini/l15-folfc-alb.png" alt=""></p>
+<h3 id="considerazioni">Considerazioni</h3>
+<p>L&#39;algoritmo è <strong>corretto</strong> e <strong>completo</strong> per le clausole definite di primo ordine, questo perché essendo clausole definite l&#39;esecuzione dell&#39;algoritmo termina sempre.</p>
+<p>La correttezza deriva dal fatto che viene semple applicato il Modus Ponens Generalizzato che è corretto.</p>
+<p>Se ci sono solo clausole definite del primo ordine è non c&#39;è nessuna funzione (<strong>datalog</strong>) allora FC termina in un numero poninomiale di iterazioni: <em>p\</em>n<sup>k</sup><em> che coincide con il massimo numero di fatti ground distinti che possono essere presenti nella KB. (</em>p<em> predicati </em>k<em>-ari e </em>n* costanti).</p>
+<p>In generale l&#39;algoritmo può non terminare se 𝜶 non è una conseguenza logica e questo è inevitabile perché il problema è semi-decidibile.</p>
+<p>Allo stesso modo la presenza di funzioni porta a generare un numero possibilmente infinito di clausole.</p>
+<p>Si può osservare che non c&#39;è bisogno di matchare una regola alla iterazione <em>k</em> se non è stata aggiunta una premessa alla iterazione <em>k-1</em>.</p>
+<p>Quindi conviene matchare ogni regola le cui premesse contengono un letterale appena aggiunto, questo per ridurre il numero di operazioni di match, dal momento che si tratta di un&#39;operazione costosa.</p>
+<p>Per velocizzare il match si può <strong>indicizzare</strong> la base di conoscenza in modo da permette il recupero di fatti conosciuti in <em>O(1)</em>.</p>
+<p>Il matching di premesse congiuntive rispetto a fatti conosciuti è un problema NP-hard.</p>
+<p>Da questo ne segue che FC è lagarmente utilizzato in basi di conoscenza deduttive (cioè che non hanno funzioni).</p>
+<h1 id="lezione-16-backward-chaining-e-prolog">Lezione 16 - Backward Chaining e Prolog</h1>
+<h2 id="backward-chainging">Backward Chainging</h2>
+<p><strong>manca la parte introduttiva</strong></p>
+<p><img src="Intelligenza Artificiale/immagini/l16-backward.png" alt="a"></p>
+<p>L&#39;algoritmo ritorna un generatore di sostituzioni e il calcolo parte dalla generazione degli OR.</p>
+<p>Per ogni regola che è rilevante per il predicato convinlto nell&#39;obiettivo, viene prima fatta la standardizzazione e poi per tutte le sostituzioni che sono state generate dagli AND.</p>
+<p>...</p>
+<p>La complessità in spazio è lineare con la dimensione della prova ma c&#39;è il rischio di effettuare cicli infiniti, è quindi necessario andare a controllare che il goal corrente non sia già nella pila dei goal.</p>
+<p>L&#39;algoritmo può essere inefficente a causa di sottogoal ripetuti, conviene tuinti tenere una cache che contiene i risultati già calcoalti.</p>
+<p>Prolog non utilizza questi due miglioramenti.</p>
+<h2 id="programmazione-logica-prolog">Programmazione Logica: Prolog</h2>
+<p>Come anticipato utilizza backward chaining con clausole di Horn.</p>
+<p>Un programma Prolog è un&#39;insieme di clausole, la nostra base di conoscenza.</p>
+<p>Le clausole sono scritte &quot;al contrario&quot;:</p>
+<pre><code>test :- letterale_1, letterale_2, ..., letterale_n.
+
+<span class="hljs-function"><span class="hljs-title">criminal</span><span class="hljs-params">(X)</span></span> :- <span class="hljs-function"><span class="hljs-title">american</span><span class="hljs-params">(X)</span></span>, <span class="hljs-function"><span class="hljs-title">weapon</span><span class="hljs-params">(Y)</span></span>, <span class="hljs-function"><span class="hljs-title">sells</span><span class="hljs-params">(X,Y,Z)</span></span>, <span class="hljs-function"><span class="hljs-title">hostile</span><span class="hljs-params">(Z)</span></span>.
+</code></pre><p>Da notare che le vaariabili sono scritte in maiuscolo e i predicati tutti in minuscolo.</p>
+<p>I fatti vengono rappresentati come predicati senza implicazione.</p>
+<pre><code><span class="hljs-function"><span class="hljs-title">american</span><span class="hljs-params">(West)</span></span>.
+</code></pre><p>Una volta inserita la base di conoscenza vengono inviate delle query al programma. La ricerca in backward viene fatta real time.</p>
+<p>Trammite <strong>open coding</strong> può essere migliora l&#39;unificazione diminuendo il tempo necessario alla ricerca delle sostituzioni.</p>
+<p>Prolog esegue il backward chaining in <em>depth first, left to right</em>. Questo è importante per vari motivi, ad esempio con una regola ricorsiva è necessario definire prima il caso base e poi l&#39;invocazione ricorsiva.</p>
+<p>È possibile usare l&#39;operatore <code>is</code> per assegnare un valore a delle variabili e di utilizzare alcune espressioni aritmetiche.</p>
+<p><strong>assunzione del mondo chiuso</strong>: tutto quello che fallisce risulta essere negato. Se la dimostrazione che la query sia implicata dalla KB fallisce, allora la query viene considerata come falsa.</p>
+<h3 id="esempio-di-programma">Esempio di programma</h3>
+<pre><code><span class="hljs-function"><span class="hljs-title">append</span><span class="hljs-params">([],Y,Y)</span></span>.
+<span class="hljs-function"><span class="hljs-title">append</span><span class="hljs-params">([X|L], Y, [X|Z])</span></span> :- <span class="hljs-function"><span class="hljs-title">append</span><span class="hljs-params">(L,Y,Z)</span></span>.
+</code></pre><p>L&#39;operatore <code>|</code> su una lista separa il primo elemento dal resto della lista.</p>
+<p>La prima clausola dice che l&#39;append ad una lista vuota di una variabile da come risultato la variabile stessa.</p>
+<p>La seconda regola dice che data una lista con almeno un elemento e una lista Y, la concatenazione è una lista che inizia co il primo elemento e che continua con una lista. Questa lista è ottenuto partendo concatenando il resto della prima lista e la lista <code>Y</code>. </p>
+<p>Quindi se <code>Z</code> è l&#39;append di <code>L</code> con la lista <code>Y</code>, <code>[X|Z]</code> è l&#39;append di <code>[X|L]</code> con <code>Y</code>.</p>
+<p>Su questa base di conoscenza è possibile fare la query <code>append(A,B,[1,2])?</code>, cioè chiedere se <code>[1,2]</code> è la concatenazione di <code>A</code> e <code>B</code>.</p>
+<p>Prolog esegue quindi l&#39;unificazione secondo l&#39;ordine in cui compaiono le clausole:</p>
+<pre><code>append(A,B,<span class="hljs-string">[1,2]</span>)?
+append(<span class="hljs-string">[]</span>,Y,Y)
+
+𝜃 = {A/<span class="hljs-string">[]</span>, B/Y, Y/<span class="hljs-string">[1,2]</span>}
+</code></pre><p>Vengono però ritornate solamente delle sostituzioni che hanno variabili della query, quindi <code>𝜃 = {A/[], B/[1,2]}</code>.</p>
+<p>Dopodiché si continua a cercare, assumendo che quelle già valutate siano fallite, in modo da trovare altre soluzioni</p>
+<pre><code><span class="hljs-keyword">append</span>(A,B,[1,2])?
+<span class="hljs-keyword">append</span>([X|<span class="hljs-keyword">L</span>], Y, [X|Z]) :- <span class="hljs-keyword">append</span>(<span class="hljs-keyword">L</span>,Y,Z).
+
+𝜃_2 = {A/[X|<span class="hljs-keyword">L</span>], B/Y, X/1, Z/[2]}
+
+Il nuovo goal diventa quindi:
+
+<span class="hljs-keyword">append</span>(<span class="hljs-keyword">L</span>,Y,[2])? <span class="hljs-comment">//Adesso si riparte da capo con il processo di ricerca</span>
+<span class="hljs-keyword">append</span>([],Q,Q) 
+
+𝜃_2,1 = {<span class="hljs-keyword">L</span>/[], Y/Q, Q/[2]} = {<span class="hljs-keyword">L</span>/[], Y/[2]}
+
+Viene quindi composta 𝜃_2 con 𝜃_2,1
+
+𝜃_2 𝜸 𝜃_2,1 = {A/[1|[]], B/[2]} = {A/[1], B/[2]}
+
+Dopodiché assumo falsa <span class="hljs-keyword">la</span> clausola usata <span class="hljs-keyword">e</span> ne provo un'altra
+
+<span class="hljs-keyword">append</span>(<span class="hljs-keyword">L</span>,Y,[2])?
+<span class="hljs-keyword">append</span>([X|F], <span class="hljs-keyword">G</span>, [X|Z]) :- <span class="hljs-keyword">append</span>(F,<span class="hljs-keyword">G</span>,Z)
+
+𝜃_2,2 = {<span class="hljs-keyword">L</span>/[X|F], Y/<span class="hljs-keyword">G</span>, [X|Z]/[2]} = {<span class="hljs-keyword">L</span>/[2|F], Y/<span class="hljs-keyword">G</span>, X/2, Z/[]}
+
+Il nuovo goal diventa quindi: 
+<span class="hljs-keyword">append</span>(F,<span class="hljs-keyword">G</span>,[])? <span class="hljs-keyword">e</span> si riparte da capo
+<span class="hljs-keyword">append</span>([], K, K)
+
+𝜃_4 = {F/<span class="hljs-keyword">G</span>, <span class="hljs-keyword">G</span>/K, K/[]} = {F/<span class="hljs-keyword">G</span>, <span class="hljs-keyword">G</span>/[]}
+
+Combinando 𝜃_4 <span class="hljs-keyword">e</span> 𝜃_2_2 = {...}
+
+Bisogna poi assumere falsa <span class="hljs-keyword">la</span> prima clausola <span class="hljs-keyword">e</span> provare con <span class="hljs-keyword">la</span> seconda.
+Durante <span class="hljs-keyword">la</span> ricerca con <span class="hljs-keyword">la</span> seconda non si riesce a trovare una sostituzione, <span class="hljs-keyword">l</span>'algoritmo quindi temrina.
+</code></pre><p><em>Tutte le ricerche dovrebbero essere standardizzate con un pedice e non con le lettere, per motivi pratici questo non viene fatto nell&#39;esempio.</em></p>
+<p>Le variabili della query possono essere istanziate a piacere. Ad esempio alla query <code>append([],[1],[1])?</code> Prolog risponde con un <code>True</code>.</p>
+<h1 id="lezione-17">Lezione 17</h1>
+<pre><code><span class="hljs-function"><span class="hljs-title">tedge</span><span class="hljs-params">(a,X)</span></span>
+
+<span class="hljs-function"><span class="hljs-title">findall</span><span class="hljs-params">(X,tedge(a,X)</span></span>, R).
+
+R = [c,d,b]
+
+<span class="hljs-function"><span class="hljs-title">ledge</span><span class="hljs-params">(A,B)</span></span> :- <span class="hljs-function"><span class="hljs-title">edge</span><span class="hljs-params">(A,B)</span></span>
+<span class="hljs-function"><span class="hljs-title">ledge</span><span class="hljs-params">(A,B)</span></span> :- <span class="hljs-function"><span class="hljs-title">edge</span><span class="hljs-params">(A,C)</span></span>, <span class="hljs-function"><span class="hljs-title">ledge</span><span class="hljs-params">(C,B)</span></span>
+
+operatore di cut ! per evitare di valutare le clausole successive
+</code></pre><h1 id="lezione-18-risoluzione-in-fol">Lezione 18 - Risoluzione in FOL</h1>
+<p>Anche in FOL è possibile applicare la regola di risoluzione, con la differenza che vengono ridotti due predicati, che una volta unificati sono tra loro complementari.</p>
+<h2 id="conversione-a-cnf">Conversione a CNF</h2>
+<p>Per poter applicare la risoluzione è necessario che la base di conoscenza sia in CNF.</p>
+<p>Per passare alla CNF:</p>
+<ol>
+<li>Eliminare le implicazioni.</li>
+<li>Spostare la negazione all&#39;interno, tenendo conto dei vari quantificatori che possono essere negati.</li>
+<li>Standardizzare le variabili.</li>
+<li><strong>Skolemizzare</strong>: ogni variabile esistenziale viene sostituita con una costante di Skolem. Se la variabile esistenziale è all&#39;interno di un quantifiatore esistenzale è necessario utilizzare una <strong>funzione di Skolem</strong>, che va a sostituire tutte le variabili esistenziali che sono all&#39;interno di un qunatificatore universale.</li>
+<li>Rimuovere i quantificatori universali.</li>
+<li>Distribuire ⋀ su ⋁.</li>
+</ol>
+<p><strong>immagine 1 e 2</strong></p>
+<p>Se un quantificatore esistenziale si trovata all&#39;interno di due quantificatori esistenziali <em>∀x,q</em>, le funzioni di Skolem devono ricevere due parametri <em>F(x,q)</em>.</p>
+<p>L&#39;algoritmo di inferenza rimane sempre lo stesso, per provare KB|=𝜶, si cerca di provare KB⋁!𝜶, se viene generata la clausola vuota, allora KB|=𝜶.</p>
+<h2 id="strategie-di-appplicazione-della-regola-di-risoluzione">Strategie di appplicazione della regola di risoluzione</h2>
+<p>Nella logica proposizionale si può puntare a raggiungere un punto fisso per provare a generare la clausola vuota, tuttavia applicare questa strategia nella logica del primo ordine porta ad un&#39;esplosione combinatoria.</p>
+<p>È improtante dimostrare la completezza di queste strategie.</p>
+<ul>
+<li><strong>Unit clause</strong>: si <em>preferisce</em> effettuare la risoluzione con una delle sentenze costituite da un singolo letterale, in modo da avere diminuire la dimensione delle clausola risolvente. Questa strategia è <strong>completa</strong> perché preferisce la clausola unitaria, se non è possibile si continua in modo normale.</li>
+<li><strong>Unit Resolution</strong>: si esegue la risoluzione coinvolgendo <strong>sempre</strong> una clausola unitaria (<strong>incompleta</strong> in generale, ma completa per le clausole di Horn).</li>
+<li><strong>Set of support</strong>: utilizza un set di supporto dal quale vengono prelevate le sentenze e dove venogno posti i vari risolventi. Inizialmente il set di supporto è composto dal goal (!𝜶). L&#39;idea è quella di effettuare delle risoluzioni che sono utili per arrivare alla clausola vuota. <strong>Completo</strong> perché vengono fatte solamente delle scelte che portano alla risoluzione.</li>
+<li><strong>Input resolution</strong>: combina sempre una sentenza di input (KB e Query) con il risolvente corrente. <strong>Incompleta</strong>.</li>
+<li><strong>Linear resolution</strong>: come l&#39;input resolution ma ammette anche la combinazione del risolvente con uno dei suoi avi, ottenendo così una strategia <strong>completa</strong>.</li>
+<li><strong>Subsumption</strong>: elimina tutte le sentenze che sono <em>subsumed</em> (più specifiche di altre), in modo da diminuire il numero di clausole da gestire. Es: se ho sia <em>P(A)</em> che <em>P(x)</em>, posso rimuovere la clausola <em>P(A)</em>.</li>
+</ul>
+<p>In ogni caso se la KB contiene una funzione e non implica 𝜶, allora l&#39;algoritmo non termina. </p>
+<h2 id="uguaglianza">Uguaglianza</h2>
+<p>Ci sono 3 approcci diversi per trattare l&#39;uguaglianza:</p>
+<ol>
+<li><strong>Assiomatizzazione</strong>: si aggiungono degli assiomi che descrivono le proprietà dell&#39;uguaglianza ed assiomo opportuni per ogni predicato e funzione. Questa è la stategia più corretta a livello logico, però dal punto di vista computazinale è poco pratico.</li>
+<li><strong>Demodulation</strong> o <strong>Paramodulation</strong>: se <em>x=y</em> e <em>Unify(x,z) = 𝝝</em> allora rimpiazzo <em>z</em> con <em>SUBST(𝝝,y)</em>.</li>
+<li><strong>Estensione</strong> dell&#39;algoritmo di unificazione: i termini equivalenti vengono unificati in un unico termine.</li>
+</ol>
+<h2 id="completezza-della-risoluzione">Completezza della Risoluzione</h2>
+<p><strong>immagine3</strong></p>
+<p>Non vediamo la dimostrazione completa.</p>
+<h2 id="riassinto">Riassinto</h2>
+<ul>
+<li>La proposizionalizzazione e l&#39;uso dell&#39;unficazione permetteno di evitare l&#39;istanziazione delle variabili coinvolte in una prova.</li>
+<li>Il modus ponens generalizzato usa l&#39;unificazione e permette l&#39;applicazione di forward e backward chaining su clausole definite.</li>
+<li>GMP è completo per le clausole definite, per dei Datalog il problema è sempre decidibile.</li>
+<li>Forward Chaining è completo e polinomiale per i Datalog, però effettua inferenze in modo indiscriminato.</li>
+<li>Backward Chaining è utilizzato in Programmazione Logica e viene &quot;rinforzato&quot; con delle opportune tecniche di compilazione.</li>
+<li>La risoluzione generalizzata è completa per le KB in CNF. Se si usa il principio di induzione non è più completa.</li>
+</ul>
+</body></html>
