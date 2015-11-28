@@ -89,6 +89,6 @@ Durante il ritorno, si sotistuisce l'*f-valore* di ogni nodo lungo il cammino co
 
 Come per A\*, la ricerca è ottima se la funzione euristica è ammissibile.
 
-La complessità spaziale è lineare ma la complessità spaziale è difficile da definire, nel caso pessimo è sempre esponenziale.
+La complessità spaziale è lineare ma la complessità temporale è difficile da definire, nel caso pessimo è sempre esponenziale.
 
 Anche questo algoritmo soffre di un problema simile ad IDA\*, cioè non usano tutta la memoria a disposizione.

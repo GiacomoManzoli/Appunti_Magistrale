@@ -4,9 +4,9 @@
 
 ##Enumerazione delle soluzioni
 
-In alcuni casi, in CP si possono voler trovare più soluzioni oppure si può voler sapere quante possibili soluzioni.
+In alcuni casi, in CP può essere necessario trovare più soluzioni oppure sapere quante sono le possibili soluzioni.
 
-L'algoritmo di ricerca DFS diventa quindi:
+Per risolvere questo problrma di enumerazione l'algoritmo di ricerca DFS diventa:
 
 ```python
 def DFS(CSP):
@@ -22,15 +22,15 @@ def DFS(CSP):
 
 ##Ottimizzazione in CP
 
-> COP = <X, D, C, f>
+> COP = \<X, D, C, f\>
 
-È un CSP con una funzione (o espressione) obiettivo che deve essere minimizzata.
+È un CSP con una funzione (o espressione) obiettivo che deve essere minimizzata (si può ottenere una massimizzazione negando la funzione).
 
 ###Optimal Map Coloring
 
 Qual'è il numero minimo di colori per colorare le regioni del nord Italia?
 
-La definzione del modello è analoga a quella del relativo CSP, con la differenza che il dominio delle variabili va da 0 a n-1, dove n è il numero delle regioni.
+La definzione del modello è analoga a quella del relativo CSP, con la differenza che il dominio delle variabili va da *0* a *n-1*, dove *n* è il numero delle regioni.
 
 Serve però una funzione obiettivo:
 
@@ -38,22 +38,22 @@ Serve però una funzione obiettivo:
 
 ##Risolizione di un COP
 
-L'idea principale è che un COP è una serie di CSP.
+L'idea principale è che risolvere un COP coincide con il risolvere una serie di CSP.
 
 Ci sono vari approcci a questo tipo di problema, ma ci sono due filoni principali:
 
-- Ricerca sul dominio di f(x)
+- Ricerca sul dominio di *f(x)*
 - Branch & Bound
 
 ### Rircerca
 
 ####Descructive Lower Bound
 
-Si itera sui valori v del dominio di f(x) a partire dal lower bound, ad ogni iterazione si pone il vincolo `f(x) <= v` e si risolve il CSP.
+Si itera sui valori *v* del dominio di *f(x)* a partire dal lower bound, ad ogni iterazione si pone il vincolo *f(x) <= v* e si risolve il CSP.
 
-Probabilmente i primi CSP sono infiesible, il primo CSP che ha la soluzone ha anche la soluzione ottima.
+Probabilmente i primi CSP sono infiesible, però la prima soluzione che viene trovata risulta anche essere ottima.
 
-Descrutive perché ad ogni iterazione si butta via tutto quello calcolato per l'iterazione precedentemente.
+Questo approccio viene chiamato **descrutive** perché ad ogni iterazione si butta via tutto quello calcolato per l'iterazione precedentemente.
 
 ```python
 sol = None # Current best solution
@@ -68,9 +68,9 @@ while not solved:
 
 ####Destructive Upper Bound
 
-Stesso ragionamento solo che si parte dal massimo valore di f(x).
+Stesso ragionamento solo che si parte dal massimo valore di *f(x)*, è importante che il valore di partenza permetta di raggiungere una soluzione.
 
-Per la prossima iterazione si usa `v = f(x) - 1`, cioè il costo della soluzione che abbiamo trovato -1 in modo da provare a migliorare.
+Ad ogni iterazione si usa *v = f(x) - 1*, cioè il costo della soluzione trovata al passo precedente *-1* in modo da provare a migliorare.
 
 L'ultima soluzione trovata è quella ottima.
 
@@ -98,15 +98,19 @@ Ovviamente la versione che usa il lower bound non è anytime però fornisce un l
 
 I passi del lower bound invece sono molto corti.
 
-Per quanto riguarda la versione upper funziona come duale del lower bound, i passi dell'algoritmo sono più grandi, si trova a risolvere problemi per la maggior parte feasbile e quindi ci mette meno tempo.
+Per quanto riguarda la versione upper, questa funziona come duale del lower bound, i passi dell'algoritmo sono più grandi, si trova a risolvere problemi per la maggior parte feasbile e quindi ci mette meno tempo.
 
 Di contro non trova un lower bound e c'è meno propagazione dei vincoli.
 
 ### Binary Search
 
-È la combinazione dei due algoritmi, che va a fare una ricerca binaria sul dominio di f(x).
+È la combinazione dei due algoritmi, che va a fare una ricerca binaria sul dominio di *f(x)*.
 
-L'ieda è quella di tenere un upper bound feasbile e un lower bound infeasible e si rivolve per `lb < f(x) < ub`.
+L'idea è quella di tenere un upper bound feasbile e un lower bound infeasible e di rivolvere il problema per *lb < f(x) < ub*.
+
+Se si riesce a trovare una soluzione per quel problema si aggiorna *ub* con il valore di *f(x)*, altrimenti, se il problema è infeasible, si aggiorna *lb* con il valore di *f(x)*.
+
+L'algoritmo termina quanto viene trovata una soluzione *f(x) = lb+1*.
 
 ```python
 sol = None #Current best solution
@@ -122,26 +126,25 @@ while lb < ub:
     lb = sol(f(x))
 ```
 
-In questo modo si ottiene un algoritmo di tipo anytime che calcola anche un lower bound ed inoltre funziona a passi più grandi.
+In questo modo si ottiene un algoritmo di tipo anytime che calcola anche un lower bound, che funziona a passi più grandi e che permette di effettuare una buona propagazione dal momento che ci sono vincoli sempre più stretti su *f(x)*.
 
-Ma un altro grande vantaggio che è l'**optimality gap**, quando fermo l'algoritmo prima della terminazione ottengo sia una soluzione ottima sia un indicatore della qualità della soluzione.
+Ma un altro grande vantaggio di questo approccio è l'**optimality gap**, quando fermo l'algoritmo prima della terminazione ottengo sia una soluzione per il problema CSP sia un indicatore della qualità della soluzione.
 
-> og = (ub - ul) / ul
+> og = (ub - lb) / lb
 
 ###Branch and Bound
 
 Le ricerche hanno un problema: scartano la maggior parte delle informazioni ad ogni iterazione e questo porta a tanto lavoro ripetuto.
 
-Nel B&B, ogni volta che si trova una nuova soluzione si va ad aggiungere un nuovo vincolo di Bound.
+Nel B&B, ogni volta che si trova una nuova soluzione si va ad aggiungere un nuovo vincolo di Bound sul valore di *f(x)*.
 
-Utilizzare il branch and bound in CP non c'è bisogno di calcolare per ogni nodo il lower bound, in quanto viene calcolato in modo automatico dai
- vincoli.
+Utilizzando il branch and bound in CP non c'è bisogno di calcolare per ogni nodo il lower bound, in quanto viene calcolato in modo automatico dai vincoli.
 
 Quando l'algoritmo trova una soluzione, per capire che è ottima deve comunque andare ad esplorare tutto l'albero (*optimality proof*).
 
 ####Pro e contro
 
-- La prova di ottimalità può essere complessa.
+- La prova di ottimalità può essere complessa, perché è necessario esplorare tutto l'albero.
 - Non c'è uno spreco di informazioni, l'albero viene esplorato una volta sola.
 - È possibile fare passi grandi;
 - È un algoritmo anytime:

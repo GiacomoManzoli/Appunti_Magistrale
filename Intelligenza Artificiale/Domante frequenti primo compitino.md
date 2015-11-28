@@ -10,7 +10,7 @@ Note:
 
 ###Domanda 1 (20130404-d1)
 
-Descrivere le principali strategie di ricerca non infomrate e confrontarle dal punto di vista della loro correttezza, completezza, ottimalità e complessità in tempo e spazio.
+Descrivere le principali strategie di ricerca non informate e confrontarle dal punto di vista della loro correttezza, completezza, ottimalità e complessità in tempo e spazio.
 
 Considerare l'albero della figura e mostrare la sequenza di visita dei nodi per la ricerca in prodonfità, in ampiezza e con un costo uniforme, prima di arrivare ad uno dei due nodi goal (indidicati con la G).
 
@@ -34,7 +34,7 @@ La ricerca a **costo uniforme** va ad espandere il nodo che ha il costo di cammi
 
 Questa ricerca risulta essere sia completa sia ottima, a condizione che il costo di ogni arco dell'albero sia maggiore di 0.
 
-Sia la complessità in tempo che quella in spazio dipendono dal numero di nodi che hanno un costo di cammino minore del costo della soluzione ottima, la complessità è quindi *O(b<sup>C\*/ϵ</sup>)* dove _C*_ è il costo della soluzione ottima e *ϵ* è il costo di arco minimo.
+Sia la complessità in tempo che quella in spazio dipendono dal numero di nodi che hanno un costo di cammino minore del costo della soluzione ottima, la complessità è quindi _O(b<sup>C\*/ϵ</sup>)_ dove _C*_ è il costo della soluzione ottima e *ϵ* è il costo di arco minimo.
 
 La ricerca **depth-first** va ad espandere il nodo a profondità massima.
 
@@ -43,11 +43,11 @@ Questa ricerca generalmente non è completa in quanto può trovare un cammino di
 La soluzione trovata da questa ricerca non è garantito che sia ottima, dal momento che l'algoritmo ritorna la prima che trova.
 
 Tuttavia il vantaggio di questo algoritmo sta nella complessità.
-La complessità temporale è *O(b<sup>m</sup>)* con *m* profondità massima di cammino e la complessità spaziale è lineare *O(b\*m)*.
+La complessità temporale è *O(b<sup>m</sup>)* con *m* profondità massima di cammino ma la complessità spaziale è lineare _O(b\*m)_.
 
-Delle strategie di ricerca non informate quella più interessante è quella depth-first in quanto garantisce una complessità in termini di spazio lineare, il problema è che generalemnte non è ne ottima ne completa.
+Delle strategie di ricerca non informate quella più interessante è quella depth-first in quanto garantisce una complessità in termini di spazio lineare, il problema è che generalmente non è ne ottima ne completa.
 
-Esite una variante detta **iterative-deepening** che consiste nell'applicare DFS fino ad una profondità limitata (**Depth Limited**) e nel caso non venga trovata aumentare il limite, finché non ne viene trovata una.
+Esite una variante detta **iterative-deepening** che consiste nell'applicare DFS fino ad una profondità limitata (**Depth Limited**) e nel caso non venga trovata una soluzione, aumentare il limite finché non ne viene trovata una.
 
 In questo modo si ottiene una ricerca completa, in tempo *O(b<sup>d</sup>)* e con complessità in spazio lineare. La soluzione trovata risulta anche ottima se tutti gli archi hanno lo stesso costo.
 
@@ -69,7 +69,7 @@ Se volete fate esempi del loro uso su un problema di ricerca.
 
 Descrivere l'algoritmo A* e la nozione di euristica ammissibile e consistente, e discutere a cosa serva avere un'euristica con una di queste proprietà.
 
-Nell'albero dell'esecizio uno (riportato sotto), considerare l'euristica che, per ogni nodo, tirorna la minima distanza (cioè il minimo numero di archi, non il loro costo) tra il nodo e una sua foglia discendente. 
+Nell'albero dell'esecizio uno (riportato sotto), considerare l'euristica che, per ogni nodo, ritorna la minima distanza (cioè il minimo numero di archi, non il loro costo) tra il nodo e una sua foglia discendente. 
 
 Discutere le caratteristiche di questa euristica.
 
@@ -86,7 +86,7 @@ In particolare la funzione di valutazione di un nodo è data dalla somma di altr
 - `g(n)` che rappresenta il costo del cammino per raggiungere il nodo n
 - `h(n)` che prende il nome di **funzione euristica**, una funzione che approssima il costo stimato per raggiungere il nodo goal a partire dal nodo n.
 
-Se la funzione euristica è **ammissibile** se è una sotto-stima del costo effettivo per raggiungere il nodo n allora la ricerca A* su un albero è ottima.
+Se la funzione euristica è **ammissibile**, cioè se è una sotto-stima del costo effettivo per raggiungere il nodo *n*, allora la ricerca A\* su un albero è ottima.
 
 Questo si dimostra supponendo che un goal sub-ottimo G<sub>2</sub> sia stato generato e che si trovi nella coda (frontiera) e che ci sia un nodo *n* non ancora espanso su un cammino minimo verso il goal ottimo G.
 
@@ -98,18 +98,18 @@ Questo si dimostra supponendo che un goal sub-ottimo G<sub>2</sub> sia stato gen
 
 A* quindi non selezionerà mai G<sub>2</sub> per l'espansione e di conseguenza verrà estratto prima G di G<sub>2</sub>.
 
-Perché A* sia ottimo anche nella ricerca su un grafo è necessario che la funzione euristica sia anche **consinstente** cioè, la funzione euristica calcolata per un nodo *n* deve essere minore o uguale a quella di un nodo *n'* sommata al costo per passare da *n* a *n'*: `h(n) <= c(n,a,n') + h(n')`, ottenendo così una funzione di valutazione non decrescente.
+Perché A\* sia ottimo anche nella ricerca su un grafo è necessario che la funzione euristica sia anche **consinstente** cioè, la funzione euristica calcolata per un nodo *n* deve essere minore o uguale a quella di un nodo *n'* sommata al costo per passare da *n* a *n'*: `h(n) <= c(n,a,n') + h(n')`, ottenendo così una funzione di valutazione non decrescente.
 In questo modo si evita di scartare alcuni cammini del grafo che possono portare a soluzioni ottime.
 
-La ricerca A* è **completa** se il numero di nodi con `f <= f(G)` è finito.
+La ricerca A\* è **completa** se il numero di nodi con `f <= f(G)` è finito.
 
 Il tempo necessario per completare la ricerca è esponenziale rispetto la lunghezza della soluzione e l'errore commesso dall'euristica.
 
 La complessità in spazio invece dipende dal numero di nodi con funzione di valutazione <= al costo della soluzione ottima.
 
-A* è quindi applicabile a problemi reali ma è necessario tenere sotto controllo l'occupazione della memoira, ed è per questo che sono state proposte delle varianti come IDA\*, MA\* (memory bounded) e SMA\*.
+A\* è quindi applicabile a problemi reali ma è necessario tenere sotto controllo l'occupazione della memoira, ed è per questo che sono state proposte delle varianti come IDA\*, MA\* (memory bounded) e SMA\*.
 
-L'euristica *distanza dalle foglie* applicata all'esempio **non** è ammissibile in quanto non è una sottostima del costo per raggiungere un nodo goal. Ad esempio, applicando questa euristica ad una foglia che non è un nodo goal si ottiene 0 come risultato il quale non può essere una sottostima del costo per raggiungere un nodo goal.
+L'euristica *distanza dalle foglie* applicata all'esempio **non** è ammissibile in quanto non è una sottostima del costo per raggiungere un nodo goal. **sbagliato** Ad esempio, applicando questa euristica ad una foglia che non è un nodo goal si ottiene 0 come risultato il quale non può essere una sottostima del costo per raggiungere un nodo goal.
 
 ![](./immagini/c1-tree-4.png)
 
@@ -129,7 +129,7 @@ Si scelga un dominio e si faccia un esempio di due euristiche h1 e h2, definite 
 
 Un euristica è una funzione che viene utilizzata nella ricerca informata per stimare il costo per raggiungere un nodo goal a partire da un nodo *n*.
 
-Perché sia efficace è necessario che l'euristica sia **ammissibile** cioè sia una sottostima della costo effettivo per raggiungere il nodo.
+Perché sia efficace è necessario che l'euristica sia **ammissibile** cioè sia una sottostima della costo effettivo per raggiungere un nodo goal a partire da un dato nodo.
 
 Nel caso la ricerca venga fatta su un grafo è necessario che l'euristica sia anche **consistente** cioè che dato la funzione euristica calcolata sul nodo *n* sia minore o uguale dell'euristica calcolata sul nodo *n'* sommata al costo per passare dal nodo *n* a *n'*.
 
@@ -189,7 +189,7 @@ Discutere in modo comparativo i vantaggi/svantaggi di tali varianti.
 
 **L'ottimalità è già stata trattata**
 
-L'idea più semplice è quella di andare a limitare il numero di nodi che possono finire nella frontiera, **IDA\*** non inserisce nella frontiera i nodi che hanno una funzione di valutazione maggiore di un certo valore detto *cutof f*.
+L'idea più semplice è quella di andare a limitare il numero di nodi che possono finire nella frontiera, __IDA\*__ non inserisce nella frontiera i nodi che hanno una funzione di valutazione maggiore di un certo valore detto *cutof f*.
 
 Se non viene trovata una soluzione, allora si ripete la ricerca utilizzando come valore di *cutof* il minimo valore della funzione di valutazione precedentemente scartato.
 
@@ -198,7 +198,7 @@ In questo modo verranno espansi in memoria solamente un numero limitato di nodi,
 1. C'è la possibilità di fare molte iterazioni, e tra un'iterazione e l'altra vengono scartati tutti i nodi
 2. Non viene sfruttata al massimo la memoria disponbile, specialemente nelle prime iterazioni.
 
-Un'altra strategia è quella utilizzata da *SMA\** (la versione modificata di MA*), che espande i nodi come la versione normale di A\*, con la differenza che quando la non c'è più spazio, scarta dalla coda i nodi peggiori, cioè quelli con funzione di valutazione più alta.
+Un'altra strategia è quella utilizzata da _SMA\*_ (la versione modificata di MA\*), che espande i nodi come la versione normale di A\*, con la differenza che quando la non c'è più spazio, scarta dalla coda i nodi peggiori, cioè quelli con funzione di valutazione più alta.
 
 Quando viene scartato un nodo dalla coda, viene memorizzato sul padre del nodo il suo valore delle funzione di valutazione, in questo modo è possibile sapere il valore del figlio migliore nel caso sia necessaria una seconda espansione.
 
