@@ -14,7 +14,7 @@ Per ogni regola che è rilevante per il predicato convinlto nell'obiettivo, vien
 
 La complessità in spazio è lineare con la dimensione della prova ma c'è il rischio di effettuare cicli infiniti, è quindi necessario andare a controllare che il goal corrente non sia già nella pila dei goal.
 
-L'algoritmo può essere inefficente a causa di sottogoal ripetuti, conviene tuinti tenere una cache che contiene i risultati già calcoalti.
+L'algoritmo può essere inefficente a causa di sottogoal ripetuti, conviene quindi tenere una cache che contiene i risultati già calcoalti.
 
 Prolog non utilizza questi due miglioramenti.
 

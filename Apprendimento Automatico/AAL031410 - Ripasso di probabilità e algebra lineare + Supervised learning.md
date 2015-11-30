@@ -1,6 +1,5 @@
 #Lezione 3 - Ripasso di probabilità e algebra + Supervised Learning
 
-14 Ottobre 2015
 
 ##Variabili aleatorie
 
@@ -8,8 +7,10 @@
 
 Esito di un esperimento che può essere positivo o negativo.
 
-> P(X = i) = p 		se i=1 
-> 				1-p 	se i=0
+```
+P(X = i) = p   se i=1 
+           1-p se i=0
+```
 
 ###Binomiale
 
@@ -24,7 +25,8 @@ Il valore atteso di questa variabile è dato da `N*p` mentre la varianza è `N*p
 Assume che in un intervallo `[a,b]` tutti i punti hanno la stessa probabilità.
 
 > P(X = x) = 1 / (b-a) con `a <= x <= b`
-> 				0 altrimenti
+> 
+> P(X = x) = 0 altrimenti
 
 Il valore atteso di X (`E[X]`) è uguale a `(a+b)/2`
 
@@ -33,6 +35,7 @@ Il valore atteso di X (`E[X]`) è uguale a `(a+b)/2`
 La distribuzione si concentra in un certo valore medio `mu` ed ha la forma _a campana_.
 
 > N(mu, sigma<sup>2</sup>)
+> 
 > P(x) = [1 / sigma(√2Pi)]*e<sup>(x-mu)^2 / 2sigma^2</sup>
 
 <!-- https://it.wikipedia.org/wiki/Distribuzione_normale -->
@@ -93,46 +96,42 @@ Una matrice si dice **simmetrica** se tutti gli autovalori sono maggiori di 0.
 
 ##Supervised Learning
 
-Si vuole tradurre un insieme di dati in ingresso X in un insieme di dati di uscita Y.
+Si vuole tradurre un insieme di dati in ingresso *X* in un insieme di dati di uscita *Y*.
 
-Anche in questo caso c'è un _oracolo_ che sceglie un oggetto x in X secondo una certa probabilità P(x) e sceglie y in Y in base a P(y|x).
+Anche in questo caso c'è un _oracolo_ che funziona in modo stocastico e che sceglie un oggetto *x* in *X* secondo una certa probabilità *P(x)* e sceglie *y* in *Y* in base a *P(y|x)*.
 
-Si assume quindi che la natura (o oracolo) funzioni in modo stocastico.
+L'obiettivo che si vuole raggiungere è quello di approssimare queste probabilità.
 
-L'obiettivo del machine learning è quello di approssimare queste probabilità.
-
-Cosa importante, questo oracolo non sempre è una funzione, questo perché può capitare che ad uno stesso x corrispondano y diversi.
+Cosa importante, questo oracolo non sempre è una funzione, questo perché può capitare che ad uno stesso *x* corrispondano *y* diversi.
 
 ###Operativamente 
 
-Si dispone di una serie di coppie (x,y) che seguono lo schema naturale (che prende il nome di _training set_).
+Si dispone di una serie di coppie *(x,y)* che seguono lo schema naturale, insieme di queste coppie prende il nome di **training set**.
 
-Selezionamo una ipotesi `h` da valori in X mi fornisca valori in Y, nello spazio delle ipotesi H utilizzando i dati di apprendimento. L'ipotesi scelta non deve solamente rappresentare i dati di apprendimento ma deve riuscire a generalizzare e predirre i corretti valori di uscita anche per valori non presenti nel training set.
+Viene quindi scelta un funzione *h* che prende il nome di **ipotesi**, definita nello spazio delle ipotesi *H* tale che, da valori presenti nell'insieme *X*, restituisca dei valori nell'insieme *Y*.
 
-**Errore empirico**: è l'errore commesso da `h` in media, all'interno del training set. (errore medio dell'ipotesi sul training set).
+L'apprendimento consiste quindi nell'andare a scegliere l'*h* migliore a partire dai dai presenti nel training set in modo che questa funzione approssimi bene i dati presenti nel training set e che riesca a generalizzare e predirre i corretti valori *y* anche per valori di *x* non presenti nel training set.
 
-**Errore ideale**: è l'errore commesso da `h` su una qualsiasi coppia (x,y) ~ P(x,y), come media su un'insieme infinito di coppie. Questo errore può essere solamente stimato.
+Da ciò segue che possono essere commessi due tipi di errori:
 
-Per calcolare una stima dell'errore ideale si può usare un _test set_.
+- **Errore empirico**: è l'errore commesso da *h* in media, all'interno del training set. In altre parole è l'errore medio dell'ipotesi sul training set.
+- **Errore ideale**: è l'errore commesso da *h* su una qualsiasi coppia *(x,y) ~ P(x,y)*, come media su un'insieme infinito di coppie. Questo errore può essere solamente stimato.
 
-È importante che gli esempi del test set siano diversi da quelli del training set perché non puoi valutare l'errore ideale utilzzando i dati che sono stati usati per selezionare un'ipotesi piuttosto che un'altra.
+Per calcolare una stima dell'errore ideale si può usare un **test set**, cioè un altro insieme di coppie *(x,y)* che non compaiono nel training set. Questa discriminazione è importante perché se così non fosse l'errore ideale sarebbe influenzato dall'errore empirico.
 
 _Riassumendo: l'errore empirico è quello che si fa sui dati che si conoscono, l'errore ideale è quello che si fa su dei dati nuovi._
 
-Ovviamente lo spazio delle ipotesi non può coincidere con tutte le funzioni calcolabili.
-
-È necessario quindi fare delle assunzioni sulla funzione oracolo, queste assunzioni prendono il nome di **bias induttivo**.
-Sono delle conscenze a priori che abbiamo sul dominio che utilizzo per fare delle previsioni induttive sui dati.
+Dal momento che lo spazio delle ipotesi non può coincidere con tutte le funzioni calcolabili è  necessario fare delle assunzioni sulla funzione oracolo, queste assunzioni prendono il nome di **bias induttivo** e derivano da delle conscenze a priori che abbiamo sul dominio e che vengono utilizzate per fare delle previsioni induttive sui dati.
 
 Fanno parte del bias induttivo:
 
 - Come vengono rappresentati gli esempi;
-- Come viene modellato lo spazio delle ipotesi H;
-- La funzione obiettivo per la ricerca nello spazio H (modo per cercare nello spazio).
+- Come viene modellato lo spazio delle ipotesi *H*;
+- La funzione obiettivo per la ricerca nello spazio *H*, cioè come viene scelta la funzione *h*.
 
 ####Es: regressione polinomiale
 
-TRAIN = {(x<sub>1</sub>,y<sub>1</sub>),...,(x<sub>n</sub>,y<sub>n</sub>)}
+> TRAIN = {(x<sub>1</sub>,y<sub>1</sub>),...,(x<sub>n</sub>,y<sub>n</sub>)}
 
 Si vuole trovare una funzione polinomiale in grado di approssimare i punti.
 
@@ -140,7 +139,7 @@ In questo caso il bias induttivo è assumere che esista una funzione polinomiale
 
 Lo spazio delle ipotesi diventa quindi l'insieme dei vari polinomi e l'apprendimento viene fatto sui vari coefficenti.
 
-Dobbiamo quindi scegliere tra questo spazio un grado `p` che va a limitare i possibili polinomi (definzione di H) e i vari parametri della curva (ricerca nello spazio H).
+Dobbiamo quindi scegliere tra questo spazio un grado *p* che va a limitare i possibili polinomi (definzione di *H*) e i vari parametri della curva (ricerca nello spazio *H*).
 
 
 

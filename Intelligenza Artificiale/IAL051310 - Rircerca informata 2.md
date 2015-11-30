@@ -45,7 +45,7 @@ Conseguentemente è meglio *h<sub>2</sub>* così considero meno nodi e trovo pri
 
 Dal momento che *h<sub>2</sub>(n)* è sempre maggiore o uguale di *h<sub>1</sub>(n)* si dice che *h<sub>2</sub>* __domina__ *h<sub>1</sub>*.
 
-Tipicamente ha più senso usare l'euristica dominante, c'è però da considerare il tempo necessario per calcolare l'euristica, in alcuni casi può essere più performante usare un'euristica "peggiore" ma che è molto efficente da calolcare.
+Tipicamente ha più senso usare l'euristica dominante, c'è però da considerare il tempo necessario per calcolare l'euristica, in alcuni casi può essere più performante usare un'euristica "peggiore" ma che è molto efficente da calcolare.
 
 ###Problemi rilassati
 
@@ -65,7 +65,7 @@ Questo si può fare andando ad aggiungere un limite al valore dalla funzione di 
 
 Non inserisce nella coda dei nodi con valore di *f* maggiore di un certo valore _cutof f_.
 
-Questo valore di _cutof f_ alla iterazione successiva viene posto uguale al minomo valore di *f* dei nodi non inseriti in coda.
+Questo valore di _cutof f_ alla iterazione successiva viene posto uguale al minimo valore di *f* dei nodi non inseriti in coda.
 
 (Ad ogni iterazione prendo il nodo di che non ho inserito in coda e con funzione di valutazione minima e assegno a _cutof f_ il su f-valore, in questo modo quel nodo verrà preso in cosiderazione alla prossima iterazione dell'algoritmo)
 

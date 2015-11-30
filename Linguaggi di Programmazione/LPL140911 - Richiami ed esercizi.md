@@ -1,6 +1,6 @@
 #Lezione 14 - Richiami ed esercizi
 
-Alcuni linguaggi funzionli come List e ML non sono linguaggi completamente dichiarativi in qunaot permettono di eseguire delle assegnazioni.
+Alcuni linguaggi funzionli come Lisp e ML non sono linguaggi completamente dichiarativi in quanto permettono di eseguire delle assegnazioni.
 
 Haskell invece è dichiarativo (funzionale puro).
 

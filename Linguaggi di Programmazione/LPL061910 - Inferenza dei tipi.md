@@ -11,7 +11,7 @@ f :: Num -> Num
 
 In questo caso il compilatore inferisce che `x` è di tipo `Num` in quanto `2` è una costante di tipo `Num`.
 
-Il compilatore traforma `fun f x = 2 + x` in `*lamba*x.((+2)x)` e crea una specie di albero.
+Il compilatore trasforma `fun f x = 2 + x` in `*lamba*x.((+2)x)` e crea una specie di albero.
 
 Vengono poi valutati i tipi delle foglie, che in questo caso sono `Num -> Num -> Num` per l'operatore `+` e `Num` per la costante `2`.
 
@@ -79,13 +79,11 @@ Nel caso la funzione richiede l'invocazione di una funzione utilizzi più parame
 Ad esempio l'albero per l'applicazione della funzione `f a b` porta al seguente albero.
 
 ```
-Fare un'immagine
-
 				  (@)
 				/     \
-			(@)			 b
+			(@)       b
 		  /		\
-		f		 a
+	   f       a
 ```
 
 
@@ -94,11 +92,9 @@ Cioè il figlio destro rappresenta l'ultimo dei parametri dell'applicazione, men
 Complicando ancora le cose, l'applicazione della funzione `f a (g b)` diventa abbastanza divertente, inquanto entrambi i figli del primo nodo sono entrambi nodi applicazione.
 
 ```
-Fare un'immagine
-
 				  (@)
 				/     \
-			(@)			(@)
+			(@)	      (@)
 		  /		\	  /   \
 		f		 a  g		 b
 ```
@@ -110,9 +106,6 @@ Questo perché l'ultimo parametro è il risultato dell'applicazione della funzio
 In questo caso si aggiunge il vincolo che il tipo della funzione deve essere uguale a quello presente come nodo dell'albero.
 
 In modo simile per le funzioni con definizioni multiple deve avere il vincolo il tipo di tutte le funzioni coincida.
-
-**vedi esercizio quaderno**
-
 
 
 

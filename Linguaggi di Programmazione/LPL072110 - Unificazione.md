@@ -14,7 +14,7 @@ tipo di una funzione f: a -> b -> c
 Rappresentato come stringa: 
 ->(a, ->(b,c))
 ```
-Questo perché, essendo currificate, f è una funzione che dato un parametro `a` ritorna una funzione di tipo `b -> c`.
+Questo perché, essendo currificate, `f` è una funzione che dato un parametro `a` ritorna una funzione di tipo `b -> c`.
 
 Se c'è un tipo funzione in mezzo, la cosa è la stessa:
 
@@ -33,7 +33,7 @@ Rappresentato come stringa:
 ->(a, ->((b->c), d)
 ```
 
-Gli alberi di questo tipo possono essere confrontati a partire dalla radice e matchando le varie freccie, in questo modo è possibile definire delle equazioni tra i tipi delle foglie.
+Gli alberi di questo tipo possono essere confrontati a partire dalla radice e matchando le varie frecce, in questo modo è possibile definire delle equazioni tra i tipi delle foglie.
 
 ```
 Alb1
@@ -77,7 +77,7 @@ può essere espresso anche come (insieme di binding):
 {a/f, e/->(c,[f]), d/f}
 ```
 
-In questo caso non cambia nulla, ma è sempre preferibile tenere sempre lo stesso valore a destra, in questo caso `f`.
+In questo caso non cambia nulla, ma è sempre preferibile tenere sempre lo stesso valore a destra, cioè `f`.
 
 Una volta trovato un *binding* si devono fare le sostituzioni nei due alberi, se dopo le sostituzioni i due alberi sono uguali, allora ho trovato una soluzione.
 

@@ -52,7 +52,7 @@ Ci sono 3 approcci diversi per trattare l'uguaglianza:
 
 Non vediamo la dimostrazione completa.
 
-##Riassinto
+##Riassunto
 
 - La proposizionalizzazione e l'uso dell'unficazione permetteno di evitare l'istanziazione delle variabili coinvolte in una prova.
 - Il modus ponens generalizzato usa l'unificazione e permette l'applicazione di forward e backward chaining su clausole definite.

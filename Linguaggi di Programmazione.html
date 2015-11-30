@@ -1,0 +1,1478 @@
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="linguaggi-di-programmazione-lezione-1">Linguaggi di programmazione - Lezione 1</h1>
+<p>I primi linguaggi importanti per la storia sono il C/C++, Java e Haskell.</p>
+<p>Il controllo dei tipi è iniziato dal Fortran (anni 50) con la gestione statica dei valori delle variabili. La prima versione del Fortran tuttavia non ammetteva ricorsinoe.</p>
+<p><em>I linguaggi operativi hanno un approccio più ingegneristico mentre quelli funzionali sono più matematici e astratti.</em></p>
+<p>Al giorno d&#39;oggi i linguaggi hanno caratteristiche miste, sia imperative che funzionali. Questo perché si cerca di andare verso un mondo parallelo e distribuito.</p>
+<blockquote>
+<p>Il JavaScript è più ad oggetti che funzionale.</p>
+</blockquote>
+<h2 id="processo-di-esecuzione">Processo di esecuzione</h2>
+<p>Codice Sorgente --&gt; Compilatore --&gt; Programma Oggetto --&gt; Interprete</p>
+<p>Ci sono sempre due fasi: quella di compilazione e quella di interpretazione.</p>
+<p>Se è più importante la fase di compilazione si ottiene una maggiore efficienza e in alcuni casi il programma può essere eseguito direttamente (come nel C++).</p>
+<p>Se è più importante la parte di interpetazione il programma è più sicuro e dinamico (meno crash), come Java.</p>
+<h2 id="computabilit-">Computabilità</h2>
+<p>Il calcolo di una funzione può non andare a buon fine, per un errore, come la divisione per 0 oppure perché semplicemente il calcolo non termina.</p>
+<p>La non terminazione è un modo per creare un funzione parziale, cioè una funzione che non è calcolabile per alcuni valori.</p>
+<p>Tutte le funzioni sono calcolabili? No. Kurt Göedel (anni &#39;30).</p>
+<p>Questa domanta è nata prima ancora dei computer attuali, questo perché erano presenti dei modelli di calcolo formale:</p>
+<ul>
+<li>Macchine di Turing, macchine a registri, macchine di Post;</li>
+<li>Linguaggi funzionali, come il Lambda calcolo;</li>
+<li>Regole di composizione di funzioni a partire da funzioni elementari.</li>
+</ul>
+<p>Tutti i modelli precedenti definiscono la stessa classi di funzionie --&gt; formazilizzano il caloclo dello stesso modello di funzioni, le <strong>funzioni parziali ricorsive</strong>.</p>
+<p><strong>Tesi di Church</strong>: Tutte le funzioni parziali ricorsive sono calcolabili. Non è un teorema, ma una tesi in quanto è un concetto intuitivo che non è ancora stato dimostrato.</p>
+<p>Tutto quello che può fare un computer moderno lo può fare anche una macchina di turing, il che vuol dire che tutti i linguaggi moderni sono turing completi, cioè sono in grado di calolcare tutte le funzioni calcolabili (funzioni parziali ricorsive).</p>
+<p>La Turing completezza non aiuta quindi a confrontare tra loro i linguaggi di programmazione, perciò si preferisce utilizzare l&#39;esperessività di un linguaggio come criterio di confronto ed è per questo che utilizziamo Java e non una macchina di turing.</p>
+<p>L&#39;espressività ha però un prezzo in efficienza e di conseguenza non è possibile creare il linguaggio di programmazione perfetto.</p>
+<h2 id="incalcolabilit-con-la-macchina-di-turing">Incalcolabilità con la Macchina di Turing</h2>
+<p>Göedel ha dimostrato che non tutte le funzioni sono calcolabili e questo è possibile dimostrarlo con una macchina di turing.</p>
+<p>Consideriamo tutte le funzioni che possono essere calcolate con un &quot;Si&quot; o con un &quot;No&quot; (problemi decisionali).</p>
+<blockquote>
+<p>f : I --&gt; SI/NO</p>
+</blockquote>
+<p>Göedel ha dimostrato che la decisione della terminazione di una macchina di turing non è decidibile (calcolabile).</p>
+<blockquote>
+<p>I = &lt;P, x&gt;</p>
+<p>P -&gt; stringa che descrive una macchina di turing</p>
+<p>x -&gt; stringa scritta nel nastro di P</p>
+<p>P(x) -&gt; è il calcolo della macchina P su x</p>
+</blockquote>
+<p>Se la terminazione di P su x è decidibile allora esiste un programma (o macchina di turing) Q che dato:</p>
+<blockquote>
+<p>&lt;P, x&gt; --&gt; Q(P,x) = SI se P(x) termina, NO altrimenti</p>
+</blockquote>
+<p>Supponiamo che questo per assurdo sia vero.</p>
+<p>Usando Q è quindi possibile definire D in modo che prenda in input una macchina di turing ed esegua Q(P,P) e che:</p>
+<ul>
+<li>Se Q(P,P) = SI, allora D non termina</li>
+<li>Se Q(P,P) = NO, allora D termina</li>
+</ul>
+<p>Cioè, se D(P) termina, allora vuol dire che la macchina P non riesce a calcolare se stessa, P(P) non è calcolabile.
+E viceversa.</p>
+<p>Considerando l&#39;esecuzione </p>
+<blockquote>
+<p>D(D)</p>
+</blockquote>
+<p>In questo caso viene eseguito Q(D,D) inquanto la macchina D è composta in parte da Q.</p>
+<p>Così facendo, Q(D,D) calcola SI se D(D) termina e NO se D(D) non termina.</p>
+<p>Ma se D(D) termina, allora per come è definito D(D) non dovrebbe terminare e viceversa.</p>
+<p>Si arriva così ad una situazione assurda che dimostra che la terminazione di un programma non è calcolabile.</p>
+<p>Tuttavia la terminazione di una macchina di turing è semi-decidibile, in quanto si può sempre dire se una macchina di turing termina (simulandola) ma non si può dire il contrario.</p>
+<p>Anche perché se fosse possible, allora il problema totale sarebbe decidibile (<em>basta una macchina di turing che simuli contemporaneamente due macchine di turing, ognuna che risolva uno dei due semi-problemi</em>).</p>
+<p>Un problema si dice <strong>indecidibile</strong> quando esiste un sotto-insieme infinito di istanze per il quale non è decidibile, tuttavia possono essere presenti alcune istanze per le quali il problema è decidbilie.</p>
+<h2 id="lezione-2-riduzione-dei-problemi">Lezione 2 - Riduzione dei problemi</h2>
+<h2 id="riduzione-dei-problemi">Riduzione dei problemi</h2>
+<p>Siano R e R&#39; due problemi (<em>funzioni che vengono calcolate con un SI/NO</em>) con R che è NON decidibile e R&#39; di cui non si sa nulla.</p>
+<p>Per ottenere delle informazioni su R&#39; si <strong>riduce R a R&#39;</strong>.</p>
+<p>Cioè per ogni istanza I di R si cerca di costruire un istanza I&#39; di R&#39; tale che</p>
+<blockquote>
+<p>R(I) = SI se e solo se R&#39;(I&#39;) = SI</p>
+<p>R(I) = NO se e solo se R&#39;(I&#39;) = NO</p>
+</blockquote>
+<h3 id="halt-_perogni-halt-_v-">HALT_PEROGNI (HALT_V)</h3>
+<p>Data una macchina di turing P:</p>
+<blockquote>
+<p>HALT_V(P) = SI --&gt; Se per ogni stringa x, P(x) termina</p>
+<p>HALT_V(P) = NO --&gt; se per qualche stringa x, P(x) non termina</p>
+</blockquote>
+<p>Questo problema è indecidibile e si dimostra per riduzione, riducendo HALT ad HALT_V (<em>HALT è la decidibilità della terminazione di una macchina di turing</em>).</p>
+<blockquote>
+<p>HALT        HALT_V</p>
+<p>\&lt;P, x&gt; --> P<sub>x</sub></p>
+</blockquote>
+<p>Bisogna quindi riuiscre a trasformare &lt;P, x&gt; in P<sub>x</sub> in modo che i risultati dei due problemi coincidano.</p>
+<p>L&#39;idea è quella di trovare una macchina di turing che si comporta, con qualsiasi input, come si comporta P(x).</p>
+<p>Questa macchina è quindi definita come:</p>
+<blockquote>
+<p>P<sub>x</sub> = P&#39; : P</p>
+</blockquote>
+<p>Dove P&#39; è un programma che pulisce cancella l&#39;input del nastro di P e lo sostiuisce con la stringa <em>x</em>.</p>
+<p>In questo modo è facile vedere che</p>
+<blockquote>
+<p>HALT(&lt;P,x&gt;) = SI se e solo se HALT_V(P<sub>x</sub>) = SI</p>
+</blockquote>
+<h3 id="riduzione-della-complessit-">Riduzione della complessità</h3>
+<p>Lo stesso meccanismo di riduzione di un problema per calcolarne la calcolabilità vale anche per la complessità (non di un algoritmo, ma del problema in se).</p>
+<p>Se sappiamo che P ha complessità <em>G(n)</em> e sospettiamo che P&#39; abbia complessità <strong>almeno</strong> <em>G(n)</em>, si può trovare un algoritmo che riduce P in P&#39; con una complessità <em>c(n)</em>, tale che <em>c(n)</em> sia irrisoria rispetto a <em>G(n)</em> altrimenti tutta la baracca non avrebbe senso.</p>
+<p>Se si riesce a trovare questo algoritmo, allora decidere P&#39; costa F(n) con F(n) ≥ G(n).</p>
+<p>Questo perché, altrimenti, potremmo decidere P in c(n) + F(n) &lt; G(n).</p>
+<h2 id="perch-la-decidibilit-importante-">Perché la decidibilità è importante?</h2>
+<p>Perché farebbe comodo riuscire a sapere se un programma scritto nei linguaggi di programmazione moderni termina o meno, senza andarlo ad eseguire.</p>
+<p>A livello pratico tutte le proprietà interessanti dei linguaggi di programmazione non sono decidibili.</p>
+<blockquote>
+<p>Cosideriamo una proprità k:</p>
+<p>P = P&#39; : P&#39;&#39; con P&#39; che rispetta k e P&#39;&#39; che viola k.</p>
+<p>P viola k se e solo se P&#39; termina e quindi decidere se P viola k significa decidere se P&#39; termina, con P&#39; qualsiasi.</p>
+</blockquote>
+<p>Il tutto questo per dire che durante la compilazione di un programma non possiamo sapere come questo si comporterà durante l&#39;esecuzione.</p>
+<p>Possiamo però approsimarne alcune proprietà.</p>
+<p>Con l&#39;analisi statica riusciamo a dire e ad avere la sicurezza che in una determinata parte del programma non ci siano errori.</p>
+<h3 id="test-a-run-time-vs-compile-time">Test a run-time vs compile-time</h3>
+<p>L&#39;analisi di un programma può essere fatta anche a runtime ma questo risulta meno efficiente.</p>
+<blockquote>
+<p>if TEST then OK else ERRORE</p>
+</blockquote>
+<p>Il compilatore dovrebbe rifiutarsi di compilare il programma perché non può decidere se c&#39;è l&#39;errore o meno (approccio pessimistico).</p>
+<p>A runtime il test potrebbe essere sempre true e l&#39;errore potrebbe non essere mai rilevato (situazione pericolosa).</p>
+<p>Ha quindi più senso fare dei controlli a compile time.</p>
+<p>Nel caso dei tipi questo controllo viene fatto sia a runtime che a compile time.</p>
+<p>Si cerca comunque di fare il massimo possibile a compile time dal momento che è più efficiente, però alcune cose, come il bound-check di un array, possono essere fatte solo a runtime.</p>
+<h1 id="lezione-3-haskell">Lezione 3- Haskell</h1>
+<h2 id="parte-generica">Parte generica</h2>
+<ul>
+<li><code>:t f</code> per sapere il tipo della funzione <code>f</code>.</li>
+<li><code>let</code> per definire delle costanti, viene usato solo nell&#39;ambiente <code>ghci</code>, dentro un file non è necessario</li>
+<li><code>it</code> contiene l&#39;ultimo valore calcolato</li>
+</ul>
+<h2 id="funzioni">Funzioni</h2>
+<p>Vengono invocate con il nome, seprato da un spazio, seguito dai parametri, ognuno seprato da uno spazio</p>
+<pre><code class="lang-haskell">foo para<span class="hljs-title">m1</span> para<span class="hljs-title">m2</span>
+</code></pre>
+<p>Non ci sono le parentesi nell&#39;invocazione, quelle vengono utilizzate solamente per esprimere la priorità d&#39;esecuzione</p>
+<pre><code class="lang-haskell">foo <span class="hljs-list">(<span class="hljs-keyword">foo</span> <span class="hljs-number">3</span>)</span>
+-- in modo imperativo sarebbe
+foo<span class="hljs-list">(<span class="hljs-keyword">foo</span><span class="hljs-list">(<span class="hljs-number">3</span>)</span>)</span>
+-- e non questo
+foo<span class="hljs-list">(<span class="hljs-keyword">foo</span>,<span class="hljs-number">3</span>)</span>
+</code></pre>
+<p>Una funzione si definisce nel seguente modo:</p>
+<pre><code class="lang-haskell">doubleUs x y = x*<span class="hljs-number">2</span> + y*<span class="hljs-number">2</span>
+</code></pre>
+<p>L&#39;apostrofo può comparire nel nome della funzione.</p>
+<p>Le funzioni <strong>non</strong> possono iniziare con una lettera maiuscola.</p>
+<p>Se una funzione non riceve dei parametri diventa una <em>definition</em> o <em>name</em>.</p>
+<h3 id="funzioni-currificate">Funzioni currificate</h3>
+<pre><code class="lang-haskell">Prelude&gt; let g <span class="hljs-tag">a</span> <span class="hljs-tag">b</span> = a+<span class="hljs-tag">b</span>
+Prelude&gt; :t g
+g :: Num <span class="hljs-tag">a</span> =&gt; <span class="hljs-tag">a</span> -&gt; <span class="hljs-tag">a</span> -&gt; a
+</code></pre>
+<p>La funzione <code>g</code> dell&#39;esempio è detta <em>currificata</em>. Una funzione che può prendere vari parametri ma li elabora uno alla volta.
+<code>a -&gt; a -&gt; a</code> è il tipo della funzione <code>g</code></p>
+<pre><code class="lang-haskell">Prelude&gt; <span class="hljs-keyword">let</span> h x = g x
+Prelude&gt; :t h
+h <span class="hljs-comment">:: Num a =&gt; a -&gt; a -&gt; a</span>
+</code></pre>
+<p><code>g</code> aspetta due parametri per far la somma, se a <code>g</code> passo un solo parametro ottengo una funzione che aspetta i restanti parametri, necessari per eseguire <code>g</code>.</p>
+<p>Una funzione <em>currificata</em> è quindi una funzione a cui non è necessario passare tutti i parametri, ma li aspettano uno alla volta.</p>
+<p><em>questo dovrebbe essere il significato della -&gt;</em></p>
+<pre><code class="lang-haskell">Prelude&gt; let <span class="hljs-tag">q</span> = h <span class="hljs-number">3</span>
+</code></pre>
+<p><code>q</code> invoca <code>h</code> con <code>3</code> e ritorna <code>g</code> con già un parametro passato.</p>
+<pre><code class="lang-haskell">Prelude&gt; q <span class="hljs-number">4</span>
+<span class="hljs-number">7</span>
+</code></pre>
+<p>Quando esegue <code>q 4</code> viene passato il secondo parametro che permette l&#39;esecuzione di <code>g</code>, la quale ritorna <code>7</code>.</p>
+<p>Nella descrizione del tipo di una funzione la prima parte (<code>Num a</code>) specifica che c&#39;è un solo tipo, in questo caso numerico.</p>
+<p>Mentre la seconda parte, dopo la <code>=&gt;</code> specifica il tipo dei parametri e del valore di ritorno.
+Quindi <code>a -&gt; a -&gt; a</code> specifica che il primo parametro, il secondo parametro e il valore di ritorno hanno tutti lo stesso tipo.</p>
+<pre><code class="lang-haskell">Prelude&gt; :t (==)
+(==) :: Eq <span class="hljs-tag">a</span> =&gt; <span class="hljs-tag">a</span> -&gt; <span class="hljs-tag">a</span> -&gt; Bool
+</code></pre>
+<p><code>Eq</code> racchiude tutti i tipi che sono tra loro confrontabili.
+<code>a -&gt; a -&gt; Bool</code> specifica che vengo presi due parametri dello stesso tipo e viene ritornato un valore booleano.</p>
+<p>Quando definisco dei miei tipi, posso specificare che appartengono alla categoria di <code>Eq</code>.</p>
+<p>Nel caso il tipo di una funzione includa un maggior numero di tipi, questo viene descritto come <code>Num a, Num b, Num c =&gt; a -&gt; b -&gt; c</code></p>
+<pre><code class="lang-haskell">Prelude&gt; <span class="hljs-keyword">let</span> asd = (==) 2
+Prelude&gt; :t asd
+asd <span class="hljs-comment">:: (Eq a, Num a) =&gt; a -&gt; Bool</span>
+</code></pre>
+<p>In questo caso il tipo <code>a</code> deve essere sia numerico, sia confrontabile. La funzione ritorna come valore una funzione currificata, che in questo caso è la funzione <code>==</code> che si aspetta un secondo parametro.</p>
+<pre><code class="lang-haskell">Prelude&gt; asd <span class="hljs-number">2</span>
+<span class="hljs-literal">True</span>
+Prelude&gt; asd <span class="hljs-number">32</span>
+<span class="hljs-literal">False</span>
+</code></pre>
+<h3 id="funzioni-polimorfe">Funzioni polimorfe</h3>
+<p>Le funzioni polimorfe sono quelle che accettano variabili di qualsiasi tipo.</p>
+<pre><code class="lang-haskell">:t head
+<span class="hljs-label">head ::</span> [<span class="hljs-literal">a</span>] -&gt; <span class="hljs-literal">a</span>
+</code></pre>
+<h2 id="if">If</h2>
+<ul>
+<li>l&#39;<code>else</code> è obbligatorio</li>
+<li>c&#39;è anche il <code>then</code> da mettere</li>
+</ul>
+<pre><code class="lang-haskell">doubleSmallNumber x = <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">100</span>  
+                        then x  
+                        <span class="hljs-keyword">else</span> x*<span class="hljs-number">2</span>
+</code></pre>
+<h2 id="list">List</h2>
+<p>Nelle liste è possibile tenere solo elementi di uno stesso tipo.</p>
+<p>Per concantenare due liste c&#39;è l&#39;operatore <code>++</code>.</p>
+<p>Le stringhe vengono considerate come liste di caratteri.</p>
+<p>L&#39;operatore <code>:</code> permette di inserire in testa ad una lista.</p>
+<pre><code class="lang-haskell">ghci&gt; <span class="hljs-number">5</span>:[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]  
+[<span class="hljs-number">5</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]
+</code></pre>
+<p>Si possono definire liste di liste di liste. Hell yeah!</p>
+<p>Gli operatori di disuguaglianza <code>&lt;,&gt;,&lt;=,&gt;=</code> permettono di confrontare delle liste in odrine lessicografico.</p>
+<h3 id="list-comprehension">List comprehension</h3>
+<p>Modo compatto di esprimere liste che deriva dalla notazione matematica.</p>
+<pre><code class="lang-haskell">Prelude&gt; [x*<span class="hljs-number">2</span> | x &lt;- [<span class="hljs-number">1.</span><span class="hljs-number">.10</span>], x*<span class="hljs-number">2</span> &gt;= <span class="hljs-number">12</span>]
+[<span class="hljs-number">12</span>,<span class="hljs-number">14</span>,<span class="hljs-number">16</span>,<span class="hljs-number">18</span>,<span class="hljs-number">20</span>]
+</code></pre>
+<pre><code class="lang-haskell"><span class="hljs-name">Prelude</span>&gt; <span class="hljs-atom">let</span> <span class="hljs-atom">removeNonUppercase</span> <span class="hljs-atom">st</span> = [<span class="hljs-atom">c</span> | <span class="hljs-atom">c</span> &lt;- <span class="hljs-atom">st</span>, <span class="hljs-atom">c</span> <span class="hljs-string">`elem`</span> [<span class="hljs-string">'A'</span>..<span class="hljs-string">'Z'</span>]]
+<span class="hljs-name">Prelude</span>&gt; <span class="hljs-atom">removeNonUppercase</span> <span class="hljs-string">"pIPPo"</span>
+<span class="hljs-string">"IPP"</span>
+</code></pre>
+<h2 id="tipi-predefiniti">Tipi predefiniti</h2>
+<p>Sono presenti delle classi di tipo che raggruppano tipi tra loro simili sui quali è possibile eseguire funzioni simili.
+Ad esempio <code>Num</code> raggruppa tutti i tipi che si comportano come numeri.</p>
+<h2 id="pattern-matching">Pattern Matching</h2>
+<pre><code class="lang-haskell"><span class="hljs-type">Prelude</span>&gt; <span class="hljs-keyword">let</span> head' <span class="hljs-literal">[]</span> = error <span class="hljs-string">"No head for empty list"</span>
+<span class="hljs-type">Prelude</span>&gt; <span class="hljs-keyword">let</span> head' (x:_) = x
+<span class="hljs-type">Prelude</span>&gt; :t head'
+head' :: [t] -&gt; t
+</code></pre>
+<p>Posso definire delle funzioni con lo stesso nome per &quot;matchare&quot; i vari parametri possibili.</p>
+<p><code>(x:_)</code> mactha tutti i parametri che sono una lista, <code>x</code> è il primo elemento, <code>_</code> matcha un valore qualsiasi, <code>:</code> concatena <code>x</code> con il valore qualsiasi, ottenendo così una lista.</p>
+<p><code>(x:xs)</code> in questo caso avviene lo stesso match, solo che con <code>xs</code> ho il valore del resto della lista.</p>
+<p>Posso anche usare una versione alternativa del pattern matching tra parametri che è equivalente.</p>
+<pre><code class="lang-haskell">head<span class="hljs-string">''</span> xs = <span class="hljs-keyword">case</span> xs <span class="hljs-keyword">of</span> []<span class="hljs-function"> -&gt;</span> error <span class="hljs-string">"no head"</span>
+                    <span class="hljs-function"><span class="hljs-params">(x:_)</span> -&gt;</span> x
+</code></pre>
+<h2 id="guardie">Guardie</h2>
+<pre><code class="lang-haskell"><span class="hljs-label">max' ::</span> (Ord <span class="hljs-literal">a</span>) =&gt; <span class="hljs-literal">a</span> -&gt; <span class="hljs-literal">a</span> -&gt; <span class="hljs-literal">a</span>
+max' <span class="hljs-literal">a</span> b
+    | <span class="hljs-literal">a</span> &gt; b     = <span class="hljs-literal">a</span>
+    | otherwise = b
+</code></pre>
+<p>Rappresentano una specie di <code>if-elseif</code>.</p>
+<p>Da notare che nella definzione della funzione non serve usare l&#39;uguale.</p>
+<h2 id="where">Where</h2>
+<pre><code>initials :: <span class="hljs-built_in">String</span> -&gt; <span class="hljs-built_in">String</span> -&gt; <span class="hljs-built_in">String</span>
+initials firstname lastname = [f] ++ <span class="hljs-string">". "</span> ++ [l] ++<span class="hljs-string">". "</span>
+    <span class="hljs-keyword">where</span> (f:_) = firstname
+          (l:_) = lastname  
+*Main&gt; initials <span class="hljs-string">"giacomo"</span> <span class="hljs-string">"manzoli"</span>
+<span class="hljs-string">"g. m. "</span>
+</code></pre><h2 id="let-it-be-in-">Let it be (in)</h2>
+<pre><code class="lang-haskell">initials' :: <span class="hljs-built_in">String</span> -&gt; <span class="hljs-built_in">String</span> -&gt; <span class="hljs-built_in">String</span>
+initials' firstname lastname = <span class="hljs-keyword">let</span>
+                                    (f:_) = firstname
+                                    (l:_) = lastname
+                                <span class="hljs-keyword">in</span>
+                                    [f] ++ <span class="hljs-string">". "</span> ++ [l] ++<span class="hljs-string">". "</span>
+</code></pre>
+<p><code>Let-in</code> ritorna un&#39;esperessione, mentre <code>where</code> permette di definire delle costanti all&#39;interno di un&#39;espressione.</p>
+<pre><code class="lang-haskell">f3 :: <span class="hljs-string">[a]</span> -&gt; (<span class="hljs-string">[a]</span>,<span class="hljs-string">[a]</span>,<span class="hljs-string">[a]</span>,<span class="hljs-string">[a]</span>)
+f3 l =  let
+            aux <span class="hljs-string">[]</span> = (<span class="hljs-string">[]</span>,<span class="hljs-string">[]</span>)
+            aux (x:<span class="hljs-string">[]</span>) = (<span class="hljs-string">[x]</span>,<span class="hljs-string">[]</span>)
+            aux (x:y:xs) = (<span class="hljs-string">[x,y]</span>,xs)
+        in
+            let
+                (x1,y1) = aux l
+                (x2,y2) = aux y1
+                (x3,y3) = aux y2
+            in
+                (x1,x2,x3,y3)
+</code></pre>
+<h1 id="lezione-4-even-more-haskell">Lezione 4 - Even more Haskell</h1>
+<h2 id="algebric-data-types">Algebric data types</h2>
+<p>Tipi definiti dall&#39;utente.</p>
+<pre><code class="lang-haskell"><span class="hljs-type">data</span> <span class="hljs-built_in">Shape</span> = Circle <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> | Rectangle <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span>
+</code></pre>
+<p>Definisco il tipo <code>Shape</code> che può essere costituito da valori conformi alla parte <code>Circle</code> o <code>Rectangle</code>.</p>
+<p>Da notare l&#39;utilizzo delle maiuscole per il nome del tipo o dei costruttori</p>
+<pre><code class="lang-haskell"><span class="hljs-constant">Prelude&gt;</span> <span class="hljs-symbol">:t</span> <span class="hljs-constant">Circle</span>
+<span class="hljs-constant">Circle </span><span class="hljs-symbol">:</span><span class="hljs-symbol">:</span> <span class="hljs-constant">Float </span>-&gt; <span class="hljs-constant">Float </span>-&gt; <span class="hljs-constant">Float </span>-&gt; <span class="hljs-constant">Shape</span>
+<span class="hljs-constant">Prelude&gt;</span> <span class="hljs-symbol">:t</span> <span class="hljs-constant">Rectangle</span>
+<span class="hljs-constant">Rectangle </span><span class="hljs-symbol">:</span><span class="hljs-symbol">:</span> <span class="hljs-constant">Float </span>-&gt; <span class="hljs-constant">Float </span>-&gt; <span class="hljs-constant">Float </span>-&gt; <span class="hljs-constant">Float </span>-&gt; <span class="hljs-constant">Shape</span>
+</code></pre>
+<p>I due costruttori sono delle normali funzioni che si aspettano dei parametri.</p>
+<p>Tuttavia con questa definzione il sistema non sa stampare il tipo <code>Shape</code>, è quindi necessario specificare che <code>Shape</code> è stampabile:</p>
+<pre><code class="lang-haskell"><span class="hljs-type">data</span> <span class="hljs-built_in">Shape</span> = Circle <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> | Rectangle <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> <span class="hljs-built_in">Float</span> deriving Show
+</code></pre>
+<p>In questo modo si specifica che <code>Shape</code> fa parte della classe dei tipi stampabili.</p>
+<pre><code class="lang-haskell">Prelude&gt; Circle <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span>
+Circle <span class="hljs-number">2.0</span> <span class="hljs-number">3.0</span> <span class="hljs-number">4.0</span>
+-- viene stampata la stringa utilizzata per invocare il costruttore
+</code></pre>
+<p>Questa cosa funziona out-of-the-box solo nel caso i valori che costituiscono il tipo derivano anche essi da <code>Show</code>.</p>
+<pre><code class="lang-haskell"><span class="hljs-typedef"><span class="hljs-keyword">data</span> <span class="hljs-type">Point</span> = <span class="hljs-type">Point</span> <span class="hljs-type">Float</span> <span class="hljs-type">Float</span> <span class="hljs-keyword">deriving</span> <span class="hljs-container">(<span class="hljs-type">Show</span>)</span></span>
+<span class="hljs-typedef"><span class="hljs-keyword">data</span> <span class="hljs-type">Shape</span> = <span class="hljs-type">Circle</span> <span class="hljs-type">Point</span> <span class="hljs-type">Float</span> | <span class="hljs-type">Rectangle</span> <span class="hljs-type">Point</span> <span class="hljs-type">Point</span> <span class="hljs-keyword">deriving</span> <span class="hljs-container">(<span class="hljs-type">Show</span>)</span></span>
+</code></pre>
+<p><code>Point</code> deve derivare da <code>Show</code> altrimenti si verifica un errore.</p>
+<p>Da notare che il nome del costruttore può o meno matchare il nome del tipo.</p>
+<pre><code class="lang-haskell">Prelude&gt; :t Circle
+Circle :: Point -&gt; Float -&gt; Shape
+Prelude&gt; let p = Point <span class="hljs-number">10</span> <span class="hljs-number">20</span>
+Prelude&gt; Circle p <span class="hljs-number">20</span>
+Circle (Point <span class="hljs-number">10.0</span> <span class="hljs-number">20.0</span>) <span class="hljs-number">20.0</span>
+-- da notare che Circle <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> non funziona più
+Prelude&gt; Circle (Point <span class="hljs-number">10</span> <span class="hljs-number">20</span>) <span class="hljs-number">5</span>
+Circle (Point <span class="hljs-number">10.0</span> <span class="hljs-number">20.0</span>) <span class="hljs-number">5.0</span>
+</code></pre>
+<pre><code class="lang-haskell"><span class="hljs-shader"><span class="hljs-keyword">surface</span> :: Shape -&gt; Float
+<span class="hljs-keyword">surface</span> (</span>Circle _ _ r) = pi * r ^ <span class="hljs-number">2</span>
+<span class="hljs-shader"><span class="hljs-keyword">surface</span> (</span>Rectangle x1 y1 x2 y2) = (<span class="hljs-built_in">abs</span> $ x2 - x1) - (<span class="hljs-built_in">abs</span> $ y2 - y1)
+</code></pre>
+<p>Da notare che quando definisco la funzione per un determinato tipo posso fare il pattern matching sulla tipologia del costruttore.</p>
+<p><em>La funzione <code>surface</code> dell&#39;esempio funziona con la versione del costruttore senza il tipo <code>Point</code>.</em></p>
+<h2 id="incapsulamento">Incapsulamento</h2>
+<pre><code class="lang-haskell"><span class="hljs-module"><span class="hljs-keyword">module</span> Shape
+<span class="hljs-container">(
+    <span class="hljs-type">Point(..)</span>
+    ,<span class="hljs-type">Shape(..)</span>
+    ,surface
+)</span> <span class="hljs-keyword">where</span></span>
+
+<span class="hljs-comment">-- definzione delle funzioni</span>
+</code></pre>
+<p>In questo modo, quando viene fatto l&#39;include si vedono solo le funzioni in lista.</p>
+<p>Il <code>(..)</code> permette di esportare anche la definzione dei costruttori.</p>
+<h2 id="alberi">Alberi</h2>
+<pre><code class="lang-haskell"><span class="hljs-typedef"><span class="hljs-keyword">data</span> <span class="hljs-type">Tree</span> a = <span class="hljs-type">EmptyTree</span> | <span class="hljs-type">Node</span> a <span class="hljs-container">(<span class="hljs-type">Tree</span> <span class="hljs-title">a</span>)</span> <span class="hljs-container">(<span class="hljs-type">Tree</span> <span class="hljs-title">a</span>)</span> <span class="hljs-keyword">deriving</span> <span class="hljs-container">(<span class="hljs-type">Eq</span>, <span class="hljs-type">Show</span>, <span class="hljs-type">Read</span>)</span></span>
+
+<span class="hljs-type">Prelude</span>&gt; :t <span class="hljs-type">Node</span>
+<span class="hljs-type">Node</span> :: a -&gt; <span class="hljs-type">Tree</span> a -&gt; <span class="hljs-type">Tree</span> a -&gt; <span class="hljs-type">Tree</span> a
+</code></pre>
+<p>In questo caso il tipo <code>a</code> speficia il tipo del contenuto di un nodo, gli altri <code>Tree</code> rappresentano i due sotto alberi. Il tipo <code>Tree</code> è quindi parametrico.</p>
+<p>Da notare che <code>a</code> può non essere derivato da <code>Show</code>, in questo caso l&#39;errore può essere rilevato solo a runtime.</p>
+<pre><code class="lang-haskell">Prelude&gt; let x = <span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">2</span> (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">4</span> EmptyTree EmptyTree) (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">5</span> EmptyTree EmptyTree)
+Prelude&gt; x
+<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">2</span> (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">4</span> EmptyTree EmptyTree) (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">5</span> EmptyTree EmptyTree)
+Prelude&gt; :t x
+x :: Num a =&gt; Tree a
+</code></pre>
+<p>La stampa di defualt viene quindi fatta in modo <em>prefisso</em>.</p>
+<p>Da notare che in questo caso l&#39;applicazione di una di queste funzioni non è altro che la rappresentazione di se stessa, diventa quindi un&#39;interpretazione libera.</p>
+<p>In questo modo si ottiene un simbolismo che permette di calcolare le funzioni per ogni possibile interpretazione.</p>
+<p>Ad esempio se ho la funzione <code>3 + 4</code> grazie all&#39;interpretazione libera il calcolo della funzione ha come valore <code>3 + 4</code>, in questo modo posso usare al posto di <code>+</code> una funzione qualsiasi, ottenendo sia <code>7</code> se applico il significato classico, oppure potrei ottenere <code>12</code> se decido che nel mio programma l&#39;applicazione del <code>+</code> coincide con la moltiplicazione classica.</p>
+<p><em>Nella definzione di <code>Tree</code> c&#39;è anche la derivazione da <code>Read</code> il quale permette di invocare il costruttore a partire da una stringa.</em></p>
+<h2 id="record">Record</h2>
+<pre><code class="lang-haskell">data Person = Person { firstName <span class="hljs-type-annotation">::</span> <span class="hljs-built_in">String</span>
+    , lastName <span class="hljs-type-annotation">::</span> <span class="hljs-built_in">String</span>
+    , age <span class="hljs-type-annotation">::</span> <span class="hljs-built_in">Int</span>
+    , height <span class="hljs-type-annotation">::</span> Float
+    , phoneNumber <span class="hljs-type-annotation">::</span> <span class="hljs-built_in">String</span>
+    , flavor <span class="hljs-type-annotation">::</span> <span class="hljs-built_in">String</span>
+    } deriving (Show)
+
+Prelude&gt; :t Person
+Person
+  <span class="hljs-type-annotation">::</span> <span class="hljs-built_in">String</span> -&gt; <span class="hljs-built_in">String</span> -&gt; <span class="hljs-built_in">Int</span> -&gt; Float -&gt; <span class="hljs-built_in">String</span> -&gt; <span class="hljs-built_in">String</span> -&gt; Person
+
+<span class="hljs-keyword">let</span> x = Person {firstName=“Gigi“, lastName=<span class="hljs-string">"Asd"</span>, age=<span class="hljs-number">12</span>, height=<span class="hljs-number">184</span>, phoneNumber=<span class="hljs-string">"123123"</span>, flavor=<span class="hljs-string">"123123"</span>}
+Prelude&gt; :t x
+x <span class="hljs-type-annotation">::</span> Person
+Prelude&gt; firstName x
+<span class="hljs-string">"Gigi"</span>
+</code></pre>
+<p>In questo modo posso usare delle esperssioni come <code>firstName x</code> per accedere al primo nome.</p>
+<p>Altrimenti avrei dovuto utilizzare la sintassi pattern matching per accedere ai vari campi <code>(firstName _ _ ...) = x</code>.</p>
+<h2 id="qualcosa-di-strano">Qualcosa di strano</h2>
+<pre><code class="lang-haskell">data Maybe <span class="hljs-literal">a</span> = Nothing | Just <span class="hljs-literal">a</span>
+</code></pre>
+<p>Questa cosa è importante per riuscire a gestire le eccezioni in modo dichiarativo.</p>
+<p>Viene usato <code>Nothing</code> per far terminare il calcolo.</p>
+<p>Sarà importante per il progetto.</p>
+<pre><code class="lang-haskell">Prelude&gt; :t Just <span class="hljs-string">"HAHAH"</span>
+Just <span class="hljs-string">"HAHAH"</span> <span class="hljs-type-annotation">::</span> Maybe [<span class="hljs-built_in">Char</span>]
+Prelude&gt; :t Just <span class="hljs-number">23</span>
+Just <span class="hljs-number">23</span> <span class="hljs-type-annotation">::</span> Num a =&gt; Maybe a
+Prelude&gt; :t <span class="hljs-built_in">Nothing</span>
+<span class="hljs-built_in">Nothing</span> <span class="hljs-type-annotation">::</span> Maybe a
+</code></pre>
+<pre><code class="lang-haskell">data Either <span class="hljs-literal">a</span> b = Left <span class="hljs-literal">a</span> | Right b
+Prelude&gt; let z = Left <span class="hljs-number">2</span>
+<span class="hljs-label">Prelude&gt; :</span>t z
+<span class="hljs-label">z ::</span> Num <span class="hljs-literal">a</span> =&gt; Either <span class="hljs-literal">a</span> b
+</code></pre>
+<p><code>Either</code> può contenere al suo interno due valori. In questo modo posso fare una funzione che ritorna un valore che può essere di un tipo o di un altro.</p>
+<p>Il tutto in un modo sicuro rispetto ai tipi.</p>
+<h2 id="typeclasses">Typeclasses</h2>
+<pre><code class="lang-haskell">class Eq <span class="hljs-tag">a</span> where
+    (==) :: <span class="hljs-tag">a</span> -&gt; <span class="hljs-tag">a</span> -&gt; Bool
+    (/=) :: <span class="hljs-tag">a</span> -&gt; <span class="hljs-tag">a</span> -&gt; Bool
+    x == y = not (x /= y)
+    x /= y = not (x == y)
+</code></pre>
+<p>Replica della definzione della classe <code>Eq</code>, vengono fornite le definzioni delle funzioni che il tipo deve implementare per appartenere alla famiglia di <code>Eq</code>.</p>
+<p>La seconda parte permette di definire una sola funzione come contrario dell&#39;altra rendendo necessaria l&#39;implementazione di solo una delle due funzioni.</p>
+<pre><code class="lang-haskell">data TrafficLight = <span class="hljs-keyword">Red</span> | <span class="hljs-keyword">Yellow</span> | <span class="hljs-keyword">Green</span>
+
+instance Eq TrafficLight where
+    <span class="hljs-keyword">Red</span> == <span class="hljs-keyword">Red</span> = Ture
+    <span class="hljs-keyword">Yellow</span> == <span class="hljs-keyword">Yellow</span> = Ture
+    <span class="hljs-keyword">Green</span> == <span class="hljs-keyword">Green</span> = <span class="hljs-keyword">True</span>
+    _ == _ = Flase
+</code></pre>
+<p>In questo modo il tipo <code>TrafficLight</code> appartiene ad <code>Eq</code> con la definizione della funzione <code>==</code> secondo pattern matching.</p>
+<pre><code class="lang-haskell">istance <span class="hljs-operator"><span class="hljs-keyword">Show</span> TrafficLight <span class="hljs-keyword">where</span>
+    <span class="hljs-keyword">show</span> Red = <span class="hljs-string">"Red Light"</span>
+    <span class="hljs-keyword">show</span> Yellow = <span class="hljs-string">"Yellow Light"</span>
+    <span class="hljs-keyword">show</span> Green = <span class="hljs-string">"Green Light"</span></span>
+</code></pre>
+<p>In questo modo vado a definire come mostrare i vari tipi dentro una classe di tipi.</p>
+<pre><code class="lang-haskell">class YesNo a where
+    yesno<span class="hljs-keyword"> :</span>: a -&gt; Bool
+
+-- spefico che anche il tipo lista di qualcuno tipo appartiene alla classe YesNo<span class="hljs-instruction">
+instance </span>YesNo <span class="hljs-keyword">[</span>a] where
+    yesno <span class="hljs-keyword">[</span>] = false
+    yesno _ = true
+</code></pre>
+<h2 id="-spalmare-funzioni-">&quot;Spalmare funzioni&quot;</h2>
+<pre><code class="lang-haskell"><span class="hljs-label">Prelude</span>&gt; :t <span class="hljs-preprocessor">map</span>
+<span class="hljs-label">map</span> :: (a -&gt; <span class="hljs-keyword">b) </span>-&gt; [a] -&gt; [<span class="hljs-keyword">b]
+</span><span class="hljs-label">Prelude</span>&gt; <span class="hljs-preprocessor">map</span> (++ <span class="hljs-string">"!"</span>)[<span class="hljs-string">"hey"</span>, <span class="hljs-string">"ho"</span>] 
+[<span class="hljs-string">"hey!"</span>,<span class="hljs-string">"ho!"</span>]
+</code></pre>
+<p><code>map</code> permette di applicare una funzione a tutti gli elementi di una lista.</p>
+<pre><code class="lang-haskell">Prelude&gt; :t <span class="hljs-built_in">filter</span>
+<span class="hljs-built_in">filter</span> :: (<span class="hljs-operator">a</span> -&gt; Bool) -&gt; [<span class="hljs-operator">a</span>] -&gt; [<span class="hljs-operator">a</span>]
+</code></pre>
+<p><code>filter</code> permette di filtare i dati su una lista</p>
+<pre><code class="lang-haskell">Prelude&gt; :t foldl
+foldl :: Foldable t =&gt; (<span class="hljs-tag">b</span> -&gt; <span class="hljs-tag">a</span> -&gt; b) -&gt; <span class="hljs-tag">b</span> -&gt; t <span class="hljs-tag">a</span> -&gt; <span class="hljs-tag">b</span>
+Prelude&gt; let sum xs = foldl (+) <span class="hljs-number">0</span> xs
+Prelude&gt; sum [<span class="hljs-number">1</span>..<span class="hljs-number">5</span>]
+<span class="hljs-number">15</span>
+</code></pre>
+<p><code>foldl</code> permette di trasformare una lista in un valore unico.</p>
+<p>Esiste anche <code>foldr</code> che esamina la lista a partire da destra.</p>
+<h2 id="inserimento-in-un-albero">Inserimento in un albero</h2>
+<pre><code class="lang-haskell">data Tree a = EmptyTree | <span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">a</span> (Tree a) (Tree a) deriving (<span class="hljs-operator">Eq</span>, Show, <span class="hljs-operator">Read</span>)
+
+singleton :: a -&gt; Tree a
+singleton x = <span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">x</span> EmptyTree EmptyTree
+
+treeInsert :: (Ord a) =&gt; a -&gt; Tree a -&gt; Tree a
+treeInsert x EmptyTree = singleton x
+treeInsert x (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">a</span> left right)
+    | x == a = <span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">x</span> left right --non inserisco se uguale
+    | x <span class="hljs-tag">&lt; a  = Node a (treeInsert x left) right
+    | x &gt;</span> a  = <span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">a</span> left (treeInsert x right)
+</code></pre>
+<p>In questo modo ho definito sia un albero, sia una funzione che mi permette di creare un albero binario di ricerca con valori tutti diversi.</p>
+<pre><code class="lang-haskell">*Main&gt; let nums = [<span class="hljs-number">8</span>,<span class="hljs-number">6</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">7</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>]
+*Main&gt; let numsTree = foldr treeInsert EmptyTree nums
+*Main&gt; numsTree
+<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">5</span> (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">3</span> (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">1</span> EmptyTree EmptyTree) (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">4</span> EmptyTree EmptyTree)) (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">7</span> (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">6</span> EmptyTree EmptyTree) (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">8</span> EmptyTree EmptyTree))
+</code></pre>
+<h2 id="funtori">Funtori</h2>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-type">Functor</span> f <span class="hljs-keyword">where</span></span>
+    fmap :: (a -&gt; b) -&gt; f a -&gt; f b
+</code></pre>
+<p>Per essere un funtore il tipo <code>f</code> (<code>f</code> è un tipo parametrico) deve avere una funzione <code>fmap</code> che data una funzione e un oggetto che contiene un valore sul quale può essere applicata quella funzione, ritorna un&#39;altro oggetto contenente il risultato dell&#39;applicazione della funzione.</p>
+<p>L&#39;idea è che un funtore è una generalizzazione della funzione <code>map</code>.</p>
+<p>Esempio: <code>f</code> = costruttore <code>[]</code> dove <code>[] :: a -&gt; [a]</code></p>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">instance</span> <span class="hljs-type">Functor</span> [] <span class="hljs-keyword">where</span></span>
+    fmap = map
+</code></pre>
+<pre><code class="lang-haskell">*<span class="hljs-constant">Main&gt;</span> <span class="hljs-symbol">:t</span> fmap
+fmap <span class="hljs-symbol">:</span><span class="hljs-symbol">:</span> <span class="hljs-constant">Functor </span>f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+*<span class="hljs-constant">Main&gt;</span> <span class="hljs-symbol">:t</span> map
+map <span class="hljs-symbol">:</span><span class="hljs-symbol">:</span> (a -&gt; b) -&gt; [a] -&gt; [b]
+*<span class="hljs-constant">Main&gt;</span> <span class="hljs-symbol">:t</span> []
+[] <span class="hljs-symbol">:</span><span class="hljs-symbol">:</span> [t]
+</code></pre>
+<p>Ovunque ci sia un &quot;involucro&quot; che contiene dei valori deve essere possibile &quot;spalmare&quot; su quei valori una funzione.</p>
+<h3 id="funtori-su-maybe">Funtori su Maybe</h3>
+<pre><code class="lang-haskell">instance Functor Maybe where
+    fmap f <span class="hljs-list">(<span class="hljs-keyword">Just</span> x)</span> = Just <span class="hljs-list">(<span class="hljs-keyword">f</span> x)</span>
+    fmap f Nothing = Nothing
+</code></pre>
+<p>Quando mi trovo un <code>Just x</code> devo solo applicare <code>f</code> ad <code>x</code>.</p>
+<p>Se non ho niente (<code>Nothing</code>) non faccio niente. Utile in quanto se <code>Nothing</code> rappresenta un&#39;errore, questo risulta invariato.</p>
+<h3 id="funtori-su-un-tree">Funtori su un Tree</h3>
+<pre><code class="lang-haskell">instance Functor Tree where
+    fmap f EmptyTree = EmptyTree
+    fmap f (<span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">x</span> leftsub rightsub) = <span class="hljs-keyword">Node</span><span class="hljs-identifier"> </span><span class="hljs-title">(f</span> x) (fmap f leftsub) (fmap f rightsub)
+</code></pre>
+<p>In questo modo riusciamo a spalmare l&#39;esecuzione di una funzione su un albero.</p>
+<p>Se l&#39;albero è vuoto non faccio nulla.</p>
+<p>Se l&#39;albero ha un nodo, prima applico la funzione al nodo e poi la passo ai vari sotto alberi.</p>
+<h3 id="funtori-su-either">Funtori su Either</h3>
+<pre><code class="lang-haskell">instance Functor <span class="hljs-list">(<span class="hljs-keyword">Either</span> a)</span> where
+    fmap f <span class="hljs-list">(<span class="hljs-keyword">Right</span> x)</span> = Right <span class="hljs-list">(<span class="hljs-keyword">f</span> x)</span>
+    fmap f <span class="hljs-list">(<span class="hljs-keyword">Left</span> x)</span> = Left x
+</code></pre>
+<p>In questo caso <code>f</code> viene spalmata solo su uno dei due tipi.</p>
+<h2 id="input-output">Input/output</h2>
+<p><strong>L&#39;input è impuro, ma tranquilli che non ci sono roghi.</strong></p>
+<pre><code class="lang-haskell">main = <span class="hljs-operator"><span class="hljs-keyword">do</span>
+    putStrLn <span class="hljs-string">"Hello world"</span>
+    <span class="hljs-keyword">name</span> &lt;- getLine <span class="hljs-comment">-- questa è un'assegnazione ad una costante</span>
+    putStrLn <span class="hljs-keyword">name</span></span>
+</code></pre>
+<p>Da notare i tipi</p>
+<pre><code class="lang-haskell">*Main&gt; :t putStrLn 
+putStrLn <span class="hljs-type-annotation">::</span> <span class="hljs-built_in">String</span> -&gt; <span class="hljs-built_in">IO</span> ()
+*Main&gt; :t getLine
+getLine <span class="hljs-type-annotation">::</span> <span class="hljs-built_in">IO</span> <span class="hljs-built_in">String</span>
+</code></pre>
+<h1 id="lezione-5-ancora-haskell">Lezione 5 - Ancora Haskell</h1>
+<h2 id="ancora-funtori">Ancora funtori</h2>
+<p>La classe funtore prende una funzione di <code>a -&gt; b</code> e un parametro di tipo parametrico <code>f</code> instanstanziato ad un tipo <code>a</code> e ritorna un tipo <code>f</code> instanziato ad un tipo <code>b</code>.</p>
+<h2 id="io">IO</h2>
+<p>L&#39;input/output si deve essere sempre dentro il <code>main</code>.</p>
+<pre><code class="lang-haskell">main = <span class="hljs-operator"><span class="hljs-keyword">do</span>
+    putStrln <span class="hljs-string">"Hello world"</span>
+    <span class="hljs-keyword">name</span> &lt;- getLine
+    putStrLn <span class="hljs-keyword">name</span></span>
+</code></pre>
+<pre><code class="lang-haskell">main = <span class="hljs-operator"><span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">c</span> &lt;- getChar
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">c</span> /= <span class="hljs-string">''</span>
+        <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+            putChar <span class="hljs-keyword">c</span>
+            <span class="hljs-keyword">main</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> ()
+
+Prelude&gt; :<span class="hljs-keyword">t</span> <span class="hljs-keyword">return</span>
+<span class="hljs-keyword">return</span> :: (Functor <span class="hljs-keyword">m</span>) =&gt; a -&gt; <span class="hljs-keyword">m</span> a</span>
+</code></pre>
+<p><code>m</code> non è un vero e proprio funtore ma lo si può considerare tale. La funzione ritorna quindi un funtore istanziato al tipo <code>a</code>.</p>
+<p><code>IO</code> è un type constructor e un&#39;instaza di <code>Functor</code>.</p>
+<pre><code class="lang-haskell">instance <span class="hljs-type">Functor</span> <span class="hljs-type">IO</span> where
+    fmap f action = <span class="hljs-keyword">do</span>
+        <span class="hljs-literal">result</span> &lt;- action
+        <span class="hljs-keyword">return</span> (f <span class="hljs-literal">result</span>)
+</code></pre>
+<p>Quindi si può fare qualcosa del genere:</p>
+<pre><code class="lang-haskell">main = <span class="hljs-keyword">do</span> 
+    <span class="hljs-built_in">line</span> &lt;- fmap <span class="hljs-built_in">reverse</span> getLine
+     putStrLn $ <span class="hljs-string">"You said "</span> ++ <span class="hljs-built_in">line</span> ++ <span class="hljs-string">" backwards!"</span>
+</code></pre>
+<h2 id="compilazione-di-un-programma">Compilazione di un programma</h2>
+<pre><code>$ ghc --<span class="hljs-built_in">make</span> prova     <span class="hljs-comment">//Compila</span>
+$ ./prova             <span class="hljs-comment">//Esegue</span>
+</code></pre><h1 id="progetto">Progetto</h1>
+<ol>
+<li>Programma sorgente scritto nel nostro linguaggio LispKit</li>
+<li>Sequenza di token</li>
+<li>Codice intermedio: albero sintattico</li>
+<li>Codice per una macchina virtuale</li>
+</ol>
+<p>La prima parte del progetto si tratta di codificare un programma haskell che sia in grado ti effettuare l&#39;analisi lessicare di un programma scritto il LispKit.</p>
+<p>LispKit è il linguaggio di programmazione che verrà utilizzato per tutto il progetto. È funzionale ed ammette funzioni ricorsive.</p>
+<p>Bisogna effettuare delle modifiche al linguaggio in modo che la grammatica sia LL-1.</p>
+<h2 id="parte-1-analizzatore-lessicale">Parte 1 - Analizzatore lessicale</h2>
+<p>L&#39;analisi lessicale viene fatta da un automa a stati finiti.</p>
+<p>L&#39;analizzatore deve produrre una lista di <code>Token</code>.</p>
+<h1 id="lezione-6-inferenza-dei-tipi">Lezione 6 - Inferenza dei tipi</h1>
+<p>In Haskell non è necessario andare a specificare i tipi, si occupa il compilatore di fare <em>inferenza</em> di tipo.</p>
+<h2 id="inferenza-di-tipo">Inferenza di tipo</h2>
+<pre><code class="lang-haskell"><span class="hljs-keyword">let</span> f x = <span class="hljs-number">2</span> + x
+f <span class="hljs-tag">:: Num</span> <span class="hljs-subst">-&gt; </span>Num
+</code></pre>
+<p>In questo caso il compilatore inferisce che <code>x</code> è di tipo <code>Num</code> in quanto <code>2</code> è una costante di tipo <code>Num</code>.</p>
+<p>Il compilatore trasforma <code>fun f x = 2 + x</code> in <code>*lamba*x.((+2)x)</code> e crea una specie di albero.</p>
+<p>Vengono poi valutati i tipi delle foglie, che in questo caso sono <code>Num -&gt; Num -&gt; Num</code> per l&#39;operatore <code>+</code> e <code>Num</code> per la costante <code>2</code>.</p>
+<p>L&#39;albero è composto da due tipi di nodi: <code>lambda</code> o vincoli per astrazione e <code>@</code> per i vincoli applicazione.</p>
+<p><strong>Vincolo per astrazione</strong>: <code>(lambda x.y)</code> se <code>x</code> è di tipo <code>a</code> e <code>y</code> è di tipo <code>b</code>, allora il tipo è <code>a -&gt; b</code>.</p>
+<p><strong>Vincolo per applicazione</strong>: se <code>f</code> ha tipo <code>a</code>, il suo argomento <code>e</code> ha tipo <code>b</code> e <code>(f e)</code> ha tipo <code>c</code> allora: <code>a = b -&gt; c</code>.</p>
+<p>Il nodo <code>lambda</code> è associato alla funzione anonima e genera un vincolo <code>r = u -&gt; s</code>, con <code>u</code> che è una variabile di tipo per <code>x</code> e <code>s</code> è il tipo del valore di ritorno.</p>
+<p>Quando viene valutato il nodo <code>@</code> per <code>+</code> e <code>2</code> il compilatore genera il vincolo <code>Num -&gt; Num -&gt; Num = Num -&gt; t</code>. Perché il vincolo sia soddisfatto <code>t</code> deve essere uguale a <code>Num -&gt; Num</code></p>
+<p>Per l&#39;altro nodo <code>@</code> tra <code>+2</code> e <code>x</code> viene generator il vincolo <code>t = u -&gt; s</code>.</p>
+<p>Infine, sapendo che <code>t = Num -&gt; Num</code> allora <code>t = u -&gt; s ==&gt; u = Num, s = Num</code>.</p>
+<p>Possono verificarsi delle situazioni <em>circolari</em> in cui non si riesce ad inferire in modo automatico i tipo. Questo perché una variabile di tipo può dipendere da un&#39;altra variabile di tipo che a sua volta dipende dalla prima.</p>
+<p><img src="Linguaggi di Programmazione/immagini/L09-inferenza.png" alt="alt text" title="Logo Title Text 1"></p>
+<p><em>La profondità dell&#39;albero viene influenzata dal fatto che le funzioni sono currificate</em>.</p>
+<h3 id="creazione-dell-albero">Creazione dell&#39;albero</h3>
+<p>L&#39;albero dell&#39;inferenza è creato da due tipi di nodi, i nodi lambda che hanno come simbolo <code>\</code> e i nodi applicazione che hanno come simbolo <code>@</code>.</p>
+<h4 id="nodi-lambda">Nodi lambda</h4>
+<p>Quando si sta analizzando la definizione di una funzione viene creato un nodo <code>\</code>.
+Questo nodo sempre come figlio sinistro un parametro della funzione preso in sequenza, cioè il primo nodo <code>\</code> ha il primo parametro, il secondo nodo <code>\</code> ha il secondo parametro e così via.</p>
+<p>Il figlio destro di un nodo <code>\</code> può essere o un&#39;altro nodo <code>\</code> nel caso la funzione abbia più di un parametro, oppure un nodo <code>@</code>.</p>
+<p>Un nodo di questo tipo da origine ad un vincolo del tipo:</p>
+<pre><code><span class="hljs-type">TipoNodoRadice</span> = <span class="hljs-type">TipoNodoFiglioSinistro</span> -&gt; <span class="hljs-type">TipoFiglioNodoDestro</span>
+
+ad esempio, facendo riferimento all'esempio di prima
+
+r = t -&gt; w
+</code></pre><h4 id="nodi-applicazione">Nodi applicazione</h4>
+<p>Questi nodi vengono creati quando si valuta l&#39;applicazione di una funzione.</p>
+<p>Al contrario dei nodi lambda, in questo caso se la funzione ha più parametri, si espande l&#39;albero a sinistra, questo deriva dal fatto che in Haskell tutte le funzioni sono currificate.</p>
+<p>Il figlio sinistro di un nodo applicazione può essere o un&#39;altro nodo applicazione, nel caso la funzione abbia più parametri, oppure una funzione.</p>
+<p>Sempre nell&#39;esempio sopra, il nodo <code>@</code> rappresenta l&#39;applicazione di <code>f x</code>, e da quel nodo si deriva il vincolo <code>t = u -&gt; s</code>.</p>
+<p>Che generalizzato diventa:</p>
+<pre><code><span class="hljs-constant">TipoNodoFiglioSinistro </span>= <span class="hljs-constant">TipoNodoFiglioDestro </span>-&gt; <span class="hljs-constant">TipoNodoPadre</span>
+</code></pre><p>Nel caso la funzione richiede l&#39;invocazione di una funzione utilizzi più parametri, come già detto, si espande a sinistra.</p>
+<p>Ad esempio l&#39;albero per l&#39;applicazione della funzione <code>f a b</code> porta al seguente albero.</p>
+<pre><code>                  <span class="hljs-comment">(@)</span>
+                /     \
+            <span class="hljs-comment">(@)</span>       b
+          /        \
+       f       a
+</code></pre><p>Cioè il figlio destro rappresenta l&#39;ultimo dei parametri dell&#39;applicazione, mentre il figlio sinistro è un&#39;altro nodo applicazione.</p>
+<p>Complicando ancora le cose, l&#39;applicazione della funzione <code>f a (g b)</code> diventa abbastanza divertente, inquanto entrambi i figli del primo nodo sono entrambi nodi applicazione.</p>
+<pre><code>                  <span class="hljs-comment">(@)</span>
+                /     \
+            <span class="hljs-comment">(@)</span>          <span class="hljs-comment">(@)</span>
+          /        \      /   \
+        f         a  g         b
+</code></pre><p>Questo perché l&#39;ultimo parametro è il risultato dell&#39;applicazione della funzione <code>g</code> sul valore <code>b</code></p>
+<h2 id="inferenza-di-tipo-per-funzioni-ricorsive">Inferenza di tipo per funzioni ricorsive</h2>
+<p>In questo caso si aggiunge il vincolo che il tipo della funzione deve essere uguale a quello presente come nodo dell&#39;albero.</p>
+<p>In modo simile per le funzioni con definizioni multiple deve avere il vincolo il tipo di tutte le funzioni coincida.</p>
+<h1 id="lezione-7-unificazione">Lezione 7 - Unificazione</h1>
+<p>Il significato della <code>-&gt;</code> in haskell:</p>
+<pre><code>tipo di una funzione f: <span class="hljs-tag">a</span> -&gt; <span class="hljs-tag">b</span> -&gt; c
+
+            (-&gt;)
+           /    \
+         <span class="hljs-tag">a</span>      (-&gt;)
+               /    \
+              <span class="hljs-tag">b</span>      c
+
+Rappresentato come stringa: 
+-&gt;(<span class="hljs-tag">a</span>, -&gt;(<span class="hljs-tag">b</span>,c))
+</code></pre><p>Questo perché, essendo currificate, <code>f</code> è una funzione che dato un parametro <code>a</code> ritorna una funzione di tipo <code>b -&gt; c</code>.</p>
+<p>Se c&#39;è un tipo funzione in mezzo, la cosa è la stessa:</p>
+<pre><code>tipo di una funzione <span class="hljs-attribute">f</span>: a<span class="hljs-function"> -&gt;</span> <span class="hljs-function"><span class="hljs-params">(b -&gt; c)</span> -&gt;</span> d
+
+            (<span class="hljs-function">-&gt;</span>)
+           /    <span class="hljs-string">\</span>
+         a      (<span class="hljs-function">-&gt;</span>)
+               /     <span class="hljs-string">\</span>
+             (<span class="hljs-function">-&gt;</span>)     d
+            /    <span class="hljs-string">\</span>
+           b      c
+
+Rappresentato come <span class="hljs-attribute">stringa</span>:<span class="hljs-function">
+-&gt;</span>(a,<span class="hljs-function"> -&gt;</span>((b-&gt;c), d)
+</code></pre><p>Gli alberi di questo tipo possono essere confrontati a partire dalla radice e matchando le varie frecce, in questo modo è possibile definire delle equazioni tra i tipi delle foglie.</p>
+<pre><code>Alb1
+            (<span class="hljs-function">-&gt;</span>)
+           /    <span class="hljs-string">\</span>
+         a      (<span class="hljs-function">-&gt;</span>)
+               /     <span class="hljs-string">\</span>
+             (<span class="hljs-function">-&gt;</span>)     a
+            /    <span class="hljs-string">\</span>
+           c     [a]
+Alb2
+            (<span class="hljs-function">-&gt;</span>)
+           /    <span class="hljs-string">\</span>
+         d      (<span class="hljs-function">-&gt;</span>)
+               /     <span class="hljs-string">\</span>
+              e       f
+
+Alb2 = <span class="hljs-attribute">Alb1</span>:
+- d = a
+- <span class="hljs-function"><span class="hljs-title">e</span> = -&gt;</span>(c,[a])
+- f = a
+</code></pre><p>In questo caso è preferibile utilizzare <code>/</code> come notazione al posto dell&#39;<code>=</code>. Questo perché l&#39;operazione che si fa è una sostituzione piuttosto che un&#39;uguaglianza.</p>
+<p>Nell&#39;esempio di prima si ha:</p>
+<pre><code><span class="hljs-literal">a</span>/d
+<span class="hljs-literal">a</span>/f
+e/-&gt;(c,[<span class="hljs-literal">a</span>])
+</code></pre><p>In questo caso è necessario propagare il valore di <code>a</code>:</p>
+<pre><code>a/<span class="hljs-literal">f</span>
+<span class="hljs-keyword">d</span>/<span class="hljs-literal">f</span>
+<span class="hljs-keyword">e</span>/-&gt;(c,[f])
+
+può essere espresso anche come (insieme <span class="hljs-keyword">di</span> binding):
+{a/f, <span class="hljs-keyword">e</span>/-&gt;(c,[f]), <span class="hljs-keyword">d</span>/f}
+</code></pre><p>In questo caso non cambia nulla, ma è sempre preferibile tenere sempre lo stesso valore a destra, cioè <code>f</code>.</p>
+<p>Una volta trovato un <em>binding</em> si devono fare le sostituzioni nei due alberi, se dopo le sostituzioni i due alberi sono uguali, allora ho trovato una soluzione.</p>
+<p>Nelle espressioni di binding, alla sinistra devono comparire solo variabili distinte che non compaiono mai a destra.</p>
+<p>Per indicare che si applica una sostituzione ad un albero si usa la notazione <code>T σ</code>.</p>
+<p>L&#39;applicazione di una sostituzione è idempotente:</p>
+<pre><code>(<span class="hljs-literal">T</span> σ) σ = <span class="hljs-literal">T</span> σ
+</code></pre><p>Tipicamente nella notazione non viene utilizzata la <code>-&gt;</code>, di solito si associa un&#39;arietà ad ogni simbolo.</p>
+<pre><code>{f/<span class="hljs-number">3</span>, f/<span class="hljs-number">4</span>, g/<span class="hljs-number">2</span>, <span class="hljs-literal">a</span>/<span class="hljs-number">0</span>} + eventuali variabili
+
+                f/<span class="hljs-number">4</span>
+           /    /  \   \
+        /      /    \     \
+       f/<span class="hljs-number">3</span>    g/<span class="hljs-number">2</span>    <span class="hljs-literal">a</span>     <span class="hljs-literal">a</span>
+    /   | \    / \ 
+    <span class="hljs-literal">a</span>   g  <span class="hljs-literal">a</span>  <span class="hljs-literal">a</span>  <span class="hljs-literal">a</span>
+       / \
+      <span class="hljs-literal">a</span>   <span class="hljs-literal">a</span>
+</code></pre><p>Se un termine non ha variabili si dice <em>ground</em>.</p>
+<h2 id="composizione-di-sostituzioni">Composizione di sostituzioni</h2>
+<blockquote>
+<p>σ<sub>1</sub> = {x<sub>1</sub>/t<sub>1</sub>, ..., x<sub>n</sub>/t<sub>n</sub>}
+σ<sub>2</sub> = {y<sub>1</sub>/s<sub>1</sub>, ..., y<sub>n</sub>/s<sub>n</sub>}</p>
+</blockquote>
+<p>La composizione di queste due soluzioni è data da </p>
+<blockquote>
+<p>σ<sub>1</sub> 𝜸 σ<sub>2</sub> = {x<sub>1</sub>/(t<sub>1</sub> σ<sub>2</sub>), ..., x<sub>n</sub>/(t<sub>n</sub> σ<sub>2</sub>)} ∪ {y<sub>j</sub>/s<sub>j</sub> | y<sub>j</sub> non è in {x<sub>1</sub> ... x<sub>n</sub>}}.</p>
+</blockquote>
+<p>Anche se l&#39;applicazione di una sostituzione è idempotente, la composizione non lo è.</p>
+<h2 id="preordine-delle-sostituzioni">Preordine delle sostituzioni</h2>
+<p>Si dice che σ<sub>1</sub> &gt;= σ<sub>2</sub> se esiste σ<sub>3</sub> tale che σ<sub>1</sub>𝜸σ<sub>3</sub> = σ<sub>2</sub>.</p>
+<p>Questo vuol dire che per ottenere lo stesso effetto di σ<sub>2</sub> devo comporre σ<sub>1</sub> con un&#39;altra sostituzione σ<sub>3</sub>.</p>
+<p>Questo vuol dire che σ<sub>1</sub> è <strong>più generale</strong> di σ<sub>2</sub>, allo stesso modo, σ<sub>2</sub> è <strong>più istanziata</strong> di σ<sub>1</sub></p>
+<p>Ad esempio:</p>
+<blockquote>
+<p>σ<sub>1</sub> = {x/y}
+σ<sub>2</sub> = {x/[Int]}</p>
+<p>allora</p>
+<p>σ<sub>1</sub> &gt;= σ<sub>2</sub></p>
+<p>e</p>
+<p>σ<sub>3</sub> = {y/[Int]}</p>
+<p>σ<sub>1</sub> 𝜸 σ<sub>3</sub> = σ<sub>2</sub></p>
+<p>(anche se Filè dice che non è del tutto vero)</p>
+</blockquote>
+<p>Se σ<sub>1</sub> 𝜸 σ<sub>2</sub> = σ<sub>2</sub> e σ<sub>2</sub> 𝜸 σ<sub>1</sub> = σ<sub>1</sub> allora si dice che le due sostituzioni sono <strong>equivalenti</strong>.</p>
+<p>Una sostituzione è <strong>ground</strong> se non ha variabili nelle parti destre dei binding.</p>
+<h2 id="sistema-di-equazioni">Sistema di equazioni</h2>
+<p>Dato un sistema di equazioni <code>E</code>, si indica con <code>Gsol(E) o Grosol(E)</code> l&#39;insieme delle sostituzioni che sono soluzioni ground di E.</p>
+<p>Se <code>Gsol(E)</code> non è vuoto allora <code>E</code> è <strong>risolvibile</strong>, mentre se <code>Gsol(E) == Gsol(E&#39;)</code> allora si dice che <code>E</code> è <strong>equivalente</strong> ad <code>E&#39;</code>.</p>
+<p><strong>Sistema di equazioni in forma risolta</strong>: <code>E = {x = f(y), z = f(g(y))}</code>, questo sistema è idempotente e le parti sinistre delle equazioni sono solo variabili.
+σ<sub>E</sub> = {x/f(y), z/f(g(y))} è una soluzione di <code>E</code>, quindi <code>E</code> è una rappresentazione compatta di tutte le sue soluzioni, comprese quelle ground.
+Se σ è una soluzione di ground di <code>E</code> allora σ &lt;= σ<sub>E</sub>, cioè esiste una soluzione σ&#39; tale che σ = σ<sub>E</sub> 𝜸 σ.
+Questo vuol dire che σ<sub>E</sub> è la soluzione più generale di tutte e di conseguenza espire tutto <code>Grosol(E)</code>.</p>
+<h2 id="unificazione">Unificazione</h2>
+<p>Si parte da due insiemi di equazioni e si cerca di andare a fare delle sostituzioni, in modo da arrivare ad un unico insieme di equazioni in forma risolta, facendo in modo che il numero di soluzioni ground non cambi.</p>
+<ol>
+<li>f(t<sub>1</sub>,...,t<sub>n</sub>) = f(s<sub>1</sub>, ... , s<sub>n</sub>) --&gt; {t<sub>1</sub> = s<sub>1</sub>, ... , t<sub>n</sub> = s<sub>n</sub>} : <em>pealing</em>: si passa da due termini con arietà <em>n</em> e si costruiscono <em>n</em> nuove equazioni per i tipi figli.</li>
+<li>f(t<sub>1</sub>, ..., t<sub>n</sub>) = g(s<sub>1</sub>, ..., s<sub>k</sub>) --&gt; stop con fallimento, perché ci sono dei termini che devono essere ground (???).</li>
+<li><code>x = x</code> --&gt; vengono eliminate tutte le equazioni di questo tipo.</li>
+<li><code>t = x</code> con <code>t</code> non variabile viene trasformato in <code>x = t</code>. Trasformo le varie equazioni in modo che siano già in forma risolta.</li>
+<li>Per tutte le equazioni del tipo <code>x = t</code>, con <code>t</code> diverso da <code>x</code> e <code>x</code> ha altre occorrenze in <code>E</code>, allora se <code>x</code> compare in <code>t</code> ho un fallimento (ovvero esiste un&#39;equazione <code>x = t(x)</code>, questo tipo di equazione non può essere trattato), altrimenti sostituisco ogni occorrenza di <code>x</code> in <code>t</code> (Faccio la propagazione delle equazioni risolte).</li>
+</ol>
+<h3 id="esempio">Esempio</h3>
+<pre><code>{<span class="hljs-keyword">g</span>(x)=<span class="hljs-keyword">g</span>(<span class="hljs-keyword">g</span>(z)), <span class="hljs-literal">f</span>(a,z)=<span class="hljs-literal">f</span>(a,y)}
+
+    <span class="hljs-keyword">g</span>   =   <span class="hljs-keyword">g</span> 
+    |       |
+    x       <span class="hljs-keyword">g</span>
+            |
+            z
+        <span class="hljs-literal">e</span>
+
+    f   =   <span class="hljs-literal">f</span>
+   / \     / \
+  a   z   a   <span class="hljs-literal">y</span>
+
+passo alla notazione lineare
+
+{ 
+    x = <span class="hljs-keyword">g</span>(z),
+    a = a, <span class="hljs-comment">//Può essere scartata (passo 3 dell'algoritmo)</span>
+    z = <span class="hljs-literal">y</span>
+}
+
+applico il passo 5 dell'algoritmo
+
+{
+    x = <span class="hljs-keyword">g</span>(y) <span class="hljs-comment">//Sostituisco z con y</span>
+    z = <span class="hljs-literal">y</span>
+}
+
+posso riespandere <span class="hljs-keyword">la</span> notazione per ottenere i due alberi
+
+    <span class="hljs-keyword">g</span>   =   <span class="hljs-keyword">g</span> 
+    |       |
+    <span class="hljs-keyword">g</span>       <span class="hljs-keyword">g</span>
+    |       |
+    y       <span class="hljs-literal">y</span>
+
+        <span class="hljs-literal">e</span>
+
+    f   =   <span class="hljs-literal">f</span>
+   / \     / \
+  a   y   a   <span class="hljs-literal">y</span>
+</code></pre><h3 id="correttezza-dell-algoritmo">Correttezza dell&#39;algoritmo</h3>
+<ol>
+<li>Dato un insieme di equazioni <code>E</code>, l&#39;algoritmo termina sempre, perché ad ogni iterazione diminuisce il numero di equazioni.</li>
+<li>Se termina senza fallire viene prodotto un nuovo insieme <code>E&#39;</code>, in forma risolta e risolvibile, con <code>Grosol(E) = Grosol(E&#39;)</code></li>
+<li>Se l&#39;algoritmo fallisce allora <code>E</code> non è risolvibile.</li>
+</ol>
+<p>Dimostrazione:</p>
+<ol>
+<li>Ogni trasformazione (1), (3) e (4) diminusice strettamente il numero di simboli nelle parti sinistre delle equazioni, quindi dopo un numero finito di applicazione di questi passi, o si termina o si applica il passo (5). Quindi il passo (5) può fallire oppure elimina tutte le occorrenze di una variabile, meno una (ne viene lasciata una sola). Di conseguenza, il passo (5) si può applicare solo una volta per ogni variabile, da cui segue che il passo (5) può essere applicato al massimo tante volte quante sono le variabili distinte in <code>E</code>.</li>
+<li>Per ogni passo E<sub>1</sub> --&gt; E<sub>2</sub> che ha successo vale che hanno le stesse soluzioni.<ul>
+<li>(1): <code>f(u) = f(v) --&gt; u = v</code>, questo perché una soluzione ground per la prima equazione porrebbe le variabili <code>u</code> e <code>v</code> ad uno stesso tipo, soddisfacendo anche la seconda equazione. Se le due equazioni sono più complesse, si applica lo stesso ragiornamento, ricorsivamente tra i vari sotto-termini.</li>
+<li>(3): <code>t = x</code> --&gt; <code>x = t</code>, questo perché è un&#39;equazione.</li>
+<li>(5): se viene applicato con successo con <code>x = t</code>, per ogni soluzione σ di E<sub>1</sub> deve essere che <code>(x) σ = (t) σ</code>, quindi dovunque in E<sub>1</sub> si trova <code>x</code>, questa può essere sostituita con <code>t</code>, mantenendo comunque la soluzione σ. (Manca la dimostrazione del fallimento, sarà nella prossima lezione).</li>
+</ul>
+</li>
+</ol>
+<h1 id="lezione-8-unificazione-2-e-analisi-sintattica">Lezione 8 - Unificazione 2 e Analisi Sintattica</h1>
+<h2 id="unificazione-cont-d-">Unificazione (cont&#39;d)</h2>
+<p><em>Dimostrazione della correttezza dell&#39;algoritmo di unione</em></p>
+<h3 id="dimostrazione-del-punto-2-">Dimostrazione del punto (2)</h3>
+<p>Per ogni passo E<sub>1</sub> -&gt; E<sub>2</sub> che ha successo vale che i due insiemi hanno le stesse soluzioni ground.</p>
+<p><strong>Passo (1)</strong>: f(u<sub>1</sub>,..., u<sub>n</sub>) = f(v<sub>1</sub>,..., v<sub>n</sub>) --&gt; u<sub>1</sub> = v<sub>1</sub> ... u<sub>n</sub> = v<sub>n</sub></p>
+<p>Prendendo una soluzione σ e applicandola u<sub>1</sub> σ, questo deve essere uguale a v<sub>1</sub> σ, il che applicato a tutte le varie equazioni le rende trivialmente verificiate.</p>
+<p><strong>Passo (3)</strong>: <code>t = x</code> --&gt; <code>x = t</code>, questo perché è un&#39;equazione.</p>
+<p><strong>Passo (5)</strong>: applicazione delle uguaglianze <code>x = t</code>.</p>
+<p>Se l&#39;applicazione ha successo, per ogni soluzione σ di E<sub>1</sub> deve essere che <code>x σ = t σ</code> quindi per ogni equazione in E<sub>1</sub> contentente <code>x</code> possiamo sostiturla con <code>t</code> mantenendo la soluzione σ.
+Bisogna comunque dimostrare che le soluzioni ground rimangono, ma se applico σ al risultato, se una soluzione è ground per il risultato, questa deve essere una soluzione valida anche per il sistema di equazioni originario.</p>
+<p>Alla fine del processo, se non c&#39;è un fallimento, si raggiunge E<sub>2</sub> che è in forma risolta, questo perché se non fosse vero potrei applicare delle altre regole e quindi non avrei terminato.</p>
+<p><strong>Forma risolta</strong>: sistema composto da equazioni che nella parte sinistra hanno solo una variabile. Quando un sistema è espresso in questa forma diventa una rappresentazione compatta di tutte le sue possibili soluzioni.</p>
+<p><em>dimostrazione in qualche modo di quello che c&#39;è scritto sopra</em></p>
+<p>{x<sub>1</sub>, ..., x<sub>n</sub>} sono tutte distinte e {x<sub>1</sub>,..,x<sub>n</sub>} ∩ l&#39;unione di Var(t<sub>i</sub>) = ∅:</p>
+<ol>
+<li>parte a destra non variabile --&gt; non può essere, potrei applicare il passo 1 e quindi non ho terminato</li>
+<li>le x<sub>i</sub> non sono tutte diverse --&gt; ci sono due x<sub>i</sub> uguali, posso ancora applicare il passo (5) quindi non ho terminato</li>
+<li>una x<sub>i</sub> compare in qualche t<sub>j</sub> (compare a destra di una equazione) --&gt; posso ancora applicare (5). </li>
+</ol>
+<p>Se va tutto bene, l&#39;algoritmo termina e il sistema di equazioni è già in forma risolta e consiste anche in una possibile soluzione generale per il sistema di equazioni di partenza.</p>
+<h3 id="dimostrazione-dei-casi-di-fallimento-dell-algoritmo">Dimostrazione dei casi di fallimento dell&#39;algoritmo</h3>
+<p><strong>Fallimento dovuto al caso (2)</strong>: è ovvio che non ci sono soluzioni per <code>f(...) = g(...)</code> non ci sono neanche soluzione per il sistema.</p>
+<p><strong>Fallimento dovuto al caso (5)</strong>: E<sub>1</sub> contiene <code>x = t</code> con <code>t</code> non vuoto e che contiene <code>x</code>, questa equazione quindi non ha soluzione, pertanto anche E<sub>1</sub> non ha soluzione.</p>
+<h3 id="considerazioni-finali">Considerazioni finali</h3>
+<p>In caso di successo E&#39; è in forma risolta e quindi lo possiamo vedere come una soluzione σ<sub>E&#39;</sub> e funziona sia come soluzione di E&#39; (banalmente perché è in forma risolta e istanziando ulteriormente σ<sub>E&#39;</sub> otteniamo tutte le soluzioni ground di E&#39;) sia come soluzione di E, perché tutte le soluzioni ground di E&#39; sono anche soluzioni di E (per costruzione di E&#39;).</p>
+<p>Inoltre, σ<sub>E&#39;</sub> è una soluzione più generale di E, perché per ogni altra soluzione σ di E, σ<sub>E&#39;</sub> &gt;= σ. (<strong>most general unifier</strong>) </p>
+<p>Possono esistere diversi unificatori più generali, ma sono sempre un numero finito e sono tutti &quot;quasi uguali&quot;.</p>
+<p>Ad esempio { w/f(v), x/u, y/u, z/v } e { w/f(z), x/y, u/y, v/z} sono equivalenti.</p>
+<p>Infatti in entrambe {x=u=y} e {z=v} ma sono sostituzioni che rappresentano questo in modo diferso.</p>
+<p>Sono quindi delle variabili di tipo che restano libere e scegliere un nome al posto di un altro per una variabile è indifferente.</p>
+<p>{y/u, z/v} e {u/y, v/z} rappresentano la stessa classe di variabili.</p>
+<p>Per la cronaca: le cose si complicano se si considerano sostituzioni non idempotenti, in questo caso esisstono un&#39;infinità di unificatori più generali.</p>
+<p>Cosa abbiamo dimostrato sulla type inference di Haskell?</p>
+<ul>
+<li>È sempre decidibile;</li>
+<li>Come derivare il tipo principale (che coincide con l&#39;unificatore più generale).</li>
+</ul>
+<h2 id="analisi-sintattica">Analisi sintattica</h2>
+<p>Grammatica libera da contesto per le espressioni:</p>
+<blockquote>
+<p>e ::= n | e + e | e - e
+n ::= d | nd
+d ::= 0 | 1 | 2 | ...</p>
+</blockquote>
+<p>Vengono fatte delle derivazioni che generano forme sentenziali, fino ad arrivare a stringhe terminali che rappresentano il linguaggio generato dalla grammatica.</p>
+<p>Ogni derivazione di una grammatica può essere rappresentata come un albero.</p>
+<blockquote>
+<p>e -&gt; e - e -&gt; n - e -&gt; n - e + e -&gt; ... -&gt; 10 - 15 + 12</p>
+</blockquote>
+<pre><code>        e
+    /   |<span class="hljs-string">   \
+   e    -    e
+   </span>|<span class="hljs-string">     /   </span>|<span class="hljs-string">   \
+   n    e    +   e
+   </span>|<span class="hljs-string">    </span>|<span class="hljs-string">        </span>|
+   10   n        n
+        |<span class="hljs-string">        </span>|
+        15       12
+</code></pre><p>L&#39;albero oltre che a specificare la stringa visualizzata, specifica anche l&#39;ordine in cui la stringa deve essere valutata, che in questo caso è <code>10 - (15 + 12)</code>.</p>
+<p>Questo albero per noi è fondamentale in quanto lo usiamo per generare codice.</p>
+<p>La generazione dell&#39;albero però può essere ambigua, in quanto la stessa espressione <code>10 - 15 + 12</code> può essere generata da due alberi dirversi che specificano un ordine di valutazione dell&#39;espressione in modo diverso, che portano a risultati diverse.</p>
+<p>Una grammatica alternativa che permette di generare le stesse espressioni in modo non ambiguo è data da:</p>
+<blockquote>
+<p>e    ::= num | e &lt;op&gt; num</p>
+<p>&lt;op&gt; ::= + | -</p>
+</blockquote>
+<p>In questo modo viene vincolata la precedenza a sinistra tipica delle espressioni algebriche.</p>
+<p>Però questa grammatica non permette la parentesizzazione delle espressioni.</p>
+<blockquote>
+<p>e    ::= o | e &lt;op&gt; o
+o    ::= num | (e)</p>
+<p>&lt;op&gt; ::= + | -</p>
+</blockquote>
+<p>La grammatica rimane comunque non ambigua.</p>
+<p>Ci sono però dei linguaggi che sono interamente ambigui, però per quello che riguarda i linguaggi di programmazione è facile creare delle grammatiche non ambigue.</p>
+<h1 id="lezione-9-agol60">Lezione 9 - Agol60</h1>
+<p><em>Lungua presentazione della seconda parte progetto</em></p>
+<h2 id="algol60">Algol60</h2>
+<p>Linguaggio di programmazione sviluppato da Backus/McCarthy ed è stato lo standard accademico fino all&#39;avvento del Pascal.</p>
+<p>Punti salienti del linguaggio:</p>
+<ul>
+<li>Utilizza una grammatica libera da contesto;</li>
+<li>Utilizzo della struttura a blocchi (no go-to) caratterizzati da <code>begin-end</code>;</li>
+<li>Ricorsione;</li>
+<li>Funzioni di ordine superiore (funzioni considerate come oggetti);</li>
+<li>Gestione della memoria a stack.</li>
+</ul>
+<p>Punti scrausi del linguaggio:</p>
+<ul>
+<li>Problemi nel passaggio delle funzioni come parametro (chiamate procedure);</li>
+<li>Array senza bound;</li>
+<li>pass-by-name.</li>
+</ul>
+<pre><code class="lang-ruby">real <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">average</span><span class="hljs-params">(A,n)</span>;</span>
+real <span class="hljs-keyword">array</span> A; integer n;
+<span class="hljs-keyword">begin</span>
+    real sum; sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> i=<span class="hljs-number">1</span> <span class="hljs-keyword">step</span> <span class="hljs-number">1</span> <span class="hljs-keyword">until</span> n <span class="hljs-keyword">do</span>
+        sum := sum + A[i];
+        average := sum/n
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>La cosa strana è che i nomi delle funzioni possono comparire come nomi delle variabili.</p>
+<p>Il passaggio di funzioni come parametro soffriva di alcuni problemi di tipo, veniva infatti perso il controllo sui parametri di invocazione della funzione.</p>
+<h2 id="pass-by-name">pass-by-name</h2>
+<p>Modo per passare i parametri ad una funzione.</p>
+<pre><code class="lang-ruby"><span class="hljs-keyword">begin</span> integer i;
+    integer <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">sum</span><span class="hljs-params">(i, j)</span>;</span>
+        integer i, j;
+            comment parameters passed <span class="hljs-keyword">by</span> name;
+        <span class="hljs-keyword">begin</span> integer sm; sm := <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span> <span class="hljs-keyword">step</span> <span class="hljs-number">1</span> <span class="hljs-keyword">until</span> <span class="hljs-number">100</span> <span class="hljs-keyword">do</span> sm := sm + j; 
+            sum := sm
+    <span class="hljs-keyword">end</span>; print(sum(i, i*<span class="hljs-number">10</span> ))
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>In questo caso la chiamata <code>sum(i,i*10)</code> istanzia <code>j</code> a <code>i*10</code>, in questo modo c&#39;è un cambio di contesto e all&#39;interno delle funzione <code>j</code> viene trasformato in <code>i*10</code>, quindi il risultato della somma anziché essere <code>100*j</code> si ottiene qualcosa di totalmente diverso.</p>
+<h1 id="lezione-10-gestione-dei-dati-a-runtime">Lezione 10 - Gestione dei dati a Runtime</h1>
+<p><em>Capitolo 7 del libro.</em></p>
+<p>Fortran nel 60 non permetteva invocazioni ricorsive, ogni variabile e ogni parametro formale avevano una locazione fissa che conteneva il valore.</p>
+<p>Questa strategia di gestione della memoria non permette di andare a definire funzioni ricorsive in quanto il numero di variabili è variabile e non può essere calcolato a runtime.</p>
+<p>(Per lo stesso motivo non esistevano neanche i blocchi)</p>
+<p>Algol60 essendo strutturato a blocchi ha utilizzato una strategia di gestione diversa:</p>
+<ul>
+<li>Le variabili venivano dichiarate all&#39;interno di un blocco;</li>
+<li>Ogni dichiarazione esiste in un solo blocco;</li>
+<li>Quando inizia l&#39;esecuzione di un blocco viene allocata la memoria necessaria per contenere le nuove variabili, questa memoria viene poi deallocata all&#39;uscita del blocco.</li>
+</ul>
+<h2 id="runtime">Runtime</h2>
+<p>Al giorno d&#39;oggi la memoria durante l&#39;esecuzione di un programma viene gestita con uno stack di record di attivazione, ognuno di questi record contiene tutti gli r-valori delle variabili del blocco.</p>
+<p>Questo stack cresce dall&#39;alto verso il basso.</p>
+<p><img src="Linguaggi di Programmazione/immagini/L10-computer.png" alt=""></p>
+<p>Nella parte bassa della memoria virtuale c&#39;è l&#39;heap, l&#39;area della memoria adibita a contenere i dati dinamici.</p>
+<p>L&#39;indirizzo dell&#39;ultimo record di attivazione (quello che si trova in cima allo stack) viene gestito dal <strong>enviroment pointer</strong>, un registro fisico della macchina.</p>
+<p>Un record di attivazione contiene:</p>
+<ul>
+<li><strong>Control link</strong>: un puntatore al record di attivazione precedente, serve anche per poter scendere nello stack per accedere ai valori delle variabili degli altri blocchi;</li>
+<li>Gli <strong>R-Valori</strong> delle variabili dichiarate nel blocco;</li>
+<li><strong>Risultati parziali</strong>: nel caso sia necessario avere della memoria d&#39;appoggio per i registri, questa viene allocata dentro il record di attivazione.</li>
+</ul>
+<p>Segue che ogni record di attivazione (RA) ha una lunghezza variabile.</p>
+<p>Da notare che il codice prodotto dal compilatore deve fare riferimento ad indirizzi dello stack dei RA, questo vuol dire che il compilatore deve avere un modello preciso di come sarà lo stack al momento in cui viene eseguito ciascuna operazione.</p>
+<p>Inoltre, dato che lo stack cambia durante l&#39;esecuzione del programma, il compilatore deve essere in grado di andare a calcolare gli indirizzi corretti.</p>
+<p><img src="Linguaggi di Programmazione/immagini/L10-funzione.png" alt=""></p>
+<p>Quando si entra in un blocco è necessario che il compilatore faccia il push del blocco corretto, mentre quando si esce dal blocco è necessario fare il pop per deallocarle e liberare la memoria.</p>
+<h3 id="discesa-nello-stack">Discesa nello stack</h3>
+<p>Se all&#39;interno di un blocco vengono utilizzate delle variabili di un altro blocco che contiene il blocco corrente, il compilatore deve essere in grado di andare a calcolare l&#39;indirizzo corretto.</p>
+<p>Generalmente la variabile da cercare si trova <em>n</em> record indietro ed è la variabile alla posizione <em>P</em>.</p>
+<p>Di conseguenza è possibile indicare l&#39;indirizzo della variabile <em>z</em> con la coppia <em>(n,P)</em>.</p>
+<p>Questo è possibile perché il compilatore si costruisce uno stack stastico che ha esattamente la stessa struttura dello stack dinamico.</p>
+<p>Nello <strong>stack dinamico</strong> (quello usato durante l&#39;esecuzione del programma) ci sono solo gli R-Valori delle variabili.</p>
+<p>Nello <strong>stack statico</strong> che utilizza il compilatore sono presenti sono i nomi delle variabili e non gli R-Valori.</p>
+<p>Di conseguenza l&#39;indirizzo statico di una variabile è uguale all&#39;indirizzo dinamico dell&#39;R-Valore della variabile.</p>
+<h2 id="i-blocchi-in-haskell">I blocchi in Haskell</h2>
+<p>Ogni dichirazione in Haskell definisce un blocco e nel caso si utilizzi <code>let x ... in ...</code> va a creare un blocco che è lo scope di <code>x</code>.</p>
+<pre><code class="lang-haskell">f x = x+<span class="hljs-number">1</span>
+g y = (f y)+ <span class="hljs-number">2</span>
+z = g <span class="hljs-number">3</span>
+</code></pre>
+<p>diventa qualcosa di simile a </p>
+<pre><code class="lang-haskell"><span class="hljs-collection">{
+    f x = x + <span class="hljs-number">1</span>
+    <span class="hljs-collection">{
+        g y = <span class="hljs-list">(<span class="hljs-keyword">f</span> y)</span>+ <span class="hljs-number">2</span>
+        <span class="hljs-collection">{
+            z = g <span class="hljs-number">3</span>
+        }</span>
+    }</span>
+}</span>
+</code></pre>
+<h2 id="gestione-dello-stack-statico">Gestione dello stack statico</h2>
+<p>Finché il programma è sequenziale e senza costrutti iterativi la situazione è semplice, basta che il compilatore analizzi il codice in modo da identificare i vari blocchi.</p>
+<p>Nel caso ci sia un&#39;istruzione iterativa, c&#39;è il record che associato al blocco del ciclo che viene ripetuto varie volte.</p>
+<p>Durante l&#39;esecuzione verrà sempre fatto un push e pop dello stesso record di attivazione e di conseguenza gli indirizzi delle variabili presenti nel blocco sarà sempre quello.</p>
+<p>Inoltre, non è importante sapere quante volte viene ripetuto il ciclo, dato che ci sarà sempre al massimo un record per volta.</p>
+<h3 id="stack-statico-per-le-funzioni">Stack statico per le funzioni</h3>
+<p>Anche l&#39;esecuzione di una funzione definisce un blocco che corrisponde al corpo della funzione.</p>
+<p>Il problema è che le funzioni possono utilizzare delle variabili globali e andare a ricercare il valore della variabile scendendo nello stack non funziona perché è troppo oneroso.</p>
+<p>Per risolvere questo problema si sfrutta il fatto che la definizione della funzione deve essere all&#39;interno di un blocco (globale o no) e che l&#39;invocazione delle funzione viene fatta in un blocco che è contenuto dal blocco che contiene le definizione delle funzioni.</p>
+<p>In questo modo per recuperare il valore delle variabili globali usate dentro una funzione viene utilizzata <strong>la prima occorrenza a partire dal blocco della definizione</strong>, questo prende il nome di <strong>scoping statico</strong>.</p>
+<p>Il record di attivazione di una funzione deve contenere più dati rispetto ad un record normale:</p>
+<ul>
+<li><strong>Control link</strong>: indirizzo del record di attivazione sottostante;</li>
+<li><strong>Indirizzo di ritorno</strong>: indirizzo dell&#39;istruzione successiva, l&#39;indirizzo è sempre un indirizzo ma riferisce un istruzione del codice sorgente e non un dato nella memoria;</li>
+<li><strong>Indirizzo del risultato</strong>: è un indirizzo di una locazione intera allo stack dei dati nel quale si andrà ad inserire l&#39;eventuale valore di ritorno;</li>
+<li><strong>Parametri formali</strong>: nello stack statico ci saranno i nomi dei parametri, nello stack dinamico ci saranno gli effettivi valori;</li>
+<li><strong>Variabili locali</strong>;</li>
+<li><strong>Spazio per i risultati parziali</strong>.</li>
+</ul>
+<p>Quando si hanno chiamate ricorsive, il codice della funzione esiste in un solo posto e, cosa molto importante, tutti i record di attivazione creati dalle chiamate ricorsive devono avere la stessa struttura.</p>
+<p>Questo perché viene sempre eseguito lo <strong>stesso codice</strong> utilizzando <strong>record di attivazione diversi</strong>.</p>
+<h4 id="creazione-di-un-record-di-attivazione-per-la-chiamata-di-una-funzione-ricorsiva">Creazione di un record di attivazione per la chiamata di una funzione ricorsiva</h4>
+<pre><code class="lang-haskell"><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">fact</span></span>(n) = <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">1</span> <span class="hljs-keyword">then</span> <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> n*fact(n-<span class="hljs-number">1</span>)
+</code></pre>
+<p>Calcolo del fattoriale di n-1 nel registro R0, considerando che è già stato fatto il push iniziale. (E&#39; una chiamata ricorsiva)</p>
+<p>Viene fatto un push di un record di 5 posti:</p>
+<ol>
+<li>Control link = EP</li>
+<li>Indirizzo di ritorno = Indirizzo di <code>fact</code> successivo alla richiesta ricorsiva</li>
+<li>Indirizzo del risultato = EP+4, quarta posizione del blocco precedente</li>
+<li>n = R0, valore del parametro attuale</li>
+<li>Spazio vuoto a disposizione per il risultato della chiamata ricorsiva</li>
+</ol>
+<p>Alla fine viene incrementato EP di 5.</p>
+<h1 id="lezione-11-dati-a-runtime-2">Lezione 11 - Dati a runtime 2</h1>
+<p>Le funzioni <em>tail recursive</em> sono più semplici da gestire dal punto di vista del compilatore, questo perché al termine della chiamata ricorsiva non vengono effettuate altre operazioni.</p>
+<p>Grazie a questo fatto è possibile utilizzare un solo record di attivazione per tutte le chiamate ricorsive. Questo record ha come indirizzo di ritorno, l&#39;indirizzo dell&#39;istruzione dopo la prima chiamata e il valore dei parametri viene via via aggiornato, anziché andare ad aggiungere un nuovo blocco.</p>
+<h2 id="variabili-globali-nel-corpo-delle-funzioni">Variabili globali nel corpo delle funzioni</h2>
+<p>Per la gestione delle variabili globali possono essere utilizzate due regole:</p>
+<ul>
+<li><strong>static scope</strong>: il compilatore va a cercare la variabile nei blocchi che racchiudono la definizione delle funzione;</li>
+<li><strong>dynamic scope</strong>: il compilatore va a cercare la variabile nei blocchi che racchiudono l&#39;invocazione della funzione.</li>
+</ul>
+<p>In ogni caso si cerca sempre nel blocco più vicino.</p>
+<p>Ovviamente l&#39;utilizzo del dynamic scope comporta che la stessa variabile globale può essere associata a valori diversi, dal momento che il valore dipende dal contesto di esecuzione della funzione.</p>
+<p>Per la gestione delle eccezioni è preferibile avere la gestione dello scope dinamica in modo da utilizzare sempre le informazioni &quot;di contesto&quot; delle eccezioni piuttosto che quelle statiche presenti dove è stata definita l&#39;eccezione.</p>
+<p>L&#39;implementazione dello scope dinamico è semplice, basta avere a disposizione il control link dei vari record di attivazione in modo da poter risalire tra i record di attivazione per cercare le variabili.</p>
+<p>Lo static scope invece è più complesso da implementare, è infatti necessario andare ad aggiungere un nuovo puntantore <strong>access link</strong> (detto anche link statico) che permette di arrivare direttamente al blocco corrispondende alla definizione della funzione che è stata invocata. Una volta raggiunto il blocco, si risale lo stack utilizzando il control link per trovare la prima occorrenza della variabile globale.</p>
+<p>Per chiarezza, anche la definizione di una funzione costituisce un blocco, così come la definizione di una variabile.</p>
+<h2 id="chiusure">Chiusure</h2>
+<p>Le funzioni vengono considerate come variabili globali, con la differenza che non si sa che valore sia associato alla variabile.</p>
+<p>Infatti, che valore ha una funzione?</p>
+<p>Il valore di una funzione prende il nome di <strong>chiusura</strong> e contiene tutte le informazioni necessarie per preparare l&#39;esecuzione della funzione.</p>
+<p>Tra queste ci sono un puntatore per il record di attivazione in cui è definita la funzione e un puntatore al codice compilato della funzione.</p>
+<p>Ci sono anche altri valori come la dimensione del record di attivazione.</p>
+<h1 id="lezione-12">Lezione 12</h1>
+<h2 id="funzioni-come-valori-di-prima-classe">Funzioni come valori di prima classe</h2>
+<p>Un linguaggio tratta le funzioni come entità di prima classe se:</p>
+<ol>
+<li>Una funzione può essere dichiarata in un qualsiasi blocco;</li>
+<li>Una funzione può essere passata come argomento ad un&#39;altra funzione (<strong>downward funarg problem</strong>);</li>
+<li>Una funzione può essere restituita come risultato di una funzione (<strong>upward funresult problem</strong>).</li>
+</ol>
+<p>Il punto <strong>1</strong> implica che la definizione di una funzione crea un record di attivazione che custodisce la chiusura <em>(RA, C)</em> della funzione.</p>
+<p>Il punto <strong>2</strong> implica che passare una funzione <em>f</em> ad un&#39;altra funzione significa passare il valore di <em>f</em>, cioè la sua chiusura.</p>
+<p>C&#39;è una differenza tra l&#39;uso di una funzione passata come parametro ad un&#39;altra funzione e l&#39;utilizzo di una funzione globale all&#39;interno di un&#39;altra funzione. </p>
+<p>Nel primo caso il compilatore sa che la funzione invocata riceverà una chiusura, mentre nel secondo caso il compilatore sa esattamente quale funzione verrà invocata.</p>
+<p>Con lo scoping dinamico il compilatore riesce a raggiungere una variabile globale calcolandosi direttamente un offset a partire dalla cima dello stack, questo perché ha un modello preciso della struttura dello stack durante l&#39;esecuzione.</p>
+<p>Con lo scoping statico il compilatore non riesce a calcolare un offeset preciso, perché se ci sono invocazioni ricorsive la distanza dal top dello stack al blocco della definizione delle funzioni è variabile.</p>
+<p>Il punto <strong>3</strong> crea qualche problema, perché se l&#39;invocazione di una funzione definisce e ritorna una nuova funzione il record di attivazione relativo alla nuova funzione si trova &quot;sopra&quot; il record dell&#39;invocazione della prima funzione.</p>
+<p>Al termine dell&#39;invocazione il record di attivazione deve essere rimosso dal blocco per fare spazio, tuttavia questo blocco non può essere rimosso, perché sopra ad esso c&#39;è il blocco per la definzione della nuova funzione.</p>
+<p>C&#39;è chiaramente un problema e la soluzione tipica è quello di spostare il blocco della definizione della funzione in un&#39;area diversa della memoria (spoiler alert: va a finire nello heap e il puntantore presente nella chiusura deve essere aggiornato).</p>
+<pre><code>make_counter x =
+    let
+        <span class="hljs-command">count</span> = x
+        counter inc = <span class="hljs-command">count</span>+inc
+    <span class="hljs-keyword">in</span>
+        counter
+    <span class="hljs-keyword">end</span>
+</code></pre><p>In questo caso se rimuovo il blocco relativo all&#39;invocazione di <code>make_counter</code> andrei a perdere la locazione di memoria della variabile globale <code>count</code> che usa la funzione <code>counter</code>.</p>
+<h1 id="lezione-13-controllo-del-flusso-di-controllo">Lezione 13 - Controllo del flusso di controllo</h1>
+<p>Usare i goto fuori dal blocco rende complesso gestire lo stack dei record di attivazione, quindi i goto sono stati rimossi.</p>
+<p>Tuttavia i salti condizonati ogni tanto servono.</p>
+<h2 id="controlli-strutturati">Controlli strutturati</h2>
+<p>Permettono di fare dei salti:</p>
+<ul>
+<li><code>if then else</code></li>
+<li><code>while { }</code></li>
+<li><code>return</code></li>
+<li><code>continue</code>,<code>break</code></li>
+<li>...</li>
+</ul>
+<p>Tuttavia questi salti possono essere fatti senza andare a violare la struttura a blocchi del codice.</p>
+<h2 id="eccezioni">Eccezioni</h2>
+<p>Anche le eccezioni fanno dei salti che sono molto più &quot;<em>spericolati</em>&quot; in quanto quando si verifica un eccezione viene fatto un salto ad un blocco sconosciuto.</p>
+<p>Haskell permette di gestire le eccezioni come input-output, mentre ML permette di utilizzare una gestione più completa.</p>
+<p>Andare a gestire un&#39;eccezione significa andare a modificare lo stack dei recordi di attivazione.</p>
+<p>Cosa succede quando si verifica un&#39;eccezione:</p>
+<ol>
+<li>Si esce da un blocco o dal corpo di una funzione per andare ad un blocco &quot;<em>handler</em>&quot; che si trova sotto il blocco in cui si è verificata;</li>
+<li>Si trasportano dei dati relativi al punto in cui si è verificata l&#39;eccezione;</li>
+<li>Si ritorna ad una particolare istruzione del programma da cui si può continuare la normale esecuzione.</li>
+</ol>
+<p>Perché l&#39;eccezioni funzioni devono essere presenti:</p>
+<ul>
+<li>La dichiarazione dell&#39;eccezione;</li>
+<li>Un istruzione <em>raise</em> che la solleva;</li>
+<li>Un handler che si occupa di gestire l&#39;eccezione.</li>
+</ul>
+<p>In un programma ci possono essere molti handler per una eccezione, in questo caso viene scelto il primo handler che si trova andando a risalire lo stack dei RA. Segue che per le eccezioni l&#39;unica scelta ragionevole è quella di utilizzare lo scoping dinamico.</p>
+<h3 id="eccezioni-in-ml">Eccezioni in ML</h3>
+<pre><code><span class="hljs-tag">&lt;<span class="hljs-title">esp1</span>&gt;</span> handle <span class="hljs-tag">&lt;<span class="hljs-title">pattern</span>&gt;</span> =&gt; esp2
+</code></pre><p>Ricorda un po&#39; il classico <code>try-catch</code>, viene eseguita <code>esp1</code> e se l&#39;esecuzione va a buon fine viene restituito il valore calcolato dell&#39;espressione.</p>
+<p>Se invece viene sollevata un&#39;eccezione che matcha <code>pattern</code> allora viene eseguita l&#39;espressione <code>esp2</code>.</p>
+<p>Se non c&#39;è nessun match per il pattern, oppure <code>esp2</code> solleva un&#39;altra eccezione, allora si ricerca un altro handler in un blocco superiore.</p>
+<p>Tutto il costrutto è a sua volta un&#39;espressione che deve ritornare sempre lo stesso tipo, di conseguenza <code>esp1</code> e <code>esp2</code> devono avere lo stesso tipo (oppure non deve esserci un risultato). </p>
+<pre><code>exception uno;
+exception due;
+
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">f</span></span>(x) = <span class="hljs-keyword">if</span> x = <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> raise uno <span class="hljs-keyword">else</span> raise due;
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">g</span></span>(y) = f(y) handle uno =&gt; <span class="hljs-number">1</span>;
+</code></pre><p>Il tipo dedotto (in ML) per <code>f</code> è <code>int -&gt; &#39;a</code>, in quanto il sollevamento di un&#39;eccezione non c&#39;entra nulla con il tipo del valore di ritorno, quindi <code>f</code> ritorna un risultato qualsiasi.</p>
+<pre><code>exception <span class="hljs-constant">E</span> <span class="hljs-keyword">of</span> int;
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">f</span></span>() = raise <span class="hljs-constant">E</span>(<span class="hljs-number">2</span>);
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">g</span></span>(y) = (<span class="hljs-keyword">if</span> f() <span class="hljs-keyword">then</span> <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-number">2</span>) handle <span class="hljs-constant">E</span>(x) =&gt; x*y;
+
+val z = g(<span class="hljs-number">3</span>)
+</code></pre><p>Ha come record di attivazione</p>
+<pre><code><span class="hljs-number">1</span>[CL=<span class="hljs-number">0</span>, AL=<span class="hljs-number">0</span>, exc E]
+<span class="hljs-number">2</span>[CL=<span class="hljs-number">1</span>, AL=<span class="hljs-number">1</span>, (<span class="hljs-number">2</span>,f)]
+<span class="hljs-number">3</span>[CL=<span class="hljs-number">2</span>, AL=<span class="hljs-number">2</span>, (<span class="hljs-number">3</span>,g)]
+<span class="hljs-number">4</span>[CL=<span class="hljs-number">3</span>, AL=<span class="hljs-number">3</span>, z= ]
+<span class="hljs-number">5</span>[CL=<span class="hljs-number">4</span>, AL=<span class="hljs-number">3</span>, rit=end, ris=(CL-&gt;z), y=<span class="hljs-number">3</span>, f()= ] <span class="hljs-comment">//Blocco per l'invocazione di g</span>
+<span class="hljs-number">6</span>[CL=<span class="hljs-number">5</span>, <span class="hljs-function">handle <span class="hljs-title">E</span><span class="hljs-params">(x)</span> </span>=&gt; x*y] <span class="hljs-comment">//Blocco segnaposto per l'handler presente dentro g</span>
+<span class="hljs-number">7</span>[CL=<span class="hljs-number">6</span>, AL=<span class="hljs-number">2</span>, rit=then, ris=(CL-&gt;CL-&gt;f())] <span class="hljs-comment">//Blocco per l'invocazione di f</span>
+</code></pre><p>Quando viene eseguito il codice del handler il blocco in cima alla pila è quello che contiene la definizione dell&#39;handler, in questo caso è il blocco 5, con l&#39;aggiunta dei parametri dell&#39;eccezione (in questo caso c&#39;è anche il valore <code>x</code>).</p>
+<p>Sempre nell&#39;esempio: quando viene invocata <code>f</code>:</p>
+<ol>
+<li>Viene sollevata l&#39;eccezione <code>E(2)</code>;</li>
+<li>Viene fatto il pop del blocco 7;</li>
+<li>Viene posto <code>x=2</code> in <code>E(x) =&gt; x*y</code>;</li>
+<li>Viene fatto il pop del blocco 6;</li>
+<li>Viene eseguito <code>x*y</code> con <code>x=2</code> e con il blocco 5 in cima alla pila;</li>
+<li>Viene memorizzato il risultato in <code>CL-&gt;z</code>.</li>
+</ol>
+<h3 id="esecirzi-sulla-gestione-delle-eccezioni">Esecirzi sulla gestione delle eccezioni</h3>
+<pre><code>exception A of int;
+exception E of int;
+<span class="hljs-variable"><span class="hljs-keyword">val</span> x</span> = <span class="hljs-number">2</span>;
+<span class="hljs-variable"><span class="hljs-keyword">val</span> w</span> = <span class="hljs-number">1</span>;
+<span class="hljs-variable"><span class="hljs-keyword">val</span> y</span> = <span class="hljs-number">3</span>;
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">h</span><span class="hljs-params">(x)</span> = <span class="hljs-keyword">if</span> x=y then y <span class="hljs-keyword">else</span> raise <span class="hljs-title">A</span><span class="hljs-params">(y)</span>;</span>
+<span class="hljs-variable"><span class="hljs-keyword">val</span> y</span> = <span class="hljs-number">4</span>;
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">f</span><span class="hljs-params">(w)</span> = <span class="hljs-params">(<span class="hljs-keyword">if</span> w = h(w)</span> then raise <span class="hljs-title">E</span><span class="hljs-params">(w)</span> <span class="hljs-keyword">else</span> y) handle <span class="hljs-title">A</span><span class="hljs-params">(x)</span> =&gt; x;</span>
+<span class="hljs-variable"><span class="hljs-keyword">val</span> x</span> = f(y);
+</code></pre><p>Lo stack è il seguente</p>
+<pre><code><span class="hljs-number">1</span><span class="hljs-list">[<span class="hljs-keyword">CL=0</span>, AL=0, A of int]
+<span class="hljs-number">2</span><span class="hljs-list">[<span class="hljs-keyword">CL=1</span>, AL=1, E of int]
+<span class="hljs-number">3</span><span class="hljs-list">[<span class="hljs-keyword">CL=2</span>, AL=2, x=2]
+<span class="hljs-number">4</span><span class="hljs-list">[<span class="hljs-keyword">CL=3</span>, AL=3, w=1]
+<span class="hljs-number">5</span><span class="hljs-list">[<span class="hljs-keyword">CL=4</span>, AL=4, y=3]
+<span class="hljs-number">6</span><span class="hljs-list">[<span class="hljs-keyword">CL=5</span>, AL=5, <span class="hljs-list">(<span class="hljs-keyword">6</span>,h)</span>]
+<span class="hljs-number">7</span><span class="hljs-list">[<span class="hljs-keyword">CL=6</span>, AL=6, y=4]
+<span class="hljs-number">8</span><span class="hljs-list">[<span class="hljs-keyword">CL=7</span>, AL=7, <span class="hljs-list">(<span class="hljs-keyword">8</span>,f)</span>]
+<span class="hljs-number">9</span><span class="hljs-list">[<span class="hljs-keyword">CL=8</span>, AL=8, x= ]
+<span class="hljs-number">10</span><span class="hljs-list">[<span class="hljs-keyword">CL=9</span>, AL=8, rit=end, ris=CL-&gt;x, w=4, h<span class="hljs-list">(<span class="hljs-keyword">w</span>)</span>= ] //invocazione di f
+<span class="hljs-number">11</span><span class="hljs-list">[<span class="hljs-keyword">CL=10</span>, AL=10, handle A<span class="hljs-list">(<span class="hljs-keyword">x</span>)</span> =&gt; x]
+<span class="hljs-number">12</span><span class="hljs-list">[<span class="hljs-keyword">CL=11</span>, AL=6, rit=<span class="hljs-list">(<span class="hljs-keyword"><span class="hljs-built_in">if</span></span> di f)</span>, ris=<span class="hljs-list">(<span class="hljs-keyword">CL-&gt;CL-&gt;h</span><span class="hljs-list">(<span class="hljs-keyword">w</span>)</span>)</span>, x=4] //Invocazione di h<span class="hljs-list">(<span class="hljs-keyword">w</span>)</span> dentro f
+** eseguita raise di A<span class="hljs-list">(<span class="hljs-keyword">3</span>)</span>, pop<span class="hljs-list">(<span class="hljs-keyword">12</span>)</span>, pop<span class="hljs-list">(<span class="hljs-keyword">11</span>)</span>, esegue A<span class="hljs-list">(<span class="hljs-keyword">3</span>)</span>=3, scrive risultato <span class="hljs-number">3</span> in <span class="hljs-number">9</span>-&gt;x, pop<span class="hljs-list">(<span class="hljs-keyword">10</span>)</span> **</span></span></span></span></span></span></span></span></span></span></span></span>
+</code></pre><p>Nel caso l&#39;handler <code>A(x) = x</code> contenesse un&#39;espressione più complessa, come l&#39;invocazione di una funzione <code>g(x)</code>, deve essere previsto uno slot nel record di attivazione dell&#39;esecuzione della funzione per mantenere il risultato parziale:</p>
+<pre><code><span class="hljs-number">10</span>[CL=<span class="hljs-number">9</span>, AL=<span class="hljs-number">8</span>, rit=end, ris=CL-&gt;x, w=<span class="hljs-number">4</span>, h(w)= , g(x)= ]
+</code></pre><h3 id="problemi-legati-alla-gestione-delle-eccezioni">Problemi legati alla gestione delle eccezioni</h3>
+<p>Se quando si effettua il pop per cercare un handler può capitare che dentro uno dei record tolti ci sia un puntatore verso della memoria nello heap.</p>
+<p>In questo caso se il linguaggio non possiede un garbage collector, come il C++, si possono usare due strategie:</p>
+<ul>
+<li><strong>fregarsene</strong>: le eccezioni sono eccezionali per natura e quindi posso fare garbage perché si verificano poche volte;</li>
+<li><strong>distruggere</strong>: negli oggetti viene invocato il distruttore in modo da liberare sempre la memoria.</li>
+</ul>
+<h4 id="handler-dentro-a-funzioni-ricorsive">Handler dentro a funzioni ricorsive</h4>
+<pre><code>fun <span class="hljs-literal">f</span>(0) = 1
+    | <span class="hljs-literal">f</span>(1) = raise Odd
+    | <span class="hljs-literal">f</span>(3) = <span class="hljs-literal">f</span>(3-2)
+    | <span class="hljs-literal">f</span>(<span class="hljs-keyword">n</span>) = <span class="hljs-literal">f</span>(<span class="hljs-keyword">n</span>-2) handle Odd =&gt; ~<span class="hljs-keyword">n</span>
+</code></pre><p>Invocando <code>f(11)</code> vengono creati 4 handler per la stessa gestione di <code>Odd</code>.
+Quando viene sollevata l&#39;eccezione viene invocato il primo handler trovato, cioè l&#39;ultimo creato, che è quello che ritorna <code>-5</code>.</p>
+<p>Il problema si verifica con la gestione ottimizzata per le funzioni ricorsive terminale, in quanto non è più possibile andare a riusare lo stesso record di attivazione per tutte le invocazioni ricorsive.</p>
+<p>Le funzioni ricorsive terminali possono essere comunque ottimizzate, tuttavia la presenza di handler complica la cosa.</p>
+<h4 id="eccezioni-ed-ordine-di-valutazione">Eccezioni ed ordine di valutazione</h4>
+<pre><code>exception <span class="hljs-constant">A</span>;
+exception <span class="hljs-constant">B</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">f</span></span>(<span class="hljs-number">0</span>) = raise <span class="hljs-constant">A</span>
+    | f(<span class="hljs-number">1</span>) = raise <span class="hljs-constant">B</span>
+    | f(x) = x;
+
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">g</span></span>(x,y) = x+y;
+
+g(f(<span class="hljs-number">1</span>),f(<span class="hljs-number">0</span>)) handle <span class="hljs-constant">A</span> =&gt; <span class="hljs-number">0</span>
+                | <span class="hljs-constant">B</span> =&gt; <span class="hljs-number">1</span>;
+</code></pre><p>In questo caso l&#39;ordine di sollevazione delle eccezioni dipende dall&#39;ordine di valutazione dei parametri delle funzioni, violando così la dichiaratività del linguaggio.</p>
+<h1 id="lezione-14-richiami-ed-esercizi">Lezione 14 - Richiami ed esercizi</h1>
+<p>Alcuni linguaggi funzionli come Lisp e ML non sono linguaggi completamente dichiarativi in quanto permettono di eseguire delle assegnazioni.</p>
+<p>Haskell invece è dichiarativo (funzionale puro).</p>
+<p>Nei linguaggi dichiarativi l&#39;essenza del calcolo consiste nel valutare delle funzioni.</p>
+<p>Le invocazioni di queste funzioni non producono dei side effects.</p>
+<h2 id="referential-transparency">Referential transparency</h2>
+<p>In linguistica si una per ildnciare il denomeno in cui un termine può essere sostituito con un altro mantenendo inalterato il significato della frase.</p>
+<p>I linguaggi funzionali puri supportano (maggiromente) la referential transparency, mentre quelli imperativi no (o meno).</p>
+<p>Nei linguaggi funzionali puri se <code>x</code> e <code>y</code> anno lo stesso valore, allora <code>f x</code> è equivalente a <code>f y</code>. Nei linguaggi imperativi questo è vero solo se <code>x</code> e <code>y</code> sono alias.</p>
+<p>Nei linguaggi funzionali puri una variabile è solo un nome associato ad un valore costante.</p>
+<p>Nei linguaggi funzionali due funzioni sono equivalenti se hanno lo stesso grafo, mentre in quelle funzionali ci sono da considerare anche i side effects.</p>
+<h2 id="esercizio-sulla-gestione-dello-stack">Esercizio sulla gestione dello stack</h2>
+<pre><code>exception E of int;
+<span class="hljs-variable"><span class="hljs-keyword">val</span> x</span>=<span class="hljs-number">2</span>;
+<span class="hljs-variable"><span class="hljs-keyword">val</span> z</span>=<span class="hljs-number">3</span>;
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">f</span><span class="hljs-params">(a)</span>=<span class="hljs-keyword">if</span> <span class="hljs-title">a</span><span class="hljs-params">(x)</span>+1 =2 then raise <span class="hljs-title">E</span><span class="hljs-params">(x)</span> <span class="hljs-keyword">else</span> x;</span>
+<span class="hljs-variable"><span class="hljs-keyword">val</span> x</span>=<span class="hljs-number">4</span>;
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">q</span><span class="hljs-params">()</span>=z*x;</span>
+<span class="hljs-variable"><span class="hljs-keyword">val</span> y</span>=<span class="hljs-number">5</span>;
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">g</span><span class="hljs-params">(z)</span>=let <span class="hljs-keyword">fun</span> <span class="hljs-title">h</span><span class="hljs-params">()</span>=<span class="hljs-title">f</span><span class="hljs-params">(z)</span>+x <span class="hljs-keyword">in</span> h end;</span>
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">p</span><span class="hljs-params">(a)</span>=<span class="hljs-title">a</span><span class="hljs-params">()</span> handle <span class="hljs-title">E</span><span class="hljs-params">(w)</span>=&gt; <span class="hljs-title">q</span><span class="hljs-params">()</span>+w;</span>
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">p1</span><span class="hljs-params">(a)</span>=<span class="hljs-keyword">if</span> a=x then x <span class="hljs-keyword">else</span> raise <span class="hljs-title">E</span><span class="hljs-params">(a)</span>;</span>
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">p2</span><span class="hljs-params">(a)</span>=<span class="hljs-keyword">if</span> a=y then y+x <span class="hljs-keyword">else</span> raise <span class="hljs-title">E</span><span class="hljs-params">(y)</span>;</span>
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">k</span><span class="hljs-params">()</span>= <span class="hljs-title">g</span><span class="hljs-params">(p1)</span> handle <span class="hljs-title">E</span><span class="hljs-params">(w)</span>=&gt; <span class="hljs-title">g</span><span class="hljs-params">(p2)</span>;</span>
+<span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">s</span><span class="hljs-params">()</span>=<span class="hljs-title">k</span><span class="hljs-params">()</span> handle <span class="hljs-title">E</span><span class="hljs-params">(w)</span>=&gt; q;</span>
+<span class="hljs-variable"><span class="hljs-keyword">val</span> r</span>=s();
+<span class="hljs-variable"><span class="hljs-keyword">val</span> t</span>=p(r);
+</code></pre><p>Stack:</p>
+<pre><code> <span class="hljs-number">1</span> [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, E of <span class="hljs-keyword">int</span>]
+ <span class="hljs-number">2</span> [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, x =<span class="hljs-number">2</span>]
+ <span class="hljs-number">3</span> [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, z = <span class="hljs-number">5</span>]
+ <span class="hljs-number">4</span> [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, f = (<span class="hljs-number">4</span>,f)]
+ <span class="hljs-number">5</span> [<span class="hljs-number">4</span>, <span class="hljs-number">4</span>, x = <span class="hljs-number">4</span>]
+ <span class="hljs-number">6</span> [<span class="hljs-number">5</span>, <span class="hljs-number">5</span>, q = (<span class="hljs-number">6</span>,q)]
+ <span class="hljs-number">7</span> [<span class="hljs-number">6</span>, <span class="hljs-number">6</span>, y = <span class="hljs-number">5</span>]
+ <span class="hljs-number">8</span> [<span class="hljs-number">7</span>, <span class="hljs-number">7</span>, g = (<span class="hljs-number">8</span>,g)]
+ <span class="hljs-number">9</span> [<span class="hljs-number">8</span>, <span class="hljs-number">8</span>, p = (<span class="hljs-number">9</span>,p)]
+<span class="hljs-number">10</span> [<span class="hljs-number">9</span>, <span class="hljs-number">9</span>, p1 = (<span class="hljs-number">10</span>,p1)]
+<span class="hljs-number">11</span> [<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, p2 = (<span class="hljs-number">11</span>,p2)]
+<span class="hljs-number">12</span> [<span class="hljs-number">11</span>, <span class="hljs-number">11</span>, k = (<span class="hljs-number">12</span>,k)]
+<span class="hljs-number">13</span> [<span class="hljs-number">12</span>, <span class="hljs-number">12</span>, s = (<span class="hljs-number">13</span>,s)]
+<span class="hljs-number">14</span> [<span class="hljs-number">13</span>, <span class="hljs-number">13</span>, r = _]
+<span class="hljs-number">15</span> [<span class="hljs-number">14</span>, <span class="hljs-number">13</span>, rit=<span class="hljs-string">"fine di r"</span>, res=EP-&gt;CL-&gt;r, k() = ] <span class="hljs-comment">//invocazione di s</span>
+<span class="hljs-number">16</span> [<span class="hljs-number">15</span>, <span class="hljs-number">15</span>, <span class="hljs-function">handle <span class="hljs-title">E</span><span class="hljs-params">(w)</span> </span>=&gt; q]
+<span class="hljs-number">17</span> [<span class="hljs-number">16</span>, <span class="hljs-number">12</span>, rit=<span class="hljs-string">"handler di s"</span>, res = CL-&gt;CL-&gt;k(), g(p1) = _, g(p2) = _] <span class="hljs-comment">//invocazione di k</span>
+<span class="hljs-number">18</span> [<span class="hljs-number">17</span>, <span class="hljs-number">17</span>, <span class="hljs-function">handle <span class="hljs-title">E</span><span class="hljs-params">(w)</span> </span>=&gt; g(p2)]
+<span class="hljs-number">19</span> [<span class="hljs-number">18</span>, <span class="hljs-number">8</span>, rit=<span class="hljs-string">"handler di k"</span>, ris=CL-&gt;CL-&gt;g(p1), z = (<span class="hljs-number">10</span>,p1), h = (<span class="hljs-number">19</span>,h)] <span class="hljs-comment">// Invocazione di g(p1)</span>
+</code></pre><p>L&#39;esecuzione di <code>g(p1)</code> termina, ma il record di attivazione deve essere portato nello heap perché contiene la definizione di <code>h</code>.</p>
+<pre><code><span class="hljs-number">19</span>* [<span class="hljs-number">18</span>, <span class="hljs-number">8</span>, rit=<span class="hljs-string">"handler di k"</span>, ris=CL-&gt;CL-&gt;g(p1), z = (<span class="hljs-number">10</span>,p1), h = (<span class="hljs-number">19</span>*,h)]
+</code></pre><p>Una volta copiato il record è possibile fare il pop del record 19 e 18.</p>
+<pre><code><span class="hljs-number">14</span> [<span class="hljs-number">13</span>, <span class="hljs-number">13</span>, r = _]
+<span class="hljs-number">15</span> [<span class="hljs-number">14</span>, <span class="hljs-number">13</span>, rit=<span class="hljs-string">"fine di r"</span>, res=EP-&gt;CL-&gt;r, <span class="hljs-function"><span class="hljs-title">k</span><span class="hljs-params">()</span></span> = ] <span class="hljs-comment">//invocazione di s</span>
+<span class="hljs-number">16</span> [<span class="hljs-number">15</span>, <span class="hljs-number">15</span>, handle <span class="hljs-function"><span class="hljs-title">E</span><span class="hljs-params">(w)</span></span> =&gt; q]
+<span class="hljs-number">17</span> [<span class="hljs-number">16</span>, <span class="hljs-number">12</span>, rit=<span class="hljs-string">"handler di s"</span>, res = CL-&gt;CL-&gt;<span class="hljs-function"><span class="hljs-title">k</span><span class="hljs-params">()</span></span>, <span class="hljs-function"><span class="hljs-title">g</span><span class="hljs-params">(p1)</span></span> = (<span class="hljs-number">19</span>*,h), <span class="hljs-function"><span class="hljs-title">g</span><span class="hljs-params">(p2)</span></span> = _] <span class="hljs-comment">//invocazione di k</span>
+</code></pre><p>L&#39;invocazione di <code>k</code> termina e viene fatto il pop di 17, 16, fatto questo termina anche <code>s</code>, causando il pop di 15.</p>
+<pre><code><span class="hljs-number">14</span> [<span class="hljs-number">13</span>,<span class="hljs-number">13</span>, r = (<span class="hljs-number">19</span>*,h)]
+<span class="hljs-number">15</span> [<span class="hljs-number">14</span>,<span class="hljs-number">14</span>, t = _]
+<span class="hljs-number">16</span> [<span class="hljs-number">15</span>, <span class="hljs-number">9</span>, rit=<span class="hljs-string">"fine"</span>, ris=CL-&gt;t, <span class="hljs-tag">a</span> = (<span class="hljs-number">19</span>*,h), <span class="hljs-function"><span class="hljs-title">a</span><span class="hljs-params">()</span></span> = _, <span class="hljs-tag">q</span> = _] <span class="hljs-comment">//invocazione di p(r)</span>
+<span class="hljs-number">17</span> [<span class="hljs-number">16</span>, <span class="hljs-number">16</span>, handle <span class="hljs-function"><span class="hljs-title">E</span><span class="hljs-params">(w)</span></span> =&gt; <span class="hljs-function"><span class="hljs-title">q</span><span class="hljs-params">()</span></span> + w]
+<span class="hljs-number">18</span> [<span class="hljs-number">17</span>, <span class="hljs-number">19</span>*, rit=<span class="hljs-string">"handle di p"</span>, ris=CL-&gt;CL-&gt;<span class="hljs-function"><span class="hljs-title">a</span><span class="hljs-params">()</span></span>, <span class="hljs-function"><span class="hljs-title">f</span><span class="hljs-params">(z)</span></span>] <span class="hljs-comment">//invocazione di h</span>
+<span class="hljs-number">19</span> [<span class="hljs-number">18</span>, <span class="hljs-number">4</span>, rit=<span class="hljs-string">"+ di h"</span>, ris=CL-&gt;<span class="hljs-function"><span class="hljs-title">f</span><span class="hljs-params">(z)</span></span>, <span class="hljs-tag">a</span> = (<span class="hljs-number">10</span>,p1), <span class="hljs-function"><span class="hljs-title">a</span><span class="hljs-params">(x)</span></span> = _] <span class="hljs-comment">//invocazione di f(z)</span>
+<span class="hljs-number">20</span> [<span class="hljs-number">19</span>, <span class="hljs-number">10</span>, rit=<span class="hljs-string">"+ di f"</span>, ris=CL-&gt;<span class="hljs-function"><span class="hljs-title">a</span><span class="hljs-params">(x)</span></span>, <span class="hljs-tag">a</span> = <span class="hljs-number">2</span>, ] <span class="hljs-comment">//invocazione di p1(x)</span>
+</code></pre><p>Esegue <code>if a=x</code>, con a=2 e x=4, viene quindi eseguito il ramo else che solleva l&#39;eccezione E(2).
+Viene fatto il pop di 20, 19 e 18.
+Viene trovato un handler in 17, con il conseguente pop del record.
+Viene eseguito il corpo dell&#39;handler <code>q()+w</code> con il record 16 in cima e <code>w=2</code>.</p>
+<pre><code><span class="hljs-number">15</span> [<span class="hljs-number">14</span>,<span class="hljs-number">14</span>, t = _]
+<span class="hljs-number">16</span> [<span class="hljs-number">15</span>, <span class="hljs-number">9</span>, rit=<span class="hljs-string">"fine"</span>, ris=CL-&gt;t, a = (<span class="hljs-number">19</span>*,h), a() = _, q = _] <span class="hljs-comment">//invocazione di p(r)</span>
+<span class="hljs-number">17</span> [<span class="hljs-number">16</span>, <span class="hljs-number">6</span>, rit=<span class="hljs-string">"+ di handle di p"</span>, ris=CL-&gt;q()] <span class="hljs-comment">//invocazione di q</span>
+</code></pre><p>Viene eseguito <code>z*x</code> con <code>z=3</code> e <code>x=4</code>.
+L&#39;esecuzione di <code>q()</code> termina con il conseguente pop di 17.</p>
+<pre><code><span class="hljs-number">15</span> [<span class="hljs-number">14</span>,<span class="hljs-number">14</span>, t = _]
+<span class="hljs-number">16</span> [<span class="hljs-number">15</span>, <span class="hljs-number">9</span>, rit=<span class="hljs-string">"fine"</span>, ris=CL-&gt;t, a = (<span class="hljs-number">19</span>*,h), a() = _, q() = <span class="hljs-number">12</span>] <span class="hljs-comment">//invocazione di p(r)</span>
+</code></pre><p>L&#39;esecuzione di <code>p(r)</code> termina ritornando 14.</p>
+<pre><code><span class="hljs-number">15</span> [<span class="hljs-number">14</span>,<span class="hljs-number">14</span>, t = <span class="hljs-number">14</span>]
+</code></pre><p>Inoltre il record 19* può essere rimosso dallo heap dal momento che non c&#39;è più nessun riferimento verso tale blocco.</p>
+<p>Variabili di <code>h</code></p>
+<ul>
+<li><code>z = EP-&gt;AL-&gt;z</code></li>
+<li><code>x = EP-&gt;AL-&gt;AL-&gt;CL-&gt;CL-&gt;CL-&gt;x</code></li>
+</ul>
+<p><strong>Da notare</strong>: il record 19 quando viene messo nello heap ha un CL verso il record 18 dello heap, che però non esiste più. Questa cosa non da problemi, in quanto il record 19* è il record di attivazione dell&#39;invocazione di una funzione e quindi per recuperare il contesto di quel record è necessario seguire l&#39;AL e non il CL. 
+Se il record di attivazione puntato da AL deve uscire dallo stack è necessario copiarlo nello heap e aggiornare i vari riferimenti.</p>
+<h2 id="punto-fisso-di-una-funzione">Punto fisso di una funzione</h2>
+<pre><code>y f = f <span class="hljs-comment">(y f)</span>
+:t y
+<span class="hljs-comment">((a-&gt;b)</span>-&gt;<span class="hljs-comment">(a-&gt;b)</span>)-&gt;<span class="hljs-comment">(a-&gt;b)</span>
+</code></pre><p><code>y</code> calcola il punto fisso di <code>f</code>, cioè qunado <code>f(g) = g</code>.</p>
+<p><code>f</code> sarebbe una funzione che esegue un passo di un algoritmo che funziona a punto fisso, mentre <code>y</code> è la funzione che esegue il calcolo dell&#39;algoritmo.</p>
+<p>Se</p>
+<pre><code>f g x = <span class="hljs-keyword">if</span> x = <span class="hljs-number">1</span> then <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> <span class="hljs-function">x*<span class="hljs-title">g</span><span class="hljs-params">(x-<span class="hljs-number">1</span>)</span></span>
+</code></pre><p>In questo caso se <code>g</code> è la funzione fattoriale, il punto fisso di <code>f</code> è il fattoriale.</p>
+<p>Se applico <code>y</code> a <code>f</code>, ottengo qualcosa di simile a</p>
+<pre><code>y f x = <span class="hljs-keyword">if</span> x = <span class="hljs-number">1</span> then <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> x*(Y <span class="hljs-function"><span class="hljs-title">f</span><span class="hljs-params">(x-<span class="hljs-number">1</span>)</span></span>)
+</code></pre><p>È possibile andare a ripertere lo stesso ragionamento per vedere che viene calcolato il fattoriale di <code>x</code>.</p>
+<h1 id="lezione-15-funtori-e-funtori-applicativi">Lezione 15 - Funtori e Funtori Applicativi</h1>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-type">Functor</span> f <span class="hljs-keyword">where</span></span>
+    fmap :: (a-&gt;b) -&gt; f a -&gt; f b
+</code></pre>
+<p><code>f</code> è un tipo parametrico (<em>type constructor</em>) quindi <code>(f a)</code> indica il tipo <code>f</code> instanziato con <code>a</code>.</p>
+<p>I funtori devono avere solo un tipo parametrico.</p>
+<pre><code class="lang-haskell">instance Functor Maybe where
+    fmap f<span class="hljs-function"> (</span>Just x<span class="hljs-function">)</span> = Just<span class="hljs-function"> (</span>f x<span class="hljs-function">)</span>
+    fmap f Nothing = Nothing 
+<span class="hljs-instruction">
+instance </span>Functor Tree where
+    fmap f EmptyTree = EmptyTree
+    fmap f<span class="hljs-function"> (</span>Node x leftsub rightsub<span class="hljs-function">)</span> = Node<span class="hljs-function"> (</span>f x<span class="hljs-function">)</span><span class="hljs-function"> (</span>fmap f leftsub<span class="hljs-function">)</span><span class="hljs-function"> (</span>fmap f rightsub<span class="hljs-function">)</span> 
+<span class="hljs-instruction">
+instance </span>Functor<span class="hljs-function"> (</span>Either a<span class="hljs-function">)</span> where
+    fmap f<span class="hljs-function"> (</span>Right x<span class="hljs-function">)</span> = Right<span class="hljs-function"> (</span>f x<span class="hljs-function">)</span>
+    fmap f<span class="hljs-function"> (</span>Left x<span class="hljs-function">)</span> = Left x -- La parte left è fissa.
+</code></pre>
+<h2 id="funtori-applicativi">Funtori Applicativi</h2>
+<p>I funtori permettono di spalmare una funzione su un oggetto &quot;scatola&quot; e che ritorna un altro oggetto scatola.</p>
+<pre><code class="lang-haskell">class (Functor f) =&gt; Applicative f where
+    pure :: <span class="hljs-tag">a</span> -&gt; f <span class="hljs-tag">a</span>
+    (&lt;*&gt;) :: f (<span class="hljs-tag">a</span> -&gt; b) -&gt; f <span class="hljs-tag">a</span> -&gt; f <span class="hljs-tag">b</span>
+
+(&lt;$&gt;) :: (Functor f) =&gt; (<span class="hljs-tag">a</span> -&gt; b) -&gt; f <span class="hljs-tag">a</span> -&gt; f <span class="hljs-tag">b</span>
+f &lt;$&gt; x = fmap f x
+</code></pre>
+<p><code>pure :: a -&gt; f a</code> da un tipo qualsiasi ritorna un funtore istanziato a quel tipo.</p>
+<p>Le <code>( )</code> nella definizione del tipo rappresentano una funzione infissa.</p>
+<pre><code class="lang-haskell">instance Applicative Maybe where
+    pure = Just
+    Nothing <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> _ = Nothing
+    (Just f) <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> something = fmap f something
+
+f <span class="hljs-tag">&lt;<span class="hljs-title">$</span>&gt;</span> something = fmap f something
+</code></pre>
+<pre><code class="lang-haskell">ghci&gt; :t pure (+)
+pure (+) :: (Num a, Applicative f) =&gt; f (a -&gt; a -&gt; a)
+ghci&gt; :t pure (+) <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> Just 3
+pure (+) <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> Just 3 :: Num a =&gt; Maybe (a -&gt; a)
+ghci&gt; pure (+) <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> Just 3 <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> Just 5
+Just 8
+ghci&gt; (+) <span class="hljs-tag">&lt;<span class="hljs-title">$</span>&gt;</span> Just 3 <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> Just 5
+Just 8
+ghci&gt; (+) <span class="hljs-tag">&lt;<span class="hljs-title">$</span>&gt;</span> Just 3 <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> Nothing
+Nothing
+ghci&gt; (+) <span class="hljs-tag">&lt;<span class="hljs-title">$</span>&gt;</span> Nothing <span class="hljs-tag">&lt;<span class="hljs-title">*</span>&gt;</span> Just 5
+Nothing
+</code></pre>
+<p>Un funtore applicativo viene quindi utilizzato per eseguire una funzione all&#39;interno di altri alcuni funtori.</p>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">instance</span> <span class="hljs-type">Applicative</span> [] <span class="hljs-keyword">where</span></span>
+    pure = [x]
+    fs &lt;*&gt; xs = [f x | f &lt;- fs, x &lt;- xs]
+</code></pre>
+<pre><code>ghci&gt; [(*<span class="hljs-number">0</span>),(+<span class="hljs-number">100</span>),(^<span class="hljs-number">2</span>)] &lt;*&gt; [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]
+[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">101</span>,<span class="hljs-number">102</span>,<span class="hljs-number">103</span>,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>]
+ghci&gt; [(+),(*)] &lt;*&gt; [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>] &lt;*&gt; [<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]
+[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>]
+ghci&gt; filter (&gt;<span class="hljs-number">50</span>) $ pure (*) &lt;*&gt; [<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">10</span>] &lt;*&gt; [<span class="hljs-number">8</span>,<span class="hljs-number">10</span>,<span class="hljs-number">11</span>]
+[<span class="hljs-number">55</span>,<span class="hljs-number">80</span>,<span class="hljs-number">100</span>,<span class="hljs-number">110</span>]
+</code></pre><p>Da notare che il numero di <code>&lt;*&gt;</code> deve coincidere con tutti il numero dei parametri delle funzione che viene &quot;<em>purificata</em>&quot;.</p>
+<pre><code>pure <span class="hljs-comment">(,,)</span>:: Applicative f =&gt; f <span class="hljs-comment">(a-&gt;b-&gt;c-&gt;(a,b,c)</span>)
+</code></pre><p>Il “resto” determina il funtore f: guarda gli esempi seguenti</p>
+<pre><code>-- f=Maybe
+ghci&gt; k = <span class="hljs-keyword">pure</span> (,,)&lt;*&gt; Just <span class="hljs-string">"pippo"</span>&lt;*&gt; Just <span class="hljs-string">"pluto"</span>&lt;*&gt; Just <span class="hljs-string">"pappa”
+Just ("</span>pippo<span class="hljs-string">","</span>pluto<span class="hljs-string">","</span>pappa<span class="hljs-string">")
+-- f=list
+ghci&gt; z = pure (,,) &lt;*&gt; ["</span><span class="hljs-keyword">pure</span><span class="hljs-string">","d</span>opo<span class="hljs-string">"] &lt;*&gt; ["</span>pippo<span class="hljs-string">","</span>pluto<span class="hljs-string">"] &lt;*&gt; [3]
+[("</span><span class="hljs-keyword">pure</span><span class="hljs-string">","</span>pippo<span class="hljs-string">",3),("</span><span class="hljs-keyword">pure</span><span class="hljs-string">","</span>pluto<span class="hljs-string">",3),("d</span>opo<span class="hljs-string">","</span>pippo<span class="hljs-string">",3),("d</span>opo<span class="hljs-string">","</span>plu
+to<span class="hljs-string">",3)]</span>
+</code></pre><p>Da notare che non posso mettere <code>3</code> al posto di <code>[3]</code> perché serve un funtore e <code>3</code> non lo è.</p>
+<p>Giocando con le liste sarebbe bello poter arrivare ad avere la possibilità di fare questo:</p>
+<pre><code>[(+), (*), (/)] &lt;*&gt; [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>] &lt;*&gt; [<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>] =[<span class="hljs-number">1</span>+<span class="hljs-number">2</span>,<span class="hljs-number">2</span>*<span class="hljs-number">3</span>,<span class="hljs-number">3</span>/<span class="hljs-number">4</span>]
+</code></pre><p>Per fare ciò è possibile definire il tipo <code>ZipList</code>, che è un funtore applicativo definito come:</p>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">instance</span> <span class="hljs-type">Applicative</span> <span class="hljs-type">ZipList</span> <span class="hljs-keyword">where</span></span>
+    pure x = <span class="hljs-type">ZipList</span> (repeat x) <span class="hljs-comment">--Serve per limitare il numero di elemeni alla lunghezza della prima lista</span>
+    <span class="hljs-type">ZipList</span> fs &lt;*&gt; <span class="hljs-type">ZipList</span> xs = <span class="hljs-type">ZipList</span> (zipWith (\f x -&gt; f x) fs xs)
+</code></pre>
+<p>Anche <code>r -&gt; a</code> è un funtore applicativo.</p>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">instance</span> <span class="hljs-type">Applicative</span> <span class="hljs-container">((-&gt;)</span> r) <span class="hljs-keyword">where</span></span>
+    pure x = (\_ -&gt; x)
+    f &lt;*&gt; g = \x -&gt; f x (g x)
+</code></pre>
+<pre><code>ghci&gt; :t pure <span class="hljs-comment">(+)</span> &lt;*&gt; <span class="hljs-comment">(+3)</span> &lt;*&gt; <span class="hljs-comment">(*100)</span>
+pure <span class="hljs-comment">(+)</span> &lt;*&gt; <span class="hljs-comment">(+3)</span> &lt;*&gt; <span class="hljs-comment">(*100)</span> :: <span class="hljs-comment">(Num a)</span> =&gt; a -&gt; a
+ghci&gt; pure <span class="hljs-comment">(+)</span> &lt;*&gt; <span class="hljs-comment">(+3)</span> &lt;*&gt; <span class="hljs-comment">(*100)</span> $ <span class="hljs-number">5</span>
+<span class="hljs-number">508</span>
+</code></pre><p><code>5</code> viene usato prima come operando di <code>(*100)</code> e poi viene usato come operando per <code>(+3)</code>, dopodiché ai due risultati viene applicata la funzione <code>(+)</code>, ottenendo così <code>508</code>.</p>
+<pre><code>ghci&gt; pure (\x y z -&gt; [x,y,z]) &lt;*&gt; (+<span class="hljs-number">3</span>) &lt;*&gt; (*<span class="hljs-number">2</span>) &lt;*&gt; (/<span class="hljs-number">2</span>) $ <span class="hljs-number">5</span>
+[<span class="hljs-number">8.0</span>,<span class="hljs-number">10.0</span>,<span class="hljs-number">2.5</span>]
+</code></pre><pre><code class="lang-haskell">sequenceA :: (Applicative f) =&gt; <span class="hljs-string">[f a]</span> -&gt; f <span class="hljs-string">[a]</span>
+sequenceA <span class="hljs-string">[]</span> = pure <span class="hljs-string">[]</span>
+sequenceA (x:xs) = (:) &lt;$&gt; x &lt;*&gt; sequenceA xs
+</code></pre>
+<pre><code class="lang-haskell">ghci&gt; sequenceA [Just <span class="hljs-number">3</span>, Just <span class="hljs-number">2</span>, Just <span class="hljs-number">1</span>]
+Just [<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>]
+ghci&gt; sequenceA [Just <span class="hljs-number">3</span>, Nothing, Just <span class="hljs-number">1</span>]
+Nothing
+ghci&gt; sequenceA [(+<span class="hljs-number">3</span>),(+<span class="hljs-number">2</span>),(+<span class="hljs-number">1</span>)] <span class="hljs-number">3</span>
+[<span class="hljs-number">6</span>,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>]
+{-
+    f = a-&gt;b
+    sequenceA ::[a-&gt;b] -&gt; a-&gt;[b]
+-}
+ghci&gt; sequenceA [[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]]
+[[<span class="hljs-number">1</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">5</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">5</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">5</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">6</span>]]
+</code></pre>
+<h1 id="lezione-16-monadi">Lezione 16 - Monadi</h1>
+<p>-- Assente --</p>
+<p><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">Funtori, applicativi e monadi</a></p>
+<pre><code class="lang-haskell">data Maybe <span class="hljs-literal">a</span> = Nothing | Just <span class="hljs-literal">a</span>
+</code></pre>
+<p><code>Maybe</code> è un datatype di default che è sia un funtore, sia un applicativo che una monade e verrà utilizzato per fare i vari esempi. </p>
+<h2 id="funtori">Funtori</h2>
+<p>Permettono di esegurie delle funzioni su valori che sono raccolti all&#39;interno di un contesto.</p>
+<p>Perché un tipo si comporti come funtore, deve istanziare la typeclass <code>Functor</code> fornendo una definizione per la funzione <code>fmap</code>:</p>
+<pre><code class="lang-haskell">instance Functor Maybe where
+    fmap <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(Just val)</span> = <span class="hljs-title">Just</span> <span class="hljs-params">(func val)</span></span>
+    fmap <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Nothing</span> = <span class="hljs-title">Nothing</span></span>
+</code></pre>
+<p>Un esempio di utilizzo è dato da</p>
+<pre><code class="lang-haskell">&gt; fmap <span class="hljs-list">(<span class="hljs-keyword">+3</span>)</span> <span class="hljs-list">(<span class="hljs-keyword">Just</span> <span class="hljs-number">2</span>)</span>
+Just <span class="hljs-number">5</span>
+</code></pre>
+<p>che è equivalente a scrivere</p>
+<pre><code class="lang-haskell">&gt; (+<span class="hljs-number">3</span>) &lt;$&gt; Just <span class="hljs-number">2</span>
+Just <span class="hljs-number">5</span>
+</code></pre>
+<p>Le funzioni in Haskell sono a loro volta dei funtori, così come le liste.</p>
+<h2 id="applicativi">Applicativi</h2>
+<p>Funtori particolare che possono racchiudere anche delle funzioni.</p>
+<pre><code class="lang-haskell">&gt; (+) &lt;$&gt; (Just <span class="hljs-number">5</span>)
+Just (+<span class="hljs-number">5</span>)
+&gt; Just (+<span class="hljs-number">5</span>) &lt;*&gt; (Just <span class="hljs-number">3</span>)
+Just <span class="hljs-number">8</span>
+&gt; (*) &lt;$&gt; Just <span class="hljs-number">5</span> &lt;*&gt; Just <span class="hljs-number">3</span>
+Just <span class="hljs-number">15</span>
+</code></pre>
+<p>Perché un tipo di comporti come applicativo deve istanziale la typeclass <code>Applicative</code></p>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-container">(<span class="hljs-type">Functor</span> <span class="hljs-title">f</span>)</span> =&gt; <span class="hljs-type">Applicative</span> f <span class="hljs-keyword">where</span></span>  
+    pure :: a -&gt; f a  
+    (&lt;*&gt;) :: f (a -&gt; b) -&gt; f a -&gt; f b
+</code></pre>
+<p>Ad esempio <code>Maybe</code> è definito in questo modo</p>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">instance</span> <span class="hljs-type">Applicative</span> <span class="hljs-type">Maybe</span> <span class="hljs-keyword">where</span></span>  
+    pure = <span class="hljs-type">Just</span>  
+    <span class="hljs-type">Nothing</span> &lt;*&gt; _ = <span class="hljs-type">Nothing</span>  
+    (<span class="hljs-type">Just</span> f) &lt;*&gt; something = fmap f something
+</code></pre>
+<h2 id="monadi">Monadi</h2>
+<p>Le monadi permetto di estrarre il valore da un contesto e di applicarci una funzione che ritorna una monade contenente il risultato dell&#39;applicazione della funzione.</p>
+<p>Data la funzione <code>half</code> che dato un intero restituisce un valore <code>Maybe</code> contenente la metà del valore dato.</p>
+<pre><code class="lang-haskell">half x = <span class="hljs-keyword">if</span> even x
+           <span class="hljs-keyword">then</span> Just (x `<span class="hljs-keyword">div</span>` <span class="hljs-number">2</span>)
+           <span class="hljs-keyword">else</span> Nothing
+</code></pre>
+<p>Non è possibile invocare <code>half (Just 2)</code>.</p>
+<p>Tuttavia usando le monadi si riesce ad eseguire le seguenti operazioni:</p>
+<pre><code class="lang-haskell">&gt; <span class="hljs-constant">Just</span> <span class="hljs-number">3</span> <span class="hljs-prompt">&gt;&gt;= </span>half
+<span class="hljs-constant">Nothing</span>
+&gt; <span class="hljs-constant">Just</span> <span class="hljs-number">4</span> <span class="hljs-prompt">&gt;&gt;= </span>half
+<span class="hljs-constant">Just</span> <span class="hljs-number">2</span>
+&gt; <span class="hljs-constant">Nothing</span> <span class="hljs-prompt">&gt;&gt;= </span>half
+<span class="hljs-constant">Nothing</span>
+</code></pre>
+<p>Una monade è quindi una typeclass che richiede la definzione della funzione <code>&gt;&gt;=</code>:</p>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Monad</span> <span class="hljs-title">m</span> <span class="hljs-title">where</span></span>
+    <span class="hljs-function"><span class="hljs-params">(&gt;&gt;=)</span> :: <span class="hljs-title">m</span> <span class="hljs-title">a</span> -&gt;</span> <span class="hljs-function"><span class="hljs-params">(a -&gt; m b)</span> -&gt;</span> m b
+</code></pre>
+<p>Una funzione che data una monade e una funzione applicabile al contenuto della monade, ritorna una nuova monade conentene la funzione applicata al valore iniziale.</p>
+<p><code>Maybe</code> definisce la funzione in questo modo</p>
+<pre><code class="lang-haskell">instance Monad Maybe where
+    <span class="hljs-typename">Nothing</span> &gt;&gt;= func = <span class="hljs-typename">Nothing</span>
+    Just <span class="hljs-variable"><span class="hljs-keyword">val</span> &gt;&gt;</span>= func  = func <span class="hljs-variable"><span class="hljs-keyword">val</span></span>
+</code></pre>
+<p>In questo modo è possibile concatenare l&#39;esecuzione delle funioni:</p>
+<pre><code class="lang-haskell">&gt; <span class="hljs-constant">Just</span> <span class="hljs-number">20</span> <span class="hljs-prompt">&gt;&gt;= </span>half &gt;&gt;= half &gt;&gt;= half
+<span class="hljs-constant">Nothing</span>
+</code></pre>
+<h3 id="typeclass-monad">Typeclass Monad</h3>
+<p>La typeclass precedenemente riportata non è completa.</p>
+<p>La versione corretta è:</p>
+<pre><code class="lang-haskell">class Monad m where  
+    return :: <span class="hljs-tag">a</span> -&gt; m <span class="hljs-tag">a</span>  
+
+    (&gt;&gt;=) :: m <span class="hljs-tag">a</span> -&gt; (<span class="hljs-tag">a</span> -&gt; m b) -&gt; m <span class="hljs-tag">b</span>  
+
+    (&gt;&gt;) :: m <span class="hljs-tag">a</span> -&gt; m <span class="hljs-tag">b</span> -&gt; m <span class="hljs-tag">b</span>  
+    x &gt;&gt; y = x &gt;&gt;= \_ -&gt; y  
+
+    fail :: String -&gt; m <span class="hljs-tag">a</span>  
+    fail msg = error msg
+</code></pre>
+<p><code>return</code> permette di creare una monade a partire da un valore.</p>
+<p><code>&gt;&gt;</code> è una cosa strana e poco usata, viene implementata di default.</p>
+<h3 id="esempio-d-uso-delle-monadi">Esempio d&#39;uso delle monadi</h3>
+<pre><code class="lang-haskell">type Birds = <span class="hljs-built_in">Int</span>
+type Pole = (Birds, Birds)
+
+
+landLeft :: Birds -&gt; Pole -&gt; Maybe Pole
+landLeft n (<span class="hljs-built_in">left</span>,<span class="hljs-built_in">right</span>)
+    | <span class="hljs-built_in">abs</span> ((<span class="hljs-built_in">left</span> + n) - <span class="hljs-built_in">right</span>) &lt; <span class="hljs-number">4</span> = Just (<span class="hljs-built_in">left</span> +n , <span class="hljs-built_in">right</span>)
+    | otherwise                    = <span class="hljs-literal">Nothing</span> 
+
+landRight :: Birds -&gt; Pole -&gt; Maybe Pole
+landRight n (<span class="hljs-built_in">left</span>, <span class="hljs-built_in">right</span>)
+    | <span class="hljs-built_in">abs</span> ((<span class="hljs-built_in">right</span> + n) - <span class="hljs-built_in">left</span>) &lt; <span class="hljs-number">4</span> = Just (<span class="hljs-built_in">left</span>, <span class="hljs-built_in">right</span> + n)
+    | otherwise                    = <span class="hljs-literal">Nothing</span>
+</code></pre>
+<p>È possibile concatenare l&#39;esecuzione di queste funzioni utilizzando le monadi:</p>
+<pre><code class="lang-haskell">Main&gt; <span class="hljs-keyword">return</span> (<span class="hljs-number">0</span>,<span class="hljs-number">0</span>) &gt;&gt;= landLeft <span class="hljs-number">2</span>
+Just (<span class="hljs-number">2</span>,<span class="hljs-number">0</span>)
+Main&gt; <span class="hljs-keyword">return</span> (<span class="hljs-number">0</span>,<span class="hljs-number">0</span>) &gt;&gt;= landLeft <span class="hljs-number">2</span> &gt;&gt;= landRight <span class="hljs-number">2</span>
+Just (<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)
+Main&gt; <span class="hljs-keyword">return</span> (<span class="hljs-number">0</span>,<span class="hljs-number">0</span>) &gt;&gt;= landLeft <span class="hljs-number">2</span> &gt;&gt;= landRight <span class="hljs-number">2</span> &gt;&gt;= landRight <span class="hljs-number">4</span>
+Nothing
+Main&gt; <span class="hljs-keyword">return</span> (<span class="hljs-number">0</span>,<span class="hljs-number">0</span>) &gt;&gt;= landLeft <span class="hljs-number">2</span> &gt;&gt;= landRight <span class="hljs-number">2</span> &gt;&gt;= landRight <span class="hljs-number">4</span> &gt;&gt;= landLeft <span class="hljs-number">2</span>
+Nothing
+</code></pre>
+</body></html>

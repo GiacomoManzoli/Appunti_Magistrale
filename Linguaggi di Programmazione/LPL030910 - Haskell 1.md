@@ -181,7 +181,7 @@ Posso anche usare una versione alternativa del pattern matching tra parametri ch
 
 ```haskell
 head'' xs = case xs of [] -> error "no head"
-							 (x:_) -> x
+                    (x:_) -> x
 ```
 
 ##Guardie
@@ -218,7 +218,7 @@ initials' firstname lastname = let
                                     [f] ++ ". " ++ [l] ++". "
 ```
 
-Let-in ritorna un'esperessione, mentre where permette di definire delle costanti all'interno di un'espressioni.
+`Let-in` ritorna un'esperessione, mentre `where` permette di definire delle costanti all'interno di un'espressione.
 
 ```haskell
 f3 :: [a] -> ([a],[a],[a],[a])

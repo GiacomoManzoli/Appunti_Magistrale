@@ -139,7 +139,7 @@ Continuando ad applicare l'algoritmo prima o poi si arriverà ad un punto fisso,
 
 Ogni applicazione dei passi 1,3 e 4 dell'algoritmo diminusice strettamente il numero di simboli nelle parti sinistre delle equazioni del sistema.
 
-Quindi è possibile riperete per un numero finito di volte questi passi finché non si verifichi una di queste condizioni:
+Quindi è possibile ripetere per un numero finito di volte questi passi finché non si verifichi una di queste condizioni:
 
 - Non è più possibile applicare questi passi perché tutte le equazioni hanno una sola variabile nella parte sinistra. Questo vuol dire che il sistema è in forma risolta ed è corretto che l'algortimo termini.
 - Si verifica un fallimento per il passo 2 (correttezza discussa dopo)

@@ -1,10 +1,36 @@
 #Compitino 4 - Eccezioni e Upward result
 
-##Domanda1
+##Domanda 1
+
+```haskell
+exception E of int;
+exception A of int->int;
+val x=2;
+val y=3;
+fun h a = if a(x)=y then raise A(a) else a(y*2);
+fun f0 x= 
+    let 
+        val z=3+x
+        fun f1 z1 = 
+        let 
+            fun f2 z2 = (if x+y = z2 then z2 else raise E(y)) handle E(x)=> x+z |A(x)=> x(y)
+        in 
+            h(f2) 
+        end
+    in 
+        f1
+    end;
+    
+val r=6;
+fun q()=f0(y) handle A(x)=> x;
+val w1= q();
+fun p() = w1(x) handle E(x)=> x*y | A(x)=>x(r);
+val w2= p();
+```
 
 ###Soluzione
 
-```
+```haskell
 1  [0, 0, E of int]
 2  [1, 1, A of int -> int]
 3  [2, 2, x = 2]
@@ -19,17 +45,17 @@
 12 [11, 6, rit="handle q", ris=EP->CL->CL->f0y; x = 3, z = 6, f1=(12,f1)] //Invocazione di f0(y)
 ```
 
-Termina f0, EP->CL->CL->f0y = (12,f1), si tratta di un problema di upward funresult, il record 12 viene sposato nello heap, ridirigento 12 in 12*.
+Termina `f0`, `EP->CL->CL->f0y = (12,f1)`, si tratta di un problema di upward funresult, il record 12 viene sposato nello heap, ridirigendo 12 in 12*.
 
-```
+```haskell
 12* [11, 6, rit="handle q", ris=EP->CL->CL->f0y; x = 3, z = 6, f1=(12*,f1)] --> Heap
 ```
 
-Viene quindi fatto il pop del record 11, mettendo (12*, f1) in w1 e si conclude facendo il pop di 10.
+Viene quindi fatto il pop del record 11, mettendo `(12*, f1)` in `K` e si conclude facendo il pop di 10.
 
 L'esecuzione del codice continua quindi con:
 
-```
+```haskell
 1  [0, 0, E of int]
 2  [1, 1, A of int -> int]
 3  [2, 2, x = 2]
@@ -47,9 +73,9 @@ L'esecuzione del codice continua quindi con:
 15 [14, 5, rit="fine di f1", ris=EP->CL->h(f2), a=(14,f2), a(x) = _, a(y*2) = _] //Invocazione di h(f2)
 ```
 
-// Esecuzione del corpo di h, viene invocata a(x)
+Esecuzione del corpo di h, viene invocata a(x)
 
-```
+```haskell
 16 [15, 14, rit="if di h", ris=EP->CL->a(x), z2 = 2, x(y) = _] //Invocazione di a(x), a=f2, x è globale
 17 [16, 16, handle E(x) => x+z | A(x)=>x(y)] //Handler di f2
 ```
@@ -76,13 +102,13 @@ Viene fatto anche il pop del 16 e si ritorna il controllo all'if di h
 
 In cima alla pila c'è
 
-```
+```haskell
 15 [14, 5, rit="fine di f1", ris=EP->CL->h(f2), a=(14,f2), a(x) = 9, a(y*2) = _] //Invocazione di h(f2)
 ```
 
 a(x) = y -> 9 = 3 -> false, viene eseguita a(y*2)
 
-```
+```haskell
 16 [15, 14, rit="fine di h", ris=EP->CL->a(y*2), z2=6, x(y) = _] //Invocazione di a(y*2)
 17 [16, 16, handle E(x) => x+z | A(x)]=>x(y)] //Hander di f2
 ```
@@ -101,13 +127,13 @@ Viene fatto il pop di 17 e 16
 
 In cima alla pila c'è:
 
-```
+```haskell
 15 [14, 5, rit="fine di f1", ris=EP->CL->h(f2), a=(14,f2), a(x) = 9, a(y*2) = 6] //Invocazione di h(f2)
 ```
 
 h termina e si passa alla fine di f1, viene posto EP->CL->h(f2) = 6 e fatto il pop di 15
 
-```
+```haskell
 14 [13, 12*, rit="handle di p", ris=EP->CL->CL->w1(x), z1 = 2, f2 = (14,f2), h(f2) = 6] //Invocazione di w1(y)
 ```
 
@@ -115,7 +141,7 @@ w1(y) continua la sua esecuzione e ritorna h(f2) in EP->CL->CL->w1(x), viene poi
 
 Continua l'esecuzione di p con in cima i record
 
-```
+```haskell
 12 [11, 10, rit="fine", res=EP->CL->w2, w1(x) = 6, x(r) = _] //Invocazione di p
 ```
 
@@ -123,7 +149,7 @@ Viene infine memorizzato il risutlato di w1(x) in EP->CL->w2 e fatto il pop di 1
 
 Il programma quindi termina con w2 = 6
 
-```
+```haskell
 11 [10, 10, w2= 6] 
 ```
 

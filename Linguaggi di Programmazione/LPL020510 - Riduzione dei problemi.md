@@ -24,7 +24,7 @@ Questo problema è indecidibile e si dimostra per riduzione, riducendo HALT ad H
 
 > HALT 	   HALT_V
 > 
-> \<P, x\> --\> P<sub>x</sub>
+> \<P, x> --\> P<sub>x</sub>
 
 Bisogna quindi riuiscre a trasformare <P, x> in P<sub>x</sub> in modo che i risultati dei due problemi coincidano.
 
@@ -52,7 +52,7 @@ Questo perché, altrimenti, potremmo decidere P in c(n) + F(n) < G(n).
 
 ##Perché la decidibilità è importante?
 
-Perché farebbe comodo riuscire a sapere se un progrmma scritto nei linguaggi di programmazione moderni termina o meno, senza andarlo ad eseguire.
+Perché farebbe comodo riuscire a sapere se un programma scritto nei linguaggi di programmazione moderni termina o meno, senza andarlo ad eseguire.
 
 A livello pratico tutte le proprietà interessanti dei linguaggi di programmazione non sono decidibili.
 

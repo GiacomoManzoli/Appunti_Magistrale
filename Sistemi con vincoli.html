@@ -1,0 +1,499 @@
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="sistemi-con-vincoli">Sistemi con vincoli</h1>
+<h2 id="introduzione">Introduzione</h2>
+<p>Programmazione a vincoli: constraint programmmig</p>
+<p><strong>CSP</strong> --&gt; constraint satisfaction program</p>
+<p><strong>COP</strong> --&gt; constraint optimization program, problema di ottimizazione con vincoli, è diversa dalla programmazione lineare.</p>
+<p>Tipici problemi gestionali, come la pianificazione dei treni o gestione dei porti.</p>
+<p>Si basa sempre sulla costruzzione di un modello come per LP (Ricerca operativa) solo che non vengono utilizzate le equazioni lineari</p>
+<h2 id="problemi-combinatori-csp">problemi combinatori - CSP</h2>
+<ul>
+<li>Colorazione della cartina con 4 colori</li>
+<li>Sudoku</li>
+</ul>
+<p>hanno un pattern simile di risoluzione:</p>
+<ul>
+<li>Si cercano dei vincoli per limitare le possibili mosse</li>
+<li>Si fanno determinate scelte e se sono sbagliate si torna indietro</li>
+</ul>
+<p>Su un foglio di carta è più semplice da fare, in CP si cerca di formalizzare queste cose per un computer</p>
+<p>CSP = \&lt;X,D,C\&gt;</p>
+<ul>
+<li>X: insieme di variabili, con x<sub>i</sub> si indica una variabile dell&#39;insieme;</li>
+<li>D: insieme di domini, x<sub>i</sub> ha dominio D(x<sub>i</sub>);</li>
+<li>C: insieme di vincoli, c<sub>j</sub> è definito su un sottoinsieme di varibili, X(c<sub>j</sub>) e viene detto <em>ambito del vincolo</em> (scope in inglese).</li>
+</ul>
+<p><em>Tupla</em>: sequenza fissata di valori.</p>
+<p><em>Relazione</em>: Data S sequenza di insiemi = S<sub>0</sub>, S<sub>1</sub>, S<sub>2</sub>, ecc.</p>
+<p>Una relazione R su S è un sottoinsieme del prodotto cartesiano della sequenza S.</p>
+<p>...
+...</p>
+<p>Un vincolo è qundi una sorta di tabella con i valori validi per le coppie di variabili</p>
+<p>Una soluzione per un CPS è un tupla definita sul prodotto cartesiano di tutti i domini che è consistenti con tutti i vincoli. (Una soluzione è quindi una relazione sull&#39;insieme dei domini).</p>
+<p>Un CSP senza soluzione si dice <em>infisable</em>, senza soluzione.</p>
+<p>Un CSP può essere definito con ogni tipo di dominio e vincolo</p>
+<p>Tipicamente come domini vengono utilizzati:</p>
+<ul>
+<li>Interi</li>
+<li>Reali</li>
+<li>Set</li>
+<li>Grafi</li>
+<li>...</li>
+</ul>
+<p>Nel corso noi useremo domini interi finiti (finite domains)</p>
+<p>Tipicamente come vincoli venogno utilizzati:</p>
+<p>Con i domini finiti è possibile utilizzare qualsiasi tipo di vincolo. (rappresentazione estensionale).
+Sono scomodi e inefficenti.</p>
+<p>Per esprimere dei vincoli vengono utilizzate delle Constraint libraries, un insieme di tipologie di vincoli.</p>
+<p>Es:</p>
+<ul>
+<li>equality: x==y</li>
+<li>disequality: x!=y</li>
+</ul>
+<p>Colorazione della cartina dell&#39;Italia:</p>
+<ul>
+<li>variabili: x<sub>i</sub> € {0..3} per ogni regione</li>
+<li>vincoli: x<sub>i</sub> != x<sub>j</sub> per le regioni confinanti</li>
+</ul>
+<p><strong>fitlering</strong></p>
+<p>filtrare per un determinato vincolo vuol dire andare a rimuovere dai domini delle variabili alcuni valori che sono sicuramente non soddisfacibili.</p>
+<p><em>pruning</em> l&#39;atto di rimuovere un valore mentre <em>filtering</em> specifica il processo.</p>
+<p>Il filtering fatto da un vincolo può permettere ad un altro vincolo di fare ulteriore filtering, in questo caso si dice che fa <strong>propagation</strong>.</p>
+<p>La propagazione viene effettuata mediante un algoritmo.</p>
+<h3 id="ac1-il-primo-algoritmo-di-propagazione">AC1: il primo algoritmo di propagazione</h3>
+<pre><code>dirty = <span class="hljs-literal">true</span>
+white <span class="hljs-string">dirty:</span>
+    dirty = <span class="hljs-literal">false</span>
+    <span class="hljs-keyword">for</span> cj <span class="hljs-keyword">in</span> <span class="hljs-string">C:</span>
+        dirty = dirty or cj.filter()
+</code></pre><p>Assumendo che <code>cj.filter()</code> ritorni <code>true</code> se il filtering ha tagliato dei valori.</p>
+<p>AC1 raggiunge sempre un <em>fix point</em> che non dipende dall&#39;ordine in cui sono stati processati i vincoli.</p>
+<p>C&#39;è una dimostrazione di questo nelle slide e deriva dal fatto che filtrando si tagliano sempre dei valori, finché non si esauriscono tutti i valori tagliabili. </p>
+<p>La funzione <code>filter</code> è anche monotona, filtrare un dominio di partenza già filtrato, può solo produrre un insieme ulteriormente filtrato.</p>
+<p>Tutto questo prende il nome di <strong>Fix Point Theorem</strong>.</p>
+<p>L&#39;ordine con cui eseguo il filtering influisce però sul numero di iterazioni necessarie.</p>
+<p>Determinare l&#39;ordine migliore non è semplice da calolcare (è un problema NP-Difficile).</p>
+<h2 id="solving-ricerca-delle-soluzioni-">Solving (Ricerca delle soluzioni)</h2>
+<p>Dopo aver filtrato e propagato non sempre si ottiene una soluzione, in questo caso è necessario andare a tentativi.</p>
+<p>La maggior parte di questi problemi sono NP-Difficili.</p>
+<h3 id="depth-first-search">Depth First Search</h3>
+<p>l&#39;algoritmo di ricerca più semplice.</p>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">DFS</span><span class="hljs-params">(CSP)</span>:</span>
+    <span class="hljs-keyword">if</span> sol_found: <span class="hljs-keyword">return</span> true
+    <span class="hljs-keyword">if</span> infeasible: <span class="hljs-keyword">return</span> false
+    <span class="hljs-keyword">for</span> dec <span class="hljs-keyword">in</span> decisions(CSP):
+        <span class="hljs-keyword">if</span> DFS(apply(dec, CSP)): <span class="hljs-keyword">return</span> true
+    <span class="hljs-keyword">return</span> false
+</code></pre><p>L&#39;algortimo fa <em>backtracking</em>, se non raggiunge una soluzione, distrugge il ramo decisionale che ha seguito e ne inizia un&#39;altro.</p>
+<p>Per determinare che un problema è infiseable devo guardare il dominio, se il dominio è vuoto allora non ho soluzione (<em>domain wipeout</em>).</p>
+<p><code>decision(CSP)</code> usa l&#39;insieme dei vincoli per scegliere un valore per una variabile <em>unbound</em>, cioè una variabile il cui dominio contiene più valori.</p>
+<p>Si prende il valore minore presente nel dominio, e si prova ad applicarlo alla variabile (un ramo) e si prova a porre la variabile diversa da quel valore (altro ramo).</p>
+<p>Se si arriva ad una situazione infiseable si torna indietro.</p>
+<p>Dopo aver preso una decisione, si propaga la decisione utilizzando AC1, restringendo ulteriormente l&#39;ambito delle possibili scelte.</p>
+<h1 id="lezione-2">Lezione 2</h1>
+<p><strong>Restrizione di domini</strong></p>
+<p>A partire da un&#39;insieme di domini D<sub>0</sub>,D<sub>1</sub>,... si arriva ad un&#39;insieme D<sub>0</sub>&#39;,D<sub>1</sub>&#39;... tale che D<sub>0</sub>&#39; &lt; D<sub>0</sub>,...</p>
+<p><strong>Vincolo risolto</strong></p>
+<p>Un vincolo si dice risolto se coincide con il prodotto cartesiano nel suo scope.</p>
+<p><strong>Soluzione CSP</strong></p>
+<p>È una restrizione di domini tali che tutti i vincoli vengono risolti.</p>
+<p>D′(x<sub>i</sub>) ∀x<sub>i</sub>∈X : ∀c<sub>j</sub>∈C, c<sub>j</sub>=∏x<sub>i</sub>∈X(c<sub>j</sub>)D′(x<sub>i</sub>)</p>
+<p>Una generalizzazione della soluzione sono tutti domini che sono dei singoletti.</p>
+<p>Tutto questo permette di ottimizzare gli algoritmi risolutivi.</p>
+<h2 id="dfs-depth-first-search">DFS - Depth first search</h2>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">DFS</span><span class="hljs-params">(CSP)</span>:</span>
+  <span class="hljs-keyword">if</span> sol_found(CSP): <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+  <span class="hljs-keyword">if</span> infeasible(CSP): <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+  <span class="hljs-keyword">for</span> dec <span class="hljs-keyword">in</span> decisions(CSP):
+    <span class="hljs-keyword">if</span> DFS(apply(dec, CSP)): <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+</code></pre><p>Può essere ottimizzato fermandosi quando viene trovata una soluzione generalizzata.</p>
+<p>Allo stesso modo può essere modificato <strong>AC1</strong> in modo che se un vincolo è già risolto, allora non prova ad eseguire il filtering.</p>
+<pre><code>dirty = True
+while dirty:
+  dirty = False
+  <span class="hljs-keyword">for</span> cj <span class="hljs-keyword">in</span> C:
+    <span class="hljs-keyword">if</span> not <span class="hljs-function"><span class="hljs-title">resolved</span><span class="hljs-params">(cj, CSP)</span></span>:
+      dirty = dirty or cj.<span class="hljs-function"><span class="hljs-title">filter</span><span class="hljs-params">()</span></span>
+</code></pre><p>Per effettuare queste ottimizzazioni è necessario poter determinare se il vincolo è risolto o meno, che non sempre è possibile.</p>
+<p>Nel caso ci siano dei domini singoletti, vuol dire che i vincoli sono già soddisfatti e quindi non è necessario andare a fare filtering ulteriore.</p>
+<h2 id="vincoli-aritmetici-e-espressioni">Vincoli aritmetici e espressioni</h2>
+<p><strong>N-Queens</strong>: si vogliono disporre su una schacchiera NxN, N regine in modo che non si possano mangiare tra loro.</p>
+<p>Come variabili per questo problema si può usare una variabile per ogni colonna che specifica in quale riga della scacchiare è presente la regina.</p>
+<p>In questo modo si ottiene un dominio per le variabili già ridotto.</p>
+<p>Vincoli del problema:</p>
+<ul>
+<li>Non possono esserci due regine sulla stessa colonna --&gt; triviale per la scelta delle variabili.</li>
+<li>Non possono esserci due regine sulla stessa riga --&gt; xi != xj per ogni i,j (due variabili non possono avere lo stesso valore, per come è espresso il problema vuol dire che due colonne diverse non possono essere avere la regina sulla stessa riga).</li>
+<li>Non possono esserci due regine sulla stessa diagonale --&gt; xj - xi != j - i, per ogni coppia i &lt; j (bisogna esprimere questo vincolo anche per l&#39;altra diagonale).</li>
+</ul>
+<p>Problema: non sappiamo come modellare <code>xj - xi != v</code> e non può essere utilizzato un vincolo ad hoc perché si avrebbe un numero di vincoli che aumenta esponenzialmente.</p>
+<p>Lo stesso vincolo può essere implementato con <code>x + y = z</code> e <code>z != v</code>, in questo modo definisco due vincoli elementari che possono essere combinati tra loro per creare vincoli più complessi.</p>
+<p>Fortunatamente ci sono dei linguaggi di modellazione che eseguono il parsing automatico delle espressioni, permettendo di scrivere espressioni complesse senza preoccuparsi di definire i vincoli più semplici.</p>
+<p>Queste espressioni pososno essere aggiunte ad una libreria di vincoli come:</p>
+<ul>
+<li><code>z=x+y</code> sum constraint</li>
+<li><code>z=xy</code> multiplication constraint</li>
+<li><code>z=|x|</code> absolute value constraint</li>
+<li><code>z=min(x,y)</code> minimum constraint</li>
+</ul>
+<p>dove:</p>
+<ul>
+<li><code>z</code> is automatically introduced when parsing the expression</li>
+<li><code>z</code> is either a fresh variable or an expression object, conceptually: expression object = variable (different impl.)</li>
+<li><code>x</code> and <code>y</code> can be variables, expression objects, or constants</li>
+</ul>
+<p>Mancano ancora gli algoritmi di filtering per questi nuovi vincoli.</p>
+<h2 id="consistenze-locali">Consistenze locali</h2>
+<p>Scrivere un nuovo algoritmi di filtering per ogni vincolo non scala, è necessario usare un approccio sistematico a questo problema.</p>
+<h3 id="vincoli-binari">Vincoli binari</h3>
+<p>Si va a rimuovere un valore dal dominio di X se non supporta un determinato vincolo quando viene combinato con i valori del dominio di Y.</p>
+<p>Un valore v in D(X) si dice che ha un supporto se esiste un valore w in D(Y) tale che (v,w) soddisfa un vincolo.</p>
+<p>Quando tutti i valori presenti nel dominio hanno un supporto si dice che il vincolo c è <em>consistente sugli archi</em> (Arc Consistency).</p>
+<p>Viene usato il termine arco in quanto un CSP può essere visto come un grafo i cui nodi sono dati dalle variabili del problema.</p>
+<p>Questa definizione fornisce una formalizzazione per gli algortimi di filtering.</p>
+<p>La consistenza sugli archi garantisce che vincolo per vincolo ogni assegnamento delle variabili porta ad una soluzione feasible.</p>
+<p>A livello globale no, in quanto la conistenza dei vincoli viene forzata vincolo per vincolo, senza tenere conto degli altri vincoli, quindi non è detto che il problema sia globalmente consistente.</p>
+<p>Avere consistenza globale è complesso quanto risolvere il problema, ma la consistenza locale è meno complessa.</p>
+<p>La complessità dell&#39;algoritmo di filtering AC risulta particolarmente critico in quanto è necessario eseguire l&#39;algoritmo per ogni nodo, più volte e il numero dei nodi può essere esponenziale.</p>
+<p>Filtrare per la diseguaglianza viene fatto in tempo costante.
+Filtrare per l&#39;uguaglianza richiede un tempo linare.</p>
+<h3 id="vincoli-generici">Vincoli generici</h3>
+<p><strong>Generalizzazione di supporto</strong>: un valore di un certo dominio è supportato se per tutte le altre variabili nello scope del vincolo esisten un altro valore tale che l&#39;insieme dei valori riesce a soddisfare il vincolo.</p>
+<p><strong>Generalizzazione dell&#39;Arc Consinstency</strong>: 
+Un vincolo c è consistente sugli archi in modo generalizzato se ∀xi ∈ X(c) allora è possibile trovare un valore v ∈ D(xi) che ha supporto.</p>
+<p>Fare filtering per il vincola della somma ha una complessita cubica, tuttavia con un po&#39; di ottimizzazioni si reisce a tornare ad una complessità quadratica (questo perché nel nostro sistema fare il look-up di un valore ha complessità costante).</p>
+<p>z=x+y</p>
+<p>Regole di filtering</p>
+<ul>
+<li>se v ∈ D(z) e ∀w ∈ D(x), v − w ∉ D(y), allora tolgo v</li>
+<li>se w ∈ D(x) e ∀v ∈ D(z), v − w ∉ D(y), allora tolgo w</li>
+<li>se u ∈ D(y) e ∀v ∈ D(z), v − u ∉ D(x), allora tolgo u</li>
+</ul>
+<p>Così facendo la complessità diventa quadratica nella dimensione di D(x) e D(z).</p>
+<h3 id="bound-consistency">Bound consistency</h3>
+<p>Se i domini sono un intervallo interno e il minimo e massimo dell&#39;intervallo del dominio hanno un supporto, allora anche tutti i valori nel mezzo hanno un supporto.</p>
+<p>A value vi∈D(xi) has a BC support iff, ∀xj∈X(c)∖{xi}, there exists a value vj∈{x⎯⎯j..x⎯⎯⎯j} such that (v0,v1,…vm−1)∈c</p>
+<p>Un vincolo è BC se per ogni variabile del vincolo, sia il minimo che il massimo valore di quella variabile hanno un supporto.</p>
+<p>Questa tipologia di consistenza è più debole rispetto a quella sugli archi generalizzata.</p>
+<p>Sia la bound consistency sia la arc consistency garantiscono un domani wipeout nel caso non ci siano soluzioni, l&#39;unica differenza è l&#39;efficienza che i due algoritmi garantiscono.</p>
+<h2 id="lezione-3">Lezione 3</h2>
+<p>Applicando la bound consistency si cambia il problema di filtering, non si va a controllare il supporto dei valori uno a uno, ma si vanno a vedere dei limiti per i valori e basta, ottentendo un sistema più efficente.</p>
+<p>Bound consistency è comunque più debole di GAC, specialmente nel caso in cui il dominio ha dei buchi.</p>
+<p>Questo perché bound consistency non considera i buchi.</p>
+<h2 id="ac-bc">AC/BC</h2>
+<p>Entrambi gli algoritmi di filtering sono incompleti.</p>
+<p>AC risulta più effficace il che risulta in un tempo di ricerca minore, tuttavia risulta più costoso fare propagazione.</p>
+<p>BC risulta meno efficace e la ricerca rimane costosa, tuttavia è molto veloce da propagare.</p>
+<p>Tipicamente la maggior parte dei solver utilizzano BC al posto di AC, questo perché nei problemi reali tipicamente vengono utilizzati domini continui determinati da un intervallo.</p>
+<h2 id="bc-per-il-vincolo-della-somma">BC per il vincolo della somma</h2>
+<p>Filtering su <code>z</code></p>
+<blockquote>
+<p>z = x + y
+ub = Max(x) + Max(y) --&gt; Max(z) = ub
+lb = Min(x) + Min(y) --&gt; Min(z) = lb</p>
+</blockquote>
+<p>Filtering su <code>x</code> (analogo per <code>y</code>)</p>
+<blockquote>
+<p>z = x + y
+ub = Max(z) - Min(y) --&gt; Max(x) = ub
+lb = Min(z) - Max(z) --&gt; Min(x) = lb</p>
+</blockquote>
+<h2 id="bc-per-il-vincolo-della-moltiplicazione">BC per il vincolo della moltiplicazione</h2>
+<p>Filtering su <code>z</code></p>
+<blockquote>
+<p>z = x * y
+ub = Max(Max(x)Max(y),Max(x)Min(y),Min(x)Max(y),Min(x)Min(y))--&gt; Max(z) = ub
+lb = Min(Max(x)Max(y),Max(x)Min(y),Min(x)Max(y),Min(x)Min(y))--&gt; Min(z) = lb</p>
+</blockquote>
+<p>Filtrare su <code>x</code> è più complicato.</p>
+<h2 id="bc-per-il-vincolo-del-valore-assoluto">BC per il vincolo del valore assoluto</h2>
+<p>Filtering su <code>z</code></p>
+<blockquote>
+<p>z = |x|
+ub = Max( |Max(x)|, |Min(x)| ) --&gt; Max(z) = ub
+lb = |Max( Min(x), Min(0, Max(x)) )| --&gt; Min(z) = lb</p>
+</blockquote>
+<p>Filtering su <code>x</code></p>
+<blockquote>
+<p>z = |x|
+# Filter based on Max(z)
+if Max(x) &gt; Max(z): Max(x) = Max(z)
+if Min(x) &lt; -Max(z): Min(x) = -Max(z)
+# Filter based on Min(z)
+if Min(x) ≥ 0: # x cannot be negative
+  if Min(x) &lt; Min(z): Min(x) = Min(z)
+if Max(z) &lt; 0: # x cannot be positive
+  if Max(x) &gt; -Min(z): Max(x) = -Min(z)</p>
+</blockquote>
+<h2 id="filtering-sul-minimo">Filtering sul minimo</h2>
+<p>Filtering su <code>z</code></p>
+<blockquote>
+<p>z = Min(x,y)
+ub = Min(Max(x), Max(y)) --&gt; Max(z) = ub
+lb = Min(Min(x), Min(y)) --&gt; Min(z) = lb</p>
+</blockquote>
+<p>Filtering su <code>x</code> (analogo per <code>y</code>)</p>
+<blockquote>
+<p>z = Min(x,y)
+Max(x) &gt; Max(z), Min(y) &gt; Max(z) --&gt; Max(x) = Max(z)
+Min(x) &lt; Min(z) --&gt; Min(x) = Min(z)</p>
+</blockquote>
+<p><strong>Tipicamente non si reisce a tagliare entrambi i domini, o si taglia quello di z o quello di x e y</strong></p>
+<p>La condizione minima per cui un algoritmo di filtering sia utile è che vada a fare il test di accettabilità dei buond dei domini.</p>
+<h1 id="lezione-4-enumerazione-e-ottimizzazione">Lezione 4 - Enumerazione e Ottimizzazione</h1>
+<p><em>Tra la lezione 3 e 4 ci sono stati due laboratiori.</em></p>
+<h2 id="enumerazione-delle-soluzioni">Enumerazione delle soluzioni</h2>
+<p>In alcuni casi, in CP si possono voler trovare più soluzioni oppure si può voler sapere quante possibili soluzioni.</p>
+<p>L&#39;algoritmo di ricerca DFS diventa quindi:</p>
+<pre><code class="lang-python">def <span class="hljs-function"><span class="hljs-title">DFS</span><span class="hljs-params">(CSP)</span></span>:
+  <span class="hljs-keyword">if</span> <span class="hljs-function"><span class="hljs-title">sol_found</span><span class="hljs-params">(CSP)</span></span>:
+    process solution
+    return
+  <span class="hljs-keyword">if</span> <span class="hljs-function"><span class="hljs-title">infeasible</span><span class="hljs-params">(CSP)</span></span>: return
+  <span class="hljs-keyword">for</span> dec <span class="hljs-keyword">in</span> <span class="hljs-function"><span class="hljs-title">decisions</span><span class="hljs-params">(CSP)</span></span>:
+      <span class="hljs-function"><span class="hljs-title">DFS</span><span class="hljs-params">(apply(dec, CSP)</span></span>)
+</code></pre>
+<p><code>or-tools</code> funziona in modo simile, ogni volta trova una soluzione si mette in pausa in modo da porterla utilizzare con il metodo <code>NextSolution()</code>.</p>
+<h2 id="ottimizzazione-in-cp">Ottimizzazione in CP</h2>
+<blockquote>
+<p>COP = &lt;X, D, C, f&gt;</p>
+</blockquote>
+<p>È un CSP con una funzione (o espressione) obiettivo che deve essere minimizzata.</p>
+<h3 id="optimal-map-coloring">Optimal Map Coloring</h3>
+<p>Qual&#39;è il numero minimo di colori per colorare le regioni del nord Italia?</p>
+<p>La definzione del modello è analoga a quella del relativo CSP, con la differenza che il dominio delle variabili va da 0 a n-1, dove n è il numero delle regioni.</p>
+<p>Serve però una funzione obiettivo:</p>
+<blockquote>
+<p>f(x) = Max<sub>i = 0 ... n-1</sub>(x<sub>i</sub>)</p>
+</blockquote>
+<h2 id="risolizione-di-un-cop">Risolizione di un COP</h2>
+<p>L&#39;idea principale è che un COP è una serie di CSP.</p>
+<p>Ci sono vari approcci a questo tipo di problema, ma ci sono due filoni principali:</p>
+<ul>
+<li>Ricerca sul dominio di f(x)</li>
+<li>Branch &amp; Bound</li>
+</ul>
+<h3 id="rircerca">Rircerca</h3>
+<h4 id="descructive-lower-bound">Descructive Lower Bound</h4>
+<p>Si itera sui valori v del dominio di f(x) a partire dal lower bound, ad ogni iterazione si pone il vincolo <code>f(x) &lt;= v</code> e si risolve il CSP.</p>
+<p>Probabilmente i primi CSP sono infiesible, il primo CSP che ha la soluzone ha anche la soluzione ottima.</p>
+<p>Descrutive perché ad ogni iterazione si butta via tutto quello calcolato per l&#39;iterazione precedentemente.</p>
+<pre><code class="lang-python">sol = <span class="hljs-keyword">None</span> <span class="hljs-comment"># Current best solution</span>
+solved = <span class="hljs-keyword">False</span> <span class="hljs-comment"># Outcome of the last solution attempt</span>
+lb = safe lower bound
+<span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> solved:
+  P = ⟨X,D,C ∪ {f(x) ≤ lb}⟩
+  solved = solve(P)
+  <span class="hljs-keyword">if</span> solved: sol = found solution
+  <span class="hljs-keyword">else</span>: lb += <span class="hljs-number">1</span>
+</code></pre>
+<h4 id="destructive-upper-bound">Destructive Upper Bound</h4>
+<p>Stesso ragionamento solo che si parte dal massimo valore di f(x).</p>
+<p>Per la prossima iterazione si usa <code>v = f(x) - 1</code>, cioè il costo della soluzione che abbiamo trovato -1 in modo da provare a migliorare.</p>
+<p>L&#39;ultima soluzione trovata è quella ottima.</p>
+<p>Il vantaggio di questo algoritmo è che può essere interrotto ad ogni momento e fornisce comunque una soluzione anche se questa non è ottima.</p>
+<p>Questo fatto è molto importante perché la maggior parte dei COP è NP-Difficile.</p>
+<pre><code class="lang-python">sol = <span class="hljs-keyword">None</span> <span class="hljs-comment"># Current best solution</span>
+solved = <span class="hljs-keyword">True</span> <span class="hljs-comment"># Outcome of the last solution attempt</span>
+ub = safe upper bound
+<span class="hljs-keyword">while</span> solved:
+  P = ⟨X,D,C ∪ {f(x) ≤ ub}⟩
+  solved = solve(P)
+  <span class="hljs-keyword">if</span> solved:
+    sol = found solution
+    ub = sol(f(x)) - <span class="hljs-number">1</span>
+</code></pre>
+<h5 id="upper-vs-lower">Upper VS Lower</h5>
+<p>La versione che usa il lower bound riesce a fare più propagazione risultando più efficiente anche se il problema che si va a risolvere probabilmente non ha soluzione e quindi bisogna esplorare tutto l&#39;albero.</p>
+<p>Ovviamente la versione che usa il lower bound non è anytime però fornisce un lower bound che in alcuni casi può essere più interessante.</p>
+<p>I passi del lower bound invece sono molto corti.</p>
+<p>Per quanto riguarda la versione upper funziona come duale del lower bound, i passi dell&#39;algoritmo sono più grandi, si trova a risolvere problemi per la maggior parte feasbile e quindi ci mette meno tempo.</p>
+<p>Di contro non trova un lower bound e c&#39;è meno propagazione dei vincoli.</p>
+<h3 id="binary-search">Binary Search</h3>
+<p>È la combinazione dei due algoritmi, che va a fare una ricerca binaria sul dominio di f(x).</p>
+<p>L&#39;ieda è quella di tenere un upper bound feasbile e un lower bound infeasible e si rivolve per <code>lb &lt; f(x) &lt; ub</code>.</p>
+<pre><code class="lang-python">sol = None #Current best solution
+lb = safe lower bound
+ub = safe upper bound
+<span class="hljs-keyword">while</span> lb &lt; ub:
+  P = ⟨X,<span class="hljs-keyword">D</span>,C ∪ {<span class="hljs-literal">f</span>(x) &gt; lb, <span class="hljs-literal">f</span>(x) &lt; ub}⟩
+  solved = solve(P)
+  <span class="hljs-keyword">if</span> solved:
+    sol = found solution
+    ub = sol(<span class="hljs-literal">f</span>(x))
+  <span class="hljs-keyword">else</span>:
+    lb = sol(<span class="hljs-literal">f</span>(x))
+</code></pre>
+<p>In questo modo si ottiene un algoritmo di tipo anytime che calcola anche un lower bound ed inoltre funziona a passi più grandi.</p>
+<p>Ma un altro grande vantaggio che è l&#39;<strong>optimality gap</strong>, quando fermo l&#39;algoritmo prima della terminazione ottengo sia una soluzione ottima sia un indicatore della qualità della soluzione.</p>
+<blockquote>
+<p>og = (ub - ul) / ul</p>
+</blockquote>
+<h3 id="branch-and-bound">Branch and Bound</h3>
+<p>Le ricerche hanno un problema: scartano la maggior parte delle informazioni ad ogni iterazione e questo porta a tanto lavoro ripetuto.</p>
+<p>Nel B&amp;B, ogni volta che si trova una nuova soluzione si va ad aggiungere un nuovo vincolo di Bound.</p>
+<p>Utilizzare il branch and bound in CP non c&#39;è bisogno di calcolare per ogni nodo il lower bound, in quanto viene calcolato in modo automatico dai
+ vincoli.</p>
+<p>Quando l&#39;algoritmo trova una soluzione, per capire che è ottima deve comunque andare ad esplorare tutto l&#39;albero (<em>optimality proof</em>).</p>
+<h4 id="pro-e-contro">Pro e contro</h4>
+<ul>
+<li>La prova di ottimalità può essere complessa.</li>
+<li>Non c&#39;è uno spreco di informazioni, l&#39;albero viene esplorato una volta sola.</li>
+<li>È possibile fare passi grandi;</li>
+<li>È un algoritmo anytime:</li>
+<li>I lower bound ottenuti sono molto laschi.</li>
+</ul>
+<h2 id="reified-constraint">Reified Constraint</h2>
+<p>Alcuni problemi possono essere complessi da modellare o possono essere modellati con modelli binari (tipo il problema del trasporto magazzino/cliente tipico della Ricerca Operativa).</p>
+<p>Implementare un CSP come modello binario ha dei problemi in quanto ci sono molte variabili e non si può fare tanta propoagazione.</p>
+<h1 id="lezione-5-metavincoli">Lezione 5 - Metavincoli</h1>
+<p>Non si riesce a modellare in modo efficace il problema dei trasporti, serve quindi una nuova tipologia di vincoli</p>
+<h2 id="vincoli-come-espressioni">Vincoli come espressioni</h2>
+<blockquote>
+<p>z = (x<sub>i</sub> == j)</p>
+<p>z = 1 se x<sub>i</sub> = j</p>
+<p>z = 0 altrimenti</p>
+</blockquote>
+<p>In partica <em>z</em> è 1 se il vincolo è soddisfatto.</p>
+<p>Si dice che il vincolo <em>z</em> è un vincolo <strong>reificato</strong> (reified constraing).</p>
+<p>Un <strong>meta-vincolo</strong> è un vincolo definito utilizzando dei vincoli reificati.</p>
+<p>Un vincolo reificato è simile alle variabili binarie della programmazione logica.</p>
+<p>Questa tipologia di vincoli sono molto utili per modellare un problema, tuttavia:</p>
+<ul>
+<li>Portano ad avere dei modelli complicati;</li>
+<li>Portano ad avere dei modelli grandi, quindi serve più tempo per fare filtering;</li>
+<li>Portano ad avere un filtering debole.</li>
+</ul>
+<h3 id="gac-per-i-vincoli-reificati">GAC per i vincoli reificati</h3>
+<p>Il dominio di un vincolo reificato è sempre {0,1}, il valore 1 ha supporto se e solo se c&#39;è la possibilità che il vincolo sia vero e lo stesso vale per il valore 0.</p>
+<p>Si parla di <em>dominio di un vincolo</em> questo perché i vincoli reificati possono essere visti come delle variabili.</p>
+<p>Se un vincolo reificato non è soddisfatto non vuol dire che il problema è infeasible.</p>
+<h3 id="filtering-per-i-vincoli-reificati">Filtering per i vincoli reificati</h3>
+<p>Se <em>(c)</em> è il vincolo reificato per il vincolo <em>c</em>, prima è necessario filtrare per il vincolo <em>c</em>.</p>
+<p>Se si ottiene un domain wipeout allora D(c) non contiene 1 e se <em>c</em> è risoloto, allora D(c) non contiene 0.</p>
+<h2 id="vincoli-logici">Vincoli logici</h2>
+<p>Servono per risolvere i problemi di soddifacibilità booleana (<strong>SAT</strong>) nei quali bisogna determinare se una clausola booleana è soddisfacibile.</p>
+<p>Non serve andare ad aggiungere dei nuovi vincoli, si possono andare a reciclare alcuni vincoli già noti.</p>
+<blockquote>
+<p>z = not x</p>
+<p>z = (1 - x)</p>
+</blockquote>
+<p>Se <em>z</em> e <em>x</em> sono variabili binarie le due esperessioni sono equivalenti.</p>
+<p>In questo modo si possono riutilizzare le regole di filtering che vengono usate per le espressioni già note.</p>
+<p>Allo stesso modo</p>
+<blockquote>
+<p>z = x ∧ y</p>
+<p>z = x * y oppure z = min(x,y)</p>
+<p>z = x ∨ y</p>
+<p>z = max(x,y)</p>
+</blockquote>
+<p>Non serve quindi andare ad implementare i vincoli logici in quanto è possibile riutilizzare quelli aritmetici, in questo modo si può riutilizzare anche il filtering e il GAC.</p>
+<p>Avendo un modo per mappare i vincoli logici basilari si possono anche andare a definire quelli più complessi come il ⇒ e ⇔, tuttavia la cosa diventa più verbosa.</p>
+<blockquote>
+<p>x⇔y diventa max(xy,(1−x)(1−y)) </p>
+</blockquote>
+<p>Ma si può fare di meglio:</p>
+<blockquote>
+<p>z = (x ⇒ y)</p>
+<p>z = (x ≤ y) //Con un vincolo reificato</p>
+<p>z = (x⇔y)</p>
+<p>z = (x==y)</p>
+<p>z = (x ⊕ y) (xor)</p>
+<p>z = (x != y)</p>
+</blockquote>
+<h2 id="wombo-combo">Wombo combo</h2>
+<p>Utilizzando i metavincoli e i vincolo logici è possibile andare a definire dei vincoli più complessi come: <em>Se x allora y</em>.</p>
+<p>Riusciamo a modellare tutte le relazioni combinatorie su variabili discrete.</p>
+<p>Tuttavia questa non sempre è una grande idea per la solita storia del modello grande e del filtering debole.</p>
+<p>Questo perché i metavincoli potrebbero non esse GAC anche se tutti i vincoli individuali sono GAC.</p>
+<h2 id="riprendiamo-la-ricerca">Riprendiamo la ricerca</h2>
+<p>L&#39;algoritmo finora utilizzato è il seguente:</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">DFS</span><span class="hljs-params">(CSP)</span>:</span>
+    <span class="hljs-keyword">if</span> sol_found(CSP): <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+    <span class="hljs-keyword">if</span> infeasible(CSP): <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">for</span> dec <span class="hljs-keyword">in</span> decisions(CSP):
+        <span class="hljs-keyword">if</span> DFS(apply(dec, CSP)): <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+</code></pre>
+<ul>
+<li>Prende la prima variabile x<sub>i</sub> che non è ancora bound</li>
+<li>Si prende il valore minimo v</li>
+<li>Si prendono due decisioni:<ul>
+<li>x<sub>i</sub> = v (branch sinistro)</li>
+<li>x<sub>i</sub> != v (se faccio backtracking)</li>
+</ul>
+</li>
+</ul>
+<p>Si può andare a migliorare cambiando la <strong>variable selection heuristic</strong>, cioè cambiare come si sceglie la variabile e <strong>value selection heuristic</strong>, cioè come scegliere il valore per fare il branching.</p>
+<p>L&#39;idea è quella di scegliere l&#39;euristica migliore che permette di risolvere il problema.</p>
+<p>Questo perché non è possibile trovare un euristica per risolvere un problema generico, quindi le euristiche valgono solo per problemi specifici.</p>
+<p>Nei problemi in cui si cerca solamente una soluzione, l&#39;idea è quella di scegliere sia la variabile che il valore in modo che ci sia una maggior probabilità di arrivare ad una soluzione feasible.</p>
+<p>Tuttavia questa strategia non limita il <strong>trashing</strong>, se si prende una decisione sbagliata e si genera tutto un sotto-albero infeasible è necessario esaminare tutto il sotto-albero prima di accorgersene.</p>
+<p>Sarebbe bello avere un modo di limitare questo fenomeno.</p>
+<p>Se le variabili hanno domini diversi, queste influenzano la struttura dell&#39;albero di ricerca.</p>
+<p>In genere scegliere come variabile la variabile che ha il dominio più piccolo si ottengono due grandi vantaggi:</p>
+<ul>
+<li>La propagazione è più forte;</li>
+<li>È molto più probabile che si faccia propagazione.</li>
+</ul>
+<p>Si cerca quindi di massimizzare la propagazione scegliendo variabili a valori che cercano di causare un fail (<strong>first fail principle</strong>).</p>
+<p>Quindi ricapitolando:</p>
+<ul>
+<li>Se si crede che il problema sia feasible, si cerca di assegnare il valore che è più facile che porti ad una soluzione;</li>
+<li>Se si crede che il problema sia infeasible, si cerca di fallire il prima possibile.</li>
+</ul>
+<p>Di solito non si sa se il problema è feasible o infeasible, quindi si sceglie la variabile con il dominio più piccolo (si cerca il fail) e il valore che aumenta la probabilità di successo (varia da problema a problema).</p>
+<h1 id="lezione-6-ricerca-2">Lezione 6 - Ricerca 2</h1>
+<p>Nelle precedenti puntate: scegli una variabile in modo che sia più probabile fallire e scegli un valore in modo che si più probabile trovare una soluzione.</p>
+<h2 id="ricerca-per-i-problemi-di-ottimizzazione">Ricerca per i problemi di ottimizzazione</h2>
+<p>Oltre a trovare la solzuone è necessario provare che sia ottima, è necessario qundi andare ad esplorare tutto l&#39;albero.</p>
+<p>Tipicamente si scelgono sia variabili che valori con la qualità più alta possibile, cioè che porti ad ottenere dei vincoli più stretti.</p>
+<p>Questo perché i vincoli più stretti fanno un pruning maggiore e velocizzano il processo.</p>
+<p>Il tutto deriva dal fatto che facendo il B&amp;B ogni volta che si trova una nuova soluzione si ottiene un nuovo vincolo.</p>
+<h2 id="alternative-branching-scheme">Alternative Branching Scheme</h2>
+<p>Finora abbiamo fatto branching con un ramo <em>x=v</em> e uno <em>x!=v</em>, possono però essere usate strategia diverse, come:</p>
+<ul>
+<li><strong>labeling</strong>: tanti rami quanti sono i possibili valori della variabile;</li>
+<li><strong>paritioning</strong>: <em>x &lt;= v</em> e <em>x&gt;v</em>, è utile quando si rappresentano qunatità o si hanno domini larghi.</li>
+<li><strong>probing/diving</strong>: non faccio branching, assegno la variabile ad un valore, questo è utile quando non è necessario fare backtracking (<em>violazione di DFS</em>).</li>
+</ul>
+<h2 id="su-cosa-fare-branching">Su cosa fare branching</h2>
+<p>In alcuni casi, come quando si lavora con intervalli di tempo, la scelta della variabile sulla quale fare branching influisce di molto sulle prestazioni.</p>
+<p>Ad esempio è possibile assegnare il valore dei vincoli reificati a delle variabili ed utilizzare queste nuove variabili per fare branching.</p>
+<p>In questo modo viene fatta della propagazione dei vincoli già nella fase di ricerca.</p>
+<p>Rimane solo da assegnare un valore alle variabili. Questi valori possono essere assegnati facendo probing, utilizzando il minor start time possibile per ogni variabile.</p>
+<p>Ottenendo così una soluzione ottima in poco tempo.</p>
+<h2 id="ricapitolando">Ricapitolando</h2>
+<ul>
+<li>La ricerca in CP è molto flessibile (selezione delle variabili, schema di branching e variabili da usare per fare branching)</li>
+<li>CP può essere utilizzato per implementare delle euristiche</li>
+<li>Per ottenere i risultati migliori è necessario modificare l&#39;algoritmo</li>
+</ul>
+<h1 id="lezione-7-migliorare-un-modello">Lezione 7 - Migliorare un modello</h1>
+<p>Lo stesso problema può essere modellato in modi diversi, alcuni sono più semplici dal modellare rispetta ad altri, allo stesso modo cambia l&#39;efficenza.</p>
+<p>Anche gli stessi vincoli possono influire sulle prestazioni.</p>
+<p>Anche la scelta dei valori &quot;farlocchi&quot; va ad influire sulle prestazioni.</p>
+<p>Le simmetrie nelle soluzioni possono portare ad creare branch inutili, può essere utile aggiungere dei vincoli per andarle a rimuovere.</p>
+<p>[Ascolta la registrazione che è andato troppo veloce].</p>
+<h2 id="simmetrie">Simmetrie</h2>
+<p>Possono essere sia di variabile che di valore.</p>
+<p>Quelle di <strong>variabile</strong> si verificano quando, data una soluzione feasible è possibile scambiare i valori delle variabili ed ottenere comunque un&#39;altra soluzione feasible.</p>
+<p>In quelle di <strong>valore</strong> invece si va a permutare i vari valori (ridare il nome ai valori), ad esempio in N-Queens c&#39;è una simmetria di valori se si fa una rotazione orizzontale della scacchiera.</p>
+<p>Per rompere queste simmetrie è possibile:</p>
+<ul>
+<li>Si riformula il modello in modo da togliere o diminuire le simmetrie</li>
+<li><strong>Simmetry Breaking statico</strong> vengono aggiunti dei vincoli al modello per rompere le simmetrie</li>
+<li><strong>Simmetry Breaking dinamico</strong></li>
+</ul>
+<h3 id="lex-leader-method">Lex-Leader Method</h3>
+<p>È una strategia per rompere le simmetrie di variabile in modo statico.</p>
+<p>L&#39;idea è quella di imporre un ordine lessicografico tra le varie variabili in modo che ci sia solo una delle soluzioni simmetriche valide.</p>
+<p>Deve però essere disponibile la lista di tutte le possibili permutazioni.</p>
+<p>Di contro però vengono aggiunti dei vincolo grandi e il numero di vincoli da aggiungere cresce in modo <strong>fattoriale</strong> rispetto al numero di simmetrie.</p>
+<p><strong>Caso speciale</strong>: se c&#39;è un vincolo che impone che le varie variabili siano tutte diverse tra loro allora è necessario aggiungere <em>n-1</em> vincoli, anziché <em>n!</em>.</p>
+<h2 id="rottura-delle-simmetrie-dinamica">Rottura delle simmetrie dinamica</h2>
+<p>Il metodo statico porta ad aggiungere tanti vincoli e questi possono creare dei problemi alla strategia di ricerca, perché questi vincoli potrebbero andare a tagliare delle soluzioni simmetriche che sono trovate per prime dalla strategia di ricerca.</p>
+<p>L&#39;idea principale di questa strategia è quella di considerare i vincoli che rompono le simmetrie solo quando si fa backtracking.
+In questo modo quando si scende sul ramo sinistro non vengono tagliate le soluzioni simmetriche, ma quando si fa backtracking, questi vengono considerati in modo da sfoltire il sotto albero destro.</p>
+<p>Ad esempio facendo labeling fermandosi al primo valore simmetrico trovato.</p>
+</body></html>

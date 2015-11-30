@@ -1,6 +1,6 @@
 #Lezione 4 - Even more Haskell
 
-Ancora più haskell.
+
 
 ##Algebric data types
 
@@ -33,7 +33,7 @@ In questo modo si specifica che `Shape` fa parte della classe dei tipi stampabil
 ```haskell
 Prelude> Circle 2 3 4
 Circle 2.0 3.0 4.0
-- viene stampata la stringa utilizzata per invocare il costruttore
+-- viene stampata la stringa utilizzata per invocare il costruttore
 ```
 
 Questa cosa funziona out-of-the-box solo nel caso i valori che costituiscono il tipo derivano anche essi da `Show`.
@@ -65,7 +65,7 @@ surface (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) - (abs $ y2 - y1)
 
 Da notare che quando definisco la funzione per un determinato tipo posso fare il pattern matching sulla tipologia del costruttore.
 
-**LE DUE funzioni funzionano solo con i costruttori senza Point**
+*La funzione `surface` dell'esempio funziona con la versione del costruttore senza il tipo `Point`.*
 
 
 ##Incapsulamento
@@ -82,7 +82,7 @@ module Shape
 ```
 In questo modo, quando viene fatto l'include si vedono solo le funzioni in lista.
 
-Da notare che il `(..)` permette di esportare anche la definzione dei costruttori.
+Il `(..)` permette di esportare anche la definzione dei costruttori.
 
 ##Alberi
 
@@ -104,7 +104,7 @@ Prelude> :t x
 x :: Num a => Tree a
 ```
 
-La stampa di defualt viene quindi fatta in modo _pre-fisso_.
+La stampa di defualt viene quindi fatta in modo _prefisso_.
 
 Da notare che in questo caso l'applicazione di una di queste funzioni non è altro che la rappresentazione di se stessa, diventa quindi un'interpretazione libera.
 
@@ -174,8 +174,8 @@ Il tutto in un modo sicuro rispetto ai tipi.
 
 ```haskell
 class Eq a where
-	(==) :: a -> a --> Bool
-	(/=) :: a -> a --> Bool
+	(==) :: a -> a -> Bool
+	(/=) :: a -> a -> Bool
 	x == y = not (x /= y)
 	x /= y = not (x == y)
 ```
@@ -274,7 +274,7 @@ class Functor f where
 	fmap :: (a -> b) -> f a -> f b
 ```
 
-Per essere un funtore il tipo `f` (`f` è un tipo parametrico) deve avere una funzione `fmap` che data una funzione ...
+Per essere un funtore il tipo `f` (`f` è un tipo parametrico) deve avere una funzione `fmap` che data una funzione e un oggetto che contiene un valore sul quale può essere applicata quella funzione, ritorna un'altro oggetto contenente il risultato dell'applicazione della funzione.
 
 L'idea è che un funtore è una generalizzazione della funzione `map`.
 
@@ -313,7 +313,7 @@ instance Functor Tree where
 	fmap f EmptyTree = EmptyTree
 	fmap f (Node x leftsub rightsub) = Node (f x) (fmap f leftsub) (fmap f rightsub)
 ```
-In questo modo riusciamo a spalamre l'esecuzione di una funzione su un albero.
+In questo modo riusciamo a spalmare l'esecuzione di una funzione su un albero.
 
 Se l'albero è vuoto non faccio nulla.
 

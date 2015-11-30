@@ -12,7 +12,7 @@ Nel nostro caso S è la base di conoscenza in ⋀ con la negazione di 𝜶.
 
 **insoddisfacible**: non esite un modello per l'insieme di clausole, ovvero non esiste una combinazione dei letterali che rende vero l'insieme delle clausole.
 
-La dimostrazione di questo teorema si ottiene dimostrando che se la chiusura RC(S) non contiene la clausola vuota, allora S è soddisfacibile.
+La dimostrazione di questo teorema si ottiene dimostrando (per assurdo) che se la chiusura RC(S) non contiene la clausola vuota, allora S è soddisfacibile.
 
 Se la chiusura di S **non contiene** la clasusola vuota si può costruire un modello per S, perché se c'è una clausola vuota vuol dire che c'è una contrattiddizione e quindi non è possibile costruire un modello.
 
@@ -31,7 +31,7 @@ Questo si dimostra per induzione su i: supponiamo che sia possibile costruire il
 
 **Caso base: i = 1**
 
-In questo caso, in S non possono essere presenti sia P<sub>1</sub> sia not(P<sub>1</sub>), perché altrimenti l'applicazione dell'algoritmo di risuluzione non sarebbe terminata, questo perché le due clausole P<sub>1</sub> e not(P<sub>1</sub>) possono essere risolte con la clausola vuota. Quindi è presente solo o P<sub>1</sub> o not(P<sub>1</sub>) e di conseguenza P<sub>1</sub> vale falso se è presente not(P<sub>i</sub>), altrimenti vero. 
+In questo caso, in RC(S) non possono essere presenti sia P<sub>1</sub> sia not(P<sub>1</sub>), perché altrimenti l'applicazione dell'algoritmo di risuluzione non sarebbe terminata, questo perché le due clausole P<sub>1</sub> e not(P<sub>1</sub>) possono essere risolte con la clausola vuota. Quindi è presente solo o P<sub>1</sub> o not(P<sub>1</sub>) e di conseguenza P<sub>1</sub> vale falso se è presente not(P<sub>i</sub>), altrimenti vero. 
 
 Questa scelta è vincolata perché stiamo cercando di costruire un modello per S. 
 
@@ -155,7 +155,7 @@ Il connettivo principale da usare con l'esistenza è ⋀ e tipicamente utilizzar
 
 **Dualità**: ogni quantificatore può essere espresso usando la negazione dell'altro.
 
-> ∀x Piace(x,Gelato) == !∃x !Piace(x,Gelato)
+> ∀x Piace(x,Gelato) == ¬∃x ¬Piace(x,Gelato)
 
 ###Uguaglianza
 

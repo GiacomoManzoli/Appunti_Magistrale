@@ -4,7 +4,7 @@ I primi linguaggi importanti per la storia sono il C/C++, Java e Haskell.
 
 Il controllo dei tipi è iniziato dal Fortran (anni 50) con la gestione statica dei valori delle variabili. La prima versione del Fortran tuttavia non ammetteva ricorsinoe.
 
-_I linguaggi operativi hanno un approccio più ingegneristico mentre quelli funzionali sono più matematici e astratti._
+_I linguaggi imperativi hanno un approccio più ingegneristico mentre quelli funzionali sono più matematici e astratti._
 
 Al giorno d'oggi i linguaggi hanno caratteristiche miste, sia imperative che funzionali. Questo perché si cerca di andare verso un mondo parallelo e distribuito.
 
@@ -34,7 +34,7 @@ Questa domanta è nata prima ancora dei computer attuali, questo perché erano p
 * Linguaggi funzionali, come il Lambda calcolo;
 * Regole di composizione di funzioni a partire da funzioni elementari.
 
-Tutti i modelli precedenti definiscono la stessa classi di funzionie --> formazilizzano il caloclo dello stesso modello di funzioni, le __funzioni parziali ricorsive__.
+Tutti i modelli precedenti definiscono la stessa classe di funzioni --> formazilizzano il calcolo dello stesso modello di funzioni, le __funzioni parziali ricorsive__.
 
 __Tesi di Church__: Tutte le funzioni parziali ricorsive sono calcolabili. Non è un teorema, ma una tesi in quanto è un concetto intuitivo che non è ancora stato dimostrato.
 
@@ -55,8 +55,11 @@ Consideriamo tutte le funzioni che possono essere calcolate con un "Si" o con un
 Göedel ha dimostrato che la decisione della terminazione di una macchina di turing non è decidibile (calcolabile).
 
 > I = <P, x>
+> 
 > P -> stringa che descrive una macchina di turing
+> 
 > x -> stringa scritta nel nastro di P
+> 
 > P(x) -> è il calcolo della macchina P su x
 
 Se la terminazione di P su x è decidibile allora esiste un programma (o macchina di turing) Q che dato:

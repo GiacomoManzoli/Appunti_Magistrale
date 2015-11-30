@@ -314,7 +314,7 @@ Questo perché se un altro algoritmo esplorasse meno nodi allora rischierebbe di
 <p><em>h<sub>1</sub></em> è una euristica più semplice da calcolare ma da una sottostima tanto bassa, mentre <em>h<sub>2</sub></em> da una sottostima più accurata rispetto ad <em>h<sub>1</sub></em>.</p>
 <p>Conseguentemente è meglio <em>h<sub>2</sub></em> così considero meno nodi e trovo prima il nodo associato ad uno stato ottimo.</p>
 <p>Dal momento che <em>h<sub>2</sub>(n)</em> è sempre maggiore o uguale di <em>h<sub>1</sub>(n)</em> si dice che <em>h<sub>2</sub></em> <strong>domina</strong> <em>h<sub>1</sub></em>.</p>
-<p>Tipicamente ha più senso usare l&#39;euristica dominante, c&#39;è però da considerare il tempo necessario per calcolare l&#39;euristica, in alcuni casi può essere più performante usare un&#39;euristica &quot;peggiore&quot; ma che è molto efficente da calolcare.</p>
+<p>Tipicamente ha più senso usare l&#39;euristica dominante, c&#39;è però da considerare il tempo necessario per calcolare l&#39;euristica, in alcuni casi può essere più performante usare un&#39;euristica &quot;peggiore&quot; ma che è molto efficente da calcolare.</p>
 <h3 id="problemi-rilassati">Problemi rilassati</h3>
 <p>Per facilitare il calcolo si possono togliere alcuni vincoli al problema per applicare una ricerca non informata, in modo da poter usare il valore riscontrato dalla ricerca rilassata come euristica per il problema completo.</p>
 <p>Il costo della solzione ottima di un problema rilassato non è più grande del costo della soluzione ottima del problema originario, ed è quindi un euristica ammissibile.</p>
@@ -324,7 +324,7 @@ Questo perché se un altro algoritmo esplorasse meno nodi allora rischierebbe di
 <p>Questo si può fare andando ad aggiungere un limite al valore dalla funzione di valutazione.</p>
 <h3 id="ida-">IDA*</h3>
 <p>Non inserisce nella coda dei nodi con valore di <em>f</em> maggiore di un certo valore <em>cutof f</em>.</p>
-<p>Questo valore di <em>cutof f</em> alla iterazione successiva viene posto uguale al minomo valore di <em>f</em> dei nodi non inseriti in coda.</p>
+<p>Questo valore di <em>cutof f</em> alla iterazione successiva viene posto uguale al minimo valore di <em>f</em> dei nodi non inseriti in coda.</p>
 <p>(Ad ogni iterazione prendo il nodo di che non ho inserito in coda e con funzione di valutazione minima e assegno a <em>cutof f</em> il su f-valore, in questo modo quel nodo verrà preso in cosiderazione alla prossima iterazione dell&#39;algoritmo)</p>
 <p>Viene così limitato l&#39;uso della memoria.</p>
 <p>Ad ogni aggiornamento di <em>cutof</em> devo comunque reiniziare la ricerca da capo.</p>
@@ -336,7 +336,7 @@ Questo perché se un altro algoritmo esplorasse meno nodi allora rischierebbe di
 <p>Se il nodo corrente supera l<em>&#39;f-valore</em> (valore della funzione di valutazione), la ricorsione torna indietro al cammino alternativo.</p>
 <p>Durante il ritorno, si sotistuisce l&#39;<em>f-valore</em> di ogni nodo lungo il cammino con il miglior <em>f-valore</em> dei suoi nodi figli.</p>
 <p>Come per A*, la ricerca è ottima se la funzione euristica è ammissibile.</p>
-<p>La complessità spaziale è lineare ma la complessità spaziale è difficile da definire, nel caso pessimo è sempre esponenziale.</p>
+<p>La complessità spaziale è lineare ma la complessità temporale è difficile da definire, nel caso pessimo è sempre esponenziale.</p>
 <p>Anche questo algoritmo soffre di un problema simile ad IDA*, cioè non usano tutta la memoria a disposizione.</p>
 <h1 id="lezione-6-ricerca-informata-cont-d-x2-">Lezione 6 - Ricerca Informata (Cont&#39;d x2)</h1>
 <h2 id="simplified-ma-">Simplified MA*</h2>
@@ -410,12 +410,13 @@ Questo perché se un altro algoritmo esplorasse meno nodi allora rischierebbe di
                           successivo, un nodo
                           <span class="hljs-type">T</span>, una temperatura che controlla la provbabilità di compiere passi verso il basso.
     nodo_corrente &lt;- <span class="hljs-type">CreaNodo</span>(<span class="hljs-type">StatoIniziale</span>[<span class="hljs-type">Prolema</span>])
-    <span class="hljs-type">T</span> &lt;- velocità_raffreddamento[t]
-    <span class="hljs-keyword">if</span> <span class="hljs-type">T</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> return nodo_corrente
-    successivo &lt;- un successore di nodo_corrente scelto a caso
-    <span class="hljs-type">DeltaE</span> &lt;- <span class="hljs-type">Valore</span>[successivo] - <span class="hljs-type">Valore</span>[nodo_corrente]
-    <span class="hljs-keyword">if</span> <span class="hljs-type">DeltaE</span> &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> nodo_corrente &lt;- successivo
-    <span class="hljs-keyword">else</span> nodo_corrente &lt;- successivo con probabilità e^(<span class="hljs-type">DeltaE</span>/<span class="hljs-type">T</span>)
+    for t &lt;- <span class="hljs-number">1</span> to ∞
+       <span class="hljs-type">T</span> &lt;- velocità_raffreddamento[t]
+       <span class="hljs-keyword">if</span> <span class="hljs-type">T</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> return nodo_corrente
+       successivo &lt;- un successore di nodo_corrente scelto a caso
+       <span class="hljs-type">DeltaE</span> &lt;- <span class="hljs-type">Valore</span>[successivo] - <span class="hljs-type">Valore</span>[nodo_corrente]
+       <span class="hljs-keyword">if</span> <span class="hljs-type">DeltaE</span> &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">then</span> nodo_corrente &lt;- successivo
+       <span class="hljs-keyword">else</span> nodo_corrente &lt;- successivo con probabilità e^(<span class="hljs-type">DeltaE</span>/<span class="hljs-type">T</span>)
 </code></pre><p>A temperatura fissata <code>T</code> la probabilità di occuppazione degli stati segue la distrubuzione di Boltzmann.</p>
 <p>Se <code>T</code> viene diminuito abbastanza lentamente si raggiunge sempre lo stato migliore.</p>
 <p>Questo viene usato largamente nelle applicazioni pratiche come la definizione degli orari dei voli delle linee aeree.</p>
@@ -725,8 +726,10 @@ if <span class="hljs-keyword">state</span> is a M<span class="hljs-keyword">in</
 if <span class="hljs-keyword">state</span> is a Chance node then
     return average ExpectiMiniMax-Value of Successors(<span class="hljs-keyword">state</span>)
 ...
-</code></pre><h3 id="potatura-in-alberi-da-gioco-non-deterministici">Potatura in alberi da gioco non deterministici</h3>
+</code></pre><p><img src="Intelligenza Artificiale/immagini/l10-valutazione.png" alt=""></p>
+<h3 id="potatura-in-alberi-da-gioco-non-deterministici">Potatura in alberi da gioco non deterministici</h3>
 <p>Si riesce comunque a fare una potatura 𝜶-𝜷 solo che risulta meno efficace.</p>
+<p><img src="Intelligenza Artificiale/immagini/l10-potatura-bound.png" alt=""></p>
 <h3 id="giochi-non-deterministici-in-pratica">Giochi non deterministici in pratica</h3>
 <p>L&#39;uso dei dadi aumenta il valore del fattore di branching <em>b</em> e questo va ad influire sul valore di lookahead.</p>
 <p>Nonostante la complessità aumenti si riesce comunque ad ottenere dei risultati buoni (sfruttando anche alcune cose non ancora affrontate).</p>
@@ -974,7 +977,7 @@ Allora la premessa deve essere vera e <em>b</em> falsa, ma questo contraddice l�
 <p>Il teorema di completezza per la risoluzione nella logica proposizionale è chiamato <strong>ground resolution theorem</strong>: se un insieme di clausole S è insoddisfacibile, allora la chiusura della risoluzione di tali clausole RC(S) contiene la clausola vuota.</p>
 <p>Nel nostro caso S è la base di conoscenza in ⋀ con la negazione di 𝜶.</p>
 <p><strong>insoddisfacible</strong>: non esite un modello per l&#39;insieme di clausole, ovvero non esiste una combinazione dei letterali che rende vero l&#39;insieme delle clausole.</p>
-<p>La dimostrazione di questo teorema si ottiene dimostrando che se la chiusura RC(S) non contiene la clausola vuota, allora S è soddisfacibile.</p>
+<p>La dimostrazione di questo teorema si ottiene dimostrando (per assurdo) che se la chiusura RC(S) non contiene la clausola vuota, allora S è soddisfacibile.</p>
 <p>Se la chiusura di S <strong>non contiene</strong> la clasusola vuota si può costruire un modello per S, perché se c&#39;è una clausola vuota vuol dire che c&#39;è una contrattiddizione e quindi non è possibile costruire un modello.</p>
 <p>Si può provare quindi a costruire un modello a partire dai vari letterali P<sub>1</sub>, ..., P<sub>k</sub> che compaiono in S.</p>
 <p>Quindi, per ogni P<sub>i</sub>:</p>
@@ -986,7 +989,7 @@ Allora la premessa deve essere vera e <em>b</em> falsa, ma questo contraddice l�
 <p>Tenendo presente che in RC(S) non c&#39;è la clausola vuota per ipotesi, rimane da dimostrare che tale procedura termina sempre e produce un modello per S.</p>
 <p>Questo si dimostra per induzione su i: supponiamo che sia possibile costruire il modello parziale per i simboli fino a P<sub>i-1</sub> e mostriamo che tale modello può essere esteso fino a P<sub>i</sub>.</p>
 <p><strong>Caso base: i = 1</strong></p>
-<p>In questo caso, in S non possono essere presenti sia P<sub>1</sub> sia not(P<sub>1</sub>), perché altrimenti l&#39;applicazione dell&#39;algoritmo di risuluzione non sarebbe terminata, questo perché le due clausole P<sub>1</sub> e not(P<sub>1</sub>) possono essere risolte con la clausola vuota. Quindi è presente solo o P<sub>1</sub> o not(P<sub>1</sub>) e di conseguenza P<sub>1</sub> vale falso se è presente not(P<sub>i</sub>), altrimenti vero. </p>
+<p>In questo caso, in RC(S) non possono essere presenti sia P<sub>1</sub> sia not(P<sub>1</sub>), perché altrimenti l&#39;applicazione dell&#39;algoritmo di risuluzione non sarebbe terminata, questo perché le due clausole P<sub>1</sub> e not(P<sub>1</sub>) possono essere risolte con la clausola vuota. Quindi è presente solo o P<sub>1</sub> o not(P<sub>1</sub>) e di conseguenza P<sub>1</sub> vale falso se è presente not(P<sub>i</sub>), altrimenti vero. </p>
 <p>Questa scelta è vincolata perché stiamo cercando di costruire un modello per S. </p>
 <p><strong>Caso induttivo:</strong></p>
 <p>Consideriamo una clausola C in RC(S) che contiene P<sub>i</sub>, si hanno dei problemi ad assegnare un valore di verità a P<sub>i</sub> solo se C equivale a B ⋁ not(P<sub>i</sub>), con B clausola che contiene solo simboli P<sub>j</sub> con <em>j &lt; i</em>, cioè simboli ai quali ho già fissato un valore di verità, ed esiste C&#39; in RC(S) ed equivalente a B&#39; ⋁ P<sub>i</sub> con B&#39; clausola che contiene solamente simboli P<sub>j</sub> con <em>j &lt; i</em>.</p>
@@ -1262,7 +1265,8 @@ operatore di cut ! per evitare di valutare le clausole successive
 <li>Rimuovere i quantificatori universali.</li>
 <li>Distribuire ⋀ su ⋁.</li>
 </ol>
-<p><strong>immagine 1 e 2</strong></p>
+<p><img src="Intelligenza Artificiale/immagini/l18-conv-1.png" alt="">
+<img src="Intelligenza Artificiale/immagini/l18-conv-2.png" alt=""></p>
 <p>Se un quantificatore esistenziale si trovata all&#39;interno di due quantificatori esistenziali <em>∀x,q</em>, le funzioni di Skolem devono ricevere due parametri <em>F(x,q)</em>.</p>
 <p>L&#39;algoritmo di inferenza rimane sempre lo stesso, per provare KB|=𝜶, si cerca di provare KB⋁!𝜶, se viene generata la clausola vuota, allora KB|=𝜶.</p>
 <h2 id="strategie-di-appplicazione-della-regola-di-risoluzione">Strategie di appplicazione della regola di risoluzione</h2>
@@ -1285,7 +1289,7 @@ operatore di cut ! per evitare di valutare le clausole successive
 <li><strong>Estensione</strong> dell&#39;algoritmo di unificazione: i termini equivalenti vengono unificati in un unico termine.</li>
 </ol>
 <h2 id="completezza-della-risoluzione">Completezza della Risoluzione</h2>
-<p><strong>immagine3</strong></p>
+<p><img src="Intelligenza Artificiale/immagini/l18-dim.png" alt=""></p>
 <p>Non vediamo la dimostrazione completa.</p>
 <h2 id="riassinto">Riassinto</h2>
 <ul>
@@ -1296,4 +1300,306 @@ operatore di cut ! per evitare di valutare le clausole successive
 <li>Backward Chaining è utilizzato in Programmazione Logica e viene &quot;rinforzato&quot; con delle opportune tecniche di compilazione.</li>
 <li>La risoluzione generalizzata è completa per le KB in CNF. Se si usa il principio di induzione non è più completa.</li>
 </ul>
+<h1 id="lezione-19-risoluzione-in-fol-2">Lezione 19 - Risoluzione in FOL 2</h1>
+<h2 id="esempio-di-base-di-conoscenza">Esempio di base di conoscenza</h2>
+<pre><code>Chiunque ami tutti gli animali è amato da qualcuno
+Chiunque uccida un animale non è amato da nessuno
+Jack ama tutti gli animali
+O Jack o <span class="hljs-keyword">la</span> curiosità hanno uciso il gatto, che si chiama tonno.
+
+<span class="hljs-keyword">Query</span>: <span class="hljs-keyword">La</span> curiosità ha uccisolo il gatto?
+</code></pre><p>Rappresentazione in FOL:</p>
+<pre><code>A. ∀x [∀y Animale(y) =&gt; Ama(x,y)] =&gt; [∃y Ama(y,x)]
+B. ∀x [∃y Animale(y) ⋀ Uccide(x,y)] =&gt; [∀z ¬Ama(z,x)]
+C. ∀x Animale(x) =&gt; Ama(Jack, x)
+D. Uccide(Jack,Tonno) ⋁ Uccide(Curiosità, Tonno)
+E. Gatto(Tonno)
+F. ∀x Gatto(x) =&gt; Animale(x)
+
+G: Uccide(Curiosità, Tonno)?
+</code></pre><p>Bisogna passare in CNF</p>
+<pre><code>A. ∀x [∀y <span class="hljs-function"><span class="hljs-title">Animale</span><span class="hljs-params">(y)</span></span> =&gt; <span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(x,y)</span></span>] =&gt; [∃y <span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(y,x)</span></span>]
+
+(<span class="hljs-function"><span class="hljs-title">Animale</span><span class="hljs-params">(F(x)</span></span>) ⋁ <span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(G(x)</span></span>,x)) ⋀ (¬<span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(x,F(x)</span></span>) ⋁ <span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(G(x)</span></span>,x))
+---
+B. ∀x [∃y <span class="hljs-function"><span class="hljs-title">Animale</span><span class="hljs-params">(y)</span></span> ⋀ <span class="hljs-function"><span class="hljs-title">Uccide</span><span class="hljs-params">(x,y)</span></span>] =&gt; [∀z ¬<span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(z,x)</span></span>]
+
+¬<span class="hljs-function"><span class="hljs-title">Animale</span><span class="hljs-params">(y)</span></span> ⋁ ¬<span class="hljs-function"><span class="hljs-title">Uccide</span><span class="hljs-params">(x,y)</span></span> ⋁ ¬<span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(z,x)</span></span>
+---
+C. ∀x <span class="hljs-function"><span class="hljs-title">Animale</span><span class="hljs-params">(x)</span></span> =&gt; <span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(Jack, x)</span></span>
+
+¬<span class="hljs-function"><span class="hljs-title">Animale</span><span class="hljs-params">(x)</span></span> ⋁ <span class="hljs-function"><span class="hljs-title">Ama</span><span class="hljs-params">(Jack,x)</span></span>
+---
+D. <span class="hljs-function"><span class="hljs-title">Uccide</span><span class="hljs-params">(Jack,Tonno)</span></span> ⋁ <span class="hljs-function"><span class="hljs-title">Uccide</span><span class="hljs-params">(Curiosità, Tonno)</span></span>
+----
+E. <span class="hljs-function"><span class="hljs-title">Gatto</span><span class="hljs-params">(Tonno)</span></span>
+----
+F. ∀x <span class="hljs-function"><span class="hljs-title">Gatto</span><span class="hljs-params">(x)</span></span> =&gt; <span class="hljs-function"><span class="hljs-title">Animale</span><span class="hljs-params">(x)</span></span>
+
+¬<span class="hljs-function"><span class="hljs-title">Gatto</span><span class="hljs-params">(x)</span></span> ⋁ <span class="hljs-function"><span class="hljs-title">Animale</span><span class="hljs-params">(x)</span></span>
+---
+
+¬G: ¬<span class="hljs-function"><span class="hljs-title">Uccide</span><span class="hljs-params">(Curiosità, Tonno)</span></span>
+</code></pre><p>Si può così applicare la risoluzione</p>
+<pre><code><span class="hljs-variable">Gatto</span>(<span class="hljs-variable">Tonno</span>), ¬<span class="hljs-variable">Gatto</span>(x) ⋁ <span class="hljs-variable">Animale</span>(x)
+<span class="hljs-pp">------------------------------------ {x/Tonno}
+         Animale<span class="hljs-params">(<span class="hljs-variable">Tonno</span>)</span>
+
+<span class="hljs-params">(<span class="hljs-variable">Uccide</span>(<span class="hljs-variable">Jack</span>,<span class="hljs-variable">Tonno</span>)</span> ⋁ Uccide<span class="hljs-params">(<span class="hljs-variable">Curiosit</span>à, <span class="hljs-variable">Tonno</span>)</span>), ¬Uccide<span class="hljs-params">(<span class="hljs-variable">Curiosit</span>à, <span class="hljs-variable">Tonno</span>)</span>
+--------------------------------------------------------------------------
+                               Uccide<span class="hljs-params">(<span class="hljs-variable">Jack</span>,<span class="hljs-variable">Tonno</span>)</span>
+
+<span class="hljs-params">(¬<span class="hljs-variable">Animale</span>(y)</span> ⋁ ¬Uccide<span class="hljs-params">(x,y)</span> ⋁ ¬Ama<span class="hljs-params">(z,x)</span>), Animale<span class="hljs-params">(<span class="hljs-variable">Tonno</span>)</span>
+-------------------------------------------------------- {y/Tonno}
+               ¬Uccide<span class="hljs-params">(x,<span class="hljs-variable">Tonno</span>)</span> ⋁ ¬Ama<span class="hljs-params">(z,x)</span>
+
+<span class="hljs-params">(¬<span class="hljs-variable">Uccide</span>(x,<span class="hljs-variable">Tonno</span>)</span> ⋁ ¬Ama<span class="hljs-params">(z,x)</span>), Uccide<span class="hljs-params">(<span class="hljs-variable">Jack</span>,<span class="hljs-variable">Tonno</span>)</span>
+-------------------------------------------------- {x/Jack}
+                     ¬Ama<span class="hljs-params">(z,<span class="hljs-variable">Jack</span>)</span>
+
+<span class="hljs-params">(¬<span class="hljs-variable">Ama</span>(x,<span class="hljs-variable">F</span>(x)</span>) ⋁ Ama<span class="hljs-params">(<span class="hljs-variable">G</span>(x)</span>,x)), <span class="hljs-params">(¬<span class="hljs-variable">Animale</span>(x')</span> ⋁ Ama<span class="hljs-params">(<span class="hljs-variable">Jack</span>,x')</span>)
+--------------------------------------------------------- {x/Jack, x'/F<span class="hljs-params">(<span class="hljs-variable">X</span>)</span>}
+         ¬Animale<span class="hljs-params">(<span class="hljs-variable">F</span>(<span class="hljs-variable">Jack</span>)</span>) ⋁ Ama<span class="hljs-params">(<span class="hljs-variable">G</span>(<span class="hljs-variable">Jack</span>)</span>,Jack)
+
+<span class="hljs-params">(<span class="hljs-variable">Animale</span>(<span class="hljs-variable">F</span>(x)</span>) ⋁ Ama<span class="hljs-params">(<span class="hljs-variable">G</span>(x)</span>,x)), ¬Animale<span class="hljs-params">(<span class="hljs-variable">F</span>(<span class="hljs-variable">Jack</span>)</span>) ⋁ Ama<span class="hljs-params">(<span class="hljs-variable">G</span>(<span class="hljs-variable">Jack</span>)</span>,Jack)
+--------------------------------------------------------------- {x/Jack}
+                       Ama<span class="hljs-params">(<span class="hljs-variable">G</span>(<span class="hljs-variable">Jack</span>)</span>,Jack) 
+
+¬Ama<span class="hljs-params">(z,<span class="hljs-variable">Jack</span>)</span>, Ama<span class="hljs-params">(<span class="hljs-variable">G</span>(<span class="hljs-variable">Jack</span>)</span>,Jack)
+------------------------------- {z/G<span class="hljs-params">(<span class="hljs-variable">Jack</span>)</span>}
+               ∅</span>
+</code></pre><p>È stata trovata la clausola vuota quindi è stata la curiosità ad uccidere il tonno.</p>
+<p>Utilizzando delle query esistenziali non sempre si riesce ad ottenere una risposta corretta, ad esempio <code>∃w Uccide(w,Tonno)</code> porta ad un risultato se si usa l&#39;ordine di risoluzione precedente, mentre se si effettua il passaggio:</p>
+<pre><code>¬Uccide<span class="hljs-comment">(w, Tonno)</span>, <span class="hljs-comment">(Uccide(Jack,Tonno)</span> ⋁ Uccide<span class="hljs-comment">(Curiosità, Tonno)</span>)
+----------------------------------------------------------------  {w/Jack}
+                    Uccide<span class="hljs-comment">(Curiosità, Tonno)</span>, ¬Uccide<span class="hljs-comment">(w, Tonno)</span>
+                    ------------------------------------------- {w/Curiosità}
+                                        ∅
+</code></pre><p>Ottenendo come soluzione <code>{w/Jack, w/Curiosità}</code> che non è la risposta corretta.</p>
+<h2 id="planning">Planning</h2>
+<p><strong>Problema</strong>: trovare una sequenza di azioni (piano) che raggiunge un dato goal quando eseguita a partire da un dato stato iniziale del mondo.</p>
+<p>I goal sono usualmente specificati come una congiunzione di (sotto)goal da raggiungere.</p>
+<p>Ci sono varie strategia per generare un piano:</p>
+<ul>
+<li><strong>Generative Planning</strong>: utilizza dei principi primi legati alla conoscenza delle azioni per generare un piano, è necessario avere dei modelli formali delle azioni.</li>
+<li><strong>Case-based planning</strong>: l&#39;agente recupera un piano già prodotto per una soluzione simile e lo modifica per adattarlo al problema che sta affrontando.</li>
+<li><strong>Reinforcement Learning</strong>: vengono eseguite delle azioni a caso, tenendo traccia dei risultati che si ottengono. Questi risultati vengono poi valutati per creare dei modelli di azioni da adottare in futuro.</li>
+</ul>
+<h3 id="assunzioni-tipiche">Assunzioni tipiche</h3>
+<ul>
+<li>Il tempo è <strong>atomico</strong>, ogni azione può essere considerata indivisibile.</li>
+<li>Non sono ammesse azioni concorrenti anche se la azioni non hanno bisogno di essere eseguite in un determinato ordine. Viene sempre eseguita un&#39;azione alla volta.</li>
+<li>Azioni deterministiche, il risultato delle azioni è completamente determinato e non c&#39;è incertezza nel loro effetto (le azioni non possono fallire).</li>
+<li>L&#39;agente è l&#39;una causa di cambiamento nel mondo.</li>
+<li>L&#39;agente è omniscente, ha conoscenza completa dello stato del mondo (si assumene un mondo completamente osservabile, ovvero l&#39;agente ha tutti i sensori che gli permettono di recuperare tutte le informazioni che lo interessano).</li>
+<li><strong>Closed world assumption</strong>: tutte le informazioni a disposizione vengono assunte come vere, tutto quello che non si conosce è falso.</li>
+</ul>
+<h3 id="differenze-con-il-problem-solving">Differenze con il problem solving</h3>
+<p>Il problema di pianificazione sembra simile ai problemi di ricerca predenemente afforntati.</p>
+<p>Nei problemi di ricerca non si entra mai nei dettagli del problema (stati, successori).</p>
+<p>Gli algoritmi di planning per essere efficenti (e al momento non lo sono) tengono in considerazione anche i dettagli della del problema.</p>
+<p>Tipicamente gli stati, il goal e le azioni vengono decomposte in insiemi di sentenze (usualmente espresse in FOL).</p>
+<p>Inoltre, il problem solving lavora &quot;a stati&quot; mentre con il planning si procede nello spazio dei piani, si parte da un piano vuoto e lo si va via via a popolare con le varie azioni.</p>
+<p>In questo modo la ricerca procede lungo lo spazio dei piani e ad ogni passaggio si costruisce un piano parziale, permettendo anche di creare dei sotto goal che possono essere pianificati indipendemente, riducendo così la complessità del problema di pianificazione.</p>
+<p>Ad esempio la funzione successore andrebbe a generare tutti gli stati che possono essere raggiunti a partire da un dato stato mentre nella pianificazione vengono utilizzati i dettagli delle azioni per selezionare solo le azioni utili che permettono di avvicinarsi ad un goal.</p>
+<p>Allo stesso modo, la descrizione a &quot;black-box&quot; del goal nasconde dei dettagli per il goal, che possono essere sia risolti a parte, sia possono essere utilizzati per valutare meglio la bontà di uno stato.</p>
+<p>Quindi se il goal è composto da una serie di sotto goal tra loro indipendenti si può pianificare indipendentemente per ogni sotto-goal ottenendo così una pianificazione più semplice.</p>
+<h3 id="rappresentazione">Rappresentazione</h3>
+<p>Ogni stato viene rappresentato come una serie di congiunzione di fatti veri in quel determinato stato e conseguentemente un goal specifica quali fatti vengono richiesti che siano veri.</p>
+<p>Tutte queste informazioni vengono rappresentati con sentenze logiche del primo ordine.</p>
+<p>Il planning può essere quindi visto come la combinazione della ricerca con la rappresentazione logica.</p>
+<h1 id="lezione-20-planning-2">Lezione 20 - Planning 2</h1>
+<h2 id="planning-con-il-calcolo-delle-situazioni">Planning con il calcolo delle situazioni</h2>
+<p>L&#39;idea base è di rappresentare il problema di planning in FOL.</p>
+<p>La base di conoscenza contiene quindi una parte invariabile che modella il mondo e una parte che rappresenta lo stato corrente e che varia man mano che vengono attuate delle azioni.</p>
+<p>Per provare una sequenza di azioni viene utilizzata l&#39;inferenza. </p>
+<p>Un piano equivale quindi ad una prova delle regole a partire dalla situazione che caratterizza lo stato iniziale.</p>
+<p>Questo approccio è teoricamente corretto, c&#39;è però un problema pratico in quanto nel caso pessimo la complessità dell&#39;inferenza è esponenziale.</p>
+<p>Inoltre, applicando la risoluzione viene trovata una prova (piano) che non è necessariamente il piano migliore. In più la risoluzione risponde con un &quot;Si, c&#39;è un piano ma non te lo dico&quot;.</p>
+<p>Ci sono quindi tre problemi tipici della rappresentazione logica.</p>
+<ul>
+<li><strong>Problema del frame</strong>: quando si passa da una situazione ad un&#39;altra devo risuscire a dire se cambia il valore di un predicato che non è stato coinvolto dalla traformazione, cioè se la trasformazione causa un side-effect.</li>
+<li><strong>Problema della qualifica</strong>: perché un&#39;azione possa essere applciata devono essere soddisfatte delle preconzioni, ma come possono essere rappresentate? In alcuni casi risulta complesso riuscre ad esplicitare tutte le condizioni necessarie e sufficenti per poter esegure un&#39;azione. Per specificare in modo corretto tutto ciò può essere necessario dover andare ad inserire un elevato numero di clausole nella KB.</li>
+<li><strong>Problema della ramificazione</strong>: versione duale della qualifica, descrivere in modo dettagliato gli esiti di un&#39;azione può richiedere un elevato numero di clausole.</li>
+</ul>
+<p>Quindi è meglio utilizzare un linguaggio ristretto con un algoritmo specializzato (planner) piuttosto che una soluzione generale, in modo da ottenere una soluzione più efficente.</p>
+<h2 id="strips">STRIPS</h2>
+<p>Approccio classico usato negli anni 70.</p>
+<p>Gli stati vengono rappresentati come una congiunzione di letterali ground.</p>
+<p>I goal sono congiunzioni di letterali o variabili quantificate esistenzialmente.</p>
+<p>Non c&#39;è biosgno di specificare completamente lo stato, facendo ciò significa che quello non specificato viene assunto falso (closed world).</p>
+<p>Vengono così rappresentati molti casi con poca memoria e spesso vengono rappresentati solo i cambiamenti dello stato piuttosto che l&#39;intera situazione, limitando così il problema del frame.</p>
+<p>Al contratrio di un dimostratore di teoremi, non viene certato se il goal è vero, ma viene certcata una sequenza di azioni che lo raggiunge.</p>
+<p>Tutte le azioni vengono rappresentate come operatori, ognuno dei quali è composto da 3 componenti:</p>
+<ul>
+<li><strong>Descrizione delle azioni</strong></li>
+<li><strong>precondizioni</strong>: espresse come congiunzione di letterali positiv</li>
+<li><strong>effetto</strong>: congiunzione di letterlai positivi o negative che descrivono come la situazione cambia quandi si applicao l&#39;operatore.</li>
+</ul>
+<pre><code>Op[
+    Action: <span class="hljs-function"><span class="hljs-title">Go</span><span class="hljs-params">(there)</span></span>,
+    Precondizioni: <span class="hljs-function"><span class="hljs-title">At</span><span class="hljs-params">(here)</span></span> ⋀ <span class="hljs-function"><span class="hljs-title">Path</span><span class="hljs-params">(here,there)</span></span>,
+    Effetto: <span class="hljs-function"><span class="hljs-title">At</span><span class="hljs-params">(there)</span></span> ⋀ ¬ <span class="hljs-function"><span class="hljs-title">At</span><span class="hljs-params">(here)</span></span>
+]
+</code></pre><p>Tutte le variavili sono quantificate universalmente e tutte le variabili di situazioni sono implicite: le precondizioni devono essere vere nello stato precedente dell&#39;applicazione dell&#39;operatore, gli effetti sono veri immediatamente dopo.</p>
+<h3 id="il-noioso-mondo-dei-blocchi">Il noioso mondo dei blocchi</h3>
+<p><img src="Intelligenza Artificiale/immagini/l20-brick.png" alt=""></p>
+<p>Il mondo dei blocchi è un micro mondo che consiste in un tavolo, un insieme di blocchi e un manipolatore robotico.</p>
+<p>Alcuni vincoli del dominio:</p>
+<p>– Un solo blocco può essere immediatamente sopra un altro
+– Un qualsiasi numero di blocchi sul tavolo
+– Il manipolatore può mantenere un solo blocco</p>
+<p>Una possibile rappresentazione è data da</p>
+<pre><code><span class="hljs-function"><span class="hljs-title">on</span><span class="hljs-params">(a,tavolo)</span></span>
+<span class="hljs-function"><span class="hljs-title">on</span><span class="hljs-params">(c,tavolo)</span></span>
+<span class="hljs-function"><span class="hljs-title">on</span><span class="hljs-params">(b,a)</span></span>
+handempty
+<span class="hljs-function"><span class="hljs-title">clear</span><span class="hljs-params">(b)</span></span>
+<span class="hljs-function"><span class="hljs-title">clear</span><span class="hljs-params">(c)</span></span>
+</code></pre><p>Un goal è composto da una serie di proposizioni, ogni stato che soddisfa le proposizioni goal può essere considerato come stato goal.</p>
+<p>L&#39;azione <code>Unstack(x,y)</code> può essere rappresentata come:</p>
+<pre><code><span class="hljs-function"><span class="hljs-title">Unstack</span><span class="hljs-params">(x,y)</span></span>
+    P = HANDEMPTY, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>
+    E = ¬HANDEMPTY, ¬<span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(y)</span></span>
+</code></pre><p>Ad esempio l&#39;applicazione dell&#39;azione può avere il seguente effetto:</p>
+<p><img src="Intelligenza Artificiale/immagini/l20-unstack-1.png" alt=""></p>
+<p><img src="Intelligenza Artificiale/immagini/l20-unstack-2.png" alt=""></p>
+<p>Altre azioni:</p>
+<pre><code><span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(x,y)</span></span>
+    P = <span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(y)</span></span>
+    E = <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(y)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, HANDEMPTY
+<span class="hljs-function"><span class="hljs-title">Pickup</span><span class="hljs-params">(x)</span></span>
+    P = HANDEMPTY, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,TAVOLO)</span></span>
+    E = ¬HANDEMPTY, ¬<span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,TAVOLO)</span></span>
+<span class="hljs-function"><span class="hljs-title">PutDown</span><span class="hljs-params">(x)</span></span>
+    P = <span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>
+    E = <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,TAVOLO)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, HANDEMPTY
+</code></pre><h4 id="esempi-di-piani">Esempi di piani</h4>
+<p><img src="Intelligenza Artificiale/immagini/l20-plan-a.png" alt="">
+<img src="Intelligenza Artificiale/immagini/l20-plan-b.png" alt=""></p>
+<h3 id="generazione-di-piani">Generazione di piani</h3>
+<p>La pianificazione può essere fatta a partire dallo stato iniziale o da quello goal.</p>
+<h4 id="forward-planning">Forward Planning</h4>
+<p>L&#39;idea è quella di partire dallo stato iniziale e provare ad applicare tutte le possibile azioni fino a che non si trova una sequenza di azioni che porta ad uno stato goal.</p>
+<p>Equivare quindi ad una <strong>ricerca nello spazio degli stati</strong>, dove per ogni stato vengono generati tanti successori quante sono le azioni applicabili, in un modo analogo alla ricerca breadth-first.</p>
+<p>C&#39;è il solito problema che se ci sono molte azioni applicabili ad uno stato si ottiene un fattore di branching enorme.</p>
+<p>Il problema riguarda la ricerca di un&#39;azione <strong>rilevante</strong>, cioè se un suo effetto combacia con una proposizione del goal.</p>
+<h4 id="backward-planning-chaining-">Backward Planning (Chaining)</h4>
+<p>Si parte dalla <strong>specifica del goal</strong> (non dallo stato) e si cercano delle azioni rilevanti che soddisfano parte del goal, vengono così lasciate &quot;aperte&quot; le precondizioni delle azioni scelte, diventa quindi necessario andare a soddisfare queste precondzioni con altre azioni.</p>
+<p>Si ripete questo procedimento fin che non si ottengono delle precondizioni che vengono soddisfatte dallo stato iniziale.</p>
+<p>Con questa strategia il fattore di branching è limitato (ricerca nello spazio dei goal, questo perché si considera la rappresentazione del goal e non degli stati).</p>
+<p>Trattandosi di una ricerca in profondità c&#39;è il rischio di ciclare, biosgna quindi tenere a mente questo e deve acnhe essere possibile effettaure il back-tracking.</p>
+<h3 id="planning-in-strips">Planning in STRIPS</h3>
+<p>Vengono utilizzate due strutture dati:</p>
+<ul>
+<li><strong>Lista di stati</strong>: tutti i predicati che sono correntemente veri</li>
+<li><strong>Pila di goal</strong>: una pila di goal da risolvere, con il goal corrente in testa alla pila.</li>
+</ul>
+<p>Se il goal corrente non è soddisfatto dallo stato presente, esamina gli effetti positivi dei vari operatore, e inserisce l&#39;opertatore e la lista delle precondizioni dell&#39;operatore sulla pila (<strong>sotto-goal</strong>).</p>
+<p>Quando il goal corrente è soddisfatto lo rimuove dalla pila.</p>
+<p>Quando un operatore è in testa alla pila, registra l’applicazione dell’operatore sulla sequenza del piano e usa gli effetti per aggiornare lo stato corrente.</p>
+<pre><code>Strips(initial-state, goals)
+    state = initial-state, plan = [], stack = []
+    push goals <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> stack
+    <span class="hljs-keyword">repeat</span> <span class="hljs-keyword">until</span> stack <span class="hljs-keyword">is</span> empty
+        <span class="hljs-keyword">if</span> top <span class="hljs-keyword">of</span> stack <span class="hljs-keyword">is</span> goal <span class="hljs-keyword">and</span> matcher state <span class="hljs-keyword">then</span>
+            pop stack
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> top <span class="hljs-keyword">of</span> stack <span class="hljs-keyword">is</span> a conjunctive-goal g <span class="hljs-keyword">then</span>
+            select an ordering <span class="hljs-keyword">for</span> <span class="hljs-keyword">the</span> subgoal g
+            push them <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> <span class="hljs-keyword">the</span> stack
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> top <span class="hljs-keyword">of</span> stack <span class="hljs-keyword">is</span> a simple goal <span class="hljs-keyword">then</span>
+            choose an operator o <span class="hljs-keyword">whose</span> add-<span class="hljs-type">list</span> matcher goal
+            replace goal sg whit operator o
+            push <span class="hljs-keyword">the</span> preconditions <span class="hljs-keyword">of</span> o <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> <span class="hljs-keyword">the</span> stack
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> top <span class="hljs-keyword">of</span> stack <span class="hljs-keyword">is</span> an operator o <span class="hljs-keyword">then</span>
+            state = apply(o, state)
+            plan = [plan:o]
+</code></pre><p>Un <code>conjunctive-goal</code> è un goal composto da più proposizioni.</p>
+<h1 id="lezione-21-planning-3">Lezione 21 - Planning 3</h1>
+<h2 id="piani-sub-ottimi">Piani sub-ottimi</h2>
+<p>Finora non è stato specificato alcun criterio per trovare un piano ottimo.</p>
+<p>La soluzionione trovata non è quindi detto che sia ottima.</p>
+<h2 id="problemi-non-risolvibili-">Problemi non risolvibili.</h2>
+<pre><code>Goal: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,b)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,c)</span></span>
+Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">clear</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">clear</span><span class="hljs-params">(c)</span></span>, handempty. 
+
+Goal: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,b)</span></span>, A[<span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(b,c)</span></span>], <span class="hljs-function"><span class="hljs-title">Holding</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(c)</span></span>
+Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(c)</span></span>, handempty. 
+
+Goal: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,b)</span></span>, A[<span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(b,c)</span></span>], <span class="hljs-function"><span class="hljs-title">Holding</span><span class="hljs-params">(b)</span></span>
+Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(c)</span></span>, handempty. 
+
+Goal: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,b)</span></span>, A[<span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(b,c)</span></span>], A[<span class="hljs-function"><span class="hljs-title">Pickup</span><span class="hljs-params">(b)</span></span>], handempty, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,table)</span></span>
+Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(c)</span></span>, handempty. 
+
+Goal: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,b)</span></span>, A[<span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(b,c)</span></span>], A[<span class="hljs-function"><span class="hljs-title">Pickup</span><span class="hljs-params">(b)</span></span>]
+Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(c)</span></span>, handempty. 
+
+Goal: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,b)</span></span>, A[<span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(b,c)</span></span>]
+Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(c)</span></span>, <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(handempty)</span></span>, <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(Clear(b)</span></span>), <span class="hljs-function"><span class="hljs-title">holding</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(on(b,table)</span></span>). 
+
+Goal: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,b)</span></span>
+Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(on(b,table)</span></span>), <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,c)</span></span>, <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(clear(c)</span></span>), <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(holding(x)</span></span>), <span class="hljs-function"><span class="hljs-title">clear</span><span class="hljs-params">(x)</span></span>, handempty.
+
+Goal: A[<span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(a,b)</span></span>], <span class="hljs-function"><span class="hljs-title">Holding</span><span class="hljs-params">(a)</span></span>, <span class="hljs-function"><span class="hljs-title">Clear</span><span class="hljs-params">(b)</span></span>
+Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(on(b,table)</span></span>), <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,c)</span></span>, <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(clear(c)</span></span>), <span class="hljs-function"><span class="hljs-title">not</span><span class="hljs-params">(holding(x)</span></span>), <span class="hljs-function"><span class="hljs-title">clear</span><span class="hljs-params">(x)</span></span>, handempty.
+
+...
+</code></pre><p>Per ottenere <code>Clear(b)</code>, si può fare <code>Unstack(b,c)</code> invalidando il goal precedentemente ottenuto per poi andare a ricostruire il goal <code>On(b,c)</code>.</p>
+<p>C&#39;è però il rischio di cliclare (<strong>anomialia si Sussman</strong>) in quanto i due sottogoal non sono tra loro indipendenti.</p>
+<p>Inoltre se il problema prevede il consumo di risorse può essere che STRIPS non sia in grado di risolverlo, questo perché cerca di ottenere subito un ordine totale della azioni.</p>
+<h2 id="ricapitolando">Ricapitolando</h2>
+<p>Un piano è una soluzione trovata cercando tra le situazioni goal.</p>
+<p>La ricerca può essere fatta con un <strong>planner progressivo</strong>, che cerca il goal in avanti a partire dallo stato iniziale, o da un <strong>planner regressivo</strong>, che cerca un piano a partire dal goal.</p>
+<h2 id="planning-nello-stato-dei-piani">Planning nello stato dei piani</h2>
+<p>L&#39;alternativa è una ricerca attraverso lo spazio dei piani, piuttosto che delle situazioni.</p>
+<p>Questa ricerca parte da un <strong>piano parziale</strong> che non fa nulla e che viene espanso e raffinato fino a raggiungere un piano completo che risolve il problema.</p>
+<p>Il raffinamento avviene mediante degli <strong>operatori di raffinamento</strong> che aggiungono vincoli a piani parziale e lo modificano.</p>
+<h2 id="partial-order-planning-pop-">Partial order planning (POP)</h2>
+<p>Un planner lineare costruisce un piano come una sequenza totalmente ordinata di passi, mentre un planner non lineare (POP), costruisce un piano come un insieme di passi con alcuni vincoli temporali.</p>
+<p>Vengono quindi utilizzati dei vincoli del tipo <code>S1 &lt; S2</code> per specificare che <code>S1</code> deve essere eseguito prima di <code>S2</code>.</p>
+<p>Il raffinamento di un piano può avvenire come:</p>
+<ul>
+<li>aggiunta di un nuovo passo al piano</li>
+<li>aggiunta di un nuovo vincolo ai passi già presenti nel piano.</li>
+</ul>
+<p>Ogni piano parziale può comunque essere convertito in un piano totalmente ordinando, utilizzando un ordinamento topologico tra i vari passi.</p>
+<p>I planner non lineari incorporano il principio del <strong>minimo impegno</strong>, cioè scelgono solo quelle azioni, ordinamenti e assegnamenti di variabili che sono assolutamente necessarie, rimandando il tutto al futuro. Non vengono inoltre prese decisioni premature su aspetti che non rilevanti per raggiungere il goal.</p>
+<pre><code>• Un planner lineare sceglie sempre <span class="hljs-keyword">di</span> aggiungere un passo <span class="hljs-keyword">in</span>
+un punto preciso della sequenza
+• Un planner non-lineare sceglie <span class="hljs-keyword">di</span> aggiungere un passo <span class="hljs-keyword">ed</span>
+eventualmente qualche vincolo temporale fra passi
+</code></pre><h3 id="struttura-di-un-piano-non-lineare">Struttura di un piano non lineare</h3>
+<ol>
+<li>Insieme di passi {S1,S2, ...}, ognuno dei quali ha la descrizione di un operatore, precondizioni e postcondizioni.</li>
+<li>Un insieme di link causali {... (Si,C,Sj) ...}, che significa che uno dei propositi del passo Si è di raggiungere la condizione C del passo Sj.</li>
+<li>Un insieme di vincoli di ordinamenteo {... Si &lt; Sj, ...} nel caso in cui Si deve venire eseguito prima di Sj.</li>
+</ol>
+<p>Un piano non lineare è completo se e solo se:</p>
+<ul>
+<li>Ogni passo (2) e (3) si trova nell&#39;insieme (1).</li>
+<li>Se Sj ha un prerequisito C, asllora esisten un link causale in (2) con la forma (Si, C, Sj).</li>
+<li>Se (Si, C, Sj) è in (2) e il passo Sk è in (1) e Sk &quot;minaccia&quot; (Si, C, Sj), cioè rende falso C, allora (3) contiene Sk&lt;Si o Sk&gt;Sj.</li>
+</ul>
+<p>Ogni piano inizia allo stesso modo con un passo S1:Start e un S2:Finish.</p>
+<p><img src="Intelligenza Artificiale/immagini/l21-pp.png" alt=""></p>
+<p>Un piano ottenuto in questo modo può essere rappresentato graficamente con:</p>
+<p><img src="Intelligenza Artificiale/immagini/l21-shoe-plan.png" alt=""></p>
+<h3 id="pop-vincoli-e-euristiche">POP - Vincoli e euristiche</h3>
+<p>Per popolare un piano non lineare si torna a fare una ricerca nello spazio dei piani.</p>
+<p>Una strategia di ricerca è quella greedy, aggiungengo solo passi che raggiungono una precondizione correntemente non raggiunta. La filosofia del minimo impegno prevede poi di non ordinare i passi a meno che non sia strettamente necessario.</p>
+<p>Bisogna poi tenere conto dei link causali (Si, C, Sj) che <em>proteggono</em> una condizione <em>C</em>, quindi non deve essere mai aggiunto un passo intermedio Sk tra Si e Sj che invalida C.
+Se un&#39;azione parallela minaccia (threatens) <em>C</em>, cioè ha l&#39;effeto di negare <em>C</em> (clobbering) è necessario risolvere la minaccia aggiungendo dei vincoli temporali. Si parla di <strong>demotion</strong> se viene posto Sk &lt; Si oppure di <strong>promotion</strong> se Sk &gt; Sj.</p>
+<p><img src="Intelligenza Artificiale/immagini/l21-dem-prom.png" alt=""></p>
+<p>Un piano viene detto <strong>consistente</strong> se non ci sono cicli e non c&#39;è un conflitto tra chi soddisfa e chi minaccia, se ogni precondizione di tutte le azioni del piano sono soddisfatte e nessun passo intermedio le invalida, allora il piano si dice anche <strong>completo</strong>.</p>
+<p>Per rimuovere un conflitto si può aggiungere un vincolo d&#39;ordinamento oppure aggiungere delle nuove azioni.</p>
+<p>Nella costruzione di un piano è possibile utilizzare un&#39;euristica simile alla <strong>most constrained variable</strong> dei CSP, con la differenza che si sceglie di soddisfare la precondizione non raggiunta che può essere soddisfatta nel minor numero di modi possibile.</p>
+<h3 id="propriet-di-pop">Proprietà di POP</h3>
+<p>L&#39;algoritmo non è deterministico, se si verifica un fallimento si fa backtracking sui punti di scelta (<em>choice point</em>), questi possono essere la scelta di passo per raggiungere un sotto-obiettivo o la scelta di demotion o promotion in caso di minaccia.</p>
+<p>POP è <strong>corretto</strong>, <strong>completo</strong> e <strong>sistematico</strong> (non ci sono ripetizioni), inoltre può essere esteso rappresentando le azioni nella logica del primo ordine.</p>
+<p>L&#39;algortimo risulta efficente se utilizza delle euristiche derivate dalla descrizione del problema, altrimenti c&#39;è la solita esplosione combinatoria.</p>
+<p>C&#39;è quindi la necessità di avere delle buone euristiche e non è semplice derivare delle euristiche ammissibili.</p>
+<p>Uno strumento utile per ottenere queste euristiche è il grado di planning, il quale raccoglie informazioni su queli piani sono impossibili non prendendo in considerazione le minacce e non considerano il &quot;<em>consumo</em>&quot; dei letterali che chiudono le precondizioni (il consumo di un letterale si ha quando l&#39;esecuzione di un&#39;azione cambia il valore del letterale).</p>
+<p>Questi grafi permettono quindi di sapere se non c&#39;è soluzione ad un problema di pianificazione.</p>
+<p><img src="Intelligenza Artificiale/immagini/l21-plan-graph.png" alt=""></p>
 </body></html>

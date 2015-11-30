@@ -51,7 +51,7 @@ L'algoritmo è **corretto** e **completo** per le clausole definite di primo ord
 
 La correttezza deriva dal fatto che viene semple applicato il Modus Ponens Generalizzato che è corretto.
 
-Se ci sono solo clausole definite del primo ordine è non c'è nessuna funzione (**datalog**) allora FC termina in un numero poninomiale di iterazioni: *p\*n<sup>k</sup>* che coincide con il massimo numero di fatti ground distinti che possono essere presenti nella KB. (*p* predicati *k*-ari e *n* costanti).
+Se ci sono solo clausole definite del primo ordine e non c'è nessuna funzione (**datalog**) allora FC termina in un numero poninomiale di iterazioni: _p\*n<sup>k</sup>_ che coincide con il massimo numero di fatti ground distinti che possono essere presenti nella KB. (*p* predicati *k*-ari e *n* costanti).
 
 In generale l'algoritmo può non terminare se 𝜶 non è una conseguenza logica e questo è inevitabile perché il problema è semi-decidibile.
 

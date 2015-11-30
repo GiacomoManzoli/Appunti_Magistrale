@@ -64,9 +64,13 @@ if state is a Chance node then
 ...
 ```
 
+![](./immagini/l10-valutazione.png)
+
 ### Potatura in alberi da gioco non deterministici
 
 Si riesce comunque a fare una potatura 𝜶-𝜷 solo che risulta meno efficace.
+
+![](./immagini/l10-potatura-bound.png)
 
 ### Giochi non deterministici in pratica
 

@@ -30,9 +30,11 @@ Questo perché la formula esistenziale afferma che esiste un qualche oggetto che
 
 Se una sentenza contiene entrambi i quantificatori, in particolare *∀y ∃x*, non è possibile utilizzare una singola costante di **Skolem** per istanziare *x*, questo perché dovrei avere infinite costanti, in questo caso viene usata una **funzione di Skolem** che genera le varie costanti. (*verrà approfondito più avanti*)
 
+L'istanziazione esistenziale può essere applicata una sola volta per sentenza esistenziale e la nuova KB non è equivalente a quella vecchia, ma è soddisfacibile se e solo se la vecchia KB era soddisfacibile.
+
 Mentre l'istanziazione di un quantificatore universale può essere applicata più volte per aggiungere nuove sentenza alla base di conoscenza e la nuova KB è logicamente equivalente a quella vecchia.
 
-L'istanziazione esistenziale può essere applicata una sola volta per sentenza esistenziale e la nuova KB non è equivalente a quella vecchia, ma è soddisfacibile se e solo se la vecchia KB era soddisfacibile.
+
 
 ##Riduzione alla inferenza proposizionale
 
@@ -57,10 +59,10 @@ Quindi questo metodo di fare inferenza è sia **corretto** che **completo** per 
 
 Prima o poi questo algorito riesce a dimostrare che 𝜶 è conoscenza logica, ma se 𝜶 non è conseguenza logica l'algoritmo non temrina.
 
-Con *p* predicati *k*-ari e *n* costanti, ci sono *p * n<sup>k</sup>* istanziazioni, considerando che poi l'algoritmo di riduzione ha complessità esponenziale, la situazione è disastrosa.
+Con *p* predicati *k*-ari e *n* costanti, ci sono *p \* n<sup>k</sup>* istanziazioni, considerando inoltre che l'algoritmo di riduzione ha complessità esponenziale, la situazione è disastrosa.
 
-C'è anche un'altro problema con la proposizionalizzazione, legato al fatto che dei quantificatori universali generano tanti fatti che sono irrilevanti.
-Conviene quindi andare ad applicare l'istanziazione universale solo quanddo è strettamente necessario.
+C'è anche un'altro problema con la proposizionalizzazione ed è legato al fatto che i quantificatori universali generano tanti fatti che sono irrilevanti.
+Conviene quindi andare ad applicare l'istanziazione universale solo quando è strettamente necessario.
 
 ##Unificazione
 
