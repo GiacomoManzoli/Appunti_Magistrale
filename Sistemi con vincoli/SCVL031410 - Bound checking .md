@@ -19,17 +19,17 @@ Filtering su *z*
 
 > z = x + y
 > 
-> ub = Max(x) + Max(y) --> Max(z) = ub
+> ub<sub>z</sub> = Min(Max(x) + Max(y), Max(z))
 > 
-> lb = Min(x) + Min(y) --> Min(z) = lb
+> lb<sub>z</sub> = Max(Min(x) + Min(y), Min(z))
 
 Filtering su *x* (analogo per *y*)
 
 > z = x + y
 > 
-> ub = Max(z) - Min(y) --> Max(x) = ub
+> ub<sub>x</sub> = Min(Max(z) - Min(y), Max(x))
 > 
-> lb = Min(z) - Max(z) --> Min(x) = lb
+> lb<sub>x</sub> = Max(Min(z) - Max(z), Min(x))
 
 ##BC per il vincolo della moltiplicazione
 

@@ -113,27 +113,23 @@ Ci sono varie strategia per generare un piano:
 - Il tempo è **atomico**, ogni azione può essere considerata indivisibile.
 - Non sono ammesse azioni concorrenti anche se la azioni non hanno bisogno di essere eseguite in un determinato ordine. Viene sempre eseguita un'azione alla volta.
 - Azioni deterministiche, il risultato delle azioni è completamente determinato e non c'è incertezza nel loro effetto (le azioni non possono fallire).
-- L'agente è l'una causa di cambiamento nel mondo.
-- L'agente è omniscente, ha conoscenza completa dello stato del mondo (si assumene un mondo completamente osservabile, ovvero l'agente ha tutti i sensori che gli permettono di recuperare tutte le informazioni che lo interessano).
+- L'agente è l'unica causa di cambiamento nel mondo.
+- L'agente è omniscente, ha conoscenza completa dello stato del mondo (si assumene un mondo completamente osservabile, ovvero l'agente ha tutti i sensori che gli permettono di recuperare tutte le informazioni che gli interessano).
 - **Closed world assumption**: tutte le informazioni a disposizione vengono assunte come vere, tutto quello che non si conosce è falso.
 
 ###Differenze con il problem solving
 
-Il problema di pianificazione sembra simile ai problemi di ricerca predenemente afforntati.
+Il problema di pianificazione sembra simile ai problemi di ricerca predenemente afforntati, c'è però una grande differenza: nei problemi di ricerca non si entra mai nei dettagli del problema (stati, successori), mentre gli algoritmi di planning tengono in considerazione anche i dettagli del problema.
+Questo dovrebbe renderli più efficenti, anche se al momento non lo sono.
 
-Nei problemi di ricerca non si entra mai nei dettagli del problema (stati, successori).
-
-Gli algoritmi di planning per essere efficenti (e al momento non lo sono) tengono in considerazione anche i dettagli del problema.
-
-Tipicamente gli stati, il goal e le azioni vengono decomposte in insiemi di sentenze (usualmente espresse in FOL).
-
+Tipicamente in un problema di planning, gli stati, il goal e le azioni vengono decomposte in insiemi di sentenze (usualmente espresse in FOL).
 Inoltre, il problem solving lavora "a stati" mentre con il planning si procede nello spazio dei piani, si parte da un piano vuoto e lo si va via via a popolare con le varie azioni.
 
-In questo modo la ricerca procede lungo lo spazio dei piani e ad ogni passaggio si costruisce un piano parziale, permettendo anche di creare dei sotto goal che possono essere pianificati indipendemente, riducendo così la complessità del problema di pianificazione.
+In questo modo la ricerca procede lungo lo spazio dei piani e, ad ogni passaggio, si costruisce un piano parziale, permettendo così di creare dei sotto goal che possono essere pianificati indipendemente, riducendo la complessità del problema di pianificazione.
 
-Ad esempio la funzione successore andrebbe a generare tutti gli stati che possono essere raggiunti a partire da un dato stato mentre nella pianificazione vengono utilizzati i dettagli delle azioni per selezionare solo le azioni utili che permettono di avvicinarsi ad un goal.
+Ad esempio la funzione successore di un problema di ricerca andrebbe a generare tutti gli stati che possono essere raggiunti a partire da un dato stato mentre nella pianificazione vengono utilizzati i dettagli delle azioni per selezionare solo le azioni utili che permettono di avvicinarsi ad un goal.
 
-Allo stesso modo, la descrizione a "black-box" del goal nasconde dei dettagli per il goal, che possono essere sia risolti a parte, sia possono essere utilizzati per valutare meglio la bontà di uno stato.
+Allo stesso modo, la descrizione a "black-box" del goal nasconde dei dettagli per il goal, i quali possono permettere di scomporre il goal in sotto-goal risolvibili a parte oppure possono essere utilizzati per valutare meglio la bontà di uno stato.
 
 Quindi se il goal è composto da una serie di sotto goal tra loro indipendenti si può pianificare indipendentemente per ogni sotto-goal ottenendo così una pianificazione più semplice.
 
@@ -141,7 +137,5 @@ Quindi se il goal è composto da una serie di sotto goal tra loro indipendenti s
 
 Ogni stato viene rappresentato come una serie di congiunzione di fatti veri in quel determinato stato e conseguentemente un goal specifica quali fatti vengono richiesti che siano veri.
 
-Tutte queste informazioni vengono rappresentati con sentenze logiche del primo ordine.
-
-Il planning può essere quindi visto come la combinazione della ricerca con la rappresentazione logica.
+Tutte queste informazioni vengono rappresentati con sentenze logiche del primo ordine, pertanto il planning può essere visto come la combinazione della ricerca con la rappresentazione logica.
 

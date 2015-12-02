@@ -1,6 +1,6 @@
-#Lezione 12 - Super Vector Machine
+#Lezione 12 - Support Vector Machine
 
-Richiamo: l'errore ideale, cioè quello commesso su esempi che non sono stati valutati durante l'apprendimento, può essere visto come composto da due termini, un errore empirico sui dati e la VC-Confidence.
+Richiamo: l'errore **ideale**, cioè quello commesso su esempi che non sono stati valutati durante l'apprendimento, può essere visto come composto da due termini, un errore empirico sui dati e la VC-Confidence.
 
 L'algoritmo di minimizzazione dei rischi cerca lo spazio delle impotesi che va a minimizzare la VC-Confidence.
 
