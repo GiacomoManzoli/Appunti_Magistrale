@@ -2,29 +2,26 @@
 
 ##Dynamic Lookup
 
-Detto anche binding dinamico o polimofrismo di sotto-tipo.
+Detto anche binding dinamico o polimofrismo di sotto-tipo, stabilisce come vengono selezionati i metodi di un oggetto.
 
-Stabilisce come vengono selezionati i metodi di un oggetto.
+In C++ e Java si parla di invocazione di un metodo di un oggetto, mentre in Smalltalk si parla di mandare un messaggio ad un oggetto `x->m(args)`.
 
-In C++ e Java si parla di invocazione di un metodo di un oggetto, mentre in Smalltalk si parla di mandare un messaggio ad un oggetto `x->m(args).
+Il dynamic lookup richiede che ad ogni esecuzione dell'istruzione `x->m(args)`, il metodo `m` che viene eseguito sia deciso dal valore dinamico del tipo di `x`.
 
-Il dynamic lookup richiede che ad ogni esecuzione dell'istruzione `x->m(args)`, il metodo `m` che viene eseguito è deciso dal valore dinamico del tipo di `x`.
+La stessa variabile infatti ha sempre un tipo statico e almeno un tipo dinamico:
 
-**Tipo statico**: tipo delle variabili definite a compilazione (non cambia).
-**Tipo dinamico**: tipo delle variabili determinato a runtime in base al valore assegnato alla variabile (può cambiare).
+- **Tipo statico**: cioè il tipo definito dal compilatore (non cambia).
+- **Tipo dinamico**: cioè il tipo determinato dal valore assegnato alla variabile durante l'esecuzione del programma.
 
-La stessa variabile ha quindi un unico tipo statico e uno o più tipi dinamici.
-
-Quindi, qunado viene inviato un messaggio ad una variabile `x` è il tipo dinamico che determina quale funzione viene invocata. Di conseguenza l'istruzione `x->m(args)` può portare all'invocazione di funzione diverse se cambia il tipo dinamico di `x`.
+Quindi, quando viene inviato un messaggio alla variabile `x` è il tipo dinamico che determina quale funzione viene invocata. Di conseguenza l'istruzione `x->m(args)` può portare all'invocazione di funzione diversa se cambia il tipo dinamico di `x`.
 
 Il dynamic lookup è diverso dall'**overloading**.
 
 L'overloading (sovraccaricamento) avviene con un polimorfiso *ad-hoc* e si basa sul tipo statico dei parametri passati ad un metodo, la funzione da eseguire viene decisa a compile-time.
 
-In generale, una collezione C di oggetti diversi che tutti hannno un metodo pipppo.
-Quindi x->pippo() farà la cosa giusta per ogni x, manda cioè il messaggio pippo all'oggetto x che invoca il suo metodo corretto pippo.
+In generale, data una collezione *C* di oggetti diversi, ognugno con il metodo `pippo`, è possibile mandare lo stesso messaggio `pippo` a tutti gli elementi della collezione, si occuperà il compilatore di produrre il codice necessario affinché venga sempre eseguita la funzione corretta.
 
-Da notare che non devono essere presenti particolari relazioni tra i vari oggetti, se non la presenza del metodo pippo in ognuno di essi, non è quindi necessario che ci sia una gerarchia tra i vari tipi degli oggetti.
+Da notare che non devono essere presenti particolari relazioni tra i vari oggetti, se non la presenza del metodo `pippo` in ognuno di essi. Non è quindi necessario che ci sia una gerarchia tra i vari tipi degli oggetti.
 
 Effettuare il dynamic lookup richide un costo in termini di efficacia, pertanto è possibil scegliere di implementarlo per qualsiasi metodo oppure solo per alcuni metodi detti virtuali.
 
@@ -34,8 +31,7 @@ Effettuare il dynamic lookup richide un costo in termini di efficacia, pertanto 
 - Fare tutto a run-time, come fa Smalltalk.
 
 Il dynamic lookup può essere considerato come un overloading dinamico nel quale la valutazione del motodo da invocare viene fatta a runtime valutando il tipo dinamico dell'oggetto.
-
-Dal momento che `m->(a,b)` equivale a `m(x,a,b)` e il dynamic lookup viene effettauato solo sul valore di `x`.
+Dal momento che `x->m(a,b)` equivale a `m(x,a,b)` e il dynamic lookup viene effettauato solo sul valore di `x`.
 
 In alcuni linguaggi il dynamic lookp viene fatto su tutti gli argomenti del messaggio (es: Common Lisp Object System), ciò prende il nome di **multiple dispatch**.
 
@@ -64,18 +60,18 @@ Vantaggi del subtyping:
 - Permette di trattare in modo uniforme valori di tipo diverso.
 - Avere una base comune per ogni oggetto.
 - Rende possibile aggiungere funzionalità senza cambiare il resto del programma.
-- Velocizza il prototipaggio
+- Velocizza il prototipaggio.
 
 ##Ereditarietà
 
-L'ereditarietà significa riutilizzo di codice. Ho una classe e voglio creare una nuova riutilizzando almeno una parte del codice della classe che ho già.
+L'ereditarietà significa riutilizzo di codice. Ho una classe e voglio crearne una nuova riutilizzando almeno una parte del codice della classe che ho già.
 
 Il subtyping riguarda le interfacce degli oggetti mentre l'ereditìarietà riguarda l'implementazione degli oggetti.
 
 Lo stesso effetto dell'ereditarietà si può ottenere duplicando il codice di una classe, ma usando l'ereditarietà:
 
-- Si evita il copia-incolla, diminuendo la possibilità che si verifichi un errore.
-- Viene creato un legame tra la classe base e quelle che ereditano, in questo modo un cambiamento alla classe base si ripercuoto automaticamente sulle classi che ereditano, evitando così il rischio di inconsistenze.
+- Si evita il copia-incolla, diminuendo la possibilità che si verifichino errori.
+- Viene creato un legame tra la classe base e quelle che ereditano, in questo modo un cambiamento alla classe base si ripercuote automaticamente sulle classi che ereditano, evitando così il rischio di inconsistenze.
 
 ###Subtyping e Ereditarietà sono due cose diverse
 
@@ -107,7 +103,7 @@ Simula nasce in Norvegia negli ultimi anni 60 progettato da Ole-Johan Dahl e Kri
 I due tizi volevano fare qualcosa del genere:
 
 ```
-costruisci coda di evneti Q
+costruisci coda di eventi Q
 repeat
     rimuovi e da Q
     simula e
@@ -115,16 +111,16 @@ repeat
 until Q vuota
 ```
 
-C'era quindi il bisogno di avere delle struttere dati che possono rappresentare eventi di vario tipo.
+C'era quindi il bisogno di avere delle struttre dati che possono rappresentare eventi di vario tipo.
 
-In questo caso è tornato anche utili il dynamic lookup per la scelta del metodo da invocare e il subtyping per i vari eventi che avevano un'interfaccia comune.
+In questo caso è tornato utile anche il dynamic lookup per la scelta del metodo da invocare e il subtyping per i vari eventi che avevano un'interfaccia comune.
 
 In Simula sono presenti:
 
 - **Classi**: un funzione che restituisce il puntatore al suo record di attivazione (upward funresult problem).
 - **Oggetto**: il record di attivazione che funziona da istanza della classe.
 
-Un oggetto contiene delle funzioni, cioè delle chiusure e dei campi dati, entrambie presenti nel record di attivazione ritornato dalla classe.
+Un oggetto contiene delle funzioni, cioè delle chiusure, e dei campi dati, entrambie presenti nel record di attivazione ritornato dalla classe.
 
 Dal momento che si lavora con lo heap è stato previsto anche un garbage collector.
 
@@ -157,7 +153,7 @@ p :- new Point(1.0, 2.5);
 
 Si può notare:
 
-- La sintassi molto Algol60.
+- La sintassi è molto influenzata da Algol60.
 - La presenza di puntatori per riferire altri oggetti.
 - Ogni metodo della classe ha di default un riferimento all'oggetto.
 - Il fatto che la classe abbia due metodi implica che il record di attivazione conterrà due chiusure.

@@ -1,7 +1,7 @@
 <html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="linguaggi-di-programmazione-lezione-1">Linguaggi di programmazione - Lezione 1</h1>
 <p>I primi linguaggi importanti per la storia sono il C/C++, Java e Haskell.</p>
 <p>Il controllo dei tipi è iniziato dal Fortran (anni 50) con la gestione statica dei valori delle variabili. La prima versione del Fortran tuttavia non ammetteva ricorsinoe.</p>
-<p><em>I linguaggi operativi hanno un approccio più ingegneristico mentre quelli funzionali sono più matematici e astratti.</em></p>
+<p><em>I linguaggi imperativi hanno un approccio più ingegneristico mentre quelli funzionali sono più matematici e astratti.</em></p>
 <p>Al giorno d&#39;oggi i linguaggi hanno caratteristiche miste, sia imperative che funzionali. Questo perché si cerca di andare verso un mondo parallelo e distribuito.</p>
 <blockquote>
 <p>Il JavaScript è più ad oggetti che funzionale.</p>
@@ -21,7 +21,7 @@
 <li>Linguaggi funzionali, come il Lambda calcolo;</li>
 <li>Regole di composizione di funzioni a partire da funzioni elementari.</li>
 </ul>
-<p>Tutti i modelli precedenti definiscono la stessa classi di funzionie --&gt; formazilizzano il caloclo dello stesso modello di funzioni, le <strong>funzioni parziali ricorsive</strong>.</p>
+<p>Tutti i modelli precedenti definiscono la stessa classe di funzioni --&gt; formazilizzano il calcolo dello stesso modello di funzioni, le <strong>funzioni parziali ricorsive</strong>.</p>
 <p><strong>Tesi di Church</strong>: Tutte le funzioni parziali ricorsive sono calcolabili. Non è un teorema, ma una tesi in quanto è un concetto intuitivo che non è ancora stato dimostrato.</p>
 <p>Tutto quello che può fare un computer moderno lo può fare anche una macchina di turing, il che vuol dire che tutti i linguaggi moderni sono turing completi, cioè sono in grado di calolcare tutte le funzioni calcolabili (funzioni parziali ricorsive).</p>
 <p>La Turing completezza non aiuta quindi a confrontare tra loro i linguaggi di programmazione, perciò si preferisce utilizzare l&#39;esperessività di un linguaggio come criterio di confronto ed è per questo che utilizziamo Java e non una macchina di turing.</p>
@@ -1474,5 +1474,908 @@ Main&gt; <span class="hljs-keyword">return</span> (<span class="hljs-number">0</
 Nothing
 Main&gt; <span class="hljs-keyword">return</span> (<span class="hljs-number">0</span>,<span class="hljs-number">0</span>) &gt;&gt;= landLeft <span class="hljs-number">2</span> &gt;&gt;= landRight <span class="hljs-number">2</span> &gt;&gt;= landRight <span class="hljs-number">4</span> &gt;&gt;= landLeft <span class="hljs-number">2</span>
 Nothing
+</code></pre>
+<h1 id="lezione-17-introduzione-parte-2-correzione-parziale">Lezione 17 - Introduzione parte 2 + Correzione parziale</h1>
+<p>Nelle prossime puntante:</p>
+<ul>
+<li>I linguaggi OO</li>
+<li>Il lato oscuro del C++</li>
+<li>Il lato positivo di Java</li>
+<li>Il lato oscuro di Java (Generics)</li>
+<li>Lazy evalation di Haskell</li>
+<li>(an c&#39;è anche il progetto)</li>
+</ul>
+<p>Con i linguaggi funzionali è possibile &quot;imitare&quot; il concetto di oggetti sfruttando il l&#39;upward fun result che copia nello heap un record di attivazione che può contenere dei valori, i quali possono essere considerati sia come attributi che come metodi dell&#39;oggetto.</p>
+<p>Si riesce così ad ottenere sia un sistema di incapsulamento (o astrazione) e anche il polimorfismo parametrico.</p>
+<p>Perché un linguaggio sia considerato OO deve avere le seguenti caratteristiche:</p>
+<ul>
+<li>dynamic lookup</li>
+<li>astrazione</li>
+<li>sottotipaggio</li>
+<li>ereditarietà</li>
+</ul>
+<hr>
+<h2 id="domanda-1">Domanda 1</h2>
+<pre><code> <span class="hljs-number">1</span> [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, E]
+ <span class="hljs-number">2</span> [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, A]
+ <span class="hljs-number">3</span> [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, x=<span class="hljs-number">2</span>]
+ <span class="hljs-number">4</span> [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, y=<span class="hljs-number">3</span>]
+ <span class="hljs-number">5</span> [<span class="hljs-number">4</span>, <span class="hljs-number">4</span>, h = (<span class="hljs-number">5</span>,h)]
+ <span class="hljs-number">6</span> [<span class="hljs-number">5</span>, <span class="hljs-number">5</span>, f0 = (<span class="hljs-number">6</span>,f0)]
+ <span class="hljs-number">7</span> [<span class="hljs-number">6</span>, <span class="hljs-number">6</span>, r = <span class="hljs-number">2</span>]
+ <span class="hljs-number">8</span> [<span class="hljs-number">7</span>, <span class="hljs-number">7</span>, q = (<span class="hljs-number">8</span>,q)]
+ <span class="hljs-number">9</span> [<span class="hljs-number">8</span>, <span class="hljs-number">8</span>, w1 = _]
+<span class="hljs-number">10</span> [<span class="hljs-number">9</span>, <span class="hljs-number">8</span>, rit=<span class="hljs-string">"prox istruzione"</span>, rit=CL-&gt;w1, f0y=_] <span class="hljs-comment">//Invocazione di q</span>
+<span class="hljs-number">11</span> [<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-function">handle <span class="hljs-title">A</span><span class="hljs-params">(x)</span></span>=&gt;x]
+<span class="hljs-number">12</span> [<span class="hljs-number">11</span>, <span class="hljs-number">6</span>, rit=<span class="hljs-string">"handle di q"</span>, ris=CL-&gt;CL-&gt;f0y, x=<span class="hljs-number">3</span>, z=<span class="hljs-number">5</span>, f1=(<span class="hljs-number">12</span>,f1)] <span class="hljs-comment">//invocazione di f0(3)</span>
+</code></pre><p>Viene eseguita f0 che ritorna (12,f1).
+Dovrebbe essere tolto il record 12 dalla pila, ma contiene la definizione di una funzione, quindi deve essere spostato nello heap.</p>
+<pre><code><span class="hljs-number">12</span>* [<span class="hljs-number">11</span>, <span class="hljs-number">6</span>, rit=<span class="hljs-string">"handle di q"</span>, ris=CL-&gt;CL-&gt;f0y, x=<span class="hljs-number">3</span>, z=<span class="hljs-number">5</span>, f1=(<span class="hljs-number">12</span>*,f1)] <span class="hljs-comment">//invocazione di f0(3)</span>
+</code></pre><p>Viene fatto il pop di 12 e 11.
+Continua l&#39;esecuzione di q con il record 10 in cima.</p>
+<pre><code><span class="hljs-number">10</span> [<span class="hljs-number">9</span>, <span class="hljs-number">8</span>, rit=<span class="hljs-string">"prox istruzione"</span>, rit=CL-&gt;w1, f0y=(<span class="hljs-number">12</span>*)] <span class="hljs-comment">//Invocazione di q</span>
+</code></pre><p>L&#39;esecuzione di q termina, ritornando il valore (12*,f1), dopodiché viene fatto il pop di 10.</p>
+<p>L&#39;esecuzione del programma riparte con il record 9 in cima.</p>
+<pre><code> <span class="hljs-number">9</span> [<span class="hljs-number">8</span>, <span class="hljs-number">8</span>, w1 = (<span class="hljs-number">12</span>*,f1)]
+<span class="hljs-number">10</span> [<span class="hljs-number">9</span>, <span class="hljs-number">9</span>, p=(<span class="hljs-number">10</span>,p)]
+<span class="hljs-number">11</span> [<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, w2= _]
+<span class="hljs-number">12</span> [<span class="hljs-number">11</span>, <span class="hljs-number">10</span>, rit=<span class="hljs-string">"fine programma"</span>, ris=CL-&gt;w2, w1x=_, xr=_] <span class="hljs-comment">//p()</span>
+<span class="hljs-number">13</span> [<span class="hljs-number">12</span>, <span class="hljs-number">12</span>, <span class="hljs-function">handle <span class="hljs-title">E</span><span class="hljs-params">(x)</span> </span>= x*y | A(x)=&gt; x(r)]
+<span class="hljs-number">14</span> [<span class="hljs-number">13</span>, <span class="hljs-number">12</span>*, rit=<span class="hljs-string">"handle di p"</span>, ris=CL-&gt;CL-&gt;w1x, z1=<span class="hljs-number">2</span>, f2=(<span class="hljs-number">14</span>,f2), hf2=_]<span class="hljs-comment">//w1(x)</span>
+<span class="hljs-number">15</span> [<span class="hljs-number">14</span>, <span class="hljs-number">5</span>, rit=<span class="hljs-string">"fine di f1"</span>, ris=CL-&gt;hf2, a=(<span class="hljs-number">14</span>,f2), ax=_, ay2=_] <span class="hljs-comment">//h(f2)</span>
+<span class="hljs-number">16</span> [<span class="hljs-number">15</span>, <span class="hljs-number">14</span>, rit=<span class="hljs-string">"condizione di h"</span>, ris=CL-&gt;ax, z2=<span class="hljs-number">2</span>, xy=_]<span class="hljs-comment">//a(x)</span>
+<span class="hljs-number">17</span> [<span class="hljs-number">16</span>, <span class="hljs-number">16</span>, <span class="hljs-function">handle <span class="hljs-title">E</span><span class="hljs-params">(x)</span> </span>=&gt; x+<span class="hljs-number">2</span> | A(x) =&gt; x(y)]
+</code></pre><p>Esegue il corpo di f2 che fa il test x+z2 = z, z2 vale 2, x vale 3, z vale 5 (parametro formale di f0).
+Viene quindi eseguito il primo ramo dell&#39;if, che ritorna z2.</p>
+<p>Viene quindi fatto il pop di 17 e 16.
+Continua quindi l&#39;esecuzione del corpo di h con il record 15 in cima.</p>
+<pre><code><span class="hljs-number">15</span> [<span class="hljs-number">14</span>, <span class="hljs-number">5</span>, rit=<span class="hljs-string">"fine di f1"</span>, ris=CL-&gt;hf2, a=(<span class="hljs-number">14</span>,f2), ax=<span class="hljs-number">2</span>, ay2=_] <span class="hljs-comment">//h(f2)</span>
+</code></pre><p>Il test dell&#39;if di h viene valutato vero, viene quindi eseguito il raise di A(a).</p>
+<p>Viene fatto il pop di 15 e 14, tuttavia il record 14 contiene la definzione di a quindi deve essere copiato nello heap.</p>
+<pre><code><span class="hljs-number">14</span>* [<span class="hljs-number">13</span>, <span class="hljs-number">12</span>*, rit=<span class="hljs-string">"handle di p"</span>, ris=CL-&gt;CL-&gt;w1x, z1=<span class="hljs-number">2</span>, f2=(<span class="hljs-number">14</span>*,f2), hf2=_]<span class="hljs-comment">//w1(x)</span>
+</code></pre><p>Viene trovato un handler nel record 13, di conseguenza viene eseguito il pop di 13 ed eseguito l&#39;handler con il record 12 in cima alla pila.</p>
+<pre><code><span class="hljs-number">12</span> [<span class="hljs-number">11</span>, <span class="hljs-number">10</span>, rit=<span class="hljs-string">"fine programma"</span>, ris=CL-&gt;w2, w1x=_, xr=_] <span class="hljs-comment">//p()</span>
+<span class="hljs-number">13</span> [<span class="hljs-number">12</span>, <span class="hljs-number">14</span>*, rit=<span class="hljs-string">"fine di p"</span>, ris=CL-&gt;xr, z2=<span class="hljs-number">2</span>, xy=_] <span class="hljs-comment">//x(r)</span>
+<span class="hljs-number">14</span> [<span class="hljs-number">13</span>, <span class="hljs-number">13</span>, <span class="hljs-function">handle <span class="hljs-title">E</span><span class="hljs-params">(x)</span> </span>= x+y | A(x)=&gt; x(r)]
+</code></pre><p>Si esegue il corpo di f2 con x+z2=z, x=3, z=5, z2=2, il test viene valutato vero, viene quindi ritornato z2=2.</p>
+<p>Viene quindi fatto il pop di 14 e 13. Con 12 in cima alla pila viene riprende l&#39;esecuzione di p.</p>
+<pre><code><span class="hljs-number">12</span> [<span class="hljs-number">11</span>, <span class="hljs-number">10</span>, rit=<span class="hljs-string">"fine programma"</span>, ris=CL-&gt;w2, w1x=_, xr=<span class="hljs-number">2</span>] <span class="hljs-comment">//p()</span>
+</code></pre><p>L&#39;esecuzione di p termina ritornano il valore 2, portando anche alla terminazione del programma.
+Inoltre è possibile rimuovere il record 14* dallo heap.</p>
+<p>I valori di w1 e w2 sono:</p>
+<ul>
+<li>w1 = (12*,f1)</li>
+<li>w2 = 2</li>
+</ul>
+<p>Dentro f2 vengono utilizzati gli indirizzi:</p>
+<ul>
+<li>x: AL-&gt;AL-&gt;x</li>
+<li>y: AL-&gt;AL-&gt;AL-&gt;CL-&gt;CL-&gt;y</li>
+<li>z: AL-&gt;AL-&gt;z</li>
+<li>z2: EP-&gt;z2</li>
+</ul>
+<p>(La mancanza di EP per x, y e z è dovuta al fatto che i record per gli handle sono &quot;farlocchi&quot; quindi conviene ometterli, in ogni caso se li mettiamo cambia poco).</p>
+<p>Il codice che esegue la prima parte di h:</p>
+<pre><code><span class="hljs-comment">//Costruzione del RA per l'esecuzione di h</span>
+<span class="hljs-number">1</span>. metti EP-&gt;CL-&gt;CL-&gt;x <span class="hljs-keyword">in</span> r0
+<span class="hljs-number">2</span>. sia (c,d) il valore <span class="hljs-tag">del</span> parametro formale <span class="hljs-tag">a</span>.
+<span class="hljs-number">3</span>. push RA di <span class="hljs-number">6</span> posizioni sulla pila e ci scriviamo:
+    - <span class="hljs-number">0</span>: EP
+    - <span class="hljs-number">1</span>: AL = c
+    - <span class="hljs-number">2</span>: istruzione K di questo codice.
+    - <span class="hljs-number">3</span>: <span class="hljs-keyword">in</span> *EP-&gt;<span class="hljs-function"><span class="hljs-title">a</span><span class="hljs-params">(x)</span></span> (dereferenzio EP, cioè prendo il valore <span class="hljs-tag">del</span> campo CL <span class="hljs-tag">del</span> record e poi vado su <span class="hljs-function"><span class="hljs-title">a</span><span class="hljs-params">(x)</span></span>)
+    - <span class="hljs-number">4</span>: load r0
+    - <span class="hljs-number">5</span>: <span class="hljs-function"><span class="hljs-title">x</span><span class="hljs-params">(y)</span></span>=_
+<span class="hljs-number">4</span>. EP=EP+<span class="hljs-number">6</span>
+<span class="hljs-number">5</span>. jump d <span class="hljs-comment">//invocazione di a</span>
+K. ...
+K+<span class="hljs-number">1</span>. esegue il confronto tra <span class="hljs-function"><span class="hljs-title">a</span><span class="hljs-params">(x)</span></span> e la variabile globale x.
+</code></pre><h2 id="domanda-2">Domanda 2</h2>
+<pre><code>f g <span class="hljs-number">1</span> = <span class="hljs-number">1</span>
+f g x = x * <span class="hljs-list">(<span class="hljs-keyword">g</span> <span class="hljs-list">(<span class="hljs-keyword">x</span> - <span class="hljs-number">1</span>)</span>)</span>
+</code></pre><p>&#39;1&#39; ha come tipo Num non Int.</p>
+<p>Il tipo finale viene quindi <code>(Num -&gt; Num) -&gt; Num -&gt; Num</code>.</p>
+<h2 id="domanda-3">Domanda 3</h2>
+<p>Funtori applicativi in haskell</p>
+<pre><code class="lang-haskell">class (Functor f) =&gt; Applicative f where    
+    pure :: <span class="hljs-tag">a</span> -&gt; f <span class="hljs-tag">a</span>
+    (&lt;*&gt;) :: f (<span class="hljs-tag">a</span> -&gt; b) -&gt; f <span class="hljs-tag">a</span> -&gt; f <span class="hljs-tag">b</span> 
+    (&lt;$&gt;) :: (<span class="hljs-tag">a</span> -&gt; b) -&gt; f <span class="hljs-tag">a</span> -&gt; f <span class="hljs-tag">b</span> -- non obbligatoria
+</code></pre>
+<h2 id="domanda-4">Domanda 4</h2>
+<pre><code class="lang-haskell"><span class="hljs-class"><span class="hljs-keyword">instance</span> <span class="hljs-type">Applicative</span> [] <span class="hljs-keyword">where</span></span>
+    pure x = [x]
+    fs &lt;*&gt; xs = [f x | f &lt;- fs, x &lt;- xs]
+</code></pre>
+<h2 id="domanda-5">Domanda 5</h2>
+<ul>
+<li>Göedel: solo alcune funzioni sono calcolabili (terminazione della macchina di turing)</li>
+<li>Tesi di Church: tutte le funzioni parziali ricorsive sono calcolabili</li>
+<li>I linguaggi moderni calcolano tutte le funzioni calcolabili e quindi questo non può essere utilizzato come criterio di confronto</li>
+<li>Le proprietà &quot;interessanti&quot; dei linguaggi di programmazione non sono calcolabili, bisogna quindi apporsimarle con tecniche di analisi statica.</li>
+</ul>
+<h1 id="lezione-18-programmazione-oo">Lezione 18 - Programmazione OO</h1>
+<h2 id="dynamic-lookup">Dynamic Lookup</h2>
+<p>Detto anche binding dinamico o polimofrismo di sotto-tipo, stabilisce come vengono selezionati i metodi di un oggetto.</p>
+<p>In C++ e Java si parla di invocazione di un metodo di un oggetto, mentre in Smalltalk si parla di mandare un messaggio ad un oggetto <code>x-&gt;m(args)</code>.</p>
+<p>Il dynamic lookup richiede che ad ogni esecuzione dell&#39;istruzione <code>x-&gt;m(args)</code>, il metodo <code>m</code> che viene eseguito sia deciso dal valore dinamico del tipo di <code>x</code>.</p>
+<p>La stessa variabile infatti ha sempre un tipo statico e almeno un tipo dinamico:</p>
+<ul>
+<li><strong>Tipo statico</strong>: cioè il tipo definito dal compilatore (non cambia).</li>
+<li><strong>Tipo dinamico</strong>: cioè il tipo determinato dal valore assegnato alla variabile durante l&#39;esecuzione del programma.</li>
+</ul>
+<p>Quindi, quando viene inviato un messaggio alla variabile <code>x</code> è il tipo dinamico che determina quale funzione viene invocata. Di conseguenza l&#39;istruzione <code>x-&gt;m(args)</code> può portare all&#39;invocazione di funzione diversa se cambia il tipo dinamico di <code>x</code>.</p>
+<p>Il dynamic lookup è diverso dall&#39;<strong>overloading</strong>.</p>
+<p>L&#39;overloading (sovraccaricamento) avviene con un polimorfiso <em>ad-hoc</em> e si basa sul tipo statico dei parametri passati ad un metodo, la funzione da eseguire viene decisa a compile-time.</p>
+<p>In generale, data una collezione <em>C</em> di oggetti diversi, ognugno con il metodo <code>pippo</code>, è possibile mandare lo stesso messaggio <code>pippo</code> a tutti gli elementi della collezione, si occuperà il compilatore di produrre il codice necessario affinché venga sempre eseguita la funzione corretta.</p>
+<p>Da notare che non devono essere presenti particolari relazioni tra i vari oggetti, se non la presenza del metodo <code>pippo</code> in ognuno di essi. Non è quindi necessario che ci sia una gerarchia tra i vari tipi degli oggetti.</p>
+<p>Effettuare il dynamic lookup richide un costo in termini di efficacia, pertanto è possibil scegliere di implementarlo per qualsiasi metodo oppure solo per alcuni metodi detti virtuali.</p>
+<p>È quindi possibile seguire due strategie:</p>
+<ul>
+<li>Fare quasi tutto a compile time, tranne per alcuni metodi virtuali, come fa il C++, ottenendo così delle prestazioni migliori;</li>
+<li>Fare tutto a run-time, come fa Smalltalk.</li>
+</ul>
+<p>Il dynamic lookup può essere considerato come un overloading dinamico nel quale la valutazione del motodo da invocare viene fatta a runtime valutando il tipo dinamico dell&#39;oggetto.
+Dal momento che <code>x-&gt;m(a,b)</code> equivale a <code>m(x,a,b)</code> e il dynamic lookup viene effettauato solo sul valore di <code>x</code>.</p>
+<p>In alcuni linguaggi il dynamic lookp viene fatto su tutti gli argomenti del messaggio (es: Common Lisp Object System), ciò prende il nome di <strong>multiple dispatch</strong>.</p>
+<p>Il multiple dispatch può essere utilizzato per implementare il test di uguaglianza in base al tipo dei due oggetti, creando però un incapsulamento più debole.</p>
+<h2 id="astrazione">Astrazione</h2>
+<p>Detta anche incapsulamento.</p>
+<p>È la capacità di nascondere i dettagli implementativi di un oggetto, creando una distinzione tra una parte pubblica (interfaccia) e una parte privata contenente i dettagli implementativi.</p>
+<p>Inizialmente c&#39;era solamente il concetto di pubblico o privato, col tempo sono state poi aggiunte nuove tipologie di visibilità come package e protected.</p>
+<p>L&#39;astrazione dipende dal linguaggio, ad esempio per Smalltalk tutti i campi dati sono privati e tutti i metodi sono pubblici</p>
+<h2 id="subtyping">Subtyping</h2>
+<p><code>A &lt;: B</code>, <code>A</code> è <strong>sotto tipo</strong> di <code>B</code>.</p>
+<p>Ovvero dovunque serva un valore di tipo <code>B</code> è possibile utilizzare un oggetto di tipo <code>A</code>.</p>
+<p>Il subtyping è una relazione tra le interfacce di due tipi, quindi se <code>A</code> è sotto tipo di <code>B</code>, tutti i metodi che posso invocare su <code>B</code> li posso anche invocare su <code>A</code>. Si tratta quindi di una relazione di inclusione tra l&#39;interfaccia di due tipi.</p>
+<p>Vantaggi del subtyping:</p>
+<ul>
+<li>Permette di trattare in modo uniforme valori di tipo diverso.</li>
+<li>Avere una base comune per ogni oggetto.</li>
+<li>Rende possibile aggiungere funzionalità senza cambiare il resto del programma.</li>
+<li>Velocizza il prototipaggio.</li>
+</ul>
+<h2 id="ereditariet-">Ereditarietà</h2>
+<p>L&#39;ereditarietà significa riutilizzo di codice. Ho una classe e voglio crearne una nuova riutilizzando almeno una parte del codice della classe che ho già.</p>
+<p>Il subtyping riguarda le interfacce degli oggetti mentre l&#39;ereditìarietà riguarda l&#39;implementazione degli oggetti.</p>
+<p>Lo stesso effetto dell&#39;ereditarietà si può ottenere duplicando il codice di una classe, ma usando l&#39;ereditarietà:</p>
+<ul>
+<li>Si evita il copia-incolla, diminuendo la possibilità che si verifichino errori.</li>
+<li>Viene creato un legame tra la classe base e quelle che ereditano, in questo modo un cambiamento alla classe base si ripercuote automaticamente sulle classi che ereditano, evitando così il rischio di inconsistenze.</li>
+</ul>
+<h3 id="subtyping-e-ereditariet-sono-due-cose-diverse">Subtyping e Ereditarietà sono due cose diverse</h3>
+<p>Si vogliono realizzare 2 tipi di coda:</p>
+<ul>
+<li>FIFO: push alla fine, pop all&#39;inizio.</li>
+<li>LIFO: push e pop alla fine.</li>
+</ul>
+<p>Un modo poco ortodosso di farlo è quello di definire un tipo <code>doppia_coda</code> che permette di eseguire push e pop su entrambi gli estremi.</p>
+<p>Si possono così definire LIFO e FIFO con l&#39;ereditarietà dalla classe doppia coda.</p>
+<p>Ottenendo LIFO nascondendo tutti i metodi di <code>doppia_coda</code> e inserendo due nuovi metodi che permettono di invocare i due metodi di <code>doppia_coda</code> che interessano, ottenendo una classe con solo due metodi pubblici. Allo stesso modo è possibile definire FIFO.</p>
+<p>In C++ è possibile fare ciò utilizzando la <strong>private inheritance</strong> e si aggiungno dei metodi pubblici.</p>
+<p>Definendo così LIFO e FIFO si ottengo due classi che ereditano da <code>doppia_coda</code> ma che non hanno la stessa interfaccia.</p>
+<p>Quindi è falso dire che <code>FIFO &lt;: doppia_coda</code> e <code>LIFO &lt;: doppia_coda</code>.</p>
+<p>Infatti, il subtyping è una relazione sulle interfacce mentre l&#39;ereditarietà è una relazione sull&#39;implementazione dei metodi.</p>
+<p>Alcuni linguaggi creano confusione perché l&#39;unico modo per ottenere il dynamic lookup in modo efficente, è legare il subtyping con l&#39;ereditarietà.</p>
+<h2 id="storia-della-oop-simula-e-smalltalk">Storia della OOP - Simula e Smalltalk</h2>
+<p>Simula nasce in Norvegia negli ultimi anni 60 progettato da Ole-Johan Dahl e Kristn Nygaard, due matematici che cercavano un modo per effettuare delle simulazioni basate su eventi.</p>
+<p>I due tizi volevano fare qualcosa del genere:</p>
+<pre><code>costruisci coda <span class="hljs-keyword">di</span> eventi <span class="hljs-literal">Q</span>
+<span class="hljs-keyword">repeat</span>
+    rimuovi <span class="hljs-keyword">e</span> da <span class="hljs-literal">Q</span>
+    simula <span class="hljs-literal">e</span>
+    metti i nuovi eventi <span class="hljs-keyword">in</span> <span class="hljs-literal">Q</span>
+until Q vuota
+</code></pre><p>C&#39;era quindi il bisogno di avere delle struttre dati che possono rappresentare eventi di vario tipo.</p>
+<p>In questo caso è tornato utile anche il dynamic lookup per la scelta del metodo da invocare e il subtyping per i vari eventi che avevano un&#39;interfaccia comune.</p>
+<p>In Simula sono presenti:</p>
+<ul>
+<li><strong>Classi</strong>: un funzione che restituisce il puntatore al suo record di attivazione (upward funresult problem).</li>
+<li><strong>Oggetto</strong>: il record di attivazione che funziona da istanza della classe.</li>
+</ul>
+<p>Un oggetto contiene delle funzioni, cioè delle chiusure, e dei campi dati, entrambie presenti nel record di attivazione ritornato dalla classe.</p>
+<p>Dal momento che si lavora con lo heap è stato previsto anche un garbage collector.</p>
+<p>La versione prima versione <strong>Simula67</strong> prevede:</p>
+<ul>
+<li>Dynamic lookup</li>
+<li>Inheritance e subtyping</li>
+<li><strong>Inner</strong>: un metodo della classe base può essere marcato con la keyword inner per prevedere la chiamata ad un secondo metodo aggiuntivo della classe derivata, permettendo così di estendere il codice di un metodo della classe base.</li>
+<li><strong>Inspect</strong>: permette di fare un test dinamico sul tipo di un dato a runtime.</li>
+<li>Manca l&#39;incapsulation così come super/self.</li>
+</ul>
+<pre><code><span class="hljs-keyword">class</span> Point(x,y); real x,y;
+<span class="hljs-keyword">begin</span>
+    boolean <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">equals</span><span class="hljs-params">(r)</span>;</span> ref(Point) r;
+        <span class="hljs-keyword">if</span> r =/= none <span class="hljs-keyword">then</span>
+            <span class="hljs-keyword">equals</span> := abs(x-r.x)+abs(y-r.y) &lt; <span class="hljs-number">0.00001</span>;
+
+    real <span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">distance</span><span class="hljs-params">(p)</span>;</span> ref(Point) p;
+        <span class="hljs-keyword">if</span> p == none <span class="hljs-keyword">then</span>
+            error
+        <span class="hljs-keyword">else</span>
+            distance := sqrt((x-p.x)**<span class="hljs-number">2</span>+(y-p.y)**<span class="hljs-number">2</span>);
+<span class="hljs-keyword">end</span>
+
+...
+
+p :- <span class="hljs-keyword">new</span> Point(<span class="hljs-number">1.0</span>, <span class="hljs-number">2.5</span>);
+</code></pre><p>Si può notare:</p>
+<ul>
+<li>La sintassi è molto influenzata da Algol60.</li>
+<li>La presenza di puntatori per riferire altri oggetti.</li>
+<li>Ogni metodo della classe ha di default un riferimento all&#39;oggetto.</li>
+<li>Il fatto che la classe abbia due metodi implica che il record di attivazione conterrà due chiusure.</li>
+<li>La funzione <code>Point</code> non ha corpo, serve solo per creare il record di attivazione da mettere nell heap.</li>
+<li>La variabile <code>p</code> ha come tipo <code>ref(Point)</code>.</li>
+<li>Ad ogni invocazione della funzione <code>Point</code> viene creato un nuovo record di attivazione che corrisponde all&#39;oggetto.</li>
+</ul>
+<p><img src="Linguaggi di Programmazione/immagini/l18-ra.png" alt=""></p>
+<p>In modo analogo funziona anche l&#39;invocazione del metodo di un oggetto</p>
+<p><img src="Linguaggi di Programmazione/immagini/l18-point.png" alt=""></p>
+<h3 id="sottoclassi-e-subtyping">Sottoclassi e subtyping</h3>
+<p>Il seguente codice permette di definire una classe <code>C2</code> che deriva da <code>C1</code>.</p>
+<pre><code>class <span class="hljs-type">C1</span>
+//dichiarazione
+
+<span class="hljs-type">C1</span> class <span class="hljs-type">C2</span>
+//dichiarazione aggiuntive
+
+<span class="hljs-keyword">ref</span>(<span class="hljs-type">C2</span>) c2 = new <span class="hljs-type">C2</span>
+</code></pre><p>La costruzione degli oggetti viene trattata come il ritorno di una funzione definita all&#39;interno di una funzione. In questo modo viene creato un record di attivazione per l&#39;oggetto della classe base e un altro record per l&#39;oggetto che estende la classe base.</p>
+<p>Questo record avrà come access link l&#39;indirizzo del sotto oggetto della classe base.</p>
+<p>Ad esempio </p>
+<pre><code><span class="hljs-type">Point</span> class <span class="hljs-type">ColorPt</span>(c); color c;
+begin
+    boolean procedure equals(q); <span class="hljs-keyword">ref</span>(<span class="hljs-type">ColorPt</span>) q;
+        ...
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-keyword">ref</span>(<span class="hljs-type">ColorPt</span>) cp = new <span class="hljs-type">ColorPt</span>(<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span> giallo);
+</code></pre><p><img src="Linguaggi di Programmazione/immagini/l18-heap.png" alt=""></p>
+<p>Da notare che <code>equals</code> di <code>ColorPt</code> copre l&#39;altro <code>equals</code> della classe <code>Point</code>, mentre quando viene eseguito il metodo <code>distance</code> che non è presente nella classe derivata, viene eseguito il metodo della classe base, raggiunto grazie all&#39;access link.</p>
+<h1 id="lezione-19-oggetti-3">Lezione 19 - Oggetti 3</h1>
+<p>Tutti gli oggetti vengono messi nello heap e vengono riferiti da una variabile presente nello stack.</p>
+<p>È quindi necessario avere un sistema di garbage collection per togliere dallo heap gli oggetti che non servono più.</p>
+<p>Quando si utilizzano oggetti di classe derivate, questi sono composti da un record di attivazione relativo all&#39;oggetto della classe base e da un secondo record di attivazione conenente le informazioni aggiuntive e con un riferimento al primo.</p>
+<pre><code class="lang-c++"><span class="hljs-keyword">ref</span>(<span class="hljs-type">Point</span>) p=new <span class="hljs-type">Point</span>(<span class="hljs-number">1</span>.<span class="hljs-number">1</span>,<span class="hljs-number">3</span>.<span class="hljs-number">0</span>); 
+<span class="hljs-keyword">ref</span>(<span class="hljs-type">ColorPt</span>) cp= new <span class="hljs-type">ColorPt</span>(<span class="hljs-number">2</span>,<span class="hljs-number">4</span>.<span class="hljs-number">2</span>,red);
+</code></pre>
+<p>Per definzione un <code>ColorPoint</code> è un sotto tipo di <code>Point</code>, quindi al posto di un <code>Point</code> è possibile utilizzare <code>ColorPoint</code>.</p>
+<p>Quindi:</p>
+<pre><code class="lang-c++"><span class="hljs-attribute">p </span>:- cp; <span class="hljs-comment">//Assegnamento</span>
+</code></pre>
+<p>è un operazione legale per il subtyping, mentre</p>
+<pre><code class="lang-c++"><span class="hljs-keyword">cp</span> :- p
+</code></pre>
+<p>è sempre legale ma serve un controllo a runtime per verificare che l&#39;oggetto puntato da <code>p</code> sia un <code>ColorPoint</code>, altrimenti è necessario sollevare un&#39;errore.</p>
+<pre><code class="lang-c++"><span class="hljs-keyword">ref</span>(<span class="hljs-type">Point</span>) r=new <span class="hljs-type">Point</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>); 
+<span class="hljs-keyword">ref</span>(<span class="hljs-type">ColorPt</span>) cp= new <span class="hljs-type">ColorPt</span>(<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,red); 
+r.distance(cp);
+cp.distance(r);
+r:-cp
+r.distance(cp);
+</code></pre>
+<p>la memoria dopo la creazione dei due oggetti è:</p>
+<pre><code class="lang-c++">HEAP:
+<span class="hljs-number">1</span>* [AL=def P., x=<span class="hljs-number">1</span>, y=<span class="hljs-number">2</span>, equals=(<span class="hljs-number">1</span>*,eq), distance=(<span class="hljs-number">1</span>*,dist)]
+<span class="hljs-number">2</span>* [AL=def P., x=<span class="hljs-number">3</span>, y=<span class="hljs-number">4</span>, equals=(<span class="hljs-number">2</span>*,eq), distance=(<span class="hljs-number">2</span>*,dist)]
+<span class="hljs-number">3</span>* [AL=<span class="hljs-number">2</span>*, c=red, equals=(<span class="hljs-number">3</span>*,eq’)]
+
+STACK
+<span class="hljs-number">1</span>[CL=<span class="hljs-number">0</span>,AL=<span class="hljs-number">0</span>, r = <span class="hljs-number">1</span>*]
+<span class="hljs-number">2</span>[CL=<span class="hljs-number">1</span>,AL=<span class="hljs-number">1</span>, cp = <span class="hljs-number">3</span>*]
+</code></pre>
+<p>Per l&#39;esecuzione di <code>r.distance(cp)</code>, dove il tipo statico di <code>r</code> è <code>Point</code>, viene scelta come funzione da invocare è <code>distance</code> di <code>Point</code>.</p>
+<p>Tuttavia la funzione <code>distance</code> si aspetta un parametro di tipo <code>ref(Point)</code> ma riceve una variabile di tipo <code>ref(ColorPoint)</code>.</p>
+<p>Quindi a runtime il codice di <code>distance</code> deve essere compatibile con <code>ColorPoint</code>, in particolare <code>ColorPoint</code> deve contere <code>x</code> e <code>y</code>, ma queste variabili non vengono trovate nel record puntato da <code>cp</code> e pertanto bisogna risalire utilizzando l&#39;access link per trovalrle nel record corrispondente al sotto oggeto di tipo <code>Point</code>.</p>
+<p>Un&#39;altra istruzione interessante è <code>cp.distance(r)</code>, dal momento che nel record puntato da <code>cp</code> non è presente <code>distance</code>, pertanto è necessario cercare la funzione utilizzando l&#39;access link.</p>
+<p>Segue che gli oggetti della classe base e derivata hanno una forma diversa, quindi le operazione da fare per raggiungere i campi dati possono essere stabilite solo a runtime.</p>
+<p>A compile time è solo possibile definire delle strategie di ricerca per recuperare i vari valori e trattandosi di una ricerca a runtime alcuni errori possono non essere scoperti a compile time.</p>
+<p>Ad esempio, l&#39;istruzione <code>cp.equals(r)</code> da un errore a runtime perché la funzione invocata ha bisogno di utilizzare dei campi dati che non sono presenti nell&#39;oggetto puntato da <code>r</code>.</p>
+<p>Per rilevare questo errore il compilatore deve inserire un controllo di tipo a runtime.
+Ma non è così semplice, perché possono verificarsi dei casi ancora più tricky:</p>
+<pre><code class="lang-c++">r :- cp;
+r<span class="hljs-built_in">.</span><span class="hljs-keyword">equals</span>(<span class="hljs-literal">new</span> Point(<span class="hljs-attribute">...</span>));
+</code></pre>
+<p>A compile time i tipi statici coincidono, però a runtime viene eseguita la funzione <code>equals</code> di <code>ColorPoint</code> e ciò porta ad un errore.
+Non tutti i compilatori sono in grado di prevedere questi errori.</p>
+<p>Quindi il compilatore può scegliere di mettere i controlli di tipo sempre oppure accontentarsi di non riscuiscre a mettere abbastanza controlli.</p>
+<p><strong>Recall variance</strong> (?) Simula (ma anche Java) assume che se <code>B &lt;: A</code> allora anche <code>ref(B) &lt;: ref(A)</code>.</p>
+<pre><code class="lang-c++">A class B; <span class="hljs-keyword">ref</span>(A) a; <span class="hljs-keyword">ref</span>(B) b;
+
+<span class="hljs-keyword">proc</span> assignA(<span class="hljs-keyword">ref</span>(A) x) 
+begin
+    x:-a
+<span class="hljs-keyword">end</span>;
+
+assignA(b);
+</code></pre>
+<p>Questo crea un errore di tipo (<code>b</code> diventa di tipo <code>ref(A)</code>) che viene rilevato solo a tempo di esecuzione.</p>
+<h2 id="smalltalk">Smalltalk</h2>
+<p>Linguaggio completamente nuovo in cui ogni cosa è considerata come un oggetto, comprese le classi.</p>
+<p><em>È proprio estremista come linguaggio, ha anche la cintura esplosiva</em></p>
+<p>Tutte le operzioni venogno richieste inviando un messaggio ad un oggetto e l&#39;unico errore di tipo si verifica quando viene inviato ad un oggetto un messaggio che non è in grado di riconoscere.</p>
+<p>Non sono quindi presenti tipi statici e il controllo dell&#39;errore viene fatto a runtime, rendendo la cosa molto inefficente.</p>
+<p>In ogni caso è un linguaggio <strong>type-safe</strong> in quanto ogni errore di tipo viene segnalato, anche se questo viene rilevato solamente a runtime.</p>
+<p>La definizione di una classe avviene in un modo simile alla compilazione di un form, mentre la definzione dei metodi è più strana</p>
+<pre><code class="lang-obj-c"><span class="hljs-string">newX:</span>xval <span class="hljs-string">Y:</span>yval ||
+    ^self <span class="hljs-keyword">new</span> <span class="hljs-string">x:</span>xval <span class="hljs-string">y:</span>yval
+</code></pre>
+<p>In questo caso si definisce il metodo <code>newX:Y:</code> che ha come corpo <code>self new...</code> cioè invia a <code>self</code> il messaggio <code>newx:y:</code>, <code>^</code> serve per ritornare un valore.</p>
+<pre><code class="lang-obj-c">newOrigin ||
+    ^self <span class="hljs-keyword">new</span> x:<span class="hljs-number">0</span> y:<span class="hljs-number">0</span>
+
+initialize ||
+    pi &lt;- <span class="hljs-number">3.1415926535897238653</span>
+</code></pre>
+<p>Altri metodi generici per la classe <code>Point</code> possono essere</p>
+<pre><code class="lang-obj-c">x:xcord y:ycord <span class="hljs-string">||</span>
+    x &lt;- xcord
+    y &lt;- ycord
+
+x <span class="hljs-string">|| ^x</span>
+y <span class="hljs-string">|| ^y</span>
+</code></pre>
+<p>Il metodo <code>x || ^x</code> permette di accedere al valore di <code>x</code>. Questo metodo è necessario perché in Smalltalk tutti i campi dati sono privati.</p>
+<pre><code class="lang-obj-c"><span class="hljs-tag">i</span> &lt; j ifTrue: [<span class="hljs-tag">i</span> + j] ifFalse:[j - <span class="hljs-number">1</span>]
+</code></pre>
+<p>In questo caso viene inviato a <code>i</code> il messaggio <code>&lt;</code> con argomento <code>j</code>.
+La chiamata a questo metodo ritorna quindi un valore che può essere <code>True/False</code>.</p>
+<p>Al valore ritornato dal metodo viene inviato il messaggio <code>ifTrue: [i + j] ifFalse:[j - 1]</code>, il quale in base al valore esegure il ramo then o else.</p>
+<p>Questo perché sia <code>True</code>/<code>False</code> che i blocci di codice, come <code>[j-1]</code>,  sono degli oggetti che possono essere valutati.</p>
+<pre><code class="lang-obj-c">index &lt;- 1.
+<span class="hljs-keyword">[</span>index &lt;=<span class="hljs-instruction"> array </span>size]
+    whileTrue: <span class="hljs-keyword">[</span>array at: index put:0. 
+                index &lt;- index +1]
+</code></pre>
+<p>Il ciclo <code>while</code> viene implementato come un messaggio che viene invato al valore ritornato da <code>[index &lt;= array size]</code>.
+Se viene ritornato <code>True</code> viene eseguito il corpo, dopodiché viene rieseguito il tutto.</p>
+<p>La struttura di un <code>while</code> può essere schematizzata come:</p>
+<pre><code class="lang-obj-c">{C = (A <span class="hljs-keyword">while</span>True: B)} = ^A <span class="hljs-keyword">if</span>True: B;C <span class="hljs-keyword">if</span>False: []
+</code></pre>
+<p>In Smalltalk anche i numeri sono degli oggetti, in particolare c&#39;è la classe <code>Integer</code> dalla quale derivano <code>small</code> e <code>big</code>.</p>
+<p>Si può quindi definire una funzione <code>factorial</code> per <code>Integer</code>:</p>
+<pre><code class="lang-obj-c">factorial ||
+    self &lt;= <span class="hljs-number">1</span>
+        ifTrue: [^<span class="hljs-number">1</span>]
+        ifFalse: [^(self-<span class="hljs-number">1</span>) factorial * self]
+</code></pre>
+<p>In Smalltalk è presente anche un oggetto <code>super</code> che rappresenta la classe base, in questo modo quando si ridefinisce un metodo è comunque possibile richiedere l&#39;esecuzione del metodo originale delle classe base inviando lo stesso messaggio all&#39;oggetto <code>super</code>.</p>
+<p>Dal momento che non ci sono tipi statici la scelta del metodo da invocare in risposta ad un determinato messaggio si basa solamente sul nome del metodo e il numero dei parametri, la combinazione <em>nome messaggio</em> e <em>arietà</em> prende il nome di <strong>selettore</strong>.</p>
+<h3 id="rappresentazione-degli-oggetti">Rappresentazione degli oggetti</h3>
+<p><img src="Linguaggi di Programmazione/immagini/l19-oggetti.png" alt=""></p>
+<p>Ci sono due parti, una parte principale relativa all&#39;oggetto di tipo <code>Point</code> che contiene i dati dell&#39;oggetto e un puntatore ad un altro oggetto che rappresenta la definizione della classe <code>Point</code>, la quale contiene tutte le altre informazioni come:</p>
+<ul>
+<li>un puntatore a <code>super</code></li>
+<li>un puntatore alla tabella dei metodi, un altro oggetto che contiene tutti i metodi della classe e i riferimento al loro codice sorgente</li>
+<li>un puntatore al template della classe.</li>
+</ul>
+<p>L&#39;oggetto template serve per permettere al codice di una classe derivata di risalire alla posizione delle variabili all&#39;interno di un oggetto della classe base e viceversa.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l19-oggetto-2.png" alt=""></p>
+<p>Da notare che la tabella dei metodi della classe <code>ColoredPoint</code> contiene solo i nuovi metodi, inoltre, l&#39;oggetto di tipo <code>ColoredPoint</code> contiene tutti i campi dati, compresi quelli della classe base.</p>
+<p>Spiegando meglio l&#39;utilità del template: se ad un oggetto di una classe derivata invio un messaggio che esegue un metodo della classe base, questo metodo ha informazioni solamente riguardo la struttura della classe base e non di quella derivata, viene quindi utilizzato il template per risalire alla posizione della variabile all&#39;interno dell&#39;oggetto di classe derivata.
+Questo perché i campi dati di una classe derivata possono avere un ordine diverso rispetto a quelli della classe base.</p>
+<p>Quando viene inviato un messaggio ad un oggetto di classe derivata viene:</p>
+<ol>
+<li>Cercato il metodo nella tabella dei metodi per la classe derivata</li>
+<li>Se non viene trovato, si cerca nella tabella della superclasse</li>
+<li>Se non viene trovato, si continua a cercare nella gerarchia.</li>
+</ol>
+<p>Questo approccio è costosto, pertanto i linguaggi moderni utilizzano vari stratagemmi per velocizzare il processo.</p>
+<h1 id="lezione-20-conformit-">Lezione 20 - Conformità</h1>
+<p><em>gran parte della lezione è stata occupata dalla didscussione riguardo la didattica della laurea magistrale</em></p>
+<p><strong>Che influenza ha la calcolabilità nei linguaggi di programmazione?</strong></p>
+<p>Tesi Church fornisce la definizione di funzione calcolabile, cioè tutte le funzioni parziali ricorsive, che possono essere calcolate utilizzando vari approcci. Si tratta di una tesi e non un teorema perché si tratta di una semplice intuizione.</p>
+<p>Tutti i linguaggi di programmazione che permettono l’iterazione e/o la ricorsione riescono a calcolare tutte le funzioni parziali ricorsive.</p>
+<p>Inoltre, l’esistenza di funzioni non decidibili comporta che non è possibile calcolare alcune proprietà dei programmi, come la terminazione.
+Quindi quando si progetta un compilatore c’è da tenere in considerazione che devono essere utilizzate delle approssimazioni di queste proprietà.</p>
+<p>Esiste la tecnica di riduzione che permette di stabilire la decidibilità di un problema a partire da un problema che si sa essere non decidibile.</p>
+<h2 id="conformit-">Conformità</h2>
+<p>Si dice che due classi in gerarachia tra loro sono <strong>conformi</strong> quando i campi dati della classe derivata sono nello stesso ordine dei campi dati della classe base. </p>
+<p>In Smalltalk non viene forzata la conformità ed è per questo che viene utilizzato il template. 
+Se la conformità viene forzata dal compilatore, allora il template non è più necessario.</p>
+<p>In Simula i campi dati di un oggetto si trovano nei vari record di attivazione che compongno l&#39;oggetto, garantendo così la conformità.
+Un oggetto Smalltalk invece contiene tutti i campi dati, compresi delle classe base, quindi l&#39;ordine con il quale compaiono nella classe derivata può non essere conforme a quello della classe base.</p>
+<p>In Smalltalk c&#39;è comunque bisogno di una ricerca a runtime quando viene richiesta l&#39;invocazione di un metodo che non è ridefinito nella classe base. Questo approcccio è costoso, però si possono migliorare le prestazioni tenendo una cache dei metodi invocati di recente (Java adotta questo approccio).</p>
+<p>Tornando sul discorso della conformità, se viene imposta la conformità tra classe base e le sue derivate, allora quando viene modificata la classe base, devono essere ricompilate anche tutte le classi derivate.</p>
+<p>In Smalltalk il subtyping e l&#39;ereditarietà sono indipendenti.</p>
+<p>I tipi sono dati dall&#39;interfaccia delle classi, cioè dai messaggi che possono ricevere, quindi due oggetti che non sono in una relazione di erediterietà possono avere tra loro una relazione di subtyping.</p>
+<p>Il legame tra erediterietà e subtyping esiste, ma non è né necessario né sufficente, questo perché in Smalltalk uan classe derivata può evitare di ereditare dei metodi della classe base (<strong>ereditarietà selettiva</strong>).</p>
+<h2 id="modulatit-">Modulatità</h2>
+<p>Perché un linguaggio orientato agli oggetti sia <strong>puro</strong>, ogni classe deve poter essere sostituita da un suo sottotipo senza che il programma smetta di funzionare. Questa modularità deve essere garantita anche per le classi &quot;standard&quot; come quella degli interi.</p>
+<p>Dal momento che Smalltalk è basato sull&#39;invio di messaggi, può essere considerato come un linguaggio puro, ottenendo però un programma più inefficente.</p>
+<h1 id="lezione-21-c-">Lezione 21 - C++</h1>
+<p>Lo scopo principale del linguaggio è quello di andare ad aggiungere caratteristiche OO al C restando comunque compatibile con il C puro.</p>
+<p>Il C++ aggiunge anche un maggiore controllo statico dei tipi mantenendo comunque l&#39;efficenza del C, al punto che un programma C compilato dal compilatore C++ deve essere efficente come se fosse compilato da un compilatore C.</p>
+<p><em>Se non si usa una caratteristica allora non si deve pagare per essa</em></p>
+<p>Questo non vuol dire che i costrutti C devono essere tradotti come fa il compulatore C, ma solo che la loro efficenza deve essere la stessa.</p>
+<p>In C++ non c&#39;è garbage collection, non per questioni di efficenza, in quanto poteva essere introdotta solo per gli oggetti, ma perché il C++ <strong>non è type-safe</strong>, in quanto non è possibile determinare se un determinato oggetto è inutile, perché ogni variabile intera può essere convertita in un puntatore. Quindi il vero problema è dato dalla presenza dei cast e non da questioni di efficenza.</p>
+<h2 id="classi-in-c-">Classi in C++</h2>
+<p>Le classi sono state implementate a partire dalle strutture, aggiungendo il concetto di astrazione.</p>
+<p>Ci sono quindi delle variabili di tipo classe che non sono puntatori ad oggetti. Gli oggetti possono anche essere allocati nello stack dei record di attivazione ed esiste il concetto di assegnazione tra gli oggetti che va oltre all&#39;assegnamento dei puntatori.</p>
+<h2 id="caratteristiche">Caratteristiche</h2>
+<p>Il C++ è un linguaggio progettato bene che offre un buon controllo di tipi, tuttavia ci sono dei punti complessi e pertanto alcuni programmatori utilizzano solo parti del linguaggio. 
+Oltretuttto, il C++ non impone un buono stile di programmazione, perché per esempio il vincolo dei tipi può essere raggirato.</p>
+<p>Tra i vari miglioramenti al C, ci sono:</p>
+<ul>
+<li>Il tipo bool che può essere considerato come un intero</li>
+<li>L&#39;utilizzo dei riferimenti per gli oggetti nello heap</li>
+<li>Prevede l&#39;overloading di operatori e funzioni in base alla definizione dell&#39;utente</li>
+<li>Template di funzione per ottenere il polimorfismo parametrico con le variabili di tipo</li>
+<li>Oggetti</li>
+<li>Eccezioni</li>
+</ul>
+<h2 id="la-parte-oo">La parte OO</h2>
+<p>Noi ci contreremo di più nella parte legata agli oggetti. Tra le varie cose ci concetremo principalmente su:</p>
+<ul>
+<li>Classi</li>
+<li>Oggetti</li>
+<li>Dynamic lookup</li>
+<li>Astrazione, con vari livelli di accessibilità: public, private e protected</li>
+<li>Ereditarietà, che può essere singola o multipla</li>
+<li>Subtyping, legato all&#39;ereditarietà ma non coincide con questa perché esiste anche l&#39;ereditarietà privata.</li>
+</ul>
+<p>L&#39;astrazione in C++ risulta molto buona, oltre ai 3 livelli di visibilità c&#39;è la possibilità di definire classi friend.</p>
+<p>La relazione tra subtyping e ereditarietà sono tra loro collegate.</p>
+<p>È presente il polimorfismo parametrico utilizzando le classi template template.</p>
+<p>Typechecking statico migliore rispetto a quello del C.</p>
+<h3 id="il-lato-oscuro-del-c-">Il lato oscuro del C++</h3>
+<p>La maggior parte dei problemi del C++ deriva dal vincolo della retrocompatibilità con il C.</p>
+<p>Alcuni di questi sono:</p>
+<ul>
+<li>Cast e conversioni automatiche</li>
+<li>Oggetti allocati sullo stack</li>
+<li>Overloading (che risulta essere complicato)</li>
+<li>Ridefinizione/Overriding: quando un metodo della classe astratta ha la stessa firma di un metodo della classe base. Solo che nel caso dell&#39;overriding la classe base ha marcato il metodo come virtuale. La ridefinizione è più generale. In C++ questi due concetti si sovrappongono e possono causare dei comportamenti inattesi.</li>
+<li>Ereditarietà multipla, che causa un numero multiplo di problemi implementativi.</li>
+</ul>
+<p>Quando lo stesso programma utilizza overloading, overriding, ridefinizioni e dynamic lookup c&#39;è il rischio che la situazione diventi molto caotica.
+Aggiungendo poi l&#39;ereditarietà multipla, il tutto diventa complesso sia da implementare che da capire.</p>
+<h3 id="cast-e-conversioni">Cast e conversioni</h3>
+<p>I cast permettono di eseguire delle operazioni <strong>type-unsafe</strong>, come la conversione da un intero a un puntatore.</p>
+<p>In generale le conversioni tra puntatori non portano modifiche ai valori, viene solo cambiato il tipo del puntatore, che da quel momento in poi viene considerato di un tipo diverso, il valore del puntatore e il valore dell&#39;oggetto puntato non cambiano. </p>
+<p>Con l&#39;ereditarietà multipla il valore del puntatore deve essere modificato, questo perché quando si cambia il tipo di un puntatore ad una classe derivata al tipo di una classe base, il valore del puntatore deve essere modificato in modo che il puntatore riferisca il sotto-oggetto specifico.</p>
+<p>Il programmatore devi quindi occuparsi di questioni tecniche legate al linguaggio.</p>
+<h3 id="oggetti-allocati-sullo-stack">Oggetti allocati sullo stack</h3>
+<p>Nei linguaggi ad oggetti come Simula e Smalltalk, gli oggetti veongo allocati solo sullo heap. 
+In C++, gli oggetti possono essere allocati sia sullo heap che sullo stack, questo per mantere la retro compatibilità con il C.</p>
+<p>Esiste quindi l&#39;assegnazione tra variabili di tipo classe, che è diversa dall&#39;assegnazione di due puntatori.</p>
+<p>Quando si effettua un&#39;assegnazione tra una variabile di tipo derivato ad una variabile di tipo base si perde il subtyping in quanto l&#39;oggetto di classe derivata viene &quot;tagliato&quot; in modo che abbia la stessa dimensione dell&#39;oggetto di classe base e non si riesce quindi ad avere il dynamic lookup.</p>
+<h3 id="il-punto-della-situazione">Il punto della situazione</h3>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> Pt{
+    <span class="hljs-keyword">public</span>: <span class="hljs-comment">// metodi per leggere ma non modificare</span>
+        Pt(<span class="hljs-keyword">int</span> xv);
+        Pt(Pt* pv);
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getX</span><span class="hljs-params">()</span></span>;
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-keyword">int</span> dx)</span></span>;
+    <span class="hljs-keyword">protected</span>: <span class="hljs-comment">//metodo che cambia i dati</span>
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setX</span><span class="hljs-params">(<span class="hljs-keyword">int</span> xv)</span></span>;
+    <span class="hljs-keyword">private</span>: <span class="hljs-comment">// i dati sono privati</span>
+        <span class="hljs-keyword">int</span> x;
+} <span class="hljs-comment">// seguono le dichiarazioni dei costruttori e member functions </span>
+
+...
+
+Pt x=Pt(<span class="hljs-number">2</span>); <span class="hljs-comment">// sullo stack</span>
+Pt * px=<span class="hljs-keyword">new</span> Pt(<span class="hljs-number">3</span>); <span class="hljs-comment">// sullo heap</span>
+</code></pre>
+<p>L&#39;invocazione dei metodi di una classe, come <code>getX()</code>, avviene nel classico modo, prima si fa il push del RA di <code>getX</code> e poi si fa il salto al codice della funzione.</p>
+<p>Per i metodi <strong>virtuali</strong> come <code>move(int dx)</code> viene generato del codice diverso per permettere il dynamic lookup, questo perché il compilatore non riesce a stabilire qual&#39;è il metodo che verrà chiamato.</p>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> ColorPt : <span class="hljs-keyword">public</span> Pt{ <span class="hljs-comment">// public inheritance ColorPt &lt;: Pt</span>
+    <span class="hljs-keyword">public</span>:
+        ColorPt(<span class="hljs-keyword">int</span> xv, <span class="hljs-keyword">int</span> cv);
+        ColorPt(Pt* pv, <span class="hljs-keyword">int</span> cv);
+        ColorPt(ColorPt * cp);
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getColor</span><span class="hljs-params">()</span></span>;
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">darken</span><span class="hljs-params">(<span class="hljs-keyword">int</span> t)</span></span>; <span class="hljs-comment">// nuova</span>
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-keyword">int</span> dx)</span></span>; <span class="hljs-comment">//overriding</span>
+    <span class="hljs-keyword">protected</span>:
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setColor</span><span class="hljs-params">(<span class="hljs-keyword">int</span> cv)</span></span>; <span class="hljs-comment">// nuova</span>
+    <span class="hljs-keyword">private</span>:
+        <span class="hljs-keyword">int</span> color;
+}
+</code></pre>
+<p>I costruttori di <code>ColorPt</code> devono invocare quelli di <code>Pt</code> in modo da poter costruire il sotto-oggetto di classe base, inoltre il campo <code>x</code> di <code>Pt</code> è privato e non c&#39;è altro modo di assengarlo.</p>
+<p>Ad esempio il costruttore di <code>ColorPt</code> può essere:</p>
+<pre><code class="lang-c++">ColorPt(<span class="hljs-keyword">int</span> xv,<span class="hljs-keyword">int</span> cv) : Pt(xv)
+{
+    color=cv;
+}
+</code></pre>
+<p><code>ColorPt</code> ha tutti i membri di <code>Pt</code> più o meno come se avessero la stessa specifica che hanno in `Pt:</p>
+<ul>
+<li>i <code>public</code> sono visibili a tutti anche negli oggetti
+<code>ColorPt</code></li>
+<li>i <code>protected</code> sono visibili in <code>ColorPt</code> e nelle classi
+derivate da <code>ColorPt</code></li>
+<li>i <code>private</code> sono <code>private</code> anche negli oggetti <code>ColorPt</code>
+ed quindi non sono accessibili dai nuovi metodi di
+<code>ColorPt</code>, possono essere utilizzanti solo con i metodi di <code>Pt</code></li>
+</ul>
+<h3 id="dynamic-lookup">Dynamic lookup</h3>
+<p>L&#39;overriding di un metodo virtuale può essere fatto con:</p>
+<pre><code class="lang-c++"><span class="hljs-keyword">void</span> Pt::move(<span class="hljs-keyword">int</span> dx) {
+    x=x+dx;
+}
+<span class="hljs-keyword">void</span> ColorPt::move(<span class="hljs-keyword">int</span> dx)
+{
+    Pt::move(dx);
+    darken(<span class="hljs-number">1</span>);
+}
+</code></pre>
+<p>Il dynamic lookup deve dipendere dal valore dinamico dell&#39;oggetto di invocazione, che è sconosciuto al compilatore. 
+Per questo motivo viene utilizzata una <strong>vtable</strong> per ogni classe, cioè una tabella che contiene le informazioni riguardanti i metodi virtuali della classe.
+La tabella contiene solamente i metodi virtuali perché l&#39;invocazione dei metodi non virtuali viene decisa a compile time.</p>
+<p>Quindi ad ogni oggetto viene associato un record contenente un puntatore <code>vptr</code> che punta alla tabella dei metodi virtuali per la classe dell&#39;oggetto. </p>
+<p><img src="Linguaggi di Programmazione/immagini/l21-colorpt.png" alt=""></p>
+<p>Per eseguire il metodo</p>
+<pre><code class="lang-c++">Pt * p = <span class="hljs-keyword">new</span> Pt(<span class="hljs-number">3</span>);
+p-&gt;move(<span class="hljs-number">2</span>);
+</code></pre>
+<p>il compilatore produce il codice </p>
+<pre><code class="lang-c++"><span class="hljs-list">(<span class="hljs-keyword"><span class="hljs-built_in">*</span></span><span class="hljs-list">(<span class="hljs-keyword">p-&gt;vptr</span><span class="hljs-collection">[<span class="hljs-number">1</span>]</span> )</span>)</span> <span class="hljs-list">(<span class="hljs-keyword">p</span>,<span class="hljs-number">2</span>)</span>
+</code></pre>
+<p><em>Da notare che l&#39;indice della tabella dei metodi virtuali parte da 1 e non da 0. È una notazione del libro anche se si tratta di un libro di informatica.</em></p>
+<p>Tutto questo è stato fatto perché non è possibile determinare il tipo dinamico dell&#39;oggetto puntato da <code>p</code>.
+Tra l&#39;altro lo stesso codice prodotto dal compilatore funziona anche se l&#39;oggetto puntato da <code>p</code> è di tipo <code>ColorPt</code>, perché gli elementi della  tabella dei metodi virtuali di una classe derivata hanno lo stesso ordine (sono <strong>conformi</strong>) di quelli della tabella della classe base.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l21-vtable-1.png" alt=""></p>
+<p>In C++ l&#39;erediterietà è <strong>conforme</strong>, cioè sia i campi dati, sia i metodi virtuali che vengono ereditati da una classe derivata compaiono nello stesso ordine con il quale compaiono della classe base.</p>
+<p>Così facendo è possibile evitare di utilizzare un puntantore al sotto-oggetto come succede con Smalltalk, racchiudendo tutte le informazioni di un oggetto o di una classe in uno stesso record.</p>
+<p><em>Ripetendo il concetto:</em> la prima parte della vtable di una classe derivata conincide con l&#39;ordine dei metodi della vtable della classe base (<strong>vtable conformi</strong>).</p>
+<p><img src="Linguaggi di Programmazione/immagini/l21-vtable-2.png" alt=""></p>
+<p>Questo permette di scrivere le seguenti istruzioni</p>
+<pre><code class="lang-c++"> p = cp<span class="hljs-comment">; </span>
+ p-&gt;move(2)<span class="hljs-comment">;</span>
+</code></pre>
+<p><img src="Linguaggi di Programmazione/immagini/l21-vtable-3.png" alt=""></p>
+<p>Il compilatore produce il codice <code>(*(p-&gt;vptr[1]))(p,2)</code> che funziona correttamente sia se l&#39;oggetto puntato da <code>p</code> è di tipo <code>Pt</code> sia se è di tipo <code>ColorPt</code>, questo grazie alla conformità delle vtable.</p>
+<p>La stessa strategia non può funzionare in Smalltalk perché non essendoci un tipo statico il compilatore non riesce a farsi un idea di che tipo di oggetto potrebbe essere puntato, inoltre due oggetti di due classi in relazione gerarchica potrebbero avere lo stesso metodo in posizioni diverse a causa del fatto che Smalltalk non impone la conformità.</p>
+<p>Volendo si potrebbe utilizzare una mega tabella con tutti i possibili metodi virtuale ma questa imporrebbe troppa rigidità e sarebbe troppo inefficente.</p>
+<h3 id="dynamic-lookup-vs-overloading-overriding-ridefinzione">Dynamic lookup VS overloading/overriding/ridefinzione</h3>
+<p><strong>Overloading</strong>: operatore/metodi con lo stesso nome e parametri formali con tipi diversi, la scelta dell&#39;operatore/metodo viene fatta a  compile time per ogni invocazione.</p>
+<p><strong>Overriding</strong>: metodo di una sotto-classe con nome e tipo degli argomenti uguali a quelli di un metodo virtuale della classe base e il tipo del risultato può essere sotto-tipo.</p>
+<p><strong>Ridefinizione</strong>: in una sotto-classe c&#39;è un metodo con lo stesso nome  di un meotodo della classe base che non è stato dichiarato come virtuale</p>
+<h1 id="lezione-22-c-">Lezione 22 - C++++</h1>
+<p><strong>Overloading</strong>: possono esserci più operatori o metodi che sono diversi ma che hanno lo stesso nome e hanno parametri formali con tipi diversi. Per scegliere quale metodo invocare il compilatore una l&#39;algoritmo di <strong>overloading resolution</strong>, la scelta di quale metodo invocare viene fatta a tempo di compilazione e non durante l&#39;esecuzione del codice.</p>
+<p>L&#39;overloading resolution sceglie quindi il metodo meno costoso: ogni conversione ha un costo, vengono preferiti le uguaglianze perfette, cioè quando c&#39;è già un match perfetto tra i tipi, vengono poi scelte le promozioni, il contrario delle promozioni o nel caso pessimo le conversioni definite dall&#39;utente. 
+Nel caso di metodi con più parametri vengono calcolate delle tuple con i vari costi di conversione e viene scelta la tupla che ha tutti gli elementi minori o uguali delle altre.</p>
+<p><strong>Overriding</strong>: qunado il metodo di una sotto classe ha come nome e tipo degli argomenti uguali a quelli di un metodo virtuale della classe base. Il tipo del valore di ritorno può essere uguale oppure un sotto-tipo.</p>
+<p><strong>Ridefinizione</strong>: in una sotto-classe c&#39;è un metodo che compare con lo stesso nome di un metodo della classe base, sia che sia virtuale che non. La ridefinzione comprende anche l&#39;overriding.</p>
+<h2 id="la-scelta-del-metodo-da-invocare">La scelta del metodo da invocare</h2>
+<p>Quando il compilatore deve compilare l&#39;istruzione</p>
+<pre><code><span class="hljs-tag">a</span> -&gt; <span class="hljs-function"><span class="hljs-title">f</span><span class="hljs-params">(...)</span></span> <span class="hljs-comment">//a:A</span>
+</code></pre><p>esegue l&#39;algoritmo di <strong>overloading resolution</strong> per determinare quale metodo deve venire invocato. 
+Solo una volta completato l&#39;algoritmo il compilatore riesce a scoprire se il metodo da invocare è virtuale o meno. 
+Se il metodo non è virtuale, il compilatore produce il codice di invocazione della funzione, altrimenti deve produrre il codice per la risoluzione dinamica dell&#39;invocazione.</p>
+<p>Viene quindi utilizzato il tipo statico dell&#39;oggetto di invocazione per determinare se la risoluzione del metodo da invocare sarà statica o dinamica.</p>
+<p>Ad esempio se il metodo <code>move(x)</code> è virutale il compitore produce il codice:</p>
+<pre><code class="lang-c++">p-&gt;move<span class="hljs-list">(<span class="hljs-keyword">x</span>)</span> --&gt; <span class="hljs-list">(<span class="hljs-keyword">*</span><span class="hljs-list">(<span class="hljs-keyword">p-&gt;vptr</span>[<span class="hljs-number">1</span>])</span>)</span><span class="hljs-list">(<span class="hljs-keyword">p</span>,x)</span>
+</code></pre>
+<p>Da notare che anche i metodi non virtuali di una classe possono essere <strong>ridefiniti</strong> dalle classi derivate, ma in questo caso il metodo da chiamare viene scelto a compile time sulla base del tipo statico dell&#39;oggetto di invocazione.</p>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> parent {
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printclass</span><span class="hljs-params">()</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"parent"</span>; }
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printvirtual</span><span class="hljs-params">()</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"parent"</span>; }
+};
+
+<span class="hljs-keyword">class</span> child: <span class="hljs-keyword">public</span> parent {
+    <span class="hljs-keyword">public</span>: 
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printclass</span><span class="hljs-params">()</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"child"</span>; }
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printvirtual</span><span class="hljs-params">()</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"child"</span>; }
+};
+
+main() {
+    parent *p=<span class="hljs-keyword">new</span> parent(); 
+    child *c=<span class="hljs-keyword">new</span> child();
+    p-&gt;printclass(); <span class="hljs-comment">//stampa: parent, metodo statico</span>
+    p-&gt;printvirtual(); <span class="hljs-comment">//stampa: parent, ma la decisione viene fatta a rutime</span>
+
+    p=c; <span class="hljs-comment">//cambia il tipo dinamico di p, ma al compilatore questa cosa non interessa</span>
+    p-&gt;printclass(); <span class="hljs-comment">//stampa: parent, è un metodo statico, l'invocazione viene scelta a compile time</span>
+    p-&gt;printvirtual(); <span class="hljs-comment">//stampa: child, la decisione del metodo viene fatta in modo dinamico</span>
+    c-&gt;printclass();  <span class="hljs-comment">//stampa: child, metodo statico</span>
+}
+</code></pre>
+<p>Quando c&#39;è una ridefinizione dei metodi delle sottoclassi questi nascodono la definizione dei metodi delle classi base.</p>
+<pre><code class="lang-c++"><span class="hljs-preprocessor"># <span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>: 
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;endl; }
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">2</span>&lt;&lt;endl; }
+};
+
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">3</span>&lt;&lt;endl; }
+};
+
+main()
+{
+ A* a= <span class="hljs-keyword">new</span> A;
+ B* b=<span class="hljs-keyword">new</span> B;
+
+ a-&gt;f(<span class="hljs-number">5</span>); <span class="hljs-comment">//1, viene scelto f(int) che è un metodo statico</span>
+ a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, viene scelto f(double) che è un metodo virtuale, il metodo effettivamente invocato viene scelto a runtime</span>
+
+ a=b;
+
+ b-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//3, viene scelto il metodo f(int) di B, è un metodo statico</span>
+ b-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//3, viene scelto f(int) di B, in quanto la ridefinzione copre i metodi f della classe A.</span>
+
+ a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//1, viene scelto il metodo f(int) di A, perché l'overloading resolution viene fatta solamente sui metodi di A</span>
+ a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, viene scelto il metodo f(double) di A, per lo stesso motivo di prima, trattandosi di un metodo virtuale l'invocazione viene determinata a runtime, in ogni caso viene invocato f(dobule) di A perché la classe B non fa l'overriding del metodo.</span>
+}
+</code></pre>
+<pre><code class="lang-c++"><span class="hljs-keyword">struct</span> S1{<span class="hljs-keyword">int</span> a;};
+<span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;endl;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">2</span>&lt;&lt;endl;}};
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A {
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(S1 a)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">3</span>&lt;&lt;endl;}
+};
+
+main(){ 
+    A* a= <span class="hljs-keyword">new</span> A; B* b=<span class="hljs-keyword">new</span> B;
+    a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//1, f(int) di A con invocazione dinamica</span>
+    a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, f(double) di A con invocazione dinamica</span>
+
+    a=b;
+
+    b-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//Errore di compilazione, l'overloading resolution non trova nessun metodo da invocare in B</span>
+    b-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//Errore di compilazione, l'overloading resolution non trova nessun metodo da invocare in B</span>
+
+    a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//1, f(int) di A con invocazione dinamica</span>
+    a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, f(double) di A con invocazione dinamica</span>
+
+    <span class="hljs-comment">/* Vengono invocati i metodi di A perché B non fornisce nessun override per quei metodi */</span>
+}
+</code></pre>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;endl; }
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">2</span>&lt;&lt;endl; }
+};
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">3</span>&lt;&lt;endl; }
+};
+
+main() { 
+    A* a= <span class="hljs-keyword">new</span> A; B* b=<span class="hljs-keyword">new</span> B;
+    a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//1, f(int) di A in modo dinamico</span>
+    a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, f(double) di A in modo dinamico</span>
+
+    a=b;
+
+    b-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//3, overloading resolution sceglie f(int) di B, con invocazione dinamica</span>
+    b-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//3, overloading resolution sceglie f(int) di B, con invocazione dinamica</span>
+
+    a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//3, l'overloading resolution sceglie f(int) di A, che è un metodo virtuale, il tipo dinamico poi porta ad invocare il metodo f(int) di B.</span>
+    a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, l'overloading resolution sceglie f(double) di A, che è un metodo virtuale, tuttavia B non fa l'overloading del metodo quindi viene eseguito il f(double) di A</span>
+}
+</code></pre>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A {
+    <span class="hljs-keyword">public</span>: 
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;endl;}
+};
+
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A {
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">2</span>&lt;&lt;endl;}
+};
+
+main() {
+ A* a;
+ B* b=<span class="hljs-keyword">new</span> B;
+ a=b;
+
+ b-&gt;f(<span class="hljs-number">3</span>); <span class="hljs-comment">//2, l'overloading resulution su B trova solo f(float) viene quindi scelto quel metodo con invocazione dinamica</span>
+
+ a-&gt;f(<span class="hljs-number">3</span>); <span class="hljs-comment">//1, l'overloading resolution su A trova solo f(int) e viene scelto per l'invocazione dinamica in quanto metodo virtuale. B non esegue l'override del metodo quindi viene invocato f(int) di A.</span>
+}
+</code></pre>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A {
+    <span class="hljs-keyword">public</span>: 
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;endl;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">2</span>&lt;&lt;endl;}
+};
+
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A { 
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">3</span>&lt;&lt;endl;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">4</span>&lt;&lt;endl;}
+};
+
+main() {
+    A* a= <span class="hljs-keyword">new</span> A; B *b=<span class="hljs-keyword">new</span> B;
+
+    a-&gt;f(<span class="hljs-number">3.14f</span>); <span class="hljs-comment">//1, f(float) di A con dynamic lookup</span>
+    b-&gt;f(<span class="hljs-number">3.14f</span>); <span class="hljs-comment">//3, f(double) di B con dynamic lookup</span>
+
+    a=b;
+
+    a-&gt;f(<span class="hljs-number">3.14f</span>); <span class="hljs-comment">//1, f(fload) di A con dynamic lookup</span>
+    b-&gt;f(<span class="hljs-number">3</span>);     <span class="hljs-comment">//4, f(int) di B con dynamic lookup </span>
+    a-&gt;f(<span class="hljs-number">3</span>);     <span class="hljs-comment">//4, l'overload resolution sceglie f(int) di A con dynamic lookup, a runtime viene eseguito f(int) di B</span>
+}
+</code></pre>
+<p>Riassumento, quando in una sottoclasse viene definito un meotodo <code>f(..)</code>, questo nasconde all&#39;overloading resolution <strong>tutti i metodi</strong> della classe base. Questa scelta è stata fatta per semplificare l&#39;implementazione dell&#39;overloading resolution.</p>
+<p>Un altra motivazione per questa scelta deriva dal fatto che tipicamente una classe derivata fa l&#39;override dei metodi della classe base ed effettuare una ridefinzione tipicamente è sbagliato.</p>
+<h3 id="la-presenza-del-this">La presenza del this</h3>
+<p>Supponiamo di avere</p>
+<pre><code class="lang-c++">class A{
+    public:
+        virtual <span class="hljs-type">int</span> f(<span class="hljs-type">int</span> x);
+        virtual <span class="hljs-type">int</span> g(<span class="hljs-type">int</span> y);
+...
+};
+<span class="hljs-type">int</span> A::f(<span class="hljs-type">int</span> x)<span class="hljs-decorator">{...g(i)...}</span>
+<span class="hljs-type">int</span> A::g(<span class="hljs-type">int</span> y)<span class="hljs-decorator">{...f(j)...}</span>
+</code></pre>
+<p>e che ci sia una sotto class <code>B</code> che ridefinisce <code>f</code> ma non <code>g</code>.</p>
+<p>Se abbiamo <code>B* b=new B(); b-&gt;g(k)</code> viene ovviamente invocata la funzione <code>g</code> di <code>B</code>, ma se nel corpo di <code>g</code> invochiamo <code>f</code>, quale <code>f</code> viene invocata?</p>
+<p>Deve essere quindi possibile utilizzare il dynamic lookup per invocare <code>B::f</code>, pertanto è necessario che il compilatore, quando compila un meotodo, aggiunga un riferimento all&#39;oggetto sul quale viene invocato il metodo:</p>
+<pre><code class="lang-c++"><span class="hljs-type">int</span> A:: g( A* o, <span class="hljs-type">int</span> y)<span class="hljs-decorator">{...o-&gt;f(j)...}</span>
+</code></pre>
+<p>L&#39;oggetto di invocazione deve essere passato ad <strong>ogni</strong> metodo, sia che questo sia virtuale o meno.</p>
+<p>Questo serve sia per chiamare a runtime le corrette funzioni virtuali, sia per accedere ai campi dati dell&#39;oggetto corrente.</p>
+<p>Nel caso il metodo invocato sia non virtuale, il tipo statico dell&#39;oggetto serve al compilatore per stabilire quale funzione invocare e produrre il corretto <em>push+jump</em> per l&#39;esecuzione del codice.</p>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">1</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>{f(); <span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-number">2</span>;}
+};
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">3</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>{f(); <span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-number">4</span>;}};
+main(){
+    A*a; B* b=<span class="hljs-keyword">new</span> B();
+    a=b;
+    a-&gt;g(); <span class="hljs-comment">//l'overloading resolution secglie A::g() </span>
+    <span class="hljs-comment">// che non è virtuale quindi viene scelto subito a compile time.</span>
+
+    <span class="hljs-comment">//Dentro A::g viene invocata f sull'oggetto di invocazione</span>
+    <span class="hljs-comment">//che ha tipo statico A, pertanto l'overloading resolution</span>
+    <span class="hljs-comment">//sceglie A::f, viene quindi stampato "1 2"</span>
+}
+</code></pre>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-keyword">int</span> x;
+        A(<span class="hljs-keyword">int</span> y){x=y;}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">1</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>{f(); <span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-number">2</span>&lt;&lt; x &lt;&lt;endl;}
+};
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>:
+        B(<span class="hljs-keyword">int</span> y):A(y){}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">3</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>{f(); <span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-number">4</span> &lt;&lt; x&lt;&lt;endl;}
+};
+
+main(){
+    A*a=<span class="hljs-keyword">new</span> A(<span class="hljs-number">5</span>); B* b=<span class="hljs-keyword">new</span> B(<span class="hljs-number">10</span>);
+    a=b;
+    a-&gt;g();
+<span class="hljs-comment">/*
+ Il tipo statico è A quindi viene fatto l'overloading resolution su A,
+ viene trovato A::g che viene scelto per l'invoazione già a compile
+ time in quanto non è virtuale.
+ A::g esegue f e viene scelta A::f perché non è virtuale e come 
+ valore di x viene usato 10, che è il valore del campo x del sotto
+ oggetto di b.
+*/</span>
+}
+</code></pre>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-keyword">int</span> x;
+        A(<span class="hljs-keyword">int</span> y){x=y;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">1</span>;}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>{f(); <span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-number">2</span>&lt;&lt;x&lt;&lt;endl;}};
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>:
+        B(<span class="hljs-keyword">int</span> y):A(y){}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-number">3</span>;}
+};
+main(){
+    A*a=<span class="hljs-keyword">new</span> A(<span class="hljs-number">5</span>); B* b=<span class="hljs-keyword">new</span> B(<span class="hljs-number">10</span>);
+
+    a-&gt;g(); <span class="hljs-comment">//1 2 5, sempre la solita storia</span>
+
+    a=b;
+
+    a-&gt;g();
+
+ <span class="hljs-comment">/*
+  Prima viene scelta A::g dall'overloading resolution.
+  Poi viene scelta A::f che è virtuale, a runtime viene poi eseguita
+  B::f e come valore di x viene stampato 10, che è il valore di x
+  nell'oggetto b:
+  1 3 10
+ */</span>
+}
+</code></pre>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
+    public: 
+        int x;
+        A(int y){x=y;}
+        virtual void <span class="hljs-literal">f</span>(int i){cout&lt;&lt; <span class="hljs-string">"A-int "</span>&lt;&lt;x&lt;&lt;endl;}
+};
+<span class="hljs-keyword">class</span> B: public A{
+    public: 
+        B(int y):A(y){}
+        virtual void <span class="hljs-literal">f</span>(int i){cout&lt;&lt;"B-int “&lt;&lt;x&lt;&lt;endl;} 
+};
+main() {
+    A a=A(2); B b=B(10); <span class="hljs-comment">//Sono nello stack, non nello heap</span>
+
+    a.<span class="hljs-literal">f</span>(1); <span class="hljs-comment">//A::f, funzione virutale che dovrebbe essere compilata con  indirezione</span>
+            <span class="hljs-comment">//Stampa A-int 2</span>
+
+    a=b; <span class="hljs-comment">//La vtable di a non cambia perché si tratta di un assegnazione</span>
+         <span class="hljs-comment">//tra oggetti e non tra puntatori</span>
+
+    a.<span class="hljs-literal">f</span>(1); <span class="hljs-comment">//A::f, funzione virtuale ma la vtable non è cambiata</span>
+            <span class="hljs-comment">//quindi a runtime viene invocata A::f e non B::f</span>
+            <span class="hljs-comment">//Il campo dati x però è cambiato, viene quindi stampato</span>
+            <span class="hljs-comment">// A-int 10</span>
+
+    b.<span class="hljs-literal">f</span>(1); <span class="hljs-comment">//B::f, funzione virtuale, viene stampato B-int 10</span>
+}
+</code></pre>
+<pre><code class="lang-c++">class A{
+    public: 
+        <span class="hljs-type">int</span> x;
+        virtual <span class="hljs-type">void</span> f(<span class="hljs-type">int</span> i)<span class="hljs-decorator">{...}</span>
+        };
+class B: public A{
+    public:
+        virtual <span class="hljs-type">void</span> f(<span class="hljs-type">int</span> i)<span class="hljs-decorator">{...}</span>
+        virtual <span class="hljs-type">void</span> f(double)<span class="hljs-decorator">{...}</span> 
+};
+main() {
+    A* a; B*b=new B(..); a=b, 
+    a-&gt;f(<span class="hljs-number">3</span>.<span class="hljs-number">4</span>); //L'overloading resolution trova A::f(<span class="hljs-type">int</span>) che è virtuale
+               //viene quindi predisposto il dynamic lookup che
+               //a runtime invoca B::f(<span class="hljs-type">int</span>)
+}
+</code></pre>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>: 
+        <span class="hljs-keyword">int</span> x;
+        A(<span class="hljs-keyword">int</span> y){x=y;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-string">"A-int"</span>&lt;&lt;endl;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">char</span> i)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-string">"A-char"</span>&lt;&lt;endl;} 
+};
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>: 
+        B(<span class="hljs-keyword">int</span> y):A(y){}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"B-int"</span>&lt;&lt;endl;}};
+main() {
+    A* a=<span class="hljs-keyword">new</span> A(<span class="hljs-number">2</span>); B* b=<span class="hljs-keyword">new</span> B(<span class="hljs-number">10</span>);
+    a-&gt;f(<span class="hljs-string">'a'</span>); 
+
+    a=b; 
+
+    a-&gt;f(<span class="hljs-string">'a'</span>); 
+    <span class="hljs-comment">/*
+     L'overloading resolution sceglie A::f(char) che è virtuale, 
+     viene quindi predisposto il dynamic lookup.
+     A runtime viene invocata A::f(char) perché B non fa l'override
+     della funzione
+    */</span>
+
+    b-&gt;f(<span class="hljs-string">'a'</span>);
+    <span class="hljs-comment">/*
+     L'overloading resolution sceglie B::f(int) con dynamic lookup
+     A runtime viene quindi eseguito B::f(int)
+    */</span>
+}
 </code></pre>
 </body></html>

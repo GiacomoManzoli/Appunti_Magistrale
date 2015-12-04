@@ -1,4 +1,4 @@
-#Lezione 20 - Settimana della didattica
+#Lezione 20 - Conformità
 
 *gran parte della lezione è stata occupata dalla didscussione riguardo la didattica della laurea magistrale*
 
@@ -13,11 +13,17 @@ Quindi quando si progetta un compilatore c’è da tenere in considerazione che 
 
 Esiste la tecnica di riduzione che permette di stabilire la decidibilità di un problema a partire da un problema che si sa essere non decidibile.
 
---- 
 
-**Conformità**: i campi dati di una classe derivata sono nello stesso ordine dei campi dati della classe base. In Smalltalk non viene forzata la conformità ed è per questo che viene utilizzato il template. Se la conformità viene forzata dal compilatore, allora il template non è più necessario.
 
-A differenza di Simula, in Smalltalk l'oggetto contiene tutti i campi dati, compresi quelli della classe base, in Simula invece i campi dati si trovano nei vari record di attivazione.
+##Conformità
+
+Si dice che due classi in gerarachia tra loro sono **conformi** quando i campi dati della classe derivata sono nello stesso ordine dei campi dati della classe base. 
+
+In Smalltalk non viene forzata la conformità ed è per questo che viene utilizzato il template. 
+Se la conformità viene forzata dal compilatore, allora il template non è più necessario.
+
+In Simula i campi dati di un oggetto si trovano nei vari record di attivazione che compongno l'oggetto, garantendo così la conformità.
+Un oggetto Smalltalk invece contiene tutti i campi dati, compresi delle classe base, quindi l'ordine con il quale compaiono nella classe derivata può non essere conforme a quello della classe base.
 
 In Smalltalk c'è comunque bisogno di una ricerca a runtime quando viene richiesta l'invocazione di un metodo che non è ridefinito nella classe base. Questo approcccio è costoso, però si possono migliorare le prestazioni tenendo una cache dei metodi invocati di recente (Java adotta questo approccio).
 
@@ -31,7 +37,7 @@ Il legame tra erediterietà e subtyping esiste, ma non è né necessario né suf
 
 ##Modulatità
 
-Perché un linguaggio orientato agli oggetti sia **puro**, ogni classe deve poter essere sostituita da un suo sottotipo senza che il programma  smetta di funzionare. Questa modularità deve essere garantita anche per le classi "standard" come quella degli interi.
+Perché un linguaggio orientato agli oggetti sia **puro**, ogni classe deve poter essere sostituita da un suo sottotipo senza che il programma smetta di funzionare. Questa modularità deve essere garantita anche per le classi "standard" come quella degli interi.
 
 Dal momento che Smalltalk è basato sull'invio di messaggi, può essere considerato come un linguaggio puro, ottenendo però un programma più inefficente.
 

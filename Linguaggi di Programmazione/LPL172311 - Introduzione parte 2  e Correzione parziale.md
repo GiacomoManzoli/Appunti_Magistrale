@@ -9,7 +9,7 @@ Nelle prossime puntante:
 - Lazy evalation di Haskell
 - (an c'è anche il progetto)
 
-Con i linguaggi funzionali è possibile "imitare" il concetto di oggetti sfruttando il l'upward fun result che copia nello heap un record di attivazione dal momento che questo può contenere dei valori che funzionano sia da attributi per l'oggetto che da metodi.
+Con i linguaggi funzionali è possibile "imitare" il concetto di oggetti sfruttando il l'upward fun result che copia nello heap un record di attivazione che può contenere dei valori, i quali possono essere considerati sia come attributi che come metodi dell'oggetto.
 
 Si riesce così ad ottenere sia un sistema di incapsulamento (o astrazione) e anche il polimorfismo parametrico.
 
