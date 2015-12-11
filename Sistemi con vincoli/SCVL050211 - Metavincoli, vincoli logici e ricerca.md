@@ -73,17 +73,11 @@ Avendo un modo per mappare i vincoli logici basilari si possono anche andare a d
 
 Ma si può fare di meglio:
 
-> z = (x ⇒ y)
->
-> z = (x ≤ y) //Con un vincolo reificato
+> z = (x ⇒ y) = (x ≤ y) //Con un vincolo reificato
 
-> z = (x⇔y)
->
-> z = (x==y)
+> z = (x⇔y) = (x==y)
 
-> z = (x ⊕ y) (xor)
->
-> z = (x != y)
+> z = (x ⊕ y) (xor) = (x != y)
 
 ##Wombo combo
 

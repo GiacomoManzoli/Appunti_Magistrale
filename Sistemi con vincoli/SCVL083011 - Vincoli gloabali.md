@@ -6,7 +6,7 @@ Anche se viene stabilita la GAC può essere che sia ancora possibile eseguire de
 
 Ad esempio nel problema del partial latin square è possibile ragionare a livello di colonna, in cui tutte le celle devono essere diverse.
 
-Formalizzando, indicando con *X* la colonna delle variabili presenti su una colonna e con *V* l'unione deii domini delle variabili, se si reisce a trovare un sottoinsiem di variabili *W⊂V* e un set *Y⊂X* tale che:
+Formalizzando, indicando con *X* la colonna delle variabili presenti su una colonna e con *V* l'unione deii domini delle variabili, se si reisce a trovare un sottoinsieme di variabili *W⊂V* e un set *Y⊂X* tale che:
 
 > |X|=|W| e D(x<sub>i</sub>) ∈ W,  ∀x<sub>i</sub> ∈ X
 

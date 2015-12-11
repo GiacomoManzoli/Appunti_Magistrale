@@ -10,7 +10,7 @@ Un grafo viene costriuto a livelli:
 
 Il procedimento termina quando non è più possibile aggiungere nuovi letterali.
 
-Per ottenere un risultato in modo efficiente non vengono considerate le variabile e non devono esserci troppi oggetti. Un'altra ipotesi semplificativa è che le azioni non consumano i letterali.
+Per ottenere un risultato in modo efficiente non vengono considerate le variabili e non devono esserci troppi oggetti. Un'altra ipotesi semplificativa è che le azioni non consumano i letterali.
 
 ### Esempio della torta
 
@@ -29,13 +29,13 @@ Da notare che in S<sub>1</sub> compaiono contemporaneamente sia *Have(Cake)* che
 
 L'espasione del grafico termina quando il livello *i+1* coincide con il livello *i*.
 
-Da notare che se nei vari livello non compaiono mai i goal, questi non possono essere raggiunti nel problema rilassato, quindi anche nel problema originale non sono raggiungibili.
+Da notare che se nei vari livelli non compaiono mai i goal, questi non possono essere raggiunti nel problema rilassato e di conseguenza non sono raggiungibili neanche nel problema originale.
 
 ##Casi particolari
 
 ![](./immagini/l22-grafo-casi.png)
 
-Nel grafo di planning possono comparire dei collegamenti che in un piano reale non potrebbero compari perché sono mutuamente esclusivi (**collegamenti mutex**).
+Nel grafo di planning possono comparire dei collegamenti che in un piano reale non potrebbero comparire perché sono mutuamente esclusivi (**collegamenti mutex**).
 Questi collegamenti tra le **azioni** si possono verificare in 3 condizioni:
 
 - **Effetti inconsistenti**: un'azione nega l'effetto di un'altra. Ad esempio *Eat(Cake)* e la persistenza di *Have(Cake)* hanno effetti inconsistenti, perché sono in disaccordo sull'effetto di *Have(Cake)*. Questo avviene quando un'azione consuma un letterale negandolo, ma per effetto della persistenza lo stesso letterale non negato compare nel livello successivo.
@@ -54,7 +54,7 @@ Pertanto, un letterale che appare per la prima volta al livello *n* non implica 
 A partire da un grafo di planning possono quindi essere costruite varie euristiche ammissibili che misurano la distanza tra lo stato *s* e lo stato goal.
 Queste euristiche si basano sul **level cost** dei letterali che compongno il goal. Il level cost di un letterale corrispone al primo livello del grafo di planning che lo contiene.
  
-Si ottiene una stima migliore del level cost se si usa un grafo di planning seriale, cioè che usa la mua esclusione tra coppie di azioni (azioni persisteni escluse), ovvero tra un livello e l'altro viene sempre eseguita una sola azione.
+Si ottiene una stima migliore del level cost se si usa un grafo di planning seriale, cioè che usa la mutua esclusione tra coppie di azioni (azioni persisteni escluse), ovvero tra un livello e l'altro viene sempre eseguita una sola azione.
 
 Alcune euristiche sono:
 
@@ -88,9 +88,9 @@ Da notare che se si trovano tutti i sottogoal in un determinato livello, ma alem
 
 La funzione `EstraiSoluzione` tenta di trovare un piano a ritorso cercando di risolvere un CSP booleano che ha come variabili le azioni in ogni livello e il valore di quest specifica se l'azione è da considerare dentro o fuori dal piano. 
 
-Alternativamente si può formulare un probrlma di ricerca in cui ogni stsato contiene un puntatore ad un livello del grafo di pianificazione e a un insieme di obiettivi non soddisfatti. Il problema può essere formulato come:
+Alternativamente si può formulare un problema di ricerca in cui ogni stsato contiene un puntatore ad un livello del grafo di pianificazione e a un insieme di obiettivi non soddisfatti. Il problema può essere formulato come:
 
-- L stato iniziale è l'ultimo livello del grafo di pianificazione, *S<sub>n</sub>*, con l'insieme degli obiettivi uguale a quello del probrlma di partenza.
+- Lo stato iniziale è l'ultimo livello del grafo di pianificazione, *S<sub>n</sub>*, con l'insieme degli obiettivi uguale a quello del problema di partenza.
 - Le azioni disponibili in uno stato *S<sub>i</sub>* consistono nella selezione di un qualsiasi sottoinsieme primo di conflitti delle azioni *A<sub>i-1</sub>*. Lo stato risultate ha livello *S<sub>i-1</sub>* e ha come insieme di oviettivi le precondizioni dell'insieme di azioni prescelto.
 - L'obiettivo è raggiungere lo stato *S<sub>0</sub>* tale che tutti gli obiettivi siano soddisfatti.
 - Il costo di ogni azione è 1.
@@ -109,7 +109,7 @@ Dal momento che il mondo cambia c'è da prevedere anche un monitoraggio dell'amb
 
 Sorgono quindi nuovi problemi:
 
-- **Informazione incompleta**: le precendizione di un'azione sono sconosciute, ad esempio non ho informazioni sulla ruota di scorta.
+- **Informazione incompleta**: le precendizioni di un'azione sono sconosciute, ad esempio non ho informazioni sulla ruota di scorta.
 - **Informazione non corretta**: potrei avere a disposizioni delle informazioni errate.
 - **Problema della qualifica**: non si finisce mai di elenecare tutte le possibili precondizioni.
 
@@ -130,7 +130,7 @@ Questa strategia ha senso quando non è possibile utilizzare alcuni dei sensori 
 
 ###Pianificazione condizionale
 
-Se il mondo è non deterministico o parazialmente osservabile la percezione di un agente di solito fornisce solamente alcune infomrazioni, cioè suddivide lo stato di credenza.
+Se il mondo è non deterministico o parazialmente osservabile la percezione di un agente di solito fornisce solamente alcune informazioni, cioè suddivide lo stato di credenza.
 
 Questi piani controllano quindi tutte le conseguenze della base di conoscenza rispetto alla percezioni.
 

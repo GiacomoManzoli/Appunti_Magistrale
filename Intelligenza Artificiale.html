@@ -1069,7 +1069,7 @@ Ad esempio non si può esprimere &quot;le trappole causano la brezza in quadrati
 </ul>
 <p><strong>Dualità</strong>: ogni quantificatore può essere espresso usando la negazione dell&#39;altro.</p>
 <blockquote>
-<p>∀x Piace(x,Gelato) == !∃x !Piace(x,Gelato)</p>
+<p>∀x Piace(x,Gelato) == ¬∃x ¬Piace(x,Gelato)</p>
 </blockquote>
 <h3 id="uguaglianza">Uguaglianza</h3>
 <p>Una sentenza atomica può essere anche un&#39;uguaglianza tra due termini.</p>
@@ -1090,8 +1090,8 @@ Ad esempio non si può esprimere &quot;le trappole causano la brezza in quadrati
 <p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-3.png" alt=""></p>
 <p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-4.png" alt=""></p>
 <p>Se una sentenza contiene entrambi i quantificatori, in particolare <em>∀y ∃x</em>, non è possibile utilizzare una singola costante di <strong>Skolem</strong> per istanziare <em>x</em>, questo perché dovrei avere infinite costanti, in questo caso viene usata una <strong>funzione di Skolem</strong> che genera le varie costanti. (<em>verrà approfondito più avanti</em>)</p>
-<p>Mentre l&#39;istanziazione di un quantificatore universale può essere applicata più volte per aggiungere nuove sentenza alla base di conoscenza e la nuova KB è logicamente equivalente a quella vecchia.</p>
 <p>L&#39;istanziazione esistenziale può essere applicata una sola volta per sentenza esistenziale e la nuova KB non è equivalente a quella vecchia, ma è soddisfacibile se e solo se la vecchia KB era soddisfacibile.</p>
+<p>Mentre l&#39;istanziazione di un quantificatore universale può essere applicata più volte per aggiungere nuove sentenza alla base di conoscenza e la nuova KB è logicamente equivalente a quella vecchia.</p>
 <h2 id="riduzione-alla-inferenza-proposizionale">Riduzione alla inferenza proposizionale</h2>
 <p>L&#39;idea è quella di istanziare i vari quantificatori, per poi considerare i vari predicati applicati ai termini ground come se fossero dei letterali nella logica proposizionale.
 Questo procedimento prende il nome di <strong>proposizionalizzazione</strong>.</p>
@@ -1104,9 +1104,9 @@ Questo procedimento prende il nome di <strong>proposizionalizzazione</strong>.</
 <p>Per ottenere ciò prima si considerano solo le costanti della FOL-KB e si verifica se 𝜶 è conseguenza logica, se questa non lo è si prendono in considerazioni anche i termini ground generati da una sola invocazione di funzioni, e se anche in questo caso non è conseguenza logica, si considerano fino a due invocazioni di funzioni, e così via finché non si trova che 𝜶 è conseguenza logica.</p>
 <p>Quindi questo metodo di fare inferenza è sia <strong>corretto</strong> che <strong>completo</strong> per le basi di conoscenza che non hanno funzioni.</p>
 <p>Prima o poi questo algorito riesce a dimostrare che 𝜶 è conoscenza logica, ma se 𝜶 non è conseguenza logica l&#39;algoritmo non temrina.</p>
-<p>Con <em>p</em> predicati <em>k</em>-ari e <em>n</em> costanti, ci sono <em>p </em> n<sup>k</sup>* istanziazioni, considerando che poi l&#39;algoritmo di riduzione ha complessità esponenziale, la situazione è disastrosa.</p>
-<p>C&#39;è anche un&#39;altro problema con la proposizionalizzazione, legato al fatto che dei quantificatori universali generano tanti fatti che sono irrilevanti.
-Conviene quindi andare ad applicare l&#39;istanziazione universale solo quanddo è strettamente necessario.</p>
+<p>Con <em>p</em> predicati <em>k</em>-ari e <em>n</em> costanti, ci sono <em>p \</em> n<sup>k</sup>* istanziazioni, considerando inoltre che l&#39;algoritmo di riduzione ha complessità esponenziale, la situazione è disastrosa.</p>
+<p>C&#39;è anche un&#39;altro problema con la proposizionalizzazione ed è legato al fatto che i quantificatori universali generano tanti fatti che sono irrilevanti.
+Conviene quindi andare ad applicare l&#39;istanziazione universale solo quando è strettamente necessario.</p>
 <h2 id="unificazione">Unificazione</h2>
 <p>Si può ottenere l&#39;inferenza immediatamente se è possibile trovare una sostituzione 𝜃 tale che <code>Re(x)</code> e <code>Avido(x)</code> corrispondano a<code>Re(Giovanni)</code> e <code>Avido(y)</code>.</p>
 <p><img src="Intelligenza Artificiale/immagini/l14-unificazione-1.png" alt=""></p>
@@ -1140,10 +1140,10 @@ In questo caso l&#39;algoritmo funziona comunque, tantè che il predicato ottenu
 <p>Bisogna dimostrare che se <em>p&#39;<sub>1</sub>...p&#39;<sub>n</sub></em> e <em>p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> =&gt; q</em> allora si può inferire <em>q𝜃</em>, dato che <em>p&#39;<sub>i</sub>𝜃 = p<sub>i</sub>𝜃</em> per ogni <em>i</em>.</p>
 <p>Lemma: per ogni clausola definita <em>p</em> abbiamo <em>p |= p𝜃</em> per mezzo di UI:</p>
 <ol>
-<li><em>p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> =&gt; q |= (p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> =&gt; q)𝜃 = p<sub>1</sub>𝜃 ⋀ ... ⋀ p<sub>n</sub>𝜃 =&gt; q𝜃</em></li>
+<li><em>p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> =&gt; q |= (p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> =&gt; q)𝜃 <strong>=</strong> p<sub>1</sub>𝜃 ⋀ ... ⋀ p<sub>n</sub>𝜃 =&gt; q𝜃</em></li>
 <li><em>p&#39;<sub>1</sub> ... p&#39;<sub>n</sub> |= p&#39;<sub>1</sub> ⋀ ... ⋀ p&#39;<sub>n</sub> |= p&#39;<sub>1</sub>𝜃 ⋀ ... ⋀ p&#39;<sub>n</sub>𝜃</em></li>
 </ol>
-<p>Da 1 e 2 si riesce a ricarvare <em>q𝜃</em> usando il Modus Ponens ordinario.</p>
+<p>Dal momento che per ipotesi <em>p&#39;<sub>i</sub>𝜃 = p<sub>i</sub>𝜃</em>, sfruttando i risultati dei punti 1 e 2 si riesce a ricarvare <em>q𝜃</em> usando il Modus Ponens ordinario.</p>
 <h3 id="esempio-di-base-di-conoscenza">Esempio di base di conoscenza</h3>
 <p><img src="Intelligenza Artificiale/immagini/l15-esempio-1.png" alt=""></p>
 <p><img src="Intelligenza Artificiale/immagini/l15-esempio-2.png" alt=""></p>
@@ -1158,7 +1158,7 @@ In questo caso l&#39;algoritmo funziona comunque, tantè che il predicato ottenu
 <h3 id="considerazioni">Considerazioni</h3>
 <p>L&#39;algoritmo è <strong>corretto</strong> e <strong>completo</strong> per le clausole definite di primo ordine, questo perché essendo clausole definite l&#39;esecuzione dell&#39;algoritmo termina sempre.</p>
 <p>La correttezza deriva dal fatto che viene semple applicato il Modus Ponens Generalizzato che è corretto.</p>
-<p>Se ci sono solo clausole definite del primo ordine è non c&#39;è nessuna funzione (<strong>datalog</strong>) allora FC termina in un numero poninomiale di iterazioni: <em>p\</em>n<sup>k</sup><em> che coincide con il massimo numero di fatti ground distinti che possono essere presenti nella KB. (</em>p<em> predicati </em>k<em>-ari e </em>n* costanti).</p>
+<p>Se ci sono solo clausole definite del primo ordine e non c&#39;è nessuna funzione (<strong>datalog</strong>) allora FC termina in un numero poninomiale di iterazioni: <em>p*n<sup>k</sup></em> che coincide con il massimo numero di fatti ground distinti che possono essere presenti nella KB. (<em>p</em> predicati <em>k</em>-ari e <em>n</em> costanti).</p>
 <p>In generale l&#39;algoritmo può non terminare se 𝜶 non è una conseguenza logica e questo è inevitabile perché il problema è semi-decidibile.</p>
 <p>Allo stesso modo la presenza di funzioni porta a generare un numero possibilmente infinito di clausole.</p>
 <p>Si può osservare che non c&#39;è bisogno di matchare una regola alla iterazione <em>k</em> se non è stata aggiunta una premessa alla iterazione <em>k-1</em>.</p>
@@ -1174,7 +1174,7 @@ In questo caso l&#39;algoritmo funziona comunque, tantè che il predicato ottenu
 <p>Per ogni regola che è rilevante per il predicato convinlto nell&#39;obiettivo, viene prima fatta la standardizzazione e poi per tutte le sostituzioni che sono state generate dagli AND.</p>
 <p>...</p>
 <p>La complessità in spazio è lineare con la dimensione della prova ma c&#39;è il rischio di effettuare cicli infiniti, è quindi necessario andare a controllare che il goal corrente non sia già nella pila dei goal.</p>
-<p>L&#39;algoritmo può essere inefficente a causa di sottogoal ripetuti, conviene tuinti tenere una cache che contiene i risultati già calcoalti.</p>
+<p>L&#39;algoritmo può essere inefficente a causa di sottogoal ripetuti, conviene quindi tenere una cache che contiene i risultati già calcoalti.</p>
 <p>Prolog non utilizza questi due miglioramenti.</p>
 <h2 id="programmazione-logica-prolog">Programmazione Logica: Prolog</h2>
 <p>Come anticipato utilizza backward chaining con clausole di Horn.</p>
@@ -1291,7 +1291,7 @@ operatore di cut ! per evitare di valutare le clausole successive
 <h2 id="completezza-della-risoluzione">Completezza della Risoluzione</h2>
 <p><img src="Intelligenza Artificiale/immagini/l18-dim.png" alt=""></p>
 <p>Non vediamo la dimostrazione completa.</p>
-<h2 id="riassinto">Riassinto</h2>
+<h2 id="riassunto">Riassunto</h2>
 <ul>
 <li>La proposizionalizzazione e l&#39;uso dell&#39;unficazione permetteno di evitare l&#39;istanziazione delle variabili coinvolte in una prova.</li>
 <li>Il modus ponens generalizzato usa l&#39;unificazione e permette l&#39;applicazione di forward e backward chaining su clausole definite.</li>
@@ -1390,65 +1390,61 @@ F. ∀x <span class="hljs-function"><span class="hljs-title">Gatto</span><span c
 <li>Il tempo è <strong>atomico</strong>, ogni azione può essere considerata indivisibile.</li>
 <li>Non sono ammesse azioni concorrenti anche se la azioni non hanno bisogno di essere eseguite in un determinato ordine. Viene sempre eseguita un&#39;azione alla volta.</li>
 <li>Azioni deterministiche, il risultato delle azioni è completamente determinato e non c&#39;è incertezza nel loro effetto (le azioni non possono fallire).</li>
-<li>L&#39;agente è l&#39;una causa di cambiamento nel mondo.</li>
-<li>L&#39;agente è omniscente, ha conoscenza completa dello stato del mondo (si assumene un mondo completamente osservabile, ovvero l&#39;agente ha tutti i sensori che gli permettono di recuperare tutte le informazioni che lo interessano).</li>
+<li>L&#39;agente è l&#39;unica causa di cambiamento nel mondo.</li>
+<li>L&#39;agente è omniscente, ha conoscenza completa dello stato del mondo (si assumene un mondo completamente osservabile, ovvero l&#39;agente ha tutti i sensori che gli permettono di recuperare tutte le informazioni che gli interessano).</li>
 <li><strong>Closed world assumption</strong>: tutte le informazioni a disposizione vengono assunte come vere, tutto quello che non si conosce è falso.</li>
 </ul>
 <h3 id="differenze-con-il-problem-solving">Differenze con il problem solving</h3>
-<p>Il problema di pianificazione sembra simile ai problemi di ricerca predenemente afforntati.</p>
-<p>Nei problemi di ricerca non si entra mai nei dettagli del problema (stati, successori).</p>
-<p>Gli algoritmi di planning per essere efficenti (e al momento non lo sono) tengono in considerazione anche i dettagli della del problema.</p>
-<p>Tipicamente gli stati, il goal e le azioni vengono decomposte in insiemi di sentenze (usualmente espresse in FOL).</p>
-<p>Inoltre, il problem solving lavora &quot;a stati&quot; mentre con il planning si procede nello spazio dei piani, si parte da un piano vuoto e lo si va via via a popolare con le varie azioni.</p>
-<p>In questo modo la ricerca procede lungo lo spazio dei piani e ad ogni passaggio si costruisce un piano parziale, permettendo anche di creare dei sotto goal che possono essere pianificati indipendemente, riducendo così la complessità del problema di pianificazione.</p>
-<p>Ad esempio la funzione successore andrebbe a generare tutti gli stati che possono essere raggiunti a partire da un dato stato mentre nella pianificazione vengono utilizzati i dettagli delle azioni per selezionare solo le azioni utili che permettono di avvicinarsi ad un goal.</p>
-<p>Allo stesso modo, la descrizione a &quot;black-box&quot; del goal nasconde dei dettagli per il goal, che possono essere sia risolti a parte, sia possono essere utilizzati per valutare meglio la bontà di uno stato.</p>
+<p>Il problema di pianificazione sembra simile ai problemi di ricerca predenemente afforntati, c&#39;è però una grande differenza: nei problemi di ricerca non si entra mai nei dettagli del problema (stati, successori), mentre gli algoritmi di planning tengono in considerazione anche i dettagli del problema.
+Questo dovrebbe renderli più efficenti, anche se al momento non lo sono.</p>
+<p>Tipicamente in un problema di planning, gli stati, il goal e le azioni vengono decomposte in insiemi di sentenze (usualmente espresse in FOL).
+Inoltre, il problem solving lavora &quot;a stati&quot; mentre con il planning si procede nello spazio dei piani, si parte da un piano vuoto e lo si va via via a popolare con le varie azioni.</p>
+<p>In questo modo la ricerca procede lungo lo spazio dei piani e, ad ogni passaggio, si costruisce un piano parziale, permettendo così di creare dei sotto goal che possono essere pianificati indipendemente, riducendo la complessità del problema di pianificazione.</p>
+<p>Ad esempio la funzione successore di un problema di ricerca andrebbe a generare tutti gli stati che possono essere raggiunti a partire da un dato stato mentre nella pianificazione vengono utilizzati i dettagli delle azioni per selezionare solo le azioni utili che permettono di avvicinarsi ad un goal.</p>
+<p>Allo stesso modo, la descrizione a &quot;black-box&quot; del goal nasconde dei dettagli per il goal, i quali possono permettere di scomporre il goal in sotto-goal risolvibili a parte oppure possono essere utilizzati per valutare meglio la bontà di uno stato.</p>
 <p>Quindi se il goal è composto da una serie di sotto goal tra loro indipendenti si può pianificare indipendentemente per ogni sotto-goal ottenendo così una pianificazione più semplice.</p>
 <h3 id="rappresentazione">Rappresentazione</h3>
 <p>Ogni stato viene rappresentato come una serie di congiunzione di fatti veri in quel determinato stato e conseguentemente un goal specifica quali fatti vengono richiesti che siano veri.</p>
-<p>Tutte queste informazioni vengono rappresentati con sentenze logiche del primo ordine.</p>
-<p>Il planning può essere quindi visto come la combinazione della ricerca con la rappresentazione logica.</p>
+<p>Tutte queste informazioni vengono rappresentati con sentenze logiche del primo ordine, pertanto il planning può essere visto come la combinazione della ricerca con la rappresentazione logica.</p>
 <h1 id="lezione-20-planning-2">Lezione 20 - Planning 2</h1>
 <h2 id="planning-con-il-calcolo-delle-situazioni">Planning con il calcolo delle situazioni</h2>
-<p>L&#39;idea base è di rappresentare il problema di planning in FOL.</p>
-<p>La base di conoscenza contiene quindi una parte invariabile che modella il mondo e una parte che rappresenta lo stato corrente e che varia man mano che vengono attuate delle azioni.</p>
-<p>Per provare una sequenza di azioni viene utilizzata l&#39;inferenza. </p>
-<p>Un piano equivale quindi ad una prova delle regole a partire dalla situazione che caratterizza lo stato iniziale.</p>
-<p>Questo approccio è teoricamente corretto, c&#39;è però un problema pratico in quanto nel caso pessimo la complessità dell&#39;inferenza è esponenziale.</p>
-<p>Inoltre, applicando la risoluzione viene trovata una prova (piano) che non è necessariamente il piano migliore. In più la risoluzione risponde con un &quot;Si, c&#39;è un piano ma non te lo dico&quot;.</p>
-<p>Ci sono quindi tre problemi tipici della rappresentazione logica.</p>
+<p>L&#39;idea base è di rappresentare il problema di planning in FOL, inserendo nella base di conoscenza delle sentenze che modellano il mondo e che sono invariabili e delle altre sentenze che rappresentano lo stato corrente, le quali variano man mano che vengono attuate le azioni previste dal piano.</p>
+<p>Utilizzando questa rappresentazione è possibile utilizzare l&#39;inferenza per provare una sequenza di azioni. Così fancendo un piano equivale ad una prova delle regole associate alle azioni a partire dalla situazione che caratterizza lo stato iniziale.</p>
+<p>Questo approccio è teoricamente corretto, c&#39;è però un problema pratico in quanto nel caso pessimo la complessità dell&#39;inferenza è esponenziale.
+Inoltre, applicando la risoluzione viene trovata una prova (piano) che non è necessariamente il piano migliore. In più la risoluzione risponde con un &quot;Si, c&#39;è un piano ma non te lo dico&quot;.</p>
+<p>Uitlizzando la rappresentazione logica ci sono altri tre problemi tipici:</p>
 <ul>
-<li><strong>Problema del frame</strong>: quando si passa da una situazione ad un&#39;altra devo risuscire a dire se cambia il valore di un predicato che non è stato coinvolto dalla traformazione, cioè se la trasformazione causa un side-effect.</li>
-<li><strong>Problema della qualifica</strong>: perché un&#39;azione possa essere applciata devono essere soddisfatte delle preconzioni, ma come possono essere rappresentate? In alcuni casi risulta complesso riuscre ad esplicitare tutte le condizioni necessarie e sufficenti per poter esegure un&#39;azione. Per specificare in modo corretto tutto ciò può essere necessario dover andare ad inserire un elevato numero di clausole nella KB.</li>
+<li><strong>Problema del frame</strong>: quando si passa da una situazione ad un&#39;altra bisogna risuscire a determinare se cambia il valore di un predicato che non è stato coinvolto dalla trasformazione, cioè se la trasformazione ha causato un side-effect.</li>
+<li><strong>Problema della qualifica</strong>: perché un&#39;azione possa essere applicata devono essere soddisfatte delle precondizioni, ma come possono essere rappresentate? In alcuni casi risulta complesso riuscre ad esplicitare tutte le condizioni necessarie e sufficenti per poter esegure un&#39;azione. Per specificare in modo corretto tutto ciò può essere necessario dover andare ad inserire un elevato numero di clausole nella KB.</li>
 <li><strong>Problema della ramificazione</strong>: versione duale della qualifica, descrivere in modo dettagliato gli esiti di un&#39;azione può richiedere un elevato numero di clausole.</li>
 </ul>
-<p>Quindi è meglio utilizzare un linguaggio ristretto con un algoritmo specializzato (planner) piuttosto che una soluzione generale, in modo da ottenere una soluzione più efficente.</p>
+<p>Quindi è meglio utilizzare un linguaggio ristretto con un algoritmo specializzato (planner) piuttosto che una soluzione generale, ottenendo così una soluzione più efficente.</p>
 <h2 id="strips">STRIPS</h2>
-<p>Approccio classico usato negli anni 70.</p>
-<p>Gli stati vengono rappresentati come una congiunzione di letterali ground.</p>
-<p>I goal sono congiunzioni di letterali o variabili quantificate esistenzialmente.</p>
+<p>Approccio classico usato negli anni 70 nel quale gli stati vengono rappresentati come una congiunzione di letterali ground e i goal sono congiunzioni di letterali o variabili quantificate esistenzialmente.</p>
 <p>Non c&#39;è biosgno di specificare completamente lo stato, facendo ciò significa che quello non specificato viene assunto falso (closed world).</p>
-<p>Vengono così rappresentati molti casi con poca memoria e spesso vengono rappresentati solo i cambiamenti dello stato piuttosto che l&#39;intera situazione, limitando così il problema del frame.</p>
-<p>Al contratrio di un dimostratore di teoremi, non viene certato se il goal è vero, ma viene certcata una sequenza di azioni che lo raggiunge.</p>
-<p>Tutte le azioni vengono rappresentate come operatori, ognuno dei quali è composto da 3 componenti:</p>
+<p>Vengono così rappresentati molti casi con poca memoria e spesso vengono rappresentati solo i cambiamenti dello stato piuttosto che l&#39;intera situazione, limitando il problema del frame.</p>
+<p>Al contratrio di un dimostratore di teoremi, non viene provato se il goal è vero, ma viene certcata una sequenza di azioni che lo raggiunge.</p>
+<p>In STRIPS le azioni vengono rappresentate come operatori, ognuno dei quali è composto da 3 componenti:</p>
 <ul>
-<li><strong>Descrizione delle azioni</strong></li>
-<li><strong>precondizioni</strong>: espresse come congiunzione di letterali positiv</li>
-<li><strong>effetto</strong>: congiunzione di letterlai positivi o negative che descrivono come la situazione cambia quandi si applicao l&#39;operatore.</li>
+<li><strong>Descrizione dell&#39;azione</strong></li>
+<li><strong>Precondizioni</strong>: espresse come congiunzione di letterali positivi</li>
+<li><strong>Effetti</strong>: congiunzione di letterali positivi o negativi che descrivono come la situazione cambia quando si applica l&#39;operatore.</li>
 </ul>
 <pre><code>Op[
     Action: <span class="hljs-function"><span class="hljs-title">Go</span><span class="hljs-params">(there)</span></span>,
     Precondizioni: <span class="hljs-function"><span class="hljs-title">At</span><span class="hljs-params">(here)</span></span> ⋀ <span class="hljs-function"><span class="hljs-title">Path</span><span class="hljs-params">(here,there)</span></span>,
-    Effetto: <span class="hljs-function"><span class="hljs-title">At</span><span class="hljs-params">(there)</span></span> ⋀ ¬ <span class="hljs-function"><span class="hljs-title">At</span><span class="hljs-params">(here)</span></span>
+    Effetti: <span class="hljs-function"><span class="hljs-title">At</span><span class="hljs-params">(there)</span></span> ⋀ ¬<span class="hljs-function"><span class="hljs-title">At</span><span class="hljs-params">(here)</span></span>
 ]
-</code></pre><p>Tutte le variavili sono quantificate universalmente e tutte le variabili di situazioni sono implicite: le precondizioni devono essere vere nello stato precedente dell&#39;applicazione dell&#39;operatore, gli effetti sono veri immediatamente dopo.</p>
+</code></pre><p>Tutte le variabili sono quantificate universalmente e tutte le variabili di situazione sono implicite: le precondizioni devono essere vere nello stato precedente dell&#39;applicazione dell&#39;operatore, gli effetti sono veri immediatamente dopo.</p>
 <h3 id="il-noioso-mondo-dei-blocchi">Il noioso mondo dei blocchi</h3>
 <p><img src="Intelligenza Artificiale/immagini/l20-brick.png" alt=""></p>
 <p>Il mondo dei blocchi è un micro mondo che consiste in un tavolo, un insieme di blocchi e un manipolatore robotico.</p>
 <p>Alcuni vincoli del dominio:</p>
-<p>– Un solo blocco può essere immediatamente sopra un altro
-– Un qualsiasi numero di blocchi sul tavolo
-– Il manipolatore può mantenere un solo blocco</p>
+<ul>
+<li>Un solo blocco può essere immediatamente sopra un altro</li>
+<li>Un qualsiasi numero di blocchi sul tavolo</li>
+<li>Il manipolatore può mantenere un solo blocco</li>
+</ul>
 <p>Una possibile rappresentazione è data da</p>
 <pre><code><span class="hljs-function"><span class="hljs-title">on</span><span class="hljs-params">(a,tavolo)</span></span>
 <span class="hljs-function"><span class="hljs-title">on</span><span class="hljs-params">(c,tavolo)</span></span>
@@ -1464,8 +1460,11 @@ handempty
 </code></pre><p>Ad esempio l&#39;applicazione dell&#39;azione può avere il seguente effetto:</p>
 <p><img src="Intelligenza Artificiale/immagini/l20-unstack-1.png" alt=""></p>
 <p><img src="Intelligenza Artificiale/immagini/l20-unstack-2.png" alt=""></p>
-<p>Altre azioni:</p>
-<pre><code><span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(x,y)</span></span>
+<p>Le azioni eseguibili sono:</p>
+<pre><code><span class="hljs-function"><span class="hljs-title">Unstack</span><span class="hljs-params">(x,y)</span></span>
+    P = HANDEMPTY, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>
+    E = ¬HANDEMPTY, ¬<span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(y)</span></span>
+<span class="hljs-function"><span class="hljs-title">Stack</span><span class="hljs-params">(x,y)</span></span>
     P = <span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(y)</span></span>
     E = <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(y)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, HANDEMPTY
 <span class="hljs-function"><span class="hljs-title">Pickup</span><span class="hljs-params">(x)</span></span>
@@ -1481,24 +1480,23 @@ handempty
 <p>La pianificazione può essere fatta a partire dallo stato iniziale o da quello goal.</p>
 <h4 id="forward-planning">Forward Planning</h4>
 <p>L&#39;idea è quella di partire dallo stato iniziale e provare ad applicare tutte le possibile azioni fino a che non si trova una sequenza di azioni che porta ad uno stato goal.</p>
-<p>Equivare quindi ad una <strong>ricerca nello spazio degli stati</strong>, dove per ogni stato vengono generati tanti successori quante sono le azioni applicabili, in un modo analogo alla ricerca breadth-first.</p>
+<p>Equivale quindi ad una <strong>ricerca nello spazio degli stati</strong>, dove per ogni stato vengono generati tanti successori quante sono le azioni applicabili, in un modo analogo alla ricerca breadth-first, senza tener conto della rilevanza o meno delle azioni. Un azione è <strong>rilevante</strong> se un suo effetto combacia con la prosizione del goal.</p>
 <p>C&#39;è il solito problema che se ci sono molte azioni applicabili ad uno stato si ottiene un fattore di branching enorme.</p>
-<p>Il problema riguarda la ricerca di un&#39;azione <strong>rilevante</strong>, cioè se un suo effetto combacia con una proposizione del goal.</p>
 <h4 id="backward-planning-chaining-">Backward Planning (Chaining)</h4>
-<p>Si parte dalla <strong>specifica del goal</strong> (non dallo stato) e si cercano delle azioni rilevanti che soddisfano parte del goal, vengono così lasciate &quot;aperte&quot; le precondizioni delle azioni scelte, diventa quindi necessario andare a soddisfare queste precondzioni con altre azioni.</p>
-<p>Si ripete questo procedimento fin che non si ottengono delle precondizioni che vengono soddisfatte dallo stato iniziale.</p>
-<p>Con questa strategia il fattore di branching è limitato (ricerca nello spazio dei goal, questo perché si considera la rappresentazione del goal e non degli stati).</p>
-<p>Trattandosi di una ricerca in profondità c&#39;è il rischio di ciclare, biosgna quindi tenere a mente questo e deve acnhe essere possibile effettaure il back-tracking.</p>
+<p>Si parte dalla <strong>specifica del goal</strong> (non dallo stato) e si cercano delle azioni rilevanti che soddisfano parte del goal, vengono così lasciate &quot;aperte&quot; le precondizioni delle azioni scelte e diventa necessario andare a soddisfare queste precondzioni con altre azioni.
+Si ripete questo procedimento finché non si ottengono delle precondizioni che vengono soddisfatte dallo stato iniziale.</p>
+<p>Con questa strategia il fattore di branching è limitato e la ricerca avveniene nello spazio dei goal, questo perché si considera la rappresentazione del goal e non degli stati.</p>
+<p>Trattandosi di una ricerca in profondità c&#39;è il rischio di ciclare, è quindi necessario inserire degli opportuni controlli. Infine, deve essere possibile effettuare il back-tracking delle scelte nel caso non si arrivi ad una soluzione.</p>
 <h3 id="planning-in-strips">Planning in STRIPS</h3>
 <p>Vengono utilizzate due strutture dati:</p>
 <ul>
-<li><strong>Lista di stati</strong>: tutti i predicati che sono correntemente veri</li>
+<li><strong>Lista di stati</strong>: contiene tutti i predicati che sono correntemente veri</li>
 <li><strong>Pila di goal</strong>: una pila di goal da risolvere, con il goal corrente in testa alla pila.</li>
 </ul>
-<p>Se il goal corrente non è soddisfatto dallo stato presente, esamina gli effetti positivi dei vari operatore, e inserisce l&#39;opertatore e la lista delle precondizioni dell&#39;operatore sulla pila (<strong>sotto-goal</strong>).</p>
+<p>Se il goal corrente non è soddisfatto dallo stato presente, STRIPS esamina gli effetti positivi dei vari operatori, e inserisce l&#39;opertatore e la lista delle precondizioni dell&#39;operatore sulla pila (<strong>sotto-goal</strong>).</p>
 <p>Quando il goal corrente è soddisfatto lo rimuove dalla pila.</p>
 <p>Quando un operatore è in testa alla pila, registra l’applicazione dell’operatore sulla sequenza del piano e usa gli effetti per aggiornare lo stato corrente.</p>
-<pre><code>Strips(initial-state, goals)
+<pre><code class="lang-python">Strips(initial-state, goals)
     state = initial-state, plan = [], stack = []
     push goals <span class="hljs-function_start"><span class="hljs-keyword">on</span></span> stack
     <span class="hljs-keyword">repeat</span> <span class="hljs-keyword">until</span> stack <span class="hljs-keyword">is</span> empty
@@ -1514,11 +1512,10 @@ handempty
         <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> top <span class="hljs-keyword">of</span> stack <span class="hljs-keyword">is</span> an operator o <span class="hljs-keyword">then</span>
             state = apply(o, state)
             plan = [plan:o]
-</code></pre><p>Un <code>conjunctive-goal</code> è un goal composto da più proposizioni.</p>
+</code></pre>
+<p>Un <code>conjunctive-goal</code> è un goal composto da più proposizioni.</p>
 <h1 id="lezione-21-planning-3">Lezione 21 - Planning 3</h1>
-<h2 id="piani-sub-ottimi">Piani sub-ottimi</h2>
-<p>Finora non è stato specificato alcun criterio per trovare un piano ottimo.</p>
-<p>La soluzionione trovata non è quindi detto che sia ottima.</p>
+<p>STRIPS non tiene in considerazione il concetto di &quot;piano ottimo&quot; quindi la soluzione che fornisce non è detto che sia ottima.</p>
 <h2 id="problemi-non-risolvibili-">Problemi non risolvibili.</h2>
 <pre><code>Goal: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,b)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,c)</span></span>
 Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(b,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(a,table)</span></span>, <span class="hljs-function"><span class="hljs-title">On</span><span class="hljs-params">(c,a)</span></span>, <span class="hljs-function"><span class="hljs-title">clear</span><span class="hljs-params">(b)</span></span>, <span class="hljs-function"><span class="hljs-title">clear</span><span class="hljs-params">(c)</span></span>, handempty. 
@@ -1547,59 +1544,206 @@ Stato: <span class="hljs-function"><span class="hljs-title">On</span><span class
 ...
 </code></pre><p>Per ottenere <code>Clear(b)</code>, si può fare <code>Unstack(b,c)</code> invalidando il goal precedentemente ottenuto per poi andare a ricostruire il goal <code>On(b,c)</code>.</p>
 <p>C&#39;è però il rischio di cliclare (<strong>anomialia si Sussman</strong>) in quanto i due sottogoal non sono tra loro indipendenti.</p>
-<p>Inoltre se il problema prevede il consumo di risorse può essere che STRIPS non sia in grado di risolverlo, questo perché cerca di ottenere subito un ordine totale della azioni.</p>
+<p>Inoltre, se il problema prevede il consumo di risorse può essere che STRIPS non sia in grado di risolverlo, questo perché cerca di ottenere subito un ordine totale delle azioni.</p>
 <h2 id="ricapitolando">Ricapitolando</h2>
 <p>Un piano è una soluzione trovata cercando tra le situazioni goal.</p>
 <p>La ricerca può essere fatta con un <strong>planner progressivo</strong>, che cerca il goal in avanti a partire dallo stato iniziale, o da un <strong>planner regressivo</strong>, che cerca un piano a partire dal goal.</p>
 <h2 id="planning-nello-stato-dei-piani">Planning nello stato dei piani</h2>
 <p>L&#39;alternativa è una ricerca attraverso lo spazio dei piani, piuttosto che delle situazioni.</p>
-<p>Questa ricerca parte da un <strong>piano parziale</strong> che non fa nulla e che viene espanso e raffinato fino a raggiungere un piano completo che risolve il problema.</p>
-<p>Il raffinamento avviene mediante degli <strong>operatori di raffinamento</strong> che aggiungono vincoli a piani parziale e lo modificano.</p>
+<p>Questa ricerca parte da un <strong>piano parziale</strong> che non fa nulla, che viene espanso e raffinato fino a raggiungere un piano completo che risolve il problema.</p>
+<p>Il raffinamento avviene mediante degli <strong>operatori di raffinamento</strong> che aggiungono vincoli ad un piano parziale modificano l&#39;ordine delle azioni o aggiungendone di nuove.</p>
 <h2 id="partial-order-planning-pop-">Partial order planning (POP)</h2>
 <p>Un planner lineare costruisce un piano come una sequenza totalmente ordinata di passi, mentre un planner non lineare (POP), costruisce un piano come un insieme di passi con alcuni vincoli temporali.</p>
-<p>Vengono quindi utilizzati dei vincoli del tipo <code>S1 &lt; S2</code> per specificare che <code>S1</code> deve essere eseguito prima di <code>S2</code>.</p>
-<p>Il raffinamento di un piano può avvenire come:</p>
+<p>Vengono quindi utilizzati dei vincoli del tipo <em>S1 &lt; S2</em> per specificare che <em>S1</em> deve essere eseguito prima di <em>S2</em>.</p>
+<p>Il raffinamento avviene quindi aggiungendo dei nuovi passi al piano oppure aggiungendo dei vincoli tra i passi già presenti nel piano.</p>
+<p>La soluzione così ottenuta rappresenta un ordinamento parziale che può essere sempre convertito in un piano totalmente ordinando utilizzando un ordinamento topologico tra i vari passi.</p>
+<p>I planner non lineari incorporano il principio del <strong>minimo impegno</strong>, cioè scelgono solo quelle azioni, ordinamenti e assegnamenti di variabili che sono assolutamente necessari, rimandando le altre scelte al futuro. Non vengono inoltre prese decisioni premature su aspetti non rilevanti per raggiungere il goal.</p>
+<p>Confrontanto i due approcci:</p>
 <ul>
-<li>aggiunta di un nuovo passo al piano</li>
-<li>aggiunta di un nuovo vincolo ai passi già presenti nel piano.</li>
+<li>Un planner lineare sceglie sempre di aggiungere un passo in
+un punto preciso della sequenza</li>
+<li>Un planner non-lineare sceglie di aggiungere un passo ed
+eventualmente qualche vincolo temporale fra passi</li>
 </ul>
-<p>Ogni piano parziale può comunque essere convertito in un piano totalmente ordinando, utilizzando un ordinamento topologico tra i vari passi.</p>
-<p>I planner non lineari incorporano il principio del <strong>minimo impegno</strong>, cioè scelgono solo quelle azioni, ordinamenti e assegnamenti di variabili che sono assolutamente necessarie, rimandando il tutto al futuro. Non vengono inoltre prese decisioni premature su aspetti che non rilevanti per raggiungere il goal.</p>
-<pre><code>• Un planner lineare sceglie sempre <span class="hljs-keyword">di</span> aggiungere un passo <span class="hljs-keyword">in</span>
-un punto preciso della sequenza
-• Un planner non-lineare sceglie <span class="hljs-keyword">di</span> aggiungere un passo <span class="hljs-keyword">ed</span>
-eventualmente qualche vincolo temporale fra passi
-</code></pre><h3 id="struttura-di-un-piano-non-lineare">Struttura di un piano non lineare</h3>
+<h3 id="struttura-di-un-piano-non-lineare">Struttura di un piano non lineare</h3>
 <ol>
-<li>Insieme di passi {S1,S2, ...}, ognuno dei quali ha la descrizione di un operatore, precondizioni e postcondizioni.</li>
-<li>Un insieme di link causali {... (Si,C,Sj) ...}, che significa che uno dei propositi del passo Si è di raggiungere la condizione C del passo Sj.</li>
-<li>Un insieme di vincoli di ordinamenteo {... Si &lt; Sj, ...} nel caso in cui Si deve venire eseguito prima di Sj.</li>
+<li>Insieme di passi {S<sub>1</sub>,S<sub>2</sub>, ...}, ognuno dei quali ha la descrizione di un operatore, precondizioni e postcondizioni.</li>
+<li>Un insieme di link causali {... <em>(S<sub>i</sub>,C,S<sub>j</sub>)</em> ...}, che specificano che uno dei propositi del passo <em>S<sub>i</sub></em> è di raggiungere la condizione <em>C</em> del passo <em>S<sub>j</sub></em>.</li>
+<li>Un insieme di vincoli di ordinamento {... <em>S<sub>i</sub> &lt; S<sub>j</sub></em> ...} che specificano che il passo <em>S<sub>i</sub></em> deve venire eseguito prima di <em>S<sub>j</sub></em>.</li>
 </ol>
-<p>Un piano non lineare è completo se e solo se:</p>
+<p>Un piano non lineare è <strong>completo</strong> se e solo se:</p>
 <ul>
 <li>Ogni passo (2) e (3) si trova nell&#39;insieme (1).</li>
-<li>Se Sj ha un prerequisito C, asllora esisten un link causale in (2) con la forma (Si, C, Sj).</li>
-<li>Se (Si, C, Sj) è in (2) e il passo Sk è in (1) e Sk &quot;minaccia&quot; (Si, C, Sj), cioè rende falso C, allora (3) contiene Sk&lt;Si o Sk&gt;Sj.</li>
+<li>Se <em>S<sub>j&lt;/sub</em> ha un prerequisito <em>C</em>, allora esiste un link causale in (2) con la forma <em>(S<sub>i</sub>, C, S<sub>j</sub>)</em>.</li>
+<li>Se <em>(S<sub>i</sub>, C, S<sub>j</sub>)</em> è in (2) e il passo <em>S<sub>k</sub></em> è in (1) e <em>S<sub>k</sub></em> &quot;<strong>minaccia</strong>&quot; <em>(S<sub>i</sub>, C, S<sub>j</sub>)</em>, cioè rende falso <em>C</em>, allora (3) contiene <em>S<sub>k</sub>\&lt;S<sub>i</sub></em> o <em>S<sub>k</sub>>S<sub>j</sub></em>.</li>
 </ul>
-<p>Ogni piano inizia allo stesso modo con un passo S1:Start e un S2:Finish.</p>
+<p>Ogni piano inizia allo stesso modo con un passo <em>S<sub>1</sub>:Start</em> e un <em>S<sub>2</sub>:Finish</em>.</p>
 <p><img src="Intelligenza Artificiale/immagini/l21-pp.png" alt=""></p>
 <p>Un piano ottenuto in questo modo può essere rappresentato graficamente con:</p>
 <p><img src="Intelligenza Artificiale/immagini/l21-shoe-plan.png" alt=""></p>
 <h3 id="pop-vincoli-e-euristiche">POP - Vincoli e euristiche</h3>
 <p>Per popolare un piano non lineare si torna a fare una ricerca nello spazio dei piani.</p>
-<p>Una strategia di ricerca è quella greedy, aggiungengo solo passi che raggiungono una precondizione correntemente non raggiunta. La filosofia del minimo impegno prevede poi di non ordinare i passi a meno che non sia strettamente necessario.</p>
-<p>Bisogna poi tenere conto dei link causali (Si, C, Sj) che <em>proteggono</em> una condizione <em>C</em>, quindi non deve essere mai aggiunto un passo intermedio Sk tra Si e Sj che invalida C.
-Se un&#39;azione parallela minaccia (threatens) <em>C</em>, cioè ha l&#39;effeto di negare <em>C</em> (clobbering) è necessario risolvere la minaccia aggiungendo dei vincoli temporali. Si parla di <strong>demotion</strong> se viene posto Sk &lt; Si oppure di <strong>promotion</strong> se Sk &gt; Sj.</p>
+<p>Una strategia di ricerca è quella greedy che aggiunge solo passi che soddisfano una precondizione correntemente non soddisfatta. La filosofia del minimo impegno prevede poi di non ordinare i passi a meno che non sia strettamente necessario.</p>
+<p>Bisogna poi tenere conto dei link causali <em>(S<sub>i</sub>, C, S<sub>j</sub>)</em> che <em>proteggono</em> una condizione <em>C</em>, quindi non deve essere mai aggiunto un passo intermedio <em>S<sub>k</sub></em> tra <em>S<sub>i</sub></em> e <em>S<sub>j</sub></em> che invalida <em>C</em>.
+Se un&#39;azione parallela minaccia (<strong>threatens</strong>) <em>C</em>, cioè ha l&#39;effeto di negare <em>C</em> (clobbering) è necessario risolvere la minaccia aggiungendo dei vincoli temporali. Si parla di <strong>demotion</strong> se viene posto <em>S<sub>k</sub> \&lt; S<sub>i</sub></em> oppure di <strong>promotion</strong> se <em>S<sub>k</sub> > S<sub>j</sub></em>.</p>
 <p><img src="Intelligenza Artificiale/immagini/l21-dem-prom.png" alt=""></p>
-<p>Un piano viene detto <strong>consistente</strong> se non ci sono cicli e non c&#39;è un conflitto tra chi soddisfa e chi minaccia, se ogni precondizione di tutte le azioni del piano sono soddisfatte e nessun passo intermedio le invalida, allora il piano si dice anche <strong>completo</strong>.</p>
+<p>Un piano viene detto <strong>consistente</strong> se non ci sono cicli e non c&#39;è un conflitto tra chi soddisfa e chi minaccia. </p>
+<p>Se ogni precondizione di tutte le azioni del piano sono soddisfatte e nessun passo intermedio le invalida, allora il piano si dice anche <strong>completo</strong>.</p>
 <p>Per rimuovere un conflitto si può aggiungere un vincolo d&#39;ordinamento oppure aggiungere delle nuove azioni.</p>
-<p>Nella costruzione di un piano è possibile utilizzare un&#39;euristica simile alla <strong>most constrained variable</strong> dei CSP, con la differenza che si sceglie di soddisfare la precondizione non raggiunta che può essere soddisfatta nel minor numero di modi possibile.</p>
+<p>Nella costruzione di un piano è possibile utilizzare un&#39;euristica simile alla <strong>most constrained variable</strong> dei CSP, con la differenza che si sceglie di soddisfare per prima la precondizione non raggiunta che può essere soddisfatta nel minor numero di modi possibile.</p>
 <h3 id="propriet-di-pop">Proprietà di POP</h3>
 <p>L&#39;algoritmo non è deterministico, se si verifica un fallimento si fa backtracking sui punti di scelta (<em>choice point</em>), questi possono essere la scelta di passo per raggiungere un sotto-obiettivo o la scelta di demotion o promotion in caso di minaccia.</p>
 <p>POP è <strong>corretto</strong>, <strong>completo</strong> e <strong>sistematico</strong> (non ci sono ripetizioni), inoltre può essere esteso rappresentando le azioni nella logica del primo ordine.</p>
 <p>L&#39;algortimo risulta efficente se utilizza delle euristiche derivate dalla descrizione del problema, altrimenti c&#39;è la solita esplosione combinatoria.</p>
 <p>C&#39;è quindi la necessità di avere delle buone euristiche e non è semplice derivare delle euristiche ammissibili.</p>
-<p>Uno strumento utile per ottenere queste euristiche è il grado di planning, il quale raccoglie informazioni su queli piani sono impossibili non prendendo in considerazione le minacce e non considerano il &quot;<em>consumo</em>&quot; dei letterali che chiudono le precondizioni (il consumo di un letterale si ha quando l&#39;esecuzione di un&#39;azione cambia il valore del letterale).</p>
+<p>Uno strumento utile per ottenere queste euristiche è il grado di planning, il quale raccoglie informazioni su quali piani sono impossibili non prendendo in considerazione le minacce e non considerano il &quot;<em>consumo</em>&quot; dei letterali che chiudono le precondizioni (il consumo di un letterale si ha quando l&#39;esecuzione di un&#39;azione cambia il valore del letterale).</p>
 <p>Questi grafi permettono quindi di sapere se non c&#39;è soluzione ad un problema di pianificazione.</p>
 <p><img src="Intelligenza Artificiale/immagini/l21-plan-graph.png" alt=""></p>
+<h1 id="lezione-22-grafi-di-planning">Lezione 22 - Grafi di planning</h1>
+<h2 id="costruzione-di-un-grafo">Costruzione di un grafo</h2>
+<p>Un grafo viene costriuto a livelli:</p>
+<ul>
+<li>Il primo livello contiene tutti i letterali dello stato iniziale</li>
+<li>I successivi livelli sono ottenuti dalla applicazione riperuta delle azioni che hanno i prerequisiti soddisfatti</li>
+<li>I letterali di un livello sono riportati al livello successivo (<strong>persistance actions</strong>)</li>
+</ul>
+<p>Il procedimento termina quando non è più possibile aggiungere nuovi letterali.</p>
+<p>Per ottenere un risultato in modo efficiente non vengono considerate le variabili e non devono esserci troppi oggetti. Un&#39;altra ipotesi semplificativa è che le azioni non consumano i letterali.</p>
+<h3 id="esempio-della-torta">Esempio della torta</h3>
+<p><strong>Stato iniziale</strong>: Have(Cake)</p>
+<p><strong>Goal</strong>: Have(Cake) ⋀ Eaten(Cake)</p>
+<p><strong>Actions</strong>:</p>
+<ul>
+<li><em>Eat(Cake)</em>: PRE: Have(Cake), POST: ¬Have(Cake) ⋀ Eaten(Cake)</li>
+<li><em>Bake(Cake)</em>: PRE: ¬Have(Cake), POST: Have(Cake)</li>
+</ul>
+<p><img src="Intelligenza Artificiale/immagini/l22-grafo.png" alt=""></p>
+<p>Da notare che in S<sub>1</sub> compaiono contemporaneamente sia <em>Have(Cake)</em> che <em>¬Have(Cake)</em> e questo è permesso perché stiamo risolvendo un problema rilassato.</p>
+<p>L&#39;espasione del grafico termina quando il livello <em>i+1</em> coincide con il livello <em>i</em>.</p>
+<p>Da notare che se nei vari livelli non compaiono mai i goal, questi non possono essere raggiunti nel problema rilassato e di conseguenza non sono raggiungibili neanche nel problema originale.</p>
+<h2 id="casi-particolari">Casi particolari</h2>
+<p><img src="Intelligenza Artificiale/immagini/l22-grafo-casi.png" alt=""></p>
+<p>Nel grafo di planning possono comparire dei collegamenti che in un piano reale non potrebbero comparire perché sono mutuamente esclusivi (<strong>collegamenti mutex</strong>).
+Questi collegamenti tra le <strong>azioni</strong> si possono verificare in 3 condizioni:</p>
+<ul>
+<li><strong>Effetti inconsistenti</strong>: un&#39;azione nega l&#39;effetto di un&#39;altra. Ad esempio <em>Eat(Cake)</em> e la persistenza di <em>Have(Cake)</em> hanno effetti inconsistenti, perché sono in disaccordo sull&#39;effetto di <em>Have(Cake)</em>. Questo avviene quando un&#39;azione consuma un letterale negandolo, ma per effetto della persistenza lo stesso letterale non negato compare nel livello successivo.</li>
+<li><strong>Interferenze</strong>: uno degli effetti di un&#39;azione è la negazione di una precondizione dell&#39;altra. Ad esempio <em>Eat(Cake)</em> interferisce con la persistenza di <em>Have(Cake)</em>, negando la sua precondizione.</li>
+<li><strong>Necessità in competizione</strong>: una delle precondizione di una delle azioni è mutuamente esclusiva con una precondizione dell&#39;altra. Ad esempio <em>Bake(Cake)</em> e <em>Eat(Cake)</em> sono mutualmente esclusive perché competono sul valore delle precondizione <em>Have(Cake)</em>, ovvero per poter eseguire <em>Bake(Cake)</em> deve essere vero <em>¬Have(Cake)</em> mentre per eseguire <em>Eat(Cake)</em> deve essere vero <em>Have(Cake)</em>, ovvero quando una delle precodizioni di un&#39;azione è la negazione della precondizione di un&#39;altra azione.</li>
+</ul>
+<p>Mentre, in un dato livello si ha una relazione mutex tra due <strong>letterali</strong> se uno è la negazione dell&#39;altro oppure se ogni possibile coppia di azioni che potrebbe soddisfare i due letterali è in mutua esclusione. In questo caso si parla di <strong>supporto inconsistente</strong>.</p>
+<h2 id="costruzione-di-euristiche">Costruzione di euristiche</h2>
+<p>Ogni livello di un grafo di planning contiene tutti i letterali che <strong>potrebbero</strong> essere veri in quel passo, trascurando tutte le possibili interazioni negative fra azioni e letterali.</p>
+<p>Pertanto, un letterale che appare per la prima volta al livello <em>n</em> non implica l&#39;esistenza di un piano in <em>n</em> passi che lo raggiunge, ma si ha la certezza che non esiste un piano che lo raggiunge in <strong>meno</strong> di <em>n</em> passi.</p>
+<p>A partire da un grafo di planning possono quindi essere costruite varie euristiche ammissibili che misurano la distanza tra lo stato <em>s</em> e lo stato goal.
+Queste euristiche si basano sul <strong>level cost</strong> dei letterali che compongno il goal. Il level cost di un letterale corrispone al primo livello del grafo di planning che lo contiene.</p>
+<p>Si ottiene una stima migliore del level cost se si usa un grafo di planning seriale, cioè che usa la mutua esclusione tra coppie di azioni (azioni persisteni escluse), ovvero tra un livello e l&#39;altro viene sempre eseguita una sola azione.</p>
+<p>Alcune euristiche sono:</p>
+<ul>
+<li><strong>Max-level</strong>: massimo level cost fra tutti i sotto-goal, è un euristica ammissibile ma non molto accurata.</li>
+<li><strong>Level-sum</strong>: somma dei level cost dei sotto-goal, è un&#39;euristica inammisibile che si basa sull&#39;indipendenza dei sotto-goal. Nonostante l&#39;inammisibilità questa euristica funziona bene nei problemi pratici molto scomponibili.</li>
+<li><strong>Set-level</strong>: cerca il livello in cui tutti i letterali dell’obiettivo congiuntivo appaiono sul grafo senza che alcuna coppia di essi sia mutuamente esclusiva. Questa euristica domina max-level e funziona bene nelle attività in cui c’è molta interazione tra i sotto-piani.</li>
+</ul>
+<h2 id="graphplan">GraphPlan</h2>
+<pre><code class="lang-python">function <span class="hljs-function"><span class="hljs-title">GraphPlan</span><span class="hljs-params">(problem)</span></span> return solution or failure
+    grafo &lt;- <span class="hljs-function"><span class="hljs-title">GrafoPianificazioneIniziale</span><span class="hljs-params">(problema)</span></span>
+    obiettivi &lt;- <span class="hljs-function"><span class="hljs-title">Congiunti</span><span class="hljs-params">(problema.Obiettivo)</span></span>
+    nogood &lt;- tabella hash vuota
+    <span class="hljs-keyword">for</span> tl = <span class="hljs-number">0</span> to ∞ do
+        <span class="hljs-keyword">if</span> obiettivi sono tutti non-mutex <span class="hljs-keyword">in</span> S_t di grafo then
+            soluzione &lt;- <span class="hljs-function"><span class="hljs-title">EstraiSoluzione</span><span class="hljs-params">(grafo, obiettivi, NumLivelli(grafo)</span></span>, nogood)
+            <span class="hljs-keyword">if</span> soluzione != fallimento then return soluzione
+        <span class="hljs-keyword">if</span> grafo e nogoo si sono livellati entrambi then return fallimento
+        garfo &lt;- <span class="hljs-function"><span class="hljs-title">EspandiGrafo</span><span class="hljs-params">(grafo, problema)</span></span>
+</code></pre>
+<p>L&#39;idea dell&#39;algoritmo è quella di trovare un livello del piano in cui il goal è soddisfatto da letterali che non sono tra loro mutuamente esclusivi. Una volta trovato questo livello si torna indietro cercando di sotituire i vari sotto-goal con le loro precondizioni, fino ad arrivare alle condizioni che sono vere nello stato inziale.</p>
+<p>Una volta raggiunto lo stato iniziale, il piano è dato dalle azioni utilizzate per tornare indietro dal livello contenente il goal.</p>
+<p>Due azioni sono considerate in mutua esclusione quando producono una situazione inconsistente, cioè un livello del grafo che contienete lo stesso letterale, sia negato, che non.</p>
+<p>Da notare che se si trovano tutti i sottogoal in un determinato livello, ma alemeno uno si trova in uno stato di supporto inconsistente è necessario proseguire lo sviluppo del grafico fino a quando tutti hanno supporto.</p>
+<p>La funzione <code>EstraiSoluzione</code> tenta di trovare un piano a ritorso cercando di risolvere un CSP booleano che ha come variabili le azioni in ogni livello e il valore di quest specifica se l&#39;azione è da considerare dentro o fuori dal piano. </p>
+<p>Alternativamente si può formulare un problema di ricerca in cui ogni stsato contiene un puntatore ad un livello del grafo di pianificazione e a un insieme di obiettivi non soddisfatti. Il problema può essere formulato come:</p>
+<ul>
+<li>Lo stato iniziale è l&#39;ultimo livello del grafo di pianificazione, <em>S<sub>n</sub></em>, con l&#39;insieme degli obiettivi uguale a quello del problema di partenza.</li>
+<li>Le azioni disponibili in uno stato <em>S<sub>i</sub></em> consistono nella selezione di un qualsiasi sottoinsieme primo di conflitti delle azioni <em>A<sub>i-1</sub></em>. Lo stato risultate ha livello <em>S<sub>i-1</sub></em> e ha come insieme di oviettivi le precondizioni dell&#39;insieme di azioni prescelto.</li>
+<li>L&#39;obiettivo è raggiungere lo stato <em>S<sub>0</sub></em> tale che tutti gli obiettivi siano soddisfatti.</li>
+<li>Il costo di ogni azione è 1.</li>
+</ul>
+<h2 id="licenziando-le-assunzioni">Licenziando le assunzioni</h2>
+<p>Andremo a licenziare o rilassare alcune delle assunzioni fatte in precedenza, in particolare:</p>
+<ul>
+<li>Le azioni non sono sempre deterministiche;</li>
+<li>L&#39;agente non è da solo nello spazio;</li>
+<li>L&#39;agente non è più omniscente;</li>
+<li>Il mondo non è più chiuso.</li>
+</ul>
+<p>Quindi andiamo a sbattere contro il mondo reale, applicando della pianiciazione condizionale per gestire le situazioni di incertezza. 
+Dal momento che il mondo cambia c&#39;è da prevedere anche un monitoraggio dell&#39;ambiente e la necessità di ripianificare.</p>
+<p>Sorgono quindi nuovi problemi:</p>
+<ul>
+<li><strong>Informazione incompleta</strong>: le precendizioni di un&#39;azione sono sconosciute, ad esempio non ho informazioni sulla ruota di scorta.</li>
+<li><strong>Informazione non corretta</strong>: potrei avere a disposizioni delle informazioni errate.</li>
+<li><strong>Problema della qualifica</strong>: non si finisce mai di elenecare tutte le possibili precondizioni.</li>
+</ul>
+<p>Alcune soluzioni:</p>
+<ul>
+<li><strong>Conformant planning</strong>: si produce un piano trascurando lo stato o l&#39;esito delle azioni, tenendo però l&#39;assunizione che le azioni sono deterministiche. Il piano quindi parte da un possibile insieme di stati e applicando varie azioni li restringe, questo approccio però non sempre funziona.</li>
+<li><strong>Pianificazione condizionale</strong>: si pianificano anche delle azioni di osservazione per ottenere le informazioni mancanti e viene poi predisposto un sotto-piano per ogni possibile contingenza, ad esempio: <em>Check(Tyre1) if Intact(Tyre1) then Inflate(Tyre1) else CallAAA</em>. Questi sottopiani deveono essere definiti per tutti i casi possibili, compresi quelli molto rari, risulta quindi costoso.</li>
+<li><strong>Monitoraggio/Ripianificazione</strong>: assume di essere in una situazione normale e man mano che procede nell&#39;esecuzione del piano, controlla che questa proceda come previsto e se necessario esegue una ripianificazione. Anche in questo caso non sempre è possibile raggiungere il goal perché l&#39;agente potrebbe eseguire piani ciclici.</li>
+</ul>
+<h3 id="conformant-planning">Conformant Planning</h3>
+<p>Esegue una ricerca negli <strong>stati di credenza</strong>, cioè l&#39;insieme degli stati in cui l&#39;agente potrebbe trovarsi.
+ Questo insieme può anche contenere degli stati goal, tuttavia si assume di non avere i sensori, quindi l&#39;agente non sa di essere in un goal finché non è sicuro di essere in uno stato goal, cioè quando l&#39;insieme degli stati di credenza contiene un solo stato che è anche goal.</p>
+<p>Questa strategia ha senso quando non è possibile utilizzare alcuni dei sensori dell&#39;agente e le azioni <strong>sono</strong> deterministiche.</p>
+<p><img src="Intelligenza Artificiale/immagini/l22-mega-grafo.png" alt=""></p>
+<h3 id="pianificazione-condizionale">Pianificazione condizionale</h3>
+<p>Se il mondo è non deterministico o parazialmente osservabile la percezione di un agente di solito fornisce solamente alcune informazioni, cioè suddivide lo stato di credenza.</p>
+<p>Questi piani controllano quindi tutte le conseguenze della base di conoscenza rispetto alla percezioni.</p>
+<p>Durante l&#39;esecuzione del piano l&#39;agente verifica se è soddisfatta una determinata condizione e in base a quella esegue un piano o un altro.</p>
+<p>Questa strategia necessita di qualche piano per ognugna delle possibili percezioni. In questo caso si utilizzano gli alberi di riceca <em>AND-OR</em>.</p>
+<p>Nell&#39;esempio si assume che aspirare o arrivare in un quadrato pulito può sporcare.</p>
+<p><img src="Intelligenza Artificiale/immagini/l22-doppio-murphy.png" alt=""></p>
+<h1 id="lezione-23-pianficiazione-condizionale-e-cenni-di-apprendimento-automatico">Lezione 23 - Pianficiazione condizionale e cenni di Apprendimento automatico</h1>
+<p>Per vari motivi può esserci un <strong>fallimento</strong>, cioè le precondizioni del resto del piano non sono più soddisfatte, ad esempio a causa delle azioni di un altro agente.
+L&#39;agente quindi arriva in un punto in cui il resto del piano non può essere eseguito.</p>
+<p>È quindi necessario andare a monitare costantemente lo stato dell&#39;ambienete e nel caso di fallimento riprendere l&#39;algoritmo POP a partire dallo stato corrente.</p>
+<h2 id="ipem-integrate-plannin-execution-e-monitoring">IPEM - Integrate Plannin Execution e Monitoring</h2>
+<p>Viene aggiornato continuamente lo stato <em>Start</em> man mano che vengono eseguite le azioni, in questo modo si tiene traccia dei cambiamenti subiti dal mondo. </p>
+<p>Quandi l&#39;algoritmo si accorge che dallo stato corrente non riesce ad andare avanti perché ci sono delle condizioni non valide e quindi ripianifica a partire dallo stato corrente.</p>
+<p>Questo comportamento cicla fino al successo ed <em>emerge</em> dalla interazione tra agente del tipo monitorizza/ripianfica e ambiente non cooperativo.</p>
+<p>Ad esempio l&#39;ambiente può invalidare alcune delle precondizioni più volte, in questo caso l&#39;agente deve controllare di non ciclare all&#39;infinito.</p>
+<h2 id="cenni-di-apprendimento-automatico">Cenni di Apprendimento Automatico</h2>
+<p>Per risolvere alcuni problemi non è possibile applicare un approccio algoritmico tradizionale, per vari motivi, come l&#39;impossibilità di formalizare il problema, il rumore sui dati o l&#39;alta complessità nel formulare una soluzione. Sennò ci sono dei casi in cui si riesce a formalizzare un problema ma non si ha idea di come risolverlo.</p>
+<p>Per poter utilizzare questo approccio sono necessari:</p>
+<ul>
+<li><strong>Dati</strong>: più ce ne sono meglio è, possono essere ottenuti in blocco, una volta per tutte o man man interagendo con l&#39;ambiente.</li>
+<li><strong>Conoscenza</strong>: avere informazioni sul dominio applicativo permette di ottenere algoritmi più efficenti, anche in caso di informazioni incomplete o imprecise.</li>
+</ul>
+<p>Si vuole quindi utilizzare i dati per ottenere una nuova conosscenze o raffinare quella di cui si dispone.</p>
+<p>Ci sono 3 paradigmi principali di apprendimento:</p>
+<ul>
+<li>Supervisionato</li>
+<li>Non supervisionato</li>
+<li>Con rinforzo</li>
+</ul>
+<h3 id="apprendimento-supervisionato">Apprendimento supervisionato</h3>
+<p>Dato un insieme di esempi pre-classificati {<em>(x, f(x))</em>}, apprendere una descrizione generale che incapsula l&#39;informazione contenuta negli esempi, cioè per trovare delle regole che sono valide su tutto il dominio di ingresso.</p>
+<p>La descrizione così ottenuta deve poter poi essere utilizzata per fare predizione su nuovi dati del dominio d&#39;ingresso.</p>
+<p>Il supervisionato deriva dal fatto che ci sia un esperto che supervisioni l&#39;algortimo e cioè che fornisca il valore della funzione target per alcuni esempi.</p>
+<h3 id="apprendimento-non-supervisionato">Apprendimento non supervisionato</h3>
+<p>Dato un insieme di esempi <em>Tr = {x}</em> si vogliono estrarre delle regolarità e o pattern sui dati che siano valide per tutti gli elementi del dominio di ingresso.</p>
+<p>Non esiste nessun supervisiore che fornisce una classificazione dei dati, ma si cerca di raggruppare tra loro dei dati simili (<em>clustering</em>) e di scoprire nuove regole.</p>
+<p>Un esempio di questa applicazione è il data mining su database strutturati come quelli medici o commerciali.</p>
+<h3 id="apprendimento-con-rinforzo">Apprendimento con Rinforzo</h3>
+<p>In questo caso è presente un agente che opera all&#39;interno di un ambiente. L&#39;agente si trova in un determinato stato <em>s</em> e può eseguire una certa azione <em>a</em> tra tutte le azioni possibili per il determianto stato. Quando l&#39;agente esegue l&#39;azione, l&#39;ambiente fornisce all&#39;agente lo stato successivo e una ricompesta <em>r</em> che può essere posivita, negativa o neutra.</p>
+<p>Lo scopo dell&#39;agente è quello di massimizzare una funzione delle ricompense.</p>
+<h2 id="elementi-fondamentali-dell-apprendimento-supervisionato">Elementi fondamentali dell&#39;apprendimento supervisionato</h2>
+<p>L&#39;elemetno principale sono i dati, senza i dati non è possibile fare apprendimento.</p>
+<p>Serve poi uno spazio delle ipotesi <em>H</em>, cioè l&#39;insime delle funzioni che possono essere realizzate dal sistema di apprendimento. Si assume quindi che la funzione da apprendere <em>f</em> possa essere rappresentata da un ipotesi <em>h</em> presente in <em>H</em>.</p>
+<p>Ma come si fa ad avere la certezza che <em>H</em> contenga <em>h</em>? In questo caso torna utile la conoscenza a priori, avere delle informazioni riguardo <em>f</em> permette di scegliere un&#39;insieme <em>H</em> più adeguato.</p>
+<p>L&#39;algoritmo di apprendimento può essere quindi visto come un algoritmo di ricerca nello spazio delle ipotesi <em>H</em>.</p>
+<p>Da notare che <em>H</em> non può coincidere con l&#39;insieme di tutte le funzioni possibili e allo stesso tempo avere una ricerca esaustiva. In questo caso l&#39;apprendimento è inutile dal momento che la ricerca su uno spazio così grande è troppo onerosa, inoltre in uno spazio infinito di funzioni c&#39;è sempre un numero infinito di funzioni che approssimano i dati di apprendimento.</p>
+<p>Si parla quindi di <strong>bias induttivo</strong>, cioè di vincoli che si vanno a porre sulla rappresentazione delle funzioni o sulla strategia di ricerca. Se si hanno delle conoscenze a priori è possibile avere un bias induttivo molto forte e corretto, limitando così lo spazio di ricerca senza escludere la soluzione.</p>
+<h3 id="tipi-di-algoritmi">Tipi di algoritmi</h3>
+<p>Algoritmi <strong>eager</strong>, sono algoritmi che raccolgono tutti i dati di apprendimento e lavorano molto sull&#39;apprendimento della funzione, richiedono quindi tanto tempo per trovare un ipotesi <em>h</em>, però effettuano la predizione in poco tempo.</p>
+<p>Mentre gli algoritmi <strong>lazy</strong>, ricercano un&#39;ipotesi on-demand, cioè i dati di apprendimento vengono valutati solamente quando viene richiesta una predizione.</p>
+<p><strong><em>seguono degli esempi di spazi delle ipotesi uguali a quelli visti ad apprendimento automatico</em></strong></p>
 </body></html>

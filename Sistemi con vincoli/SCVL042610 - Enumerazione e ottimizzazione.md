@@ -34,9 +34,9 @@ La definzione del modello è analoga a quella del relativo CSP, con la differenz
 
 Serve però una funzione obiettivo:
 
-> f(x) = Max<sub>i = 0 ... n-1</sub>(x<sub>i</sub>)
+> f(x) = Max<sub>[i = 0 ... n-1]</sub>(x<sub>i</sub>)
 
-##Risolizione di un COP
+##Risoluzione di un COP
 
 L'idea principale è che risolvere un COP coincide con il risolvere una serie di CSP.
 
@@ -137,6 +137,14 @@ Ma un altro grande vantaggio di questo approccio è l'**optimality gap**, quando
 Le ricerche hanno un problema: scartano la maggior parte delle informazioni ad ogni iterazione e questo porta a tanto lavoro ripetuto.
 
 Nel B&B, ogni volta che si trova una nuova soluzione si va ad aggiungere un nuovo vincolo di Bound sul valore di *f(x)*.
+
+In questo modo, viene prima trovata una soluzione feasible, come nel caso di un CSP normale, dopodiché viene aggiunto un vincolo che rende infeasible la soluzione trovata.
+Una volta aggiunto il nuovo vincolo, la ricerca continua facendo il backtracking in modo da trovare una soluzione che soddisfi il nuovo vincolo. Se non viene trovata una soluzione migliore, l'ultima soluzione trovata è quella ottima.
+
+Ad esempio, nel problema della colorazione della cartina, prima viene risolto il CSP utilizzando 5 colori, dopodiché viene aggiunto il vincolo "*numero colori < 5* e la ricerca riprende dalla soluzione trovata.
+
+![](./immagini/l4-bb1.png)
+![](./immagini/l4-bb2.png)
 
 Utilizzando il branch and bound in CP non c'è bisogno di calcolare per ogni nodo il lower bound, in quanto viene calcolato in modo automatico dai vincoli.
 

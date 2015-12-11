@@ -18,10 +18,10 @@ Bisogna dimostrare che se *p'<sub>1</sub>...p'<sub>n</sub>* e *p<sub>1</sub> ⋀
 
 Lemma: per ogni clausola definita *p* abbiamo *p |= p𝜃* per mezzo di UI:
 
-1. *p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> => q |= (p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> => q)𝜃 = p<sub>1</sub>𝜃 ⋀ ... ⋀ p<sub>n</sub>𝜃 => q𝜃*
+1. *p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> => q |= (p<sub>1</sub> ⋀ ... ⋀ p<sub>n</sub> => q)𝜃 **=** p<sub>1</sub>𝜃 ⋀ ... ⋀ p<sub>n</sub>𝜃 => q𝜃*
 2. *p'<sub>1</sub> ... p'<sub>n</sub> |= p'<sub>1</sub> ⋀ ... ⋀ p'<sub>n</sub> |= p'<sub>1</sub>𝜃 ⋀ ... ⋀ p'<sub>n</sub>𝜃*
 
-Da 1 e 2 si riesce a ricarvare *q𝜃* usando il Modus Ponens ordinario.
+Dal momento che per ipotesi *p'<sub>i</sub>𝜃 = p<sub>i</sub>𝜃*, sfruttando i risultati dei punti 1 e 2 si riesce a ricarvare *q𝜃* usando il Modus Ponens ordinario.
 
 ###Esempio di base di conoscenza
 

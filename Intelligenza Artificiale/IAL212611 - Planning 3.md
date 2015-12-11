@@ -36,7 +36,7 @@ Per ottenere `Clear(b)`, si può fare `Unstack(b,c)` invalidando il goal precede
 
 C'è però il rischio di cliclare (**anomialia si Sussman**) in quanto i due sottogoal non sono tra loro indipendenti.
 
-Inoltre, se il problema prevede il consumo di risorse può essere che STRIPS non sia in grado di risolverlo, questo perché cerca di ottenere subito un ordine totale della azioni.
+Inoltre, se il problema prevede il consumo di risorse può essere che STRIPS non sia in grado di risolverlo, questo perché cerca di ottenere subito un ordine totale delle azioni.
 
 
 ##Ricapitolando
@@ -51,7 +51,7 @@ L'alternativa è una ricerca attraverso lo spazio dei piani, piuttosto che delle
 
 Questa ricerca parte da un **piano parziale** che non fa nulla, che viene espanso e raffinato fino a raggiungere un piano completo che risolve il problema.
 
-Il raffinamento avviene mediante degli **operatori di raffinamento** che aggiungono vincoli ad un piano parziale modificano l'ordine delle aizoni o aggiungendone di nuove.
+Il raffinamento avviene mediante degli **operatori di raffinamento** che aggiungono vincoli ad un piano parziale modificano l'ordine delle azioni o aggiungendone di nuove.
 
 ##Partial order planning (POP)
 
@@ -63,7 +63,7 @@ Il raffinamento avviene quindi aggiungendo dei nuovi passi al piano oppure aggiu
 
 La soluzione così ottenuta rappresenta un ordinamento parziale che può essere sempre convertito in un piano totalmente ordinando utilizzando un ordinamento topologico tra i vari passi.
 
-I planner non lineari incorporano il principio del **minimo impegno**, cioè scelgono solo quelle azioni, ordinamenti e assegnamenti di variabili che sono assolutamente necessari, rimandando le altre scelte al futuro. Non vengono inoltre prese decisioni premature su aspetti che non rilevanti per raggiungere il goal.
+I planner non lineari incorporano il principio del **minimo impegno**, cioè scelgono solo quelle azioni, ordinamenti e assegnamenti di variabili che sono assolutamente necessari, rimandando le altre scelte al futuro. Non vengono inoltre prese decisioni premature su aspetti non rilevanti per raggiungere il goal.
 
 Confrontanto i due approcci:
 
@@ -76,12 +76,12 @@ eventualmente qualche vincolo temporale fra passi
 
 1. Insieme di passi {S<sub>1</sub>,S<sub>2</sub>, ...}, ognuno dei quali ha la descrizione di un operatore, precondizioni e postcondizioni.
 2. Un insieme di link causali {... *(S<sub>i</sub>,C,S<sub>j</sub>)* ...}, che specificano che uno dei propositi del passo *S<sub>i</sub>* è di raggiungere la condizione *C* del passo *S<sub>j</sub>*.
-3. Un insieme di vincoli di ordinamenteo {... *S<sub>i</sub> < S<sub>j</sub>* ...} che specificano che il passo *S<sub>i</sub>* deve venire eseguito prima di *S<sub>j</sub>*.
+3. Un insieme di vincoli di ordinamento {... *S<sub>i</sub> < S<sub>j</sub>* ...} che specificano che il passo *S<sub>i</sub>* deve venire eseguito prima di *S<sub>j</sub>*.
 
 Un piano non lineare è **completo** se e solo se:
 
 - Ogni passo (2) e (3) si trova nell'insieme (1).
-- Se *S<sub>j</sub*> ha un prerequisito *C*, allora esiste un link causale in (2) con la forma *(S<sub>i</sub>, C, S<sub>j</sub>)*.
+- Se *S<sub>j</sub* ha un prerequisito *C*, allora esiste un link causale in (2) con la forma *(S<sub>i</sub>, C, S<sub>j</sub>)*.
 - Se *(S<sub>i</sub>, C, S<sub>j</sub>)* è in (2) e il passo *S<sub>k</sub>* è in (1) e *S<sub>k</sub>* "**minaccia**" *(S<sub>i</sub>, C, S<sub>j</sub>)*, cioè rende falso *C*, allora (3) contiene *S<sub>k</sub>\<S<sub>i</sub>* o *S<sub>k</sub>\>S<sub>j</sub>*.
 
 Ogni piano inizia allo stesso modo con un passo *S<sub>1</sub>:Start* e un *S<sub>2</sub>:Finish*.
@@ -103,7 +103,9 @@ Se un'azione parallela minaccia (**threatens**) *C*, cioè ha l'effeto di negare
 
 ![](./immagini/l21-dem-prom.png)
 
-Un piano viene detto **consistente** se non ci sono cicli e non c'è un conflitto tra chi soddisfa e chi minaccia. Se ogni precondizione di tutte le azioni del piano sono soddisfatte e nessun passo intermedio le invalida, allora il piano si dice anche **completo**.
+Un piano viene detto **consistente** se non ci sono cicli e non c'è un conflitto tra chi soddisfa e chi minaccia. 
+
+Se ogni precondizione di tutte le azioni del piano sono soddisfatte e nessun passo intermedio le invalida, allora il piano si dice anche **completo**.
 
 Per rimuovere un conflitto si può aggiungere un vincolo d'ordinamento oppure aggiungere delle nuove azioni.
 
@@ -119,7 +121,7 @@ L'algortimo risulta efficente se utilizza delle euristiche derivate dalla descri
 
 C'è quindi la necessità di avere delle buone euristiche e non è semplice derivare delle euristiche ammissibili.
 
-Uno strumento utile per ottenere queste euristiche è il grado di planning, il quale raccoglie informazioni su queli piani sono impossibili non prendendo in considerazione le minacce e non considerano il "*consumo*" dei letterali che chiudono le precondizioni (il consumo di un letterale si ha quando l'esecuzione di un'azione cambia il valore del letterale).
+Uno strumento utile per ottenere queste euristiche è il grado di planning, il quale raccoglie informazioni su quali piani sono impossibili non prendendo in considerazione le minacce e non considerano il "*consumo*" dei letterali che chiudono le precondizioni (il consumo di un letterale si ha quando l'esecuzione di un'azione cambia il valore del letterale).
 
 Questi grafi permettono quindi di sapere se non c'è soluzione ad un problema di pianificazione.
 

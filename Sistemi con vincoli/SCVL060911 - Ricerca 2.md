@@ -17,7 +17,7 @@ Il tutto deriva dal fatto che facendo il B&B ogni volta che si trova una nuova s
 Finora abbiamo fatto branching con un ramo *x=v* e uno *x!=v*, possono però essere usate strategia diverse, come:
 
 - **labeling**: tanti rami quanti sono i possibili valori della variabile;
-- **paritioning**: *x <= v* e *x>v*, è utile quando si rappresentano qunatità o si hanno domini larghi.
+- **paritioning**: *x <= v* e *x>v*, è utile quando si rappresentano quantità o si hanno domini larghi.
 - **probing/diving**: non faccio branching, assegno la variabile ad un valore, questo è utile quando non è necessario fare backtracking (*violazione di DFS*).
 
 ##Su cosa fare branching

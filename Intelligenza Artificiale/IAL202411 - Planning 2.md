@@ -12,7 +12,7 @@ Inoltre, applicando la risoluzione viene trovata una prova (piano) che non è ne
 Uitlizzando la rappresentazione logica ci sono altri tre problemi tipici:
 
 - **Problema del frame**: quando si passa da una situazione ad un'altra bisogna risuscire a determinare se cambia il valore di un predicato che non è stato coinvolto dalla trasformazione, cioè se la trasformazione ha causato un side-effect.
-- **Problema della qualifica**: perché un'azione possa essere applciata devono essere soddisfatte delle precondizioni, ma come possono essere rappresentate? In alcuni casi risulta complesso riuscre ad esplicitare tutte le condizioni necessarie e sufficenti per poter esegure un'azione. Per specificare in modo corretto tutto ciò può essere necessario dover andare ad inserire un elevato numero di clausole nella KB.
+- **Problema della qualifica**: perché un'azione possa essere applicata devono essere soddisfatte delle precondizioni, ma come possono essere rappresentate? In alcuni casi risulta complesso riuscre ad esplicitare tutte le condizioni necessarie e sufficenti per poter esegure un'azione. Per specificare in modo corretto tutto ciò può essere necessario dover andare ad inserire un elevato numero di clausole nella KB.
 - **Problema della ramificazione**: versione duale della qualifica, descrivere in modo dettagliato gli esiti di un'azione può richiedere un elevato numero di clausole.
 
 Quindi è meglio utilizzare un linguaggio ristretto con un algoritmo specializzato (planner) piuttosto che una soluzione generale, ottenendo così una soluzione più efficente.
@@ -30,8 +30,8 @@ Al contratrio di un dimostratore di teoremi, non viene provato se il goal è ver
 In STRIPS le azioni vengono rappresentate come operatori, ognuno dei quali è composto da 3 componenti:
 
 - **Descrizione dell'azione**
-- **Precondizioni**: espresse come congiunzione di letterali positiv
-- **Effetti**: congiunzione di letterlai positivi o negative che descrivono come la situazione cambia quandi si applicao l'operatore.
+- **Precondizioni**: espresse come congiunzione di letterali positivi
+- **Effetti**: congiunzione di letterali positivi o negativi che descrivono come la situazione cambia quando si applica l'operatore.
 
 ```
 Op[
@@ -112,17 +112,16 @@ La pianificazione può essere fatta a partire dallo stato iniziale o da quello g
 
 L'idea è quella di partire dallo stato iniziale e provare ad applicare tutte le possibile azioni fino a che non si trova una sequenza di azioni che porta ad uno stato goal.
 
-Equivare quindi ad una **ricerca nello spazio degli stati**, dove per ogni stato vengono generati tanti successori quante sono le azioni applicabili, in un modo analogo alla ricerca breadth-first, senza tener conto della rilevanza o meno delle azioni. Un azione è **rilevante** se un suo effetto combacia con la prosizione del goal.
+Equivale quindi ad una **ricerca nello spazio degli stati**, dove per ogni stato vengono generati tanti successori quante sono le azioni applicabili, in un modo analogo alla ricerca breadth-first, senza tener conto della rilevanza o meno delle azioni. Un azione è **rilevante** se un suo effetto combacia con la prosizione del goal.
 
 C'è il solito problema che se ci sono molte azioni applicabili ad uno stato si ottiene un fattore di branching enorme.
 
 ####Backward Planning (Chaining)
 
 Si parte dalla **specifica del goal** (non dallo stato) e si cercano delle azioni rilevanti che soddisfano parte del goal, vengono così lasciate "aperte" le precondizioni delle azioni scelte e diventa necessario andare a soddisfare queste precondzioni con altre azioni.
+Si ripete questo procedimento finché non si ottengono delle precondizioni che vengono soddisfatte dallo stato iniziale.
 
-Si ripete questo procedimento fin che non si ottengono delle precondizioni che vengono soddisfatte dallo stato iniziale.
-
-Con questa strategia il fattore di branching è limitato, la ricerca nello spazio dei goal, questo perché si considera la rappresentazione del goal e non degli stati.
+Con questa strategia il fattore di branching è limitato e la ricerca avveniene nello spazio dei goal, questo perché si considera la rappresentazione del goal e non degli stati.
 
 Trattandosi di una ricerca in profondità c'è il rischio di ciclare, è quindi necessario inserire degli opportuni controlli. Infine, deve essere possibile effettuare il back-tracking delle scelte nel caso non si arrivi ad una soluzione.
 

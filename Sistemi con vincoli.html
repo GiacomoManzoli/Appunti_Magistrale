@@ -194,14 +194,14 @@ Nonstante ciò bound consistency è più debole di GAC, specialmente nel caso in
 <p>Filtering su <em>z</em></p>
 <blockquote>
 <p>z = x + y</p>
-<p>ub = Max(x) + Max(y) --&gt; Max(z) = ub</p>
-<p>lb = Min(x) + Min(y) --&gt; Min(z) = lb</p>
+<p>ub<sub>z</sub> = Min(Max(x) + Max(y), Max(z))</p>
+<p>lb<sub>z</sub> = Max(Min(x) + Min(y), Min(z))</p>
 </blockquote>
 <p>Filtering su <em>x</em> (analogo per <em>y</em>)</p>
 <blockquote>
 <p>z = x + y</p>
-<p>ub = Max(z) - Min(y) --&gt; Max(x) = ub</p>
-<p>lb = Min(z) - Max(z) --&gt; Min(x) = lb</p>
+<p>ub<sub>x</sub> = Min(Max(z) - Min(y), Max(x))</p>
+<p>lb<sub>x</sub> = Max(Min(z) - Max(z), Min(x))</p>
 </blockquote>
 <h2 id="bc-per-il-vincolo-della-moltiplicazione">BC per il vincolo della moltiplicazione</h2>
 <p>Filtering su <em>z</em></p>
@@ -273,9 +273,9 @@ Nonstante ciò bound consistency è più debole di GAC, specialmente nel caso in
 <p>La definzione del modello è analoga a quella del relativo CSP, con la differenza che il dominio delle variabili va da <em>0</em> a <em>n-1</em>, dove <em>n</em> è il numero delle regioni.</p>
 <p>Serve però una funzione obiettivo:</p>
 <blockquote>
-<p>f(x) = Max<sub>i = 0 ... n-1</sub>(x<sub>i</sub>)</p>
+<p>f(x) = Max<sub>[i = 0 ... n-1]</sub>(x<sub>i</sub>)</p>
 </blockquote>
-<h2 id="risolizione-di-un-cop">Risolizione di un COP</h2>
+<h2 id="risoluzione-di-un-cop">Risoluzione di un COP</h2>
 <p>L&#39;idea principale è che risolvere un COP coincide con il risolvere una serie di CSP.</p>
 <p>Ci sono vari approcci a questo tipo di problema, ma ci sono due filoni principali:</p>
 <ul>
@@ -343,6 +343,9 @@ ub = safe upper bound
 <h3 id="branch-and-bound">Branch and Bound</h3>
 <p>Le ricerche hanno un problema: scartano la maggior parte delle informazioni ad ogni iterazione e questo porta a tanto lavoro ripetuto.</p>
 <p>Nel B&amp;B, ogni volta che si trova una nuova soluzione si va ad aggiungere un nuovo vincolo di Bound sul valore di <em>f(x)</em>.</p>
+<p>In questo modo, viene prima trovata una soluzione feasible, come nel caso di un CSP normale, dopodiché viene aggiunto un vincolo che rende infeasible la soluzione trovata.
+Una volta aggiunto il nuovo vincolo, la ricerca continua facendo il backtracking in modo da trovare una soluzione che soddisfi il nuovo vincolo. Se non viene trovata una soluzione migliore, l&#39;ultima soluzione trovata è quella ottima.</p>
+<p>Ad esempio, nel problema della colorazione della cartina, prima viene risolto il CSP utilizzando 5 colori, dopodiché viene aggiunto il vincolo &quot;<em>numero colori &lt; 5</em> e la ricerca riprende dalla soluzione trovata.</p>
 <p>Utilizzando il branch and bound in CP non c&#39;è bisogno di calcolare per ogni nodo il lower bound, in quanto viene calcolato in modo automatico dai vincoli.</p>
 <p>Quando l&#39;algoritmo trova una soluzione, per capire che è ottima deve comunque andare ad esplorare tutto l&#39;albero (<em>optimality proof</em>).</p>
 <h4 id="pro-e-contro">Pro e contro</h4>
@@ -405,12 +408,9 @@ ub = safe upper bound
 </blockquote>
 <p>Ma si può fare di meglio:</p>
 <blockquote>
-<p>z = (x ⇒ y)</p>
-<p>z = (x ≤ y) //Con un vincolo reificato</p>
-<p>z = (x⇔y)</p>
-<p>z = (x==y)</p>
-<p>z = (x ⊕ y) (xor)</p>
-<p>z = (x != y)</p>
+<p>z = (x ⇒ y) = (x ≤ y) //Con un vincolo reificato</p>
+<p>z = (x⇔y) = (x==y)</p>
+<p>z = (x ⊕ y) (xor) = (x != y)</p>
 </blockquote>
 <h2 id="wombo-combo">Wombo combo</h2>
 <p>Utilizzando i metavincoli e i vincolo logici è possibile andare a definire dei vincoli più complessi come: <em>Se x allora y</em>.</p>
@@ -465,7 +465,7 @@ ub = safe upper bound
 <p>Finora abbiamo fatto branching con un ramo <em>x=v</em> e uno <em>x!=v</em>, possono però essere usate strategia diverse, come:</p>
 <ul>
 <li><strong>labeling</strong>: tanti rami quanti sono i possibili valori della variabile;</li>
-<li><strong>paritioning</strong>: <em>x &lt;= v</em> e <em>x&gt;v</em>, è utile quando si rappresentano qunatità o si hanno domini larghi.</li>
+<li><strong>paritioning</strong>: <em>x &lt;= v</em> e <em>x&gt;v</em>, è utile quando si rappresentano quantità o si hanno domini larghi.</li>
 <li><strong>probing/diving</strong>: non faccio branching, assegno la variabile ad un valore, questo è utile quando non è necessario fare backtracking (<em>violazione di DFS</em>).</li>
 </ul>
 <h2 id="su-cosa-fare-branching">Su cosa fare branching</h2>
@@ -509,4 +509,134 @@ Questo dipende da come vengono scegli dal risolutore i valori da assegnare alle 
 <p>L&#39;idea principale di questa strategia è quella di considerare i vincoli che rompono le simmetrie solo quando si fa backtracking.
 In questo modo quando si scende sul ramo sinistro non vengono tagliate le soluzioni simmetriche, ma quando si fa backtracking, questi vengono considerati in modo da sfoltire il sotto albero destro.</p>
 <p>Ad esempio facendo labeling fermandosi al primo valore simmetrico trovato.</p>
+<h1 id="lezione-8-vincoli-globali">Lezione 8 - Vincoli globali</h1>
+<p>Anche se viene stabilita la GAC può essere che sia ancora possibile eseguire del filtering.</p>
+<h2 id="global-vs-local-filtering">Global vs Local Filtering</h2>
+<p>Ad esempio nel problema del partial latin square è possibile ragionare a livello di colonna, in cui tutte le celle devono essere diverse.</p>
+<p>Formalizzando, indicando con <em>X</em> la colonna delle variabili presenti su una colonna e con <em>V</em> l&#39;unione deii domini delle variabili, se si reisce a trovare un sottoinsiem di variabili <em>W⊂V</em> e un set <em>Y⊂X</em> tale che:</p>
+<blockquote>
+<p>|X|=|W| e D(x<sub>i</sub>) ∈ W,  ∀x<sub>i</sub> ∈ X</p>
+</blockquote>
+<p>Allora:</p>
+<p><em>W</em> prende il nome di <strong>Hall set</strong> di <em>X</em> e il valori presenti in <em>W</em> saranno assegnati alle variabili presenti in <em>Y</em>, quidni è possibile togliere i valori presenti in <em>W</em> dai domini delle variabili che non sono in <em>Y</em>.</p>
+<p>Formalmente, <em>∀W ⊂ V</em>, <em>Y ⊂ X</em> con <em>|Y|=|W|</em>:</p>
+<blockquote>
+<p>D(x<sub>i</sub>) ∈ W,  ∀x<sub>i</sub> ∈ Y ⇒ D(x<sub>j</sub>) = D(x<sub>j</sub>)∖W, ∀x<sub>j</sub> ∈ X∖Y</p>
+</blockquote>
+<p>Questo processo prende il nome di <strong>Hall set filtering</strong> e forza GAC su un intero set di variabili, come un&#39;intera colonna del partial latin square.</p>
+<p>Per codificare come vincolo <em>D(x<sub>j</sub>)∖W, ∀x<sub>j</sub> ∈ X∖Y</em> si può utilizzare una serie di congiunzioni di vincolo reificati:</p>
+<blockquote>
+<p>∀w ∈ W e x<sub>j</sub> ∈ X\Y</p>
+<p>⋀(x<sub>j</sub> ≠ w)</p>
+</blockquote>
+<p>L&#39;implicazione può essere codificata con un minore e uguale mentre la serie di <em>⋀</em> può essere codificata con un vincolo di minimo.</p>
+<p>Può essere quindi definita un&#39;esepression <em>contained(xi, W, V)</em> che deve valere 1 se <em>D(x<sub>i</sub>) ∈ W</em>. Il caso in cui <em>D(x<sub>i</sub>) ∉ W</em> non è interessante in quanto la progagazione vale solo se <em>contained</em> vale 1.</p>
+<p>Per verificare che <em>D(x<sub>i</sub>) ∈ W</em> posso utilizzare:</p>
+<blockquote>
+<p>∀v ∈ V∖W</p>
+<p>⋀(x<sub>i</sub>≠w) = min<sub>[v ∈ V∖W]</sub>(x<sub>i</sub> ≠ w)</p>
+</blockquote>
+<p>Così facendo è possibile andare a definire il vincolo </p>
+<blockquote>
+<p>⋀<sub>[x<sub>i</sub> ∈ Y]</sub>contained(x<sub>i</sub>,W,V)  ⇒⋀<sub>[x<sub>i</sub> ∈ Y, v ∈ V∖W]</sub>(x<sub>j</sub>≠v)</p>
+</blockquote>
+<p>che deve essere definito <em>∀W ⊂ V</em>, <em>Y ⊂ X</em> con <em>|Y|=|W|</em>.</p>
+<p>Tuttavia il numero di sottoinsiemi di <em>V</em> e <em>X</em> è esponenziale e quindi  la propagazione richiede troppo tempo.</p>
+<h2 id="global-alldifferent-constraint">Global Alldifferent Constraint</h2>
+<p>Un approccio alternativo al problema è quello di aggiungere un nuovo vincolo <em>ALLDIFFERENT(X)</em> con <em>X</em> vettore di variabili. La semantica di questo vincolo equivale ai vincoli <em>xi≠xj,∀i≠j</em>, con la differenza che in questo caso è possibile andare a definire un algortimo di filtering GAC ad hoc che funziona in tempo polinomiale.</p>
+<p>L&#39;algoritmo di propagazione viene visto in due fasi:</p>
+<ol>
+<li>Verifica della soddisfacibilità del vincolo</li>
+<li>Esecuzione del filtering</li>
+</ol>
+<p>Come esempio viene utilizzato:</p>
+<blockquote>
+<p>ALLDIFFERENT(X) con x<sub>0</sub>∈{0,2},x<sub>1</sub>∈{0,2},x<sub>2</sub>∈{1,2,3}</p>
+</blockquote>
+<h3 id="parte-1">Parte 1</h3>
+<p>Per ogni vincolo è possibile andare a definire un <strong>value graph</strong>, un grafo che ha nella parte sinistra tanti nodi quandi sono le variabili e sulla destra quanti nodi quanti sono i possibili valori del dominio.
+Il grafo ha tanti archi che collegano ogni nodo a destra con tutti i nodi a sinistra in cui quel valore compare nel dominio di una variabile.</p>
+<p>Questo grafo ha altri due nodi <em>s</em> e <em>t</em>, il primo è collegato a tutti i possibili valori, mentre tutte le variabili sono collegate al .</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-1.png" alt=""></p>
+<p>Gli archi del grafo che collegano un nodo valore con un nodo variabile rappresentano un possibile assegnamento del valore alla variabile. 
+Quando ad una variabile è assegnato un determinato valore, l&#39;arco è rappresentanto con una linea continua, altrimenti viene utilizzata una linea tratteggiata.</p>
+<p>Di conseguenza una soluzione esiste quando il flusso entrante al nodo <em>t</em> è uguale al numero di variabili.</p>
+<p>Per verificare il flusso massimo viene usato l&#39;algoritmo di Ford-Fulkerson.</p>
+<p>Si parte da un caso base in cui il flusso in goni arco è 0. <em>f(a-&gt;b) = 0</em>.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-2.png" alt=""></p>
+<p>Dopodiché si cerca di far passare del flusso dal nodo <em>s</em> al nodo <em>t</em> utilizzando degli archi che non sono ancora saturi. Si ripete questo processo finché non si riescono più a trovare percorsi.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-3.png" alt=""></p>
+<p>In alcuni casi, si arriva ad una situazione che non è una soluzione anche se il problema di partenza è feasible e scegliendo dei percorsi diversi sarebbe stato possibile raggiungere una soluzione.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-4.png" alt=""></p>
+<p>Quindi deve essere possibile fare l&#39;<strong>undo</strong> delle scelte. 
+Una possibilità è quella di utilizzare il backtracking, ma così facendo si ottiene una complessità esponenziale. Fortunamente c&#39;è una strategia alternativa.</p>
+<p>Si può costruire il grafo residuale, un grafo con gli stessi nodi del grafo del flusso, solamente che gli archi che nel grafo del flusso rappresentano un assegnamento vengono invertiti.</p>
+<p>Più formalmente c&#39;è un arco <em>a→b</em> nel grafo residuale se e solo se c&#39;è un arco <em>a→b</em> nel grafo originale e <em>f(a→b) = 0</em> oppure c&#39;è un arco <em>b→a</em> nel grafo originale e <em>f(b→a) = 1</em>.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-5.png" alt=""></p>
+<p>Questo nuovo grafo può essere utilizzato per trovare dei nuovi cammini dal nodo <em>s</em> al nodo <em>t</em>. Un possibile nuovo cammino è quello arancione.</p>
+<p>Questo nuovo cammino può essere utilizzato per andare a trovare nuovi flussi nel grafo iniziale.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-6.png" alt="">
+<img src="Sistemi con vincoli/immagini/l8-grafo-7.png" alt=""></p>
+<p>In questo caso il flusso sul nodo <em>t</em> è uguale al numero di variabili, quindi il vincolo è feasible.</p>
+<p>La complessità dell&#39;algoritmo dipende dalla ricerca dei cammini con Dijkstra, la cui complessità è lineare con il numero di archi e in questo caso coincide con la sommatoria delle cardinalità dei domini delle variabili. 
+La ricerca dei cammini deve essere fatta al massimo per ogni variabile, quindi si ottiene come complessità <em>O(|X| ∑<sub>[x<sub>i</sub> ∈ X]</sub>|D(x<sub>i</sub>)|)</em>, che è molto peggiore rispetto al filtering per il vincolo di diverso, il vantaggio è che viene fatto un filtering più efficace.</p>
+<p>La strategia di verifica quindi, prima costruisce il grafo del flusso, dopodiché cerca di massimizzare il flusso che arriva al nodo <em>t</em>, se il valore ottenuto conincide con <em>|X|</em> allora il vincolo è feasible.</p>
+<p>Tipicamente questo algoritmo viene implementato senza la costruzione del grafo, dal momento che possono essere usate direttamente le formule che rappresentano il vincolo. Il grafo viene utilizzato solo per rendere più semplice la spiegazione.</p>
+<h3 id="filtering-per-alldiffernt">Filtering per Alldiffernt</h3>
+<p>Per poter filtrare un valore devo considerare un arco che va da un valore ad una variabile e provare a costruire un ciclo tra i due nodi utilizzando il grafo residuale. 
+Se non viene trovato questo ciclo e tra questi due nodi non c&#39;è flusso, posso togliere quel valore dal dominio di della variabile.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-8.png" alt=""></p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-9.png" alt=""></p>
+<p>Questa condizione può essere semplificata considerando che non ci sia un ciclo tra il nodo <em>v</em> e il nodo <em>x<sub>i</sub></em> nel grafo residuale. 
+Questo avviene se e solo se <em>v</em> e <em>x<sub>i</sub></em> sono in due componenti fortemente connessi distinti. 
+Questo permette di utilizzare l&#39;algoritmo di Tarjan per ottenere un efficenza maggiore.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-10.png" alt=""></p>
+<p>La complessità si riduce ad essere <em>O(|X|+∑<sub>[x<sub>i</sub> ∈ X]</sub>|D(x<sub>i</sub>)|)</em>.</p>
+<h3 id="ricapitolando">Ricapitolando</h3>
+<p>I vincoli globali sono dei vincoli che rappresentano un set di vincoli e risultano essere importanti perché sono molto espressivi e permettono di fare una propagazione più efficente e efficace.</p>
+<h2 id="gcc-non-il-compilatore-">GCC (non il compilatore)</h2>
+<p>Ovvero <strong>Global cardinalità constraint</strong>, viene utilizzato quando si vuole limitare l&#39;occorrenza (cardinalità) di alcuni valori specifici delle variabili.</p>
+<blockquote>
+<p>GCC(X, V, L, U)</p>
+<ul>
+<li>X è un vettore di variabili x<sub>i</sub></li>
+<li>V è un vettore di valori v<sub>j</sub></li>
+<li>L è un vettore con le cardinalità minime l<sub>j</sub> per v<sub>j</sub></li>
+<li>U è un vettore con le cardinalità massime u<sub>j</sub> per v<sub>j</sub></li>
+</ul>
+</blockquote>
+<p>La propagazione di questo vincolo avviene in due tempi come per <em>Alldifferent</em>:</p>
+<ol>
+<li>Verifica della consistenza utilizzando un grafo di flussi</li>
+<li>Definizione di regole di filtering basate sui flussi.</li>
+</ol>
+<h3 id="verifica-della-soddisfacibilit-">Verifica della soddisfacibilità</h3>
+<p>Viene creato un grafo analogo a quello per <em>Alldifferent</em>.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-11.png" alt=""></p>
+<p>Con la differenza che gli archi che vanno da <em>s</em> ai valori hanno una capacità massia uguale a <em>u<sub>j</sub></em> e una domanda minima pari a <em>l<sub>j</sub></em>.</p>
+<p>L&#39;algortimo parte cercado di soddisfare i vari vincoli di domanda</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-12.png" alt=""></p>
+<p>Anche in questo caso per trovare il percorso occorre utilizzare il grafo residuale, che viene definito in modo leggermente diverso, dal momento che ora gli archi hanno una capacità maggiore di 1.</p>
+<p>Questa volta l&#39;arco <em>a → b</em> è presente nel grafo residuo se:</p>
+<ul>
+<li>Il grafo originale contiene l&#39;arco <em>a → b</em> con capacità <em>c</em> e <em>c - f(a → b) &gt; 0</em>. L&#39;idea è che l&#39;arco non è ancora saturo.</li>
+<li>Il grafo originale contiene l&#39;arco <em>b → a</em> con domanda <em>d</em> e <em>f(b → a) - d &gt; 0</em>. L&#39;idea è che si può ridurre il flusso che scorre nell&#39;arco senza invalidare il vincolo della domanda.</li>
+</ul>
+<p>Come side effect di questa definzione si ha che nel grafo residuo non è presente il vincolo della domanda per i vari archi.</p>
+<p>Un&#39;altra cosa da notare è che <em>Alldifferent</em> è un caso particolare di questo problema.</p>
+<h3 id="filtering-per-gcc">Filtering per GCC</h3>
+<p>Una volta costruito il grafo residuale che rappresenta un assegnamento feasible è possibile andare a filtrare un valore se non compare in un ciclo e sempre allo stesso modo è possibile utilizzare i componenti fortemente connessi per rendere il processo più efficente.</p>
+<p><img src="Sistemi con vincoli/immagini/l8-grafo-13.png" alt=""></p>
+<p>Nell&#39;esempio non ci sono cicli che utilizzano gli archi <em>0→x<sub>0</sub></em> e <em>2→x<sub>3</sub></em> quindi è possibile effettuare il pruning del valore <em>0</em> da <em>D(x<sub>0</sub>)</em> e <em>2</em> da <em>D(x<sub>3</sub>)</em>.</p>
+<h3 id="considerazione-su-gcc">Considerazione su GCC</h3>
+<p>Tipicamente nei solver non è presente GCC ma è presente <em>Distribute</em>:</p>
+<blockquote>
+<p>DISTRIBUTE(X,V,N)</p>
+<ul>
+<li>X vettore di variabili x<sub>i</sub></li>
+<li>V vettore di valori v<sub>j</sub></li>
+<li>N vettore con le cardinalità n<sub>j</sub> per le variabili v<sub>j</sub></li>
+</ul>
+</blockquote>
+<p>Le due principali differenze riguardano che i buond sulle cardinalità vengono specificati con <em>D(n<sub>j</sub>)</em> e il propagatore può filtrare le variabili <em>n<sub>j</sub></em>, il che vuol dire che è possibile utilizzare <em>Distribute</em> per contare (?).</p>
 </body></html>
