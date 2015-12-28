@@ -96,6 +96,8 @@ Utilizzando delle query esistenziali non sempre si riesce ad ottenere una rispos
 ```
 Ottenendo come soluzione `{w/Jack, w/Curiosità}` che non è la risposta corretta.
 
+Infatti la semantica della query è "*Esiste qualcuno che ha ucciso Tonno?*" e la risposta fornita dalla risoluzione è "*Jack o Curiosità*".
+
 ##Planning
 
 **Problema**: trovare una sequenza di azioni (piano) che raggiunge un dato goal quando eseguita a partire da un dato stato iniziale del mondo.

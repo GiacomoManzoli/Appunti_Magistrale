@@ -2,19 +2,25 @@
 
 ##Backward Chainging
 
-**manca la parte introduttiva**
+In modo analogo alla lgoica proposizionale è possibile utilizzare il backward chaining.
 
 ![a](./immagini/l16-backward.png)
 
-L'algoritmo ritorna un generatore di sostituzioni e il calcolo parte dalla generazione degli OR.
+In questo caso l'algoritmo ritorna un **generatore di sostituzioni**, ovvero una funzione che ritorna più valori, ognuno dei quali rappresenta una sostitizione diversa.
 
-Per ogni regola che è rilevante per il predicato convinlto nell'obiettivo, viene prima fatta la standardizzazione e poi per tutte le sostituzioni che sono state generate dagli AND.
+L'algoritmo di ricerca può essere visto come un algoritmo AND/OR, dove nei nodi OR vengono valutate le clausole che potrebbero unificare con il goal, mentre nei nodi AND vengono valutati i congiunti della premessa delle regole.
 
-...
+Quindi, `FOL-CI-OR` esegue il fetch di tutte le clausole che potrebbero unificare con il goal, le standardizza, e se la parte destra *rhs* della regola unifica con il goal, verfica che tutti i congiunti della parte sinistra *lhs* siano soddisfatti, utilizzando `FOL-CI-AND`.
+`FOL-CI-AND` prova quindi tutti i congiunti considerandoli come sotto-goal utilizzando `FOL-CI-OR`. 
+Man mano che la ricerca prosegue l'algoritmo tiene traccia sia delle sostituzioni che sono state effettuate durante la ricerca, sia una pila di sotto-goal da verificare per soddisfare la query.
 
-La complessità in spazio è lineare con la dimensione della prova ma c'è il rischio di effettuare cicli infiniti, è quindi necessario andare a controllare che il goal corrente non sia già nella pila dei goal.
+Trattandosi di una ricerca in profondità la complessità in spazio è lineare con la dimensione della prova ma c'è il rischio di effettuare cicli infiniti, è quindi necessario andare a controllare che il goal corrente non sia già nella pila dei goal.
 
-L'algoritmo può essere inefficente a causa di sottogoal ripetuti, conviene quindi tenere una cache che contiene i risultati già calcoalti.
+Il tempo di esecuzione di questo algortimo può essere ulteriormente ridotto parallelizzando l'unificazione dei nodi OR (**OR-parallelism**), questo perché ogni clausola che può unificare con il goal partiziona lo spazio di ricerca e può portare ad una potenziale soluzione.
+È possibile parallelizzare anche la risoluzione degli AND (**AND-parallelism**) però risulta più complessa da implementare.
+
+Un altro problema di questo algoritmo è che non tiene in considerazione i sotto-goal ripetuti. L'algoritmo infatti può finire in un ciclo cercando di risolvere sempre gli stessi sotto-goal, oppure può risultare infefficente quando si trova a dover provare più volte lo stesso sottogoal.
+Utilizzando una cache per sotto-goal già incontrati è si ottengono dei miglioramenti alle prestazioni, questa aggiunta prende il nome di **memoization**.
 
 Prolog non utilizza questi due miglioramenti.
 
@@ -22,7 +28,7 @@ Prolog non utilizza questi due miglioramenti.
 
 Come anticipato utilizza backward chaining con clausole di Horn.
 
-Un programma Prolog è un'insieme di clausole, la nostra base di conoscenza.
+Un programma Prolog è un'insieme di clausole che definiscono la base di conoscenza.
 
 Le clausole sono scritte "al contrario":
 
@@ -32,7 +38,7 @@ test :- letterale_1, letterale_2, ..., letterale_n.
 criminal(X) :- american(X), weapon(Y), sells(X,Y,Z), hostile(Z).
 ```
 
-Da notare che le vaariabili sono scritte in maiuscolo e i predicati tutti in minuscolo.
+Da notare che le variabili sono scritte in maiuscolo e i predicati tutti in minuscolo.
 
 I fatti vengono rappresentati come predicati senza implicazione.
 
@@ -40,15 +46,50 @@ I fatti vengono rappresentati come predicati senza implicazione.
 american(West).
 ```
 
-Una volta inserita la base di conoscenza vengono inviate delle query al programma. La ricerca in backward viene fatta real time.
+Una volta inserita la base di conoscenza vengono inviate delle query al programma. La ricerca in backward viene fatta real time, se il programma viene interpretato, mentre nel caso il programma sia compilato vengono effettuate delle ottimizzazioni.
 
-Trammite **open coding** può essere migliora l'unificazione diminuendo il tempo necessario alla ricerca delle sostituzioni.
+Compilando un programma Prolog è possibile, trammite **open coding**, aumentare l'efficenza andando a modificare l'algoritmo di unificazione per le query che il programma può ricevere, diminuendo così il tempo necessario per trovare una soluzione.
 
-Prolog esegue il backward chaining in *depth first, left to right*. Questo è importante per vari motivi, ad esempio con una regola ricorsiva è necessario definire prima il caso base e poi l'invocazione ricorsiva.
+Per risolvere le query Prolog utilizza il backward chaining in *depth first, left to right*. Questo è importante per vari motivi, ad esempio con una regola ricorsiva è necessario definire prima il caso base e poi l'invocazione ricorsiva:
 
-È possibile usare l'operatore `is` per assegnare un valore a delle variabili e di utilizzare alcune espressioni aritmetiche.
+```
+# Ok
+path(X,Z) :- link(X,Z).
+path(X,Z) :- path(X,Y), link(Y,Z).
 
-**assunzione del mondo chiuso**: tutto quello che fallisce risulta essere negato. Se la dimostrazione che la query sia implicata dalla KB fallisce, allora la query viene considerata come falsa.
+# Sbagliato, entra in un ciclo infinito
+path(X,Z) :- path(X,Y), link(Y,Z).
+path(X,Z) :- link(X,Z).
+```
+
+In Prolog è possibile usare l'operatore `is` per assegnare un valore a delle variabili e di utilizzare alcune espressioni aritmetiche, ma non è possibile utilizzarlo per risolvere delle equazioni:
+
+```
+X is 4 + 3. # OK. {X/7}
+5 is X + Y. # Fallimento
+```
+
+Tuttavia se viene aggiunto alla base di conoscenza il teorema di Peano, anche la seconda query viene calcolata correttamente.
+
+###Assunzione del mondo chiuso
+
+In Prolog solo le sentenze inferibili dalla base di conscenza sono considerate vere, tutto il resto e tutto quello che fallisce viene considerato falso. 
+Ovvero, se la dimostrazione che la query sia implicata dalla KB fallisce, allora la query viene considerata come falsa. 
+
+Questa assunzione causa la così detta **negation as failure**. Considerando il seguente programma:
+
+```
+man(jim).
+
+woman(jane).
+woman(X):- \+( man(X) ). # \+ è il not
+```
+
+Le query `woman(jim)` e `woman(jane)` ritornano rispettivamente vero e falso come prevedibile, tuttavia la query `woman(X)` fallisce e ritorna falso, contrariamente da quanto ci si aspetterebbe.
+
+Questo perché la query `woman(X)` ha successo solo se la query `\+( man(X) )` fallisce, ma l'interprete riesce ad unificare `man(X)` con `man(jim)`, quindi `woman(X)` fallisce e la variabile `X` rimane non assegnata.
+
+
 
 ###Esempio di programma
 

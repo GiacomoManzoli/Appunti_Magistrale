@@ -4,13 +4,11 @@
 
 ![](./immagini/l15-gmp.png)
 
-Se i vari *p'<sub>i</sub>𝜃* sono uguali ai *p<sub>i</sub>𝜃* per una determinata sostituzione 𝜃 allora si possono ridurre ad un unico *q𝜃*.
-
-A noi interessa usare la sostituzione più generale possibile in quanto a noi vogliamo arrivare ad avere il maggior numero possibile di soluzioni ground.
-
-GMP viene utilizzato con una base di conoscenza in clausole definite.
+Se i vari *p'<sub>i</sub>𝜃* sono uguali ai *p<sub>i</sub>𝜃* per una determinata sostituzione 𝜃 allora si possono ridurre ad un unico *q𝜃*, in modo simile a come avviene nella logica proposizionale, utilizzando una base di conoscenza in clausole definite.
 
 Le **clausole definite** del primo ordine sono le clausole di Horn riportate nella logica proposizionale, con la differenza che possono includere delle variabili, le quali vengono considerate quantificate universalmente, dal momento che quelle quantificate esistenzialmente vengono sostituite con una costante di Skolem.
+
+Come sostituzione conviene utilizzare quella più generale possibile in modo da trovare il maggior numero possibile di soluzioni ground.
 
 ###Correttezza di GMP
 
@@ -54,8 +52,7 @@ La correttezza deriva dal fatto che viene semple applicato il Modus Ponens Gener
 Se ci sono solo clausole definite del primo ordine e non c'è nessuna funzione (**datalog**) allora FC termina in un numero poninomiale di iterazioni: _p\*n<sup>k</sup>_ che coincide con il massimo numero di fatti ground distinti che possono essere presenti nella KB. (*p* predicati *k*-ari e *n* costanti).
 
 In generale l'algoritmo può non terminare se 𝜶 non è una conseguenza logica e questo è inevitabile perché il problema è semi-decidibile.
-
-Allo stesso modo la presenza di funzioni porta a generare un numero possibilmente infinito di clausole.
+Inoltre, la presenza di funzioni porta a generare un numero possibilmente infinito di clausole.
 
 Si può osservare che non c'è bisogno di matchare una regola alla iterazione *k* se non è stata aggiunta una premessa alla iterazione *k-1*.
 

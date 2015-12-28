@@ -57,7 +57,7 @@ Il raffinamento avviene mediante degli **operatori di raffinamento** che aggiung
 
 Un planner lineare costruisce un piano come una sequenza totalmente ordinata di passi, mentre un planner non lineare (POP), costruisce un piano come un insieme di passi con alcuni vincoli temporali.
 
-Vengono quindi utilizzati dei vincoli del tipo *S1 < S2* per specificare che *S1* deve essere eseguito prima di *S2*.
+Vengono utilizzati dei vincoli del tipo *S1 < S2* per specificare che *S1* deve essere eseguito prima di *S2*.
 
 Il raffinamento avviene quindi aggiungendo dei nuovi passi al piano oppure aggiungendo dei vincoli tra i passi già presenti nel piano.
 
@@ -81,7 +81,7 @@ eventualmente qualche vincolo temporale fra passi
 Un piano non lineare è **completo** se e solo se:
 
 - Ogni passo (2) e (3) si trova nell'insieme (1).
-- Se *S<sub>j</sub* ha un prerequisito *C*, allora esiste un link causale in (2) con la forma *(S<sub>i</sub>, C, S<sub>j</sub>)*.
+- Se *S<sub>j</sub>* ha un prerequisito *C*, allora esiste un link causale in (2) con la forma *(S<sub>i</sub>, C, S<sub>j</sub>)*.
 - Se *(S<sub>i</sub>, C, S<sub>j</sub>)* è in (2) e il passo *S<sub>k</sub>* è in (1) e *S<sub>k</sub>* "**minaccia**" *(S<sub>i</sub>, C, S<sub>j</sub>)*, cioè rende falso *C*, allora (3) contiene *S<sub>k</sub>\<S<sub>i</sub>* o *S<sub>k</sub>\>S<sub>j</sub>*.
 
 Ogni piano inizia allo stesso modo con un passo *S<sub>1</sub>:Start* e un *S<sub>2</sub>:Finish*.
@@ -99,7 +99,7 @@ Per popolare un piano non lineare si torna a fare una ricerca nello spazio dei p
 Una strategia di ricerca è quella greedy che aggiunge solo passi che soddisfano una precondizione correntemente non soddisfatta. La filosofia del minimo impegno prevede poi di non ordinare i passi a meno che non sia strettamente necessario.
 
 Bisogna poi tenere conto dei link causali *(S<sub>i</sub>, C, S<sub>j</sub>)* che *proteggono* una condizione *C*, quindi non deve essere mai aggiunto un passo intermedio *S<sub>k</sub>* tra *S<sub>i</sub>* e *S<sub>j</sub>* che invalida *C*.
-Se un'azione parallela minaccia (**threatens**) *C*, cioè ha l'effeto di negare *C* (clobbering) è necessario risolvere la minaccia aggiungendo dei vincoli temporali. Si parla di **demotion** se viene posto *S<sub>k</sub> \< S<sub>i</sub>* oppure di **promotion** se *S<sub>k</sub> \> S<sub>j</sub>*.
+Se un'azione parallela minaccia (**threatens**) *C*, cioè ha l'effeto di negare *C* (**clobbering**) è necessario risolvere la minaccia aggiungendo dei vincoli temporali. Si parla di **demotion** se viene posto *S<sub>k</sub> \< S<sub>i</sub>* oppure di **promotion** se *S<sub>k</sub> \> S<sub>j</sub>*.
 
 ![](./immagini/l21-dem-prom.png)
 

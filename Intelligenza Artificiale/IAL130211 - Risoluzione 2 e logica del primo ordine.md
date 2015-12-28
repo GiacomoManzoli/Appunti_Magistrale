@@ -61,14 +61,14 @@ Manca però del potere espressivo.
 
 La logica proposizionale è dichiarativa e i pezzi di sintassi corrispondono a fatti.
 
-Permette anche di esprimere infomrazione parziale/disgiuntiva/negata, al contrario di basi di dati o strutture dati dove vengon utilizzati solo i fatti.
+Permette anche di esprimere informazione parziale/disgiuntiva/negata, al contrario di basi di dati o strutture dati dove vengono utilizzati solo i fatti.
 
-La logica Proposizionale è composizionale, il significato di B ⋀ P è conseguenza del significato di B e P, non ci sono valori di contesto che influenzano il valore di verità.
+La logica Proposizionale è composizionale, il significato di *B ⋀ P* è conseguenza del significato di *B* e di *P*, non ci sono valori di contesto che influenzano il valore di verità.
 
 Il significato di questa logica è **indipendente dal contesto**, al contrario del linguaggio naturale dove il significato dipende dal contesto.
 
 Tuttavia la potenza espressiva di questa logica è molto limitata.
-Ad esempio non si può esprimere "le trappole causano la brezza in quadrati adiacenti se non scrivendo" una sentenza per quadrato.
+Ad esempio non si può esprimere "*le trappole causano la brezza in quadrati adiacenti se non scrivendo*" ma è necessario utilizzare una sentenza per ogni quadrato.
 
 ##Logica del primo ordine
 
@@ -108,43 +108,43 @@ Le **sentenze complesse** sono delle combinazioni di sentenze atomiche create ut
 
 Le sentenze sono vere rispetto ad un **modello** e ad una **interpretazione**.
 
-Il **modello** contiene degli oggetti (elementi di dominio), delle relazioni definite tra loro e delle funzioni che possono esservi applicate.
+Il **modello** contiene degli oggetti (elementi di dominio), delle relazioni definite tra essi e delle funzioni che possono esservi applicate.
 
 L'**interpretazione** invece specifica i referenti per le costanti (oggetti), i predicati (relazioni) e le funzioni (relazioni funzionali). Forniscono cioè le informazioni di contesto. L'interpretazione specifica quindi una corrispondenza tra i simboli e il modello.
 
 Una sentenza atomica *predicato(termine<sub>1</sub>, ..., termine<sub>n</sub>)* è vera se e solo se gli oggetti riferiti da *termine<sub>1</sub>, ..., termine<sub>n</sub>* sono nella relazione definita dal predicato. 
 
-Segue che non è possibile andare a calcolare le conseguenze logiche enumerando tutti i modelli possibili, perché ci sono troppe combinazioni possibili.
+Risulta quindi difficile andare a calcolare tutte le conseguenze logiche possibili enumerando tutti i possibili modelli, perché si verifica un'esplosione combinatoria.
 
 ###Quatificatori universali e esistenziali
 
-Con il quantificatore ∀ è possibile definrire il concetto che un predicato P è vero per ogni *x* in un modello *m* se e sole se P è vero  per ogni possibile valore di *x*.
+Con il quantificatore ∀ è possibile definire il concetto che un predicato *P* è vero per ogni *x* in un modello *m* se e solo se *P* è vero per ogni possibile valore di *x*.
 
 > Chiunque è a Padova è intelligente
 > 
 > ∀x Luogo(x,Padova) => Intelligente(x)
 
-In prima apporsimazione l'esistenza è equivalente alla congiunzione di istanziazioni di P. (Tutti devono essere veri)
+In prima apporsimazione l'esistenza è equivalente alla congiunzione di istanziazioni di *P*. (Tutti devono essere veri)
 
-Se nel modello è presente anche un solo simbolo di funzione, l'enumerazione delle possibili istanziazioni di P è infinita.
+Se nel modello è presente anche un solo simbolo di funzione, l'enumerazione delle possibili istanziazioni di *P* è infinita.
 
 Tipicamente => è il connettivo principale utilizzato con i ∀, l'uso di ⋀ è tipicamente sbagliato:
 
 > ∀x Luogo(x,Padova) ⋀ Intelligente(x)
 
-vuol dire che chiunque è a Padova e chiunque è intelligente, che non è la stessa cosa che si voleva dire.
+vuol dire che chiunque è a Padova e chiunque è intelligente e non è la stessa cosa che si voleva dire.
 
 Diverso è il discorso per il quantificatore esistenziale ∃.
 
-*∃x P* è vero in un modello *m* se e solo se P è vero essendo *x* un qualche possibile valore di un oggetto nel modello.
+*∃x P* è vero in un modello *m* se e solo se *P* è vero essendo *x* un qualche possibile valore di un oggetto nel modello.
 
 > Qualcuno a Bologna è intelligente
 >
 > ∃x Luogo(x,Bologna) ⋀ Intelligente(x)
 
-In prima apporsimazione l'esistenza è equivalente alla disgiunzione di istanziazioni di P. (Basta che ce ne sia uno di vero).
+In prima apporsimazione l'esistenza è equivalente alla disgiunzione di istanziazioni di *P*. (Basta che ce ne sia uno di vero).
 
-Anche in questo caso l'enumerazione con una funzione è infinita.
+Anche in questo caso la modellazione delle istanziazioni mediante enumerazione risulta infinita nel caso il modello contenga una funzione.
 
 Il connettivo principale da usare con l'esistenza è ⋀ e tipicamente utilizzare => è sbagliato.
 
@@ -163,3 +163,4 @@ Una sentenza atomica può essere anche un'uguaglianza tra due termini.
 
 *termine<sub>1</sub> = termine<sub>2</sub>* è vero per una data interpretazione se e solo se *termine<sub>1</sub>* e *termine<sub>2</sub>* si riferiscono allo stesso oggetto.
 
+Ad esempio, le sentenze *1=2* e _*(Sqrt(x), Sqrt(x) = x_ sono soddisfacibili, ovvero esiste un modello in cui sono vere. La sentenza *2=2* è invece valida inquanto risulta vera per ogni modello perché viene utilizzato lo stesso predicato.

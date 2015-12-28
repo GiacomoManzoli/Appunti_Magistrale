@@ -22,16 +22,33 @@ Se un quantificatore esistenziale si trovata all'interno di due quantificatori e
 
 L'algoritmo di inferenza rimane sempre lo stesso, per provare KB|=𝜶, si cerca di provare KB⋁!𝜶, se viene generata la clausola vuota, allora KB|=𝜶.
 
+##Completezza della Risoluzione
+
+Non vediamo la dimostrazione completa.
+
+![](./immagini/l18-dim.png)
+
+
+La dimostrazione parte dal fatto che se l'insieme delle clasule *S*, espresse in FOL, è indosddisfacibile, per il teorema di Herbrand, esiste un sotto-insieme di clausole proposizionalizzate che è insoddisfacibile.
+
+Dal momento che questo sotto-insieme è espresso nella logica proposizionale, si può utilizzare il **ground resolution theorem**: *se un insieme di clausole S è insoddisfacibile, allora la chiusura della risoluzione di tali clausole RC(S) contiene la clausola vuota*, così facendo si effettua la risoluzione del sottoinsieme di clausole per provare l'insoddisfacibilità.
+
+Infine, per lemma di lifting, secondo il quale ad ogni prova per risoluzione nella logica proposizionale corrisopone una prova per risoluzione in FOL che utilizza le stesse sentenze, si si arriva alla prova per contrattizione dell'insoddisfacibilità.
+
+##Esempio di risoluzione
+
+![](./immagini/l18-esempio.png)
+
 ##Strategie di appplicazione della regola di risoluzione
 
 Nella logica proposizionale si può puntare a raggiungere un punto fisso per provare a generare la clausola vuota, tuttavia applicare questa strategia nella logica del primo ordine porta ad un'esplosione combinatoria.
 
-È improtante dimostrare la completezza di queste strategie.
+Con il tempo sono state quindi sviluppate varie strategie di risoluzione:
 
 - **Unit clause**: si *preferisce* effettuare la risoluzione con una delle sentenze costituite da un singolo letterale, in modo da avere diminuire la dimensione delle clausola risolvente. Questa strategia è **completa** perché preferisce la clausola unitaria, se non è possibile si continua in modo normale.
 - **Unit Resolution**: si esegue la risoluzione coinvolgendo **sempre** una clausola unitaria (**incompleta** in generale, ma completa per le clausole di Horn).
 - **Set of support**: utilizza un set di supporto dal quale vengono prelevate le sentenze e dove venogno posti i vari risolventi. Inizialmente il set di supporto è composto dal goal (!𝜶). L'idea è quella di effettuare delle risoluzioni che sono utili per arrivare alla clausola vuota. **Completo** perché vengono fatte solamente delle scelte che portano alla risoluzione.
-- **Input resolution**: combina sempre una sentenza di input (KB e Query) con il risolvente corrente. **Incompleta**.
+- **Input resolution**: combina sempre una sentenza di input (KB e Query) con il risolvente corrente. **incompleta** in generale, ma completa per le base di conoscenza in forma di Horn.
 - **Linear resolution**: come l'input resolution ma ammette anche la combinazione del risolvente con uno dei suoi avi, ottenendo così una strategia **completa**.
 - **Subsumption**: elimina tutte le sentenze che sono *subsumed* (più specifiche di altre), in modo da diminuire il numero di clausole da gestire. Es: se ho sia *P(A)* che *P(x)*, posso rimuovere la clausola *P(A)*.
 
@@ -39,18 +56,14 @@ In ogni caso se la KB contiene una funzione e non implica 𝜶, allora l'algorit
 
 ##Uguaglianza
 
-Ci sono 3 approcci diversi per trattare l'uguaglianza:
+Nessuno dei tre metodi di fare inferenza visti finora riesce a gestire le asserzioni del tipo *x=y*.
+Per gestire questa situzione è possibile utilizzare tre approcci distinti:
 
-1. **Assiomatizzazione**: si aggiungono degli assiomi che descrivono le proprietà dell'uguaglianza ed assiomo opportuni per ogni predicato e funzione. Questa è la stategia più corretta a livello logico, però dal punto di vista computazinale è poco pratico.
+1. **Assiomatizzazione**: si aggiungono degli assiomi che descrivono le proprietà dell'uguaglianza (simmetria, transitività, ecc.) ed assiomi opportuni per ogni predicato e funzione. Questa è la stategia più corretta a livello logico, però dal punto di vista computazinale è poco pratico.
 2. **Demodulation** o **Paramodulation**: se *x=y* e *Unify(x,z) = 𝝝* allora rimpiazzo *z* con *SUBST(𝝝,y)*.
 3. **Estensione** dell'algoritmo di unificazione: i termini equivalenti vengono unificati in un unico termine.
 
-##Completezza della Risoluzione
 
-
-![](./immagini/l18-dim.png)
-
-Non vediamo la dimostrazione completa.
 
 ##Riassunto
 
