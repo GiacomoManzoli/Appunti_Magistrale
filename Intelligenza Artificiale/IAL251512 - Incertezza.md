@@ -37,11 +37,11 @@ Si parla inoltre di probabilità congiunta per un insieme di variabili alleatori
 
 ![](./immagini/l25-tab.png)
 
-Dal momento che si tratta di eventi indindenti la probabilità congiunta è data dal prodotto delle probabilità.
+Dal momento che si tratta di eventi indipendenti la probabilità congiunta è data dal prodotto delle probabilità.
 
 La probabilità congiunta permette di effettuare l'inferenza probabilitstica, perché ogni elemento della tabella è la somma dei possibili eventi.
 
-Per esepriemere l'effetto di nuova conoscenza, è possibile utilizzare la probabilità condizionale o a posteriori per influenzare il valore, ad esempio *P(Cavità* | *Mal_Di_Denti) = 0.8*, ovvero adesso che so di aver mal di denti la probabilità di avere una carie aumenta.
+Per espriemere l'effetto di nuova conoscenza, è possibile utilizzare la **probabilità condizionale** o a posteriori per influenzare il valore, ad esempio *P(Cavità* | *Mal_Di_Denti) = 0.8*, ovvero adesso che so di aver mal di denti la probabilità di avere una carie aumenta.
 
 Inoltre, se arriva una nuova evidenza che aumenta la probabilità, la credenza meno specifica **rimane valida** ma non è necessariamente utilie, ad esempio *P(Cavità* | *Mal_Di_Denti, Cavità) = 1*.
 

@@ -125,6 +125,17 @@ Uno strumento utile per ottenere queste euristiche è il grado di planning, il q
 
 Questi grafi permettono quindi di sapere se non c'è soluzione ad un problema di pianificazione.
 
-![](./immagini/l21-plan-graph.png)
+### POP con variabili non istanziate
+
+Dal momento che le azioni vengono rappresentate con la logica del primo ordine, può capitare che la scelta di un'azione introduca delle variabili che non vengono assegnate.
+
+Ad esempio per il mondo dei blocchi potrebbe essere definita l'azione `MoveB(Z,X,Y)` che sposta il blocco *Z* da sopra il blocco *X* a sopra il blocco *Y*.
+
+Il pianificatore può scegliere di usare `MoveB` per soddisfare la precondizione `on(a,b)`, che è uguale a `on(Z,Y)𝜃` con `𝜃 = {Z/a, Y/b}`. 
+Applicando la stessa sostituzione a `MoveB` si ottiene: `MoveB(Z,X,Y)𝜃 = MoveB(a,X,b)`, con `X` che rimane non istanziata.
+
+Il fatto che alcune variabili possano rimanere non instanziate, rende necessari i vincoli del tipo `var ≠ const` e `var ≠ var`, perché le variabili non instanziate potrebbero andare a minacciare una condizione raggiunta da un'altra azione.
+
+Ad esempio, se nel piano c'è l'azione `MoveB(a,X,b)` ed è necessaria per raggiungere il goal `on(a,b)`, un'altra azione che ha come effetto `¬on(a,Q)` può minacciare la condizione `on(a,b)` solo se viene utilizzata la sostituzione `𝜃 = {Q/b}`. Deve essere quindi possibile porre dei vincoli dei tipo `Q ≠ b`.
 
 
