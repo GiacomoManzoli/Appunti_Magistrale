@@ -50,6 +50,8 @@ Una volta inserita la base di conoscenza vengono inviate delle query al programm
 
 Compilando un programma Prolog è possibile, trammite **open coding**, aumentare l'efficenza andando a modificare l'algoritmo di unificazione per le query che il programma può ricevere, diminuendo così il tempo necessario per trovare una soluzione.
 
+C'è anche un meccanismo di recupero efficente per le clausole attivabili per mezzo di **direct linking**.
+
 Per risolvere le query Prolog utilizza il backward chaining in *depth first, left to right*. Questo è importante per vari motivi, ad esempio con una regola ricorsiva è necessario definire prima il caso base e poi l'invocazione ricorsiva:
 
 ```
@@ -79,17 +81,18 @@ Ovvero, se la dimostrazione che la query sia implicata dalla KB fallisce, allora
 Questa assunzione causa la così detta **negation as failure**. Considerando il seguente programma:
 
 ```
+person(jim).
+person(jane).
 man(jim).
 
-woman(jane).
 woman(X):- \+( man(X) ). # \+ è il not
 ```
 
-Le query `woman(jim)` e `woman(jane)` ritornano rispettivamente vero e falso come prevedibile, tuttavia la query `woman(X)` fallisce e ritorna falso, contrariamente da quanto ci si aspetterebbe.
+Le query `woman(jim)` fallisce come prevedibile, tuttavia la query `woman(X)` fallisce e ritorna falso.
 
-Questo perché la query `woman(X)` ha successo solo se la query `\+( man(X) )` fallisce, ma l'interprete riesce ad unificare `man(X)` con `man(jim)`, quindi `woman(X)` fallisce e la variabile `X` rimane non assegnata.
+Questo perché la query `woman(X)` ha successo solo se la query `\+( man(X) )` fallisce, ma l'interprete riesce ad unificare `man(X)` con `man(jim)`, quindi `woman(X)` fallisce e la variabile `X` rimane non assegnata, mentre ci si potrebbe aspettare `{X/jane}` come risposta, dal momento che `man(jane)` fallisce.
 
-
+Questo fallimento è dovuto al fatto che Prolog, in seguito alla closed world assumpition, non distingue il fallimento causato da un termine falso e il fallimento causato dall'ignoranza.
 
 ###Esempio di programma
 

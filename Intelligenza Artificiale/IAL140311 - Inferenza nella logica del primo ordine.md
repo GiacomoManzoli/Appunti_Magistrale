@@ -98,9 +98,36 @@ Bisogna poi porre uguali tra loro i vari argomenti dei predicati, tenendo in con
 
 ![](./immagini/l14-unificazione-alg.png)
 
+L'algoritmo analizza i due predicati, termine per termine, cercando di unificarli con `Unify-Var`.
+
+La funzione `Controlla-Occorrenza` verifica che la variabile `var` che si vuole unificare non compaia nel termine `x`, questo serve per bloccare l'unificazione tra due terminiti come *T1(a)* e *T1(T1(a)*.
+
 Questo algoritmo ritorna sempre la **MGU**
 
 Due sostituzioni possono essere tra loro composte, applicando prima una sostituzione all'altra e poi andando ad aggiungere alla prima gli elementi della seconda sostituzione.
 
 Per poter comporre due sostsituzioni è necessario che queste siano compatibili tra di loro.
+
+L'algoritmo può essere reso più efficente andando ad applicare la sostituzione corrente alle due liste di variabili prima di andare ad unificare. 
+Ovvero sostituire
+
+```
+return Unify(
+            Resto[x], 
+            Resto[y], 
+            Unify(Primo[x], Primo[y], 𝜃)
+        )
+```
+
+con
+
+```
+return Unify(
+            Subst(𝜃,Resto[x]), 
+            Subst(𝜃,Resto[y]), 
+            Unify(Subst(𝜃,Primo[x]), Subst(𝜃,Primo[y]), 𝜃)
+        )
+```
+
+Inoltre, all'interno di `UnifyVar`, anziché aggiungere direttamente la nuova sostituzione a 𝜃, conviene utilizzare il metodo `Compose({var/x}, 𝜃)` che prima di aggiungerla applica la nuova sostituzione alla sostituzione corrente.
 

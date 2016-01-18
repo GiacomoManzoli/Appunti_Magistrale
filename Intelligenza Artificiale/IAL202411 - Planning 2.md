@@ -138,6 +138,9 @@ Quando il goal corrente è soddisfatto lo rimuove dalla pila.
 
 Quando un operatore è in testa alla pila, registra l’applicazione dell’operatore sulla sequenza del piano e usa gli effetti per aggiornare lo stato corrente.
 
+**Importante**: quando in cima alla pila c'è un goal composto, STRIPS lo scompone in tanti sotto-goal, li ordina e poi li inserisce nella pila. Il goal composto **non viene** tolto dalla pila, ma serve per valutare se effettivamente lo stato corrente lo soddisfa.
+
+
 ```python
 Strips(initial-state, goals)
     state = initial-state, plan = [], stack = []
