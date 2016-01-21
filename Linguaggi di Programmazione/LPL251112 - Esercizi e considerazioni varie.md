@@ -48,8 +48,8 @@ Per quanto detto all'inzio della lezione, nel programma sopra riportato, il comp
 ```c++
 int g(Base &x) { return x.f()+1; }
 main() {
-    Base b; cout<<“g(b)=“<<g(b)<<endl; //Invoca f della classe base
-    Derived d; cout<<“g(d)=“<<g(d)<<endl; //Invoca f della classe derivata
+    Base b; cout<<"g(b)="<<g(b)<<endl; //Invoca f della classe base
+    Derived d; cout<<"g(d)="<<g(d)<<endl; //Invoca f della classe derivata
 }
 ```
 

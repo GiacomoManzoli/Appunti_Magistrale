@@ -46,15 +46,16 @@ STACK
 2[CL=1,AL=1, cp = 3*]
 ```
 
-Per l'esecuzione di `r.distance(cp)`, dove il tipo statico di `r` è `Point`, viene scelta come funzione da invocare è `distance` di `Point`.
+Per l'esecuzione di `r.distance(cp)`, dove il tipo statico di `r` è `Point`, viene scelta come funzione da invocare `distance` di `Point`.
 
 Tuttavia la funzione `distance` si aspetta un parametro di tipo `ref(Point)` ma riceve una variabile di tipo `ref(ColorPoint)`.
 
-Quindi a runtime il codice di `distance` deve essere compatibile con `ColorPoint`, in particolare `ColorPoint` deve contere `x` e `y`, ma queste variabili non vengono trovate nel record puntato da `cp` e pertanto bisogna risalire utilizzando l'access link per trovalrle nel record corrispondente al sotto oggeto di tipo `Point`.
+Quindi a runtime il codice di `distance` deve essere compatibile con `ColorPoint`. 
+In particolare `ColorPoint` deve contere `x` e `y`, ma queste variabili non vengono trovate nel record puntato da `cp` e pertanto bisogna risalire utilizzando l'access link per trovarle nel record corrispondente al sotto oggeto di tipo `Point`.
 
 Un'altra istruzione interessante è `cp.distance(r)`, dal momento che nel record puntato da `cp` non è presente `distance`, pertanto è necessario cercare la funzione utilizzando l'access link.
 
-Segue che gli oggetti della classe base e derivata hanno una forma diversa, quindi le operazione da fare per raggiungere i campi dati possono essere stabilite solo a runtime.
+Segue che gli oggetti della classe base e derivata hanno una forma diversa, quindi le operazioni da fare per raggiungere i campi dati possono essere stabilite solo a runtime.
 
 A compile time è solo possibile definire delle strategie di ricerca per recuperare i vari valori e trattandosi di una ricerca a runtime alcuni errori possono non essere scoperti a compile time.
 
@@ -68,8 +69,7 @@ r :- cp;
 r.equals(new Point(...));
 ```
 
-A compile time i tipi statici coincidono, però a runtime viene eseguita la funzione `equals` di `ColorPoint` e ciò porta ad un errore.
-Non tutti i compilatori sono in grado di prevedere questi errori.
+A compile time i tipi statici coincidono, però a runtime viene eseguita la funzione `equals` di `ColorPoint` e ciò porta ad un errore e non tutti i compilatori sono in grado di prevedere questo tipo di errori.
 
 Quindi il compilatore può scegliere di mettere i controlli di tipo sempre oppure accontentarsi di non riscuiscre a mettere abbastanza controlli.
 

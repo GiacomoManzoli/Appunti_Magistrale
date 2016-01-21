@@ -21,6 +21,7 @@ Perché un linguaggio sia considerato OO deve avere le seguenti caratteristiche:
 - ereditarietà
 
 ---
+#Correzione primo paziale
 
 ##Domanda 1
 
@@ -39,7 +40,7 @@ Perché un linguaggio sia considerato OO deve avere le seguenti caratteristiche:
 12 [11, 6, rit="handle di q", ris=CL->CL->f0y, x=3, z=5, f1=(12,f1)] //invocazione di f0(3)
 ```
 
-Viene eseguita f0 che ritorna (12,f1).
+Viene eseguita `f0` che ritorna `(12,f1).`
 Dovrebbe essere tolto il record 12 dalla pila, ma contiene la definizione di una funzione, quindi deve essere spostato nello heap.
 
 ```
@@ -53,7 +54,7 @@ Continua l'esecuzione di q con il record 10 in cima.
 10 [9, 8, rit="prox istruzione", rit=CL->w1, f0y=(12*)] //Invocazione di q
 ```
 
-L'esecuzione di q termina, ritornando il valore (12*,f1), dopodiché viene fatto il pop di 10.
+L'esecuzione di `q` termina, ritornando il valore `(12*,f1)`, dopodiché viene fatto il pop di 10.
 
 L'esecuzione del programma riparte con il record 9 in cima.
 
@@ -69,8 +70,8 @@ L'esecuzione del programma riparte con il record 9 in cima.
 17 [16, 16, handle E(x) => x+2 | A(x) => x(y)]
 ```
 
-Esegue il corpo di f2 che fa il test x+z2 = z, z2 vale 2, x vale 3, z vale 5 (parametro formale di f0).
-Viene quindi eseguito il primo ramo dell'if, che ritorna z2.
+Esegue il corpo di `f2` che fa il test `x+z2 = z`, `z2` vale 2, `x` vale 3, `z` vale 5 (parametro formale di `f0`).
+Viene quindi eseguito il primo ramo dell'if, che ritorna `z2`.
 
 Viene quindi fatto il pop di 17 e 16.
 Continua quindi l'esecuzione del corpo di h con il record 15 in cima.
@@ -79,7 +80,7 @@ Continua quindi l'esecuzione del corpo di h con il record 15 in cima.
 15 [14, 5, rit="fine di f1", ris=CL->hf2, a=(14,f2), ax=2, ay2=_] //h(f2)
 ```
 
-Il test dell'if di h viene valutato vero, viene quindi eseguito il raise di A(a).
+Il test dell'if di `h` viene valutato vero, viene quindi eseguito il raise di `A(a)`.
 
 Viene fatto il pop di 15 e 14, tuttavia il record 14 contiene la definzione di a quindi deve essere copiato nello heap.
 
@@ -95,7 +96,7 @@ Viene trovato un handler nel record 13, di conseguenza viene eseguito il pop di 
 14 [13, 13, handle E(x) = x+y | A(x)=> x(r)]
 ```
 
-Si esegue il corpo di f2 con x+z2=z, x=3, z=5, z2=2, il test viene valutato vero, viene quindi ritornato z2=2.
+Si esegue il corpo di `f2` con `x+z2=z`, `x=3`, `z=5`, `z2=2`, il test viene valutato vero, viene quindi ritornato `z2=2`.
 
 Viene quindi fatto il pop di 14 e 13. Con 12 in cima alla pila viene riprende l'esecuzione di p.
 
@@ -103,13 +104,13 @@ Viene quindi fatto il pop di 14 e 13. Con 12 in cima alla pila viene riprende l'
 12 [11, 10, rit="fine programma", ris=CL->w2, w1x=_, xr=2] //p()
 ```
 
-L'esecuzione di p termina ritornano il valore 2, portando anche alla terminazione del programma.
-Inoltre è possibile rimuovere il record 14* dallo heap.
+L'esecuzione di `p` termina ritornano il valore 2, portando anche alla terminazione del programma.
+Inoltre è possibile rimuovere il record `14*` dallo heap.
 
-I valori di w1 e w2 sono:
+I valori di `w1` e `w2` sono:
 
-- w1 = (12*,f1)
-- w2 = 2
+- `w1 = (12*,f1)`
+- `w2 = 2`
 
 Dentro f2 vengono utilizzati gli indirizzi:
 
@@ -146,7 +147,7 @@ f g 1 = 1
 f g x = x * (g (x - 1))
 ```
 
-'1' ha come tipo Num non Int.
+`1` ha come tipo Num non Int.
 
 Il tipo finale viene quindi `(Num -> Num) -> Num -> Num`.
 

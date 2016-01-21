@@ -2,7 +2,7 @@
 
 ##Dynamic Lookup
 
-Detto anche binding dinamico o polimofrismo di sotto-tipo, stabilisce come vengono selezionati i metodi di un oggetto.
+Detto anche binding dinamico o polimorfismo di sotto-tipo, stabilisce come vengono selezionati i metodi di un oggetto.
 
 In C++ e Java si parla di invocazione di un metodo di un oggetto, mentre in Smalltalk si parla di mandare un messaggio ad un oggetto `x->m(args)`.
 
@@ -17,20 +17,20 @@ Quindi, quando viene inviato un messaggio alla variabile `x` è il tipo dinamico
 
 Il dynamic lookup è diverso dall'**overloading**.
 
-L'overloading (sovraccaricamento) avviene con un polimorfiso *ad-hoc* e si basa sul tipo statico dei parametri passati ad un metodo, la funzione da eseguire viene decisa a compile-time.
+L'overloading (sovraccaricamento) avviene con un polimorfiso *ad-hoc* e si basa sul tipo statico dei parametri passati ad un metodo, pertanto la funzione da eseguire viene decisa a compile-time.
 
-In generale, data una collezione *C* di oggetti diversi, ognugno con il metodo `pippo`, è possibile mandare lo stesso messaggio `pippo` a tutti gli elementi della collezione, si occuperà il compilatore di produrre il codice necessario affinché venga sempre eseguita la funzione corretta.
+In generale, data una collezione *C* di oggetti diversi, ognugno con il metodo `pippo`, è possibile mandare lo stesso messaggio `pippo` a tutti gli elementi della collezione. Si occuperà il compilatore di produrre il codice necessario affinché venga sempre eseguita la funzione corretta.
 
 Da notare che non devono essere presenti particolari relazioni tra i vari oggetti, se non la presenza del metodo `pippo` in ognuno di essi. Non è quindi necessario che ci sia una gerarchia tra i vari tipi degli oggetti.
 
-Effettuare il dynamic lookup richide un costo in termini di efficacia, pertanto è possibil scegliere di implementarlo per qualsiasi metodo oppure solo per alcuni metodi detti virtuali.
+Effettuare il dynamic lookup richide un costo in termini di efficacia, pertanto è possibile scegliere di implementarlo per qualsiasi metodo oppure solo per alcuni metodi (metodi **virtuali** del c++).
 
 È quindi possibile seguire due strategie:
 
 - Fare quasi tutto a compile time, tranne per alcuni metodi virtuali, come fa il C++, ottenendo così delle prestazioni migliori;
 - Fare tutto a run-time, come fa Smalltalk.
 
-Il dynamic lookup può essere considerato come un overloading dinamico nel quale la valutazione del motodo da invocare viene fatta a runtime valutando il tipo dinamico dell'oggetto.
+Il dynamic lookup può essere considerato come un overloading dinamico nel quale la valutazione del metodo da invocare viene fatta a runtime valutando il tipo dinamico dell'oggetto.
 Dal momento che `x->m(a,b)` equivale a `m(x,a,b)` e il dynamic lookup viene effettauato solo sul valore di `x`.
 
 In alcuni linguaggi il dynamic lookp viene fatto su tutti gli argomenti del messaggio (es: Common Lisp Object System), ciò prende il nome di **multiple dispatch**.
@@ -39,7 +39,7 @@ Il multiple dispatch può essere utilizzato per implementare il test di uguaglia
 
 ##Astrazione
 
-Detta anche incapsulamento.
+Aka: incapsulamento.
 
 È la capacità di nascondere i dettagli implementativi di un oggetto, creando una distinzione tra una parte pubblica (interfaccia) e una parte privata contenente i dettagli implementativi.
 
@@ -51,14 +51,14 @@ L'astrazione dipende dal linguaggio, ad esempio per Smalltalk tutti i campi dati
 
 `A <: B`, `A` è **sotto tipo** di `B`.
 
-Ovvero dovunque serva un valore di tipo `B` è possibile utilizzare un oggetto di tipo `A`.
+Ovvero dovunque serve un valore di tipo `B` è possibile utilizzare un oggetto di tipo `A`.
 
-Il subtyping è una relazione tra le interfacce di due tipi, quindi se `A` è sotto tipo di `B`, tutti i metodi che posso invocare su `B` li posso anche invocare su `A`. Si tratta quindi di una relazione di inclusione tra l'interfaccia di due tipi.
+Il subtyping è una relazione di inclusione tra le interfacce di due tipi. Quindi se `A` è sotto tipo di `B`, tutti i metodi che posso invocare su `B` li posso anche invocare su `A`.
 
 Vantaggi del subtyping:
 
 - Permette di trattare in modo uniforme valori di tipo diverso.
-- Avere una base comune per ogni oggetto.
+- Permette di avere una base comune per ogni oggetto.
 - Rende possibile aggiungere funzionalità senza cambiare il resto del programma.
 - Velocizza il prototipaggio.
 

@@ -23,7 +23,7 @@ In Smalltalk non viene forzata la conformità ed è per questo che viene utilizz
 Se la conformità viene forzata dal compilatore, allora il template non è più necessario.
 
 In Simula i campi dati di un oggetto si trovano nei vari record di attivazione che compongno l'oggetto, garantendo così la conformità.
-Un oggetto Smalltalk invece contiene tutti i campi dati, compresi delle classe base, quindi l'ordine con il quale compaiono nella classe derivata può non essere conforme a quello della classe base.
+Un oggetto Smalltalk invece contiene tutti i campi dati, compresi quelli della classe base, quindi l'ordine con il quale compaiono nella classe derivata può non essere conforme a quello della classe base.
 
 In Smalltalk c'è comunque bisogno di una ricerca a runtime quando viene richiesta l'invocazione di un metodo che non è ridefinito nella classe base. Questo approcccio è costoso, però si possono migliorare le prestazioni tenendo una cache dei metodi invocati di recente (Java adotta questo approccio).
 
@@ -33,7 +33,7 @@ In Smalltalk il subtyping e l'ereditarietà sono indipendenti.
 
 I tipi sono dati dall'interfaccia delle classi, cioè dai messaggi che possono ricevere, quindi due oggetti che non sono in una relazione di erediterietà possono avere tra loro una relazione di subtyping.
 
-Il legame tra erediterietà e subtyping esiste, ma non è né necessario né sufficente, questo perché in Smalltalk uan classe derivata può evitare di ereditare dei metodi della classe base (**ereditarietà selettiva**).
+Il legame tra erediterietà e subtyping esiste, ma non è né necessario né sufficente, questo perché in Smalltalk una classe derivata può evitare di ereditare dei metodi della classe base (**ereditarietà selettiva**).
 
 ##Modulatità
 

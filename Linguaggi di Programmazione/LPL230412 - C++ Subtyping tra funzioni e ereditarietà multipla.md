@@ -6,15 +6,17 @@ Il subtyping `A <: B` al posto di `B` possiamo usare `A`. Inoltre, se `B::f` è 
 
 In un certo senso si può dire che dovunque funziona l'invocazione di `B::f` funziona anche l'invocazione di `A::f` che si avvicina alla definizione di sotto tipo, si può quindi dire che `A::f <: B::f`?
 
-Il subtyping può essere definito in due modi:
+Il subtyping tra funzioni può essere definito in due modi:
 
-- **Covariante sul codominio**: *A->B'* ha come sotto tipo *A->B* se *B* è un sotto tipo di *B'*.
+- **Covariante sul codominio**: *A->B'* ha come sotto tipo *A->B* se *B* è un sotto tipo di *B'*. Ovvero: una funzione è sotto tipo di un'altra funzione se il tipo dei parametri coincide e il valore che ritorna è un sotto tipo del valore di ritorno dell'altra funzione.
 
 > If B <: B' then A->B <: A->B'
 
-- **Contro-variante sul dominio**: *A'->B* ha come sotto tipo *A->B* se  *A'* è un sotto tipo di *A*.
+- **Contro-variante sul dominio**: *A'->B* ha come sotto tipo *A->B* se  *A'* è un sotto tipo di *A*. Ovvero: una funzione è sotto tipo di un'altra funzione se il tipo dei parametri è un sopra tipo dei parametri dell'altra funzione.
 
 > If A' <: A then A->B <: A'->B
+> 
+> `int F(ColoredPoint x) è sotto tipo di int F(Point x)`
 
 Nel caso ci siano più parametri si ha che `A::f <: B::f` se le due funzioni sono contro-varianti sul dominio e covarianti sul valore di ritorno. Ovvero se i parametri di `A::f` sono dei sotto-tipi dei parametri di `B::f` e se il valore di ritorno di `A::f` *è più specifico* del valore di ritornodi `B::f`, cioè il tipo del valore di ritorno di `B::f` è sotto tipo di `A::f`.
 
@@ -107,7 +109,7 @@ C::f(){
 }
 ```
 
-per calcolare l'indirizzo di `x` il compilatore utilizza `o + disp + dx` dove `dx` è la distanza della variabile `x` dall'inizio dell'oggetto, indicato da `o`. Il valore del displacement viene *passato* alla funzione quando viene invocata a runtime, recuperandolo dalla vtable corretta.
+per calcolare l'indirizzo di `x` il compilatore utilizza `o + disp + dx` dove `dx` è la distanza della variabile `x` dall'inizio dell'oggetto, indicato da `o`. **Il valore del displacement viene *passato* alla funzione quando viene invocata a runtime, recuperandolo dalla vtable corretta.**
 
 L'offset non viene preso in considerazione nella compilazione dell'invocazione `(*(pb->vtbl[2]))(pb,...)` perché varia in base al tipo dinamico, quindi il compilatore non riesce a stabilire l'offset a compile time.
 
@@ -155,7 +157,7 @@ Come prima cosa conviene disegnare l'oggetto principale indicando i vari sottoog
 
 > **Attenzione**: i metodi che **non** sono marcati come virtuali **non** devono comparire da nessuna parte del disegno, perché le loro invocazioni vengono decise a compile time, quindi non hanno senso si esistere a runtime.
 
-Dopo aver definito i sottooggetti si passa alle vtable, andando ad aggiungere i metodi virtuali e solo una volta completate tutte le vtable si passa ad inserire il displacemen, questo perché il displacement serve se lo stesso metodo virtuale compare contemporaneamente su più vtable.
+Dopo aver definito i sottooggetti si passa alle vtable, andando ad aggiungere i metodi virtuali e solo una volta completate tutte le vtable si passa ad inserire il displacement, questo perché il displacement serve se lo stesso metodo virtuale compare contemporaneamente su più vtable.
 
 L'oggetto ha questa struttura per garantire la conformità con gli oggetti delle classi base e il displacement serve per calcolare gli indirizzi corretti per i metodi virtuali che vengono definiti su più vtable.
 
@@ -168,6 +170,19 @@ Si chiede di spiegare il tipo dei parametri formali dei metodi: `s`, `r`, `C::f`
  `C::s(C*)`, `B::r(B* )`, `C::f(C*)`, `B::f(B*)`, `B::h(B*)`
 corpo di `C::s`:
 
-- `s(C* o){o->r();}` il compilatore sa che `o` punterà sempre all’entrata principale, `r` è non virtuale, quindi produrrà un push+jump, ma, visto che `B::r` aspetta un `B*`, deve passare come parametro implicito *(o+δ)*. 
+- `s(C* o){o->r();}` il compilatore sa che `o` punterà sempre all’entrata principale, `r` è non virtuale, quindi produrrà un push+jump, ma, visto che `B::r` aspetta un `B*`, deve passare come parametro implicito *(o+δ)* per effettuare la conversione del puntatore. 
 - `r(B* o){o->f();}`, l’overloading resolution individua `B::f (B*)` che è virtuale, quindi l’invocazione viene compilata con: `*(o->vtbl[2])(o)` nota che c’è concordanza tra il tipo di `o` e il parametro formale di `B::f(B*)`, quindi niente conversioni.
-- `C::f(C* o){o->h(B*);}` `C::f` può venire invocata con oggetto d’invocazione di tipo statico `A*`, `C*`, e `B*`. Nei primi due casi il valore dinamico di o sarà certamente l’entrata principale di un oggetto `C`, mentre nell’ultimo caso sarà l’entrata secondaria di un oggetto `C`, per compilare l’invocazione ad h è necessario sapere quale caso si applica, quindi il codice di `C::f` sarà: `*((o+ δ -disp)->vtbl)[1](o+ δ -disp)` se `disp= δ` si usa `o` in quanto punta all’entrata secondaria, altrimenti `disp=0` e quindi si usa `o + δ` (cioè l’entrata secondaria)
+- `C::f(C* o){o->h(B*);}` `C::f` può venire invocata con oggetto d’invocazione di tipo statico `A*`, `C*`, e `B*`. L'invocazione di `h` viene quindi compilata con `*((o + δ - disp)->vtbl)[1](o + δ - disp)`.
+
+Nell'ultimo esempio il problema sorge perché si sta compilando l'invocazione di un metodo virtuale, senza sapere il tipo dinamico dell'oggetto di invocazione e sapendo che è necessaria una conversione di tipo, dal momento che `o` è di tipo `C*` mentre `h` deve essere invocata con un `B*`.
+
+Con questa gerarchia, `o` può avere tipo dinamico `A*`, `B*` e `C*`, pertanto, per effettuare la conversione di tipo a `B*` è necessario considerare l'offset del sotto oggetto di tipo `B`, ovvero `o + δ`.
+Tuttavia, il valore dinamico del puntatore `o` potrebbe già puntare al sotto oggetto di tipo `B` e in questo caso, la somma dell'offset porta ad un errore. Pertanto viene preso anche in considerazione il displacement `o + δ - disp`.
+
+Così facendo, il displacement memorizzato nella vtable del sotto oggetto `A`/`C` è `0` e a runtime viene effettuata la conversione di tipo corretta: `o + δ - 0`, che è l'indirizzo del sotto-oggetto `B` se `o` punta a `C` o a `A`. 
+
+Mentre se `o` punta già al sotto oggetto di tipo `B` il valore del displacement prensete nella vtable è `δ`, pertanto `o + δ - disp` viene calcolato come `o + δ - δ`, che è l'indirizzo del sotto oggetto `B` se `o` punta già al sotto oggetto `B`.
+
+*Possibile spoiler: il displacement viene memorizzato nelle vtable degli oggetti.*
+
+*Possibile affermazione errata: come "rule-of-thumb", se nella riga della vtable associata alla funzione invocata (non quella da invocare) è presente il displacement, molto probabilmente questo è da tenere in considerazione nella compilazione*

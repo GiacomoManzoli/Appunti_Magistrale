@@ -95,4 +95,4 @@ Sono classi non completamente definite, che possono essere utilizzate solamente 
 
 Perché una classe sia virtuale è sufficente che un metodo abbia corpo nullo `=0`.
 
-Sono state introdotte per rendere meno problematica l'ereditarietà ultima, dato che servono solamente a fissare l'ordine delle vtable delle classi derivate.
+Sono state introdotte per rendere meno problematica l'ereditarietà multipla, dato che servono solamente a fissare l'ordine delle vtable delle classi derivate.
