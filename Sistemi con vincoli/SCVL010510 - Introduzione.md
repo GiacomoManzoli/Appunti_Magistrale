@@ -1,28 +1,36 @@
 #Sistemi con vincoli
 
-##Introduzione
+# Lezione 1 - Introduzione
 
-Programmazione a vincoli: constraint programmmig
+Programmazione a vincoli o constraint programmmig è una tecnica utilizzata per siolvere problemi CSP o COP.
 
-__CSP__ --> **C**onstraint **S**atisfaction **P**roblem
+- **CSP**: **C**onstraint **S**atisfaction **P**roblem
+- -**COP**: **C**onstraint **O**ptimization **P**roblem: problema di ottimizazione con vincoli, è diverso dalla programmazione lineare.
 
-__COP__ --> **C**onstraint **O**ptimization **P**roblem: problema di ottimizazione con vincoli, è diverso dalla programmazione lineare.
-
-Appartengono a questa tipologia di problemi i tipici problemi gestionali, come la pianificazione dell'orario dei treni o la gestione dei porti.
+Alcune applicazioni pratiche riguardano i problemi gestionali, come la pianificazione dell'orario dei treni o la gestione dei porti.
 
 La risoluzione di uno di questi problemi si basa sempre sulla costruzione di un modello, in modo analogo alla Programmazione Lineare, solo che nella modellazione non venogno utilizzate le equazioni lineari.
 
+Alcuni dei vantaggi dell'approccio utilizzato dalla programmazione a vincoli sono:
+
+- Un ricco linguaggio di modellazione
+- Facilità nella creazione di prototipi
+- Manutenibilità ed estensibilità
+- Possibilità di utilizzare approcci ibridi
+
 ##Problemi combinatori - CSP
 
-Sono una tipologia di problemi come la colorazione di una cartina utilizzando *n* colori o la risoluzione di un sudoko.
+Tipologia di problemi che comprende:
 
-Questi hanno un pattern simile di risoluzione:
+- **Map Coloring**: come colorare una cartina geografica con *n* colori, senza che le regioni confinanti siano dello stesso colore.
+- **Partial Latin Square (PLS)**: un sudoku con un solo quadrato
+
+Questi problemi hanno lo stesso pattern di risoluzione:
 
 - Si cercano dei vincoli per limitare le possibili mosse
 - Si fanno determinate scelte e se sono sbagliate si torna indietro
 
 Su un foglio di carta è più semplice da fare, in CP si cerca di formalizzare queste cose per un computer.
-
 
 > CSP = \<X,D,C\>
 
@@ -37,12 +45,13 @@ Una relazione *R* su *S* è un sottoinsieme del prodotto cartesiano della sequen
 
 Un vincolo è quindi una sorta di tabella con tutti i possibili valori validi (**feasible**) per le relazione definite tra i vari domini delle variabili del problema.
 
-Una soluzione per un CPS è quindi tupla definita sul prodotto cartesiano di tutti i domini che è consistente con tutti i vincoli. (Una soluzione è quindi una relazione sull'insieme dei domini).
+Una soluzione per un CPS è quindi tupla definita sul prodotto cartesiano di tutti i domini che è consistente con tutti i vincoli. Una soluzione è quindi una relazione sull'insieme dei domini:
+
+> τ ∈ ∏<sub>[x<sub>i</sub> ∈ X]</sub>D(x<sub>i</sub>) : π(τ,X(c<sub>j</sub>)) ∈ c<sub>j</sub>, ∀c<sub>j</sub> ∈ C 
 
 Un CSP senza soluzione si dice **infisable**, senza soluzione.
 
-Un CSP può essere definito con ogni tipo di dominio e vincolo
-
+Un CSP può essere definito con ogni tipo di dominio e vincolo.
 Tipicamente come domini vengono utilizzati:
 
 - Interi
@@ -53,15 +62,15 @@ Tipicamente come domini vengono utilizzati:
 Nel corso noi useremo domini interi finiti (finite domains), con i quali è possibile utilizzare qualsiasi tipo di vincolo, rappresentandolo in forma estensionale, cioè andando ad enumerare tutti i possibili assegnamenti di variabili che lo soddisfano.
 Questa modellazione dei vincoli però è scomoda e inefficente, e tipicamnete viene utilizzata la forma "*intensional*"
 
-Per esprimere dei vincoli con questa forma vengono utilizzate delle Constraint libraries,  delle collezioni di tipologie di vincoli come:
+Per esprimere dei vincoli con questa forma vengono utilizzate delle Constraint libraries, delle collezioni di tipologie di vincoli come:
 
-- **equality**: x==y
-- **disequality**: x!=y
+- **equality**: *x==y*
+- **disequality**: *x≠y*
 
 Ad esempio, utilizzando queste due tipologie di vincoli è possibile andare a modellare il problema della colorazione della cartina del nord italia con:
 
-- variabili: x<sub>i</sub> ϵ {0..3} per ogni regione;
-- vincoli: x<sub>i</sub> != x<sub>j</sub> per le regioni confinanti.
+- Variabili: *x<sub>i</sub> ∈ {0..3}* per ogni regione;
+- Vincoli: *x<sub>i</sub> ≠ x<sub>j</sub>* per le regioni confinanti.
 
 
 ##Filtering
@@ -73,7 +82,17 @@ Questo processo prende il nome di **filtering**, mentre l'atto di rimuovere un v
 
 Il filtering fatto da un vincolo può permettere ad un altro vincolo di fare ulteriore filtering, in questo caso si dice che fa __propagation__.
 
-La propagazione viene effettuata mediante un algoritmo.
+La propagazione viene effettuata mediante un algoritmo e secondo determinate regole definte all'interno della cosntraint library.
+
+### Filtering per *x=y*
+
+- **Rule 1**: v ∈ D(y) ∧ v ∉ D(x) ⟶ v ∉ D(y)
+- **Rule 2**: v ∈ D(x) ∧ v ∉ D(y) ⟶ v ∉ D(x)
+
+### Filtering per *x≠y*
+
+- **Rule 1**: D(x) = {v} ⟶ v ∉ D(y)
+- **Rule 2**: D(y) = {v} ⟶ v ∉ D(x)
 
 ###AC1: il primo algoritmo di propagazione
 
@@ -121,11 +140,11 @@ La funzione `decision(CSP)` usa l'insieme dei vincoli per scegliere un valore pe
 
 Una possibile decisione può essere quella di selezionare il valore minore presente nel dominio di una variabile e provare ad eseguire l'assegnazione, creando così un ramo decisionale. Viene poi creato un altro ramo nel quale la variabile viene posta diversa dal valore scelto.
 
-Dopodichè si prosegue l'esplorazione dell'albero lungo il primo ramo decisionale e se si arriva ad una soluzione infeasibile viene effettauto il backtracking.
+Dopodiché si prosegue l'esplorazione dell'albero lungo il primo ramo decisionale e se si arriva ad una soluzione infeasibile viene effettauto il backtracking.
 
 Dopo aver preso una decisione, questa viene propagata utilizzando AC1, restringendo ulteriormente l'ambito delle possibili scelte.
 
-
+** GIF: DFS PLS**
 
 
 

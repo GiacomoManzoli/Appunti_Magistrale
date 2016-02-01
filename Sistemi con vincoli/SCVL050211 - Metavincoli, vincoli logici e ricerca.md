@@ -102,11 +102,11 @@ def DFS(CSP):
     return False
 ```
 
-- Prende la prima variabile x<sub>i</sub> che non è ancora bound
+- Si prende la prima variabile *x<sub>i</sub>* che non è ancora bound
 - Si prende il valore minimo *v*
 - Si prendono due decisioni:
     - *x<sub>i</sub> = v* (branch sinistro)
-    - *x<sub>i</sub> != v* (se faccio backtracking)
+    - *x<sub>i</sub> ≠ v* (se faccio backtracking)
 
 Si può andare a migliorare cambiando la **variable selection heuristic**, cioè cambiare come si sceglie la variabile e **value selection heuristic**, cioè come scegliere il valore per fare il branching.
 
@@ -114,7 +114,7 @@ L'idea è quella di scegliere l'euristica migliore che permette di risolvere il 
 
 Questa euristica risulta essere specifica per alcuni tipi di problemi, perché non è possibile trovare un euristica per risolvere un problema generico.
 
-Nei problemi in cui si cerca solamente una soluzione, l'idea è quella di scegliere sia la variabile che il valore in modo che ci sia una maggior probabilità di arrivare ad una soluzione feasible.
+Nei problemi in cui si cerca solamente una soluzione, **l'idea è quella di scegliere sia la variabile che il valore in modo che ci sia una maggior probabilità di arrivare ad una soluzione feasible**.
 
 Tuttavia questa strategia non limita il **trashing**, se si prende una decisione sbagliata e si genera tutto un sotto-albero infeasible è necessario esaminare tutto il sotto-albero prima di accorgersene.
 
@@ -122,16 +122,19 @@ Sarebbe bello avere un modo di limitare questo fenomeno.
 
 Se le variabili hanno domini diversi, queste influenzano la struttura dell'albero di ricerca.
 
+![](./immagini/l5-order1.png)
+![](./immagini/l5-order2.png)
+
 In genere scegliendo come variabile alla quale assegnare un valore, la variabile che ha il dominio più piccolo, si ottengono due grandi vantaggi:
 
 - La propagazione è più forte;
 - È molto più probabile che si faccia propagazione.
 
-Si cerca quindi di massimizzare la propagazione scegliendo variabili a valori che cercano di causare un fail (**first fail principle**).
+Si cerca quindi di massimizzare la propagazione scegliendo variabili e valori in modo da causare un fail (**first fail principle**).
 
 Quindi ricapitolando:
 
 - Se si crede che il problema sia feasible, si cerca di assegnare il valore che è più facile che porti ad una soluzione;
 - Se si crede che il problema sia infeasible, si cerca di fallire il prima possibile.
 
-Di solito non si sa se il problema è feasible o infeasible, quindi si sceglie la variabile con il dominio più piccolo (si cerca il fail) e il valore che aumenta la probabilità di successo (varia da problema a problema).
+Di solito non si sa se il problema è feasible o infeasible, quindi **si sceglie la variabile con il dominio più piccolo** (si cerca il fail) e **il valore che aumenta la probabilità di successo** (varia da problema a problema).

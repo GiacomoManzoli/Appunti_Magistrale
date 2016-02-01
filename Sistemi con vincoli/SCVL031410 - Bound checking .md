@@ -1,7 +1,7 @@
 ##Lezione 3 - Bound Checking
 
 Applicando la bound consistency si cambia il problema di filtering, in quanto non si va a controllare il supporto dei valori uno a uno, ma si controllano solamente i valori dei domini, ottentendo un sistema più efficente.
-Nonstante ciò bound consistency è più debole di GAC, specialmente nel caso in cui il dominio ha dei buchi, che non vengono considerati da BC.
+Così facendo bound consistency è più debole di GAC, specialmente nel caso in cui il dominio ha dei buchi, i quali non vengono considerati da BC.
 
 ##AC/BC
 

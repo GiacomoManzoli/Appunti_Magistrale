@@ -16,19 +16,21 @@ Questo può essere visto come una generalizzazione dell'operazione di assegnamen
 
 Un vincolo si dice **risolto** se coincide con il prodotto cartesiano nel suo scope.
 
+> c<sub>j</sub>=∏<sub>[x<sub>i</sub > ∈ X(c<sub>j</sub>)]</sub> D(x<sub>i</sub>)
+
 Cioè effettuando il prodotto cartesiano dei domini di tutte le variabili presenti nel vincolo, questo prodotto contiente solo relazioni che soddisfano il vincolo, generalizzando così la definizione di **feasibility** di un assegnamento.
 
 ##Soluzione CSP
 
-È una restrizione di tutti i domini tale che tutti i vincoli siano risolti, cioè ogni possibile assegnamento di tutte le variabili soddisfa tutti i vincoli del problema.
+È una restrizione di tutti i domini tale che tutti i vincoli siano risolti, cioè ogni possibile assegnamento di tutte le variabili soddisfa tutti i vincoli del problema, ovvero è una soluzione.
 
-> D′(x<sub>i</sub>) ∀x<sub>i</sub>∈X : ∀c<sub>j</sub>∈C, c<sub>j</sub>=∏x<sub>i</sub>∈X(c<sub>j</sub>)D′(x<sub>i</sub>)
+> D′(x<sub>i</sub>) ∀x<sub>i</sub> ∈ X : ∀c<sub>j</sub> ∈ C, c<sub>j</sub> = ∏<sub>[x<sub>i</sub>∈X(c<sub>j</sub>)]</sub>D′(x<sub>i</sub>)
 
-Una caso particolare di questa generalizzazione è quandp tutti i domini di tutte le variabili sono dei singoletti, cioè sono composti da un solo elemento.
+Una caso particolare di questa generalizzazione è quando tutti i domini di tutte le variabili sono dei singoletti, cioè sono composti da un solo elemento.
 
 ##DFS - Depth first search
 
-Utilizzando questi concetti di generalizzazione è possibile andare a migliorare gli algoritmi di ricerca e filtering.
+Utilizzando questi concetti di **generalizzazione** è possibile andare a migliorare gli algoritmi di ricerca e filtering.
 
 ```python
 def DFS(CSP):
@@ -39,7 +41,7 @@ def DFS(CSP):
   return False
 ```
 
-L'algoritmo di ricerca base può essere ottimizzato facendolo terminare quando viene trovata una soluzione generalizzata.
+L'algoritmo di ricerca base può essere ottimizzato facendolo terminare quando viene trovata una soluzione generalizzata, permettendo così di terminare subito.
 
 Allo stesso modo può essere modificato __AC1__ in modo che se un vincolo è già risolto, allora non venga eseguito il filtering per tale vincolo.
 
@@ -95,34 +97,39 @@ Per poter utilizzare in modo efficente questi vincoli è andare a definire delle
 
 ##Consistenze locali 
 
-L'approccio di scrivere un nuovo algoritmo di filtering per ogni vincolo non scala, è necessario usare un approccio sistematico a questo problema.
+Per quanto visto finora è necessario scrivere un'algoritmo di filtering per ogni vincolo utilizzato.
+Questo però può risultare problematico all'aumentare delle possibili tipologie di vincoli, perciò è necessario utilizzare un approccio sistematico a questo problema.
 
 ###Vincoli binari
 
 Si rimouve un valore *v* dal dominio *D(X)* se non supporta un determinato vincolo quando viene combinato con i valori del dominio *D(Y)*.
 
-Un valore *v* in *D(X)* si dice che ha un **supporto** se esiste un valore *w* in *D(Y)* tale che *(v,w)* soddisfa un vincolo.
+Un valore *v* in *D(x)* si dice che ha un **supporto** se esiste un valore *w* in *D(y)* tale che *(v,w)* soddisfa un vincolo.
 
-Quando tutti i valori presenti nel dominio hanno un supporto si dice che il vincolo *c* è consistente sugli archi (**Arc Consistency**).
+Quando tutti i valori presenti nei due domini hanno un supporto si dice che il vincolo *c* è consistente sugli archi (**Arc Consistency**). Se tutti i vincoli del CSP sono arc consistent, allora anche il CSP è arc consistent.
 
 Viene usato il termine arco in quanto un CSP può essere visto come un grafo i cui nodi sono dati dalle variabili del problema.
 
-La consistenza sugli archi garantisce che vincolo per vincolo ogni assegnamento delle variabili porta ad una soluzione feasible e permette di formalizzare gli algoritmi di filtering.
+![](./immagini/ac_graph.png)
 
-Questa strategia funziona bene a livello locale, ma a livello globale no, in quanto la conistenza dei vincoli viene forzata vincolo per vincolo, senza tenere conto degli altri vincoli e quindi non è detto che il problema sia globalmente consistente.
+La consistenza sugli archi garantisce che, vincolo per vincolo, ogni assegnamento delle variabili porta ad una soluzione feasible e permette di formalizzare gli algoritmi di filtering.
 
-Avere consistenza globale è complesso quanto risolvere il problema e dal momento che la complessità dell'algoritmo di filtering risulta particolarmente critica dal momento che deve essere eseguito pià volte per ogni nodo, si preferisce forzare la consistenza locale che è meno complessa.
+Questa strategia funziona bene a **livello locale**, ma a livello globale no, in quanto la conistenza dei vincoli viene forzata vincolo per vincolo, senza tenere conto degli altri vincoli e quindi non è detto che il problema sia globalmente consistente.
+
+Avere consistenza globale è complesso quanto risolvere il problema e dal momento che la complessità dell'algoritmo di filtering risulta particolarmente critica dal momento che deve essere eseguito più volte per ogni nodo e il numero di nodi cresce esponenzialmente, si preferisce forzare la consistenza locale che è meno complessa.
 
 Ad esempio filtrare per la disuguaglianza di due valori viene fatto in tempo costante, mentre per l'uguaglianza è necessario un tempo lineare.
 
 ###Vincoli generici
 
-__Generalizzazione di supporto__: un valore di un certo dominio è supportato se per tutte le altre variabili nello scope del vincolo esiste un altro valore tale che l'insieme dei valori riesce a soddisfare il vincolo.
+La definizione data per i vincoli binari non funziona nel caso dei vincoli con più variabili, sono quindi necessarie ulteriori generalizzazioni.
+
+__Generalizzazione di supporto__: un valore di un certo dominio ha supporto se per tutte le altre variabili nello scope del vincolo esiste un altro valore tale che l'insieme dei valori riesce a soddisfare il vincolo.
 
 __Generalizzazione dell'Arc Consinstency__: 
 Un vincolo *c* è consistente sugli archi in modo generalizzato se *∀x<sub>i</sub> ∈ X(c)* è possibile trovare un valore *v ∈ D(x<sub>i</sub>)* che ha supporto.
 
-Fare filtering per il vincola della somma ha una complessita cubica, tuttavia con un po' di ottimizzazioni si riesce ad ottenere una complessità quadratica, questo perché nel nostro sistema fare il look-up di un valore ha complessità costante).
+Fare filtering per il vincolo della somma ha una complessita cubica, tuttavia con un po' di ottimizzazioni si riesce ad ottenere una complessità quadratica, questo perché nel nostro sistema fare il look-up di un valore ha complessità costante).
 
 > z=x+y
 
@@ -138,13 +145,14 @@ Così facendo la complessità diventa quadratica nella dimensione di *D(x)* e *D
 
 Se i domini sono un intervallo interno e il minimo e massimo dell'intervallo del dominio hanno un supporto, allora anche tutti i valori nel mezzo hanno un supporto.
 
-Si dice che un valore *v<sub>i</sub> ∈ D(x<sub>i</sub>)* ha supporto con Bound Consistency se e solo se, ∀x<sub>j</sub> ∈ X(c)∖{x<sub>i</sub>}, esiste un valore *v<sub>j</sub> ∈ {min(x<sub>j</sub>)..max(x<sub>j</sub>)}* tale che *(v<sub>0</sub>,v<sub>1</sub>,...,v<sub>m-1</sub>) ∈ c*
+Si dice che un valore *v<sub>i</sub> ∈ D(x<sub>i</sub>)* ha supporto con **Bound Consistency** se e solo se, *∀x<sub>j</sub> ∈ X(c)∖{x<sub>i</sub>}*, esiste un valore *v<sub>j</sub> ∈ {min(x<sub>j</sub>)..max(x<sub>j</sub>)}* tale che *(v<sub>0</sub>,v<sub>1</sub>,...,v<sub>m-1</sub>) ∈ c*
 
-Un vincolo è BC se per ogni variabile del vincolo, sia il minimo che il massimo valore di quella variabile hanno un supporto.
+Un vincolo è **BC** se per ogni variabile del vincolo, sia il minimo che il massimo valore di quella variabile hanno un supporto.
 
 In alcuni casi BC equivale a GAC anche se tipicamente questa tipologia di consistenza è più debole.
 
-In ogni caso, sia la bound consistency che l'arc consistency garantiscono un domani wipeout nel caso non ci siano soluzioni, la differenza riguarda l'efficenza dei due algoritmi: AC è più costoso in termini di tempo ma permette di diminuire il tempo necessario alla ricerca, mentre BC è più veloce da applicare ma taglia meno valori, con un conseguente aumento del tempo necessario alla ricerca.
+In ogni caso, sia la bound consistency che l'arc consistency garantiscono un domain wipeout nel caso non ci siano soluzioni. 
+La differenza riguarda l'efficenza dei due algoritmi: AC è più costoso in termini di tempo ma permette di diminuire il tempo necessario alla ricerca, mentre BC è più veloce da applicare ma taglia meno valori, con un conseguente aumento del tempo necessario alla ricerca.
 
 
 

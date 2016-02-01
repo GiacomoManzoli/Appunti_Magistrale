@@ -6,7 +6,7 @@
 
 In alcuni casi, in CP può essere necessario trovare più soluzioni oppure sapere quante sono le possibili soluzioni.
 
-Per risolvere questo problrma di enumerazione l'algoritmo di ricerca DFS diventa:
+Per risolvere questo problema di enumerazione l'algoritmo di ricerca DFS diventa:
 
 ```python
 def DFS(CSP):
@@ -74,7 +74,7 @@ Ad ogni iterazione si usa *v = f(x) - 1*, cioè il costo della soluzione trovata
 
 L'ultima soluzione trovata è quella ottima.
 
-Il vantaggio di questo algoritmo è che può essere interrotto ad ogni momento e fornisce comunque una soluzione anche se questa non è ottima.
+Il vantaggio di questo algoritmo è che può essere interrotto in ogni momento e fornisce comunque una soluzione anche se questa non è ottima.
 
 Questo fatto è molto importante perché la maggior parte dei COP è NP-Difficile.
 
@@ -104,7 +104,7 @@ Di contro non trova un lower bound e c'è meno propagazione dei vincoli.
 
 ### Binary Search
 
-È la combinazione dei due algoritmi, che va a fare una ricerca binaria sul dominio di *f(x)*.
+È la combinazione dei due algoritmi, che effettua una ricerca binaria sul dominio di *f(x)*.
 
 L'idea è quella di tenere un upper bound feasbile e un lower bound infeasible e di rivolvere il problema per *lb < f(x) < ub*.
 
@@ -128,7 +128,7 @@ while lb < ub:
 
 In questo modo si ottiene un algoritmo di tipo anytime che calcola anche un lower bound, che funziona a passi più grandi e che permette di effettuare una buona propagazione dal momento che ci sono vincoli sempre più stretti su *f(x)*.
 
-Ma un altro grande vantaggio di questo approccio è l'**optimality gap**, quando fermo l'algoritmo prima della terminazione ottengo sia una soluzione per il problema CSP sia un indicatore della qualità della soluzione.
+Ma un altro grande vantaggio di questo approccio è l'**optimality gap**: se l'algoritmo viene fermato prima della terminazione si ottiene sia una soluzione per il problema CSP sia un indicatore della qualità della soluzione.
 
 > og = (ub - lb) / lb
 
@@ -145,6 +145,8 @@ Ad esempio, nel problema della colorazione della cartina, prima viene risolto il
 
 ![](./immagini/l4-bb1.png)
 ![](./immagini/l4-bb2.png)
+
+**GIF B AND B**
 
 Utilizzando il branch and bound in CP non c'è bisogno di calcolare per ogni nodo il lower bound, in quanto viene calcolato in modo automatico dai vincoli.
 
