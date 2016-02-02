@@ -4,11 +4,11 @@
 
 Mangiene la bound consistency su una sommatorioa
 
-> SUM(z,X) = z=∑xi∈Xxi
+> SUM(z,X) = z=<big>∑</big><sub>[x<sub>i</sub>∈X]</sub>x<sub>i</sub>
 
 Dove *X* è un vettore di variabili e *z* è la variabile che rappresenta il risultato della somma.
 
-Conviene utilizzare questo vincolo piuttosto che ragionare sulle singole somme binarie perché utilizzando le somme binarie richiedono più operazioni per dedurre i bound, inoltre, l'ordine con il quale vengono processati influisce sul numero di operazioni. Quindi il vincolo globale permette di avere la **stessa propagazione** in modo **più efficente**.
+Conviene utilizzare questo vincolo piuttosto che le singole somme binarie perché queste richiedono più operazioni per dedurre i bound, inoltre, l'ordine con il quale vengono processati influisce sul numero di operazioni. Quindi il vincolo globale permette di avere la **stessa propagazione** in modo **più efficente**.
 
 > **Somme binarie** con *n* termini:
 >
@@ -30,25 +30,25 @@ L'idea è quindi quella di andare a tenere una cache dei risultati parziali in m
 
 Alla prima invocazione viene eseguito l'algoritmo normalmente
 
-> ub(z)=∑xi∈Xxi
+> ub(z)=<big>∑</big><sub>[x<sub>i</sub>∈X]</sub>x<sub>i</sub>
 
-ed è possibile tenere in cache il valore massimo di z: ub`$`(z).
+ed è possibile tenere in cache il valore massimo di z: ub<sub>`$`</sub>(z).
 
-Supponendo che sia stato eseguito il pruning della variabile xj, al passo successivo il bound può essere aggiornato con
+Supponendo che sia stato eseguito il pruning della variabile x<sub>j</sub>, al passo successivo il bound può essere aggiornato con
 
-> ub(z)=ub`$`(z)−old(xj)+xj
+> ub(z)=ub<sub>`$`</sub>(z) − old(x<sub>j</sub>) + x<sub>j</sub>
 
 ottenendo così l'aggiornamento dell'upper bound in tempo costante.
 
-Per fare filtering sul dominio di xi si può utilizzare
+Per fare filtering sul dominio di x<sub>i</sub> si può utilizzare
 
-> ub(xi)=z⎯⎯−∑xh∈X,h≠i min(xh)
+> ub(x<sub>i</sub>) = ub(z) - <big>∑</big><sub>[x<sub>h</sub> ∈ X, h ≠ i]</sub>lb(x<sub>h</sub>)
 
 Cioè viene preso il più grande valore di z e si tolgono i minimi valori per ogni altra variabile.
 
 Al secondo passo si può eseguire il calcolo con (assumendo che sia stato eseguito il pruning di xj (la formla è da correggere.
 
-> ub(xi)=max(z)-(lb`$`(xi)−old(min(xj) + min(xj))
+> ub(x<sub>i</sub>) = ub(z) - ( lb<sub>`$`</sub>(x<sub>i</sub>) − old(lb(x<sub>j</sub>) + lb(x<sub>j</sub>))
 
 In questo modo si riesce a fare il pruning di una singola variabile in tempo costante.
 
@@ -62,7 +62,7 @@ Perché il tutto funzioni il solver deve permettere di:
 
 ####Caching
 
-La soluzione più semplice per tenere la cache di un valore è quello di utilizzare **una variabile normale**. Questo approccio non funziona bene con il backtracking, dal momento che il valore della variabile non viene ripristinato.
+La soluzione più semplice per tenere la cache di un valore è quello di utilizzare **una variabile normale**. Questo approccio non funziona bene con il backtracking, dal momento che il valore della variabile non può essere ripristinato.
 
 Serve quindi un modo per tenere lo storico dei valori della variabile, conviene quindi utilizzare uno **stack di valori**, man mano che si scende nell'albero si effettua il push di un valore, quando si fa backtracking si esegue un pop. Nel caso ci siano degli aggiornamenti parziali, viene aggiornato il valore presente in cima allo stack.
 
@@ -70,7 +70,17 @@ Questo sistema di gestione prende il nome di **timestamp mechanism**, viene tenu
 
 Nei solver questo sistema prende il nome di **trailing** e lo stack viene chiamato **trail**, questo perché vengono utilizzati anche per tenere traccia dei domini delle variabili. 
 
-####Variabile modificata
+#### Variabile modificata
+
+L'algoritmo di filtering finora utilizzato è:
+
+```python
+dirty = True
+while dirty:
+    dirty = False
+    for cj in C:
+        dirty = dirty or cj.filter()
+```
 
 Per ottenere questa informazione è necessario modificare il vecchio algoritmo di filtering.
 
@@ -129,14 +139,14 @@ while len(Q) > 0:
 ```
 
 Nelle slide c'è un esempio di esecuzione dell'algoritmo.
-Dall'esempio emerge un caso interessante, quando viene eseguito il pruning per un vincoli *cj* vengono inseriti nuovi eventi di pruning per lo stesso vincolo, questo perché alcuni vincoli hanno bisogno di più passaggi per raggiungere la convergenza e per semplicità conviene utilizzare il solver per effettuare più iterazioni piuttosto che andare a complicare l'algoritmo di filtering.
+Dall'esempio emerge un caso interessante, quando viene eseguito il pruning per un vincolo `cj` vengono inseriti nuovi eventi di pruning per lo stesso vincolo, questo perché alcuni vincoli hanno bisogno di più passaggi per raggiungere la convergenza e per semplicità conviene utilizzare il solver per effettuare più iterazioni piuttosto che andare a complicare l'algoritmo di filtering.
 
 A causa di questo approccio il solver può arrivare ad una soluzione feasible prima di processare tutta la coda, tuttavia non può terminare l'esecuzione perché deve verificare che non ci siano dei domain wipeout.
 
-####Accedere ai valori rimossi
+#### Accedere ai valori rimossi
 
 La parte complessa riguarda scegliere quando scartare i dati per evitare di avere dei problemi con il consumo della memoria.
-L'idea più diffusa è quella di tenere in memoria un valore finché ci sono degli eventi in coda per il quale può essere necessario. Cioé bisogna tenere il valore di *xi* finché ci sono degli eventi del tipo *(cj,xi)*
+L'idea più diffusa è quella di tenere in memoria un valore finché ci sono degli eventi in coda per il quale può essere necessario. Cioé bisogna tenere il valore di `xi` finché ci sono degli eventi del tipo `(cj,xi)`
 
 ##Vingolo globale - Element
 
@@ -144,9 +154,9 @@ L'utilizzo di vincoli reificati può portare ad una propagazione debole perché 
 
 Il tipico problema è quello dei vincoli di costo:
 
-> z=1(x=0)+3(x=1)+4(x=2)
+> z = 1(x=0) + 3(x=1) + 4(x=2)
 
-L'idea è quella di guardare al problema da un'altra prospettiva, utilizzando un **vettore dei costi** *V* e di utilizzare la variabile *x* come indice del vettore. Modellando la relazione del costo con *z = vx*
+L'idea è quella di guardare al problema da un'altra prospettiva, utilizzando un **vettore dei costi** *V* e di utilizzare la variabile *x* come indice del vettore. Modellando la relazione del costo con *z = v<sub>x<sub>*
 
 > ELEMENT(z,V,x), where:
 > 
@@ -154,26 +164,41 @@ L'idea è quella di guardare al problema da un'altra prospettiva, utilizzando un
 > - V is a vector of values (or variables)
 > - x is an "index" variable
 
-Grazie a questo vincolo è possbile modellare:
+Grazie a questo vincolo è possbile modellare esspressioni del tipo:
 
-- "The global cost is the sum of the assignment cost of variables in X" z=∑xi∈Xcxi
-- "The product in position 0 must have lower weight than position 1" wx0<wx1 xi represent the product at position i W is a vector containing the weight of all products
-- "xi is the position of item i, while yj is the item at position j" yxi=i, questo vincolo è molto importante, perché permette di *collegare* più rappresentazioni diverse dello stesso problema ad esempio "item-at-position" con "position-for-item", permettendo così di scrivere vincoli migliori.
+- Il costo è la sommatoria dei costi dei singoli assegnamenti delle variabili *X*:
+> z = <big>∑</big><sub>[x<sub>i</sub> ∈ X]</sub>c<sub>x<sub>i</sub></sub>
+
+- Il prodotto in posizione *0* deve pesare meno del prodotto in posizione *1*:
+    > w<sub>x<sub>0</sub></sub> < w<sub>x<sub>1</sub></sub> 
+    
+    dove *x<sub>i</sub>* rappresenta il tipo di prodotto nella posizione *i*-esima e *W* è il vettore dei pesi
+ 
+- *x<sub>i</sub>* è la posizione dell'item *i*-esimo e *y<sub>j</sub>* è l'item che si trova nella posizione *j*
+    > y<sub>x<sub>i</sub></sub>=i 
+    >
+    > Y = [1,3,0,2] X = [2,0,3,1]
+    Ovvero *y<sub>x<sub>i</sub></sub>* contiene l'item che si trova nella posizione *x<sub>i</sub>* cioè *i*.
+    
+Quest'ultimo vincolo è molto importante, perché permette di *collegare* più rappresentazioni diverse dello stesso problema ad esempio "item-at-position" con "position-for-item", permettendo così di scrivere vincoli migliori.
 
 ###Propagazione
 
-Supponendo che *V* sia un valore di valori, si ha come **bound consistency**:
+Supponendo che *V* sia un vettore di valori, si ha come **bound consistency**:
 
-> ub(z)=maxu∈D(x)vul
-> b(z)=minu∈D(x)vu
+> ub(z) = max<sub>[u ∈ D(x)]</sub> v<sub>u</sub>
+> 
+> lb(z) = min<sub>[u ∈ D(x)]</sub> v<sub>u</sub>
 
 Mentre per ottenere **GAC**:
 
-> w∈D(z) is not pruned iff ∃u∈D(x) : vu=w
+> w ∈ D(z) is not pruned iff ∃ u ∈ D(x) : v<sub>u</sub>=w
 
-Per effettuare la propagazione in modo incrementale:
+Per effettuare la propagazione in modo incrementale è necessario tenere in memoria per ogni valore *w* che compare in *D(z)* il suo supporto di *D(x)* che prende il nome di *u(w)*.
 
-... vedi slide http://www.lia.disi.unibo.it/Staff/MicheleLombardi/reveal.js/ch8.html#/90 fino a #/92
+Quando *x* viene tagliato, se *u(w)* è ancora nel dominio, *w* ha ancora supporto, altrimenti è necessario cercare nel dominio di *x* un nuovo supporto che andrà ad aggiornare la variabile *u(w)*. Se non si riesce a trovare questo valore è possibile effettuare il pruning di *w*.
+
+Una caratteristica interessante di questo propagatore è che non è necessario andare a ripristinare i precedenti valori *u(w)* quando si fa backtracking, perché se *u(w)* è un supporto per *w* in un nodo figlio, questo lo è anche nel nodo padre, perché tornando indietro il dominio di *z* può solo aumentare.
  
 ##Vincoli globali - Min e Max
 
@@ -191,5 +216,8 @@ Permette di modellare in modo efficente situazioni del tipo *"vettori a scalare"
 Questo vincolo è interessante perché permette di modellare facilmente situazioni difficili da modellare. 
 Tuttavia la complessità della propagazione aumenta con la dimensione della tabella.
 
-Vedi slide http://www.lia.disi.unibo.it/Staff/MicheleLombardi/reveal.js/ch8.html#/99
+Il propagatore per questo vincolo cerca di trovare un supporto, ovvere una tupla della tabella, per tutti i valori che compaiono nel problema. 
 
+Il propagatore quindi processa le tuple una ad una e si ferma quando tutti i valori hanno supporto o quando non ci sono più tuple.
+
+Si può anche utilizzare la versione incrementale che tiene in memoria i vari supporti trovati.

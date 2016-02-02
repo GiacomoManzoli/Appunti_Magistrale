@@ -6,47 +6,44 @@ Anche se viene stabilita la GAC può essere che sia ancora possibile eseguire de
 
 Ad esempio nel problema del partial latin square è possibile ragionare a livello di colonna, in cui tutte le celle devono essere diverse.
 
-Formalizzando, indicando con *X* la colonna delle variabili presenti su una colonna e con *V* l'unione deii domini delle variabili, se si reisce a trovare un sottoinsieme di variabili *W⊂V* e un set *Y⊂X* tale che:
+Formalizzando, indicando con *X* l'insieme delle variabili presenti in una colonna e con *V* l'unione dei domini delle variabili, se si reisce a trovare un sottoinsieme di valori *W⊂V* e un sottoinsieme di variabili *Y⊂X* tale che:
 
-> |X|=|W| e D(x<sub>i</sub>) ∈ W,  ∀x<sub>i</sub> ∈ X
+> |Y|=|W| e D(x<sub>i</sub>) ∈ W,  ∀x<sub>i</sub> ∈ Y
 
 Allora:
 
-*W* prende il nome di **Hall set** di *X* e il valori presenti in *W* saranno assegnati alle variabili presenti in *Y*, quidni è possibile togliere i valori presenti in *W* dai domini delle variabili che non sono in *Y*.
+*W* prende il nome di **Hall set** di *X* e i valori presenti in *W* saranno assegnati alle variabili presenti in *Y*, quindi è possibile togliere i valori presenti in *W* dai domini delle variabili che non sono in *Y*.
 
 Formalmente, *∀W ⊂ V*, *Y ⊂ X* con *|Y|=|W|*:
 
 > D(x<sub>i</sub>) ∈ W,  ∀x<sub>i</sub> ∈ Y ⇒ D(x<sub>j</sub>) = D(x<sub>j</sub>)∖W, ∀x<sub>j</sub> ∈ X∖Y
 
-Questo processo prende il nome di **Hall set filtering** e forza GAC su un intero set di variabili, come un'intera colonna del partial latin square.
+Questo processo prende il nome di **Hall set filtering** e forza GAC su un intero set di variabili, come su un'intera colonna del partial latin square, utilizzando dei vincoli rindondanti.
 
-Per codificare come vincolo *D(x<sub>j</sub>)∖W, ∀x<sub>j</sub> ∈ X∖Y* si può utilizzare una serie di congiunzioni di vincolo reificati:
+Per codificare come vincolo *D(x<sub>j</sub>)∖W, ∀x<sub>j</sub> ∈ X∖Y* si può utilizzare una serie di congiunzioni di vincoli reificati:
 
-> ∀w ∈ W e x<sub>j</sub> ∈ X\Y
-> 
-> ⋀(x<sub>j</sub> ≠ w)
+> <big>⋀</big><sub>[x<sub>i</sub> ∈ Y]</sub>(D(x<sub>i</sub>)∈W) ⇒ <big>⋀</big><sub>[x<sub>j</sub> ∈ Y , v ∈ V∖W]</sub>(x<sub>j</sub>≠v)
 
 L'implicazione può essere codificata con un minore e uguale mentre la serie di *⋀* può essere codificata con un vincolo di minimo.
 
-Può essere quindi definita un'esepression *contained(xi, W, V)* che deve valere 1 se *D(x<sub>i</sub>) ∈ W*. Il caso in cui *D(x<sub>i</sub>) ∉ W* non è interessante in quanto la progagazione vale solo se *contained* vale 1.
+Può essere quindi definita un'esepression *contained(x<sub>i</sub>, W, V)* che deve valere 1 se *D(x<sub>i</sub>) ∈ W*. Il caso in cui *D(x<sub>i</sub>) ∉ W* non è interessante in quanto la progagazione vale solo se *contained* vale 1.
 
 Per verificare che *D(x<sub>i</sub>) ∈ W* posso utilizzare:
 
-> ∀v ∈ V∖W
->
-> ⋀(x<sub>i</sub>≠w) = min<sub>[v ∈ V∖W]</sub>(x<sub>i</sub> ≠ w)
+> <big>⋀</big><sub>[v ∈ V∖W]</sub>(x<sub>i</sub>≠w) = min<sub>[v ∈ V∖W]</sub>(x<sub>i</sub> ≠ w)
 
 Così facendo è possibile andare a definire il vincolo 
 
-> ⋀<sub>[x<sub>i</sub> ∈ Y]</sub>contained(x<sub>i</sub>,W,V)  ⇒⋀<sub>[x<sub>i</sub> ∈ Y, v ∈ V∖W]</sub>(x<sub>j</sub>≠v)
+> <big>⋀</big><sub>[x<sub>i</sub> ∈ Y]</sub>contained(x<sub>i</sub>,W,V)  ⇒ <big>⋀</big><sub>[x<sub>i</sub> ∈ Y, v ∈ V∖W]</sub>(x<sub>j</sub>≠v)
 
 che deve essere definito *∀W ⊂ V*, *Y ⊂ X* con *|Y|=|W|*.
 
-Tuttavia il numero di sottoinsiemi di *V* e *X* è esponenziale e quindi  la propagazione richiede troppo tempo.
+Tuttavia il numero di sottoinsiemi di *V* e *X* è esponenziale e quindi la propagazione richiede troppo tempo.
 
 ##Global Alldifferent Constraint
 
-Un approccio alternativo al problema è quello di aggiungere un nuovo vincolo *ALLDIFFERENT(X)* con *X* vettore di variabili. La semantica di questo vincolo equivale ai vincoli *xi≠xj,∀i≠j*, con la differenza che in questo caso è possibile andare a definire un algortimo di filtering GAC ad hoc che funziona in tempo polinomiale.
+Un approccio alternativo al problema è quello di aggiungere un nuovo vincolo *ALLDIFFERENT(X)* con *X* vettore di variabili. 
+La semantica di questo vincolo equivale ai vincoli *x<sub>i</sub>≠x<sub>j</sub>,∀i≠j*, con la differenza che in questo caso è possibile andare a definire un algortimo di filtering GAC ad hoc che funziona in tempo polinomiale.
 
 L'algoritmo di propagazione viene visto in due fasi:
 
@@ -59,7 +56,7 @@ Come esempio viene utilizzato:
 
 ### Parte 1
 
-Per ogni vincolo è possibile andare a definire un **value graph**, un grafo che ha nella parte sinistra tanti nodi quandi sono le variabili e sulla destra quanti nodi quanti sono i possibili valori del dominio.
+Per ogni vincolo è possibile andare a definire un **value graph**, un grafo che ha nella parte sinistra tanti nodi quandi sono le variabili e nella destra tanti nodi quanti sono i possibili valori del dominio.
 Il grafo ha tanti archi che collegano ogni nodo a destra con tutti i nodi a sinistra in cui quel valore compare nel dominio di una variabile.
 
 Questo grafo ha altri due nodi *s* e *t*, il primo è collegato a tutti i possibili valori, mentre tutte le variabili sono collegate al .
@@ -69,11 +66,11 @@ Questo grafo ha altri due nodi *s* e *t*, il primo è collegato a tutti i possib
 Gli archi del grafo che collegano un nodo valore con un nodo variabile rappresentano un possibile assegnamento del valore alla variabile. 
 Quando ad una variabile è assegnato un determinato valore, l'arco è rappresentanto con una linea continua, altrimenti viene utilizzata una linea tratteggiata.
 
-Di conseguenza una soluzione esiste quando il flusso entrante al nodo *t* è uguale al numero di variabili.
+Una soluzione esiste quando il flusso entrante al nodo *t* è uguale al numero di variabili.
 
 Per verificare il flusso massimo viene usato l'algoritmo di Ford-Fulkerson.
 
-Si parte da un caso base in cui il flusso in goni arco è 0. *f(a->b) = 0*.
+Si parte da un caso base in cui il flusso in goni arco è 0. Il flusso di un arco viene indicato con *f(a->b) = 0*.
 
 ![](./immagini/l8-grafo-2.png)
 
@@ -90,7 +87,9 @@ Una possibilità è quella di utilizzare il backtracking, ma così facendo si ot
 
 Si può costruire il grafo residuale, un grafo con gli stessi nodi del grafo del flusso, solamente che gli archi che nel grafo del flusso rappresentano un assegnamento vengono invertiti.
 
-Più formalmente c'è un arco *a→b* nel grafo residuale se e solo se c'è un arco *a→b* nel grafo originale e *f(a→b) = 0* oppure c'è un arco *b→a* nel grafo originale e *f(b→a) = 1*.
+Più formalmente, c'è un arco *a→b* nel grafo residuale se e solo se c'è un arco *a→b* nel grafo originale e *f(a→b) = 0* oppure c'è un arco *b→a* nel grafo originale e *f(b→a) = 1*.
+
+Ovvero il grafo residuale contiene gli archi nei quali può ancora passare del flusso (indicati con un tratteggio) e gli archi dove è possibile togliere del flusso (indicati con una linea continua).
 
 ![](./immagini/l8-grafo-5.png)
 
@@ -113,7 +112,7 @@ Tipicamente questo algoritmo viene implementato senza la costruzione del grafo, 
 ###Filtering per Alldiffernt
 
 Per poter filtrare un valore devo considerare un arco che va da un valore ad una variabile e provare a costruire un ciclo tra i due nodi utilizzando il grafo residuale. 
-Se non viene trovato questo ciclo e tra questi due nodi non c'è flusso, posso togliere quel valore dal dominio di della variabile.
+**Se non viene trovato questo ciclo e tra questi due nodi non c'è flusso, posso togliere quel valore dal dominio di della variabile.**
 
 ![](./immagini/l8-grafo-8.png)
 
@@ -133,7 +132,11 @@ I vincoli globali sono dei vincoli che rappresentano un set di vincoli e risulta
 
 ##GCC (non il compilatore)
 
-Ovvero **Global cardinalità constraint**, viene utilizzato quando si vuole limitare l'occorrenza (cardinalità) di alcuni valori specifici delle variabili.
+Ci sono dei problemi in cui è necessario considerare quante volte un determinato valore viene assunto da una variabile e questo può essere fatto utilizzando una sommatoria di metavincoli.
+
+Tuttavia questo approccio ha una propagazione pessima, pertanto conviene utilizzare il vincolo globale **GCC**.
+
+**GCC**, ovvero **Global Cardinality Constraint**, viene utilizzato quando si vuole limitare l'occorrenza (cardinalità) di alcuni valori specifici per delle variabili.
 
 > GCC(X, V, L, U)
 > 
@@ -142,18 +145,20 @@ Ovvero **Global cardinalità constraint**, viene utilizzato quando si vuole limi
 > - L è un vettore con le cardinalità minime l<sub>j</sub> per v<sub>j</sub>
 > - U è un vettore con le cardinalità massime u<sub>j</sub> per v<sub>j</sub>
 
+L'idea è quella che tutte le variabili del vettore *X* hanno come dominio *V* e che ognuno dei valori debba comparire un numero limitato di volte, specificato dai vettori *L* e *U* (*V, L, U* devono avere la stessa dimensione).
+
 La propagazione di questo vincolo avviene in due tempi come per *Alldifferent*:
 
 1. Verifica della consistenza utilizzando un grafo di flussi
 2. Definizione di regole di filtering basate sui flussi.
 
-###Verifica della soddisfacibilità
+### Verifica della soddisfacibilità
 
 Viene creato un grafo analogo a quello per *Alldifferent*.
 
 ![](./immagini/l8-grafo-11.png)
 
-Con la differenza che gli archi che vanno da *s* ai valori hanno una capacità massia uguale a *u<sub>j</sub>* e una domanda minima pari a *l<sub>j</sub>*.
+Con la differenza che gli archi che vanno da *s* ai valori hanno una capacità massima uguale a *u<sub>j</sub>* e una domanda minima pari a *l<sub>j</sub>*.
 
 L'algortimo parte cercado di soddisfare i vari vincoli di domanda
 
@@ -163,8 +168,8 @@ Anche in questo caso per trovare il percorso occorre utilizzare il grafo residua
 
 Questa volta l'arco *a → b* è presente nel grafo residuo se:
 
-- Il grafo originale contiene l'arco *a → b* con capacità *c* e *c - f(a → b) > 0*. L'idea è che l'arco non è ancora saturo.
-- Il grafo originale contiene l'arco *b → a* con domanda *d* e *f(b → a) - d > 0*. L'idea è che si può ridurre il flusso che scorre nell'arco senza invalidare il vincolo della domanda.
+- Il grafo originale contiene l'arco *a → b* con capacità *c* e *c - f(a → b) > 0*. Ovvero **l'arco non è ancora saturo**.
+- Il grafo originale contiene l'arco *b → a* (inverso) con domanda *d* e *f(b → a) - d > 0*. Ovvero **si può ridurre il flusso** che scorre nell'arco senza invalidare il vincolo della domanda.
 
 Come side effect di questa definzione si ha che nel grafo residuo non è presente il vincolo della domanda per i vari archi.
 
