@@ -27,7 +27,7 @@ Considerando che per riconoscere il contenuto di una scena un unmano impiega cir
 
 Questo funzionamento va in contrasto con quello attuale dei nostri processori, i quali ottenogno ottime prestazioni nelle operazioni seriali ma sono in difficoltà con il calcolo parallelo.
 
-Una rete neurale artificiale è un sistema costituito da unità interconnesse che calclano funzioni numeriche, ci sono vari tipi di unità:
+Una rete neurale artificiale è un sistema costituito da unità interconnesse che calcolano funzioni numeriche, ci sono vari tipi di unità:
 
 - le unità di input che rappresentano le variabili di ingresso;
 - le unità di output che rappresentano le variabili di uscita;
@@ -86,7 +86,7 @@ Per apprendere i coefficenti corretti vengono utilizzati gli esempi del training
 
 ###Implementazione di funzioni booleane
 
-Ad esempio Percepton può implementare l'operatore *or* con gli ingressi *y ϵ {0,1}<sup>n+1</sup>* (vettori rappresentanti stringhe binarie), si possono usare come pesi *w'<sub>0</sub> = -0.5* e *w'<sub>i</sub> = 1* per *i=1..n*.
+Ad esempio Percepton può implementare l'operatore *or* con gli ingressi *y ∈ {0,1}<sup>n+1</sup>* (vettori rappresentanti stringhe binarie), si possono usare come pesi *w'<sub>0</sub> = -0.5* e *w'<sub>i</sub> = 1* per *i=1..n*.
 
 In modo simile può essere implementato anche l'operatore *and* con *w'<sub>0</sub> = -n+0.5* e *w'<sub>i</sub> = 1* per *i = 1..n*.
 
@@ -100,14 +100,14 @@ Si può far apprendere a Perceptron tutte le funzioni linearmente separabili con
 
 Tuttavia se la funzione da apprendere non è linearmente separabile l'algoritmo non converge.
 
-Dato un insieme di apprendimento *Tr = {(x<sup>-</sup>,t)*, dove *t ϵ {-1,+1}}*.
+Dato un insieme di apprendimento *Tr = {(x<sup>-</sup>,t)*, dove *t ∈ {-1,+1}}*.
 
 1. Inizializza il vettore dei pesi *w* al vettore nullo (con tutte le componenti a 0, possono anche essere random ma piccole)
 2. Ripeti finché non si raggiunge un punto fisso:
     1. Seleziona a caso uno delgi esempi di apprendimento *(x,t)*
     2. se _out = sign(w * x) ≠ t_ allora *w = w + (t-out)x*
 
-Cioè per ogni esempio nel training set va a controllare il segno di del prodotto scalare tra *x* e i pesi, se questo non coincide con il valore di training è necessario adattare *w* in modo che anche per *x* venga calcolato il valore corretto.
+Cioè per ogni esempio nel training set va a controllare il segno del prodotto scalare tra *x* e i pesi, se questo non coincide con il valore di training è necessario adattare *w* in modo che anche per *x* venga calcolato il valore corretto.
 
 In questo modo si riesce ad apprendere una funzione che per costruzione non commette nessun errore nel training set.
 

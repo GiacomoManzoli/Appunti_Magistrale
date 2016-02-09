@@ -49,7 +49,9 @@ Cioè l'ipotesi è molto accurata sui valori di training, ma sui valori di test 
 All'aumentare della complessità dell'albero creato, l'accuratezza dell'abero sui dati di trainging aumenta, ma una volta provata con i dati di test, l'accuratezza cala drastricamente.
 
 ```
-in fact it can lead to difficulties when there is noise in the data, or when the number of training examples is too small to produce a representative sample of the true target function
+in fact it can lead to difficulties when there is noise in the data,
+ or when the number of training examples is too small to produce a 
+ representative sample of the true target function
 ```
 
 Si è osservato che fino ad un certo livello di complessità l'accuratezza in training è molto simile all'accuratezza in test, è quindi importante **potare** gli albteri complessi.
@@ -64,13 +66,15 @@ Per quanto riugarda il problema (2) ci sono varie soluzioni:
 
 - Valutare le prestazioni sull'insieme di apprendimento usando un test statistico;
 - Valutare le prestazioni su un'insieme separato di validazione;
-- Usare un principio di **minimizzazione della lunghezza di descrizione (MDL)**: min_Tree[size(tree) - size(errori(tree))].
+- Usare un principio di **minimizzazione della lunghezza di descrizione (MDL)**: *min_Tree[size(tree) - size(errori(tree))].*
 
 ###Come potare
 
 ####Reduce error pruning
 
-Pruning a decision node consists of removing the subtree rooted at that node, making it a leaf node, and assigning it the most common classification of the training examples affiliated with that node. Nodes are removed only if the resulting pruned tree performs no worse than-the original over the validation set
+Effettuare il pruning di un nodo consiste nel rimuovere il sotto albero che ha origine in quel nodo, trasformando il nodo potato in una foglia e assegnandogli come valore la classificazione più comune tra gli esempi di training associati a quel nodo.
+
+I nodi vengono rimossi solamente se le prestazione dell'albero potato non peggiorano rispetto la versione originale, confrontate sul validation set.
 
 - Dividere il training set in due sottinsiemi, uno per fare training e l'altro per fare validazione.
 - Ripetere fino a quando le prestazioni peggiorano:

@@ -92,7 +92,7 @@ Questo modulo contiene alcuni metodi utili per la creazioni di matrici o array.
 ##scipy
 
 ```python
-import shipy
+import scipy
 ```
 
 Libreria per la risolzione dei sistemi.

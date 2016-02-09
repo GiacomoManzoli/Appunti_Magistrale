@@ -1,0 +1,140 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = apprendimento_automatico.tex
+% !TEX spellcheck = it-IT
+\section{Lezione 6 - Apprendimento di concetti}\label{lezione-6---apprendimento-di-concetti}
+
+\subsection{Il concetto di Concetto}\label{il-concetto-di-concetto}
+
+In uno spazio delle istanze \emph{X}, un \textbf{concetto} è una
+funzione booleana su \emph{X}, cioè una funzione che prende in input un
+oggetto dello spazio \emph{X} e ritorna un booleano che specifica se
+l'elemento appartiene a quel concetto o meno.
+
+Un concetto \emph{C} su uno spazio delle istanze \emph{X} viene definito
+come una coppia \emph{(x,C(x))} con \emph{x ∈ X}, e \emph{C(x)} è la
+funzione concetto applicata ad \emph{x}.
+
+Si dice che un ipotesi booleana \emph{h} per lo spazio delle istanze
+\emph{X} \textbf{soddisfa} \emph{x ∈ X} se \emph{h(x) == 1}.
+
+La stessa ipotesi \emph{h} si dice che è \textbf{consistente} con un
+esempio \emph{(x,C(x))} se \emph{h(x) == C(x)}.
+
+La definizione di consistenza può essere poi estesa ad in insieme se
+l'ipotesi \emph{h} è consistente con tutti gli elementi presenti
+nell'insieme.
+
+\subsection{Ordine parziale}\label{ordine-parziale}
+
+Siano \emph{hi} e \emph{hj} due funzioni booleane definite su uno spazio
+delle istanze \emph{X}, diciamo che \emph{hi} è \textbf{più generale} o
+equivalente di \emph{hj} (\emph{hi \textgreater{}=g hj}) se:
+
+\begin{quote}
+x  X \textbar{} hj(x) == 1 --\textgreater{} hi(x) == 1
+\end{quote}
+
+Cioè tutti gli esempi che sono soddisfatti dall'ipotesi più specifica
+sono sempre soddisfatti anche dall'ipotesi più generale.
+
+Può essere che due ipotesi possono non essere comparabili tra loro.
+
+\subsection{Find-S}\label{find-s}
+
+Algoritmo che permette di trovare tra tutte le ipotesi, quella più
+specifica e consistente con l'insieme di apprendimento.
+
+Si parte da un training set \emph{Tr} e si inizializza \emph{h} con
+l'ipotesi più specifica di tutte.
+
+Per ogni istanza positiva \emph{x} del training set, cioè per tutti gli
+esempi che appartengono al concetto, si modifica \emph{h} in modo che
+riesca a soddisfare l'esempio \emph{x}.
+
+Una volta terminate le istanze presenti nel training set viene ritornata
+\emph{h}.
+
+L'algoritmo parte dall'ipotesi più specifica possibile e man mano che
+procede nell'analisi del training set la generalizzarla, in modo da
+trovare la prima ipotesi consistente con il training set che sia il più
+specifica possibile.
+
+L'ipotesi più specifica di tutte è quella che rifiuta tutti i valori,
+poi per ogni istanza del training set positiva, questa viene
+generalizzata il meno possibile in modo che venga soddisfatta l'istanza
+che si sta esaminando.
+
+Bisogna notare che l'ipotesi più specifica non è sempre la migliore,
+inoltre per funzionare bene il training set dovrebbe essere molto
+grande.
+
+\subsection{Candidate Elimination}\label{candidate-elimination}
+
+\textbf{Version space}: sottoinsieme dello spazio \emph{H} contenete
+solo ipotesi che sono consistenti con gli esempi del training set. Per
+essere contenuta nel version space, un'ipotesi deve essere più generale
+o equivalente a quella ottenuta con Find-S.
+
+Dal momento che Find-S ritorna solamente un ipotesi e non è detto che
+quella ritornata sia l'ipotesi migliore per il training set è stato
+proposto l'algoritmo Candidate Elimination che ritorna tutte le ipotesi
+contenute nel version space.
+
+\textbf{Confine più specifico}: \emph{S}, insieme delle ipotesi \emph{s}
+in \emph{H}, consistenti con il traingin set e tali che non esistano
+altre ipotesi consistenti e più specifiche.
+
+\textbf{Confine più generale}: \emph{G}, insieme delle ipotesi \emph{g}
+in \emph{H}, consistenti nel training set e tali che non esistano altre
+ipotesi più generali che siano consistenti con il trainging set.
+
+Il version space è quindi contenuto tra i due confini, cioè contiene
+tutte quelle ipotesi più generali di quelle contenute in \emph{S} e meno
+generali di quelle contenute in \emph{G}, \emph{S} e \emph{G} inclusi.
+
+\subsubsection{Algoritmo}\label{algoritmo}
+
+Si inizializzano gli insiemi \emph{G} e \emph{S} in modo che conengano
+rispettivamente le ipotesi più generali e più specifiche.
+
+%\begin{Shaded}
+%\begin{Highlighting}[]
+%\NormalTok{foreach d }\OperatorTok{==} \NormalTok{(x,c(x)) }\OperatorTok{in} \NormalTok{Tr do}
+%    \ControlFlowTok{if} \NormalTok{c(x) }\OperatorTok{=} \DecValTok{1}\NormalTok{:}
+%        \NormalTok{rimuovi da G ogni ipotesi inconsistente con d}
+%        \NormalTok{per ogni ipotesi s }\OperatorTok{in} \NormalTok{S e inconsistente con d}
+%            \NormalTok{rimuovi s da S.}
+%            \NormalTok{aggiungi ad S tutte le generalizzazioni minime h di s tali che sono consistenti con d ed esiste un altra ipotesi g }\OperatorTok{in} \NormalTok{G più generale di h.}
+%            \NormalTok{rimuovi da S tutte le ipotesi s}\StringTok{' che sono più generali di altre ipotesi in S.}
+%\StringTok{    if c(x) == 0:}
+%\StringTok{        rimuovi da S tutte le ipotesi inconsistenti con d}
+%\StringTok{        per ogni ipotesi g in G inconsistente con d}
+%\StringTok{            rimuovi g da G}
+%\StringTok{            aggiungi a G tutte le specificazioni (?) minime h di g tali che siano consistenti con d e che esiste un'}\NormalTok{altra ipotesi s }\OperatorTok{in} \NormalTok{S più %specifica di h.}
+%            \NormalTok{rimuovi da G tutte le ipotesi g}\StringTok{' che sono più specifiche di altre ipotesi in G.}
+%\end{Highlighting}
+%\end{Shaded}
+
+Quando viene trovato un esempio \emph{d} nel training set che soddisfa
+il concetto che si cerca di apprendere:
+
+\begin{itemize}
+\tightlist
+\item
+  Vengono rimosse da \emph{G} e da \emph{S} tutte le ipotesi che sono
+  inconsistenti con \emph{d}, questo perché il version space deve
+  contenere solo ipotesi consistenti con il traingin set.
+\item
+  Per ogni ipotesi \emph{s} rimossa da \emph{S} viengono aggiunte tutte
+  le generalizzazioni minime di \emph{s} che sono in grado di soddisfare
+  \emph{d}, questo per andare a definire delle nuove ipotesi specifiche
+  e consistenti con il Tr.
+\item
+  Vengono poi rimosse tutte le ipotesi \emph{s'} da \emph{S} che sono
+  più generali di altre ipotesi presenti in \emph{S}, così facendo
+  \emph{S} conterrà sempre e solo le ipotesi più specifiche.
+\end{itemize}
+
+Se \emph{d} non soddisfa il concetto viene applicato lo stesso
+scambiando i due insiemi.

@@ -43,7 +43,8 @@ Lo stesso albero può essere infatti rappresentato come:
 
 L'algoritmo di apprendimento che costruisce l'albero di decisione trammite una procedura top down in stile divide et impera.
 
-Questo algoritmo apprende l'albero di dicesione costruendolo con un approccio top-down. La costruzione inizia con la domanda "Quale attributo dovrebbe essere testato alla radice dell'albero?". Per scegliere l'attributo vengono valutati tutti i possibili candidati utilizzando un test statistico per valutare quando bene il singolo attributo classifica il training set.
+Questo algoritmo apprende l'albero di dicesione costruendolo con un approccio top-down. La costruzione inizia con la domanda "*Quale attributo dovrebbe essere testato alla radice dell'albero?*". 
+Per scegliere l'attributo vengono valutati tutti i possibili candidati utilizzando un test statistico per valutare quando bene il singolo attributo classifica il training set.
 
 Viene selezionato il miglior attributo e utilizzato come test alla radice dell'albero. Vengono poi creati tanti figli quanti sono i possibili valori dell'attributo e gli esempi del training set vengono partizionati tra i vari figli, in modo che il loro valore per quell'attributo corrisponda con il valore del nodo.
 
@@ -108,11 +109,11 @@ L'entropia misura il grado di purezza degll'insieme degli esempi.
 
 Nel caso ci siano più valori l'entropia si calcola come
 
-> \- Sommatoria<sub>v</sub> (p<sub>v</sub>log<sub>2</sub>(p<sub>v</sub>))
+> \- ∑<sub>v</sub> (p<sub>v</sub>log<sub>2</sub>(p<sub>v</sub>))
 
 ID3 sceglie come attributo *a*, quello che massimizza il guadagno entropico.
 
-> G(S,*a*) = E(S) - Sommatoria<sub>v ϵ V(a)</sub> (E(S<sub>a = v</sub>) |S<sub>a=v</sub>| / |S|)
+> G(S,*a*) = E(S) - ∑<sub>v ϵ V(a)</sub> (E(S<sub>a = v</sub>) |S<sub>a=v</sub>| / |S|)
 
 Il guadagno misura la riduzione aspettata dell'entropia nel partizionare i dati utilizzando *a*.
 
@@ -125,7 +126,7 @@ Seguendo l'esempio della data, segliere quell'attributo porta ad ottenere tante 
 
 Dove *SI* rappresenta la *split information*, un valore che misura quanti e quanto uniformi sono i sottoinsiemi generati dall'attributo *a* a partire dall'insieme *S*.
 
-> SI(S,a) = - Sommatoria<sub>v ϵ V(a)</sub>( log<sub>2</sub>(|S<sub>a = v</sub>| / |S|) |S<sub>a = v</sub>| / |S| )
+> SI(S,a) = - ∑<sub>v ϵ V(a)</sub>( log<sub>2</sub>(|S<sub>a = v</sub>| / |S|) |S<sub>a = v</sub>| / |S| )
 
 E corrispone all'entropia di *S* dati i possibili valori di *a*.
 

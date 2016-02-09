@@ -1,4 +1,4 @@
-#Lezione 10
+#Lezione 10 - Reti neurali 2
 
 Perceptron va bene ma non riesce ad apprendere la XOR perché non è linearmente separabile.
 
@@ -17,7 +17,7 @@ Si può quindi seguire il segno della derivata prima di una funzione per  raggiu
 
 ![](./immagini/l10-threshold.png)
 
-La funzione obbiettivo da minimizzare è la **funzione errore**, la quale rappresenta lo scarto quadratico medio del valore target predetto dal neurone (*funzione out*).
+La funzione obiettivo da minimizzare è la **funzione errore**, la quale rappresenta lo scarto quadratico medio del valore target predetto dal neurone (*funzione out*).
 
 Dal momento che si tratta di una funzione derivabile è possibile utilizzare la discessa di gradiente per raggiungere un minimo.
 
@@ -29,7 +29,7 @@ Per calcolare lo spostamento rispetto ad ogni *w<sub>i</sub>* per minimizzare la
 Una volta calcolati tutti i *Δw<sub>i</sub>* posso andare a sommarli tra loro e successivamente aggiornare il vettore *w*.
 
 La seguente serie di calcoli mostra come è possibile calcolare i *Δw<sub>i</sub>* per tutti gli esempi presenti nel training set. 
-Viene usato *out<sup>(d)</sup>* per indicare il valore calcolato dalla reter per il *d*-esimo esempio del training set e *t<sup>(d)</sup>* per indicare il corretto valore della funzione target per lo stesso esempio.
+Viene usato *out<sup>(d)</sup>* per indicare il valore calcolato dalla rete per il *d*-esimo esempio del training set e *t<sup>(d)</sup>* per indicare il corretto valore della funzione target per lo stesso esempio.
 
 In questo caso viene sempre considerata una rete di perceptron senza hard-treshold e senza sigmoide.
 

@@ -1,0 +1,147 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = apprendimento_automatico.tex
+% !TEX spellcheck = it-IT
+\section{Lezione 4 - Laboratorio}\label{lezione-4---laboratorio}
+
+Durante il corso useremo Python 2.7.x
+
+Python è un linguaggio orientato agli oggetti.
+
+Ogni oggetto è caratterizzato da:
+
+\begin{itemize}
+\tightlist
+\item
+  identità: è un identificativo dell'oggetto (!= puntatore).
+\item
+  tipo: rappresenta le operazioni che si possono fare con un oggetto,
+  python è un linguaggio a tipizzazione dinamica e il tipo viene
+  determinato a runtime.
+\item
+  valore: rappresenta il valore effettivo contenuto nell'oggetto.
+\end{itemize}
+
+In python non c'è il concetto classico di variabile, ma vengono usati
+dei riferimenti.
+
+%\begin{Shaded}
+%\begin{Highlighting}[]
+%\NormalTok{x }\OperatorTok{=} \DecValTok{2}
+%\NormalTok{y }\OperatorTok{=} \DecValTok{3}
+%\NormalTok{y }\OperatorTok{=} \NormalTok{x }\OperatorTok{//}\NormalTok{y e x puntano allo stesso oggetto}
+%\end{Highlighting}
+%\end{Shaded}
+
+La funzione \texttt{id()} permette di sapere l'identificatore di un
+oggetto.
+
+Gli oggetti in Python sono immutabili.
+
+Contenitori:
+
+\begin{itemize}
+\tightlist
+\item
+  liste
+\item
+  set (insiemi)
+\item
+  tuple
+\item
+  dizionari
+\end{itemize}
+
+Tutti questi contenitori possono essere eterogenei, una lista può tenere
+sia numeri che stringhe contemporaneamente.
+
+Le liste in python sono mutabili.
+
+Un contenitore si dice iterabile se gli elementi possono essere iterati.
+
+Un contenitore si dice sequenziale se è definita una sequenza di
+elementi e può essere acceduto mediante indice (liste e tuple).
+
+Un contenitere si dice associativo quando si comporta come un
+dizionario, quindi solo i dizionari.
+
+In python non esitono i caratteri, esistono solo stringhe di lunghezza
+uno.
+
+Gli indici per accedere ad una collezione con le \texttt{{[}{]}} possono
+anche essere negativi, in questo caso si procede all'indietro.
+
+%\begin{Shaded}
+%\begin{Highlighting}[]
+%\OperatorTok{>>>} \NormalTok{s }\OperatorTok{=} \StringTok{"Giacomo"}
+%\OperatorTok{>>>} \NormalTok{s[}\DecValTok{3}\NormalTok{]}
+%\CommentTok{'c'}
+%\OperatorTok{>>>} \NormalTok{s[}\OperatorTok{-}\DecValTok{3}\NormalTok{]}
+%\CommentTok{'o'}
+%\OperatorTok{>>>} \NormalTok{s[}\DecValTok{1}\NormalTok{:}\OperatorTok{-}\DecValTok{3}\NormalTok{] }\CommentTok{#slicing}
+%\CommentTok{'iac'}
+%\end{Highlighting}
+%\end{Shaded}
+
+\textbf{List comprehension}
+
+%\begin{Shaded}
+%\begin{Highlighting}[]
+%\OperatorTok{>>>} \NormalTok{[x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for} \NormalTok{x }\OperatorTok{in} \BuiltInTok{range}%\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{)]}
+%\NormalTok{[}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{16}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{36}\NormalTok{, }\DecValTok{49}\NormalTok{, }\DecValTok{64}\NormalTok{, }\DecValTok{81}\NormalTok{]}
+%\end{Highlighting}
+%\end{Shaded}
+
+\textbf{operatore in}
+
+%\begin{Shaded}
+%\begin{Highlighting}[]
+%\ControlFlowTok{if} \NormalTok{k }\OperatorTok{in} \NormalTok{dictiornary:}
+%    \CommentTok{# something}
+%\end{Highlighting}
+%\end{Shaded}
+
+\textbf{copy()}
+
+%\begin{Shaded}
+%\begin{Highlighting}[]
+%\NormalTok{a }\OperatorTok{=} \NormalTok{[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}%\NormalTok{]}
+%\NormalTok{b }\OperatorTok{=} \NormalTok{a           }\CommentTok{# b riferisce a }
+%\NormalTok{c }\OperatorTok{=} \NormalTok{a.copy()    }\CommentTok{# c è una copia di a (oggetto diverso)}
+%\end{Highlighting}
+%\end{Shaded}
+
+\subsection{numpy}\label{numpy}
+
+%\begin{Shaded}
+%\begin{Highlighting}[]
+%\OperatorTok{>>>} \ImportTok{import} \NormalTok{numpy }\ImportTok{as} \NormalTok{np}
+%
+%\OperatorTok{>>>} \NormalTok{a }\OperatorTok{=} \NormalTok{np.array([}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}%\NormalTok{,}\DecValTok{8}\NormalTok{], }\BuiltInTok{float}\NormalTok{)}
+%\OperatorTok{>>>} \NormalTok{a}
+%%\NormalTok{array([ }\DecValTok{1}\NormalTok{.,  }\DecValTok{4}\NormalTok{.,  }\DecValTok{5}\NormalTok{.,  }\DecValTok{8}\NormalTok{.])}
+%\end{Highlighting}
+%\end{Shaded}
+
+Questo modulo contiene alcuni metodi utili per la creazioni di matrici o
+array.
+
+\texttt{a}~matrice - \texttt{a.transpose()} - \texttt{a\ +\ b},
+\texttt{a\ -\ b}, \texttt{a\ *\ b}, \texttt{b\ /\ a} sono tutte
+operazioni tra matrici \emph{entry wise}, cioè elemento per elemento
+
+\subsection{scipy}\label{scipy}
+
+%\begin{Shaded}
+%\begin{Highlighting}[]
+%\ImportTok{import} \NormalTok{scipy}
+%\end{Highlighting}
+%\end{Shaded}
+
+Libreria per la risolzione dei sistemi.
+
+Anche questa ha un suo tipo per le matrici che è diverso da quello di
+\texttt{numpy}.
+
+Tra tipi \texttt{matrix} di \texttt{scipy} l'operazione
+\texttt{\textbackslash{}*} effettua il prodotto tra matrici.

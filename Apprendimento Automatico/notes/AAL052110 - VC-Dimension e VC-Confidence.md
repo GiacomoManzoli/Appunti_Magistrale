@@ -1,4 +1,4 @@
-#Lezione 5
+#Lezione 5 VC-Dimension e VC-Confidence
 
 ##Esempi di spazi delle ipotesi
 
@@ -10,11 +10,11 @@ Seguono alcuni esempi di spazi per le ipotesi nei problemi di apprendimento supe
 
 Lavorando in R<sup>2</sup> lo spazio delle istanze è definito come:
 
-> X = {x | x ϵ R<sup>2</sup>}.
+> X = {x | x ∈ R<sup>2</sup>}.
 
 Mentre lo spazio delle ipotesi è dato dalle dicotomie indotte da iperpiani in R<sup>2</sup>, cioè da tutte le possibili divisioni del piano.
 
-> H = {f<sub>(w,b)</sub>(x) | f<sub>(w,b)</sub>(x) = sign(w * x + b), w ϵ R<sup>2</sup>, b ϵ R}
+> H = {f<sub>(w,b)</sub>(x) | f<sub>(w,b)</sub>(x) = sign(w * x + b), w ∈ R<sup>2</sup>, b ∈ R}
 
 Così facendo vengono prese in considerazione tutte le rette che dividono R<sup>2</sup> in due parti in modo che da una parte l'ipotesi valga 1 e dall'altra -1.
 
@@ -22,7 +22,7 @@ Così facendo vengono prese in considerazione tutte le rette che dividono R<sup>
 
 Sempre in R<sup>2</sup> è possibile considerare come spazio delle ipotesi tutte le dicotomie indotte da disci in R<sup>2</sup> e centrati nell'origine.
 
-> H = {f<sub>b</sub>(x) | f<sub>b</sub>(x) = sign(||x||<sup>2</sup> - b), w ϵ R<sup>2</sup>, b ϵ R}
+> H = {f<sub>b</sub>(x) | f<sub>b</sub>(x) = sign(||x||<sup>2</sup> - b), w ∈ R<sup>2</sup>, b ∈ R}
 
 Il che vuol dire che all'interno del disco le ipotesi valgono -1 mentre al di fuori valgono 1.
 
@@ -30,7 +30,7 @@ Il che vuol dire che all'interno del disco le ipotesi valgono -1 mentre al di fu
 
 Lo spazio delle istanze questa volta è dato da tutte le stringhe di *m* bits 
 
-> X = {s | s ϵ {0,1}<sup>m</sup>}
+> X = {s | s ∈ {0,1}<sup>m</sup>}
 
 Lo spazio delle ipotesi è dato da tutte le sentenze logiche che riguardano i letterali positivi l<sub>1</sub>,l<sub>2</sub>,...,l<sub>m</sub> (l<sub>i</sub> è vero se l'*i*-esimo bit è 1) e che contengono solo l'operatore ⋀.
 
@@ -45,7 +45,7 @@ Considerato un determinato spazio delle ipotesi *H*, questo contiene sempre:
 
 **shattering**: (frammentazione), dato *S* sottoinsieme dello spazio delle istanze, si dice che *S* è frammentato dallo spazio delle ipotesi *H* se:
 
-> ∀ S' ⊆ S, ∃ h ϵ H, tale che ∀x in S, h(x) = 1 se e solo se x appartiene a S'.
+> ∀ S' ⊆ S, ∃ h ∈ H, tale che ∀x in S, h(x) = 1 se e solo se x appartiene a S'.
 
 Cioè *H* realizza tutte le possibili dicotomie di *S*.
 
@@ -59,7 +59,7 @@ La VC-Dimension è la dimensione di uno spazio delle ipotesi *H* definito su uno
 > 
 > VC(H) = ∞ se S non è limitato
 
-Ad esempio nello spazio delle ipotesi dato dagli iperpiani su R<sup>2</sup>.
+Ad esempio nello spazio delle ipotesi dato dagli iperpiani su R<sup>2</sup>:
 
 Se nello spazio delle istanze ho 2 punti, questo viene frammentato da *H*, perché posso sempre trovare una retta che riesce a realizzare tutte le possibili dicotomie di due punti su un piano.
 
@@ -79,7 +79,7 @@ Scegliendo un *S* tale che *|S| = VC(H)*, si ottiene *|H| >= 2<sup>VC(H)</sup>*,
 
 Se un dataset contiene *N* elementi, questi *N* elementi possono essere etichettati con degli 0 e 1 in *2<sup>N</sup>* modi diversi.
 
-Se per ognuno di questi modi è possibile trovare un ipotesi *h ϵ H* che separa tutte le istanze negative da quelle positive allora si dice che *H* frammenta il dataset *N*. Il che vuol dire che il dataset *N* può essere appreso con un errore empirico nullo.
+Se per ognuno di questi modi è possibile trovare un ipotesi *h ∈ H* che separa tutte le istanze negative da quelle positive allora si dice che *H* frammenta il dataset *N*. Il che vuol dire che il dataset *N* può essere appreso con un errore empirico nullo.
 
 Il massimo numero di punti che possono essere frammentati da *H* è detto *VC(H)* e fornisce una misura della capacità di *H*.
 

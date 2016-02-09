@@ -64,9 +64,9 @@ function parseFile(file){
 }
 
 function buildHtmlPage(body){
-  return "<html><head>"+'<meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css">'
-    +'<link rel="stylesheet" href="_builder/highlight/styles/default.css">'
-    +'<script src="_builder/highlight/highlight.pack.js"></script>'
+  return "<html><head>"+'<meta charset="utf-8"><link rel="stylesheet" href="../_builder/pdf.css">'
+    +'<link rel="stylesheet" href="../_builder/highlight/styles/default.css">'
+    +'<script src="../_builder/highlight/highlight.pack.js"></script>'
     +'<script>hljs.initHighlightingOnLoad();</script></head><body>'
     + body +
     '</body></html>';

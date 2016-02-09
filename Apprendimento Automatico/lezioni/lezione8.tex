@@ -1,0 +1,209 @@
+\section{Lezione 8 - Alberi di decisione
+2}\label{lezione-8---alberi-di-decisione-2}
+
+\subsection{Dove'è il bias induttivo degli alberi di
+decisione?}\label{doveuxe8-il-bias-induttivo-degli-alberi-di-decisione}
+
+Con \textbf{candidate elimination} c'era l'incompletezza delle ipotesi
+ma la ricerca all'interno dello spazio è esaustiva, mentre negli alberi
+di decisione, c'è la completezza per quanto riguarda lo spazio delle
+ipotesi ma la ricerca non è completa in quanto vengono effettuate scelte
+greedy.
+
+Un altro bias induttivo è che tutti gli attributi che producono un
+guadagno entropico alto si trovano vicino alla radice.
+
+\subsection{Casi speciali}\label{casi-speciali}
+
+\subsubsection{Attributi continui}\label{attributi-continui}
+
+Uno o più attributi hanno dei valori continui, escluso il target che
+rimane binario o con un numero discreto di possibili valori.
+
+La soluzione è quella di trasformare dinamicamente un attributo continuo
+\emph{A} nell'attributo booleano \emph{Ac} in modo che sia true se il
+valore di \emph{A} è minore di una certa soglia \emph{c}.
+
+Il tutto sta ne scegliere la soglia \emph{c} migliore cioè che
+corrispone al massimo guadagno entropico.
+
+Si è dimostrato che il valore ottimo di soglia si localizza nel valore
+di mezzo tra due valori a cui corrisponde un target diverso.
+
+Da notare che con ID3 un attributo può essere utilizzato soltanto una
+volta, in questo caso però è possibile riutilizzare l'attributo con un
+\emph{c} diverso.
+
+\subsubsection{Attributi con costi}\label{attributi-con-costi}
+
+In alcune situazioni andare a verificare il valore assunto da un
+attributo potrebbe avere un costo.
+
+Può essere preferibile quindi testare prima gli attributi meno costosi,
+serve quindi un criterio per la selezione degll'attributo ottimo che
+tiene conto dei costi.
+
+Alcuni criteri sono:
+
+\begin{quote}
+\textbf{Diagnosi medica} (2Guadagno(S,A)-1)/(Costo(A)+1)\emph{w} con
+\emph{w} tra 0 e 1 (più vicino a 1 è \emph{w} più peso si da al costo)
+
+\textbf{Percezione robotica}: (Guadagno2(S,A))/Costo(A)
+\end{quote}
+
+\subsubsection{Attributi con valori
+mancanti}\label{attributi-con-valori-mancanti}
+
+In alcuni casi si vuole classificare qualcosa che non ha tutti i dati
+per gli attributi.
+
+Questi casi possono essere trattati in vari modi diversi:
+
+\begin{itemize}
+\tightlist
+\item
+  Utilizzare per \emph{A} il valore più comune nell'insieme d'esempi
+  associato al nodo interno.
+\item
+  Come prima, solo che vengono considerati solamente esempi con target
+  uguale a quello dell'esempio corrente (ovviamente devo sapere il
+  valore del target dell'esempio corrente).
+\item
+  Considerare tutti i valori \emph{ai} che può assumere l'attributo e la
+  loro probabilità di occorrenza nell'insieme degli esempi associati al
+  nodo interno e andare sostituire l'esempio corrente \emph{(x,target)}
+  con delle istanze frazionarie per ogni possibile valore di \emph{A},
+  ognuna con un peso pari alla probabilità. Quando devo scoprire il
+  target di un'esempio ``provo'' con tutti i possibili valori, e poi
+  faccio la media pesata dei valori ottenuti, rispondo come target la
+  classe più probabile.
+\end{itemize}
+
+\subsection{Overfitting}\label{overfitting}
+
+Cioè l'ipotesi è molto accurata sui valori di training, ma sui valori di
+test risulta meno accurata.
+
+All'aumentare della complessità dell'albero creato, l'accuratezza
+dell'abero sui dati di trainging aumenta, ma una volta provata con i
+dati di test, l'accuratezza cala drastricamente.
+
+\begin{verbatim}
+in fact it can lead to difficulties when there is noise in the data,
+ or when the number of training examples is too small to produce a 
+ representative sample of the true target function
+\end{verbatim}
+
+Si è osservato che fino ad un certo livello di complessità l'accuratezza
+in training è molto simile all'accuratezza in test, è quindi importante
+\textbf{potare} gli albteri complessi.
+
+Ci sono però due problemi:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Come si effettua la potatura?
+\item
+  Quando fermarsi con la potatura o con l'apprendimento?
+\end{enumerate}
+
+Per quanto riugarda il problema (2) ci sono varie soluzioni:
+
+\begin{itemize}
+\tightlist
+\item
+  Valutare le prestazioni sull'insieme di apprendimento usando un test
+  statistico;
+\item
+  Valutare le prestazioni su un'insieme separato di validazione;
+\item
+  Usare un principio di \textbf{minimizzazione della lunghezza di
+  descrizione (MDL)}: \emph{min\_Tree{[}size(tree) -
+  size(errori(tree)){]}.}
+\end{itemize}
+
+\subsubsection{Come potare}\label{come-potare}
+
+\paragraph{Reduce error pruning}\label{reduce-error-pruning}
+
+Effettuare il pruning di un nodo consiste nel rimuovere il sotto albero
+che ha origine in quel nodo, trasformando il nodo potato in una foglia e
+assegnandogli come valore la classificazione più comune tra gli esempi
+di training associati a quel nodo.
+
+I nodi vengono rimossi solamente se le prestazione dell'albero potato
+non peggiorano rispetto la versione originale, confrontate sul
+validation set.
+
+\begin{itemize}
+\tightlist
+\item
+  Dividere il training set in due sottinsiemi, uno per fare training e
+  l'altro per fare validazione.
+\item
+  Ripetere fino a quando le prestazioni peggiorano:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Per ogni nodo interno \emph{n} valutare l'impatto del nodo sul
+    sottoinsieme di valutazione avendo potato il nodo
+  \item
+    Effettuare la potatura che porta alle prestazioni migliori
+    sull'insieme di valutazione.
+  \end{itemize}
+\end{itemize}
+
+Al sottoalbero radicato in \emph{n} si sotistuisce la foglia con
+etichetta uguale alla classe più frequente nell'insieme degli esempi
+associati al nodo \emph{n}.
+
+\paragraph{Rule-Post pruning}\label{rule-post-pruning}
+
+\begin{itemize}
+\tightlist
+\item
+  Si genera una regola \emph{Ri} per ogni cammino \emph{path(r, fi)}
+  dalla radice \emph{r} alla foglia \emph{i}-esima \emph{fi}.
+\item
+  Si effettua la potatura indipendentemente su ogni regola \emph{Ri}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Si stimano le prestazioni utilizzando solo \emph{Ri} come
+    classificatore
+  \item
+    Si rimuovo le precondizioni (una o più) che conducono ad un aumento
+    della stima delle prestazioni utilizzando un approccio greedy.
+  \end{itemize}
+\item
+  Si ordinano le \emph{Ri} potate per ordine crescente di prestazione
+  (evitando i conflitti)
+\item
+  Eventualmente si aggiunge come classicazione di default la classe più
+  frequente
+\end{itemize}
+
+\emph{Ri} è del tipo:
+
+\begin{quote}
+IF (Attri1 = vi1) ⋀ \ldots{} ⋀ (Attrik = vik) THEN labelfi
+\end{quote}
+
+La classificazione di una nuova istanza a partire da parte delle regole
+ordinate avviene seguendo l'ordine stabilito per le regole:
+
+\begin{itemize}
+\tightlist
+\item
+  La prima regola la cui precondizione è soddisfatta dalla istanza è
+  usata per generare la classificazione
+\item
+  Se nessuna regola ha le condizioni soddisfatte, si utilizza la regola
+  di default per la classificazione, cioè si ritorna la classi più
+  frequente nell'insieme di apprendimento.
+\end{itemize}

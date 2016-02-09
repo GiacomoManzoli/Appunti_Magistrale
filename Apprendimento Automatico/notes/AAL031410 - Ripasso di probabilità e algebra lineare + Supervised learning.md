@@ -106,11 +106,11 @@ Cosa importante, questo oracolo non sempre è una funzione, questo perché può 
 
 ###Operativamente 
 
-Si dispone di una serie di coppie *(x,y)* che seguono lo schema naturale, insieme di queste coppie prende il nome di **training set**.
+Si dispone di una serie di coppie *(x,y)* che seguono lo schema naturale, l'insieme di queste coppie prende il nome di **training set**.
 
 Viene quindi scelta un funzione *h* che prende il nome di **ipotesi**, definita nello spazio delle ipotesi *H* tale che, da valori presenti nell'insieme *X*, restituisca dei valori nell'insieme *Y*.
 
-L'apprendimento consiste quindi nell'andare a scegliere l'*h* migliore a partire dai dai presenti nel training set in modo che questa funzione approssimi bene i dati presenti nel training set e che riesca a generalizzare e predirre i corretti valori *y* anche per valori di *x* non presenti nel training set.
+L'apprendimento consiste quindi nell'andare a scegliere l'*h* migliore in modo che approssimi bene i dati presenti nel training set e che riesca a generalizzare e predirre i corretti valori *y* anche per valori di *x* non presenti nel training set.
 
 Da ciò segue che possono essere commessi due tipi di errori:
 

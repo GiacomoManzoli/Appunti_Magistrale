@@ -4,9 +4,9 @@
 
 In uno spazio delle istanze *X*, un **concetto** è una funzione booleana su *X*, cioè una funzione che prende in input un oggetto dello spazio *X* e ritorna un booleano che specifica se l'elemento appartiene a quel concetto o meno.
 
-Un concetto *C* su uno spazio delle istanze *X* viene definito come una coppia *(x,C(x))* con *x ϵ X*, e *C(x)* è la funzione concetto applicata ad *x*.
+Un concetto *C* su uno spazio delle istanze *X* viene definito come una coppia *(x,C(x))* con *x ∈ X*, e *C(x)* è la funzione concetto applicata ad *x*.
 
-Si dice che un ipotesi booleana *h* per lo spazio delle istanze *X* **soddisfa** *x ϵ X* se *h(x) == 1*.
+Si dice che un ipotesi booleana *h* per lo spazio delle istanze *X* **soddisfa** *x ∈ X* se *h(x) == 1*.
 
 La stessa ipotesi *h* si dice che è **consistente** con un esempio *(x,C(x))* se *h(x) == C(x)*.
 
@@ -16,7 +16,7 @@ La definizione di consistenza può essere poi estesa ad in insieme se l'ipotesi 
 
 Siano *h<sub>i</sub>* e *h<sub>j</sub>* due funzioni booleane definite su uno spazio delle istanze *X*, diciamo che *h<sub>i</sub>* è **più generale** o equivalente di *h<sub>j</sub>* (*h<sub>i</sub> >=<sub>g</sub> h<sub>j</sub>*) se:
 
-> ∀x ϵ X | h<sub>j</sub>(x) == 1 --> h<sub>i</sub>(x) == 1
+> ∀x ∈ X | h<sub>j</sub>(x) == 1 --> h<sub>i</sub>(x) == 1
 
 Cioè tutti gli esempi che sono soddisfatti dall'ipotesi più specifica sono sempre soddisfatti anche dall'ipotesi più generale.
 
@@ -55,15 +55,15 @@ Il version space è quindi contenuto tra i due confini, cioè contiene tutte que
 
 Si inizializzano gli insiemi *G* e *S* in modo che conengano rispettivamente le ipotesi più generali e più specifiche.
 
-```
+```python
 foreach d == (x,c(x)) in Tr do
-    if c(x) = 1
+    if c(x) = 1:
         rimuovi da G ogni ipotesi inconsistente con d
         per ogni ipotesi s in S e inconsistente con d
             rimuovi s da S.
             aggiungi ad S tutte le generalizzazioni minime h di s tali che sono consistenti con d ed esiste un altra ipotesi g in G più generale di h.
             rimuovi da S tutte le ipotesi s' che sono più generali di altre ipotesi in S.
-    if c(x) == 0
+    if c(x) == 0:
         rimuovi da S tutte le ipotesi inconsistenti con d
         per ogni ipotesi g in G inconsistente con d
             rimuovi g da G

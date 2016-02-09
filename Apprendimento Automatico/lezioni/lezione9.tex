@@ -1,0 +1,222 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = apprendimento_automatico.tex
+% !TEX spellcheck = it-IT
+
+\section{Lezione 9 - Reti neurali}\label{lezione-9---reti-neurali}
+
+Due approcci principali per studiarle:
+
+\begin{enumerate}
+\item
+  Riprodurre il cervello umano, cercando di modellarne la struttura in
+  modo affidabile.
+\item
+  Estrarre i principi fondamentali di calcolo utilizzati dal cervello
+  replicandone solamente il comportamento, concentrandosi sui principi
+  di calcolo che il cervello utilizza al fne di ripordurre un sistema
+  artificiale in grado di replicarli.
+\end{enumerate}
+
+Durante il corso ci concentreremo sul secondo approccio applicato al
+contesto dell'apprendimento supervisionato.
+
+\subsection{Quando usarle?}\label{quando-usarle}
+
+Quando si hanno tanti input numerici e discreti e si vuole effettuare
+una classificazione o regressione.
+
+I dati di input possono anche contenere del rumore e la forma della
+funzione target è totalmente sconosciuta.
+
+Il risultato finale non deve essere compreso da un esperto umano, il
+funzionamento della rete è una black-box.
+
+Tipicamente vengono utilizzate quando non ci sono conoscenze a priori
+nel dominio.
+
+\subsection{Reti neurali artificiali}\label{reti-neurali-artificiali}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{./notes/immagini/l9-rete.png}
+\caption{}
+\end{figure}
+
+Il cervello umano è sostituito da circa 1010 neuroni fortemente
+interconnessi tra loro (da 104 a 105 connessioni), il tempo di risposta
+di un neurone è di circa 0.001 secondi.
+
+Considerando che per riconoscere il contenuto di una scena un unmano
+impiega circa 0.1 secondi, ne segue che il cervello umano sfrutta
+pesantemente il calcolo parallelo: infatti, in questo caso, non pul
+effettuare più di 100 calcoli seriali.
+
+Questo funzionamento va in contrasto con quello attuale dei nostri
+processori, i quali ottenogno ottime prestazioni nelle operazioni
+seriali ma sono in difficoltà con il calcolo parallelo.
+
+Una rete neurale artificiale è un sistema costituito da unità
+interconnesse che calcolano funzioni numeriche, ci sono vari tipi di
+unità:
+
+\begin{itemize}
+
+\item
+  le unità di input che rappresentano le variabili di ingresso;
+\item
+  le unità di output che rappresentano le variabili di uscita;
+\item
+  le unità nascoste che rappresentano le variabili interne che
+  codificano (dopo l'apprendimento) le correlazioni tra le variabili di
+  input relativamente al valore di output che si vuole generare.
+\end{itemize}
+
+Sulle connessioni tra le varie unità sono definiti dei pesi che vengono
+definiti dall'algoritmo di apprendimeno.
+
+Ci sono due modi per replicare un neurone:
+
+\begin{itemize}
+
+\item
+  Hard-threshold
+\item
+  Sigmoidale
+\end{itemize}
+
+\subsubsection{Hard-threshold -
+iperpiano}\label{hard-threshold---iperpiano}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{./notes/immagini/l9-threshold.png}
+\caption{}
+\end{figure}
+
+L'idea è quella di avere un vettore di input che rappresenta i nodi di
+ingresso da ognuno dei quali arriva un segnale xi. A ogni segnale è
+associato un peso wi che lo amplifica, tutti questi pesi vengono
+definiti dall'algoritmo di apprendimento.
+
+Il neurone è poi composto da altri due elementi: il primo che effettua
+una sommatoria, detta \textbf{net} di tutti i segnali d'ingresso
+moltiplicati per il loro peso, mentre il secondo utilizza il risultato
+del primo e calcola una funzione gradino, il cui output è 1 o -1 in base
+al segno di net.
+
+Alcune precisazioni:
+
+\begin{itemize}
+\item
+  Nella sommatoria iniziale gli ingressi vengono rappresentati da x1 a
+  xn, ognuno moltiplicato per il proprio peso. Tuttavia è presente anche
+  un ingresso x0 sempre fisso a 1, al quale viene associato il peso w0,
+  questa componente rappresenta il bais induttivo.
+\item
+  Possono essere usate altre funzioni gradino oltre a quella del segno.
+\end{itemize}
+
+Si può dimostrare che questo tipo di neurone definisce un iperpiano.
+Questo perché la somamtoria a partire da \emph{i=1} può essere vista
+come un \emph{wTx +w0} ed concide con la definizione di iperpiano.
+
+\subsubsection{Sigmoidale}\label{sigmoidale}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{./notes/immagini/l9-sigmoidale.png}
+\caption{}
+\end{figure}
+
+Utilizza la stessa sommatoria \emph{net} alla quale viene applicata la
+funzione σ.
+
+\begin{quote}
+σ(z) = 1 / (1 + e-z)
+\end{quote}
+
+La funzione è continua e compresa tra 0 e 1.
+
+Il vantaggio fondamentale di σ è che si tratta di una funzione
+derivabile e quindi permette di utilizzare l'algoritmo di \textbf{back
+propagation}. Un algoritmo che permette di fare apprendimento
+all'indietro in grado di funzionare anche su reti composte da più
+livelli.
+
+Un'altra caratteristica interessante di questa funzione è che la sua
+derivata può essere espressa come una funzione dei valori di input.
+Cioè:
+
+\begin{quote}
+∂σ / ∂z = σ(z)(1-σ(z))
+\end{quote}
+
+Questa proprietà tornerà utile quando sarà applicato l'algortimo di back
+propagation.
+
+Infine, il neurone sigmoidale può utilizza altre funzioni al posto di
+\emph{1 / (1 + e-z)}, come la tangente iperbolica.
+
+\subsection{Perceptron}\label{perceptron}
+
+È una rete neurale composta da un singolo neurone con Hard Threshold che
+viene utilizzata per rappresentare un iperpiano.
+
+L'algoritmo di apprendimento per questa rete cerca dei valori per i vari
+pesi \emph{wi} in modo da apprendere la funzione target. Per apprendere
+i coefficenti corretti vengono utilizzati gli esempi del training set.
+
+\subsubsection{Implementazione di funzioni
+booleane}\label{implementazione-di-funzioni-booleane}
+
+Ad esempio Percepton può implementare l'operatore \emph{or} con gli
+ingressi \emph{y ∈ \{0,1\}n+1} (vettori rappresentanti stringhe
+binarie), si possono usare come pesi \emph{w'0 = -0.5} e \emph{w'i = 1}
+per \emph{i=1..n}.
+
+In modo simile può essere implementato anche l'operatore \emph{and} con
+\emph{w'0 = -n+0.5} e \emph{w'i = 1} per \emph{i = 1..n}.
+
+Si può anche realizzare l'operatore \emph{not} con una singola
+connessione e con un unico peso negativo.
+
+Un problema che il perceptron non riesce a risolvere è la \emph{xor},
+questo perché si tratta di una funzione non linearmente separabili.
+
+\subsubsection{Apprendimento di funzioni linearmente
+separabili}\label{apprendimento-di-funzioni-linearmente-separabili}
+
+Si può far apprendere a Perceptron tutte le funzioni linearmente
+separabili con un algoritmo che è garantito che termini.
+
+Tuttavia se la funzione da apprendere non è linearmente separabile
+l'algoritmo non converge.
+
+Dato un insieme di apprendimento \emph{Tr = \{(x-,t)}, dove \emph{t ∈
+\{-1,+1\}\}}.
+
+\begin{enumerate}
+\item
+  Inizializza il vettore dei pesi \emph{w} al vettore nullo (con tutte
+  le componenti a 0, possono anche essere random ma piccole)
+\item
+  Ripeti finché non si raggiunge un punto fisso:
+
+  \begin{enumerate}
+  \item
+    Seleziona a caso uno delgi esempi di apprendimento \emph{(x,t)}
+  \item
+    se \emph{out = sign(w * x) ≠ t} allora \emph{w = w + (t-out)x}
+  \end{enumerate}
+\end{enumerate}
+
+Cioè per ogni esempio nel training set va a controllare il segno del
+prodotto scalare tra \emph{x} e i pesi, se questo non coincide con il
+valore di training è necessario adattare \emph{w} in modo che anche per
+\emph{x} venga calcolato il valore corretto.
+
+In questo modo si riesce ad apprendere una funzione che per costruzione
+non commette nessun errore nel training set.
+
+Piccola precisazione, \emph{x} e \emph{w} sono dei vettori.

@@ -1,0 +1,224 @@
+\section{Lezione 3 - Ripasso di probabilità e algebra + Supervised
+Learning}\label{lezione-3---ripasso-di-probabilituxe0-e-algebra-supervised-learning}
+
+\subsection{Variabili aleatorie}\label{variabili-aleatorie}
+
+\subsubsection{Bernoulli}\label{bernoulli}
+
+Esito di un esperimento che può essere positivo o negativo.
+
+\begin{verbatim}
+P(X = i) = p   se i=1 
+           1-p se i=0
+\end{verbatim}
+
+\subsubsection{Binomiale}\label{binomiale}
+
+La probabilatà di avere \emph{i} successi su \emph{N} esperimenti è
+uguale a
+
+\begin{quote}
+P(X=i) = (N su i)pi(1-p)N-i
+\end{quote}
+
+Il valore atteso di questa variabile è dato da \texttt{N*p} mentre la
+varianza è \texttt{N*p*(1-p)}.
+
+\subsubsection{Distribuzione uniforme}\label{distribuzione-uniforme}
+
+Assume che in un intervallo \texttt{{[}a,b{]}} tutti i punti hanno la
+stessa probabilità.
+
+\begin{quote}
+P(X = x) = 1 / (b-a) con \texttt{a\ \textless{}=\ x\ \textless{}=\ b}
+
+P(X = x) = 0 altrimenti
+\end{quote}
+
+Il valore atteso di X (\texttt{E{[}X{]}}) è uguale a \texttt{(a+b)/2}
+
+\subsubsection{Distribuzione normale
+(Gaussaina)}\label{distribuzione-normale-gaussaina}
+
+La distribuzione si concentra in un certo valore medio \texttt{mu} ed ha
+la forma \emph{a campana}.
+
+\begin{quote}
+N(mu, sigma2)
+
+P(x) = {[}1 / sigma(√2Pi){]}*e(x-mu)\^{}2 / 2sigma\^{}2
+\end{quote}
+
+\subsection{Algebra lineare}\label{algebra-lineare}
+
+\begin{quote}
+M \euro{} Rm x d
+\end{quote}
+
+Somma di due matrici: le matrici A e B devono avere la stessa
+dimensione, e la matrice somma ha come elementi la somma degli elementi
+delle matrici.
+
+\begin{quote}
+C = {[}A + B{]}i,j = {[}a{]}i,j + {[}b{]}i,j
+\end{quote}
+
+Per fare il prodotto di due matrici è necessario che siano di dimensioni
+compatibili.
+
+\begin{quote}
+A \euro{} Rm x d B \euro{} Rd x k L'emento (i,j) della matrice C = A * B
+è uguale alla somma del prodotto riga i-esima di a e colonna j-esima di
+B
+\end{quote}
+
+La matrice trasposta di una matriche è la stessa matrice
+``\emph{ribaltata}'' sulla diagonale.
+
+\begin{quote}
+(AB)T = BTAT
+\end{quote}
+
+Un vettore è una matrice di una sola colonna.
+
+Il prodotto scalare tra due vettori è la sommatoria del prodotti dei
+vari elementi del prodotto.
+
+Due vettori si dicono ortogonali quando il loro prodotto scalare è 0.
+
+Due vettori si dicono correlati se il loro prodotto scalare è maggiore
+di 0, in caso contrario si dicono scorrelati.
+
+La lunghezza di un vettore (norma2, distanza eculidea) è definita come
+la radice quadrata della sommatoria dei vari elementi del vettore,
+eleveati al quadrato.
+
+Allo stesso modo il quadrato della lunghezza è la sommatoria dei
+quadrati degli elementi del vettore.
+
+Il prodotto scalare tra due vettori è anche uguale al prodotto delle
+lunghezza dei due vettori, moltiplicato anche per il coseno dell'angolo
+tra i due vettori.
+
+La distanza tra due vettori è la norma della differenza tra i due
+vettori.
+
+Matrice inversa e determinante.
+
+Utilizzando le matrici è possibile risolvere i sistemi lineari.
+
+Una matrice pseudo inversa è un qualcosa di simile ad una matrice
+inversa per le matrici rettangolari.
+
+\begin{quote}
+A+ = AT(AAT)-1
+\end{quote}
+
+\subsubsection{Autovalori e autovettori}\label{autovalori-e-autovettori}
+
+\begin{quote}
+A * e = lambda * e A matrice e vettore
+\end{quote}
+
+\texttt{e} è un autovettore della matrice A e \texttt{lambda} è il
+corrispondente autovalore.
+
+\textbf{Traccia}: la traccia di una matrice è la somma degli elementi
+nella diagonale.
+
+Una matrice si dice \textbf{simmetrica} se tutti gli autovalori sono
+maggiori di 0.
+
+\subsection{Supervised Learning}\label{supervised-learning}
+
+Si vuole tradurre un insieme di dati in ingresso \emph{X} in un insieme
+di dati di uscita \emph{Y}.
+
+Anche in questo caso c'è un \emph{oracolo} che funziona in modo
+stocastico e che sceglie un oggetto \emph{x} in \emph{X} secondo una
+certa probabilità \emph{P(x)} e sceglie \emph{y} in \emph{Y} in base a
+\emph{P(y\textbar{}x)}.
+
+L'obiettivo che si vuole raggiungere è quello di approssimare queste
+probabilità.
+
+Cosa importante, questo oracolo non sempre è una funzione, questo perché
+può capitare che ad uno stesso \emph{x} corrispondano \emph{y} diversi.
+
+\subsubsection{Operativamente}\label{operativamente}
+
+Si dispone di una serie di coppie \emph{(x,y)} che seguono lo schema
+naturale, l'insieme di queste coppie prende il nome di \textbf{training
+set}.
+
+Viene quindi scelta un funzione \emph{h} che prende il nome di
+\textbf{ipotesi}, definita nello spazio delle ipotesi \emph{H} tale che,
+da valori presenti nell'insieme \emph{X}, restituisca dei valori
+nell'insieme \emph{Y}.
+
+L'apprendimento consiste quindi nell'andare a scegliere l'\emph{h}
+migliore in modo che approssimi bene i dati presenti nel training set e
+che riesca a generalizzare e predirre i corretti valori \emph{y} anche
+per valori di \emph{x} non presenti nel training set.
+
+Da ciò segue che possono essere commessi due tipi di errori:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Errore empirico}: è l'errore commesso da \emph{h} in media,
+  all'interno del training set. In altre parole è l'errore medio
+  dell'ipotesi sul training set.
+\item
+  \textbf{Errore ideale}: è l'errore commesso da \emph{h}~su una
+  qualsiasi coppia \emph{(x,y) \textasciitilde{} P(x,y)}, come media su
+  un'insieme infinito di coppie. Questo errore può essere solamente
+  stimato.
+\end{itemize}
+
+Per calcolare una stima dell'errore ideale si può usare un \textbf{test
+set}, cioè un altro insieme di coppie \emph{(x,y)} che non compaiono nel
+training set. Questa discriminazione è importante perché se così non
+fosse l'errore ideale sarebbe influenzato dall'errore empirico.
+
+\emph{Riassumendo: l'errore empirico è quello che si fa sui dati che si
+conoscono, l'errore ideale è quello che si fa su dei dati nuovi.}
+
+Dal momento che lo spazio delle ipotesi non può coincidere con tutte le
+funzioni calcolabili è necessario fare delle assunzioni sulla funzione
+oracolo, queste assunzioni prendono il nome di \textbf{bias induttivo} e
+derivano da delle conscenze a priori che abbiamo sul dominio e che
+vengono utilizzate per fare delle previsioni induttive sui dati.
+
+Fanno parte del bias induttivo:
+
+\begin{itemize}
+\tightlist
+\item
+  Come vengono rappresentati gli esempi;
+\item
+  Come viene modellato lo spazio delle ipotesi \emph{H};
+\item
+  La funzione obiettivo per la ricerca nello spazio \emph{H}, cioè come
+  viene scelta la funzione \emph{h}.
+\end{itemize}
+
+\paragraph{Es: regressione
+polinomiale}\label{es-regressione-polinomiale}
+
+\begin{quote}
+TRAIN = \{(x1,y1),\ldots{},(xn,yn)\}
+\end{quote}
+
+Si vuole trovare una funzione polinomiale in grado di approssimare i
+punti.
+
+In questo caso il bias induttivo è assumere che esista una funzione
+polinomiale in grado di approssimare i vari punti.
+
+Lo spazio delle ipotesi diventa quindi l'insieme dei vari polinomi e
+l'apprendimento viene fatto sui vari coefficenti.
+
+Dobbiamo quindi scegliere tra questo spazio un grado \emph{p} che va a
+limitare i possibili polinomi (definzione di \emph{H}) e i vari
+parametri della curva (ricerca nello spazio \emph{H}).

@@ -13,13 +13,13 @@ Alcuni esempi sono: riconoscimento facciale, filtro anti-spam.
 
 In questi casi gli algoritmi (sequenza finita di passi che portano ad un risultato determinato in un tempo finito) non funzionano ed è quindi preferibile fornire una soluzione "*imperfetta*".
 
-In apprendimento automatico si studiano i metodi per trasformare l'infomrazione empirica (dati del problema) in conoscenza.
+In apprendimento automatico si studiano i metodi per trasformare l'informazione empirica (dati del problema) in conoscenza.
 
-Questo approccio è diventato possibile grazie al fatto che grazie ad Internet sono diventati disponibili molti dati.
+Questo approccio è diventato possibile grazie al fatto che Internet ha reso disponibili molti dati.
 
 ##Le basi
 
-Perché il machine leargning funzioni deve esserci un processo (stocastico o deterministico) che spiega i dati che osserviamo, in modo da riuscire a costruire un approssimazione di tale processo che può anche risultare imperfetta dal momento che il processo che si vuole approssimare non è noto.
+Perché il machine leargning funzioni deve esserci un processo (stocastico o deterministico) che spiega i dati che osserviamo, in modo da riuscire a costruire un'approssimazione di tale processo che può anche risultare imperfetta dal momento che il processo che si vuole approssimare non è noto.
 
 *Stocastico*: random a probabilità
 
