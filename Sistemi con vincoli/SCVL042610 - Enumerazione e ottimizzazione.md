@@ -165,6 +165,6 @@ Quando l'algoritmo trova una soluzione, per capire che è ottima deve comunque a
 
 Alcuni problemi possono essere complessi da modellare o possono essere modellati con modelli binari (tipo il problema del trasporto magazzino/cliente tipico della Ricerca Operativa).
 
-Implementare un CSP come modello binario ha dei problemi in quanto ci sono molte variabili e non si può fare tanta propoagazione.
+Implementare un CSP come modello binario ha dei problemi in quanto ci sono molte variabili e non si può fare tanta propagazione.
 
 

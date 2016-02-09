@@ -16,7 +16,7 @@ Il subtyping tra funzioni può essere definito in due modi:
 
 > If A' <: A then A->B <: A'->B
 > 
-> `int F(ColoredPoint x) è sotto tipo di int F(Point x)`
+> `int F(Point x) è sotto tipo di int F(ColoredPoint x)`
 
 Nel caso ci siano più parametri si ha che `A::f <: B::f` se le due funzioni sono contro-varianti sul dominio e covarianti sul valore di ritorno. Ovvero se i parametri di `A::f` sono dei sotto-tipi dei parametri di `B::f` e se il valore di ritorno di `A::f` *è più specifico* del valore di ritornodi `B::f`, cioè il tipo del valore di ritorno di `B::f` è sotto tipo di `A::f`.
 

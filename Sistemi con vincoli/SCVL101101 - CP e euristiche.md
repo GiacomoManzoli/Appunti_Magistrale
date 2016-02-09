@@ -1,4 +1,4 @@
-#Lezione 11 - CP e euristiche
+#Lezione 10 - CP e euristiche
 
 Il PLS ha due proprietà interessanti:
 
@@ -29,7 +29,7 @@ C'è un range di valori per i quali trovare una soluzione difficile e ricadono n
 
 Pertanto, se un problema ha una transizione di fase, le istanze più difficili tendono ad essere vicine al punto di transizione.
 
-La transizione di fase diepende da:
+La transizione di fase dipende da:
 
 - Il problema
 - L'approccio con il quale viene generata l'istanza del problema, ad esempio se si usa il riempimento casuale c'è, ma se si parte da un problema feasible e si "torna indietro" non c'è (come per la generazione del sudoku).
@@ -232,16 +232,12 @@ Dove:
 
 - **localstore**: inizialmente vale 1 e ogni volta che un branch viene processato, viene aggiornato con *0* se il branch ha portato ad un fallimento, altrimenti *1+R*.
 - **α**: è una costante di invecchiamento, più è vicina a *1* e meno è influente il valore aggiornato, tipicamente varia nell'intervallo *[0.9, 0.99]*
-- **depthscore**: è la media dei **decision score**  alla profondità corrente, inizialemente 1. Viene utilizzato per normalizzare i risultati, dal momento che maggiore è la profondità, minore è efficace la propagazione.
+- **depthscore**: è la media dei **decision score**  alla profondità corrente, inizialemente 1. Viene utilizzato per normalizzare i risultati, dal momento che maggiore è la profondità più efficace è la propagazione.
 
-FDS sceglie sempre la decisione con lo score più basso e si segue il branch della soluzione con lo score più basso, questo perché uno score più basso porta ad una propagazione migliore e l'obiettivo di questa euristica è quello di fallire in fretta.
+FDS sceglie sempre la decisione con lo score più basso e segue il branch con lo score più basso, questo perché uno score più basso porta ad una propagazione migliore e l'obiettivo di questa euristica è quello di fallire in fretta.
 
-Questa euristica funziona particolarmente bene con il restart, perché al primo giro si impara quali sono le decisioni migliore e nelle iterazione successive, queste vengono prese subito in modo da sflotire il più in alto possibile.
+Questa euristica funziona particolarmente bene con i restart, perché al primo giro impara quali sono le decisioni migliori e nelle iterazione successive le prende subito in modo da sflotire il più in alto possibile.
 
 L'utilizzo di FDS porta quindi ad ottenere un albero nel quale i sotto alberi sinistri tendono a fallire più frequentemente e le decisioni che portano ad un doppio fallimento (entrambi i branch falliscono) vengono utilizzate più frequentemente.
 
 ![](./immagini/l11-fds-tree.png)
-
-Questa strategia funzione bene con i riavvi, in quanto al primo tentativo individua le decisioni migliori e nei tentativi successivi le applica prima, in modo da sfoltire l'albero più in alto.
-
-

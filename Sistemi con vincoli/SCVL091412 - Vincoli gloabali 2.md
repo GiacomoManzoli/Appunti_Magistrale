@@ -46,9 +46,9 @@ Per fare filtering sul dominio di x<sub>i</sub> si può utilizzare
 
 Cioè viene preso il più grande valore di z e si tolgono i minimi valori per ogni altra variabile.
 
-Al secondo passo si può eseguire il calcolo con (assumendo che sia stato eseguito il pruning di xj (la formla è da correggere.
+Al secondo passo si può eseguire il calcolo con (assumendo che sia stato eseguito il pruning di *x<sub>j</sub>* (la formla è da correggere.
 
-> ub(x<sub>i</sub>) = ub(z) - ( lb<sub>`$`</sub>(x<sub>i</sub>) − old(lb(x<sub>j</sub>) + lb(x<sub>j</sub>))
+> ub(x<sub>i</sub>) = ub(z) - ( lb<sub>`$`</sub>(x<sub>i</sub>) − old(lb(x<sub>j</sub>)) + lb(x<sub>j</sub>))
 
 In questo modo si riesce a fare il pruning di una singola variabile in tempo costante.
 
@@ -97,8 +97,8 @@ def prune(xi, v):
         cj.filter(xi)
 ```
 
-che risulta inefficente e ricorsivo.
-Conviene quindi utilizzare una coda FIFO ed espettare ad effettuare le chiamate:
+che risulta inefficente e ricorsiva.
+Conviene quindi utilizzare una coda FIFO ed aspettare ad effettuare le chiamate:
 
 ```python
 def prune(xi, v):

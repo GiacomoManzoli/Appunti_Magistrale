@@ -1,9 +1,9 @@
 <html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="sistemi-con-vincoli">Sistemi con vincoli</h1>
 <h1 id="lezione-1-introduzione">Lezione 1 - Introduzione</h1>
-<p>Programmazione a vincoli o constraint programmmig è una tecnica utilizzata per siolvere problemi CSP o COP.</p>
+<p>Programmazione a vincoli o constraint programmmig è una tecnica utilizzata per risolvere problemi CSP o COP.</p>
 <ul>
 <li><strong>CSP</strong>: <strong>C</strong>onstraint <strong>S</strong>atisfaction <strong>P</strong>roblem</li>
-<li>-<strong>COP</strong>: <strong>C</strong>onstraint <strong>O</strong>ptimization <strong>P</strong>roblem: problema di ottimizazione con vincoli, è diverso dalla programmazione lineare.</li>
+<li><strong>COP</strong>: <strong>C</strong>onstraint <strong>O</strong>ptimization <strong>P</strong>roblem: problema di ottimizazione con vincoli, è diverso dalla programmazione lineare.</li>
 </ul>
 <p>Alcune applicazioni pratiche riguardano i problemi gestionali, come la pianificazione dell&#39;orario dei treni o la gestione dei porti.</p>
 <p>La risoluzione di uno di questi problemi si basa sempre sulla costruzione di un modello, in modo analogo alla Programmazione Lineare, solo che nella modellazione non venogno utilizzate le equazioni lineari.</p>
@@ -121,9 +121,9 @@ Dal momento che questa può solo togliere dei valori è ovvio che dopo un numero
 <p>Restringendo lo spazio di ricerca a partire da un&#39;insieme di domini <em>D<sub>0</sub>,D<sub>1</sub>,...</em> si arriva ad un altro un&#39;insieme <em>D<sub>0</sub>&#39;,D<sub>1</sub>&#39;...</em> tale che <em>D<sub>0</sub>&#39; ⊆ D<sub>0</sub>,...</em></p>
 <p>Questo può essere visto come una generalizzazione dell&#39;operazione di assegnamento, che cattura l&#39;effetto del filtering e della ricerca.</p>
 <h2 id="vincolo-risolto">Vincolo risolto</h2>
-<p>Un vincolo si dice <strong>risolto</strong> se coincide con il prodotto cartesiano nel suo scope.</p>
+<p>Un vincolo si dice <strong>risolto</strong> se coincide con il prodotto cartesiano dei domini delle variabili nel suo scope.</p>
 <blockquote>
-<p>c<sub>j</sub>=∏<sub>[x<sub>i&lt;/sub &gt; ∈ X(c<sub>j</sub>)]</sub> D(x<sub>i</sub>)</p>
+<p>c<sub>j</sub>=∏<sub>[x<sub>i&lt;/subx&gt; ∈ X(c<sub>j</sub>)]</sub> D(x<sub>i</sub>)</p>
 </blockquote>
 <p>Cioè effettuando il prodotto cartesiano dei domini di tutte le variabili presenti nel vincolo, questo prodotto contiente solo relazioni che soddisfano il vincolo, generalizzando così la definizione di <strong>feasibility</strong> di un assegnamento.</p>
 <h2 id="soluzione-csp">Soluzione CSP</h2>
@@ -141,7 +141,7 @@ Dal momento che questa può solo togliere dei valori è ovvio che dopo un numero
     <span class="hljs-keyword">if</span> DFS(apply(dec, CSP)): <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
   <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
 </code></pre>
-<p>L&#39;algoritmo di ricerca base può essere ottimizzato facendolo terminare quando viene trovata una soluzione generalizzata, permettendo così di terminare subito.</p>
+<p>L&#39;algoritmo di ricerca base può essere ottimizzato facendolo terminare quando viene trovata una soluzione generalizzata, permettendo così di terminare prima la ricerca.</p>
 <p>Allo stesso modo può essere modificato <strong>AC1</strong> in modo che se un vincolo è già risolto, allora non venga eseguito il filtering per tale vincolo.</p>
 <pre><code class="lang-python">dirty = True
 while dirty:
@@ -163,7 +163,7 @@ while dirty:
 <li>Non possono esserci due regine sulla stessa riga --&gt; <em>x<sub>i</sub> ≠ x<sub>j</sub></em> per ogni <em>i</em> e <em>j</em>, cioè due variabili non possono avere lo stesso valore e per come è espresso il problema vuol dire che due colonne diverse non possono essere avere la regina sulla stessa riga.</li>
 <li>Non possono esserci due regine sulla stessa diagonale --&gt; <em>x<sub>j</sub> - x<sub>i</sub> ≠ j - i</em>, per ogni coppia <em>i &lt; j</em>, è necessario esprimere anche questo vincolo per l&#39;altra diagonale.</li>
 </ul>
-<p><strong>Problema</strong>: non sappiamo come modellare <em>x<sub>j</sub> - x<sub>i</sub> ≠ v</em> e non può essere utilizzato un vincolo ad hoc perché si avrebbe un numero di vincoli che aumenta esponenzialmente.</p>
+<p><strong>Problema</strong>: non sappiamo come modellare <em>x<sub>j</sub> - x<sub>i</sub> ≠ v</em> e non può essere definito un nuovo vincolo ad hoc perché questa strategia porterebbe ad avere un numero esponenziale di vincoli.</p>
 <p>Lo stesso vincolo può essere implementato con <em>x + y = z</em> e <em>z ≠ v</em>, in questo modo definisco due vincoli elementari che possono essere combinati tra loro per creare vincoli più complessi.</p>
 <p>Fortunatamente ci sono dei linguaggi di modellazione che eseguono il parsing automatico delle espressioni, permettendo di scrivere espressioni complesse senza preoccuparsi di definire i vincoli più semplici.</p>
 <p>Queste espressioni possono essere aggiunte ad una libreria di vincoli come:</p>
@@ -395,7 +395,7 @@ Una volta aggiunto il nuovo vincolo, la ricerca continua facendo il backtracking
 </ul>
 <h2 id="reified-constraint">Reified Constraint</h2>
 <p>Alcuni problemi possono essere complessi da modellare o possono essere modellati con modelli binari (tipo il problema del trasporto magazzino/cliente tipico della Ricerca Operativa).</p>
-<p>Implementare un CSP come modello binario ha dei problemi in quanto ci sono molte variabili e non si può fare tanta propoagazione.</p>
+<p>Implementare un CSP come modello binario ha dei problemi in quanto ci sono molte variabili e non si può fare tanta propagazione.</p>
 <h1 id="lezione-5-metavincoli">Lezione 5 - Metavincoli</h1>
 <p>Non si riesce a modellare in modo efficace il problema dei trasporti, serve quindi una nuova tipologia di vincoli</p>
 <h2 id="vincoli-come-espressioni">Vincoli come espressioni</h2>
@@ -497,8 +497,8 @@ Una volta aggiunto il nuovo vincolo, la ricerca continua facendo il backtracking
 <p><em>Nelle precedenti puntate:</em> scegli una variabile in modo che sia più probabile fallire e scegli un valore in modo che si più probabile trovare una soluzione.</p>
 <h2 id="ricerca-per-i-problemi-di-ottimizzazione">Ricerca per i problemi di ottimizzazione</h2>
 <p>Oltre a trovare la solzuone è necessario provare che sia ottima, è necessario qundi andare ad esplorare tutto l&#39;albero.</p>
-<p>Tipicamente si scelgono sia variabili che valori con la qualità più alta possibile, cioè che portino ad ottenere dei vincoli più stretti.</p>
-<p>Questo perché i vincoli più stretti fanno un pruning maggiore e velocizzano il processo di ricerca.</p>
+<p>Tipicamente si scelgono sia variabili che valori con la qualità più alta possibile in modo da ottenere subito una buona soluzione (in termini delle funzione obiettivo).</p>
+<p>Così facendo, durante l&#39;optimality proof si hanno dei vincoli più stretti che portano ad un pruning maggiore, velocizzando così il processo di ricerca.</p>
 <p>Il tutto deriva dal fatto che facendo il B&amp;B ogni volta che si trova una nuova soluzione si ottiene un nuovo vincolo e che per provare l&#39;ottimialità è necessario esplorare tutto l&#39;albero di ricerca.</p>
 <h2 id="alternative-branching-scheme">Alternative Branching Scheme</h2>
 <p>Finora abbiamo fatto branching con un ramo <em>x=v</em> e uno <em>x≠v</em>, possono però essere usate strategia diverse, come:</p>
@@ -606,7 +606,7 @@ In questo modo quando si scende sul ramo sinistro non vengono tagliate le soluzi
 <p>|Y|=|W| e D(x<sub>i</sub>) ∈ W,  ∀x<sub>i</sub> ∈ Y</p>
 </blockquote>
 <p>Allora:</p>
-<p><em>W</em> prende il nome di <strong>Hall set</strong> di <em>X</em> e i valori presenti in <em>W</em> saranno assegnati alle variabili presenti in <em>Y</em>, quindi è possibile togliere i valori presenti in <em>W</em> dai domini delle variabili che non sono in <em>Y</em>.</p>
+<p><em>W</em> prende il nome di <strong>Hall set</strong> di <em>Y</em> e i valori presenti in <em>W</em> saranno assegnati alle variabili presenti in <em>Y</em>, quindi è possibile togliere i valori presenti in <em>W</em> dai domini delle variabili che non sono in <em>Y</em>.</p>
 <p>Formalmente, <em>∀W ⊂ V</em>, <em>Y ⊂ X</em> con <em>|Y|=|W|</em>:</p>
 <blockquote>
 <p>D(x<sub>i</sub>) ∈ W,  ∀x<sub>i</sub> ∈ Y ⇒ D(x<sub>j</sub>) = D(x<sub>j</sub>)∖W, ∀x<sub>j</sub> ∈ X∖Y</p>
@@ -640,10 +640,10 @@ La semantica di questo vincolo equivale ai vincoli <em>x<sub>i</sub>≠x<sub>j</
 <blockquote>
 <p>ALLDIFFERENT(X) con x<sub>0</sub>∈{0,2},x<sub>1</sub>∈{0,2},x<sub>2</sub>∈{1,2,3}</p>
 </blockquote>
-<h3 id="parte-1">Parte 1</h3>
+<h3 id="parte-1-soddisfacibilit-">Parte 1 - Soddisfacibilità</h3>
 <p>Per ogni vincolo è possibile andare a definire un <strong>value graph</strong>, un grafo che ha nella parte sinistra tanti nodi quandi sono le variabili e nella destra tanti nodi quanti sono i possibili valori del dominio.
 Il grafo ha tanti archi che collegano ogni nodo a destra con tutti i nodi a sinistra in cui quel valore compare nel dominio di una variabile.</p>
-<p>Questo grafo ha altri due nodi <em>s</em> e <em>t</em>, il primo è collegato a tutti i possibili valori, mentre tutte le variabili sono collegate al .</p>
+<p>Questo grafo ha altri due nodi <em>s</em> e <em>t</em>, il primo è collegato a tutti i possibili valori, mentre tutte le variabili sono collegate al secondo.</p>
 <p><img src="Sistemi con vincoli/immagini/l8-grafo-1.png" alt=""></p>
 <p>Gli archi del grafo che collegano un nodo valore con un nodo variabile rappresentano un possibile assegnamento del valore alla variabile. 
 Quando ad una variabile è assegnato un determinato valore, l&#39;arco è rappresentanto con una linea continua, altrimenti viene utilizzata una linea tratteggiata.</p>
@@ -670,7 +670,7 @@ Una possibilità è quella di utilizzare il backtracking, ma così facendo si ot
 La ricerca dei cammini deve essere fatta al massimo per ogni variabile, quindi si ottiene come complessità <em>O(|X| ∑<sub>[x<sub>i</sub> ∈ X]</sub>|D(x<sub>i</sub>)|)</em>, che è molto peggiore rispetto al filtering per il vincolo di diverso, il vantaggio è che viene fatto un filtering più efficace.</p>
 <p>La strategia di verifica quindi, prima costruisce il grafo del flusso, dopodiché cerca di massimizzare il flusso che arriva al nodo <em>t</em>, se il valore ottenuto conincide con <em>|X|</em> allora il vincolo è feasible.</p>
 <p>Tipicamente questo algoritmo viene implementato senza la costruzione del grafo, dal momento che possono essere usate direttamente le formule che rappresentano il vincolo. Il grafo viene utilizzato solo per rendere più semplice la spiegazione.</p>
-<h3 id="filtering-per-alldiffernt">Filtering per Alldiffernt</h3>
+<h3 id="parte-2-filtering">Parte 2 - Filtering</h3>
 <p>Per poter filtrare un valore devo considerare un arco che va da un valore ad una variabile e provare a costruire un ciclo tra i due nodi utilizzando il grafo residuale. 
 <strong>Se non viene trovato questo ciclo e tra questi due nodi non c&#39;è flusso, posso togliere quel valore dal dominio di della variabile.</strong></p>
 <p><img src="Sistemi con vincoli/immagini/l8-grafo-8.png" alt=""></p>
@@ -770,9 +770,9 @@ Questo permette di utilizzare l&#39;algoritmo di Tarjan per ottenere un efficenz
 <p>ub(x<sub>i</sub>) = ub(z) - &lt;big&gt;∑&lt;/big&gt;<sub>[x<sub>h</sub> ∈ X, h ≠ i]</sub>lb(x<sub>h</sub>)</p>
 </blockquote>
 <p>Cioè viene preso il più grande valore di z e si tolgono i minimi valori per ogni altra variabile.</p>
-<p>Al secondo passo si può eseguire il calcolo con (assumendo che sia stato eseguito il pruning di xj (la formla è da correggere.</p>
+<p>Al secondo passo si può eseguire il calcolo con (assumendo che sia stato eseguito il pruning di <em>x<sub>j</sub></em> (la formla è da correggere.</p>
 <blockquote>
-<p>ub(x<sub>i</sub>) = ub(z) - ( lb<sub><code>$</code></sub>(x<sub>i</sub>) − old(lb(x<sub>j</sub>) + lb(x<sub>j</sub>))</p>
+<p>ub(x<sub>i</sub>) = ub(z) - ( lb<sub><code>$</code></sub>(x<sub>i</sub>) − old(lb(x<sub>j</sub>)) + lb(x<sub>j</sub>))</p>
 </blockquote>
 <p>In questo modo si riesce a fare il pruning di una singola variabile in tempo costante.</p>
 <h3 id="supporto-del-solver">Supporto del solver</h3>
@@ -804,8 +804,8 @@ Questo permette di utilizzare l&#39;algoritmo di Tarjan per ottenere un efficenz
     <span class="hljs-keyword">for</span> cj <span class="hljs-keyword">in</span> C: 
         cj.filter(xi)
 </code></pre>
-<p>che risulta inefficente e ricorsivo.
-Conviene quindi utilizzare una coda FIFO ed espettare ad effettuare le chiamate:</p>
+<p>che risulta inefficente e ricorsiva.
+Conviene quindi utilizzare una coda FIFO ed aspettare ad effettuare le chiamate:</p>
 <pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">prune</span><span class="hljs-params">(xi, v)</span>:</span>
     <span class="hljs-comment"># rimuove il valore dal dominio</span>
     <span class="hljs-keyword">for</span> cj <span class="hljs-keyword">in</span> C: 
@@ -904,7 +904,7 @@ Tuttavia la complessità della propagazione aumenta con la dimensione della tabe
 <p>Il propagatore per questo vincolo cerca di trovare un supporto, ovvere una tupla della tabella, per tutti i valori che compaiono nel problema. </p>
 <p>Il propagatore quindi processa le tuple una ad una e si ferma quando tutti i valori hanno supporto o quando non ci sono più tuple.</p>
 <p>Si può anche utilizzare la versione incrementale che tiene in memoria i vari supporti trovati.</p>
-<h1 id="lezione-11-cp-e-euristiche">Lezione 11 - CP e euristiche</h1>
+<h1 id="lezione-10-cp-e-euristiche">Lezione 10 - CP e euristiche</h1>
 <p>Il PLS ha due proprietà interessanti:</p>
 <ol>
 <li>Ha una <strong>transizione di fase</strong></li>
@@ -922,7 +922,7 @@ Tuttavia la complessità della propagazione aumenta con la dimensione della tabe
 <p>C&#39;è un range di valori per i quali trovare una soluzione difficile e ricadono nella transizione di fase.</p>
 <p><img src="Sistemi con vincoli/immagini/l10-phase-2.png" alt=""></p>
 <p>Pertanto, se un problema ha una transizione di fase, le istanze più difficili tendono ad essere vicine al punto di transizione.</p>
-<p>La transizione di fase diepende da:</p>
+<p>La transizione di fase dipende da:</p>
 <ul>
 <li>Il problema</li>
 <li>L&#39;approccio con il quale viene generata l&#39;istanza del problema, ad esempio se si usa il riempimento casuale c&#39;è, ma se si parte da un problema feasible e si &quot;torna indietro&quot; non c&#39;è (come per la generazione del sudoku).</li>
@@ -1054,13 +1054,12 @@ Se alla fine del pool ci sono delle variabili non ancora istanziate, vuol dire c
 <ul>
 <li><strong>localstore</strong>: inizialmente vale 1 e ogni volta che un branch viene processato, viene aggiornato con <em>0</em> se il branch ha portato ad un fallimento, altrimenti <em>1+R</em>.</li>
 <li><strong>α</strong>: è una costante di invecchiamento, più è vicina a <em>1</em> e meno è influente il valore aggiornato, tipicamente varia nell&#39;intervallo <em>[0.9, 0.99]</em></li>
-<li><strong>depthscore</strong>: è la media dei <strong>decision score</strong>  alla profondità corrente, inizialemente 1. Viene utilizzato per normalizzare i risultati, dal momento che maggiore è la profondità, minore è efficace la propagazione.</li>
+<li><strong>depthscore</strong>: è la media dei <strong>decision score</strong>  alla profondità corrente, inizialemente 1. Viene utilizzato per normalizzare i risultati, dal momento che maggiore è la profondità più efficace è la propagazione.</li>
 </ul>
-<p>FDS sceglie sempre la decisione con lo score più basso e si segue il branch della soluzione con lo score più basso, questo perché uno score più basso porta ad una propagazione migliore e l&#39;obiettivo di questa euristica è quello di fallire in fretta.</p>
-<p>Questa euristica funziona particolarmente bene con il restart, perché al primo giro si impara quali sono le decisioni migliore e nelle iterazione successive, queste vengono prese subito in modo da sflotire il più in alto possibile.</p>
+<p>FDS sceglie sempre la decisione con lo score più basso e segue il branch con lo score più basso, questo perché uno score più basso porta ad una propagazione migliore e l&#39;obiettivo di questa euristica è quello di fallire in fretta.</p>
+<p>Questa euristica funziona particolarmente bene con i restart, perché al primo giro impara quali sono le decisioni migliori e nelle iterazione successive le prende subito in modo da sflotire il più in alto possibile.</p>
 <p>L&#39;utilizzo di FDS porta quindi ad ottenere un albero nel quale i sotto alberi sinistri tendono a fallire più frequentemente e le decisioni che portano ad un doppio fallimento (entrambi i branch falliscono) vengono utilizzate più frequentemente.</p>
 <p><img src="Sistemi con vincoli/immagini/l11-fds-tree.png" alt=""></p>
-<p>Questa strategia funzione bene con i riavvi, in quanto al primo tentativo individua le decisioni migliori e nei tentativi successivi le applica prima, in modo da sfoltire l&#39;albero più in alto.</p>
 <h1 id="lezione-11-cp-e-scheduling">Lezione 11 - CP e Scheduling</h1>
 <p>Una delle applicazioni classiche di CP riguarda la risoluzione dei problemi di scheduling, questo perché si riescono ad ottenere ottimi risultati.</p>
 <h2 id="rcpsp-resource-constrained-project-scheduling-problem">RCPSP - Resource Constrained Project Scheduling Problem</h2>

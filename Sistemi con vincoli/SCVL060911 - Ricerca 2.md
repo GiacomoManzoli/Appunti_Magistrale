@@ -6,9 +6,9 @@
 
 Oltre a trovare la solzuone è necessario provare che sia ottima, è necessario qundi andare ad esplorare tutto l'albero.
 
-Tipicamente si scelgono sia variabili che valori con la qualità più alta possibile, cioè che portino ad ottenere dei vincoli più stretti.
+Tipicamente si scelgono sia variabili che valori con la qualità più alta possibile in modo da ottenere subito una buona soluzione (in termini delle funzione obiettivo).
 
-Questo perché i vincoli più stretti fanno un pruning maggiore e velocizzano il processo di ricerca.
+Così facendo, durante l'optimality proof si hanno dei vincoli più stretti che portano ad un pruning maggiore, velocizzando così il processo di ricerca.
 
 Il tutto deriva dal fatto che facendo il B&B ogni volta che si trova una nuova soluzione si ottiene un nuovo vincolo e che per provare l'ottimialità è necessario esplorare tutto l'albero di ricerca.
 

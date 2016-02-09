@@ -2,10 +2,10 @@
 
 # Lezione 1 - Introduzione
 
-Programmazione a vincoli o constraint programmmig è una tecnica utilizzata per siolvere problemi CSP o COP.
+Programmazione a vincoli o constraint programmmig è una tecnica utilizzata per risolvere problemi CSP o COP.
 
 - **CSP**: **C**onstraint **S**atisfaction **P**roblem
-- -**COP**: **C**onstraint **O**ptimization **P**roblem: problema di ottimizazione con vincoli, è diverso dalla programmazione lineare.
+- **COP**: **C**onstraint **O**ptimization **P**roblem: problema di ottimizazione con vincoli, è diverso dalla programmazione lineare.
 
 Alcune applicazioni pratiche riguardano i problemi gestionali, come la pianificazione dell'orario dei treni o la gestione dei porti.
 

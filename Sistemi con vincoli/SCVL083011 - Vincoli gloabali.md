@@ -12,7 +12,7 @@ Formalizzando, indicando con *X* l'insieme delle variabili presenti in una colon
 
 Allora:
 
-*W* prende il nome di **Hall set** di *X* e i valori presenti in *W* saranno assegnati alle variabili presenti in *Y*, quindi è possibile togliere i valori presenti in *W* dai domini delle variabili che non sono in *Y*.
+*W* prende il nome di **Hall set** di *Y* e i valori presenti in *W* saranno assegnati alle variabili presenti in *Y*, quindi è possibile togliere i valori presenti in *W* dai domini delle variabili che non sono in *Y*.
 
 Formalmente, *∀W ⊂ V*, *Y ⊂ X* con *|Y|=|W|*:
 
@@ -54,12 +54,12 @@ Come esempio viene utilizzato:
 
 > ALLDIFFERENT(X) con x<sub>0</sub>∈{0,2},x<sub>1</sub>∈{0,2},x<sub>2</sub>∈{1,2,3}
 
-### Parte 1
+### Parte 1 - Soddisfacibilità
 
 Per ogni vincolo è possibile andare a definire un **value graph**, un grafo che ha nella parte sinistra tanti nodi quandi sono le variabili e nella destra tanti nodi quanti sono i possibili valori del dominio.
 Il grafo ha tanti archi che collegano ogni nodo a destra con tutti i nodi a sinistra in cui quel valore compare nel dominio di una variabile.
 
-Questo grafo ha altri due nodi *s* e *t*, il primo è collegato a tutti i possibili valori, mentre tutte le variabili sono collegate al .
+Questo grafo ha altri due nodi *s* e *t*, il primo è collegato a tutti i possibili valori, mentre tutte le variabili sono collegate al secondo.
 
 ![](./immagini/l8-grafo-1.png)
 
@@ -109,7 +109,7 @@ La strategia di verifica quindi, prima costruisce il grafo del flusso, dopodich�
 
 Tipicamente questo algoritmo viene implementato senza la costruzione del grafo, dal momento che possono essere usate direttamente le formule che rappresentano il vincolo. Il grafo viene utilizzato solo per rendere più semplice la spiegazione.
 
-###Filtering per Alldiffernt
+### Parte 2 - Filtering
 
 Per poter filtrare un valore devo considerare un arco che va da un valore ad una variabile e provare a costruire un ciclo tra i due nodi utilizzando il grafo residuale. 
 **Se non viene trovato questo ciclo e tra questi due nodi non c'è flusso, posso togliere quel valore dal dominio di della variabile.**

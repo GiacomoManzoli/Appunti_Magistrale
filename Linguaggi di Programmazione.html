@@ -1495,6 +1495,7 @@ Nothing
 <li>ereditarietà</li>
 </ul>
 <hr>
+<h1 id="correzione-primo-paziale">Correzione primo paziale</h1>
 <h2 id="domanda-1">Domanda 1</h2>
 <pre><code> <span class="hljs-number">1</span> [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, E]
  <span class="hljs-number">2</span> [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, A]
@@ -1508,13 +1509,13 @@ Nothing
 <span class="hljs-number">10</span> [<span class="hljs-number">9</span>, <span class="hljs-number">8</span>, rit=<span class="hljs-string">"prox istruzione"</span>, rit=CL-&gt;w1, f0y=_] <span class="hljs-comment">//Invocazione di q</span>
 <span class="hljs-number">11</span> [<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-function">handle <span class="hljs-title">A</span><span class="hljs-params">(x)</span></span>=&gt;x]
 <span class="hljs-number">12</span> [<span class="hljs-number">11</span>, <span class="hljs-number">6</span>, rit=<span class="hljs-string">"handle di q"</span>, ris=CL-&gt;CL-&gt;f0y, x=<span class="hljs-number">3</span>, z=<span class="hljs-number">5</span>, f1=(<span class="hljs-number">12</span>,f1)] <span class="hljs-comment">//invocazione di f0(3)</span>
-</code></pre><p>Viene eseguita f0 che ritorna (12,f1).
+</code></pre><p>Viene eseguita <code>f0</code> che ritorna <code>(12,f1).</code>
 Dovrebbe essere tolto il record 12 dalla pila, ma contiene la definizione di una funzione, quindi deve essere spostato nello heap.</p>
 <pre><code><span class="hljs-number">12</span>* [<span class="hljs-number">11</span>, <span class="hljs-number">6</span>, rit=<span class="hljs-string">"handle di q"</span>, ris=CL-&gt;CL-&gt;f0y, x=<span class="hljs-number">3</span>, z=<span class="hljs-number">5</span>, f1=(<span class="hljs-number">12</span>*,f1)] <span class="hljs-comment">//invocazione di f0(3)</span>
 </code></pre><p>Viene fatto il pop di 12 e 11.
 Continua l&#39;esecuzione di q con il record 10 in cima.</p>
 <pre><code><span class="hljs-number">10</span> [<span class="hljs-number">9</span>, <span class="hljs-number">8</span>, rit=<span class="hljs-string">"prox istruzione"</span>, rit=CL-&gt;w1, f0y=(<span class="hljs-number">12</span>*)] <span class="hljs-comment">//Invocazione di q</span>
-</code></pre><p>L&#39;esecuzione di q termina, ritornando il valore (12*,f1), dopodiché viene fatto il pop di 10.</p>
+</code></pre><p>L&#39;esecuzione di <code>q</code> termina, ritornando il valore <code>(12*,f1)</code>, dopodiché viene fatto il pop di 10.</p>
 <p>L&#39;esecuzione del programma riparte con il record 9 in cima.</p>
 <pre><code> <span class="hljs-number">9</span> [<span class="hljs-number">8</span>, <span class="hljs-number">8</span>, w1 = (<span class="hljs-number">12</span>*,f1)]
 <span class="hljs-number">10</span> [<span class="hljs-number">9</span>, <span class="hljs-number">9</span>, p=(<span class="hljs-number">10</span>,p)]
@@ -1525,27 +1526,27 @@ Continua l&#39;esecuzione di q con il record 10 in cima.</p>
 <span class="hljs-number">15</span> [<span class="hljs-number">14</span>, <span class="hljs-number">5</span>, rit=<span class="hljs-string">"fine di f1"</span>, ris=CL-&gt;hf2, a=(<span class="hljs-number">14</span>,f2), ax=_, ay2=_] <span class="hljs-comment">//h(f2)</span>
 <span class="hljs-number">16</span> [<span class="hljs-number">15</span>, <span class="hljs-number">14</span>, rit=<span class="hljs-string">"condizione di h"</span>, ris=CL-&gt;ax, z2=<span class="hljs-number">2</span>, xy=_]<span class="hljs-comment">//a(x)</span>
 <span class="hljs-number">17</span> [<span class="hljs-number">16</span>, <span class="hljs-number">16</span>, <span class="hljs-function">handle <span class="hljs-title">E</span><span class="hljs-params">(x)</span> </span>=&gt; x+<span class="hljs-number">2</span> | A(x) =&gt; x(y)]
-</code></pre><p>Esegue il corpo di f2 che fa il test x+z2 = z, z2 vale 2, x vale 3, z vale 5 (parametro formale di f0).
-Viene quindi eseguito il primo ramo dell&#39;if, che ritorna z2.</p>
+</code></pre><p>Esegue il corpo di <code>f2</code> che fa il test <code>x+z2 = z</code>, <code>z2</code> vale 2, <code>x</code> vale 3, <code>z</code> vale 5 (parametro formale di <code>f0</code>).
+Viene quindi eseguito il primo ramo dell&#39;if, che ritorna <code>z2</code>.</p>
 <p>Viene quindi fatto il pop di 17 e 16.
 Continua quindi l&#39;esecuzione del corpo di h con il record 15 in cima.</p>
 <pre><code><span class="hljs-number">15</span> [<span class="hljs-number">14</span>, <span class="hljs-number">5</span>, rit=<span class="hljs-string">"fine di f1"</span>, ris=CL-&gt;hf2, a=(<span class="hljs-number">14</span>,f2), ax=<span class="hljs-number">2</span>, ay2=_] <span class="hljs-comment">//h(f2)</span>
-</code></pre><p>Il test dell&#39;if di h viene valutato vero, viene quindi eseguito il raise di A(a).</p>
+</code></pre><p>Il test dell&#39;if di <code>h</code> viene valutato vero, viene quindi eseguito il raise di <code>A(a)</code>.</p>
 <p>Viene fatto il pop di 15 e 14, tuttavia il record 14 contiene la definzione di a quindi deve essere copiato nello heap.</p>
 <pre><code><span class="hljs-number">14</span>* [<span class="hljs-number">13</span>, <span class="hljs-number">12</span>*, rit=<span class="hljs-string">"handle di p"</span>, ris=CL-&gt;CL-&gt;w1x, z1=<span class="hljs-number">2</span>, f2=(<span class="hljs-number">14</span>*,f2), hf2=_]<span class="hljs-comment">//w1(x)</span>
 </code></pre><p>Viene trovato un handler nel record 13, di conseguenza viene eseguito il pop di 13 ed eseguito l&#39;handler con il record 12 in cima alla pila.</p>
 <pre><code><span class="hljs-number">12</span> [<span class="hljs-number">11</span>, <span class="hljs-number">10</span>, rit=<span class="hljs-string">"fine programma"</span>, ris=CL-&gt;w2, w1x=_, xr=_] <span class="hljs-comment">//p()</span>
 <span class="hljs-number">13</span> [<span class="hljs-number">12</span>, <span class="hljs-number">14</span>*, rit=<span class="hljs-string">"fine di p"</span>, ris=CL-&gt;xr, z2=<span class="hljs-number">2</span>, xy=_] <span class="hljs-comment">//x(r)</span>
 <span class="hljs-number">14</span> [<span class="hljs-number">13</span>, <span class="hljs-number">13</span>, <span class="hljs-function">handle <span class="hljs-title">E</span><span class="hljs-params">(x)</span> </span>= x+y | A(x)=&gt; x(r)]
-</code></pre><p>Si esegue il corpo di f2 con x+z2=z, x=3, z=5, z2=2, il test viene valutato vero, viene quindi ritornato z2=2.</p>
+</code></pre><p>Si esegue il corpo di <code>f2</code> con <code>x+z2=z</code>, <code>x=3</code>, <code>z=5</code>, <code>z2=2</code>, il test viene valutato vero, viene quindi ritornato <code>z2=2</code>.</p>
 <p>Viene quindi fatto il pop di 14 e 13. Con 12 in cima alla pila viene riprende l&#39;esecuzione di p.</p>
 <pre><code><span class="hljs-number">12</span> [<span class="hljs-number">11</span>, <span class="hljs-number">10</span>, rit=<span class="hljs-string">"fine programma"</span>, ris=CL-&gt;w2, w1x=_, xr=<span class="hljs-number">2</span>] <span class="hljs-comment">//p()</span>
-</code></pre><p>L&#39;esecuzione di p termina ritornano il valore 2, portando anche alla terminazione del programma.
-Inoltre è possibile rimuovere il record 14* dallo heap.</p>
-<p>I valori di w1 e w2 sono:</p>
+</code></pre><p>L&#39;esecuzione di <code>p</code> termina ritornano il valore 2, portando anche alla terminazione del programma.
+Inoltre è possibile rimuovere il record <code>14*</code> dallo heap.</p>
+<p>I valori di <code>w1</code> e <code>w2</code> sono:</p>
 <ul>
-<li>w1 = (12*,f1)</li>
-<li>w2 = 2</li>
+<li><code>w1 = (12*,f1)</code></li>
+<li><code>w2 = 2</code></li>
 </ul>
 <p>Dentro f2 vengono utilizzati gli indirizzi:</p>
 <ul>
@@ -1573,7 +1574,7 @@ K+<span class="hljs-number">1</span>. esegue il confronto tra <span class="hljs-
 </code></pre><h2 id="domanda-2">Domanda 2</h2>
 <pre><code>f g <span class="hljs-number">1</span> = <span class="hljs-number">1</span>
 f g x = x * <span class="hljs-list">(<span class="hljs-keyword">g</span> <span class="hljs-list">(<span class="hljs-keyword">x</span> - <span class="hljs-number">1</span>)</span>)</span>
-</code></pre><p>&#39;1&#39; ha come tipo Num non Int.</p>
+</code></pre><p><code>1</code> ha come tipo Num non Int.</p>
 <p>Il tipo finale viene quindi <code>(Num -&gt; Num) -&gt; Num -&gt; Num</code>.</p>
 <h2 id="domanda-3">Domanda 3</h2>
 <p>Funtori applicativi in haskell</p>
@@ -1596,7 +1597,7 @@ f g x = x * <span class="hljs-list">(<span class="hljs-keyword">g</span> <span c
 </ul>
 <h1 id="lezione-18-programmazione-oo">Lezione 18 - Programmazione OO</h1>
 <h2 id="dynamic-lookup">Dynamic Lookup</h2>
-<p>Detto anche binding dinamico o polimofrismo di sotto-tipo, stabilisce come vengono selezionati i metodi di un oggetto.</p>
+<p>Detto anche binding dinamico o polimorfismo di sotto-tipo, stabilisce come vengono selezionati i metodi di un oggetto.</p>
 <p>In C++ e Java si parla di invocazione di un metodo di un oggetto, mentre in Smalltalk si parla di mandare un messaggio ad un oggetto <code>x-&gt;m(args)</code>.</p>
 <p>Il dynamic lookup richiede che ad ogni esecuzione dell&#39;istruzione <code>x-&gt;m(args)</code>, il metodo <code>m</code> che viene eseguito sia deciso dal valore dinamico del tipo di <code>x</code>.</p>
 <p>La stessa variabile infatti ha sempre un tipo statico e almeno un tipo dinamico:</p>
@@ -1606,32 +1607,32 @@ f g x = x * <span class="hljs-list">(<span class="hljs-keyword">g</span> <span c
 </ul>
 <p>Quindi, quando viene inviato un messaggio alla variabile <code>x</code> è il tipo dinamico che determina quale funzione viene invocata. Di conseguenza l&#39;istruzione <code>x-&gt;m(args)</code> può portare all&#39;invocazione di funzione diversa se cambia il tipo dinamico di <code>x</code>.</p>
 <p>Il dynamic lookup è diverso dall&#39;<strong>overloading</strong>.</p>
-<p>L&#39;overloading (sovraccaricamento) avviene con un polimorfiso <em>ad-hoc</em> e si basa sul tipo statico dei parametri passati ad un metodo, la funzione da eseguire viene decisa a compile-time.</p>
-<p>In generale, data una collezione <em>C</em> di oggetti diversi, ognugno con il metodo <code>pippo</code>, è possibile mandare lo stesso messaggio <code>pippo</code> a tutti gli elementi della collezione, si occuperà il compilatore di produrre il codice necessario affinché venga sempre eseguita la funzione corretta.</p>
+<p>L&#39;overloading (sovraccaricamento) avviene con un polimorfiso <em>ad-hoc</em> e si basa sul tipo statico dei parametri passati ad un metodo, pertanto la funzione da eseguire viene decisa a compile-time.</p>
+<p>In generale, data una collezione <em>C</em> di oggetti diversi, ognugno con il metodo <code>pippo</code>, è possibile mandare lo stesso messaggio <code>pippo</code> a tutti gli elementi della collezione. Si occuperà il compilatore di produrre il codice necessario affinché venga sempre eseguita la funzione corretta.</p>
 <p>Da notare che non devono essere presenti particolari relazioni tra i vari oggetti, se non la presenza del metodo <code>pippo</code> in ognuno di essi. Non è quindi necessario che ci sia una gerarchia tra i vari tipi degli oggetti.</p>
-<p>Effettuare il dynamic lookup richide un costo in termini di efficacia, pertanto è possibil scegliere di implementarlo per qualsiasi metodo oppure solo per alcuni metodi detti virtuali.</p>
+<p>Effettuare il dynamic lookup richide un costo in termini di efficacia, pertanto è possibile scegliere di implementarlo per qualsiasi metodo oppure solo per alcuni metodi (metodi <strong>virtuali</strong> del c++).</p>
 <p>È quindi possibile seguire due strategie:</p>
 <ul>
 <li>Fare quasi tutto a compile time, tranne per alcuni metodi virtuali, come fa il C++, ottenendo così delle prestazioni migliori;</li>
 <li>Fare tutto a run-time, come fa Smalltalk.</li>
 </ul>
-<p>Il dynamic lookup può essere considerato come un overloading dinamico nel quale la valutazione del motodo da invocare viene fatta a runtime valutando il tipo dinamico dell&#39;oggetto.
+<p>Il dynamic lookup può essere considerato come un overloading dinamico nel quale la valutazione del metodo da invocare viene fatta a runtime valutando il tipo dinamico dell&#39;oggetto.
 Dal momento che <code>x-&gt;m(a,b)</code> equivale a <code>m(x,a,b)</code> e il dynamic lookup viene effettauato solo sul valore di <code>x</code>.</p>
 <p>In alcuni linguaggi il dynamic lookp viene fatto su tutti gli argomenti del messaggio (es: Common Lisp Object System), ciò prende il nome di <strong>multiple dispatch</strong>.</p>
 <p>Il multiple dispatch può essere utilizzato per implementare il test di uguaglianza in base al tipo dei due oggetti, creando però un incapsulamento più debole.</p>
 <h2 id="astrazione">Astrazione</h2>
-<p>Detta anche incapsulamento.</p>
+<p>Aka: incapsulamento.</p>
 <p>È la capacità di nascondere i dettagli implementativi di un oggetto, creando una distinzione tra una parte pubblica (interfaccia) e una parte privata contenente i dettagli implementativi.</p>
 <p>Inizialmente c&#39;era solamente il concetto di pubblico o privato, col tempo sono state poi aggiunte nuove tipologie di visibilità come package e protected.</p>
 <p>L&#39;astrazione dipende dal linguaggio, ad esempio per Smalltalk tutti i campi dati sono privati e tutti i metodi sono pubblici</p>
 <h2 id="subtyping">Subtyping</h2>
 <p><code>A &lt;: B</code>, <code>A</code> è <strong>sotto tipo</strong> di <code>B</code>.</p>
-<p>Ovvero dovunque serva un valore di tipo <code>B</code> è possibile utilizzare un oggetto di tipo <code>A</code>.</p>
-<p>Il subtyping è una relazione tra le interfacce di due tipi, quindi se <code>A</code> è sotto tipo di <code>B</code>, tutti i metodi che posso invocare su <code>B</code> li posso anche invocare su <code>A</code>. Si tratta quindi di una relazione di inclusione tra l&#39;interfaccia di due tipi.</p>
+<p>Ovvero dovunque serve un valore di tipo <code>B</code> è possibile utilizzare un oggetto di tipo <code>A</code>.</p>
+<p>Il subtyping è una relazione di inclusione tra le interfacce di due tipi. Quindi se <code>A</code> è sotto tipo di <code>B</code>, tutti i metodi che posso invocare su <code>B</code> li posso anche invocare su <code>A</code>.</p>
 <p>Vantaggi del subtyping:</p>
 <ul>
 <li>Permette di trattare in modo uniforme valori di tipo diverso.</li>
-<li>Avere una base comune per ogni oggetto.</li>
+<li>Permette di avere una base comune per ogni oggetto.</li>
 <li>Rende possibile aggiungere funzionalità senza cambiare il resto del programma.</li>
 <li>Velocizza il prototipaggio.</li>
 </ul>
@@ -1765,11 +1766,12 @@ STACK
 <span class="hljs-number">1</span>[CL=<span class="hljs-number">0</span>,AL=<span class="hljs-number">0</span>, r = <span class="hljs-number">1</span>*]
 <span class="hljs-number">2</span>[CL=<span class="hljs-number">1</span>,AL=<span class="hljs-number">1</span>, cp = <span class="hljs-number">3</span>*]
 </code></pre>
-<p>Per l&#39;esecuzione di <code>r.distance(cp)</code>, dove il tipo statico di <code>r</code> è <code>Point</code>, viene scelta come funzione da invocare è <code>distance</code> di <code>Point</code>.</p>
+<p>Per l&#39;esecuzione di <code>r.distance(cp)</code>, dove il tipo statico di <code>r</code> è <code>Point</code>, viene scelta come funzione da invocare <code>distance</code> di <code>Point</code>.</p>
 <p>Tuttavia la funzione <code>distance</code> si aspetta un parametro di tipo <code>ref(Point)</code> ma riceve una variabile di tipo <code>ref(ColorPoint)</code>.</p>
-<p>Quindi a runtime il codice di <code>distance</code> deve essere compatibile con <code>ColorPoint</code>, in particolare <code>ColorPoint</code> deve contere <code>x</code> e <code>y</code>, ma queste variabili non vengono trovate nel record puntato da <code>cp</code> e pertanto bisogna risalire utilizzando l&#39;access link per trovalrle nel record corrispondente al sotto oggeto di tipo <code>Point</code>.</p>
+<p>Quindi a runtime il codice di <code>distance</code> deve essere compatibile con <code>ColorPoint</code>. 
+In particolare <code>ColorPoint</code> deve contere <code>x</code> e <code>y</code>, ma queste variabili non vengono trovate nel record puntato da <code>cp</code> e pertanto bisogna risalire utilizzando l&#39;access link per trovarle nel record corrispondente al sotto oggeto di tipo <code>Point</code>.</p>
 <p>Un&#39;altra istruzione interessante è <code>cp.distance(r)</code>, dal momento che nel record puntato da <code>cp</code> non è presente <code>distance</code>, pertanto è necessario cercare la funzione utilizzando l&#39;access link.</p>
-<p>Segue che gli oggetti della classe base e derivata hanno una forma diversa, quindi le operazione da fare per raggiungere i campi dati possono essere stabilite solo a runtime.</p>
+<p>Segue che gli oggetti della classe base e derivata hanno una forma diversa, quindi le operazioni da fare per raggiungere i campi dati possono essere stabilite solo a runtime.</p>
 <p>A compile time è solo possibile definire delle strategie di ricerca per recuperare i vari valori e trattandosi di una ricerca a runtime alcuni errori possono non essere scoperti a compile time.</p>
 <p>Ad esempio, l&#39;istruzione <code>cp.equals(r)</code> da un errore a runtime perché la funzione invocata ha bisogno di utilizzare dei campi dati che non sono presenti nell&#39;oggetto puntato da <code>r</code>.</p>
 <p>Per rilevare questo errore il compilatore deve inserire un controllo di tipo a runtime.
@@ -1777,8 +1779,7 @@ Ma non è così semplice, perché possono verificarsi dei casi ancora più trick
 <pre><code class="lang-c++">r :- cp;
 r<span class="hljs-built_in">.</span><span class="hljs-keyword">equals</span>(<span class="hljs-literal">new</span> Point(<span class="hljs-attribute">...</span>));
 </code></pre>
-<p>A compile time i tipi statici coincidono, però a runtime viene eseguita la funzione <code>equals</code> di <code>ColorPoint</code> e ciò porta ad un errore.
-Non tutti i compilatori sono in grado di prevedere questi errori.</p>
+<p>A compile time i tipi statici coincidono, però a runtime viene eseguita la funzione <code>equals</code> di <code>ColorPoint</code> e ciò porta ad un errore e non tutti i compilatori sono in grado di prevedere questo tipo di errori.</p>
 <p>Quindi il compilatore può scegliere di mettere i controlli di tipo sempre oppure accontentarsi di non riscuiscre a mettere abbastanza controlli.</p>
 <p><strong>Recall variance</strong> (?) Simula (ma anche Java) assume che se <code>B &lt;: A</code> allora anche <code>ref(B) &lt;: ref(A)</code>.</p>
 <pre><code class="lang-c++">A class B; <span class="hljs-keyword">ref</span>(A) a; <span class="hljs-keyword">ref</span>(B) b;
@@ -1875,12 +1876,12 @@ Quindi quando si progetta un compilatore c’è da tenere in considerazione che 
 <p>In Smalltalk non viene forzata la conformità ed è per questo che viene utilizzato il template. 
 Se la conformità viene forzata dal compilatore, allora il template non è più necessario.</p>
 <p>In Simula i campi dati di un oggetto si trovano nei vari record di attivazione che compongno l&#39;oggetto, garantendo così la conformità.
-Un oggetto Smalltalk invece contiene tutti i campi dati, compresi delle classe base, quindi l&#39;ordine con il quale compaiono nella classe derivata può non essere conforme a quello della classe base.</p>
+Un oggetto Smalltalk invece contiene tutti i campi dati, compresi quelli della classe base, quindi l&#39;ordine con il quale compaiono nella classe derivata può non essere conforme a quello della classe base.</p>
 <p>In Smalltalk c&#39;è comunque bisogno di una ricerca a runtime quando viene richiesta l&#39;invocazione di un metodo che non è ridefinito nella classe base. Questo approcccio è costoso, però si possono migliorare le prestazioni tenendo una cache dei metodi invocati di recente (Java adotta questo approccio).</p>
 <p>Tornando sul discorso della conformità, se viene imposta la conformità tra classe base e le sue derivate, allora quando viene modificata la classe base, devono essere ricompilate anche tutte le classi derivate.</p>
 <p>In Smalltalk il subtyping e l&#39;ereditarietà sono indipendenti.</p>
 <p>I tipi sono dati dall&#39;interfaccia delle classi, cioè dai messaggi che possono ricevere, quindi due oggetti che non sono in una relazione di erediterietà possono avere tra loro una relazione di subtyping.</p>
-<p>Il legame tra erediterietà e subtyping esiste, ma non è né necessario né sufficente, questo perché in Smalltalk uan classe derivata può evitare di ereditare dei metodi della classe base (<strong>ereditarietà selettiva</strong>).</p>
+<p>Il legame tra erediterietà e subtyping esiste, ma non è né necessario né sufficente, questo perché in Smalltalk una classe derivata può evitare di ereditare dei metodi della classe base (<strong>ereditarietà selettiva</strong>).</p>
 <h2 id="modulatit-">Modulatità</h2>
 <p>Perché un linguaggio orientato agli oggetti sia <strong>puro</strong>, ogni classe deve poter essere sostituita da un suo sottotipo senza che il programma smetta di funzionare. Questa modularità deve essere garantita anche per le classi &quot;standard&quot; come quella degli interi.</p>
 <p>Dal momento che Smalltalk è basato sull&#39;invio di messaggi, può essere considerato come un linguaggio puro, ottenendo però un programma più inefficente.</p>
@@ -1888,8 +1889,9 @@ Un oggetto Smalltalk invece contiene tutti i campi dati, compresi delle classe b
 <p>Lo scopo principale del linguaggio è quello di andare ad aggiungere caratteristiche OO al C restando comunque compatibile con il C puro.</p>
 <p>Il C++ aggiunge anche un maggiore controllo statico dei tipi mantenendo comunque l&#39;efficenza del C, al punto che un programma C compilato dal compilatore C++ deve essere efficente come se fosse compilato da un compilatore C.</p>
 <p><em>Se non si usa una caratteristica allora non si deve pagare per essa</em></p>
-<p>Questo non vuol dire che i costrutti C devono essere tradotti come fa il compulatore C, ma solo che la loro efficenza deve essere la stessa.</p>
-<p>In C++ non c&#39;è garbage collection, non per questioni di efficenza, in quanto poteva essere introdotta solo per gli oggetti, ma perché il C++ <strong>non è type-safe</strong>, in quanto non è possibile determinare se un determinato oggetto è inutile, perché ogni variabile intera può essere convertita in un puntatore. Quindi il vero problema è dato dalla presenza dei cast e non da questioni di efficenza.</p>
+<p>Questo non vuol dire che i costrutti C devono essere tradotti come fa il compilatore C, ma solo che la loro efficenza deve essere la stessa.</p>
+<p>In C++ non c&#39;è garbage collection, non per questioni di efficenza, in quanto poteva essere introdotta solo per gli oggetti, ma perché il C++ <strong>non è type-safe</strong> e pertanto non è possibile determinare se un determinato oggetto è inutile, questo perché ogni variabile intera può essere convertita in un puntatore. 
+Quindi il vero problema è dato dalla presenza dei cast e non da questioni di efficenza.</p>
 <h2 id="classi-in-c-">Classi in C++</h2>
 <p>Le classi sono state implementate a partire dalle strutture, aggiungendo il concetto di astrazione.</p>
 <p>Ci sono quindi delle variabili di tipo classe che non sono puntatori ad oggetti. Gli oggetti possono anche essere allocati nello stack dei record di attivazione ed esiste il concetto di assegnazione tra gli oggetti che va oltre all&#39;assegnamento dei puntatori.</p>
@@ -1917,7 +1919,7 @@ Oltretuttto, il C++ non impone un buono stile di programmazione, perché per ese
 </ul>
 <p>L&#39;astrazione in C++ risulta molto buona, oltre ai 3 livelli di visibilità c&#39;è la possibilità di definire classi friend.</p>
 <p>La relazione tra subtyping e ereditarietà sono tra loro collegate.</p>
-<p>È presente il polimorfismo parametrico utilizzando le classi template template.</p>
+<p>È presente il polimorfismo parametrico utilizzando le classi template.</p>
 <p>Typechecking statico migliore rispetto a quello del C.</p>
 <h3 id="il-lato-oscuro-del-c-">Il lato oscuro del C++</h3>
 <p>La maggior parte dei problemi del C++ deriva dal vincolo della retrocompatibilità con il C.</p>
@@ -1934,10 +1936,10 @@ Aggiungendo poi l&#39;ereditarietà multipla, il tutto diventa complesso sia da 
 <h3 id="cast-e-conversioni">Cast e conversioni</h3>
 <p>I cast permettono di eseguire delle operazioni <strong>type-unsafe</strong>, come la conversione da un intero a un puntatore.</p>
 <p>In generale le conversioni tra puntatori non portano modifiche ai valori, viene solo cambiato il tipo del puntatore, che da quel momento in poi viene considerato di un tipo diverso, il valore del puntatore e il valore dell&#39;oggetto puntato non cambiano. </p>
-<p>Con l&#39;ereditarietà multipla il valore del puntatore deve essere modificato, questo perché quando si cambia il tipo di un puntatore ad una classe derivata al tipo di una classe base, il valore del puntatore deve essere modificato in modo che il puntatore riferisca il sotto-oggetto specifico.</p>
-<p>Il programmatore devi quindi occuparsi di questioni tecniche legate al linguaggio.</p>
+<p>Con l&#39;ereditarietà multipla, il valore del puntatore deve essere modificato, questo perché quando si cambia il tipo di un puntatore ad una classe derivata al tipo di una classe base, il valore del puntatore deve essere modificato in modo che il puntatore riferisca il sotto-oggetto specifico.</p>
+<p>Il programmatore deve quindi occuparsi di questioni tecniche legate al linguaggio.</p>
 <h3 id="oggetti-allocati-sullo-stack">Oggetti allocati sullo stack</h3>
-<p>Nei linguaggi ad oggetti come Simula e Smalltalk, gli oggetti veongo allocati solo sullo heap. 
+<p>Nei linguaggi ad oggetti come Simula e Smalltalk, gli oggetti vengono allocati solo sullo heap. 
 In C++, gli oggetti possono essere allocati sia sullo heap che sullo stack, questo per mantere la retro compatibilità con il C.</p>
 <p>Esiste quindi l&#39;assegnazione tra variabili di tipo classe, che è diversa dall&#39;assegnazione di due puntatori.</p>
 <p>Quando si effettua un&#39;assegnazione tra una variabile di tipo derivato ad una variabile di tipo base si perde il subtyping in quanto l&#39;oggetto di classe derivata viene &quot;tagliato&quot; in modo che abbia la stessa dimensione dell&#39;oggetto di classe base e non si riesce quindi ad avere il dynamic lookup.</p>
@@ -1982,7 +1984,7 @@ Pt * px=<span class="hljs-keyword">new</span> Pt(<span class="hljs-number">3</sp
     color=cv;
 }
 </code></pre>
-<p><code>ColorPt</code> ha tutti i membri di <code>Pt</code> più o meno come se avessero la stessa specifica che hanno in `Pt:</p>
+<p><code>ColorPt</code> ha tutti i membri di <code>Pt</code> più o meno come se avessero la stessa specifica che hanno in <code>Pt</code>:</p>
 <ul>
 <li>i <code>public</code> sono visibili a tutti anche negli oggetti
 <code>ColorPt</code></li>
@@ -2016,10 +2018,10 @@ p-&gt;move(<span class="hljs-number">2</span>);
 <pre><code class="lang-c++"><span class="hljs-list">(<span class="hljs-keyword"><span class="hljs-built_in">*</span></span><span class="hljs-list">(<span class="hljs-keyword">p-&gt;vptr</span><span class="hljs-collection">[<span class="hljs-number">1</span>]</span> )</span>)</span> <span class="hljs-list">(<span class="hljs-keyword">p</span>,<span class="hljs-number">2</span>)</span>
 </code></pre>
 <p><em>Da notare che l&#39;indice della tabella dei metodi virtuali parte da 1 e non da 0. È una notazione del libro anche se si tratta di un libro di informatica.</em></p>
-<p>Tutto questo è stato fatto perché non è possibile determinare il tipo dinamico dell&#39;oggetto puntato da <code>p</code>.
-Tra l&#39;altro lo stesso codice prodotto dal compilatore funziona anche se l&#39;oggetto puntato da <code>p</code> è di tipo <code>ColorPt</code>, perché gli elementi della  tabella dei metodi virtuali di una classe derivata hanno lo stesso ordine (sono <strong>conformi</strong>) di quelli della tabella della classe base.</p>
+<p>Tutto questo perché non è possibile determinare il tipo dinamico dell&#39;oggetto puntato da <code>p</code>.
+Tra l&#39;altro lo stesso codice prodotto dal compilatore funziona anche se l&#39;oggetto puntato da <code>p</code> è di tipo <code>ColorPt</code>, perché gli elementi della tabella dei metodi virtuali di una classe derivata hanno lo stesso ordine di quelli della tabella della classe base (sono <strong>conformi</strong>).</p>
 <p><img src="Linguaggi di Programmazione/immagini/l21-vtable-1.png" alt=""></p>
-<p>In C++ l&#39;erediterietà è <strong>conforme</strong>, cioè sia i campi dati, sia i metodi virtuali che vengono ereditati da una classe derivata compaiono nello stesso ordine con il quale compaiono della classe base.</p>
+<p>In C++ l&#39;erediterietà è <strong>conforme</strong>, cioè sia i campi dati, sia i metodi virtuali che vengono ereditati, compaiono nello stesso ordine con il quale compaiono della classe base.</p>
 <p>Così facendo è possibile evitare di utilizzare un puntantore al sotto-oggetto come succede con Smalltalk, racchiudendo tutte le informazioni di un oggetto o di una classe in uno stesso record.</p>
 <p><em>Ripetendo il concetto:</em> la prima parte della vtable di una classe derivata conincide con l&#39;ordine dei metodi della vtable della classe base (<strong>vtable conformi</strong>).</p>
 <p><img src="Linguaggi di Programmazione/immagini/l21-vtable-2.png" alt=""></p>
@@ -2030,21 +2032,22 @@ Tra l&#39;altro lo stesso codice prodotto dal compilatore funziona anche se l&#3
 <p><img src="Linguaggi di Programmazione/immagini/l21-vtable-3.png" alt=""></p>
 <p>Il compilatore produce il codice <code>(*(p-&gt;vptr[1]))(p,2)</code> che funziona correttamente sia se l&#39;oggetto puntato da <code>p</code> è di tipo <code>Pt</code> sia se è di tipo <code>ColorPt</code>, questo grazie alla conformità delle vtable.</p>
 <p>La stessa strategia non può funzionare in Smalltalk perché non essendoci un tipo statico il compilatore non riesce a farsi un idea di che tipo di oggetto potrebbe essere puntato, inoltre due oggetti di due classi in relazione gerarchica potrebbero avere lo stesso metodo in posizioni diverse a causa del fatto che Smalltalk non impone la conformità.</p>
-<p>Volendo si potrebbe utilizzare una mega tabella con tutti i possibili metodi virtuale ma questa imporrebbe troppa rigidità e sarebbe troppo inefficente.</p>
+<p>Volendo si potrebbe utilizzare una mega tabella con tutti i possibili metodi virtuali ma questa imporrebbe troppa rigidità e sarebbe troppo inefficente.</p>
 <h3 id="dynamic-lookup-vs-overloading-overriding-ridefinzione">Dynamic lookup VS overloading/overriding/ridefinzione</h3>
 <p><strong>Overloading</strong>: operatore/metodi con lo stesso nome e parametri formali con tipi diversi, la scelta dell&#39;operatore/metodo viene fatta a  compile time per ogni invocazione.</p>
 <p><strong>Overriding</strong>: metodo di una sotto-classe con nome e tipo degli argomenti uguali a quelli di un metodo virtuale della classe base e il tipo del risultato può essere sotto-tipo.</p>
-<p><strong>Ridefinizione</strong>: in una sotto-classe c&#39;è un metodo con lo stesso nome  di un meotodo della classe base che non è stato dichiarato come virtuale</p>
+<p><strong>Ridefinizione</strong>: in una sotto-classe c&#39;è un metodo con lo stesso nome di un metodo della classe base che non è stato dichiarato come virtuale</p>
 <h1 id="lezione-22-c-">Lezione 22 - C++++</h1>
-<p><strong>Overloading</strong>: possono esserci più operatori o metodi che sono diversi ma che hanno lo stesso nome e hanno parametri formali con tipi diversi. Per scegliere quale metodo invocare il compilatore una l&#39;algoritmo di <strong>overloading resolution</strong>, la scelta di quale metodo invocare viene fatta a tempo di compilazione e non durante l&#39;esecuzione del codice.</p>
-<p>L&#39;overloading resolution sceglie quindi il metodo meno costoso: ogni conversione ha un costo, vengono preferiti le uguaglianze perfette, cioè quando c&#39;è già un match perfetto tra i tipi, vengono poi scelte le promozioni, il contrario delle promozioni o nel caso pessimo le conversioni definite dall&#39;utente. 
+<p><strong>Overloading</strong>: possono esserci più operatori o metodi che sono diversi ma che hanno lo stesso nome e hanno parametri formali con tipi diversi. Per scegliere quale metodo invocare il compilatore usa l&#39;algoritmo di <strong>overloading resolution</strong>, questo algoritmo viene eseguito a tempo di compilazione e non durante l&#39;esecuzione del codice.</p>
+<p>L&#39;overloading resolution sceglie quindi il metodo meno costoso: ogni conversione ha un costo, vengono preferite le uguaglianze perfette, cioè quando c&#39;è già un match perfetto tra i tipi, vengono poi scelte le promozioni, il contrario delle promozioni o nel caso pessimo le conversioni definite dall&#39;utente. 
 Nel caso di metodi con più parametri vengono calcolate delle tuple con i vari costi di conversione e viene scelta la tupla che ha tutti gli elementi minori o uguali delle altre.</p>
-<p><strong>Overriding</strong>: qunado il metodo di una sotto classe ha come nome e tipo degli argomenti uguali a quelli di un metodo virtuale della classe base. Il tipo del valore di ritorno può essere uguale oppure un sotto-tipo.</p>
+<p><strong>Overriding</strong>: quando il metodo di una sotto classe ha come nome e tipo degli argomenti uguali a quelli di un metodo virtuale della classe base. Il tipo del valore di ritorno può essere uguale oppure un sotto-tipo.</p>
 <p><strong>Ridefinizione</strong>: in una sotto-classe c&#39;è un metodo che compare con lo stesso nome di un metodo della classe base, sia che sia virtuale che non. La ridefinzione comprende anche l&#39;overriding.</p>
 <h2 id="la-scelta-del-metodo-da-invocare">La scelta del metodo da invocare</h2>
 <p>Quando il compilatore deve compilare l&#39;istruzione</p>
-<pre><code><span class="hljs-tag">a</span> -&gt; <span class="hljs-function"><span class="hljs-title">f</span><span class="hljs-params">(...)</span></span> <span class="hljs-comment">//a:A</span>
-</code></pre><p>esegue l&#39;algoritmo di <strong>overloading resolution</strong> per determinare quale metodo deve venire invocato. 
+<pre><code class="lang-c++">a-&gt;<span class="hljs-function"><span class="hljs-title">f</span><span class="hljs-params">(...)</span></span> <span class="hljs-comment">//a:A</span>
+</code></pre>
+<p>esegue l&#39;algoritmo di <strong>overloading resolution</strong> per determinare quale metodo deve venire invocato. 
 Solo una volta completato l&#39;algoritmo il compilatore riesce a scoprire se il metodo da invocare è virtuale o meno. 
 Se il metodo non è virtuale, il compilatore produce il codice di invocazione della funzione, altrimenti deve produrre il codice per la risoluzione dinamica dell&#39;invocazione.</p>
 <p>Viene quindi utilizzato il tipo statico dell&#39;oggetto di invocazione per determinare se la risoluzione del metodo da invocare sarà statica o dinamica.</p>
@@ -2093,19 +2096,23 @@ main() {
 
 main()
 {
- A* a= <span class="hljs-keyword">new</span> A;
+ A* a=<span class="hljs-keyword">new</span> A;
  B* b=<span class="hljs-keyword">new</span> B;
 
- a-&gt;f(<span class="hljs-number">5</span>); <span class="hljs-comment">//1, viene scelto f(int) che è un metodo statico</span>
- a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, viene scelto f(double) che è un metodo virtuale, il metodo effettivamente invocato viene scelto a runtime</span>
+ a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//1, viene scelto f(int) che è un metodo statico</span>
+ a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, viene scelto f(double) che è un metodo virtuale, </span>
+            <span class="hljs-comment">//il metodo effettivamente invocato viene scelto a runtime</span>
 
  a=b;
 
  b-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//3, viene scelto il metodo f(int) di B, è un metodo statico</span>
  b-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//3, viene scelto f(int) di B, in quanto la ridefinzione copre i metodi f della classe A.</span>
 
- a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//1, viene scelto il metodo f(int) di A, perché l'overloading resolution viene fatta solamente sui metodi di A</span>
- a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, viene scelto il metodo f(double) di A, per lo stesso motivo di prima, trattandosi di un metodo virtuale l'invocazione viene determinata a runtime, in ogni caso viene invocato f(dobule) di A perché la classe B non fa l'overriding del metodo.</span>
+ a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//1, viene scelto il metodo f(int) di A, </span>
+            <span class="hljs-comment">// perché l'overloading resolution viene fatta solamente sui metodi di A</span>
+ a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, viene scelto il metodo f(double) di A, per lo stesso motivo di prima, </span>
+            <span class="hljs-comment">// trattandosi di un metodo virtuale l'invocazione viene determinata a runtime, </span>
+            <span class="hljs-comment">// in ogni caso viene invocato f(dobule) di A perché la classe B non fa l'overriding del metodo.</span>
 }
 </code></pre>
 <pre><code class="lang-c++"><span class="hljs-keyword">struct</span> S1{<span class="hljs-keyword">int</span> a;};
@@ -2154,8 +2161,10 @@ main() {
     b-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//3, overloading resolution sceglie f(int) di B, con invocazione dinamica</span>
     b-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//3, overloading resolution sceglie f(int) di B, con invocazione dinamica</span>
 
-    a-&gt;f(<span class="hljs-number">5</span>);   <span class="hljs-comment">//3, l'overloading resolution sceglie f(int) di A, che è un metodo virtuale, il tipo dinamico poi porta ad invocare il metodo f(int) di B.</span>
-    a-&gt;f(<span class="hljs-number">5.0</span>); <span class="hljs-comment">//2, l'overloading resolution sceglie f(double) di A, che è un metodo virtuale, tuttavia B non fa l'overloading del metodo quindi viene eseguito il f(double) di A</span>
+    a-&gt;f(<span class="hljs-number">5</span>);    <span class="hljs-comment">//3, l'overloading resolution sceglie f(int) di A, che è un metodo virtuale, </span>
+                <span class="hljs-comment">// il tipo dinamico poi porta ad invocare il metodo f(int) di B.</span>
+    a-&gt;f(<span class="hljs-number">5.0</span>);  <span class="hljs-comment">//2, l'overloading resolution sceglie f(double) di A, che è un metodo virtuale, </span>
+                <span class="hljs-comment">// tuttavia B non fa l'overloading del metodo quindi viene eseguito il f(double) di A</span>
 }
 </code></pre>
 <pre><code class="lang-c++"><span class="hljs-keyword">class</span> A {
@@ -2173,9 +2182,12 @@ main() {
  B* b=<span class="hljs-keyword">new</span> B;
  a=b;
 
- b-&gt;f(<span class="hljs-number">3</span>); <span class="hljs-comment">//2, l'overloading resulution su B trova solo f(float) viene quindi scelto quel metodo con invocazione dinamica</span>
+ b-&gt;f(<span class="hljs-number">3</span>); <span class="hljs-comment">//2, l'overloading resulution su B trova solo f(float) viene quindi scelto quel metodo </span>
+          <span class="hljs-comment">// con invocazione dinamica</span>
 
- a-&gt;f(<span class="hljs-number">3</span>); <span class="hljs-comment">//1, l'overloading resolution su A trova solo f(int) e viene scelto per l'invocazione dinamica in quanto metodo virtuale. B non esegue l'override del metodo quindi viene invocato f(int) di A.</span>
+ a-&gt;f(<span class="hljs-number">3</span>); <span class="hljs-comment">//1, l'overloading resolution su A trova solo f(int) e viene scelto per l'invocazione </span>
+          <span class="hljs-comment">// dinamica in quanto metodo virtuale. B non esegue l'override del metodo quindi viene </span>
+          <span class="hljs-comment">// invocato f(int) di A.</span>
 }
 </code></pre>
 <pre><code class="lang-c++"><span class="hljs-keyword">class</span> A {
@@ -2200,7 +2212,8 @@ main() {
 
     a-&gt;f(<span class="hljs-number">3.14f</span>); <span class="hljs-comment">//1, f(fload) di A con dynamic lookup</span>
     b-&gt;f(<span class="hljs-number">3</span>);     <span class="hljs-comment">//4, f(int) di B con dynamic lookup </span>
-    a-&gt;f(<span class="hljs-number">3</span>);     <span class="hljs-comment">//4, l'overload resolution sceglie f(int) di A con dynamic lookup, a runtime viene eseguito f(int) di B</span>
+    a-&gt;f(<span class="hljs-number">3</span>);     <span class="hljs-comment">//4, l'overload resolution sceglie f(int) di A con dynamic lookup, </span>
+                 <span class="hljs-comment">// a runtime viene eseguito f(int) di B</span>
 }
 </code></pre>
 <p>Riassumento, quando in una sottoclasse viene definito un meotodo <code>f(..)</code>, questo nasconde all&#39;overloading resolution <strong>tutti i metodi</strong> della classe base. Questa scelta è stata fatta per semplificare l&#39;implementazione dell&#39;overloading resolution.</p>
@@ -2302,31 +2315,31 @@ main(){
 }
 </code></pre>
 <pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
-    public: 
-        int x;
-        A(int y){x=y;}
-        virtual void <span class="hljs-literal">f</span>(int i){cout&lt;&lt; <span class="hljs-string">"A-int "</span>&lt;&lt;x&lt;&lt;endl;}
+    <span class="hljs-keyword">public</span>: 
+        <span class="hljs-keyword">int</span> x;
+        A(<span class="hljs-keyword">int</span> y){x=y;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-string">"A-int "</span>&lt;&lt;x&lt;&lt;endl;}
 };
-<span class="hljs-keyword">class</span> B: public A{
-    public: 
-        B(int y):A(y){}
-        virtual void <span class="hljs-literal">f</span>(int i){cout&lt;&lt;"B-int “&lt;&lt;x&lt;&lt;endl;} 
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>: 
+        B(<span class="hljs-keyword">int</span> y):A(y){}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt; <span class="hljs-string">"B-int "</span>&lt;&lt;x&lt;&lt;endl;} 
 };
 main() {
-    A a=A(2); B b=B(10); <span class="hljs-comment">//Sono nello stack, non nello heap</span>
+    A a=A(<span class="hljs-number">2</span>); B b=B(<span class="hljs-number">10</span>); <span class="hljs-comment">//Sono nello stack, non nello heap</span>
 
-    a.<span class="hljs-literal">f</span>(1); <span class="hljs-comment">//A::f, funzione virutale che dovrebbe essere compilata con  indirezione</span>
+    a.f(<span class="hljs-number">1</span>); <span class="hljs-comment">//A::f, funzione virutale che dovrebbe essere compilata con  indirezione</span>
             <span class="hljs-comment">//Stampa A-int 2</span>
 
     a=b; <span class="hljs-comment">//La vtable di a non cambia perché si tratta di un assegnazione</span>
          <span class="hljs-comment">//tra oggetti e non tra puntatori</span>
 
-    a.<span class="hljs-literal">f</span>(1); <span class="hljs-comment">//A::f, funzione virtuale ma la vtable non è cambiata</span>
+    a.f(<span class="hljs-number">1</span>); <span class="hljs-comment">//A::f, funzione virtuale ma la vtable non è cambiata</span>
             <span class="hljs-comment">//quindi a runtime viene invocata A::f e non B::f</span>
             <span class="hljs-comment">//Il campo dati x però è cambiato, viene quindi stampato</span>
             <span class="hljs-comment">// A-int 10</span>
 
-    b.<span class="hljs-literal">f</span>(1); <span class="hljs-comment">//B::f, funzione virtuale, viene stampato B-int 10</span>
+    b.f(<span class="hljs-number">1</span>); <span class="hljs-comment">//B::f, funzione virtuale, viene stampato B-int 10</span>
 }
 </code></pre>
 <pre><code class="lang-c++">class A{
@@ -2377,5 +2390,1038 @@ main() {
      A runtime viene quindi eseguito B::f(int)
     */</span>
 }
+</code></pre>
+<h1 id="lezione-23-subtyping-tra-funzioni-e-ereditariet-multipla">Lezione 23 - Subtyping (tra funzioni) e Ereditarietà multipla</h1>
+<h2 id="subtyping-tra-funzioni">Subtyping tra funzioni</h2>
+<p>Il subtyping <code>A &lt;: B</code> al posto di <code>B</code> possiamo usare <code>A</code>. Inoltre, se <code>B::f</code> è overriddato in <code>A::f</code>, il dynamic lookup prevede che venga invocato <code>A::f</code> al posto di <code>B::f</code> se il tipo dinamico dell&#39;oggetto di invocazione è <code>A</code>.</p>
+<p>In un certo senso si può dire che dovunque funziona l&#39;invocazione di <code>B::f</code> funziona anche l&#39;invocazione di <code>A::f</code> che si avvicina alla definizione di sotto tipo, si può quindi dire che <code>A::f &lt;: B::f</code>?</p>
+<p>Il subtyping tra funzioni può essere definito in due modi:</p>
+<ul>
+<li><strong>Covariante sul codominio</strong>: <em>A-&gt;B&#39;</em> ha come sotto tipo <em>A-&gt;B</em> se <em>B</em> è un sotto tipo di <em>B&#39;</em>. Ovvero: una funzione è sotto tipo di un&#39;altra funzione se il tipo dei parametri coincide e il valore che ritorna è un sotto tipo del valore di ritorno dell&#39;altra funzione.</li>
+</ul>
+<blockquote>
+<p>If B &lt;: B&#39; then A-&gt;B &lt;: A-&gt;B&#39;</p>
+</blockquote>
+<ul>
+<li><strong>Contro-variante sul dominio</strong>: <em>A&#39;-&gt;B</em> ha come sotto tipo <em>A-&gt;B</em> se  <em>A&#39;</em> è un sotto tipo di <em>A</em>. Ovvero: una funzione è sotto tipo di un&#39;altra funzione se il tipo dei parametri è un sopra tipo dei parametri dell&#39;altra funzione.</li>
+</ul>
+<blockquote>
+<p>If A&#39; &lt;: A then A-&gt;B &lt;: A&#39;-&gt;B</p>
+<p><code>int F(ColoredPoint x) è sotto tipo di int F(Point x)</code></p>
+</blockquote>
+<p>Nel caso ci siano più parametri si ha che <code>A::f &lt;: B::f</code> se le due funzioni sono contro-varianti sul dominio e covarianti sul valore di ritorno. Ovvero se i parametri di <code>A::f</code> sono dei sotto-tipi dei parametri di <code>B::f</code> e se il valore di ritorno di <code>A::f</code> <em>è più specifico</em> del valore di ritornodi <code>B::f</code>, cioè il tipo del valore di ritorno di <code>B::f</code> è sotto tipo di <code>A::f</code>.</p>
+<blockquote>
+<p>B::T f(T<sub>1</sub>, ..., T<sub>k</sub>) e A::S f(S<sub>1</sub>, ..., S<sub>k</sub>) </p>
+<p>A::f &lt;: B::f</p>
+<p>se T<sub>1</sub>, ..., T<sub>k</sub> &lt;: S<sub>1</sub>, ..., S<sub>k</sub> e S &lt;: T</p>
+</blockquote>
+<p>Ad esempio, se <code>circle &lt;: shape</code>:</p>
+<p><img src="Linguaggi di Programmazione/immagini/l23-sub.png" alt=""></p>
+<p>Nell&#39;esempio non si riescono a trovare altri sotto tipi per <code>shape -&gt; circle</code>, perché non c&#39;è nessuna classe più generica di <code>shape</code> e nessuna più specifica di <code>circle</code>.</p>
+<p>Tuttavia si può risalire la gerarchia, rendendo più specifico <code>shape</code> o più generco <code>circle</code>.</p>
+<p>Quindi <code>circle -&gt; circle &lt;: circle -&gt; shape</code>, perché ovunque è richiesta l&#39;esecuzione di una funzione <code>circle -&gt; shape</code> è possibile utilizzare una funzione <code>circle -&gt; circle</code>, questo perché le due funzioni hanno lo stesso dominio e il codominio di <code>circle-&gt;circle</code> è un sotto tipo del dominio di <code>circle -&gt; shape</code>.</p>
+<p>Inoltre, <code>shape -&gt; circle &lt;: circle -&gt; circle</code>, questo perché qualunque sotto tipo di <code>circle</code> è anche sotto tipo di <code>shape</code>, quindi le invocazioni di <code>circle -&gt; circle</code> sono compatibili con <code>shape -&gt; circle</code> e i risultati sono dello stesso tipo.</p>
+<p>Da notare che tutto questo ragionamento si <strong>basa sui tipi</strong>, non viene tenuto in considerazione che cosa fa effettivamente una funzione, quindi il sotto-tipaggio tra funzioni <strong>non implica</strong> che le due funzioni facciano le stesse cose o che siano corrette.</p>
+<p>In C++ la regola per il subtyping tra funzioni è più rigida, viene imposto che i domini delle funzioni siano uguali, quindi:</p>
+<blockquote>
+<p>T<sub>1</sub>,...,T<sub>k</sub> = S<sub>1</sub>,...,S<sub>k</sub> e S &lt;:T</p>
+</blockquote>
+<p>Questo perché il tipo del risultato di una funzione di ritorno non viene considerato dall&#39;algoritmo di overloading resolution, quindi l&#39;overriding può cambiare il tipo del valore di ritorno senza interferire con l&#39;overloading resolution.</p>
+<p>In questo modo quando viene scelto un metodo virtuale non c&#39;è il rischio che il dynamic lookup invochi un metodo che si aspetta dei parametri di tipo diverso.</p>
+<p>Se non ci fosse questo vincolo un metodo della classe base potrebbe essere overriddato da un metodo che si aspetta dei parametri diversi e se ci sono più override dello stesso metodo, la scelta del metodo da invocare diventerebbe ambigua.</p>
+<p>Ricapitolando, in C++ l&#39;unico subtyping tra funzioni consentito è:</p>
+<pre><code class="lang-c++"><span class="hljs-function">Point* <span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>; &lt;: <span class="hljs-function">ColorPoint* <span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;
+</code></pre>
+<h2 id="ereditariet-multipla">Ereditarietà Multipla</h2>
+<p>In C++ una classe può avere più classi basi, in questo modo si possono ereditare funzionalità indipendenti che possono essere utilizzate per creare nuove funzionalità.</p>
+<p>Ci sono però vari problemi, primo tra tutti è che la vtable della classe ottenuta per ereditarietà multipla deve essere conforme con quelle di tutte le classi base.</p>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A {
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-keyword">int</span> x;
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;
+};
+<span class="hljs-keyword">class</span> B {
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-keyword">int</span> y;
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>;
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;
+};
+
+<span class="hljs-keyword">class</span> C: <span class="hljs-keyword">public</span> A, <span class="hljs-keyword">public</span> B { <span class="hljs-comment">//L'ordine delle classi base è importante</span>
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-keyword">int</span> z;
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;
+};
+...
+C *pc = <span class="hljs-keyword">new</span> C;
+A *pa = pc;
+B *pb = pc;
+</code></pre>
+<p>L&#39;ordine con cui vengono dichiarate le classi base influisce sulla struttura dell&#39;oggetto, quindi la classe <code>class C: public A, public B</code> è diversa dalla classe <code>class C: public B, public A</code>.</p>
+<p>Questo perché l&#39;ordine con cui vengono dichiarate le classi base corrisponde con l&#39;ordine dei sotto oggetti.</p>
+<p>Anche per questo motivo il valore di <code>pc</code> è diverso dal valore di <code>pb</code>.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l23-ered-mult.png" alt=""></p>
+<p>La parte iniziale di un oggetto <code>C</code> è identica ad un oggetto <code>A</code>, dopodiché c&#39;è una parte identica ad un oggetto di tipo <code>B</code> e per finire ci sono le parti aggiunte dalla classe <code>C</code>.</p>
+<p>La classe <code>C</code> ha quindi due vtable, una conforme alla classe <code>A</code> e l&#39;altra conforme alla classe <code>B</code>. C&#39;è anche una colonna aggiuntiva con contenete l&#39;offset dal puntatore all&#39;inzio dell&#39;oggetto. Questo è necessario perché se viene invocata <code>C::f</code> utilizzando un puntatore di tipo <code>B*</code> si ha come valore l&#39;inizio del sotto oggetto di tipo <code>B</code> e quindi per trovare il corretto indirizzo di inzio dell&#39;oggetto è necessario utilizzare il <strong>displacement</strong> presente nella colonna della vtable, così facendo l&#39;esecuzione di <code>f</code> riesce ad accedere sempre agli indirizzi corretti.</p>
+<p>Quindi, alla compilazione di <code>pb-&gt;f(...)</code> il compilatore produrrà il codice <code>(*(pb-&gt;vtbl[2]))(pb,...)</code> mentre per <code>pc-&gt;f(...)</code>, <code>(*(pc-&gt;vtbl[1]))(pc,...)</code>.</p>
+<p>Il valore dell&#39;offset (<em>displacement</em>) viene preso in considerazione nel codice compilato per la funzione, non nell&#39;invocazione. Quindi supponendo di avere</p>
+<pre><code class="lang-c++">C::f(){
+    x=x+<span class="hljs-number">2</span>
+}
+</code></pre>
+<p>per calcolare l&#39;indirizzo di <code>x</code> il compilatore utilizza <code>o + disp + dx</code> dove <code>dx</code> è la distanza della variabile <code>x</code> dall&#39;inizio dell&#39;oggetto, indicato da <code>o</code>. <strong>Il valore del displacement viene <em>passato</em> alla funzione quando viene invocata a runtime, recuperandolo dalla vtable corretta.</strong></p>
+<p>L&#39;offset non viene preso in considerazione nella compilazione dell&#39;invocazione <code>(*(pb-&gt;vtbl[2]))(pb,...)</code> perché varia in base al tipo dinamico, quindi il compilatore non riesce a stabilire l&#39;offset a compile time.</p>
+<p>Le complicazioni causate dall&#39;ereditarietà multipla sono quindi:</p>
+<ul>
+<li>La classe derivata ha diverse vtable, una per ogni classe base.</li>
+<li>Un puntatore <code>B*</code> ad un oggetti di tipo <code>C</code> punta ad un indirizzo differenzte dell&#39;oggetto rispetto ad un puntatore <code>A*</code> o <code>C*</code>.</li>
+<li>Le vtable contengono degli offeset per alcuni metodi.</li>
+</ul>
+<h3 id="esercizio">Esercizio</h3>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-keyword">int</span> x;
+        A(<span class="hljs-keyword">int</span> a=<span class="hljs-number">0</span>){x=a;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{g();}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt; “g di A”&lt;&lt;endl;}};
+<span class="hljs-keyword">class</span> B{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-keyword">int</span> y;
+        B(<span class="hljs-keyword">int</span> b=<span class="hljs-number">0</span>){y=b;}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">r</span><span class="hljs-params">()</span></span>{f();}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">()</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"h di B"</span>&lt;&lt;endl;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{h();}
+};
+<span class="hljs-keyword">class</span> C: <span class="hljs-keyword">public</span> A, <span class="hljs-keyword">public</span> B{
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-keyword">int</span> z;
+        C(<span class="hljs-keyword">int</span> a=<span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> b=<span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> c=<span class="hljs-number">0</span>):A(a),B(b){z=c;}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>{h();}
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">s</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{r();}
+};
+</code></pre>
+<h4 id="domanda-1">Domanda 1</h4>
+<p>Si chiede di disegnare in dettaglio la struttura di un oggetto della classe <code>C</code> spiegando le ragiuni di questa struttura</p>
+<p><img src="Linguaggi di Programmazione/immagini/l23-rappr.png" alt=""></p>
+<blockquote>
+<p><strong>Attenzione</strong>: l&#39;ordine delle classi base influisce sull&#39;ordine dei sotto oggetti</p>
+</blockquote>
+<p>Come prima cosa conviene disegnare l&#39;oggetto principale indicando i vari sottooggetti e i campi dati, seguendo l&#39;ordine di come compaiono nei sotto oggetti.</p>
+<blockquote>
+<p><strong>Attenzione</strong>: i metodi che <strong>non</strong> sono marcati come virtuali <strong>non</strong> devono comparire da nessuna parte del disegno, perché le loro invocazioni vengono decise a compile time, quindi non hanno senso si esistere a runtime.</p>
+</blockquote>
+<p>Dopo aver definito i sottooggetti si passa alle vtable, andando ad aggiungere i metodi virtuali e solo una volta completate tutte le vtable si passa ad inserire il displacement, questo perché il displacement serve se lo stesso metodo virtuale compare contemporaneamente su più vtable.</p>
+<p>L&#39;oggetto ha questa struttura per garantire la conformità con gli oggetti delle classi base e il displacement serve per calcolare gli indirizzi corretti per i metodi virtuali che vengono definiti su più vtable.</p>
+<h4 id="domanda-2">Domanda 2</h4>
+<p>Si chiede di spiegare il tipo dei parametri formali dei metodi: <code>s</code>, <code>r</code>, <code>C::f</code>, <code>B::f</code>, e <code>B::h</code> e anche di descrivere come vengono compilate le invocazioni contenute nel corpo di questi 5 metodi.</p>
+<blockquote>
+<p><strong>Attenzione</strong> per riverirsi all&#39;oggetto di invocazione si utilizza <code>o</code>.</p>
+</blockquote>
+<p> <code>C::s(C*)</code>, <code>B::r(B* )</code>, <code>C::f(C*)</code>, <code>B::f(B*)</code>, <code>B::h(B*)</code>
+corpo di <code>C::s</code>:</p>
+<ul>
+<li><code>s(C* o){o-&gt;r();}</code> il compilatore sa che <code>o</code> punterà sempre all’entrata principale, <code>r</code> è non virtuale, quindi produrrà un push+jump, ma, visto che <code>B::r</code> aspetta un <code>B*</code>, deve passare come parametro implicito <em>(o+δ)</em> per effettuare la conversione del puntatore. </li>
+<li><code>r(B* o){o-&gt;f();}</code>, l’overloading resolution individua <code>B::f (B*)</code> che è virtuale, quindi l’invocazione viene compilata con: <code>*(o-&gt;vtbl[2])(o)</code> nota che c’è concordanza tra il tipo di <code>o</code> e il parametro formale di <code>B::f(B*)</code>, quindi niente conversioni.</li>
+<li><code>C::f(C* o){o-&gt;h(B*);}</code> <code>C::f</code> può venire invocata con oggetto d’invocazione di tipo statico <code>A*</code>, <code>C*</code>, e <code>B*</code>. L&#39;invocazione di <code>h</code> viene quindi compilata con <code>*((o + δ - disp)-&gt;vtbl)[1](o + δ - disp)</code>.</li>
+</ul>
+<p>Nell&#39;ultimo esempio il problema sorge perché si sta compilando l&#39;invocazione di un metodo virtuale, senza sapere il tipo dinamico dell&#39;oggetto di invocazione e sapendo che è necessaria una conversione di tipo, dal momento che <code>o</code> è di tipo <code>C*</code> mentre <code>h</code> deve essere invocata con un <code>B*</code>.</p>
+<p>Con questa gerarchia, <code>o</code> può avere tipo dinamico <code>A*</code>, <code>B*</code> e <code>C*</code>, pertanto, per effettuare la conversione di tipo a <code>B*</code> è necessario considerare l&#39;offset del sotto oggetto di tipo <code>B</code>, ovvero <code>o + δ</code>.
+Tuttavia, il valore dinamico del puntatore <code>o</code> potrebbe già puntare al sotto oggetto di tipo <code>B</code> e in questo caso, la somma dell&#39;offset porta ad un errore. Pertanto viene preso anche in considerazione il displacement <code>o + δ - disp</code>.</p>
+<p>Così facendo, il displacement memorizzato nella vtable del sotto oggetto <code>A</code>/<code>C</code> è <code>0</code> e a runtime viene effettuata la conversione di tipo corretta: <code>o + δ - 0</code>, che è l&#39;indirizzo del sotto-oggetto <code>B</code> se <code>o</code> punta a <code>C</code> o a <code>A</code>. </p>
+<p>Mentre se <code>o</code> punta già al sotto oggetto di tipo <code>B</code> il valore del displacement prensete nella vtable è <code>δ</code>, pertanto <code>o + δ - disp</code> viene calcolato come <code>o + δ - δ</code>, che è l&#39;indirizzo del sotto oggetto <code>B</code> se <code>o</code> punta già al sotto oggetto <code>B</code>.</p>
+<p><em>Possibile spoiler: il displacement viene memorizzato nelle vtable degli oggetti.</em></p>
+<p><em>Possibile affermazione errata: come &quot;rule-of-thumb&quot;, se nella riga della vtable associata alla funzione invocata (non quella da invocare) è presente il displacement, molto probabilmente questo è da tenere in considerazione nella compilazione</em></p>
+<h1 id="lezione-24-eredit-multipla-2">Lezione 24 - Eredità Multipla 2</h1>
+<p><strong>Precisazione sul displacement della vtable</strong>: se un metodo della classe derivata esegue l&#39;override di un metodo virtuale di <strong>una sola classe base</strong> non serve considerare il displacement.</p>
+<p><strong>Precisazione sul dynamic lookup</strong>: se in una qualche gerarchia di classi, c&#39;è un metodo <code>f</code> virtuale che viene ridefinito in più sottoclassi, l&#39;istruzione <code>C::f</code> invoca il metodo <code>f</code> della classe <code>C</code>, in questo caso l&#39;invocazione viene decisa a compile time e non utilizza  il dynamic lookup.</p>
+<h2 id="cosa-fa-veramente-il-compilatore">Cosa fa veramente il compilatore</h2>
+<p>Utilizzando il flag <code>-fdump-class-hierarchy</code> il compilatore <code>g++</code> mostra la struttura delle classi.</p>
+<p>Dai risultati forniti dal compilatore si riescono a vedere le due vtable. In particolare tutti i metodi overriden della classe derivata si trovano nella prima vtable e nelle entrate delle altre vtable c&#39;è un riferimento al record relativo alla prima vtable.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l24-compilatore.png" alt=""></p>
+<p>Tuttvia questa potrebbe essere un&#39;ottimizzazione effettuata dal compilatore, non è detto che sia un&#39;implementazione standard.
+Negli esercizi si può utilizzare l&#39;approccio visto in classe (default) oppure se si vuole utilizzare questo approccio è da specificare.</p>
+<h2 id="cast-pericolosi">Cast pericolosi</h2>
+<p>Supponiamo di avere 5 classi, <code>A0</code>, <code>A1</code>, <code>B</code> che deriva da <code>A0</code>, <code>C</code> che deriva da <code>A1</code> e <code>D</code> che deriva da <code>B</code> e <code>C</code>.</p>
+<p>Il seguente frammento di codice compila correttamente</p>
+<pre><code class="lang-c++">A0<span class="hljs-keyword">*</span> a0 = new A0;
+A1<span class="hljs-keyword">*</span> a1 = new A1;
+D<span class="hljs-keyword">*</span> d = (D<span class="hljs-keyword">*</span>) a0;
+d = (D<span class="hljs-keyword">*</span>) a1;
+</code></pre>
+<p>Questo porta ad un errore a runtime, perché non esiste nessun oggetto di tipo <code>D</code>. </p>
+<h2 id="caso-con-3-classi-base">Caso con 3 classi base</h2>
+<p><img src="Linguaggi di Programmazione/immagini/l24-base-multipla.png" alt=""></p>
+<p>In questo caso il compilatore da un errore, perché <code>E</code> non ridefinisce <code>f</code> e c&#39;è un&#39;ambiguità nella scelta, quindi il compilatore per non sapere né leggere né scrivere, solleva un&#39;errore.</p>
+<p>Nel caso ci fosse anche <code>E::f</code> le varie tabelle utilizzerebbero <code>&amp;E::f</code>, con displacmente <code>0</code>, <code>δ</code> e <code>δ + δ&#39;</code>.</p>
+<p>Se non ci fossero né <code>D::f</code> né <code>E::f</code>, l&#39;istruzione <code>E* e = new E(); e-&gt;f()</code> è senza dubbio corretta, ma come fa il compilatore a trovare <code>f</code>? Dal momento che <code>f</code> viene eriditata da <code>C</code>, aggiunge al valore di <code>e</code> il displacement per arrivare al sotto-oggetto <code>C</code>. </p>
+<h2 id="conflitto-nei-nomi">Conflitto nei nomi</h2>
+<p>Per risolvere il conflitto dell&#39;esempio precedente si possono utilizzare 3 strategie:</p>
+<ul>
+<li><strong>Risoluzione implicita</strong>: sceglie il compilatore che metodo invocare</li>
+<li><strong>Risoluzione esplicita</strong>: il compilatore segnala errore se il programmatore non disambigua in modo esplicito.</li>
+<li><strong>Avoid name clash</strong>: il compilatore non permette che si verifichino questi conflitti.</li>
+</ul>
+<p>Nessuna delle 3 è le migliore, ma la risoluzione esplicita è la meno peggio.</p>
+<h2 id="ereditariet-a-diamante">Ereditarietà a Diamante</h2>
+<p>Utilizzando l&#39;ereditarietà multipla può essere che compaia il diamante della morte, ovvero quando si ha una classe <code>D</code>, dalla quale derivano <code>A</code> e <code>B</code>, e si aggiunge alla festa una classe <code>C</code> che eredita sia da <code>A</code> che da <code>B</code>.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l24-diamante.png" alt=""></p>
+<p>Per gestire questa situazione si possono utilizzare due strategie diverse:</p>
+<ul>
+<li>Si tengono due copie dei dati dell&#39;oggetto <code>D</code>, quando un metodo della classe <code>C</code> deve accedere ad un dato dell&#39;sottooggetto <code>D</code> deve specificare con l&#39;operatore di scoping <code>::</code>, alcune istruzioni non possono essere più eseguite, come <code>D* d = new C()</code>.</li>
+<li>Si tiene una copia sola dei dati, rischiando però di avere delle incoerenze.</li>
+</ul>
+<p>C++ permette di utilizzare entrambe le strategie. Se non viene specificato nulla vengono tenute due copie dei sotto-oggetti, mentre con l&#39;<strong>ereditarietà virtuale</strong> viene utilizzato un singolo sotto-oggetto.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l24-virtuale.png" alt=""></p>
+<p>Ovvero il sotto oggetto di tipo <code>D</code> viene distaccato e sostituito con un puntatore.
+Il nuovo sotto oggetto ha una vtable che contiene dei riferimenti ai metodi che sono stati overridati da <code>A</code>.</p>
+<p>Da notare che in questo modo viene aggiunto un livello di indirezione che crea dei problemi quando è necessario fare un downcast, dal momento che la distanza δ non è più costante. È quindi necessario utilizzare il <strong>dynamic cast</strong> il quale utilizza delle informazioni presenti nella vtable del sotto oggetto <code>D</code> per recuperare l&#39;indirizzo dell&#39;oggetto <code>A</code>.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l24-vtable.png" alt=""></p>
+<p>Il tutto può essere riassunto dicendo che il sotto oggetto virtuale viene messo in fondo all&#39;oggetto derivato, man mano che si effettuano derivazioni, la distanza del sotto oggetto virtuale aumenta.
+Trattandosi poi di un valore che varia dinamicamente, questa distanza deve essere specificata nella vtable degli oggetti.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l24-sottooggetto.png" alt=""></p>
+<h3 id="casi-strani">Casi strani</h3>
+<p><img src="Linguaggi di Programmazione/immagini/l24-f.png" alt=""></p>
+<p>Se viene usata l&#39;ereditarietà virtuale, il compilatore solleva un errore perché nella vtable del sotto oggetto <code>D</code> non può contenere due definizioni di <code>f</code>. Se anche <code>C</code> defince <code>f</code>, allora non ci sono problemi.</p>
+<p>Se invece <code>f</code> viene overridata solamente da <code>A</code>, allora non ci sono problemi.</p>
+<p>C&#39;è un problema anche con i costruttori, in questo caso il compilatore impedisce ai costruttori di <code>A</code> e <code>B</code> di invocare i costruttori di <code>D</code>, solo il costruttore di <code>C</code> può invocarli, questo perché c&#39;è un solo sotto oggetto.</p>
+<p>Dal momento che come si eredita viene deciso quando viene progettata la classe, è necessario tenere conto di come verrà utilizzata la classe quando si sceglie che tipo di ereditarietà utilizzare. Questo perché l&#39;ereditarietà virtuale o meno, influenza come altre classi possano derivare la classe che si sta definendo.</p>
+<h2 id="classi-astratte">Classi astratte</h2>
+<p>Sono classi non completamente definite, che possono essere utilizzate solamente per definire dei sottotipi conformi ad essa.</p>
+<p>Perché una classe sia virtuale è sufficente che un metodo abbia corpo nullo <code>=0</code>.</p>
+<p>Sono state introdotte per rendere meno problematica l&#39;ereditarietà multipla, dato che servono solamente a fissare l&#39;ordine delle vtable delle classi derivate.</p>
+<h1 id="lezione-25-esercizi-e-considerazioni-varie">Lezione 25 - Esercizi e considerazioni varie</h1>
+<p>Quando una sottoclasse fa l&#39;overriding di un metodo virtuale, la visibilità del metodo deve rimanere la stessa. Se questa viene modificata, il compilatore ignora la modifica.</p>
+<p><strong>Filosofia di programmazione del C++</strong>: nelle sottoclassi si aggiungo metodi con nuovi nomi e al più si fa overriding dei metodi ereditati. Lo stesso approccio vale anche per la visibilità dei metodi che non va cambiata nelle sottoclassi.</p>
+<h2 id="metodi-fantasma-proposta-di-modifica-del-c-">Metodi fantasma (proposta di modifica del c++)</h2>
+<p>Sono metodi che si comportano come metodi virtuali solo se viene effettuato l&#39;overriding. Sono ereditabili sono se la classe li ridefinisce, altrimenti non vengono ereditate</p>
+<pre><code class="lang-c++">class A{
+<span class="hljs-attribute">...</span>
+    <span class="hljs-keyword">public</span>: phantom <span class="hljs-literal">void</span> f() {<span class="hljs-attribute">...</span><span class="hljs-built_in">.</span>}
+};
+class B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>: <span class="hljs-comment">/* no def of f */</span>
+};
+
+<span class="hljs-comment">//---</span>
+
+A* a = <span class="hljs-literal">new</span> A();
+a<span class="hljs-subst">-&gt;</span>f() <span class="hljs-comment">// ok</span>
+B* b = <span class="hljs-literal">new</span> B();
+b<span class="hljs-subst">-&gt;</span>f() <span class="hljs-comment">// errore, rilevabile a compile time</span>
+
+a = b;
+a<span class="hljs-subst">-&gt;</span>f() <span class="hljs-comment">// non si riesce a rilevare questo errore (almeno a compile time)</span>
+</code></pre>
+<p>Inoltre, viene violato il fatto che in C++ l&#39;eredietarietà pubblica soddisfa la definizione di sotto-tipo. </p>
+<h2 id="visibilit-">Visibilità</h2>
+<pre><code class="lang-c++">class <span class="hljs-type">Base</span>{
+public: virtual f()<span class="hljs-decorator">{...}</span>
+};
+class <span class="hljs-type">Derived</span>: public <span class="hljs-type">Base</span>{
+private: virtual f()<span class="hljs-decorator">{...}</span>
+};
+</code></pre>
+<p>È ragionevole che l&#39;ereditarietà pubblica implichi il subtyping, perché con l&#39;ereditarietà pubblica viene garantito che l&#39;interfaccia della classe derivata contenga l&#39;interfaccia della classe base.</p>
+<p>Per quanto detto all&#39;inzio della lezione, nel programma sopra riportato, il compilatore ignora il fatto che la visibilità del metodo overridden sia stata cambiata.</p>
+<pre><code class="lang-c++">int <span class="hljs-keyword">g</span>(Base &amp;x) { <span class="hljs-keyword">return</span> x.<span class="hljs-literal">f</span>()+1; }
+main() {
+    Base b; cout&lt;&lt;<span class="hljs-string">"g(b)="</span>&lt;&lt;<span class="hljs-keyword">g</span>(b)&lt;&lt;endl; <span class="hljs-comment">//Invoca f della classe base</span>
+    Derived <span class="hljs-keyword">d</span>; cout&lt;&lt;<span class="hljs-string">"g(d)="</span>&lt;&lt;<span class="hljs-keyword">g</span>(<span class="hljs-keyword">d</span>)&lt;&lt;endl; <span class="hljs-comment">//Invoca f della classe derivata</span>
+}
+</code></pre>
+<p>Il codice precedente permette di invocare un metodo privato di un&#39;oggetto, creando un&#39;incoerenza sulla definizione delle interfacce.
+Questo perché, il compilatore darebbe un errore sull&#39;invocazione <code>d-&gt;f()</code> perché privato, ma le istruzioni <code>Base* b = new Derived(); b-&gt;f()</code> compila ed esegue correttamente, invocando il metodo <code>D::f</code>.</p>
+<h2 id="subtyping-e-overriding">Subtyping e overriding</h2>
+<pre><code class="lang-c++"><span class="hljs-keyword">class</span> A{
+    <span class="hljs-keyword">public</span>:
+        A(<span class="hljs-keyword">int</span> x){a=x;}
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{f(x);}
+    <span class="hljs-keyword">private</span>:
+        <span class="hljs-keyword">int</span> a;
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;x&lt;&lt;endl;}
+};
+<span class="hljs-keyword">class</span> B: <span class="hljs-keyword">public</span> A{
+    <span class="hljs-keyword">public</span>:
+        B(<span class="hljs-keyword">int</span> x):A(x){}
+    <span class="hljs-keyword">private</span>:
+        <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;x+<span class="hljs-number">2</span>&lt;&lt;endl;}
+};
+
+main() {
+    A* a= <span class="hljs-keyword">new</span> A(<span class="hljs-number">2</span>);
+    B* b=<span class="hljs-keyword">new</span> B(<span class="hljs-number">3</span>);
+    a-&gt;g(<span class="hljs-number">1</span>); <span class="hljs-comment">//1</span>
+    a=b;
+    a-&gt;g(<span class="hljs-number">1</span>); <span class="hljs-comment">//2</span>
+}
+</code></pre>
+<p>Il C++ permette di avere anche i metodi privati virtuali, e questi sono overriddabili dalle classe basi, pertanto:</p>
+<ol>
+<li>L&#39;invocazione di <code>g</code> esegue <code>A::f</code></li>
+<li>L&#39;invocazione di <code>g</code> esegue <code>B::f</code></li>
+</ol>
+<p>Inoltre, se <code>B::f</code> non fosse virtuale, il compilatore si comporterebbe allo stesso modo, considerandolo comunque come un override di un metodo virtuale.</p>
+<p>Se <code>B::f</code> fosse <code>public</code>, verrebbe solamente cambiata l&#39;interfaccia di <code>B</code>, senza andare ad influire sul subtyping tra <code>B</code> e <code>A</code>.</p>
+<h2 id="eiffel">Eiffel</h2>
+<pre><code><span class="hljs-keyword">class</span> Point
+x:int
+<span class="hljs-function"><span class="hljs-keyword">method</span> <span class="hljs-title">equals</span> <span class="hljs-params">(pt: like current)</span>:</span> bool return <span class="hljs-keyword">self</span>.x==pt.x
+
+<span class="hljs-keyword">class</span> ColPoint inherits Point
+color:string
+<span class="hljs-function"><span class="hljs-keyword">method</span> <span class="hljs-title">equals</span> <span class="hljs-params">(cpt: like current)</span>:</span> bool return <span class="hljs-keyword">self</span>.x==cpt.x <span class="hljs-keyword">and</span> <span class="hljs-keyword">self</span>.color==cpt.color
+</code></pre><p>Eiffel permette di utilizzare il tipo <code>like current</code> che rappresenta il tipo dinamico della classe.
+L&#39;utilizzo di questo tipo viene utilizzato in Eiffel per effettuare l&#39;overriding dei metodi.</p>
+<p>Nell&#39;esempio, la classe <code>ColPoint</code> non è sotto tipo di <code>Point</code>, perché i parametri della funzione <code>equals</code> di <code>ColPoint</code> non sono un sovra-tipo di quelli della funzione <code>equals</code> di <code>Point</code>.</p>
+<p>Ad esempio il codice:</p>
+<pre><code>Point <span class="hljs-tag">p</span> = new <span class="hljs-function"><span class="hljs-title">ColPoint</span><span class="hljs-params">()</span></span>
+<span class="hljs-tag">p</span>.<span class="hljs-function"><span class="hljs-title">equals</span><span class="hljs-params">(new Point()</span></span>)
+</code></pre><p>in questo caso il compilatore non riesce a trovare l&#39;errore, perché i tipi statici coincidono, ma quelli a runtime i no.</p>
+<p>Tuttavia Eiffel permette di considerare <code>ColPoint</code> come sotto tipo di <code>Point</code> anche se questo può portare errori a runtime.
+Quando i volponi che hanno fatto il linguaggio si sono accorti che la cosa è sbagliata, hanno aggiunto un sistema di analisi statica per rilevare questi errori.</p>
+<p>Il problema è che la ricerca di questo errore è non decidibile, quindi il l&#39;analisi statica introdotta fornisce un&#39;approsimazione, quindi ci sono dei casi in cui l&#39;analisi statica segnala degli errori che in realtà non ci sono (questo perché l&#39;approsimazione deve essere pessimistica).</p>
+<h1 id="lezione-26-java">Lezione 26 - Java</h1>
+<p>Nasce negli anni &#39;90 con il nome di Oak per far funzionare delle &quot;smart tv&quot;.</p>
+<p>Per il Java è presente sia un compilatore che un interprete: il programmatore compila il codice Java con il compilatore, il quale produce il <em>Java bytecode</em> che può essere interpretato dalla <strong>Java Virtual Machine</strong>.</p>
+<p>L&#39;utilizzo dell&#39;interprete fornisce maggiore sicurezza, dal momento che durante l&#39;esecuzione si ha un maggior controllo sulle istruzioni che si stanno eseguento.
+Viene comunque fornita la possibilità di effettuare delle chiamate native.</p>
+<p>Obiettivi del linguaggio:</p>
+<ul>
+<li><strong>Portabilità</strong>: il linguaggio deve poter essere &quot;internet-wide&quot;, ovvero compatibile con i vari sistemi operativi;</li>
+<li><strong>Reliability</strong>: i programmi devono evitare crash e comportamenti in attesi, programmi solidi e rubusti;</li>
+<li><strong>Safety</strong>: il linguaggio deve controllare che non vengano eseguite istruzioni maligne;</li>
+<li><strong>Dynamic Linking</strong>: il programma può essere eseguito anche se tutte le classi che lo compongno non sono presenti, ciò deriva dal fatto che il programma può essere caricato da più computer connessi in rete;</li>
+<li><strong>Multi-Threaded</strong>: possibilità di scrivere programmi concorrenti;</li>
+<li><strong>Simplicity</strong>: il linguaggio deve essere facilmente comprensibile dai programmatori medi, ovvero la sinstassi deve ricordare quella del C++ (era il linguaggio del momento);</li>
+<li><strong>Efficenza</strong>: tenuta in secondo piano.</li>
+</ul>
+<p>Java non ha lo stesso problema del C++ per quanto riguarda l&#39;ereditarietà dal momento che non deve mantenere la retrocompatibilità con il C.
+Non sono quindi presenti i cast e l&#39;aritmetica dei puntatoro, inoltre il paradigma OO può essere integrato maggiormente nel linguaggio.</p>
+<h2 id="compilazione-in-bytecode">Compilazione in Bytecode</h2>
+<p>Il compiltatore Java produce un programma in Bytecode che può essere eseguito dalla JVM.</p>
+<p>Questa scelta assicura:</p>
+<ul>
+<li><strong>Portabilità</strong>: basta avere l&#39;implementazione della JVM compatibile con il sistema operativo per poter eseguire il programma scritto in Bytecode.</li>
+<li><strong>Safety</strong>: interpretare da maggior controllo</li>
+<li><strong>Efficency</strong>: questo approccio risulta <strong>meno</strong> efficente perché interpretare è più costoso del compilare. Con il tempo è stato introdotta la compilazione JIT (Just In Time).</li>
+</ul>
+<h2 id="type-safeness">Type-safeness</h2>
+<p>Il controllo sui tipi viene fatto a 3 livelli:</p>
+<ul>
+<li>Type check sul codice sorgente scritto in Java, che risulta più efficace dal momento che non c&#39;è da tenere in considerazione l&#39;aritmentica dei puntatori e cast. Ciò ha permesso anche di implementare la garbage collection.</li>
+<li>Ogni istruzione Bytecode viene poi <em>typecheck-ata</em> prima di essere eseguita (check statico eseguito quando viene caricato il Bytecode).</li>
+<li>Controlli a runtime, come i limiti degli array e i down-cast (ad esempio da Object a String).</li>
+</ul>
+<p>L&#39;efficenza diminuisce a causa del numero dei controlli, specialmente per quelli eseguiti a run time.</p>
+<h2 id="oggetti-e-riferimenti">Oggetti e riferimenti</h2>
+<p>In Java <strong>quasi</strong> tutto è un oggetto, infatti i tipi primitivi non sono oggetti per creare un compromesso tra semplicità ed efficenza.</p>
+<p>Per semplificare il linguaggio è stato poi posto il vincolo che gli oggetti possono essere acceduti solamente tramite puntatori, che prendono il nome di <strong>riferimenti</strong> e che vengono &quot;nascosti&quot; dal compilatore.
+Di conseguenza l&#39;unica assegnazione tra oggetti è quella tra i puntatori.</p>
+<p>Il passaggio dei parametri alle funzioni avviene sempre per valore. Quando viene passato un oggetto, viene forinto il valore del puntatore (riferimento).</p>
+<p><img src="Linguaggi di Programmazione/immagini/l26-base.png" alt=""></p>
+<p>In Java vale l&#39;<strong>array covariance</strong>, ovvero se <code>Shape</code> è sotto tipo di <code>Circle</code>, anche <code>Shape[]</code> è sotto tipo di <code>Circle[]</code>. Questo è uno dei punti discutibili del Java.</p>
+<p>La classe <code>ClassLoader</code> rapprenseta la classe che viene utilizzata per caricare dinamicamente le altre classi. Risulta importare avere la possibilità di utilizzare più <code>ClassLoader</code> per una questione di sicurezza: è possibile avere un loader per caricare delle classi ritenute sicure che esegue meno controlli sulla sicurezza e fornisce privilegi maggiori e avere altri loader meno permissivi.</p>
+<p>Tutti gli oggetti Java estendono (ereditano) da una classe, se questa non è specificata viene utilizzato di default <code>Object</code>, che contiene alcuni metodi generici come <code>toString()</code>, <code>equals()</code> e altri metodi legati alla concorrenza.</p>
+<h2 id="tipi-e-sotto-tipi-in-java">Tipi e sotto tipi in Java</h2>
+<ul>
+<li><strong>Tipi primitivi</strong>: non sono oggetti, <code>int</code> <code>bool</code></li>
+<li><strong>Reference Type</strong>: vengono utilizzati i riferimenti per gli oggetti,  classi, interfaccie e array. Inolre, la sintassi non prevede l&#39;utilizzo di <code>Object*</code> a contrario del C++.</li>
+<li><strong>Type Conversion</strong>: se <code>B &lt;: A</code> e <code>A x</code> allora è possibile fare il cast di <code>x</code> a <code>B</code> (programmazione generica). Tutti questi cast vengono verificati a run time e possono sollevare delle eccezioni.</li>
+</ul>
+<h2 id="garbage-collection">Garbage Collection</h2>
+<p>Grazie alla concorrenza è possibile effettuare la garbage collection, che è necessaria per la type safety dal momento che se non ci fosse, sarebbe compito del programmatore gestire la memoria (evita i dangling pointer).</p>
+<p>La garbage collection utilizza un&#39;approssimazione per determinare se un oggetto servirà in futuro o meno.
+L&#39;approssimazione risulta comunque accurata e raramente sbaglia. In ogni caso è necessaria per il buon funzionamento del programma.</p>
+<h2 id="dynamic-linking">Dynamic linking</h2>
+<p>Le classi che compongono il programma possono venire caricate nella JVM in modo incrementale per velocizare l&#39;inizio dell&#39;esecuzione del programma.</p>
+<p>È una sorta di lazy-evaluation delle classi: se durante l&#39;esecuzione una classe non serve questa non vienne caricata.</p>
+<p>Risulta fondamentale che le classi abbiano un&#39;interfaccia chiara che permette il controllo del programma con le classi mancanti rapprentando la loro interfaccia. <strong>Sistemami!</strong></p>
+<h2 id="java-vs-c-">Java VS C++</h2>
+<p>Semplicazioni:</p>
+<ul>
+<li>Non c&#39;è l&#39;ereditarietà multipla;</li>
+<li>Non c&#39;è l&#39;overloading degli operatori, solo delle funzioni;</li>
+<li>Non ci sono coercizioni automatiche nell&#39;overloading resolution</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> :</span> f(int)
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">A</span> :</span> f(double)
+
+<span class="hljs-type">A</span> a = <span class="hljs-keyword">new</span> <span class="hljs-type">A</span>();
+a.f(<span class="hljs-number">2.4</span>);   <span class="hljs-comment">//C++ invoca f(int)</span>
+            <span class="hljs-comment">//Java da un errore di compilazione a causa della conversione Double -&gt; Int</span>
+a = <span class="hljs-keyword">new</span> <span class="hljs-type">B</span>();
+a.f(<span class="hljs-number">2.4</span>)
+<span class="hljs-comment">// C++ invoca f(int) per via del tipo statico</span>
+<span class="hljs-comment">//Anche in questo caso Java segnala l'errore. </span>
+<span class="hljs-comment">//(non ne sono sicuro, ma sembra avere senso perché staticamente non sa il tipo dinamico)</span>
+</code></pre>
+<ul>
+<li>Non ci sono puntatori espliciti e le relative operazioni.</li>
+</ul>
+<p>Punti in cui il Java migliora il C++:</p>
+<ul>
+<li>Garbage collection e metodi <code>finalize</code></li>
+<li>Costruttori e costruttori delle superclassi, per la costruzione dei sotto oggetti</li>
+<li>Classi e metodi final</li>
+<li>Ereditarietà multipla ma solo con interfacce</li>
+<li>Eccezioni integrate nelle classi e controllo degli handlers</li>
+<li>Overloading</li>
+<li>Enforcing delle regole di overriding dei metodi che sono virtuali</li>
+<li>Concorrenza</li>
+</ul>
+<p>Aspetti negativi del Java:</p>
+<ul>
+<li>Array covariance (trattata dopo);</li>
+<li>Realizzazione della concorrenza non sempre accettabile, specialmente in ambito real time, però si tratta già di un passo avanti rispetto al C++;</li>
+<li>Programmazione generica inizialemente assente (introdotta negli anni 2000) e comunque è stata implementata in modo diverso dal solito dal momento che il Java con Generics viene compilato allo stesso modo del Java senza Generics, mantenendo la retrocompatibilità.</li>
+</ul>
+<h3 id="garbage-collection-e-finalize">Garbage collection e finalize</h3>
+<p>Gli oggetti vengono deallocati solamente dal garbage collector, evitando così i puntatori a null.</p>
+<p>Possono esserci dei problemi nella deallocazione se l&#39;oggetto in questione possiede delle risorse o ha dei lock.</p>
+<p>Sono stati quindi introdotti i metodi <code>finalize</code> che vegnono invocati dal garbage collector in modo da liberare le risorse.
+Questi metodi possono essere quindi invocati prima di deallocare l&#39;oggetto o all&#39;uscita del programma.</p>
+<p>La necessità di liberare spazio non è sempre la motivazione giusta per liberare le risorse, perché può creare problemi quando l&#39;oggetto ha un lock (per la programmazione concorrente).</p>
+<p>È una convenzione invocare <code>super.finalize</code> all&#39;interno del metodo, anche se non è obbligatorio.</p>
+<h3 id="costruttori-e-super">Costruttori e super</h3>
+<p>Java garantisce che il costruttore venga invocato per ogni oggetto e questo deve essere possibile anche con l&#39;ereditarietà.</p>
+<p>In particolare il costruttore della sotto classe <strong>deve</strong> chiamare il costruttore della super classe, altrimenti viene inserita dal compilatore la chiamata al costruttore senza parametri.</p>
+<p>Se questo costruttore non è presente si verifica un errore di compilazione.</p>
+<p>C&#39;è un&#39;eccezione nel caso un costruttore invochi un altro costruttore della stessa classe.</p>
+<p>Da notare che la convezione adotta è diversa da quella per <code>finalize</code>.</p>
+<h3 id="final">Final</h3>
+<p>Keyword che permette di limitare l&#39;ereditarietà. Le classi o metodi marcati come <code>final</code> non possono essere ridefiniti (es: <code>java.lang.String</code>).</p>
+<p>Questo è importante per la sicurezza, dal momento che il programmatore può limitare il comportamento delle sotto-classi.</p>
+<p>Ogni metodo di una classe risulta &quot;<em>virutale</em>&quot; finché non viene marcato come <code>final</code>.</p>
+<h3 id="ereditariet-mutlipla-con-inferfacce">Ereditarietà mutlipla con inferfacce</h3>
+<p>Il subtyping per le classi è simile al C++: staticamente tipato, sottoclasse collegata al sottotipo e ereditarità singola.</p>
+<p>Le interfacce permettono di definire delle classi astratte che non hanno implementazione, anche se esiste comunque la possibilità di definire le classi astratte che hanno un&#39;implementazione parziale.</p>
+<p>Per ottenere il <em>multiple subtyping</em> le inferfacce permettono l&#39;ereditarietà multipla.</p>
+<p>In questo modo a compilazione si riesce a distinguere il caso in cui viene usato come tipo statico la classe base o un&#39;interfaccia, ottenendo una maggiore efficenza nel caso venga utilizzata la classe base, dal momento che in questo caso il dynamic lookup può essere basato sulla conformità.</p>
+<p>Nel caso dell&#39;utilizzo di un&#39;interfaccia non viene più garantita la conformità, pertanto il codice prodotto risulta diverso dal momento che deve effettuare la ricerca dinamica del metodo da invocare (ci sono dei barbatrucchi per ottimizzare la ricerca).</p>
+<p>L&#39;utilizzo delle interfacce permette di avere l&#39;ereditarietà multipla evitando il diamante della morte che si può verificare nel C++.
+C&#39;è però un costo maggiore dovuto al fatto che la ricerca dei metodi da invocare deve essere fatta a runtime.</p>
+<h3 id="eccezioni">Eccezioni</h3>
+<p>Il funzionamento è standard con il <code>throw</code>/<code>catch</code> utilizzando il dynamic scope per la selezione dell&#39;handler (primo trovato).</p>
+<p>Ci sono alcune differenze legate al fatto che le eccezioni sono un oggetto e pertanto è permesso il subtyping delle eccezioni.</p>
+<p>Inoltre, la firma dei metodi deve dichiarare queli eccezioni possono essere sollevate e che non sono <code>Exception</code>, questo perché c&#39;è una gerarchia delle eccezioni.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l26-exc.png" alt=""></p>
+<p>Se un metodo può sollevare delle eccezioni, queste devono essere sotto-tipo di <code>Exception</code> e devono essere dichiarate nella firma/prototipo.</p>
+<p>Le <code>RuntimeExcpetion</code> rappresentano tutte le eccezioni legate agli errori runtime, come l&#39;out of bound di un&#39;array o un class cast fallito.</p>
+<p>Le cose fighe sono:</p>
+<ul>
+<li>Le eccezioni di un thread rimangono dentro il thread</li>
+<li>È possibile utilizzare un sopratipo per catturare più sotto-tipi di eccezioni.</li>
+</ul>
+<h3 id="overloading">Overloading</h3>
+<p>Si basa sulla firma del metodo, utilizzando il nome e il tipo degli argomenti.</p>
+<p>I metodi con lo stesso nome ma con parametri diversi sono in concorrenza, la decisione del metodo da invocare viene presa durante la compilazione da sorgente a Bytecode, senza tenere conto delle conversioni automatiche.</p>
+<p>Quindi o c&#39;è un metodo che ha la firma che coincide con i tipi di invocazione o viene sollevato un errore (vedi esempio precedente).</p>
+<p>Non è possibile effettuare l&#39;overload degli operatori.</p>
+<h3 id="overriding">Overriding</h3>
+<p>In Java tutti i metodi sono virtuali, quindi per effettuare l&#39;overriding basta utilizzare la stessa firma del metodo.</p>
+<p>La firma del metodo rispetto ad un metodo della super classe può variare in tre modi:</p>
+<ul>
+<li>Tipi degli argomenti</li>
+<li>Tipo del valore di ritorno</li>
+<li>Eccezioni sollevate</li>
+</ul>
+<p>Per fare l&#39;override gli argomenti devono avere lo stesso tipo, il valore di ritorno può essere un sotto tipo, il metodo può sollevare meno eccezioni e la visibilità può essere solamente ampliata.</p>
+<p>Le ridefinizioni di un metodo non sono bloccanti come con il C++: un metodo della classe derivata può overriddare un metodo conforme della classe base, ma non oscura altri metodi della classe base che hanno lo stesso nome ma parametri diversi. Questi altri metodi vengono ereditati normalmente e rimangono visibili nella classe derivata.</p>
+<h3 id="array-covariance-problem">Array covariance problem</h3>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> {</span>};
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">A</span> {</span>};
+
+<span class="hljs-type">B</span>[] b = <span class="hljs-keyword">new</span> <span class="hljs-type">B</span>[<span class="hljs-number">10</span>];
+<span class="hljs-type">A</span>[] a = b; <span class="hljs-comment">//Ok, perché B[] &lt;: A[]</span>
+a[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> <span class="hljs-type">A</span>(); <span class="hljs-comment">//Eccezione a runtime perché B &lt;: A</span>
+</code></pre>
+<p>Tuttavia il compilatore non segnala errori, ma a runtime viene sollevato in quanto si prova ad eseguire un assegnamento del tipo <code>B x = new A();</code>.</p>
+<p>Questo problema deriva dalla versione originale di Java e ormai non può essere più modificata per una questione di retrocompatibilità con i programma già esistenti.</p>
+<h3 id="conversioni-automatiche-int-double">Conversioni automatiche int-&gt;double</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> A1{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span>
+    </span>{
+        System.out.println(<span class="hljs-string">"f di A1 "</span>);}
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> B1 extends A1{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span>
+    </span>{   
+        System.out.println(<span class="hljs-string">"f di B"</span>);}
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> Main1{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        A1 a=<span class="hljs-keyword">new</span> A1();
+        B1 b=<span class="hljs-keyword">new</span> B1();
+        a.f(<span class="hljs-number">2</span>); <span class="hljs-comment">//Ok con conversione automatica, A1::f</span>
+        b.f(<span class="hljs-number">2</span>); <span class="hljs-comment">//Ok, B1::f</span>
+        a.f(<span class="hljs-number">2.1</span>); <span class="hljs-comment">//Ok, A1::f</span>
+        b.f(<span class="hljs-number">2.1</span>); <span class="hljs-comment">//Ok, A1::f dato che B1::f(int) non copre il metodo ereditato</span>
+        a=b;
+        a.f(<span class="hljs-number">2.1</span>); <span class="hljs-comment">//Ok, A1::f</span>
+        a.f(<span class="hljs-number">2</span>);   <span class="hljs-comment">//OK, ma stampa A1::f per via del tipo statico</span>
+    }
+}
+</code></pre>
+<p>Nell&#39;ultimo caso con <code>a.f(2)</code> l&#39;overloading resolution sceglie <code>f(double)</code> perché è l&#39;unico che risce a vedere. A runtime non vengono trovati override del metodo e di conseguenza viene invocato il metodo di <code>A1</code>.</p>
+<h1 id="lezione-27-jvm">Lezione 27 - JVM</h1>
+<p><img src="Linguaggi di Programmazione/immagini/l27-jvm.png" alt=""></p>
+<p>Il compilatore Java produce un file <code>.class</code> che contiene il bytecode prodotto, spetta poi alla JVM eseguire il contenuto del file.</p>
+<p>La JVM è divisa in due parti, la prima dedicata al caricamento delle classi e la seconda dedicata all&#39;interpretazione del codice.</p>
+<p>La prima parte è poi divisa in 3 moduli:</p>
+<ul>
+<li>Loader</li>
+<li>Verifier</li>
+<li>Linker</li>
+</ul>
+<h2 id="loader-subsystem">Loader subsystem</h2>
+<p>La prima parte si occupa di caricare le classi da i vari file quando queste sono richieste.</p>
+<p>Il meccanismo di caricamento di default delle classi può essere modificato creando delle sotto classi di <code>ClassLoader</code> e che ridefiniscono il metodo <code>loadClass</code>.
+Lo scopo delle ridefinzione di <code>ClassLoader</code> è quello di aggiungere nuovi percorsi possibili per andare a cercare il file <code>.class</code>, ad esempio per caricare la classi a partire da un indirizzo di rete.</p>
+<p>Durante l&#39;esecuzione del loader vengono eseguiti i blocchi di inizializzazione statica delle classi.</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> ... </span>{
+ <span class="hljs-comment">/* static variable with initial value */</span>
+ <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> x = initial_value
+ <span class="hljs-comment">/* ---- static initialization block --- */</span>
+ <span class="hljs-keyword">static</span> { <span class="hljs-comment">/* code executed once, when loaded */</span> }
+}
+</code></pre>
+<p>Questi blocchi statici vengono eseguiti una sola volta, quando la classe viene caricata dal loader e non possono sollevare eccezioni, perché potrebbero non esserci degli handler che le gestiscono.</p>
+<p>Il <strong>linker</strong> si occupa di aggiungere al sistema le classi caricate dal loader e di creare i campi statici e inizializzarli.</p>
+<p>Il linker si occupa inoltre di risolvere i nomi dei campi dati, ovvero sostituisce il nome dei campi dati di un oggetto con l&#39;indirizzo del record dell&#39;oggetto e il displacement del relativo campo dati dell&#39;oggetto. Es: <code>this.pippo --&gt; o + disp[pippo]</code>.</p>
+<p>Il <strong>verifier</strong> si occupa poi di controlalre il bytecode prima che questo venga linkato e nel caso si verifichino dei problemi, solleva delle eccezioni di tipo <code>VerifyException</code>.</p>
+<p><strong>N.B.</strong>: loader, verifier e linker vengono eseguiti &quot;in contemporanea&quot;, ovvero non è proprio una sequenza di fasi ma una cooperazioni tra componenti.</p>
+<p>Il controllo fatto dal verifier è necessario perché il bytecode potrebbe essere stato scritto a mano da dei malintenzionati.
+Pertanto il verifier controlla:</p>
+<ul>
+<li>La correttezza del operation code delle istruzioni;</li>
+<li>Che i branch delle operazioni confizionali inzino all&#39;inzio di un&#39;istruzione e non a metà;</li>
+<li>Ogni metodo abbia una firma corretta;</li>
+<li>I tipi delle espressioni siano corretti.</li>
+</ul>
+<h2 id="bytecode-interpreter">Bytecode interpreter</h2>
+<p>Si occupa di eseguire il bytecode dell&#39;applicazione.</p>
+<p>Durante l&#39;esecuzione, l&#39;interprete si occupa di effettuare i controlli run-time come il bound check degli array.</p>
+<p>È inoltre possibile compilare il bytecode in codice nativo.</p>
+<p>L&#39;interprete è anche in grado di invocare i metodi nativi, parti di programma scritte in C.</p>
+<p>C&#39;è poi da eseguire il dynamic lookup dei metodi, e questo può essere fatto in modi diversi:</p>
+<ul>
+<li><strong>invokevirtual</strong>: invocazione di un metodo per il quale è noto il tipo statico ed è una classe</li>
+<li><strong>invokeinterface</strong>: invocazione di un metodo per il quale è noto il tipo statico ed è un&#39;interfaccia</li>
+<li><strong>invokestatic</strong>: invocazione di un metodo statico di una classe</li>
+<li><strong>invokespecial</strong>: invocazione di un costruttore</li>
+</ul>
+<p>C&#39;è una differeza tra invokevirtual e invokeinterface, perché nel caso di una classe è garantita la conformità e pertanto il dynamic lookup può essere fatto alla C++, mentre per le interfacce è necessario utilizzare del codice diverso.</p>
+<p>Per quanto riguarda i controlli di tipo a run-time, questi riguardano anche i cast e il null-dereferencing.
+C&#39;è anche la garbage collection automatica, dal momento che non è presente l&#39;aritmetica dei puntatori.</p>
+<h2 id="jvm-data-areas">JVM data areas</h2>
+<p>Ovvero le strutture dati a supporto dell&#39;interpretazione del codice, un po&#39; come per la macchina SECD del progetto.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l27-jvm-areas.png" alt=""></p>
+<ul>
+<li><strong>method area</strong>: area di memoria che contiene le informazioni delle classi (il nome è un po&#39; sviante).</li>
+<li><strong>heap</strong>: contiene gli oggetti.</li>
+<li><strong>Java stacks</strong>: area di memoria contenente le istruzioni da eseguire, <em>stacks</em> perché ce ne è uno per ogni thread.</li>
+<li><strong>PC registers</strong>: un program counter per ogni stack.</li>
+<li><strong>native method stacks</strong>: zona per l&#39;esecuzione dei metodi nativi.</li>
+</ul>
+<p><img src="Linguaggi di Programmazione/immagini/l27-jvm-object.png" alt=""></p>
+<p>In uno stack della stack area ci sarà un puntatore ad un oggetto allocato nello heap. L&#39;oggetto conterrà poi un puntatore alla sua classe, che si troverà nella method area.</p>
+<p>Nella method area si troverà anche la <strong>method table</strong> della classe, un po&#39; come la vtable del C++, con la differenza che in questa tabella c&#39;è anche un puntatore ai <strong>class data</strong>, ovvero i campi dati statici della classe.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l27-jvm-ra.png" alt=""></p>
+<p>Uno stack della stacks area è composto da una pila di record di attivazione e il relativo program counter conterrà l&#39;indizzo di un&#39;istruzione di un metodo che si trova nella method area.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l27-jvm-frame.png" alt=""></p>
+<p>Ogni record di attivazione è composto da 3 parti:</p>
+<ul>
+<li><strong>local variables</strong>: area contenti le variabili locali, ovvero i valori dei parametri che vengono passati al metodo al quale è associato il record di attivazione.</li>
+<li><strong>operand stack</strong>: stack contenente gli operandi per le operazioni che devono essere eseguite o per il valore di ritorno.</li>
+<li><strong>data area</strong>: area contenente le informazioni riguardo l&#39;indirizzo di ritorno, le eccezioni che possono essere sollevate, i risultati parziali delle operazioni, il <strong>costant pool resolution</strong>.</li>
+</ul>
+<p>C&#39;è un po&#39; di black magic per determinare la dimensione massima richesta dall&#39;operand stack.</p>
+<h2 id="class-file">Class file</h2>
+<pre><code><span class="hljs-title">ClassFile</span> { <span class="hljs-title">u4</span> magic; <span class="hljs-title">u2</span> minor_version; <span class="hljs-title">u2</span> major version;
+ <span class="hljs-title">u2</span> constant_pool_count;
+ <span class="hljs-title">cp_info</span> constant_pool[constant_pool_count-<span class="hljs-number">1</span>];
+ <span class="hljs-title">u2</span> access_flags; <span class="hljs-title">u2</span> this_class; <span class="hljs-title">u2</span> super_class;
+ <span class="hljs-title">u2</span> interfaces_count; <span class="hljs-title">u2</span> interfaces[interfaces_count];
+ <span class="hljs-title">u2</span> fields_count; <span class="hljs-title">field_info</span> fields[fields_count];
+ <span class="hljs-title">u2</span> methods_count; <span class="hljs-title">method_info</span> methods[methods_count];
+ <span class="hljs-title">u2</span> attributes_count;
+ <span class="hljs-title">attribute_info</span> attributes[attributes_count]; 
+}
+</code></pre><ul>
+<li><code>u4</code> e simili indicano quanto spazio richiede il campo dati che segue.</li>
+<li><code>minor_version</code> e <code>major_version</code> specificano un intervallo di versioni per la classe</li>
+<li><code>constant_pool</code> contiene una lista con tutti i nomi simbolici (classi, metodi, campi dati, costanti, stringhe, ecc.) che compaiono nel ClassFile, il formato di ogni elemento della costant_pool è indicato con un tag di un byte.</li>
+<li><code>access_flag</code> rappresenta le specifiche della classe descritta dal file: accessibilità e se è astratta</li>
+<li><code>field_info</code> è la tabella che contiene i campi dati della classe e contiene solo i campi dati della classe descritta dal ClassFile e non quelli ereditati dalla superclasse.</li>
+<li><code>method_info</code> è una lista che cointene i metodi della classe e, in modo analogo a <code>field_info</code> contiene solo i dati della classe e non della superclasse.</li>
+</ul>
+<blockquote>
+<p>I tag della costant pool non saranno chiesti all&#39;esame</p>
+</blockquote>
+<p>All&#39;interno delle varie liste ci sono delle strutture dati che contengono le informazioni riguardo a quello che rappresentano.
+Ad esempio dentro la <code>constant_pool</code> potrebbe esserci</p>
+<pre><code><span class="hljs-title">CONTANT_Class_info</span> { <span class="hljs-title">u1</span> tag; <span class="hljs-title">u2</span> name_index; }
+</code></pre><p>con il tag che ha come valore <code>7</code> e <code>name_index</code> che è un indice per la <code>constant_pool</code> che contiene le informazioni riguardanti il nome completo della classe (un oggetto di tipo <code>CONSTANT_Utf8_info</code>).</p>
+<pre><code>CONSTANT_Utf8_info {
+    u1 tag;<span class="hljs-comment"> // =1</span>
+    u2 <span class="hljs-built_in">length</span>;<span class="hljs-comment"> //Numero di caratteri</span>
+    u1 <span class="hljs-keyword">bytes</span>[<span class="hljs-built_in">length</span>]<span class="hljs-comment"> //Array di byte contenente la stringa</span>
+}
+</code></pre><p><code>CONSTANT_Utf8_info</code> rappresenta una stringa, il significato della quale varia in base agli elementi della <code>constant_pool</code> che sono stati &quot;visitati&quot; prima di raggiungere l&#39;oggetto.</p>
+<p>La <code>constant_pool</code> è quindi un&#39;oggetto che contiene tutte le informazioni in modo spezzettato, ognuna con un riferimento al pezzo successivo.</p>
+<p>Tra le possibili strutture dati della <code>constant_table</code> possono esserci anche <code>CONSTANT_Methodref_info</code> e <code>CONSTANT_InterfaceMethodref_info</code> che distinguono i metodi di una classe da quelli di un&#39;interfaccia. Queste strutture hanno poi un campo dati <code>class_index</code> che referenzia il nome della classe o interfaccia di appartenenza.</p>
+<p>Nella lista <code>field_info</code> le strutture dati contenute hanno la forma</p>
+<pre><code><span class="hljs-title">field_info</span> { 
+    <span class="hljs-title">u2</span> access_flags;
+    <span class="hljs-title">u2</span> name_index;
+    <span class="hljs-title">u2</span> descriptor_index;
+    <span class="hljs-title">u2</span> attributes_count;
+    <span class="hljs-title">attribute_info</span> attributes[attributes_count];
+}
+</code></pre><p>che è diversa rispetto alle strutture della <code>constan_pool</code>.
+Per <code>method_list</code> la struttara è simile:</p>
+<pre><code><span class="hljs-title">method_info</span> {
+    <span class="hljs-title">u2</span> access_flags;
+    <span class="hljs-title">u2</span> name_index;
+    <span class="hljs-title">u2</span> descriptor_index;
+    <span class="hljs-title">u2</span> attributes_count;
+    <span class="hljs-title">attribute_info</span> attributes[attributes_count];
+}
+</code></pre><p>Tra gli attributi del metodo, c&#39;è sicuramente il puntatore al codice.</p>
+<p>Grazie a queste strutture dati, l&#39;interprete riesce ad accedere direttamente ai campi dati senza utilizzare il riferimento simbolico. Tuttavia, la ricerca delle informazioni a runtime risulta onerosa in termini di tempo. Anche perché un singolo ClassFile non contiene le informazioni delle superclassi e delle interfacce che implementa.</p>
+<p>Perciò viene usata un&#39;ottimizzazione: alla prima esecuzione del codice viene effettuata la ricerca completa per trovare il simbolo corretto nella costant pool, una volta trovato viene modificato il codice sostituendo il riferimento con un offset in modo che per le successive esecuzioni sia possibile accedere direttamente al valore, senza effetturare la ricerca.</p>
+<p>L&#39;interprete non si limita quindi ad interpretare il codice, ma lo trasforma in modo da ottimizzare le presetazioni.</p>
+<p>Un possibile esempio di bytecode è:</p>
+<pre><code>aload i <span class="hljs-comment">//Inserisce in cima al operand_stack il contenuto della i-esima variabile locale </span>
+getfield <span class="hljs-preprocessor">#<span class="hljs-number">18</span></span>
+</code></pre><p>Prima di poter eseguire la <code>getfield</code>, l&#39;oggetto del quale si vuole accedere al campo dati deve essere in cima al operand stack.
+Da notare che prima di eseguire <code>getfield</code> l&#39;inteprete sa già la classe dell&#39;oggetto che potrebbe non essere ancora stata caricata.</p>
+<p>Viene quindi acceduta l&#39;entrata 18 della constant pool, la quale deve contenere un <code>filedref_info</code> che specifica la classe, il nome e il tipo del campo che si vuole mettere nello stack.
+Queste informazioni devono essere in accordo con la classe dell&#39;oggetto in questione.</p>
+<p>Assumendo che il campo dati dell&#39;oggetto si trovi a distanza 10 dall&#39;inzio, l&#39;istruzione <code>getfield #18</code> viene sostituita con <code>getfield_quick 10</code> in modo da velocizzare le successive esecuzioni.</p>
+<h1 id="lezione-28-jvm-2-metodi-e-polimorfismo">Lezione 28 - JVM 2 (metodi) e polimorfismo</h1>
+<p>Le istruzioni da eseguire per invocare un metodo cambiano in base al tipo statico.</p>
+<p>Se il tipo statico è una classe, l&#39;invocazione viene convertita con <code>invokevirtual</code>, altrimenti se è un&#39;interfaccia viene utilizzato <code>invokeinterface</code>.</p>
+<h2 id="invokevirtual">Invokevirtual</h2>
+<pre><code class="lang-java"><span class="hljs-built_in">Object</span> x;
+x.<span class="hljs-keyword">equals</span>(<span class="hljs-string">"test"</span>);
+</code></pre>
+<p>In bytecode viene convertita con:</p>
+<pre><code>aload <span class="hljs-number">1</span> <span class="hljs-comment">//push x assumendo che sia la prima variabile locale</span>
+invokevirtual <span class="hljs-preprocessor">#<span class="hljs-number">23</span></span>
+</code></pre><p>dove <code>#23</code> riferisce l&#39;entrata della constant pool e deve essere una struttura di tipo <code>methodref_info</code> e che contiene il nome della classe dell&#39;oggetto e il nome e i tipo del metodo invocato.</p>
+<p>L&#39;esecuzione di invokevirtual si basa sull&#39;oggeto d&#39;invocazione <code>x</code> e accede alla tabella dei metodi della classi di <code>x</code> cercando un metodo con specifica uguale a quella trovata nell&#39;entrata <code>#23</code> della constant pool.
+Se questo viene trovato, il compilatore riesce a trovare l&#39;indirizzo della method area con il codice da invocare per il metodo.</p>
+<p>Se non viene trovato, la ricerca continua tra i metodi delle superclass e nel caso peggiore solleva un&#39;eccezione.</p>
+<p>Per aumentare l&#39;efficenza, una volta trovato il metodo da invocare, l&#39;istruzione <code>invokevirtual #23</code> viene sostituita con <code>invokevirtual_quick d</code>, dove <code>d</code> è la posizione del metodo nella tabella dei metodi della classe.
+Questo codice rende possibile il dynamic lookup perché in Java le classi in gerarchia hanno le tabelle dei metodi conformi.</p>
+<h2 id="invokeinterface">Invokeinterface</h2>
+<p>Se il tipo statico è un&#39;interfaccia, per invocare il metodo viene utilizzato <code>invokeinterface</code> perché non si può più sfruttare la conformità tra le tabelle dei metodi.
+Ad esempio <code>invokeinterface #24</code>.</p>
+<p>All&#39;esecuzione dell&#39;istruzione, viene cercata nell&#39;entrata <code>24</code> della constant pool una struttura <code>interfaceMethod_ref</code> che specifica il metodo che si vuole invocare.</p>
+<p>La classe dell&#39;oggetto in cima alla pila deve implementare quell&#39;interfaccia ed avere il metodo trovato.</p>
+<p>La differenza principale sta nel fatto che <strong>non</strong> si può sostituire l&#39;istruzione con la versione quick, perché non è detto che tutte le classi che implementano l&#39;interfaccia abbiano il metodo sempre nella stessa poszione delle tabella dei metodi.</p>
+<p>Si può comunque ottimizzare la cosa tenendo una cache. 
+Infatti, una volta risolto il metodo, è nota sia la classe dell&#39;oggetto dinamico, sia l&#39;offeset nella tabella dei metodi. 
+In questo modo, la prima volta che viene eseguita l&#39;invocazione del metodo con un oggetto di una determinata classe viene fatta la ricerca e salvato il risultato nella cache. 
+Così facendo, se l&#39;esecuzione successiva ha lo stesso tipo dinamico è possibile recuperare il valore dalla cache, evitando la ricerca. Se invece il tipo dinamico non compare in cache è necessario fare una nuova ricerca.</p>
+<h2 id="polimorfismo">Polimorfismo</h2>
+<p>(Sezione 6.4 e 6.5 nel libro)</p>
+<p>Esistono più tipi di polimorfismo:</p>
+<ul>
+<li><strong>Polimorfismo parametrico</strong>: riguarda il tipo delle funzioni, ovvero funzioni che possono prendere parametri di tipi diversi, ad esempio <code>sort: (‘a * ‘a -&gt; bool)*’a list -&gt; ‘a list</code>. In ML e Haskell il polimorfismo di tipo è implicito e viene inferito automaticamente, mentre in C++ è necessario utilizzare i template.</li>
+<li><strong>Polimorfismo ad hoc</strong>: riguarda l&#39;overloading delle funzioni, lo stesso nome di funzione può essere usato con parametri di tipo diverso.</li>
+<li><strong>Polimorfismo di sotto tipo</strong>: legato al dynamic lookup e dynamic binding, deriva dal fatto che quando ci si aspetta un oggetto di un determinato tipo, questo può essere di un altro sotto tipo.</li>
+</ul>
+<p>Rimane da affrontare quello parametrico.</p>
+<h3 id="polimoformismo-parametrico-in-c-">Polimoformismo parametrico in C++</h3>
+<p>In C++ è possibile utilizzare i template per definire delle variabili di tipo in modo da scrivere del codice generico. Prende il nome di polimorfismo esplicito perché deve essere presente una keyword.</p>
+<pre><code class="lang-c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;x, <span class="hljs-keyword">int</span> &amp;y)</span>
+</span>{
+    <span class="hljs-keyword">int</span> tmp=x; x=y; y=tmp; 
+}
+
+<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(T &amp; x, T &amp; y)</span>
+</span>{
+    T tmp=x; x=y; y=tmp;
+}
+<span class="hljs-comment">// ...</span>
+
+<span class="hljs-keyword">int</span> i, j; swap(i,j); <span class="hljs-comment">// T = int</span>
+<span class="hljs-built_in">string</span> x,y; swap(x,y); <span class="hljs-comment">// T = string</span>
+</code></pre>
+<p>Il polimorfismo parametrico è utile quando si vuole che un algoritmo generico funzioni utilizzando variabili di tipo diverso.</p>
+<p>Per quanto riguarda ML e Haskell, il polimorfismo è implicito, ci pensa l&#39;algortimo di inferenza automatica a rilevare se la funzione è polimorfa o meno. E anche in questo caso le variabili di tipo vengono istanziate all&#39;invocazione della funzione. Questo avviene anche in C++.</p>
+<p>L&#39;implementazione del polimorfismo è diversa tra Haskell e C++, questo perché in C++ l&#39;implementazione dei valori dei diversi tipi è diversa, pertando il codice che manipola questi valori è specifico per ciascun tipo.
+Mentre in ML/Haskell l&#39;impementazione dei valori di tipi diversi è <strong>uniforme</strong> e quinti la manipolazione dei valori è uniforme per tutti i tipi.</p>
+<p>Long story short: in C++ serve del codice ad hoc per ogni instanziazione del template, in Haskell/ML no (lo stesso codice va bene per tutti i tipi).</p>
+<p>In C++, quando e da chi vengono prodotte le diverse istanze di una funzione template <code>F(T x)</code>? Considerando il caso in cui un programma è costruito da più unità di compilazioni (programma diviso su più moduli).</p>
+<p>Ci sono due modelli di risuluzione:</p>
+<ul>
+<li><strong>inlcusione</strong>: le istenze vengono realizzate durante la compilazione di ciascun pezzo del programma. Ad esempio se il programma è diviso in 3 pezzi, la compilazione di uno di questi, produce anche il codice per le varie <code>F(T x)</code>, istanziata per i vari tipi con i quali viene invocata. È necessario però che ogni parte del programma abbia tutto il codice della funzione template in modo che riesca a compilare il template, non basta la firma del metodo, pertanto è necessario che il template sia ripetuto in ogni parte del programma con il rischio che questi siano diversi.</li>
+<li><strong>separazione</strong>: le istanze dei template vengono generate quando i diversi componenti del programma vengono linkati tra di loro. In questo modo la compilazione di una singola parte non produce nessuna istanza dei template, ma vengono prodotti solamente quando tutto il codice è disponibile.</li>
+</ul>
+<p>La prima soluzione richiede che ogni utinità abbia a disposizione il codice di template. 
+La stessa istanza può essere prodotta da più parti distinte, pertanto durante il link devono essere rimosse le copie multiple dello stesso template.</p>
+<p>Inoltre il template può richiedere altre definzioni gloabali, ad esempio:</p>
+<pre><code class="lang-c++"><span class="hljs-comment">//file3.h</span>
+<span class="hljs-preprocessor"># <span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> T&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T)</span></span>;
+<span class="hljs-preprocessor"># <span class="hljs-keyword">include</span> <span class="hljs-string">"file3.C"</span></span>
+
+<span class="hljs-comment">//file3.C</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"di file3.C "</span>&lt;&lt;x&lt;&lt;endl;}
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> T&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T t)</span> </span>{ g(<span class="hljs-number">0</span>); }
+
+<span class="hljs-comment">//caller3.C</span>
+<span class="hljs-preprocessor"># <span class="hljs-keyword">include</span> <span class="hljs-string">"file3.h"</span></span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"di caller "</span>&lt;&lt;x&lt;&lt;endl;}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">()</span> </span>{ f(<span class="hljs-number">3.14</span>); g(<span class="hljs-number">2</span>);}
+main(){ h();} <span class="hljs-comment">// "di file3.C 0" "di file3.C 2"</span>
+</code></pre>
+<p>In questo caso l&#39;inclusione del template porta con se anche la definzione di <code>g(int)</code>, che viene resa disponibile anche dentro il file <code>caller3.C</code>. Questo fenomeno prende il nome di <strong>name hijack</strong> o cattura dei nomi globali.</p>
+<p>Il vantaggio dell&#39;<strong>inclusione</strong> è che è semplice da implementare, ma ci sono dei problemi con i nomi globali e nella gestione dei duplicati durante la fase di link.</p>
+<p>Utilizzando l&#39;approccio di <strong>separazione</strong>, esiste una sola definizione del template e tutte le unità hanno solo il prototipo.
+Quindi la compilazione delle singole unità non genera istanze del templalte.</p>
+<p>Solo in fase di link la definzione del templeate e tutte le sue possibili istanzazioni vengono &quot;accoppiate&quot; e pertanto diventa possibile compilare le istanze necessarie.</p>
+<p>Il problema in questo caso è che la fase di link è una fase avanzata della compilazione, pertanto certi errori possono essere rilevati solo quando si è arrivati a questa fase.
+Inoltre, si deve aggiungere la responsabilità di compilare i template al linker.</p>
+<h3 id="polimorfismo-di-tipo-in-ml">Polimorfismo di tipo in ML</h3>
+<p>In ML il discorso è più semplice, dal momento che viene prodotta una sola versione del codice della funzione polimorfa, questo perché i tipi sono implementati in modo uniforme.</p>
+<p>Il che significa che il passaggio dei parametnri avviene attraverso dei puntatori e generlamente tutto il calcolo della funzione avviene tramite assegnamenti tra puntatori.</p>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">swap</span></span> (x,y) = (y,x);
+swap :: (t1, t) -&gt; (t, t1)
+</code></pre><pre><code><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">K</span></span> <span class="hljs-literal">nil</span> <span class="hljs-constant">L</span> = <span class="hljs-literal">true</span> |
+    <span class="hljs-constant">K</span> <span class="hljs-constant">L</span> <span class="hljs-literal">nil</span> = <span class="hljs-literal">false</span> |
+    <span class="hljs-constant">K</span> (<span class="hljs-symbol">a:</span>:<span class="hljs-constant">L</span>) (<span class="hljs-symbol">b:</span>:<span class="hljs-constant">N</span>) = <span class="hljs-keyword">if</span> a &gt; b <span class="hljs-keyword">then</span> <span class="hljs-literal">false</span>
+                      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> a &lt; b <span class="hljs-keyword">then</span> <span class="hljs-literal">true</span> <span class="hljs-keyword">else</span> <span class="hljs-constant">K</span> <span class="hljs-constant">L</span> <span class="hljs-constant">N</span>;
+</code></pre><p>Il tipo calcolato dall&#39;inferenza è <code>K:: int list -&gt; int list -&gt; boolean</code>, questo perché non è possibile eseguire in modo generico il confronto <code>&gt;</code>, pertanto deve essere specificato.
+Se si vogliono utilizzare altri tipi, questi devono essere specificati, perdendo comunque il polimorfismo.</p>
+<p>Per risolvere questo problema si può &quot;nascondere&quot; il confronto dei parametri:</p>
+<pre><code><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">K</span></span> <span class="hljs-literal">nil</span> <span class="hljs-constant">L</span> confg =<span class="hljs-literal">false</span>|
+    <span class="hljs-constant">K</span> <span class="hljs-constant">L</span> <span class="hljs-literal">nil</span> confg =<span class="hljs-literal">true</span>|
+    <span class="hljs-constant">K</span> (<span class="hljs-symbol">a:</span>:<span class="hljs-constant">L</span>) (<span class="hljs-symbol">b:</span>:<span class="hljs-constant">N</span>) confg = <span class="hljs-keyword">if</span> confg(a, b) <span class="hljs-keyword">then</span> <span class="hljs-literal">false</span> 
+                            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> confg(b,a) <span class="hljs-keyword">then</span> <span class="hljs-literal">true</span> 
+                            <span class="hljs-keyword">else</span> <span class="hljs-constant">K</span> <span class="hljs-constant">L</span> <span class="hljs-constant">N</span> confg ;
+</code></pre><p>così facendo viene inferito il tipo <code>K ::&#39;a list -&gt; &#39;b list -&gt; (&#39;a * &#39;b -&gt; bool) -&gt; bool</code> e viene mantenuto il polimorfismo, è però necessario passare come parametro anche l&#39;operatore di confronto.</p>
+<p>Il core business della situazione è che la maggior parte degli algortimi hanno una parte naturalmente polimorfa e delle parti più specifiche, pertanto per mantenere il polimorfismo implicito è necessario astrarre le operazioni specifiche.</p>
+<p>In ML la maggior parte delle operazioni sono uniformi rispetto ai tipi, quindi si riesce ad avere un codice uniforme, in C++ invece la maggior parte di codice è specifico per il tipo e pertanto è necessario produrre più versioni dello stesso codice.</p>
+<h3 id="polimorfismo-parametrico-in-haskell">Polimorfismo parametrico in Haskell</h3>
+<p>In Haskell è ancora più semplice dal momento che ci sono le classi di tipo che permettono di definire un&#39;insieme di tipi sui quali è possibile utilizzare delle funzioni.
+Il codice dell&#39;esempio precedente diventa:</p>
+<pre><code class="lang-haskell">k l [] = False
+k [] l= True
+k (<span class="hljs-tag">a</span>:b) (c:d) = <span class="hljs-function"><span class="hljs-title">if</span><span class="hljs-params">(a&lt;c)</span></span> then True
+                <span class="hljs-keyword">else</span> <span class="hljs-function"><span class="hljs-title">if</span><span class="hljs-params">(c&lt;a)</span></span> then False
+                <span class="hljs-keyword">else</span> (k <span class="hljs-tag">b</span> d)
+</code></pre>
+<p>e il tipo inferito automaticamente è <code>k::(Ord a)=&gt; [a]-&gt;[a]-&gt;Bool</code>, dove <code>Ord</code> è la classe di tipo che raggruppa i tipi sui quali sono definite le operazioni di ordinamento.
+Così facendo le istruzioni che <em>mettono in pericolo</em> il polimorfismo, vengono astratte dalle classi di tipo.
+Si può osservare che c&#39;è una certa similarità tra le classi di tipo Haskell e le inferfacce del Java.</p>
+<h3 id="tirando-le-somme">Tirando le somme</h3>
+<ul>
+<li>La rappresentazione non uniforme porta ad avere un codice più lungo (molte istanze) ma il codice prodotto è ottimizzato e pertanto più efficente. Gli errori però vengono rilevati a link-time.</li>
+<li>La rappresentazione uniforme produce meno codice ma meno ottimizzato a causa della dereferenziazione dei puntatori, sia in tempo che in spazio. Gli errori vengono rilevati a compile-time. C&#39;è da dire che i problemi di efficienza sono tipici dei linguaggi funzionali.</li>
+<li>In C++ l&#39;utilizzo dei template viene favorito dalla possibilità di estendere gli operatori standard <code>==</code>, <code>&gt;=</code>, ecc.</li>
+<li>In ML l&#39;overloading esistente è limitato dagli operatori per i tipi predefiniti che non sono estendibili. È possibile con un barbatrucco raggirare questa limitazione ma questo approccio non scala con la dimensione del programma, perché è necessario andare a definire tante funzioni polimorfe da passare come parametri.</li>
+<li>In Haskell esiste l&#39;overloading degli operatori ed è possibile utilizzare le classi di tipo, rendendo più semplice utilizzare il polimorfismo parametrico.</li>
+</ul>
+<h3 id="java-generics">Java Generics</h3>
+<p>Prima dell&#39;introduzione dei Generics in Java c&#39;era il <strong>generic idiom</strong>:</p>
+<pre><code class="lang-java"><span class="hljs-built_in">List</span> <span class="hljs-built_in">list</span> = <span class="hljs-literal">new</span> ArrayList(); <span class="hljs-comment">//raw type</span>
+<span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>add(<span class="hljs-string">"hello"</span>);
+<span class="hljs-built_in">String</span> s = (<span class="hljs-built_in">String</span>) <span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>get(<span class="hljs-number">0</span>);
+<span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>add(<span class="hljs-number">1</span>); <span class="hljs-comment">//Nessun errore</span>
+</code></pre>
+<p>con l&#39;introduzione dei generics (Java 5) il codice diventa:</p>
+<pre><code class="lang-java"><span class="hljs-built_in">List</span>&lt;<span class="hljs-built_in">String</span>&gt; <span class="hljs-built_in">list</span> = <span class="hljs-literal">new</span> ArrayList&lt;<span class="hljs-built_in">String</span>&gt;(); <span class="hljs-comment">//Aggiunge l'informazione riguardo al tipo degli oggetti contenuti nella lista</span>
+<span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>add(<span class="hljs-string">"hello"</span>);
+<span class="hljs-built_in">String</span> s = <span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>get(<span class="hljs-number">0</span>); <span class="hljs-comment">//Non serve il cast</span>
+<span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>add(<span class="hljs-number">1</span>); <span class="hljs-comment">//Errore segnalato dal compilatore</span>
+</code></pre>
+<p>Per mantenere la retro compatibilità con le versioni precedenti, il compilatore produce lo stesso bytecode omettendo il check sui parametri di tipo. Questo ha permesso di non modificare la JVM e non porta problemi perché i tipi vengono controllati staticamente prima di produrre il bytecode, quindi gli errori di tipo vengono comunque rivelati.</p>
+<p>Entrambi i frammenti sopra producono lo stesso codice:</p>
+<pre><code class="lang-java"><span class="hljs-built_in">List</span> <span class="hljs-built_in">list</span> = <span class="hljs-literal">new</span> ArrayList();
+<span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>add(<span class="hljs-string">"hello"</span>);
+<span class="hljs-built_in">String</span> s = <span class="hljs-built_in">list</span><span class="hljs-built_in">.</span>get(<span class="hljs-number">0</span>);
+</code></pre>
+<p>Questo è vero fino ad un certo punto, perché se vengono mescolate versioni diverse di Java &lt; 5 con Java &gt; 5, i controlli vengono mantenuti.</p>
+<h1 id="lezione-29-java-generics">Lezione 29 - Java generics</h1>
+<p><strong>raw type</strong>: tipi normali non parametrici.</p>
+<p>In Java <code>List&lt;String&gt;</code> non è una nuova classe creata dal template <code>List&lt;T&gt;</code>, ma è una notazione per specificare al compliatore che si intende utilizzare la lista come una lista di stringhe, permettendo così al compilatore di controllare il tipi.</p>
+<pre><code class="lang-java"><span class="hljs-built_in">List</span>&lt;<span class="hljs-built_in">String</span>&gt; ls = <span class="hljs-keyword">new</span> ArrayList&lt;<span class="hljs-built_in">String</span>&gt;();
+<span class="hljs-built_in">List</span>&lt;<span class="hljs-built_in">Object</span>&gt; lo = ls; <span class="hljs-comment">// Il compilatore segnala un errore (no covarianza)</span>
+
+<span class="hljs-comment">// Se l'assegnazione fosse andata a buon fine sarebbe stato possibile</span>
+<span class="hljs-comment">// eseguire le seguenti operazioni</span>
+lo.add(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>());
+<span class="hljs-built_in">String</span> s = ls.<span class="hljs-literal">get</span>(<span class="hljs-number">0</span>); <span class="hljs-comment">// Errore: prova ad assegnare un Object ad una String</span>
+</code></pre>
+<p>Con i generics si <strong>perde la covarianza</strong> dei riferimenti e <code>List&lt;Object&gt;</code> non viene considerato come sopra tipo di <code>List&lt;String&gt;</code>.</p>
+<h2 id="metodi-generici">Metodi generici</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T,E&gt; <span class="hljs-typename">void</span> fromArrayToCollection (T[] a, Collection&lt;E&gt; c)
+    <span class="hljs-keyword">for</span> (T <span class="hljs-string">o :</span> a) {
+        c.add(o);
+    }
+}
+</code></pre>
+<p>Il codice sopra riportato non compila, perché il tipo dell&#39;array e il tipo della collezione non sono in relazione tra loro.</p>
+<p>Un&#39;alternativa è quella di utilizzare una collezione di <code>Object</code>.</p>
+<pre><code class="lang-java">public <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-type">void</span> fromArrayToCollection (T[] a, <span class="hljs-type">Collection</span>&lt;<span class="hljs-type">Object</span>&gt; c) <span class="hljs-decorator">{...}</span>
+</code></pre>
+<p>questa definizione però non funziona bene:</p>
+<pre><code class="lang-java">fromArrayToCollection<span class="hljs-list">(<span class="hljs-keyword">intArray</span>, objectCollection)</span><span class="hljs-comment">; //Ok</span>
+fromArrayToCollection<span class="hljs-list">(<span class="hljs-keyword">intArray</span>, intCollection)</span><span class="hljs-comment">; //Errore di compilazione</span>
+</code></pre>
+<p>Viene sollevato un errore perché <code>Collection&lt;Int&gt;</code> non è sotto tipo di <code>Collection&lt;Object&gt;</code>.</p>
+<p>Un&#39;altra idea può essere quella di utilizzare il raw type:</p>
+<pre><code class="lang-java">public <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-type">void</span> fromArrayToCollection (T[] a, <span class="hljs-type">Collection</span> c) <span class="hljs-decorator">{...}</span>
+</code></pre>
+<p>In questo modo viene mescolato il codice pre-generics con il codice generics. Il compilatore solleva un warning per la chiamata della funzione <code>add()</code> perché non riesce a fare il controllo di tipo a compile time e deve inserire un controllo di tipo a runtime.
+Questo perché la collection nella quale andiamo ad aggiungere l&#39;elemento potrebbe contenere oggetti di un tipo diverso e l&#39;<code>add()</code> riuscirebbe ad aggiungere comunque l&#39;oggetto di tipo <code>T</code>, introducendo la possibilità di un errore runtime durante il resto dell&#39;esecuzione del programma, ovvero quando verrà estratto dalla lista l&#39;elemento aggiunto.</p>
+<p>Questo è un problema generico che si verifica quando si mescola il codice con i generics con il codice senza i generics.
+Segue inoltre che <code>Collection&lt;Object&gt;</code> non ha lo stesso tipo di <code>Collection</code>.</p>
+<p>Un&#39;altra possibile soluzione è:</p>
+<pre><code class="lang-java">public <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-type">void</span> fromArrayToCollection (T[] a, <span class="hljs-type">Collection</span>&lt;?&gt; c) <span class="hljs-decorator">{...}</span>
+</code></pre>
+<p>ovvero utilizzando la wild card <code>&lt;?&gt;</code>. In particolare <code>Collection&lt;?&gt;</code> è un sopratipo per tutte le altre collection.</p>
+<p>In questo caso il compilatore solleva un errore di compilazione, perché non ha sufficenti informazioni per effettuare il controllo del tipo, ovvero le informazioni fornite sono troppo generiche.</p>
+<p>Viene sollevato un errore anziché un warning perché utilizzando la wild card si dice al compilatore <em>&quot;Voglio che controlli il tipo&quot;</em> e lui non ne è in grado. Utilizzando il raw type si dice al compilatore <em>&quot;Me ne frego del tipo&quot;</em>, quindi il compilatore solleva un warning per dire <em>&quot;Occhio che potrebbe esserci un errore&quot;</em>.</p>
+<p>Morale della favola, la firma corretta per il metodo è:</p>
+<pre><code class="lang-java">public <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-type">void</span> fromArrayToCollection (T[] a, <span class="hljs-type">Collection</span>&lt;T&gt; c) <span class="hljs-decorator">{...}</span>
+</code></pre>
+<p>e questo dice al compilatore <em>&quot;Guarda che l&#39;array e la collezione devono contenere oggetti dello stesso tipo&quot;</em>.</p>
+<p>Con questo sistema viene introdotta la contro varianza a causa della covarianza degli array. Ovvero se <code>T</code> viene istanziato con <code>X</code> e come secondo parametro viene fornito un <code>Collection&lt;Y&gt;</code>, se <code>X &lt;: Y</code> non vengono sollevati errori, anche se dalla firma del metodo sembra che i tipi debbano coincidere per forza.</p>
+<pre><code class="lang-java">Object[] oa = <span class="hljs-keyword">new</span> Object[<span class="hljs-number">100</span>];
+Collection&lt;Object&gt; <span class="hljs-keyword">co</span> = <span class="hljs-keyword">new</span> ArrayList&lt;Object&gt;();
+fromArrayToCollection(oa, <span class="hljs-keyword">co</span>); // T inferred <span class="hljs-keyword">to</span> <span class="hljs-keyword">be</span> Object
+
+String[] <span class="hljs-keyword">sa</span> = <span class="hljs-keyword">new</span> String[<span class="hljs-number">100</span>];
+Collection&lt;String&gt; <span class="hljs-keyword">cs</span> = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();
+fromArrayToCollection(<span class="hljs-keyword">sa</span>, <span class="hljs-keyword">cs</span>); // T inferred <span class="hljs-keyword">to</span> <span class="hljs-keyword">be</span> String
+
+fromArrayToCollection(<span class="hljs-keyword">sa</span>, <span class="hljs-keyword">co</span>); // T inferred <span class="hljs-keyword">to</span> <span class="hljs-keyword">be</span> Object
+
+Integer[] <span class="hljs-keyword">ia</span> = <span class="hljs-keyword">new</span> Integer[<span class="hljs-number">100</span>];
+Float[] fa = <span class="hljs-keyword">new</span> Float[<span class="hljs-number">100</span>];
+Number[] na = <span class="hljs-keyword">new</span> Number[<span class="hljs-number">100</span>];
+Collection&lt;Number&gt; <span class="hljs-keyword">cn</span> = <span class="hljs-keyword">new</span> ArrayList&lt;Number&gt;();
+
+fromArrayToCollection(<span class="hljs-keyword">ia</span>, <span class="hljs-keyword">cn</span>); // T inferred <span class="hljs-keyword">to</span> <span class="hljs-keyword">be</span> Number
+fromArrayToCollection(fa, <span class="hljs-keyword">cn</span>); // T inferred <span class="hljs-keyword">to</span> <span class="hljs-keyword">be</span> Number
+fromArrayToCollection(na, <span class="hljs-keyword">cn</span>); // T inferred <span class="hljs-keyword">to</span> <span class="hljs-keyword">be</span> Number
+fromArrayToCollection(na, <span class="hljs-keyword">co</span>); // T inferred <span class="hljs-keyword">to</span> <span class="hljs-keyword">be</span> Object
+fromArrayToCollection(na, <span class="hljs-keyword">cs</span>); // compile-time error
+</code></pre>
+<p>C&#39;è un&#39;altra definzione che risulta essere ancora più corretta ed esplicativa:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-keyword">void</span> fromArrayToCollection (T[] a, Collection&lt;? <span class="hljs-keyword">extends</span> T&gt; c)
+</code></pre>
+<p><img src="Linguaggi di Programmazione/immagini/l29-subtype.png" alt=""></p>
+<p>Il caso d&#39;uso principale della wild card è quando si vogliono leggere dei dati generici di una collezione d&#39;oggetti generica. Tutte le operazioni di scrittura su <code>Collection&lt;?&gt;</code> falliscono perché non è possibile fare il controllo di tipo.</p>
+<p>Un&#39;esempio è dato da</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printCollection</span>(<span class="hljs-params">Collection&lt;?&gt; c</span>)</span>{ 
+    <span class="hljs-keyword">for</span> (Object e : c) {
+        System.<span class="hljs-keyword">out</span>.println(e);
+    }
+}
+</code></pre>
+<p>Esercizio:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Shape</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">(Canvas c)</span></span>; 
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Circle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Shape</span> </span>{ 
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> x, y, radius; 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">(Canvas c)</span> </span>{ ... } 
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rectangle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Shape</span> </span>{ 
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> x, y, width, height; 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">(Canvas c)</span> </span>{ ... } 
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Canvas</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">(Shape s)</span> </span>{ s.draw(<span class="hljs-keyword">this</span>); }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">drawAll</span><span class="hljs-params">(List&lt;Shape&gt; shapes)</span> </span>{ 
+        <span class="hljs-keyword">for</span> (Shape s: shapes) { 
+            s.draw(<span class="hljs-keyword">this</span>); 
+        }
+    }
+}
+</code></pre>
+<p>Il metodo <code>drawAll</code> funziona solo se riceve una <code>List&lt;Shape&gt;</code>, se riceve una <code>List&lt;Circle&gt;</code> viene sollevato un errore. Per rendere più elastica il metodo si può utilizzare la firma <code>public void drawAll(List&lt;? extends Shape&gt; shapes)</code>.</p>
+<p>Non sempre conviene utilizzare la versione flessibile:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addRectangle</span><span class="hljs-params">(List&lt;? <span class="hljs-keyword">extends</span> Shape&gt; shapes)</span> </span>{ 
+    <span class="hljs-comment">// Compile-time error! shapes.add(0, new Rectangle());</span>
+}
+</code></pre>
+<h2 id="generics-e-codice-vecchio">Generics e codice vecchio</h2>
+<pre><code class="lang-java"><span class="hljs-comment">// Codice legacy</span>
+package com.Example.widgets;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Part</span> </span>{...}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Inventory</span> </span>{ 
+    <span class="hljs-comment">/* Adds a new Assembly to the inventory database. 
+    The assembly name consists of a set parts specified by parts. 
+    All elements of the collection parts must support the Part
+    interface. */</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> void addAssembly(String name, Collection parts) {...}
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Assembly getAssembly(String name) {...} 
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Assembly</span> </span>{
+    <span class="hljs-comment">// Returns a collection of Parts Collection</span>
+    Collection getParts(); 
+}
+
+<span class="hljs-comment">// Parte Generics</span>
+package com.mycompany.inventory;
+import com.Example.widgets.*;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Blade</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Part</span> </span>{ ... }
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Guillotine</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Part</span> </span>{ ... } 
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> void main(String[] args) {
+        Collection&lt;Part&gt; c = <span class="hljs-keyword">new</span> ArrayList&lt;Part&gt;();
+        c.add(<span class="hljs-keyword">new</span> Guillotine()) ;
+        c.add(<span class="hljs-keyword">new</span> Blade());
+        Inventory.addAssembly(“pippo<span class="hljs-string">", c); // addAssembly si aspetta il raw type, ma il codice compila
+        Collection&lt;Part&gt; k = Inventory.getAssembly(“pippo"</span>).getParts();
+        <span class="hljs-comment">// L'assegnamento produce un "Unchecked warning" perché</span>
+        <span class="hljs-comment">// si sta assegnando una collezione raw ad una collezione</span>
+        <span class="hljs-comment">// generica e il compilatore non riesce a stabilire</span>
+        <span class="hljs-comment">// la correttezza dei tipi </span>
+    }
+}
+</code></pre>
+<p>Questo funziona perché il compilatore Java considera <code>Collection</code> (versione raw type) come <code>Collection&lt;?&gt;</code>, questa scelta è stata forzata per permettere di combinare del codice scritto prima dei generics con il codice che li utilizza.</p>
+<p>Per assicurare la correttezza rispetto ai tipi il compilatore introduce dei controlli a runtime per verificare che la <code>Collection</code> ritornata sia effettivamente una <code>Collection&lt;Part&gt;</code>.</p>
+<pre><code class="lang-java"><span class="hljs-built_in">Box</span>&lt;<span class="hljs-built_in">String</span>&gt; stringBox = new <span class="hljs-built_in">Box</span>&lt;&gt;();
+<span class="hljs-built_in">Box</span> rawBox = stringBox;
+rawBox.set(<span class="hljs-number">8</span>);  <span class="hljs-comment">// Compile time warning: unchecked invocation to set(T)</span>
+                <span class="hljs-comment">// A runtime viene sollevata un'eccezione</span>
+</code></pre>
+<h1 id="lezione-30-generics-2-e-laziness">Lezione 30 - Generics 2 e Laziness</h1>
+<h2 id="limitazioni-dei-generics">Limitazioni dei Generics</h2>
+<p>I parametri di tipo di una classe non possono venire utilizzati nei campi e nei metodi statici della classe.</p>
+<pre><code class="lang-java">SingleLinkQueue.<span class="hljs-function"><span class="hljs-title">merge</span><span class="hljs-params">()</span></span>
+SingleLinkQueue.merge&lt;String&gt;() <span class="hljs-comment">//Non compila</span>
+</code></pre>
+<p>All&#39;interno di un metodo non si possono scrivere istruzioni tipo <code>new T()</code> o <code>new T[10]</code>.</p>
+<p>Non è possibile definire array di generics, <code>new List&lt;String&gt;[10]</code> non funziona, l&#39;unico caso in cui si può fare è utilizzando la wild card.</p>
+<p>Inoltre non si possono usare:</p>
+<ul>
+<li><code>instanceof</code></li>
+<li>cast</li>
+<li>eccezioni</li>
+<li><code>List&lt;String&gt;.class</code>, perché non esiste la classe <code>List&lt;String&gt;</code>.</li>
+</ul>
+<h2 id="ereasure">Ereasure</h2>
+<p>Il Java Generics, quando viene tradotto in Bytecode, perde i parametri di tipo. In particolare:</p>
+<ul>
+<li><code>List&lt;A&gt;</code> --&gt; <code>List</code></li>
+<li><code>A</code> --&gt; <code>Object</code></li>
+<li><code>&lt;? extends Number&gt;</code> --&gt; <code>Number</code></li>
+</ul>
+<p>In questo modo si garantisce anche la retro compatibilità con il codice Java normale e la JVM.</p>
+<p>È possibile rimuovere i parametri di tipo perché quando viene prodotto il Bytecode è già stato type checked.</p>
+<p>Ci sono però dei problemi:</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Comparator</span>&lt;<span class="hljs-title">A</span>&gt;</span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(A x, A y)</span></span>;
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ByteComp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Comparator</span>&lt;<span class="hljs-title">Byte</span>&gt;</span>{ <span class="hljs-comment">//Il parametro Byte viene scartato</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Byte x, Byte y)</span></span>{ <span class="hljs-comment">// ma nella firma del metodo rimane</span>
+        <span class="hljs-keyword">return</span> x.byteValue()-y.byteValue();
+    }
+}
+</code></pre>
+<p>per gestire questi casi particolari il compliatore genera in modo automatico il codice per gestire questa situazione:</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Comparator</span></span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Object x, Object y)</span></span>;
+}
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ByteComp</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Comparator</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Byte x, Byte y)</span></span>{ <span class="hljs-comment">//non è overriding</span>
+        <span class="hljs-keyword">return</span> x.byteValue()-y.byteValue();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">compare</span><span class="hljs-params">(Object x, Object y)</span></span>{ <span class="hljs-comment">//metodo bridge</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.compare((Byte) x, (Byte) y);
+    }
+}
+</code></pre>
+<h2 id="lazyness-in-haskell">Lazyness in Haskell</h2>
+<p>La valutazione lazy implica che non viene calcolato nulla finché non è strettamente necessario.</p>
+<p>Data un&#39;espressione questa può essere valutata in modo <strong>inner most</strong> o <strong>outer most</strong>.</p>
+<p>Supponendo di avere la funzione <code>square x = x*x</code>. </p>
+<p>Per valutare <code>square (3+4)</code> in modo inner most, vengono valutate prima le espressioni più interne, a partire dalla espressioni che sono già risolte (valori in forma normale). Con l&#39;apporccio innermost, viene prima calcolato <code>3+4</code> e poi viene valutato <code>square 7</code>, in questo caso <code>7</code> è già risolto, e viene valutato <code>7*7</code> ottenendo <code>49</code> che è la forma normale dell&#39;espressione.</p>
+<p>Per raggiungere la forma normale sono state necessarie 3 operazioni.</p>
+<p>Con l&#39;approccio outer most, viene calcolata come prima espressione quella che non è contenuta in altre espressioni più grandi.
+Ovvero, partendo da <code>square (3+4)</code>, viene prima valutato <code>square</code>, ottenendo <code>(3+4)*(3+4)</code>. L&#39;espressione più esterna adesso è <code>3+4</code>, ottenendo <code>7*(3+4)</code>, viene poi valutata ancora <code>3+4</code>, ottenendo <code>7*7</code>. Infine si calcola il risultato <code>7</code> in 4 passi.</p>
+<p>Indipendentemente dall&#39;approccio, ad ogni passo si riduce un espressione che prende il nome di <strong>redex</strong>.</p>
+<p>Quindi, con l&#39;approccio inner most viene ridotto il redex che non contiene altri redex e con l&#39;approccio outermost viene ridotto il redex che non è contenuto da altri redex.</p>
+<p>L&#39;approccio lazy valuta le espressioni in modo outer most, pertanto anche se ha delle proprietà interessanti, è inefficiente.</p>
+<p>Ci sono però dei casi in cui outermost richiede meno operazioni.</p>
+<p>Ad esempio, consideriamo la funzione <code>fst</code> che ritorna il primo elemento di una tupla.</p>
+<p>Per calcolare l&#39;espressione <code>fst(square 4, square 2)</code> con l&#39;approccio inner most è necessario calcolare prima <code>square 4</code> e poi <code>square 2</code> ed infine ritornare il valore di <code>square 4</code>, scartando il valore di <code>square 2</code> che è stato calcolato inutilmente.</p>
+<p>Utilizzando l&#39;approccio outer most, il valore di <code>square 2</code> non viene calcolato richedendo così meno operazioni.
+Questo perché <code>fst</code> è una funzione lazy.</p>
+<p>Un&#39;espressione potrebbe non essere riducibile alla forma normale, però se questa è raggiungibile, è sicuramente raggiungibile con l&#39;approccio outer most, cosa che non è sempre vera per inner most.</p>
+<p><code>fst(square 4, undefined)</code> raggiunge la forma normale solo se calcolata con l&#39;approccio outermost.</p>
+<p>Indipendentemente dall&#39;ordine con cui si valutano le espressioni, la forma normale che si raggiunge è sempre quella.</p>
+<p>In alcuni casi l&#39;approccio outer most può essere reso più efficiente per evitare di eseguire calcoli ripetuti, effettuando delle ottimizzazioni con dei grafi.</p>
+<p>Outer most però ha altri svantaggi legati all&#39;efficienza:</p>
+<pre><code class="lang-haskell">sum [<span class="hljs-number">0.</span><span class="hljs-number">.1000</span>] = foldl (+) <span class="hljs-number">0</span> [<span class="hljs-number">1.</span><span class="hljs-number">.10000</span>]
+              = foldl (+) <span class="hljs-number">0</span>+<span class="hljs-number">1</span> [<span class="hljs-number">2.</span><span class="hljs-number">.10000</span>]
+              = foldl (+) <span class="hljs-number">0</span>+<span class="hljs-number">1</span>+<span class="hljs-number">2</span> [<span class="hljs-number">3.</span><span class="hljs-number">.10000</span>]
+              = ...
+</code></pre>
+<p>ovvero prima estrae i valori dalla lista e poi quando a finito li somma.
+In questo caso sarebbe conveniente avere delle riduzioni inner most ed è quello che viene fatto da <code>foldl&#39;</code>.</p>
+<p>I valori in Haskell sono estremamente stratificati, ovvero sono dei data type discriminati da dei costruttori, ognungo dei quali può essere rappresentato come un albero e non sempre è interessante calcolare tutto l&#39;albero, perché potrebbe essere interessante solo una porzione dell&#39;albero.</p>
+<pre><code class="lang-haskell">let
+    z = (length [1..5], reverse <span class="hljs-string">"olleh"</span>) <span class="hljs-comment">// z=thunk</span>
+    (<span class="hljs-keyword">n</span>, s) = z <span class="hljs-comment">// z=(thunk, thunk) n=thunk, s=thunk</span>
+    '<span class="hljs-keyword">h</span>':ss = <span class="hljs-literal">s</span>
+<span class="hljs-keyword">in</span> 
+    ...
+</code></pre>
+<p><code>thunk</code> indica un espressione che deve essere calcolata e che contiene anche le informazioni legate all&#39;ambiente che deve essere usato per valutarla, in un modo simile alle chiusure delle funzioni.</p>
+<p>Per effettuare il pattern matching e proseguire con l&#39;esecuzione del programma, viene calcolato il minimo indispensabile, ovvero fino a che non si arriva al fatto che il valore di <code>z</code> è una coppia.</p>
+<p>Per calcolare <code>&#39;h&#39;:ss = s</code> viene valutato il valore di <code>s</code> per verificare che sia una lista del tipo <code>thunk:thunk</code>, la cosa importante è che <code>s</code> sia una lista non vuota, altrimenti viene sollevato un errore riguardo il pattern matching.
+Poi deve essere matchato il carattere <code>h</code>, quindi viene valutato il primo <code>thunk</code>, ottenendo <code>s = &#39;h&#39;:thunk</code> e <code>ss = thunk</code>, da notare che il thunk di <code>ss</code> corrisponde all&#39;espressione <code>reverse &quot;olle&quot;</code>.</p>
+<p>Tutte le espressioni intermedie che contendono dei thunk prendono il nome di <strong>weak head normale form</strong>.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l30-1.png" alt=""></p>
+<p>Una funzione può essere <strong>strict</strong> o <strong>lazy</strong>:</p>
+<ul>
+<li>una funzione strict è una funzione che utilizza i suoi parametri, quindi è necessario che questi vengono valutati</li>
+<li>una funzione lazy non usa tutti i suoi parametri, quindi può essere che alcuni non vengano valutati.</li>
+</ul>
+<p>Nel caso di funzioni lazy conviene quindi utilizzare la valutazione outer most per limitare il numero di calcoli.</p>
+<p><img src="Linguaggi di Programmazione/immagini/l30-2.png" alt=""></p>
+<p>Non è facile valutare se una funzione è lazy o meno, sempre per il discorso della non decidibilità, dei linguaggi di Turing ecc.</p>
+<p>Perché una funzione sia strict, questa deve forzare il valore di un parametro. Ovvero quando <code>f x</code> forza la valutazione del parametro <code>x</code>.</p>
+<p>Ad esempio verrebbe da pensare che la funzione <code>id</code> non sia strict perché ritorna semplicemente il valore ricevuto come parametro. Tuttavia, questa funzione stampa sull&#39;ambiente di esecuzione il valore del parametro e di conseguenza viene forzata la valutazione.</p>
+<pre><code class="lang-haskell">-- We evaluate the right-hand <span class="hljs-keyword">of</span> the <span class="hljs-keyword">let</span>-binding <span class="hljs-keyword">to</span>
+WHNF <span class="hljs-keyword">by</span> pattern-matching
+-- against <span class="hljs-literal">it</span>.
+<span class="hljs-keyword">let</span> (x, y) = <span class="hljs-literal">undefined</span> <span class="hljs-keyword">in</span> x
+-- Error, because we force <span class="hljs-literal">undefined</span>.
+<span class="hljs-keyword">let</span> (x, y) = id <span class="hljs-literal">undefined</span> <span class="hljs-keyword">in</span> x
+-- Error, because we force <span class="hljs-literal">undefined</span>.
+
+<span class="hljs-keyword">const</span> a b = a -- lazy sul secondo parametro
+<span class="hljs-keyword">let</span> (x, y) = <span class="hljs-keyword">const</span> (<span class="hljs-number">3</span>, <span class="hljs-number">4</span>) <span class="hljs-literal">undefined</span>
+-- No error, because <span class="hljs-keyword">const</span> (<span class="hljs-number">3</span>, <span class="hljs-number">4</span>) <span class="hljs-literal">undefined</span> = (<span class="hljs-number">3</span>,<span class="hljs-number">4</span>), thus
+-- <span class="hljs-literal">undefined</span> <span class="hljs-keyword">is</span> ignored
 </code></pre>
 </body></html>

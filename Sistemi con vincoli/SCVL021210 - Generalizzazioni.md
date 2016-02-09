@@ -14,9 +14,9 @@ Questo può essere visto come una generalizzazione dell'operazione di assegnamen
 
 ##Vincolo risolto
 
-Un vincolo si dice **risolto** se coincide con il prodotto cartesiano nel suo scope.
+Un vincolo si dice **risolto** se coincide con il prodotto cartesiano dei domini delle variabili nel suo scope.
 
-> c<sub>j</sub>=∏<sub>[x<sub>i</sub > ∈ X(c<sub>j</sub>)]</sub> D(x<sub>i</sub>)
+> c<sub>j</sub>=∏<sub>[x<sub>i</subx> ∈ X(c<sub>j</sub>)]</sub> D(x<sub>i</sub>)
 
 Cioè effettuando il prodotto cartesiano dei domini di tutte le variabili presenti nel vincolo, questo prodotto contiente solo relazioni che soddisfano il vincolo, generalizzando così la definizione di **feasibility** di un assegnamento.
 
@@ -41,7 +41,7 @@ def DFS(CSP):
   return False
 ```
 
-L'algoritmo di ricerca base può essere ottimizzato facendolo terminare quando viene trovata una soluzione generalizzata, permettendo così di terminare subito.
+L'algoritmo di ricerca base può essere ottimizzato facendolo terminare quando viene trovata una soluzione generalizzata, permettendo così di terminare prima la ricerca.
 
 Allo stesso modo può essere modificato __AC1__ in modo che se un vincolo è già risolto, allora non venga eseguito il filtering per tale vincolo.
 
@@ -74,7 +74,7 @@ Con questa modellazione i vincoli del problema diventano:
 - Non possono esserci due regine sulla stessa riga --> *x<sub>i</sub> ≠ x<sub>j</sub>* per ogni *i* e *j*, cioè due variabili non possono avere lo stesso valore e per come è espresso il problema vuol dire che due colonne diverse non possono essere avere la regina sulla stessa riga.
 - Non possono esserci due regine sulla stessa diagonale --> *x<sub>j</sub> - x<sub>i</sub> ≠ j - i*, per ogni coppia *i < j*, è necessario esprimere anche questo vincolo per l'altra diagonale.
 
-**Problema**: non sappiamo come modellare *x<sub>j</sub> - x<sub>i</sub> ≠ v* e non può essere utilizzato un vincolo ad hoc perché si avrebbe un numero di vincoli che aumenta esponenzialmente.
+**Problema**: non sappiamo come modellare *x<sub>j</sub> - x<sub>i</sub> ≠ v* e non può essere definito un nuovo vincolo ad hoc perché questa strategia porterebbe ad avere un numero esponenziale di vincoli.
 
 Lo stesso vincolo può essere implementato con *x + y = z* e *z ≠ v*, in questo modo definisco due vincoli elementari che possono essere combinati tra loro per creare vincoli più complessi.
 
