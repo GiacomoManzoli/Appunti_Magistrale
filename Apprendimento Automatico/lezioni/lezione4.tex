@@ -1,17 +1,14 @@
 % !TEX encoding = UTF-8
 % !TEX TS-program = pdflatex
-% !TEX root = apprendimento_automatico.tex
+% !TEX root = ../apprendimento_automatico.tex
 % !TEX spellcheck = it-IT
 \section{Lezione 4 - Laboratorio}\label{lezione-4---laboratorio}
 
 Durante il corso useremo Python 2.7.x
 
-Python è un linguaggio orientato agli oggetti.
-
-Ogni oggetto è caratterizzato da:
+Python è un linguaggio orientato agli oggetti e ognuno di questi è caratterizzato da:
 
 \begin{itemize}
-\tightlist
 \item
   identità: è un identificativo dell'oggetto (!= puntatore).
 \item
@@ -25,23 +22,18 @@ Ogni oggetto è caratterizzato da:
 In python non c'è il concetto classico di variabile, ma vengono usati
 dei riferimenti.
 
-%\begin{Shaded}
-%\begin{Highlighting}[]
-%\NormalTok{x }\OperatorTok{=} \DecValTok{2}
-%\NormalTok{y }\OperatorTok{=} \DecValTok{3}
-%\NormalTok{y }\OperatorTok{=} \NormalTok{x }\OperatorTok{//}\NormalTok{y e x puntano allo stesso oggetto}
-%\end{Highlighting}
-%\end{Shaded}
+\begin{lstlisting}[language=Python, caption=Codice Python]
+x = 2
+y = 3
+y = x #y e x puntano allo stesso oggetto
+\end{lstlisting}
 
-La funzione \texttt{id()} permette di sapere l'identificatore di un
-oggetto.
-
+La funzione \texttt{id()} permette di sapere l'identificatore di unoggetto.
 Gli oggetti in Python sono immutabili.
 
 Contenitori:
 
 \begin{itemize}
-\tightlist
 \item
   liste
 \item
@@ -65,83 +57,67 @@ elementi e può essere acceduto mediante indice (liste e tuple).
 Un contenitere si dice associativo quando si comporta come un
 dizionario, quindi solo i dizionari.
 
-In python non esitono i caratteri, esistono solo stringhe di lunghezza
-uno.
+In Python non esitono i caratteri, esistono solo stringhe di lunghezzauno.
 
-Gli indici per accedere ad una collezione con le \texttt{{[}{]}} possono
-anche essere negativi, in questo caso si procede all'indietro.
+Gli indici per accedere ad una collezione con le \texttt{{[}{]}} possonoanche essere negativi, in questo caso si procede all'indietro.
 
-%\begin{Shaded}
-%\begin{Highlighting}[]
-%\OperatorTok{>>>} \NormalTok{s }\OperatorTok{=} \StringTok{"Giacomo"}
-%\OperatorTok{>>>} \NormalTok{s[}\DecValTok{3}\NormalTok{]}
-%\CommentTok{'c'}
-%\OperatorTok{>>>} \NormalTok{s[}\OperatorTok{-}\DecValTok{3}\NormalTok{]}
-%\CommentTok{'o'}
-%\OperatorTok{>>>} \NormalTok{s[}\DecValTok{1}\NormalTok{:}\OperatorTok{-}\DecValTok{3}\NormalTok{] }\CommentTok{#slicing}
-%\CommentTok{'iac'}
-%\end{Highlighting}
-%\end{Shaded}
+\begin{lstlisting}[language=Python, caption=Indici delle liste]
+>>> s = "Giacomo"
+>>> s[3]
+'c'
+>>> s[-3]
+'o'
+>>> s[1:-3] #slicing
+'iac'
+\end{lstlisting}
+
 
 \textbf{List comprehension}
 
-%\begin{Shaded}
-%\begin{Highlighting}[]
-%\OperatorTok{>>>} \NormalTok{[x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for} \NormalTok{x }\OperatorTok{in} \BuiltInTok{range}%\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{)]}
-%\NormalTok{[}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{16}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{36}\NormalTok{, }\DecValTok{49}\NormalTok{, }\DecValTok{64}\NormalTok{, }\DecValTok{81}\NormalTok{]}
-%\end{Highlighting}
-%\end{Shaded}
+\begin{lstlisting}[language=Python, caption=List comprehension]
+>>> [x**2 for x in range(1,10)]
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+\end{lstlisting}
+
+Permette di scrivere liste in modo compatto.
 
 \textbf{operatore in}
 
-%\begin{Shaded}
-%\begin{Highlighting}[]
-%\ControlFlowTok{if} \NormalTok{k }\OperatorTok{in} \NormalTok{dictiornary:}
-%    \CommentTok{# something}
-%\end{Highlighting}
-%\end{Shaded}
+\begin{lstlisting}[language=Python, caption=Utilizzo di in]
+if k in dictiornary:
+    # do something with k
+\end{lstlisting}
 
 \textbf{copy()}
 
-%\begin{Shaded}
-%\begin{Highlighting}[]
-%\NormalTok{a }\OperatorTok{=} \NormalTok{[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}%\NormalTok{]}
-%\NormalTok{b }\OperatorTok{=} \NormalTok{a           }\CommentTok{# b riferisce a }
-%\NormalTok{c }\OperatorTok{=} \NormalTok{a.copy()    }\CommentTok{# c è una copia di a (oggetto diverso)}
-%\end{Highlighting}
-%\end{Shaded}
+\begin{lstlisting}[language=Python]
+a = [1,2,3,4]
+b = a              # b riferisce a 
+c = a.copy()    # c è una copia di a (oggetto diverso)
+\end{lstlisting}
 
 \subsection{numpy}\label{numpy}
 
-%\begin{Shaded}
-%\begin{Highlighting}[]
-%\OperatorTok{>>>} \ImportTok{import} \NormalTok{numpy }\ImportTok{as} \NormalTok{np}
-%
-%\OperatorTok{>>>} \NormalTok{a }\OperatorTok{=} \NormalTok{np.array([}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}%\NormalTok{,}\DecValTok{8}\NormalTok{], }\BuiltInTok{float}\NormalTok{)}
-%\OperatorTok{>>>} \NormalTok{a}
-%%\NormalTok{array([ }\DecValTok{1}\NormalTok{.,  }\DecValTok{4}\NormalTok{.,  }\DecValTok{5}\NormalTok{.,  }\DecValTok{8}\NormalTok{.])}
-%\end{Highlighting}
-%\end{Shaded}
+\begin{lstlisting}[language=Python, caption=Numpy]
+>>> import numpy as np
+
+>>> a = np.array([1,4,5,8], float)
+>>> a
+array([ 1.,  4.,  5.,  8.])
+\end{lstlisting}
 
 Questo modulo contiene alcuni metodi utili per la creazioni di matrici o
 array.
 
-\texttt{a}~matrice - \texttt{a.transpose()} - \texttt{a\ +\ b},
-\texttt{a\ -\ b}, \texttt{a\ *\ b}, \texttt{b\ /\ a} sono tutte
-operazioni tra matrici \emph{entry wise}, cioè elemento per elemento
+Ad esempio, se la variabile \texttt{a} è una matrice è possibile utilizzare il metodo \texttt{a.transpose()} per ottenere la matrice trasposta.
+
+Inoltre, se \texttt{a} e \texttt{b} sono delle matrici, è possibile effettuare le classiche operazioni aritmetiche in modo \textit{point wise}, ovvero elemento per elemento, con \texttt{a + b}, \texttt{a * b}, ecc.
 
 \subsection{scipy}\label{scipy}
-
-%\begin{Shaded}
-%\begin{Highlighting}[]
-%\ImportTok{import} \NormalTok{scipy}
-%\end{Highlighting}
-%\end{Shaded}
 
 Libreria per la risolzione dei sistemi.
 
 Anche questa ha un suo tipo per le matrici che è diverso da quello di
 \texttt{numpy}.
 
-Tra tipi \texttt{matrix} di \texttt{scipy} l'operazione
-\texttt{\textbackslash{}*} effettua il prodotto tra matrici.
+Tra tipi \texttt{matrix} di \texttt{scipy} l'operazione \texttt{*} effettua il prodotto tra matrici.

@@ -1,4 +1,4 @@
-<html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="apprendimento-automatico">Apprendimento automatico</h1>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../_builder/pdf.css"><link rel="stylesheet" href="../_builder/highlight/styles/default.css"><script src="../_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="apprendimento-automatico">Apprendimento automatico</h1>
 <p>Non sempre è possibile utilizzare degli algoritmi per risolvere un problema.</p>
 <p>Per vari motivi:</p>
 <ul>
@@ -8,10 +8,10 @@
 </ul>
 <p>Alcuni esempi sono: riconoscimento facciale, filtro anti-spam.</p>
 <p>In questi casi gli algoritmi (sequenza finita di passi che portano ad un risultato determinato in un tempo finito) non funzionano ed è quindi preferibile fornire una soluzione &quot;<em>imperfetta</em>&quot;.</p>
-<p>In apprendimento automatico si studiano i metodi per trasformare l&#39;infomrazione empirica (dati del problema) in conoscenza.</p>
-<p>Questo approccio è diventato possibile grazie al fatto che grazie ad Internet sono diventati disponibili molti dati.</p>
+<p>In apprendimento automatico si studiano i metodi per trasformare l&#39;informazione empirica (dati del problema) in conoscenza.</p>
+<p>Questo approccio è diventato possibile grazie al fatto che Internet ha reso disponibili molti dati.</p>
 <h2 id="le-basi">Le basi</h2>
-<p>Perché il machine leargning funzioni deve esserci un processo (stocastico o deterministico) che spiega i dati che osserviamo, in modo da riuscire a costruire un approssimazione di tale processo che può anche risultare imperfetta dal momento che il processo che si vuole approssimare non è noto.</p>
+<p>Perché il machine leargning funzioni deve esserci un processo (stocastico o deterministico) che spiega i dati che osserviamo, in modo da riuscire a costruire un&#39;approssimazione di tale processo che può anche risultare imperfetta dal momento che il processo che si vuole approssimare non è noto.</p>
 <p><em>Stocastico</em>: random a probabilità</p>
 <p>L&#39;obiettivo finale del machine learning è quello di definire dei criteri da ottimizzare in modo che sia possibile andare a migliorare dei modelli definiti su certi parametri.</p>
 <p>Questi modelli possono essere:</p>
@@ -156,9 +156,9 @@ e vettore</p>
 <p>L&#39;obiettivo che si vuole raggiungere è quello di approssimare queste probabilità.</p>
 <p>Cosa importante, questo oracolo non sempre è una funzione, questo perché può capitare che ad uno stesso <em>x</em> corrispondano <em>y</em> diversi.</p>
 <h3 id="operativamente">Operativamente</h3>
-<p>Si dispone di una serie di coppie <em>(x,y)</em> che seguono lo schema naturale, insieme di queste coppie prende il nome di <strong>training set</strong>.</p>
+<p>Si dispone di una serie di coppie <em>(x,y)</em> che seguono lo schema naturale, l&#39;insieme di queste coppie prende il nome di <strong>training set</strong>.</p>
 <p>Viene quindi scelta un funzione <em>h</em> che prende il nome di <strong>ipotesi</strong>, definita nello spazio delle ipotesi <em>H</em> tale che, da valori presenti nell&#39;insieme <em>X</em>, restituisca dei valori nell&#39;insieme <em>Y</em>.</p>
-<p>L&#39;apprendimento consiste quindi nell&#39;andare a scegliere l&#39;<em>h</em> migliore a partire dai dai presenti nel training set in modo che questa funzione approssimi bene i dati presenti nel training set e che riesca a generalizzare e predirre i corretti valori <em>y</em> anche per valori di <em>x</em> non presenti nel training set.</p>
+<p>L&#39;apprendimento consiste quindi nell&#39;andare a scegliere l&#39;<em>h</em> migliore in modo che approssimi bene i dati presenti nel training set e che riesca a generalizzare e predirre i corretti valori <em>y</em> anche per valori di <em>x</em> non presenti nel training set.</p>
 <p>Da ciò segue che possono essere commessi due tipi di errori:</p>
 <ul>
 <li><strong>Errore empirico</strong>: è l&#39;errore commesso da <em>h</em> in media, all&#39;interno del training set. In altre parole è l&#39;errore medio dell&#39;ipotesi sul training set.</li>
@@ -246,35 +246,35 @@ c = <span class="hljs-operator">a</span>.copy()    <span class="hljs-comment"># 
 <li><code>a + b</code>, <code>a - b</code>, <code>a * b</code>, <code>b / a</code> sono tutte operazioni tra matrici <em>entry wise</em>, cioè elemento per elemento </li>
 </ul>
 <h2 id="scipy">scipy</h2>
-<pre><code class="lang-python"><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> shipy</span>
+<pre><code class="lang-python"><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> scipy</span>
 </code></pre>
 <p>Libreria per la risolzione dei sistemi.</p>
 <p>Anche questa ha un suo tipo per le matrici che è diverso da quello di <code>numpy</code>.</p>
 <p>Tra tipi <code>matrix</code> di <code>scipy</code> l&#39;operazione <code>\*</code> effettua il prodotto tra matrici.</p>
-<h1 id="lezione-5">Lezione 5</h1>
+<h1 id="lezione-5-vc-dimension-e-vc-confidence">Lezione 5 VC-Dimension e VC-Confidence</h1>
 <h2 id="esempi-di-spazi-delle-ipotesi">Esempi di spazi delle ipotesi</h2>
 <p>Seguono alcuni esempi di spazi per le ipotesi nei problemi di apprendimento supervisionato, cioè quei problemi in cui si vuole stabilire se un elemento <em>x</em> appartiene o meno ad una classe.</p>
 <h3 id="iperpiani-in-r-sup-2-sup-">Iperpiani in R<sup>2</sup></h3>
 <p><strong>Iperpiano</strong>: dato uno spazio a <em>n</em>-dimensioni, un iperpiano per quello spazio è un sottospazio di dimensione <em>n-1</em>. Quindi gli iperpiani in R<sup>2</sup> sono tutte le rette del piano.</p>
 <p>Lavorando in R<sup>2</sup> lo spazio delle istanze è definito come:</p>
 <blockquote>
-<p>X = {x | x ϵ R<sup>2</sup>}.</p>
+<p>X = {x | x ∈ R<sup>2</sup>}.</p>
 </blockquote>
 <p>Mentre lo spazio delle ipotesi è dato dalle dicotomie indotte da iperpiani in R<sup>2</sup>, cioè da tutte le possibili divisioni del piano.</p>
 <blockquote>
-<p>H = {f<sub>(w,b)</sub>(x) | f<sub>(w,b)</sub>(x) = sign(w * x + b), w ϵ R<sup>2</sup>, b ϵ R}</p>
+<p>H = {f<sub>(w,b)</sub>(x) | f<sub>(w,b)</sub>(x) = sign(w * x + b), w ∈ R<sup>2</sup>, b ∈ R}</p>
 </blockquote>
 <p>Così facendo vengono prese in considerazione tutte le rette che dividono R<sup>2</sup> in due parti in modo che da una parte l&#39;ipotesi valga 1 e dall&#39;altra -1.</p>
 <h3 id="dischi-in-r-sup-2-sup-">Dischi in R<sup>2</sup></h3>
 <p>Sempre in R<sup>2</sup> è possibile considerare come spazio delle ipotesi tutte le dicotomie indotte da disci in R<sup>2</sup> e centrati nell&#39;origine.</p>
 <blockquote>
-<p>H = {f<sub>b</sub>(x) | f<sub>b</sub>(x) = sign(||x||<sup>2</sup> - b), w ϵ R<sup>2</sup>, b ϵ R}</p>
+<p>H = {f<sub>b</sub>(x) | f<sub>b</sub>(x) = sign(||x||<sup>2</sup> - b), w ∈ R<sup>2</sup>, b ∈ R}</p>
 </blockquote>
 <p>Il che vuol dire che all&#39;interno del disco le ipotesi valgono -1 mentre al di fuori valgono 1.</p>
 <h3 id="congiunzione-di-m-letterali-positivi">Congiunzione di <em>m</em> letterali positivi</h3>
 <p>Lo spazio delle istanze questa volta è dato da tutte le stringhe di <em>m</em> bits </p>
 <blockquote>
-<p>X = {s | s ϵ {0,1}<sup>m</sup>}</p>
+<p>X = {s | s ∈ {0,1}<sup>m</sup>}</p>
 </blockquote>
 <p>Lo spazio delle ipotesi è dato da tutte le sentenze logiche che riguardano i letterali positivi l<sub>1</sub>,l<sub>2</sub>,...,l<sub>m</sub> (l<sub>i</sub> è vero se l&#39;<em>i</em>-esimo bit è 1) e che contengono solo l&#39;operatore ⋀.</p>
 <blockquote>
@@ -288,7 +288,7 @@ c = <span class="hljs-operator">a</span>.copy()    <span class="hljs-comment"># 
 </ul>
 <p><strong>shattering</strong>: (frammentazione), dato <em>S</em> sottoinsieme dello spazio delle istanze, si dice che <em>S</em> è frammentato dallo spazio delle ipotesi <em>H</em> se:</p>
 <blockquote>
-<p>∀ S&#39; ⊆ S, ∃ h ϵ H, tale che ∀x in S, h(x) = 1 se e solo se x appartiene a S&#39;.</p>
+<p>∀ S&#39; ⊆ S, ∃ h ∈ H, tale che ∀x in S, h(x) = 1 se e solo se x appartiene a S&#39;.</p>
 </blockquote>
 <p>Cioè <em>H</em> realizza tutte le possibili dicotomie di <em>S</em>.</p>
 <p><em>H</em> frammenta un certo insieme <em>S</em> se è possibile trovare un iperpiano che raccoglie tutti i punti dell&#39;insieme <em>S</em>. Ovvero per tutte le dicotomie di <em>S</em> esiste un iperpiano che riesce a realizzarle.</p>
@@ -298,7 +298,7 @@ c = <span class="hljs-operator">a</span>.copy()    <span class="hljs-comment"># 
 <p>VC(H) = max(<sub>S ⊆ X</sub>)|S| tale che H frammenta S</p>
 <p>VC(H) = ∞ se S non è limitato</p>
 </blockquote>
-<p>Ad esempio nello spazio delle ipotesi dato dagli iperpiani su R<sup>2</sup>.</p>
+<p>Ad esempio nello spazio delle ipotesi dato dagli iperpiani su R<sup>2</sup>:</p>
 <p>Se nello spazio delle istanze ho 2 punti, questo viene frammentato da <em>H</em>, perché posso sempre trovare una retta che riesce a realizzare tutte le possibili dicotomie di due punti su un piano.</p>
 <p>Se nello spazio delle istanze ho 3 punti, riesco comunque a realizzare tutte le dicotomie.</p>
 <p>Se nello spazio delle istanze ho 4 punti qualsiasi non si riesce a trovare un iperpiano che realizza la dicotonomia, quindi <em>VC(H) = 3</em>.</p>
@@ -310,7 +310,7 @@ c = <span class="hljs-operator">a</span>.copy()    <span class="hljs-comment"># 
 <p>Scegliendo un <em>S</em> tale che <em>|S| = VC(H)</em>, si ottiene <em>|H| &gt;= 2<sup>VC(H)</sup></em>, prendendo il logaritmo si trova quello che si stava cercando, ovvero <em>VC(H) &lt;= log<sub>2</sub>(|H|)</em>.</p>
 <p><strong>Dal libro</strong>:</p>
 <p>Se un dataset contiene <em>N</em> elementi, questi <em>N</em> elementi possono essere etichettati con degli 0 e 1 in <em>2<sup>N</sup></em> modi diversi.</p>
-<p>Se per ognuno di questi modi è possibile trovare un ipotesi <em>h ϵ H</em> che separa tutte le istanze negative da quelle positive allora si dice che <em>H</em> frammenta il dataset <em>N</em>. Il che vuol dire che il dataset <em>N</em> può essere appreso con un errore empirico nullo.</p>
+<p>Se per ognuno di questi modi è possibile trovare un ipotesi <em>h ∈ H</em> che separa tutte le istanze negative da quelle positive allora si dice che <em>H</em> frammenta il dataset <em>N</em>. Il che vuol dire che il dataset <em>N</em> può essere appreso con un errore empirico nullo.</p>
 <p>Il massimo numero di punti che possono essere frammentati da <em>H</em> è detto <em>VC(H)</em> e fornisce una misura della capacità di <em>H</em>.</p>
 <h2 id="bound-sull-errore-di-generalizzazione">Bound sull&#39;errore di generalizzazione</h2>
 <p>Considerando un problema di apprendimento binario, con: </p>
@@ -330,18 +330,18 @@ c = <span class="hljs-operator">a</span>.copy()    <span class="hljs-comment"># 
 <p>Approccio per la scelta dello spazio delle ipotesi proposto da Vapnik che cerca di trovare un compromesso tra l&#39;errore empirico e la VC-Confidence.</p>
 <p>Si considerano spazi delle ipotesi sempre più piccoli H<sub>1</sub> ⊆ H<sub>2</sub> ⊆ ... ⊆ H<sub>n</sub> tali che VC(H<sub>1</sub>) ≤ VC(H<sub>2</sub>) ≤ ... ≤ VC(H<sub>n</sub>)</p>
 <p>Si seleziona lo spazio delle ipostesi H<sub>i</sub> che ha il valore del bound sull&#39;errore di generalizzazione più piccolo.</p>
-<p><img src="Apprendimento Automatico/immagini/l5-srm.png" alt=""></p>
+<p><img src="./notes/immagini/l5-srm.png" alt=""></p>
 <h1 id="lezione-6-apprendimento-di-concetti">Lezione 6 - Apprendimento di concetti</h1>
 <h2 id="il-concetto-di-concetto">Il concetto di Concetto</h2>
 <p>In uno spazio delle istanze <em>X</em>, un <strong>concetto</strong> è una funzione booleana su <em>X</em>, cioè una funzione che prende in input un oggetto dello spazio <em>X</em> e ritorna un booleano che specifica se l&#39;elemento appartiene a quel concetto o meno.</p>
-<p>Un concetto <em>C</em> su uno spazio delle istanze <em>X</em> viene definito come una coppia <em>(x,C(x))</em> con <em>x ϵ X</em>, e <em>C(x)</em> è la funzione concetto applicata ad <em>x</em>.</p>
-<p>Si dice che un ipotesi booleana <em>h</em> per lo spazio delle istanze <em>X</em> <strong>soddisfa</strong> <em>x ϵ X</em> se <em>h(x) == 1</em>.</p>
+<p>Un concetto <em>C</em> su uno spazio delle istanze <em>X</em> viene definito come una coppia <em>(x,C(x))</em> con <em>x ∈ X</em>, e <em>C(x)</em> è la funzione concetto applicata ad <em>x</em>.</p>
+<p>Si dice che un ipotesi booleana <em>h</em> per lo spazio delle istanze <em>X</em> <strong>soddisfa</strong> <em>x ∈ X</em> se <em>h(x) == 1</em>.</p>
 <p>La stessa ipotesi <em>h</em> si dice che è <strong>consistente</strong> con un esempio <em>(x,C(x))</em> se <em>h(x) == C(x)</em>.</p>
 <p>La definizione di consistenza può essere poi estesa ad in insieme se l&#39;ipotesi <em>h</em> è consistente con tutti gli elementi presenti nell&#39;insieme.</p>
 <h2 id="ordine-parziale">Ordine parziale</h2>
 <p>Siano <em>h<sub>i</sub></em> e <em>h<sub>j</sub></em> due funzioni booleane definite su uno spazio delle istanze <em>X</em>, diciamo che <em>h<sub>i</sub></em> è <strong>più generale</strong> o equivalente di <em>h<sub>j</sub></em> (<em>h<sub>i</sub> &gt;=<sub>g</sub> h<sub>j</sub></em>) se:</p>
 <blockquote>
-<p>∀x ϵ X | h<sub>j</sub>(x) == 1 --&gt; h<sub>i</sub>(x) == 1</p>
+<p>∀x ∈ X | h<sub>j</sub>(x) == 1 --&gt; h<sub>i</sub>(x) == 1</p>
 </blockquote>
 <p>Cioè tutti gli esempi che sono soddisfatti dall&#39;ipotesi più specifica sono sempre soddisfatti anche dall&#39;ipotesi più generale.</p>
 <p>Può essere che due ipotesi possono non essere comparabili tra loro.</p>
@@ -362,20 +362,21 @@ Per essere contenuta nel version space, un&#39;ipotesi deve essere più generale
 <p>Il version space è quindi contenuto tra i due confini, cioè contiene tutte quelle ipotesi più generali di quelle contenute in <em>S</em> e meno generali di quelle contenute in <em>G</em>, <em>S</em> e <em>G</em> inclusi.</p>
 <h3 id="algoritmo">Algoritmo</h3>
 <p>Si inizializzano gli insiemi <em>G</em> e <em>S</em> in modo che conengano rispettivamente le ipotesi più generali e più specifiche.</p>
-<pre><code><span class="hljs-keyword">foreach</span> <span class="hljs-keyword">d</span> == (x,c(x)) <span class="hljs-keyword">in</span> Tr <span class="hljs-keyword">do</span>
-    <span class="hljs-keyword">if</span> c(x) = 1
+<pre><code class="lang-python"><span class="hljs-keyword">foreach</span> <span class="hljs-keyword">d</span> == (x,c(x)) <span class="hljs-keyword">in</span> Tr <span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">if</span> c(x) = 1:
         rimuovi da <span class="hljs-keyword">G</span> ogni ipotesi inconsistente con <span class="hljs-literal">d</span>
         per ogni ipotesi s <span class="hljs-keyword">in</span> S <span class="hljs-keyword">e</span> inconsistente con <span class="hljs-literal">d</span>
             rimuovi s da S.
             aggiungi ad S tutte le generalizzazioni minime <span class="hljs-keyword">h</span> <span class="hljs-keyword">di</span> s tali che sono consistenti con <span class="hljs-keyword">d</span> <span class="hljs-keyword">ed</span> esiste un altra ipotesi <span class="hljs-keyword">g</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">G</span> più generale <span class="hljs-keyword">di</span> <span class="hljs-keyword">h</span>.
             rimuovi da S tutte le ipotesi s' che sono più generali <span class="hljs-keyword">di</span> altre ipotesi <span class="hljs-keyword">in</span> S.
-    <span class="hljs-keyword">if</span> c(x) == 0
+    <span class="hljs-keyword">if</span> c(x) == 0:
         rimuovi da S tutte le ipotesi inconsistenti con <span class="hljs-literal">d</span>
         per ogni ipotesi <span class="hljs-keyword">g</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">G</span> inconsistente con <span class="hljs-literal">d</span>
             rimuovi <span class="hljs-keyword">g</span> da <span class="hljs-keyword">G</span>
             aggiungi a <span class="hljs-keyword">G</span> tutte le specificazioni (?) minime <span class="hljs-keyword">h</span> <span class="hljs-keyword">di</span> <span class="hljs-keyword">g</span> tali che siano consistenti con <span class="hljs-keyword">d</span> <span class="hljs-keyword">e</span> che esiste un'altra ipotesi s <span class="hljs-keyword">in</span> S più specifica <span class="hljs-keyword">di</span> <span class="hljs-keyword">h</span>.
             rimuovi da <span class="hljs-keyword">G</span> tutte le ipotesi <span class="hljs-keyword">g</span>' che sono più specifiche <span class="hljs-keyword">di</span> altre ipotesi <span class="hljs-keyword">in</span> <span class="hljs-keyword">G</span>.
-</code></pre><p>Quando viene trovato un esempio <em>d</em> nel training set che soddisfa il concetto che si cerca di apprendere:</p>
+</code></pre>
+<p>Quando viene trovato un esempio <em>d</em> nel training set che soddisfa il concetto che si cerca di apprendere:</p>
 <ul>
 <li>Vengono rimosse da <em>G</em> e da <em>S</em> tutte le ipotesi che sono inconsistenti con <em>d</em>, questo perché il version space deve contenere solo ipotesi consistenti con il traingin set.</li>
 <li>Per ogni ipotesi <em>s</em> rimossa da <em>S</em> viengono aggiunte tutte le generalizzazioni minime di <em>s</em> che sono in grado di soddisfare <em>d</em>, questo per andare a definire delle nuove ipotesi specifiche e consistenti con il Tr.</li>
@@ -394,9 +395,9 @@ Per essere contenuta nel version space, un&#39;ipotesi deve essere più generale
 <p>Gli algoritmi che lavorano su alberi di decisione sono molto efficenti ed è per questo che vengono utilizzati in applicazioni pratiche.</p>
 <h2 id="-il-giorno-giusto-per-giocare-a-tennis-">È il giorno giusto per giocare a tennis?</h2>
 <p>Dati:</p>
-<p><img src="Apprendimento Automatico/immagini/l7-tabella.png" alt=""></p>
+<p><img src="./notes/immagini/l7-tabella.png" alt=""></p>
 <p>Albero:</p>
-<p><img src="Apprendimento Automatico/immagini/l7-albero.png" alt=""></p>
+<p><img src="./notes/immagini/l7-albero.png" alt=""></p>
 <p>Come si può notare, nell&#39;albero ogni nodo corrisponde ad un attributo e l&#39;arco tra un nodo e l&#39;altro corrisponde uno dei possibili valori, mentre le foglie dell&#39;albero forniscono una classificazione.</p>
 <p>Per classificare un&#39;istanza si parte dalla radice e si scende verso le foglie, secondo quanto specificato dai test sugli attributi definiti dai nodi dell&#39;albero.</p>
 <p>Se si raggiunge una foglia l&#39;etichetta ad essa associata rappresenta la classificazione.</p>
@@ -409,7 +410,8 @@ Per essere contenuta nel version space, un&#39;ipotesi deve essere più generale
 (Outlook = <span class="hljs-built_in">Rain</span> <span class="hljs-built_in">and</span> <span class="hljs-built_in">Wind</span> = Weak)
 </code></pre><h2 id="id3-apprendimento-su-un-albero">ID3 - Apprendimento su un albero</h2>
 <p>L&#39;algoritmo di apprendimento che costruisce l&#39;albero di decisione trammite una procedura top down in stile divide et impera.</p>
-<p>Questo algoritmo apprende l&#39;albero di dicesione costruendolo con un approccio top-down. La costruzione inizia con la domanda &quot;Quale attributo dovrebbe essere testato alla radice dell&#39;albero?&quot;. Per scegliere l&#39;attributo vengono valutati tutti i possibili candidati utilizzando un test statistico per valutare quando bene il singolo attributo classifica il training set.</p>
+<p>Questo algoritmo apprende l&#39;albero di dicesione costruendolo con un approccio top-down. La costruzione inizia con la domanda &quot;<em>Quale attributo dovrebbe essere testato alla radice dell&#39;albero?</em>&quot;. 
+Per scegliere l&#39;attributo vengono valutati tutti i possibili candidati utilizzando un test statistico per valutare quando bene il singolo attributo classifica il training set.</p>
 <p>Viene selezionato il miglior attributo e utilizzato come test alla radice dell&#39;albero. Vengono poi creati tanti figli quanti sono i possibili valori dell&#39;attributo e gli esempi del training set vengono partizionati tra i vari figli, in modo che il loro valore per quell&#39;attributo corrisponda con il valore del nodo.</p>
 <p>Questo processo vienei ripetuto per ognuno dei nodi creati fino a che non vengono esaminati tutti gli esempi.</p>
 <p>Più formalmente, dato un training set <em>Tr</em> e un insieme di attributi <em>A</em>, algoritmo è definito come:</p>
@@ -458,11 +460,11 @@ A = Temp, Hum, <span class="hljs-built_in">Wind</span>})
 <p>L&#39;entropia misura il grado di purezza degll&#39;insieme degli esempi.</p>
 <p>Nel caso ci siano più valori l&#39;entropia si calcola come</p>
 <blockquote>
-<p>- Sommatoria<sub>v</sub> (p<sub>v</sub>log<sub>2</sub>(p<sub>v</sub>))</p>
+<p>- ∑<sub>v</sub> (p<sub>v</sub>log<sub>2</sub>(p<sub>v</sub>))</p>
 </blockquote>
 <p>ID3 sceglie come attributo <em>a</em>, quello che massimizza il guadagno entropico.</p>
 <blockquote>
-<p>G(S,<em>a</em>) = E(S) - Sommatoria<sub>v ϵ V(a)</sub> (E(S<sub>a = v</sub>) |S<sub>a=v</sub>| / |S|)</p>
+<p>G(S,<em>a</em>) = E(S) - ∑<sub>v ϵ V(a)</sub> (E(S<sub>a = v</sub>) |S<sub>a=v</sub>| / |S|)</p>
 </blockquote>
 <p>Il guadagno misura la riduzione aspettata dell&#39;entropia nel partizionare i dati utilizzando <em>a</em>.</p>
 <p>L&#39;entropia attesa è descritta dal secondo termine ed è semplicemente la sommatoria delle entropie di tutti i sottoinsiemi di <em>S</em>, pesata secondo il numero di esempi che appartengono al sottoinsieme di <em>S</em>.</p>
@@ -473,7 +475,7 @@ Seguendo l&#39;esempio della data, segliere quell&#39;attributo porta ad ottener
 </blockquote>
 <p>Dove <em>SI</em> rappresenta la <em>split information</em>, un valore che misura quanti e quanto uniformi sono i sottoinsiemi generati dall&#39;attributo <em>a</em> a partire dall&#39;insieme <em>S</em>.</p>
 <blockquote>
-<p>SI(S,a) = - Sommatoria<sub>v ϵ V(a)</sub>( log<sub>2</sub>(|S<sub>a = v</sub>| / |S|) |S<sub>a = v</sub>| / |S| )</p>
+<p>SI(S,a) = - ∑<sub>v ϵ V(a)</sub>( log<sub>2</sub>(|S<sub>a = v</sub>| / |S|) |S<sub>a = v</sub>| / |S| )</p>
 </blockquote>
 <p>E corrispone all&#39;entropia di <em>S</em> dati i possibili valori di <em>a</em>.</p>
 <p><em>GainRatio</em> non risolve tutti i problemi, infatti può succedere che attributi significativi e che possono assumere tanti valori, vengano svantaggiati rispetto al altri.</p>
@@ -508,7 +510,9 @@ Seguendo l&#39;esempio della data, segliere quell&#39;attributo porta ad ottener
 <h2 id="overfitting">Overfitting</h2>
 <p>Cioè l&#39;ipotesi è molto accurata sui valori di training, ma sui valori di test risulta meno accurata.</p>
 <p>All&#39;aumentare della complessità dell&#39;albero creato, l&#39;accuratezza dell&#39;abero sui dati di trainging aumenta, ma una volta provata con i dati di test, l&#39;accuratezza cala drastricamente.</p>
-<pre><code><span class="hljs-operator">in</span> fact <span class="hljs-keyword">it</span> can lead <span class="hljs-built_in">to</span> difficulties when there is noise <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> data, <span class="hljs-operator">or</span> when <span class="hljs-operator">the</span> <span class="hljs-built_in">number</span> <span class="hljs-operator">of</span> training examples is too small <span class="hljs-built_in">to</span> produce <span class="hljs-operator">a</span> representative sample <span class="hljs-operator">of</span> <span class="hljs-operator">the</span> <span class="hljs-constant">true</span> target <span class="hljs-function"><span class="hljs-keyword">function</span></span>
+<pre><code><span class="hljs-operator">in</span> fact <span class="hljs-keyword">it</span> can lead <span class="hljs-built_in">to</span> difficulties when there is noise <span class="hljs-operator">in</span> <span class="hljs-operator">the</span> data,
+ <span class="hljs-operator">or</span> when <span class="hljs-operator">the</span> <span class="hljs-built_in">number</span> <span class="hljs-operator">of</span> training examples is too small <span class="hljs-built_in">to</span> produce <span class="hljs-operator">a</span> 
+ representative sample <span class="hljs-operator">of</span> <span class="hljs-operator">the</span> <span class="hljs-constant">true</span> target <span class="hljs-function"><span class="hljs-keyword">function</span></span>
 </code></pre><p>Si è osservato che fino ad un certo livello di complessità l&#39;accuratezza in training è molto simile all&#39;accuratezza in test, è quindi importante <strong>potare</strong> gli albteri complessi.</p>
 <p>Ci sono però due problemi:</p>
 <ol>
@@ -519,11 +523,12 @@ Seguendo l&#39;esempio della data, segliere quell&#39;attributo porta ad ottener
 <ul>
 <li>Valutare le prestazioni sull&#39;insieme di apprendimento usando un test statistico;</li>
 <li>Valutare le prestazioni su un&#39;insieme separato di validazione;</li>
-<li>Usare un principio di <strong>minimizzazione della lunghezza di descrizione (MDL)</strong>: min_Tree[size(tree) - size(errori(tree))].</li>
+<li>Usare un principio di <strong>minimizzazione della lunghezza di descrizione (MDL)</strong>: <em>min_Tree[size(tree) - size(errori(tree))].</em></li>
 </ul>
 <h3 id="come-potare">Come potare</h3>
 <h4 id="reduce-error-pruning">Reduce error pruning</h4>
-<p>Pruning a decision node consists of removing the subtree rooted at that node, making it a leaf node, and assigning it the most common classification of the training examples affiliated with that node. Nodes are removed only if the resulting pruned tree performs no worse than-the original over the validation set</p>
+<p>Effettuare il pruning di un nodo consiste nel rimuovere il sotto albero che ha origine in quel nodo, trasformando il nodo potato in una foglia e assegnandogli come valore la classificazione più comune tra gli esempi di training associati a quel nodo.</p>
+<p>I nodi vengono rimossi solamente se le prestazione dell&#39;albero potato non peggiorano rispetto la versione originale, confrontate sul validation set.</p>
 <ul>
 <li>Dividere il training set in due sottinsiemi, uno per fare training e l&#39;altro per fare validazione.</li>
 <li>Ripetere fino a quando le prestazioni peggiorano:<ul>
@@ -556,130 +561,146 @@ Seguendo l&#39;esempio della data, segliere quell&#39;attributo porta ad ottener
 <h1 id="lezione-9-reti-neurali">Lezione 9 - Reti neurali</h1>
 <p>Due approcci principali per studiarle:</p>
 <ol>
-<li>Riprodurre il cervello umano<ul>
-<li>Modellare tutto o parte del cervello umano in modo affidabile, concentrandosi non tanto sul comportamento ma sulla struttura</li>
-</ul>
-</li>
-<li>Estrarre i principi fondamentali di calcolo utilizzati dal cervello<ul>
-<li>replicare solamente il compratmento del cervello umano, concentrandosi nei principi fondamentali del calcolo che il cervello utilizza, al fine di produrre un sistema artificiale in grado di replicarli</li>
-</ul>
-</li>
+<li>Riprodurre il cervello umano, cercando di modellarne la struttura in modo affidabile.</li>
+<li>Estrarre i principi fondamentali di calcolo utilizzati dal cervello replicandone solamente il comportamento, concentrandosi sui principi di calcolo che il cervello utilizza al fne di ripordurre un sistema artificiale in grado di replicarli.</li>
 </ol>
-<p>Durante il corso ci concetreremo sul secondo approccio applicato al contesto dell&#39;apprendimento supervisionato.</p>
-<h2 id="tipologie-di-reti">Tipologie di reti</h2>
-<p>Le reti neurali differiscono per:</p>
-<ul>
-<li>Topologia della rete</li>
-<li>Funzionamento dei neuroni</li>
-<li>...</li>
-</ul>
+<p>Durante il corso ci concentreremo sul secondo approccio applicato al contesto dell&#39;apprendimento supervisionato.</p>
 <h2 id="quando-usarle-">Quando usarle?</h2>
 <p>Quando si hanno tanti input numerici e discreti e si vuole effettuare una classificazione o regressione.</p>
 <p>I dati di input possono anche contenere del rumore e la forma della funzione target è totalmente sconosciuta.</p>
 <p>Il risultato finale non deve essere compreso da un esperto umano, il funzionamento della rete è una black-box.</p>
 <p>Tipicamente vengono utilizzate quando non ci sono conoscenze a priori nel dominio.</p>
 <h2 id="reti-neurali-artificiali">Reti neurali artificiali</h2>
-<p><img src="Apprendimento Automatico/immagini/l9-rete.png" alt=""></p>
-<p>Il cervello umano è sostituito da circa 10 alla 10 neuroni fortemente interconnessi tra loro (da 10 alla 4 a 10 alla 5 connessioni), il tempo di risposta di un neurone è di circa 0.001 secondi.</p>
-<p>Considerando che per riconoscere il contenuto di una scena un unmano impiega circa 0.1 secondi, ne consegue che il cervello umano sfrutta pesantemente il calcolo parallelo: infatti, in questo caso, non pul effettuare più di 100 calcoli seriali.</p>
-<p>I processori attuali fanno ancora fatica a lavorare in parallelo.</p>
-<p>Una rete neurale artificiale è un sistema costituito da unità interconnesse che calclano funzioni numeriche, ci sono vari tipi di unità:</p>
+<p><img src="./notes/immagini/l9-rete.png" alt=""></p>
+<p>Il cervello umano è sostituito da circa 10<sup>10</sup> neuroni fortemente interconnessi tra loro (da 10<sup>4</sup> a 10<sup>5</sup> connessioni), il tempo di risposta di un neurone è di circa 0.001 secondi.</p>
+<p>Considerando che per riconoscere il contenuto di una scena un unmano impiega circa 0.1 secondi, ne segue che il cervello umano sfrutta pesantemente il calcolo parallelo: infatti, in questo caso, non pul effettuare più di 100 calcoli seriali.</p>
+<p>Questo funzionamento va in contrasto con quello attuale dei nostri processori, i quali ottenogno ottime prestazioni nelle operazioni seriali ma sono in difficoltà con il calcolo parallelo.</p>
+<p>Una rete neurale artificiale è un sistema costituito da unità interconnesse che calcolano funzioni numeriche, ci sono vari tipi di unità:</p>
 <ul>
-<li>le unità di input rappresentano le variabili di ingresso</li>
-<li>le unità di output rappresentano le variabili di uscita</li>
-<li>le unità nascoste rappresentano le variabili interne che codificano (dopo l&#39;apprendimento) le correlazioni tra le variabili di input relativamente al valore di output che si vuole generare</li>
+<li>le unità di input che rappresentano le variabili di ingresso;</li>
+<li>le unità di output che rappresentano le variabili di uscita;</li>
+<li>le unità nascoste che rappresentano le variabili interne che codificano (dopo l&#39;apprendimento) le correlazioni tra le variabili di input relativamente al valore di output che si vuole generare.</li>
 </ul>
-<p>E sulle connessioni tra le varie unità sono definiti dei pesi adattabili dall&#39;algoritmo di apprendimento.</p>
-<p>Ci sono due modi per replicare un neurone.</p>
+<p>Sulle connessioni tra le varie unità sono definiti dei pesi che vengono definiti dall&#39;algoritmo di apprendimeno.</p>
+<p>Ci sono due modi per replicare un neurone:</p>
+<ul>
+<li>Hard-threshold</li>
+<li>Sigmoidale</li>
+</ul>
 <h3 id="hard-threshold-iperpiano">Hard-threshold - iperpiano</h3>
-<p><img src="Apprendimento Automatico/immagini/l9-threshold.png" alt=""></p>
-<p>L&#39;idea è quella di avere un vettore di input (nodi d&#39;ingresso) e da ogni nodo arriva un segnale x<sub>i</sub>, ognuno di questi segnali viene aplificato di un fattore w<sub>i</sub>.</p>
-<p>C&#39;è un primo elmento che effettua la sommatoria <em>net</em> di tutti i segnali d&#39;ingresso considerando il loro peso, dove x<sub>0</sub> per devinizione viene posto a 1.</p>
-<p>Sul risultato <em>net</em> viene applciata una funzione gradino che ritorna -1 o 1 un base al segno di <em>net</em>.</p>
-<p>Si può dimostrare che questo tipo di neurone definisce un iperpiano.</p>
-<p>Questo perché la somamtoria a partire da i=1 può essere vista come un W trasposto x +w0 ed è la definizione precedentemente data di iperpiano.</p>
+<p><img src="./notes/immagini/l9-threshold.png" alt=""></p>
+<p>L&#39;idea è quella di avere un vettore di input che rappresenta i nodi di ingresso da ognuno dei quali  arriva un segnale x<sub>i</sub>. A ogni segnale è associato un peso w<sub>i</sub> che lo amplifica, tutti questi pesi vengono definiti dall&#39;algoritmo di apprendimento.</p>
+<p>Il neurone è poi composto da altri due elementi: il primo che effettua una sommatoria, detta <strong>net</strong> di tutti i segnali d&#39;ingresso moltiplicati per il loro peso, mentre il secondo utilizza il risultato del primo e calcola una funzione gradino, il cui output è 1 o -1 in base al segno di net.</p>
+<p>Alcune precisazioni:</p>
+<ul>
+<li>Nella sommatoria iniziale gli ingressi vengono rappresentati da x<sub>1</sub> a x<sub>n</sub>, ognuno moltiplicato per il proprio peso. Tuttavia è presente anche un ingresso x<sub>0</sub> sempre fisso a 1, al quale viene associato il peso w<sub>0</sub>, questa componente rappresenta il bais induttivo.</li>
+<li>Possono essere usate altre funzioni gradino oltre a quella del segno.</li>
+</ul>
+<p>Si può dimostrare che questo tipo di neurone definisce un iperpiano.
+Questo perché la somamtoria a partire da <em>i=1</em> può essere vista come un <em>w<sup>T</sup>x +w<sub>0</sub></em> ed concide con la definizione di iperpiano.</p>
 <h3 id="sigmoidale">Sigmoidale</h3>
-<p><img src="Apprendimento Automatico/immagini/l9-sigmoidale.png" alt=""></p>
+<p><img src="./notes/immagini/l9-sigmoidale.png" alt=""></p>
 <p>Utilizza la stessa sommatoria <em>net</em> alla quale viene applicata la funzione σ.</p>
 <blockquote>
 <p>σ(z) = 1 / (1 + e<sup>-z</sup>)</p>
 </blockquote>
 <p>La funzione è continua e compresa tra 0 e 1.</p>
-<p>Il vantaggio fondamentale di σ è che è una funzione derivabile e quindi permette di utilizzare l&#39;algoritmo di <strong>back propagation</strong> che permette di fare apprendimento all&#39;indietro usando più livelli di neuroni.</p>
+<p>Il vantaggio fondamentale di σ è che si tratta di una funzione derivabile e quindi permette di utilizzare l&#39;algoritmo di <strong>back propagation</strong>. Un algoritmo che permette di fare apprendimento all&#39;indietro in grado di funzionare anche su reti composte da più livelli.</p>
+<p>Un&#39;altra caratteristica interessante di questa funzione è che la sua derivata può essere espressa come una funzione dei valori di input. 
+Cioè:</p>
+<blockquote>
+<p>∂σ / ∂z = σ(z)(1-σ(z))</p>
+</blockquote>
+<p>Questa proprietà tornerà utile quando sarà applicato l&#39;algortimo di back propagation.</p>
+<p>Infine, il neurone sigmoidale può utilizza altre funzioni al posto di <em>1 / (1 + e<sup>-z</sup>)</em>, come la tangente iperbolica.</p>
 <h2 id="perceptron">Perceptron</h2>
-<p>È un singolo neurone con Hard Threshold, l&#39;idea è quella di ridursi ad un iperpiano.</p>
-<p>Quando facciamo apprendimento si cerca di trovare un valore ai vari pesi w<sub>i</sub> in modo da apprendere la funzione target (anche in questo caso viene utilizzato un training set).</p>
+<p>È una rete neurale composta da un singolo neurone con Hard Threshold che viene utilizzata per rappresentare un iperpiano.</p>
+<p>L&#39;algoritmo di apprendimento per questa rete cerca dei valori per i vari pesi <em>w<sub>i</sub></em> in modo da apprendere la funzione target.
+Per apprendere i coefficenti corretti vengono utilizzati gli esempi del training set.</p>
 <h3 id="implementazione-di-funzioni-booleane">Implementazione di funzioni booleane</h3>
-<p>Ad esempio Percepton può implementare l&#39;operatore or con gli ingressi y<sup>-</sup> € {0,1}<sup>n+1</sup> (stringhe binarie), si possono usare come pesi w&#39;<sub>0</sub> = -0.5 e w&#39;<sub>i</sub> = 1 per i=1...n.</p>
-<p>In modo simile può essere implementato anche l&#39;operatore and con w&#39;<sub>0</sub> = -n+0.5 e w&#39;<sub>i</sub> = 1 per i = 1..n.</p>
-<p>Si può anche realizzare l&#39;operatore not con una singola connessione e con un unico peso negativo.</p>
-<p>Un problema che il perceptron non riesce a risolvere è la xor.</p>
+<p>Ad esempio Percepton può implementare l&#39;operatore <em>or</em> con gli ingressi <em>y ∈ {0,1}<sup>n+1</sup></em> (vettori rappresentanti stringhe binarie), si possono usare come pesi <em>w&#39;<sub>0</sub> = -0.5</em> e <em>w&#39;<sub>i</sub> = 1</em> per <em>i=1..n</em>.</p>
+<p>In modo simile può essere implementato anche l&#39;operatore <em>and</em> con <em>w&#39;<sub>0</sub> = -n+0.5</em> e <em>w&#39;<sub>i</sub> = 1</em> per <em>i = 1..n</em>.</p>
+<p>Si può anche realizzare l&#39;operatore <em>not</em> con una singola connessione e con un unico peso negativo.</p>
+<p>Un problema che il perceptron non riesce a risolvere è la <em>xor</em>, questo perché si tratta di una funzione non linearmente separabili.</p>
 <h3 id="apprendimento-di-funzioni-linearmente-separabili">Apprendimento di funzioni linearmente separabili</h3>
-<p>Si può far apprendere a Perceptron delle funzioni linearmente separabili con un algoritmo che è garantito che termini.</p>
+<p>Si può far apprendere a Perceptron tutte le funzioni linearmente separabili con un algoritmo che è garantito che termini.</p>
 <p>Tuttavia se la funzione da apprendere non è linearmente separabile l&#39;algoritmo non converge.</p>
-<p>Dato un insieme di apprendimento Tr = {(x<sup>-</sup>,t), dove t € {-1,+1}}.</p>
+<p>Dato un insieme di apprendimento <em>Tr = {(x<sup>-</sup>,t)</em>, dove <em>t ∈ {-1,+1}}</em>.</p>
 <ol>
-<li>Inizializza il vettore dei pesi w al vettore nullo (con tutte le componenti a 0, possono anche essere random ma piccole)</li>
+<li>Inizializza il vettore dei pesi <em>w</em> al vettore nullo (con tutte le componenti a 0, possono anche essere random ma piccole)</li>
 <li>Ripeti finché non si raggiunge un punto fisso:<ol>
-<li>seleziona a caso uno delgi esempi di apprendimento (x<sup>-</sup>,t)</li>
-<li>se out = sign(w<sup>-</sup> * x<sup>-</sup>) != t allora w<sup>-</sup> = w<sup>-</sup> + (t-out)x<sup>-</sup></li>
+<li>Seleziona a caso uno delgi esempi di apprendimento <em>(x,t)</em></li>
+<li>se <em>out = sign(w * x) ≠ t</em> allora <em>w = w + (t-out)x</em></li>
 </ol>
 </li>
 </ol>
-<p>Cioè per ogni esempio nel training set va a controllare il segno di del prodotto scalare tra x e i pesi, se questo non coincide con il valore di training è necessario adattare w in modo che anche per x venga calcolato il valore corretto.</p>
+<p>Cioè per ogni esempio nel training set va a controllare il segno del prodotto scalare tra <em>x</em> e i pesi, se questo non coincide con il valore di training è necessario adattare <em>w</em> in modo che anche per <em>x</em> venga calcolato il valore corretto.</p>
 <p>In questo modo si riesce ad apprendere una funzione che per costruzione non commette nessun errore nel training set.</p>
-<h1 id="lezione-10">Lezione 10</h1>
+<p>Piccola precisazione, <em>x</em> e <em>w</em> sono dei vettori.</p>
+<h1 id="lezione-10-reti-neurali-2">Lezione 10 - Reti neurali 2</h1>
 <p>Perceptron va bene ma non riesce ad apprendere la XOR perché non è linearmente separabile.</p>
 <h2 id="reti-di-perceptron">Reti di Perceptron</h2>
-<p>Una rete di Perceptron può apprendere qualsiasi funzione booleana.</p>
-<p>Problema: come effettuare l’apprendimento di una rete di Perceptron?</p>
-<p>Non si sa come assegnare pesi alle unità nascoste,una possibile soluzione e`quella di rendere il singolo neurone derivabile e sfruttare la tecnica di Discesa del Gradiente per apprendere i pesi &quot;giusti&quot;.</p>
+<p>L&#39;idea è quindi quella di combinare più Perceptron tra loro, in modo che riescano ad apprendere una qualsiasi funzione boolena.</p>
+<p>Il problema ora diventa come effettuare l&#39;apprendimento con una rete di Perceptron, dal momento che non è più triviale come assegnare dei pesi alle unità nascoste. 
+Una possibile soluzione è quella di rendere il singolo neurone derivabile e sfruttare la tecnica di Discesa del Gradiente per apprendere i pesi &quot;giusti&quot;.</p>
 <h3 id="discesa-di-gradiente">Discesa di gradiente</h3>
 <p><strong>Richiami di analisi</strong>: il segno della derivata di una funzione determina se la funzione è crescente o decrescente. Inoltre se la derviata vale 0, la funzione in quel punto ha un minimo o un massimo locale.</p>
-<p>Il core business della derivata è che noi possiamo seguire il segno della derivata per trovare dei valori più grandi per la funzione originale.</p>
-<hr>
-<p><img src="Apprendimento Automatico/immagini/l10-threshold.png" alt=""></p>
-<p>La funzione obbiettivo da minimizzare è la <strong>funzione errore</strong>, l&#39;idea della funzione è di calcolare lo scarto quadratico medio del valore target predetto dal neurone (<em>funzione out</em>).</p>
-<p>L&#39;idea della disceza di grandiente è quello di spostarsi nella direzione contraria del gradiente in modo da ottenere il valore più piccolo della funzione obiettivo.</p>
-<p><img src="Apprendimento Automatico/immagini/l10-step.png" alt=""></p>
-<p><em>-η</em> è lo step con il quale mi sposto.</p>
-<p>Per calcolare lo spostamento rispetto ad ogni <em>w_i</em> per minimizzare la funzione obiettivo, vado a calcolare la derivata.</p>
-<p><em>out^(d)</em> e <em>t^(d)</em> si riferiscono all&#39;esempio <em>d</em>-esimo nel training set.</p>
-<p><img src="Apprendimento Automatico/immagini/l10-step-passaggi.png" alt=""></p>
+<p>Si può quindi seguire il segno della derivata prima di una funzione per  raggiungere un massimo o minimo locale.</p>
+<p><img src="./notes/immagini/l10-threshold.png" alt=""></p>
+<p>La funzione obiettivo da minimizzare è la <strong>funzione errore</strong>, la quale rappresenta lo scarto quadratico medio del valore target predetto dal neurone (<em>funzione out</em>).</p>
+<p>Dal momento che si tratta di una funzione derivabile è possibile utilizzare la discessa di gradiente per raggiungere un minimo.</p>
+<p><img src="./notes/immagini/l10-step.png" alt=""></p>
+<p>Il valore <em>-η</em> è lo step con il quale mi sposto e prende il nome di <strong>learn rate</strong>.</p>
+<p>Per calcolare lo spostamento rispetto ad ogni <em>w<sub>i</sub></em> per minimizzare la funzione obiettivo, vado a calcolare la derivata.
+Una volta calcolati tutti i <em>Δw<sub>i</sub></em> posso andare a sommarli tra loro e successivamente aggiornare il vettore <em>w</em>.</p>
+<p>La seguente serie di calcoli mostra come è possibile calcolare i <em>Δw<sub>i</sub></em> per tutti gli esempi presenti nel training set. 
+Viene usato <em>out<sup>(d)</sup></em> per indicare il valore calcolato dalla rete per il <em>d</em>-esimo esempio del training set e <em>t<sup>(d)</sup></em> per indicare il corretto valore della funzione target per lo stesso esempio.</p>
+<p>In questo caso viene sempre considerata una rete di perceptron senza hard-treshold e senza sigmoide.</p>
+<p><img src="./notes/immagini/l10-step-passaggi.png" alt=""></p>
 <h4 id="algoritmo-di-apprendimento">Algoritmo di apprendimento</h4>
-<p><em>Δw_i</em> rappresenta lo spostamento dal w_i iniziale</p>
-<p><img src="Apprendimento Automatico/immagini/l10-algoritmo-gradiente.png" alt=""></p>
-<p>In pratica prima viene esaminato tutti il training set per aggiornare i vari <em>Δw_i</em>, una folta finito di esaminare il training set si aggiornano i <em>w_i</em> e si riparte da capo.</p>
-<p>Le condizioni di stop dell&#39;algoritmo possono essere:</p>
+<p><em>Δw<sub>i</sub></em> rappresenta lo spostamento dal <em>w<sub>i</sub></em> iniziale.</p>
+<p><img src="./notes/immagini/l10-algoritmo-gradiente.png" alt=""></p>
+<p>In pratica prima viene esaminato tutti il training set per aggiornare i vari <em>Δw<sub>i</sub></em>, una volta finito di esaminare il training set si aggiornano i <em>w<sub>i</sub></em> e si ripete fino a che non si verifica una  condizione di stop.</p>
+<p>Possono essere utilizzate varie condizioni di stop:</p>
 <ul>
 <li><em>E(w)</em> minore di una soglia prefissata</li>
-<li><em>Δw_i = 0 ∀i</em></li>
+<li><em>Δw<sub>i</sub> = 0 ∀i</em></li>
 <li>Il numero di iterazioni ha superato una soglia prefissata. </li>
 </ul>
 <h3 id="discesa-di-gradiente-con-sigmoide">Discesa di gradiente con sigmoide</h3>
-<p><img src="Apprendimento Automatico/immagini/l10-sigmoidale.png" alt=""></p>
-<p>Nell&#39;ultimo conto c&#39;è una &quot;)&quot; di troppo.</p>
-<p>L&#39;algoritmo di apprendimento è sempre lo stesso, cambia come vengono aggirnati i <em>Δw_i</em>.</p>
+<p><img src="./notes/immagini/l10-sigmoidale.png" alt=""></p>
+<p>In questo caso si può utilizzare lo stesso algoritmo di apprendimento visto in precedenza, cambia però come vengono aggiornati i <em>Δw<sub>i</sub></em>, dal momento che bisona tenere in considerazione la derivata della funzione sigmoidale.</p>
+<p><img src="./notes/immagini/l10-derivata-sigmoide.png" alt=""></p>
+<p>Nonostate la formula sembri molto minacciosa, i <em>Δw<sub>i</sub></em> sono uguali a <em>-η∂E / ∂w<sub>i</sub></em>, cioè il learn rate moltiplicato per la derivata appena calcolata.</p>
 <h2 id="rete-di-perceptron">Rete di Perceptron</h2>
-<p><img src="Apprendimento Automatico/immagini/l10-rete.png" alt=""></p>
-<p><img src="Apprendimento Automatico/immagini/l10-rete-parametri.png" alt=""></p>
-<p>L&#39;errore è l&#39;errore quadratico medio di tutte le unità di output.</p>
+<p><img src="./notes/immagini/l10-rete.png" alt=""></p>
+<p><img src="./notes/immagini/l10-rete-parametri.png" alt=""></p>
+<p>E rappresenta l&#39;errore quadratico medio di tutte le unità di output.</p>
 <h3 id="calcolo-dei-pesi-per-le-unit-di-output">Calcolo dei pesi per le unità di output</h3>
 <p>Calcoliamo i pesi per le unità di output, considerando i livelli nascosti come se fossero degli ingressi.</p>
-<p>I <em>w_i</em> adesso diventano <em>w_k,j</em> perché i pesi sono come pesi da un&#39;unità nascosta <em>j</em> all&#39;unità di output <em>k</em>.</p>
-<p><img src="Apprendimento Automatico/immagini/l10-rete-output.png" alt=""></p>
+<p>I <em>w<sub>i</sub></em> adesso diventano <em>Δw<sub>k,j</sub></em> perché i pesi vengono calcolati per ogni collegamento da un&#39;unità nascosta <em>j</em> all&#39;unità di output <em>k</em>.</p>
+<p><img src="./notes/immagini/l10-rete-output.png" alt=""></p>
 <p>Nel secondo passo sono state fatte due operazioni, prima viene tolta la sommatoria, perché quando viene fatta la derivata della sommatoria c&#39;è un solo elemento diverso da ed è quello di indice <em>k^=k</em>.</p>
 <h3 id="calcolo-dei-pesi-per-le-unit-nascoste">Calcolo dei pesi per le unità nascoste</h3>
-<p><img src="Apprendimento Automatico/immagini/l10-rete-input.png" alt=""></p>
+<p><img src="./notes/immagini/l10-rete-input.png" alt=""></p>
 <h3 id="algoritmo-di-apprendimento">Algoritmo di apprendimento</h3>
-<p>L&#39;apprendimento viene fatto in due fasi, una <strong>forward</strong> nella quale si fa apprendimento sull&#39;input, e una base <strong>backward</strong> nella quale si fa apprendimento sull&#39;output. Ma non ne sono sicuro.</p>
-<p><img src="Apprendimento Automatico/immagini/l10-apprendimento-rete.png" alt=""></p>
-<p>Il passo 2 rappresenta la fase <strong>forward</strong> mentre il passo 3 rappresenta la fase <strong>backward</strong></p>
+<p>L&#39;algoritmo di apprendimento lavora in due fasi: nella prima fase, detta <strong>feed forward</strong>, viene forinto in input alla rete un esempio del training set, in modo che questa possa provare a calcolare la funzione target per l&#39;esempio. Una volta calcolata si passa alla fase di <strong>backward progragation</strong>, nella quale si aggiornarno i coefficenti delle unità di output e delle unità nascoste in base alla correttezza o meno della predizione. In questo caso l&#39;apprendimento avviene a ritroso, prima vengono aggiornati i coefficenti delle unità di output e poi quelli dei livelli nascosti.</p>
+<p><img src="./notes/immagini/l10-apprendimento-rete.png" alt=""></p>
+<p>Il passo 2 dell&#39;algoritmo rappresenta il calcolo della differenza tra l&#39;output atteso e quello ottenuto, questo viene poi utilizzato per aggiornare a ritroso i valori dei nodi interni (passo 3).</p>
+<p>L&#39;algoritmo prende il nome di <strong>back propagation stocastico</strong> perché il valore dei <em>Δw<sub>i</sub></em> viene aggiornato subito dopo aver valutato un esempio <em>x</em> e non solamente dopo aver valutato tutti gli esempi del training set.</p>
 <p>Le possibili condizioni di terminazione sono le stesse che si hanno quando c&#39;è un solo neurone.</p>
-<h1 id="lezione-11-reti-neurali-3">Lezione 11 - Reti neurali 3</h1>
-<p>Pipeline di apprendimento supervisionato per una rete.</p>
-<h2 id="oggetti">Oggetti</h2>
-<p>In natura possono essere presenti varie tipologie di oggetti:</p>
+<h1 id="lezione-11-pipeline-di-apprendimento-supervisionato">Lezione 11 - Pipeline di apprendimento supervisionato</h1>
+<p>L&#39;apprendimento supervisionato può essere visto come una serie di fasi:</p>
+<ol>
+<li>Analisi del problema</li>
+<li>Raccolta, analisi e preprocessing dei dati</li>
+<li>Studio delle correlazioni tra variabili</li>
+<li>Feature selection, definizione dei pesi, normalizzazione</li>
+<li>Scelta del predittore e del modello</li>
+<li>Verifica del modello</li>
+</ol>
+<h2 id="fase-4-feature-selection-definizione-dei-pesi-normalizzazione">Fase 4 - Feature selection, definizione dei pesi, normalizzazione</h2>
+<p>Per rappresensentare gli oggetti con i quali lavora un algoritmo di apprendimento è possibile utilizzare varie rappresentazioni:</p>
 <ul>
 <li><strong>vettori</strong>: come il valore di pressione del sangue, il battito cardiacoo, altezza e peso, (Un vettore con dei numeri.</li>
 <li><strong>stringhe</strong>: Una serie di caratteri che rappresentano un documento o la struttura del DN</li>
@@ -688,93 +709,119 @@ Seguendo l&#39;esempio della data, segliere quell&#39;attributo porta ad ottener
 <li><strong>albero o grafi</strong>: un documento XML </li>
 <li><strong>strutture composte</strong>: ottenute combinando tra loro le precedenti.</li>
 </ul>
-<p>Nel corso ci concentriamo principamente nei vettori.</p>
-<p>Per ogni oggetto possiamo avere a disponsizione delle <strong>feature categoriche</strong>, che rappresentano delle caratteristiche nominali dell&#39;oggetto (marca di un auto, paese di origine), alcune di queste possono essere anche <strong>ordinali</strong>, cioè che impongno un ordine (gradi militari: soldato, caporale,...) ma la distanza tra un valore e un altro non è quantificabile.</p>
-<p>Possono essere definite delle <strong>feature quantitative</strong>, cioè delle caratteristiche che sono <strong>enumerabili</strong> (livello di apprezzamento di un prodotto) oppure <strong>ratio</strong>, ovvero dei numeri reali (peso di una persona).</p>
+<p>Nel corso ci concentriamo principamente sui vettori.</p>
+<p>Per ogni oggetto possiamo avere a disponsizione delle <strong>feature categoriche</strong>, che rappresentano delle caratteristiche nominali dell&#39;oggetto (marca di un auto, paese di origine), alcune di queste possono essere anche <strong>ordinali</strong>, cioè che impongno un ordine tra gli elementi ma la distanza tra un valore e un altro non è quantificabile, come per esempio i gradi militari: soldato, caporale, ecc.</p>
+<p>Un altro tipo di feature sono le <strong>feature quantitative</strong>, cioè delle caratteristiche che sono <strong>enumerabili</strong>, come il livello di apprezzamento di un prodotto, oppure <strong>ratio</strong>, ovvero dei numeri reali, come il peso di una persona.</p>
 <h3 id="mapping-feature-categoriche">Mapping Feature categoriche</h3>
 <p>Le feature categoriche si possono mappare in un vettore con tante componenti quanti sono i possibili valori della variabile (<strong>one-hot</strong>).</p>
-<p>Esempio: possibili valori delle variabili:</p>
+<blockquote>
+<p>Ad esempio per raooresentare una macchina con le seguenti caratteristiche è possibile utilizzare un vettore che lo codifica.</p>
 <ul>
 <li>Marca: Fiat [c1], Toyota [c2], Ford [c3]</li>
 <li>Colore: Bianco [c4], Nero [c5], Rosso [c6],</li>
 <li>Tipo: Economica [c7], Sportiva [c8]</li>
 </ul>
-<p>Un oggetto con le caratteristiche (Toyota, Rossa, Economica) viene rappresentato con un vettore <code>[0,1,0,0,0,1,1,0]</code></p>
+<p>La macchina (Toyota, Rossa, Economica) viene quindi rappresentata con un vettore <code>[0,1,0,0,0,1,1,0]</code></p>
+</blockquote>
 <h3 id="mapping-per-feature-continue">Mapping per feature continue</h3>
 <p>Tipicamente le feature continue vengono trasformate per ottenere dei valori comparabili con le altre feature.</p>
 <p>Per ottenere ciò è possibile applicare una delle seguenti traformazioni:</p>
 <ul>
 <li><strong>Centramento</strong>: <em>f(x) = x - E(x)</em></li>
 <li><strong>Normalizzazione STD</strong>: <em>f(x) = (x - E(x))/σ(x)</em></li>
-<li><strong>Rescaling</strong>: <em>f(x) = (x - xmin)/(xmax-xmin)</em></li>
+<li><strong>Rescaling</strong>: <em>f(x) = (x - x<sub>min</sub>)/(x<sub>max</sub>-x<sub>min</sub>)</em></li>
 </ul>
-<h3 id="similarit-e-distanza">Similarità e Distanza</h3>
-<p>Distanza tra vettori: se i vettori hanno stessa norma, la disntaza è equivalente alla similarità indotta dal prodotto scalare.</p>
-<p>Altrimenti anche la lunghezza dei due vettori conta.</p>
-<p>Se i vettori sono normalizzati, allora la distanza e la similarità coindicono, sennò distanza e similiarità non sono lo stesso valore.</p>
-<h3 id="algoritmo-k-nn">Algoritmo k-nn</h3>
-<p><strong>K-Nearest-Neighbors</strong>: è un algoritmo di classificazione in cui un esempio di test è classificato come la classe di maggioranza dei sui k-vicini nel training set.</p>
-<p>Si vanno a scegliere i k elementi più vicini ad un dato elemento, e l&#39;elemento viene classificato come la maggioranza dei sui k-vicini.</p>
+<p>Dove:</p>
+<ul>
+<li><em>E(x)</em> è la media di tutti i possibili valori di <em>x</em></li>
+<li><em>σ(x)</em> è lo scarto quadratico medio</li>
+</ul>
+<h3 id="algoritmo-k-nn">Algoritmo K-NN</h3>
+<p><strong>K-Nearest-Neighbors</strong>: è un algoritmo di classificazione in cui un esempio di test è classificato come la classe di maggioranza dei sui <em>k</em>-vicini nel training set.</p>
+<p>Si vanno a scegliere i <em>k</em> elementi più vicini all&#39;elemento che si vuole classificare e viene scelta come classe quella della maggioranza dei suoi <em>k</em>-vicini.</p>
 <p>Volendo si può normalizzare per perdere volontariamente delle informazioni, in modo da togliere del rumore.</p>
-<h2 id="scelta-degli-iper-parametri">Scelta degli iper-parametri</h2>
-<p>I parametri sono i valori che influiscono nell&#39;apprendimento (i pesi w). Gli iper-parametri sono tutti gli altri parametri che non influiscono con l&#39;apprendimento, come il numero di unità nascoste o il k per l&#39;algoritmo k-nn.</p>
-<p><strong>Model selection</strong>: fase di una piple di apprendimento dove si vanno a individuare gli iper-parametri che ...</p>
-<h3 id="bias-e-varianzaa">Bias e varianzaa</h3>
-<p>Il bias misura la distorsione di una stima (quanto lo stimatore è corretto), mentre la varianza misura la dispersione di una stima.</p>
-<p>𝜃 è la cosa corretta, 𝜃&#39; è quella calcolata dallo stimatore.</p>
+<p>Trattandosi di vettori la distanza deve essere misurata come:</p>
+<blockquote>
+<p>||x - y||<sup>2</sup> = ||x||<sup>2</sup> + ||y||<sup>2</sup> - 2x<sup>T</sup>y</p>
+</blockquote>
+<p>Per semplificare i calcoli, si può tenere in considerazione che se i due vettori hanno la stessa norma, la loro distanza è uguale alla similiarità indotta dal prodotto scalare:</p>
+<blockquote>
+<p>||x - y||<sup>2</sup> = const - 2x<sup>T</sup>y</p>
+</blockquote>
+<h2 id="fase-5-scelta-del-predittore-e-del-modell">Fase 5 - Scelta del predittore e del modell</h2>
+<p>I parametri sono i valori che influiscono nell&#39;apprendimento, come i vari pesi <em>w</em>. Mentre, gli <strong>iper-parametri</strong> sono tutti gli altri parametri che non influiscono con l&#39;apprendimento, come il numero di unità nascoste per le reti neurali o il <em>k</em> per l&#39;algoritmo k-nn.</p>
+<p>La fase in cui questi valori vengono scelti prende il nome di <strong>model selection</strong> e come valori si cerca di scegliere il migliore per il task.</p>
+<h3 id="bias-e-varianza">Bias e varianza</h3>
+<p>Per valutare le predizioni di uno stimatore vengono utilizzate due misure:</p>
+<ul>
+<li><strong>bias</strong>: che misura la distorsione di una stima quando lo stimatore è corretto</li>
+</ul>
+<blockquote>
 <p>b = E[𝜃&#39;] - 𝜃 </p>
+</blockquote>
+<ul>
+<li><strong>varianze</strong>: che misura quanto si disperde la stima.</li>
+</ul>
+<blockquote>
 <p>v = E[(𝜃&#39; - E[𝜃&#39;])<sup>2</sup>]</p>
+</blockquote>
+<p>Nelle formule sopra riportate <em>𝜃</em> rappresenta il valore corretto e <em>𝜃&#39;</em> rappresenta il valore prodotto dallo stimatore.</p>
 <h3 id="hold-out">Hold out</h3>
-<p>Ovvero la ricerca del valore per un determinato iper-parametro.</p>
+<p>Una strategia per ricercare il valore ottimo per un iper-parametro è quella dell&#39;<strong>hold out</strong>, ovvero per ogni possibile valore un valore per l&#39;iper-parametro si fa eseguire l&#39;apprendimento allo stimatore su un sotto-insieme del training set, dopodiché si confrontano i risultati ottenuti effettuando delle predizioni su un insieme di validazione, ovviamente viene scelto il valore dell&#39;iper-parametro che porta ad ottenere le predizioni migliori.</p>
+<p>Più formalmente:</p>
 <ol>
-<li>Si sceglie un piccolo sottoinsieme Tr del training-set che viene utilizzato come set di validazione Va.</li>
-<li>Il classificatore (algoritmo) apprende utilizzando gli esempi in Tr ma senza usare quelli che compaiono in Va.</li>
-<li>Osservo poi come si comporta il classificatore con un determinato valore dell&#39;iper-parametro, e ripeto a partire dal punto 2 per tutti i possibili valori dell&#39;iper-parametro.</li>
+<li>Si sceglie un piccolo sottoinsieme <em>Tr</em> del training set che viene utilizzato come set di validazione <em>Va</em>.</li>
+<li>Il classificatore (algoritmo) apprende utilizzando gli esempi in <em>Tr</em> ma senza usare quelli che compaiono in <em>Va</em>.</li>
+<li>Si osserva come si comporta il classificatore con un determinato valore dell&#39;iper-parametro, e si ripete a partire dal punto 2 per tutti i possibili valori dell&#39;iper-parametro.</li>
 </ol>
 <p>In questo modo riesco a calcolare l&#39;<em>accuracy</em> per ogni valore del iper-parametro e di conseguenza posso scegliere il valore migliore.</p>
-<p>Una volta scelto il valore, rieffetto l&#39;apprendimento utilizzando però il training set completo.</p>
+<p>Con l&#39;<strong>accuracy</strong> si intende la proporzione di predizione corrette effettuate dallo stimatore.</p>
+<p>Una volta scelto il valore, tipicamente si rieffettua l&#39;apprendimento utilizzando il training set completo.</p>
 <h3 id="k-fold-cross-validation">K-fold Cross Validation</h3>
-<p>Alternativa all&#39;hold-out, cioè permette anche questo di scegliere il valore migliore per un dato iper-parametro.</p>
-<p>Si partizione in modo casuale l&#39;insieme di apprendimento in k parti.</p>
-<p>Viene poi fissata una partzione da usare come Va e le restanti come insieme di apprendimento.
-Si ripete questo procedimento per ogni partzione.</p>
-<p>Per ogni valore dell&#39;iper-parametro si ottengono così k valori di accuracy, in questo modo è possibile fare la media di questi valori ed ottenere così un valore di accuracy più accurato.</p>
-<p>Il valore di k influisce la dimensione del training set, utilizzando un k piccolo, si ottiene un training set più piccolo e il bias induttivo aumenta e la varianza della stima ottenuta diminuisce.</p>
-<p>Viceversa, se k è grande, il training set è più grande e si ottiene un minor bias induttivo.</p>
-<p>Tipicamente si usa k=5 o k=10.</p>
-<h2 id="valutazione-per-dati-non-bilanciati">Valutazione per dati non bilanciati</h2>
-<p>Cioè quando nel training set c&#39;è una classe che domanina sulle altre.</p>
-<p>L&#39;accuracy in questo caso non è una misura adatta.</p>
-<p>Vengono quindi utilizzate <strong>precision</strong>, <strong>recall</strong> e <strong>F-Measure</strong>.</p>
-<p><strong>Precision</strong> misura quante volte, quanti tra quelli classificati positivi sono effettivamente positivi, mentre la <strong>recall</strong> misura quanti che sono effettivamente positivi sono stati classificati come positivi.</p>
-<p><strong>Precioson</strong>: quanti tra quelli che ho detto essere positivi sono effettivamente positivi.</p>
+<p>Alternativa all&#39;hold-out che permette di valutare in modo più preciso la bontà dei possibili valori per un iper-parametro.</p>
+<p>L&#39;insieme di apprendimento viene partizionato in <em>k</em> parti disgiunte.
+Viene poi eseguito l&#39;apprendimento utilizzando <em>k-1</em> partizioni e utilizzando la restante partizione per fare validazione.
+L&#39;intero processo di apprendimento viene ripetuto quindi <em>k</em> volte, utilizzando ogni volta una partizione per la validazione diversa.</p>
+<p>Così facendo per un singolo valore di un iper-parametro si ottengono <em>k</em> valori di accuracy e si può utilizzare la media di queti valori per ottenere una stima dell&#39;accuracy migliore.</p>
+<p>Il tutto viene poi ripetuto per ogni possibile valore dell&#39;iper-parametro. </p>
+<p>Il valore di <em>k</em> influisce la dimensione del training set, utilizzando un <em>k</em> piccolo, si ottiene un training set più piccolo, quindi il bias induttivo aumenta e la varianza della stima ottenuta diminuisce.</p>
+<p>Viceversa, se <em>k</em> è grande, il training set è più grande e si ottiene un minor bias induttivo.</p>
+<p>Tipicamente si usa <em>k=5</em> o <em>k=10</em>.</p>
+<h3 id="valutazione-per-dati-non-bilanciati">Valutazione per dati non bilanciati</h3>
+<p>Quando nel training set c&#39;è una classe che domanina sulle altre, l&#39;accuracy non è più una stima adatta, vengono quindi utilizzate altre misure quali: <strong>precision</strong>, <strong>recall</strong> e <strong>F-Measure</strong>.</p>
+<ul>
+<li><strong>Precision</strong>: (π) misura quante volte, quanti tra gli esempi classificati come positivi sono effettivamente positivi</li>
+</ul>
 <blockquote>
 <p>π  = true positive / (true positive + false positive)</p>
 </blockquote>
-<p><strong>Recall</strong>: quanti tra quelli che so essere positivi sono riuscito a classificare correttamente (ovvero li ho calcolati positivi).</p>
+<ul>
+<li><strong>Recall</strong>: (p) misura quanti che sono effettivamente positivi sono stati classificati come positivi.</li>
+</ul>
 <blockquote>
 <p>p = true positive / (true positive + false negative)</p>
 </blockquote>
-<p><strong>F-measure</strong>: combina tra loro precision e recall.</p>
+<p><strong>Precioson</strong>: quanti tra quelli che ho detto essere positivi sono effettivamente positivi.</p>
+<p>Un&#39;altra misura più accurata è la <strong>F-measure</strong> che combina tra loro precision e recall:</p>
 <blockquote>
 <p>F<sub>1</sub> = 2 πp / (π + p)</p>
-<p>F<sub>𝜷</sub> = (1+𝜷<sup>2</sup>)πp / (𝜷<sup>2</sup> +....)</p>
+<p>F<sub>𝜷</sub> = (1+𝜷<sup>2</sup>)πp / (𝜷<sup>2</sup>π + p)</p>
 </blockquote>
-<h1 id="lezione-12-super-vector-machine">Lezione 12 - Super Vector Machine</h1>
-<p>Richiamo: l&#39;errore ideale, cioè quello commesso su esempi che non sono stati valutati durante l&#39;apprendimento, può essere visto come composto da due termini, un errore empirico sui dati e la VC-Confidence.</p>
+<h1 id="lezione-12-support-vector-machine">Lezione 12 - Support Vector Machine</h1>
+<p>Richiamo: l&#39;errore <strong>ideale</strong>, cioè quello commesso su esempi che non sono stati valutati durante l&#39;apprendimento, può essere visto come composto da due termini, un errore empirico sui dati e la VC-Confidence.</p>
 <p>L&#39;algoritmo di minimizzazione dei rischi cerca lo spazio delle impotesi che va a minimizzare la VC-Confidence.</p>
 <h2 id="svm-idea-di-base">SVM - Idea di base</h2>
 <p>Sappiamo che la VC dimension di un iperpiano nello spazio <em>m</em> è <em>m+1</em>.</p>
 <p>Considerando il caso in cui gli esempi sono linearmente separabili si può definire il margine <em>r</em> come la distanza minima tra l&#39;iperpiano e l&#39;esempio più vicino.</p>
 <p>L&#39;iperpiano che ha un margine maggiore viene detto ottimo e massimizza la minima distanza con gli esempi.</p>
-<p><img src="Apprendimento Automatico/immagini/l12-space.png" alt=""></p>
+<p><img src="./notes/immagini/l12-space.png" alt=""></p>
 <h3 id="margine">Margine</h3>
-<p><img src="Apprendimento Automatico/immagini/l12-distanza.png" alt=""></p>
-<p><img src="Apprendimento Automatico/immagini/l12-distanza-2.png" alt=""></p>
-<p><img src="Apprendimento Automatico/immagini/l12-distanza-3.png" alt=""></p>
+<p><img src="./notes/immagini/l12-distanza.png" alt=""></p>
+<p><img src="./notes/immagini/l12-distanza-2.png" alt=""></p>
+<p><img src="./notes/immagini/l12-distanza-3.png" alt=""></p>
 <p>Vincoli e funzione di costo sono convessi perché i vincoli sono lineare e il costo è una parabola.</p>
-<p><img src="Apprendimento Automatico/immagini/l12-caso-separabile.png" alt=""></p>
-<p><img src="Apprendimento Automatico/immagini/l12-caso-separabile-2.png" alt=""></p>
+<p><img src="./notes/immagini/l12-caso-separabile.png" alt=""></p>
+<p><img src="./notes/immagini/l12-caso-separabile-2.png" alt=""></p>
 <p>Quindi i vettori di supporto sono gli esempi di training che si trovano in uno dei due iperpiani margine.</p>
 <h1 id="lezione-13-support-vector-machine">Lezione 13 - Support Vector Machine</h1>
 <p>Nelle precedenti puntate:</p>
@@ -787,16 +834,16 @@ Si ripete questo procedimento per ogni partzione.</p>
 <h2 id="dati-non-separabili-linearmente">Dati non separabili linearmente</h2>
 <p>Tutto quello visto finora funziona se i dati sono linearmente separabili.</p>
 <p>Nel caso questi non lo siano è necessario aggiungere una nuova variabile per ogni elemento presente nel training set.</p>
-<p><img src="Apprendimento Automatico/immagini/l13-non-linear.png" alt=""></p>
+<p><img src="./notes/immagini/l13-non-linear.png" alt=""></p>
 <p>Vengono quindi definite delle psi_i che rappresenta la distanza del elemento i-esimo dal margine entro il quale dovrebbe trovarsi.</p>
 <p>L&#39;idea è quindi quella di andare a sommare alla funzione costo, un altro quoziente della sommatoria di tutti i psi_i dei vari esempi presenti nel training set.</p>
 <p>Il valore <em>C</em> del coefficente che va a moltiplicare la sommatoria degli psi_i può essere scelta con le tecniche di model selection.</p>
 <p>In pratica vengono penalizzati (aumentato il costo) gli esempi che non rispettano il margine.</p>
 <p>La funzione psi_i si comprota anche come upper buond per la rappresentazione dell&#39;esempoio i-esimo del trainging set.</p>
 <p>Sommando le psi_i di tutti gli esempi è maggiore o ugale al numero di errrori analizzzando tutto il trainingset.</p>
-<p><img src="Apprendimento Automatico/immagini/l13-slack.png" alt=""></p>
+<p><img src="./notes/immagini/l13-slack.png" alt=""></p>
 <p>Allo stesso modo si può trovare il problema duale (non vengono visti i conti)</p>
-<p><img src="Apprendimento Automatico/immagini/l13-cost.png" alt=""></p>
+<p><img src="./notes/immagini/l13-cost.png" alt=""></p>
 <p>Da notare che nel caso separabile i vettori di supporto stanno su uno dei due iperpiani margini.</p>
 <p>Nel caso di dati non linearmente separabili o si trovano in un ipermpiano margine oppire uno psi_i negativo.</p>
 <p>Da notare che le psi_i sono variabili del problema primale e che quindi non compaiono nel problema duale.</p>
@@ -811,18 +858,417 @@ Si ripete questo procedimento per ogni partzione.</p>
 <li>Perché il teorema sulla separabilità di Cover afferma che uno spazio delle ipotesi più grande è più probabile che questo sia linearmente separabile. (Un problema di classificazione complesso, formulato attrvareso una trasfomrazione non linear dei dati in uno spazio ad alata dimensionalità, ha maggiore probabilità di essere linearmente separabile che in uno spazio a bassa dimnsionalità).</li>
 <li>Perché l&#39;iperpiano ottimo minimizza la VC-Dimension e quindi la capacità di generalizzazione migliora.</li>
 </ol>
-<p><img src="Apprendimento Automatico/immagini/l13-alt.png" alt=""></p>
+<p><img src="./notes/immagini/l13-alt.png" alt=""></p>
 <p>In un modo simile a come accade con il perceptron.</p>
-<p><img src="Apprendimento Automatico/immagini/l13-train.png" alt=""></p>
+<p><img src="./notes/immagini/l13-train.png" alt=""></p>
 <h2 id="funzioni-kernel">Funzioni Kernel</h2>
-<p><img src="Apprendimento Automatico/immagini/l13-kernel.png" alt=""></p>
+<p><img src="./notes/immagini/l13-kernel.png" alt=""></p>
 <p>La cosa bella è che si può &quot;inventare&quot; una funzione K che ci permette di calcolare agevolmente il prododdo scalare.</p>
-<p><img src="Apprendimento Automatico/immagini/l13-kernel-2.png" alt=""></p>
-<p><img src="Apprendimento Automatico/immagini/l13-comparsion.png" alt=""></p>
+<p><img src="./notes/immagini/l13-kernel-2.png" alt=""></p>
+<p><img src="./notes/immagini/l13-comparsion.png" alt=""></p>
 <h2 id="regressione">Regressione</h2>
 <p>Quando si considera il problema di approssimazione di funzioni a valori reali (regressione) si utilizza l&#39;ϵ-tubo: output che differiscono dai valori di target per più di ϵ in valore assolunto vengono penalizzati linearmente, altrimenti non vengono considerati errori.
 In partica aggiungo un intervallo di tolleranza al iperpiano che partiziona lo spazio.</p>
-<p><img src="Apprendimento Automatico/immagini/l13-min-primale.png" alt=""></p>
+<p><img src="./notes/immagini/l13-min-primale.png" alt=""></p>
 <p>che trasformata in duale diventa</p>
-<p><img src="Apprendimento Automatico/immagini/l13-duale.png" alt=""></p>
+<p><img src="./notes/immagini/l13-duale.png" alt=""></p>
+<h1 id="lezione-14-funzioni-kernel">Lezione 14 - Funzioni Kernel</h1>
+<p><img src="./notes/immagini/l14-kernel.png" alt=""></p>
+<p>In pratica la funzione Kernel serve per calcolare un prodotto scalare in uno spazio a più dimensioni.</p>
+<h2 id="rappresentazione-dei-dati-con-i-kernel">Rappresentazione dei dati con i Kernel</h2>
+<p>Le funzioni Kernel permettono di andare a definire una serie di metodi per l&#39;apprendimento supervisionato.</p>
+<p>Ad esempio data una serie di oggetti <em>S = {x<sub>1</sub>,x<sub>2</sub>,.., x<sub>n</sub>}</em> può essere rappresentata con i Kernel come una funzione</p>
+<blockquote>
+<p><em>k</em>: X <em>x</em> X -&gt; R</p>
+</blockquote>
+<p>Cioè una funzione che confronta le varie coppie della serie e le valuta utilizzando un numero reale.</p>
+<p>Il dataset <em>S</em> può essere quindi rappresentato con una matrice simmetrica <em>K<sub>i,j</sub> = k(x<sub>i</sub>,x<sub>j</sub>)</em>. Inoltre, dal momento che la funzione <em>k</em> rappresenta un prodotto scalare su un certo spazio, la matrice <em>k</em> è semi-definita positiva (questa realzione vale in se e solo se).</p>
+<p><strong> aggiungi immagine cone definzione di matrice definita semi positva</strong></p>
+<h3 id="vantaggi-di-questa-rappresentazione">Vantaggi di questa rappresentazione</h3>
+<p>La rappresentazione dei dati con matrici kernel ha come vantaggi:</p>
+<ul>
+<li>lo stesso algortimo può essere utilizzato per analizzare dati diveri, quindi tutti gli algoritmi <strong>kernel based</strong> saranno definiti sulla forma della matrice.</li>
+<li>la progettazione dei kernel e degli algortimi è modulare</li>
+<li>risulta più semplice integrare viste diverse di oggetti, non sempre esiste una rappresentazione ottimale dello stesso oggetto, diventa quindi possibile combinare tra loro queste rappresentazioni.</li>
+<li>La dimensionalità dei dati dipente solo dal numero di oggetti e non dalla loro dimensione vettoriale.</li>
+<li>La comparazione tra oggetti può risultare più semplice rispetto ad una loro esplicita rappresentazione.</li>
+</ul>
+<h3 id="metodi-kernel">Metodi Kernel</h3>
+<p>Molti metodi kernel, comprese le SVM possono essere interpretati come algortimi che, dato un insieme di oggetti <em>S</em> risolvono un problema di minimo di una certa funzione <em>L</em> associata al rischio empirico.</p>
+<p><strong>immagine 1</strong></p>
+<h3 id="modularit-dei-metodi-kernel">Modularità dei metodi Kernel</h3>
+<p>I metodi Kernel possono essere rappresentatni da 5 fasi modulari</p>
+<ol>
+<li><em>n</em>-oggetti</li>
+<li>definizione della funzione kernel</li>
+<li>costruzione della matrice <em>K</em></li>
+<li>applicazione dell&#39;algoritmo su <em>K</em> e <em>Y</em> (valori target attesi) (ad esempio SVM)</li>
+<li>produzione dalla funzione</li>
+</ol>
+<p><strong>sostituire con l&#39;immagine</strong></p>
+<h2 id="kernel-trick">Kernel Trick</h2>
+<p>Ogni algoritmo per i dati vettoriali che può essere espresso in termini del prodotto scalre tra vettori può essere implicitamente eseguito nello spazio delle feature associatio ad un determinato kernel, rimpiazzando i prodotti scalari con valutazioni kernel.</p>
+<ol>
+<li>Kerneliizzazione di metodi lineari o basati su distenze, come il Perceptron e K-NN.</li>
+<li>Applicazione di algoritmi definiti su vettori a dati non vettoriali, utilizzando dei kernel definiti per dati non vettoriali.</li>
+</ol>
+<p>Ad esempio K-NN può utilizzare i kernel per calcolare la distanza tra due vettori.</p>
+<h2 id="tipologie-di-kernel">Tipologie di Kernel</h2>
+<p>Per <strong>vettori</strong> si possono utilizzare come kernel:</p>
+<ul>
+<li><strong>lineare</strong>: <em>k(x,z) = x \</em> z*</li>
+<li><strong>polinomiale</strong>: <em>k(x,z) = (x * z + c)<sup>d</sup></em></li>
+<li><strong>gaussiano</strong> (RBF): <em>k(x,z) = exp(-𝜸||x-z||<sup>2</sup>)</em>, ha la caratteristica di essere sempre compreso tra 0 e 1.</li>
+</ul>
+<p>Il fatto che il kernel sia sempre maggiore di 0, implica che i due vettori sono nello stesso ottante (tra i due vettori c&#39;è un angolo minore di 90°).</p>
+<p>Se <em>k(x,x)</em> è uguale a 1 si dice che il kernel è <strong>normalizzato</strong>, ovvero tutti i vettori del feature space sono normalizzati. La matrice kernel definita con un kernel normalizzato ha tutti 1 nella diagonale.</p>
+<p>È sempre possibile normalizzare un kernel <em>k(x,z)</em> dividendolo per la radice quandrata di <em>k(x,x) * k(z,z)</em></p>
+<p>Come kernel per le <strong>stringhe</strong> si possono contare tutte le sequenze di una cerca lunghezza e costruire un vettore delle feature delle occorrenze, questo si fa con le tecniche di programmazione dinamica.</p>
+<p>Per gli alberi si possono utilizzare delle tecniche analoghe, considerando i sotto alberi in comune.</p>
+<p>C&#39;è un libro <strong>Kernel Methods for Pattern Analysis</strong> che spiega molto bene questa tecnica.</p>
+<h2 id="operazioni-sui-kernel">Operazioni sui Kernel</h2>
+<p>Una combinazione lineare positiva di kernel è anchessa un kernel, quindi</p>
+<blockquote>
+<p>k(x,z) = ak<sub>1</sub>(x,z) + bk<sub>2</sub>(x,z)</p>
+</blockquote>
+<p>Se quna sequenza di kernel converge puntualmente ad una funzione <em>f</em>, allora anche <em>f</em> è un kernel.</p>
+<p>Ma c&#39;è di più, i kernel possono essere tra loro composti per ottenere altri kernel.</p>
+<p>Tutto questo si può andare a combinare per ottenere un kernel migliore.
+Dato un insieme <em>S</em> di kernel si può definire</p>
+<blockquote>
+<p>k(x,z) = Sommatoria<sub>[S=1,Q]</sub>μ<sub>s</sub>k<sub>s</sub>(x,z)</p>
+</blockquote>
+<p>Dove μ è un vettore tale che la loro sommatoria sia 1.</p>
+<p>L&#39;idea del Multiple Kernel Learning è di definire degli algoritmi per apprendere i valori di μ<sub>s</sub> della combinazione che migliorino le prestazione di una SVM usando il kernel combinato, rispetto alle SVM ottenute utilizzando i kernel individuali.</p>
+<h1 id="lezione-15-apprendimento-bayesiano">Lezione 15 - Apprendimento Bayesiano</h1>
+<p>Si tratta di algoritmi di apprendimento basati sulla probabilità e sul teorema di Bayes.</p>
+<h2 id="scelta-delle-ipotesi">Scelta delle ipotesi</h2>
+<p>Tutto si basa sulla formula di Bayes.</p>
+<blockquote>
+<p>P(h|D) = P(D|h)P(h)/ P(D)</p>
+</blockquote>
+<p>L&#39;obiettivo è quello di massimizzare <em>P(h|D)</em>, sapendo <em>P(D|h)</em> che viene fornito dal supervisore e <em>P(h)</em> che viene appresa.</p>
+<p>Nel massimizzare si può tralasciare il termine <em>P(D)</em> dal momento che è sempre costante.</p>
+<blockquote>
+<p>h<sub>MAP</sub> = argmax<sub>[h ϵ H]</sub> P(h|D)P(D)</p>
+</blockquote>
+<p>Si può inoltre assumere che tutte le ipotesi <em>h</em> abbiano la stessa ipotesi e nel mondo reale questa assunzione è tipicamente corretta, il problema di massimizzazione diventa:</p>
+<blockquote>
+<p>h<sub>ML</sub> = argmax<sub>[h ϵ H]</sub> P(h|D)</p>
+</blockquote>
+<p>A pagina 158 del Mitchel c&#39;è un esempio che mette in evidenza come le probabilità a priori influenzino il risultato.</p>
+<h2 id="brute-force-map-learning-interpretazione-find-s-">Brute Force MAP Learning (interpretazione Find-S)</h2>
+<p>Si assumono fissate le istanze x1 ... xn.</p>
+<p>Si assume D essere lìinsieme dei valori derisderati D 
+= {c(x1)...c(xn)}</p>
+<p>Considerando tutte le ipotesi equiprobabili: <em>1/|H|</em></p>
+<blockquote>
+<p>P(D|h) = 1 se h è consistente con gli elementi di D</p>
+<p>P(D|h) = 0 altrimenti </p>
+</blockquote>
+<p>Supponiamo inoltre che non sia presente del rumore.</p>
+<p>In questo modo la probabilità <em>P(h|D)</em> si ottiene applicando la regola di Bayes, in particolare:</p>
+<blockquote>
+<p>P(h|D) = 0 se h è non è consistente con D</p>
+<p>P(h|D) = 1/VS<sub>H,D</sub> se h è consistente con D</p>
+</blockquote>
+<p>Quindi se tutte le ipotesi <em>h</em> sono equiprobabili, allora qualsiasi ipotesi presente in <em>H</em> va bene con probabilità  <em>1/VS<sub>H,D</sub></em>.</p>
+<p>Se vengono cambiate le probabilità in modo che la probabilità di un&#39;ipotesi più specifica sia più alta si ottiene che <em>P(h|D) = P(h)</em>.</p>
+<h2 id="apprendimento-di-una-funzione-ml-">Apprendimento di una funzione (ML)</h2>
+<blockquote>
+<p>di = f(xi) + ei</p>
+</blockquote>
+<p>dove Ei è l&#39;errore che segue una probabilità gaussiana con media 0 di cui non si conosce la varianza.</p>
+<blockquote>
+<p>ei = di - f(xi)</p>
+</blockquote>
+<p>Però si vuole valutare l&#39;errore come se al posto di <em>f</em> (che è sconsociuta) ci fosse <em>h</em></p>
+<blockquote>
+<p>ei = di - h(xi)</p>
+</blockquote>
+<p>La probabilità di <em>P(di|h)</em>, cioè che l&#39;ipotesi <em>h</em> classifichi correttamente <em>di</em> segue la distribuzione guassiana di <em>ei</em>.</p>
+<blockquote>
+<p>h<sub>ML</sub> = argmax<sub>[h ϵ H]</sub> P(D|h)</p>
+<p>h<sub>ML</sub> = argmax<sub>[h ϵ H]</sub> (produttoria) P(di|h)</p>
+<p>h<sub>ML</sub> = argmax<sub>[h ϵ H]</sub> (produttoria) gaussiana di (di-h(xi))</p>
+</blockquote>
+<p>Dal momento che la gaussiana contiene un&#39;esponenziale, conviene utilizzare il logaritmo, tanto per il problema di massimizzazione è la stessa cosa.</p>
+<p><strong>fai screen delle slide per i conti</strong></p>
+<p>Segue quindi che</p>
+<blockquote>
+<p>h<sub>ML</sub> = argmin<sub>[h ϵ H]</sub> (sommatoria)(di-h(xi))<sup>2</sup></p>
+</blockquote>
+<p>Quindi per trovare l&#39;ipotesi <strong>maximum likelihood</strong> è necessario minimizzare l&#39;errore quadratico, sotto le ipotesi che la probabilità di ogni ipotesi è uniforme e assumendo che non ci sia rumore nei dati di training.</p>
+<h3 id="classificazione">Classificazione</h3>
+<p>Finora abbiamo cercato l&#39;ipotesi più probabile per i dati <em>D</em> (<em>h<sub>MAP</sub></em>), ma dato un nuovo esempio, qual&#39;è la classificazione più probabile? Non sempre</p>
+<p>Supponiamo di avere <em>P(h1|D)=0.4</em>,<em>P(h2|D)=0.3</em>, <em>P(h3|D)=0.3</em>, data una nuova istanza <em>x</em> può succedere che <em>h1(x) = (+)</em> e <em>h2(x) = h3(x) = (-)</em>. Quindi considerando le tre ipotesi, la classificazione più probabile è <em>(-)</em> e non <em>(+)</em>.</p>
+<p>Segue che la <strong>classificazione ottima di Bayes</strong>:</p>
+<blockquote>
+<p>argmax<sub>[v ϵ vj]</sub> (sommatoria<sub>[h ϵ H]</sub>) P(vj | h)P(h)</p>
+</blockquote>
+<p>Si va cioè a considerare tra tutte le ipotesi, pesate per la loro probabilità, e si considera come classe quella che compare più volte.</p>
+<h4 id="classificazione-di-gibbs">Classificazione di Gibbs</h4>
+<p>Dal momento che il classificatore ottimo di Bayes potrebbe essere molto costoso da calcolare se ci sono tante impotesi.</p>
+<p>Si può tulizzare un&#39;alternativa, scegliendo un ipotesi a caso, secondo la probabilità <em>P(h|D)</em> e utilizzando quell&#39;ipotesi per classificare la nuova istanza, si ottiene un errore medio minore del doppio dell&#39;errore medio che si ottiene utilizzando il classificatore ottimo.</p>
+<blockquote>
+<p>E[errore<sub>Gibbs</sub>] &lt;= E[errore<sub>OttimoBayes</sub>]</p>
+</blockquote>
+<p>Sempre assumendo probabilità uniforme per tutte le ipotesi del version space.</p>
+<h1 id="lezione-17-clustering">Lezione 17 - Clustering</h1>
+<p>Il clustering è il processo che partiziona un&#39;insieme di oggetti in sottogruppi in modo che gli oggetti di questi gruppi siano simili tra loro.</p>
+<p>Questa tipologia di apprendimento prende il nome di <strong>apprendimento non supervisionato</strong> dal momento che non vengono calcolate delle etichette e non c&#39;è un supervisore che fornisce delle etichette per i dati di apprendimento.</p>
+<h2 id="il-problema-del-clustering">Il problema del clustering</h2>
+<p>Tipicamente è composto da:</p>
+<ul>
+<li>Un insieme di esempi, detti anche documenti, D = {d<sub>1</sub>..d<sub>n</sub>}</li>
+<li>Una misura di similiarità o distanza, decisa da noi</li>
+<li>Un criterio di partizionamento</li>
+<li>Un numero desiderato di cluster <em>K</em>.</li>
+</ul>
+<p>L&#39;algoritmo di clustering calcola quindi una funzione di assegnamento 𝜸 che prende un elemento di <em>D</em> e lo assegna ad un gruppo <em>{1..K}</em>, in modo che non ci siano cluster vuoti e che venga soddisfatta la misura di similarità.</p>
+<h2 id="problemi-del-clustering">Problemi del clustering</h2>
+<p>Come rappresentare i dati? Anche in questo caso è necessario utilizzare una rappresentazione nel vector space, normalizzando i dati.
+Inoltre, la rappresentazione influsce sulla misura di similarità.</p>
+<p>Serve poi una notazione per la similarità/distanza.</p>
+<p>C&#39;è poi il problema di quanti cluster fare, se stabilirlo a priori o sceglierlo in base ai dati, evitando i casi triviali con cluster troppo grandi o troppo piccoli.</p>
+<h2 id="funzione-obiettivo">Funzione obiettivo</h2>
+<p>Tipicamente l&#39;obiettivo di un problrma di clustering è quello di ottimizzare una funzione, definendo così un problema di ricerca tra i possibili assegnamenti.</p>
+<p>Questi stati sono tanti, <em>K<sup>N</sup>/K!</em>. Il <em>K!</em> serve per togliere i cluster equivalenti, cioè quando la divisione degli elementi è identica ma cambia &quot;l&#39;etichetta&quot; dei cluster a cui sono assegnati.</p>
+<p>Tra l&#39;altro ci sono dei problemi con i minimi locali per la funzione obiettivo, possono essercene tanti e possono impedire di raggiungere un minimo ottimo.</p>
+<h2 id="valutazione-di-un-clustering">Valutazione di un clustering</h2>
+<p>Ci sono dei <strong>criteri interni</strong> che vanno a misurare la similarità tra oggetti della stessa classe (<strong>intra-class</strong>) e tra oggetti di classi diversi (<strong>extra class</strong>), un buon clustering cerca quindi di massimizzare l&#39;intra-class e di minimizzare l&#39;extraclass.</p>
+<p>La qualità misurata inoltre dipende da come vengono rappresentati i dati e dalla misura di similirità adottata.</p>
+<p>Ci sono poi i <strong>criteri esterni</strong>, l&#39;idea è quella di trovare quanto simile è il clustering trovato rispetto ad una divisione data a priori che prende il nome di <strong>ground truth</strong>.</p>
+<p>Si assume quindi che i documenti possano essere partizionati in <em>C</em> classi che rappresentano la ground truth e che l&#39;algortimo di clustering produca <em>K</em> cluster, <em>ω<sub>1</sub> ... ω<sub>K</sub></em>, ognuno contenente <em>n<sub>i</sub></em> documenti.</p>
+<p>La misura più semplice prende il nome di <strong>purity</strong> e rappresenta il rapporto medio tra i vari cluster che c&#39;è tra la classe nominante in quel cluster e la dimensione del cluster.</p>
+<p>Dalle slide: purity, the ratio between the dominant class in the cluster π<sub>i</sub> and the size of the cluster ω<sub>i</sub></p>
+<p>Altre misure si basano sull&#39;entropia.</p>
+<p><img src="./notes/immagini/l17-purity.png" alt=""></p>
+<p>Nell&#39;esempio il numero di cluster coincide con il numero di etichette è una cosa voluta, ma il gioco funziona anche con un numero diverso di cluster.</p>
+<p><strong>il core business della situazione è che le etichette per il clustering servono solo per VALUTARLO e non per fare apprendimento</strong></p>
+<h3 id="rand-index">Rand Index</h3>
+<p>È una misura di similiratà tra cluster, definita come il rapporto tra il numero di elementi che hanno la stessa classe ground e si trovano nello stesso cluster e con classi diverse in cluster diversi, sul numero totale di elementi.</p>
+<p><img src="./notes/immagini/l17-rand-index.png" alt=""></p>
+<p>Viene creata una tabella di contingenza, valutando per ogni coppia di punti, se hanno etichette diverse e se sono nello stesso cluster.</p>
+<p>Probabilmente, ma non ne sono sicuro, i numeri della tabella corrispondo alle coppie che rispondo a quella categoria.</p>
+<p>In questo modo ci si riconduce all&#39;accuracy:</p>
+<blockquote>
+<p>RI = A + D / A+B+C+D</p>
+</blockquote>
+<p>Allo stesso modo si possono calcolare <strong>precision</strong> e <strong>recall</strong></p>
+<blockquote>
+<p>P = A/A+B</p>
+<p>R = A/A+C</p>
+</blockquote>
+<h2 id="algoritmi-di-clustering">Algoritmi di Clustering</h2>
+<p>Ci sono due tipoleogie di algoritmi: </p>
+<ul>
+<li><strong>partitional</strong>: che partono da un partizionamento casuale e cercano di migliorarlo iterativamente (K-means clustering, Model based clustering)</li>
+<li><strong>hierarchical</strong>: che vanno a definire un clustering come un albero in cui la radice contiene tutti gli esempi e man mano che si scende questi vegono partizionati. Si può usare un approccio <strong>agglomerative</strong> che costruisce l&#39;albero in modo bottom-up (permettendo di fissare un numero di cluster), o <strong>divisive</strong> che funziona in top-down, applicando K-mean sulla radice e poi ricorsivamente su ogni figlio, arrivando fino alla foglie che consistono in cluster di un solo elemento.</li>
+</ul>
+<h2 id="k-means">K-means</h2>
+<p>Questo algoritmo appartiene alla categoria degli algoritmi di partizionamento, ovvero vengono partizionati gli <em>n</em> documenti in <em>K</em> cluster, cercando di trovare un partizionamento ottimo secondo un determinato criterio.</p>
+<p>Gli elementi da clusterizzare sono dei vettori con numeri reali e come criterio di partizionamento si utilizza la distanza vettoriale tra gli esempi e il centro del cluster.</p>
+<p>Si cerca quindi di creare dei cluster che minimizzano il raggio della ipersfera che contiene gli esempi. (cluster <strong>centroidi</strong>)</p>
+<p>La formula da minimizzare è la seguente:</p>
+<p><img src="./notes/immagini/l17-center.png" alt=""></p>
+<h3 id="algoritmo">Algoritmo</h3>
+<ol>
+<li>Si posizionano K punti a caso nello spazio degli oggetti da clusterizzare, questi punti rappresentano i centroidi dei cluster.</li>
+<li>Si assegna ogni oggetto al centroide più vicino.</li>
+<li>Una volta completato l&#39;assegnamento si ricalcola la posizione di tutti i centroidi utilizzano la media dei valori di tutti gli oggetti che sono finiti nel cluster.</li>
+<li>Si ripetono i passi 2 e 3 finché non si spostano più i centrodi.</li>
+</ol>
+<p>Questo algoritmo raggiunge un punto fisso.</p>
+<p>Resta comunque il problema della scelta del numero di cluster da utilizzare.</p>
+<h2 id="approcci-gerarchici-agglormerativi">Approcci gerarchici agglormerativi</h2>
+<p><strong>quelli disivi utilizzano ricorsivamente k-means</strong></p>
+<p>Costruiscono un dendogramma a partire dagli oggetti, che vengono agglomerati tra loro quando vengono trovati simili.
+Si ripete il procedimento finché tutti gli oggetti non vengono agglomerati in un unico cluster.</p>
+<p>Si parte quindi da N cluster, uno per ogni esempio e si agglomerano via via finché non si ottiene un unico cluster.</p>
+<p>Ad ogni itereazione l&#39;algoritmo può essere interroto per evitare di ottenere un unico cluster.</p>
+<p>Le linee verticale di un dendogramma rappresentano un cluster, mentre quelle orizzontali rappresentano un punto di <strong>merge</strong> ovvero quando la similarità di due cluster è tale che vengono uniti in un unico cluster.</p>
+<p><img src="./notes/immagini/l17-clustering.png" alt=""></p>
+<p>In base alla misura di similitarità l&#39;operazione può essere <strong>monotona</strong> o meno, cioè se <em>s<sub>1</sub>, ..., s<sub>k-1</sub></em> sono combinazioni di similarità associate a delle operazioni di merge, allora <em>s<sub>1</sub> &gt; ... &gt; s<sub>k-1</sub></em></p>
+<h3 id="hac-hierarchical-agglormerative-clustering">HAC - Hierarchical agglormerative Clustering</h3>
+<p>Prima viene creato un cluster per ogni esempio, dopodiché viene eseguito via via il merge del <strong>clostes pair</strong>, ovvero dei due cluster più simili, fino a che non rimane un unico cluster.
+Lo storico dei merge crea il dendogramma.</p>
+<p>Per scegliere il <strong>closest pair</strong> di cluster utilizzando vari criteri:</p>
+<ul>
+<li><strong>single link</strong>: ovvero la distanza minima che c&#39;è tra tutte le coppie di elementi di cluster dirversi</li>
+<li><strong>complete link</strong>: ovvero la distanza massima che c&#39;è tra tutte le coppie di elementi di cluster dirversi</li>
+<li><strong>centroid link</strong>: ovvero la distanza tra i dentroidi dei due cluster</li>
+<li><strong>average link</strong>: la distanza media che c&#39;è tra tutte le coppie di elementi di cluster dirversi</li>
+</ul>
+<p>Viene quindi effettuato prima il merge dei cluster con similirità minima.</p>
+<p><img src="./notes/immagini/l17-dendogram-cluster.png" alt=""></p>
+<p>Sia single link che complete link garantiscono la monotonia, tuttavia con single link si tendono a creare dei cluster che sono delle <em>catene</em>, ovvero si ottengono dei dendogrammi sbilanciati, mentre il complete link tende a dare dei cluster sferici e più compatti, se però ci sono degli esempi <strong>outliers</strong>, ovvero che escono dalla distribuzione.</p>
+<p>Il centroid link è carino ma non garantisce la monotonia.</p>
+<p><img src="./notes/immagini/l17-riassunto.png" alt=""></p>
+<p>(le complessità della tabella indicano quante operazioni servono per scegliere il closest pair)</p>
+<h1 id="lezione-18-feature-selection-e-kernel-learning">Lezione 18 - Feature selection e Kernel learning</h1>
+<p>Gli attributi o variabili dovrebbero essere utilizzati solo se veramente utili (rilevanti) per la classificazione/predizione.</p>
+<p>Avere meno attributi porta modelli di classificazione-predizione più compatti e che hanno bisogno di un numero minore di esempi di apprendimento per ottenere dei buoni risultati.
+Infatti, alcuni attributi possono introdurre del rumore sui dati.</p>
+<p>Inoltre, modelli che usano pochi attributi sono più semplci da ocmprendere per un umano e sono più facilmente rappresentabili.</p>
+<h2 id="feature-selection-ed-extraction">Feature selection ed extraction</h2>
+<p><strong>Feature selection</strong>: viene selezionato un sotto insieme &quot;migliore&quot; degli attributi tra quelli originali. Ad esempio possono essere scartate delle feature ridondanti o non rilevanti. </p>
+<p>In questo modo si ottiene un interpretabilità migliore del modello predittivo, pertanto questo approccio è preferibile dove l&#39;interpretabilità è più importante dell&#39;accuratezza.</p>
+<p><strong>Feature extraction</strong>: si derivano nuovi attributi da quelli originali, per esempio, nuove features vengono ottenuteo come combinazione di attributi.</p>
+<p>In questo modo si ottengono featuer più discriminative che portano ad avere un&#39;accuratezza migliore, pertanto questo approccio è preferibile per applicazioni dove l&#39;accuratezza è più importante dell&#39;interpretabilità.</p>
+<h3 id="feature-selection">Feature selection</h3>
+<p>Ci sono tre famiglie principali di metodi:</p>
+<ul>
+<li><strong>Filter methods</strong>: considerano caratteristiche generali del training set, andando a pre-processare i dati indipendenemnte dall&#39;algoritmo di apprendimento. Viene calcolato uno score per le varie feature e vengono tenute solamente quelle migliori, senza tenere conto del supervisiore. Ad esempio questo metodo va a scartare le informazioni relative al nome di una persona.</li>
+<li><strong>Wrapper methods</strong>: la selezione delle feature viene fatta sulla base della loro capacità predittive, tipicamente utilizzando un insieme di hold-out. Può essere utilizzato un&#39;approccio <strong>backward</strong>, partendo prima con tutte le feature possibili, dopodiché per ognuna delle feature si prova a toglierla e si controlla quanto migliora lo score. Si vanno via via a rimuovere in modo greedy le feature che portano ad un miglioramento dello score. L&#39;approccio <strong>backward</strong> parte da un numero minimo di feature e va ad aggiungere feature in modo da aumentare lo score.</li>
+<li><strong>Embedde methons</strong>: la scelta delle feature viene inserita nel problema di minimizzazione, come nel metodo <strong>LASSO</strong>, Se <em>w</em> è il vettore dei pesi che si va ad apprendere, si aggiunge al problema la massimizzazione della norma zero del vettore <em>w</em>. Nel lato pratico si usa l&#39;approssimazione ottenuta massimizzando la norma uno del vettore. (da sistemare)</li>
+</ul>
+<h3 id="feature-extraction">Feature extraction</h3>
+<p>Il metodo più importante si chiama <strong>Principal Component Analysis</strong> (PCA) e che consiste nella estrazione di un insieme di features non correlate linearmente.</p>
+<p>Ovvero si mappano tutti gli esempi in poche dimensioni, queste dimensioni sono quelle che rappresentano meglio i dati del problema e allo stesso tempo diminuiscono il rumore sui dati.</p>
+<p>Il numero di componenti principali è solitamente molto inferiore al numero di features originali.</p>
+<h3 id="applicazioni-della-feature-selection">Applicazioni della Feature Selection</h3>
+<ul>
+<li><strong>Biologia computazionale</strong>: in quanto si hanno pochi esempi e migliaia di features. Ad esempio si vuole sapere, dato il paziente si vuole sapere se una cura può essere efficace o meno.</li>
+<li><strong>Riconoscimento di facce</strong>: per determinare quali sono le feature importanti per il riconoscimento della faccia.</li>
+<li><strong>Ambito medico</strong>: generalmente le variabili sono dei risultati degli esami medici, pertanto si cerca di minimizzare le variabili per ridurre i costi.</li>
+<li><strong>Ambito finanziario</strong>: moltissimi fattori possono influenzare un titolo in borsa. Si cerca quindi di ridurre questo numero per rendere più semplice il modello risultante.</li>
+<li><strong>Classificazione dei testi</strong>: ad ogni termine è associata una feature, riducendo questo numero si velocizza l&#39;apprendimento.</li>
+</ul>
+<h2 id="kernel-learning">Kernel Learning</h2>
+<p>L&#39;idea è quella di apprendere la funzione o la matrice kernel:</p>
+<ol>
+<li>Metodi parametrici per il kernel learing</li>
+<li>Tranductive featuer extraction con kernel non lineari</li>
+<li>Spectral kernel learning</li>
+<li>Multiple kernel learning</li>
+</ol>
+<p><strong>Matrice kernel</strong>: matrice che per ogni coppia di dati di traning fornisce un valore che rappresenta il prodotto scalare della coppia.</p>
+<h3 id="metodi-parametrici-per-il-kernel-learning">Metodi parametrici per il kernel learning</h3>
+<p>L&#39;idea è quella di prendere una funzione kernel come RBF e aggiungerci dei parametri.</p>
+<blockquote>
+<p>k(x,z) = e^{-(x-z)^t M(x-z)}</p>
+</blockquote>
+<p>e se <em>M = 𝜸I</em> si ottiene la versione classica di RBF</p>
+<blockquote>
+<p>k(x,z) = e^{-𝜸||x-z||^2}</p>
+</blockquote>
+<p>Un&#39;altra scelta tipica è <em>M = diag(𝜸<sub>1</sub>, ...,𝜸<sub>m</sub>)</em>, in questo caso le distanze vengono pesate dando maggiore importanza rispetto ad altre.</p>
+<p>Con questo approccio vengono appresi anche i parametri 𝜸.</p>
+<h3 id="transduction-feature-extraction-con-kernel-non-lineari">Transduction feature extraction con kernel non lineari</h3>
+<p>Effettua una feature extraction implicitamente nel featuer space.</p>
+<p><strong>KPCA</strong> o Kernel Principal Component Analisys va a calcolare implicitamente le proiezioni delle featuer principagli sugli autovettori (direzioni) principali.</p>
+<p>Trattandosi di un caso non lineare, non è possibile andare a calcolare esplicitamente le componenti principali, ma viene utilizzata una forumale che permette di calcolarle in modo più agevole (implicitamente), un po&#39; come accade con i margini delle SVM. </p>
+<p>Trattandosi di un approccio trasduttivo, pertanto può essere utilizzato sole se si hanno ha disposizione tutte le componenti si riesce ad applicare. Se questo non è possibile è necessatio utilizzare delle tecniche dette <strong>out sample</strong>.</p>
+<h3 id="spectral-kernel-learning">Spectral Kernel learning</h3>
+<p>La matrice kernel, essendo definita positiva, può essere scritta in un modo compatto in funzione degli autovalori e autovettori.</p>
+<p>Utilizzando una trasfomrazione degli autovalori si va ad agire implicitamente nello spazio delle feature. Intaffi, il kernel modificato può essere ottenuto utilizzando un po&#39; di algebra, andando a moltiplicare la matrice degli autovettori con la radice quadrata della matrice degli autovalori.</p>
+<h3 id="multiple-kernel-learning">Multiple kernel learning</h3>
+<p>L&#39;idea è quella di combinare linearmente kernel diversi e definiti a priori, per poi apprendere la combinazione lineare di questi in modo da ottimizzare il kernel risultante.</p>
+<ul>
+<li><strong>Fixed methods</strong>: o metodi euristici, vengono utilizzati semplici regole che vengono utilizzate per il caloclo dei coefficenti, ad esempio il metodo più semplice è prendere la media dei kernel e stranamente, a livello pratico, funziona molto bene, oppure possono essere scelti dei pesi in base all&#39;accuratezza dei singoli kernel (funziona peggio rispetto alla media).</li>
+<li><strong>Optimization method</strong>: inglobano i coefficenti come variabile da apprendere nel problema di ottimizzazione, ad esempio nelle SVM si può modificare il problema di apprendimento per apprendere sia i coefficenti 𝜶, sia per i coefficenti della combinazione lineare.</li>
+</ul>
+<h1 id="lezione-19-sistemi-di-raccomandazione">Lezione 19 - Sistemi di raccomandazione</h1>
+<p>Quando Facebook suggerisce gli amici, quando Amazon suggerisce dei prodotti e quando Youtube suggerisce dei video, viene utilizzato un sistema di raccomandazione.</p>
+<h2 id="organizzazione-di-un-rs">Organizzazione di un RS</h2>
+<p>C&#39;è un sistema di <strong>esplict feedback</strong> che l&#39;utente esprime in modo quantitativo:</p>
+<ul>
+<li>Valutazione da 1 a 5 o con stelle</li>
+<li>Un ordinamento dal preferito al meno favorito</li>
+<li>Preferenze su coppie di oggetti</li>
+</ul>
+<p>Tutte queste valutazione sono intrusive e richiedono che l&#39;interazione dell&#39;utente.</p>
+<p>Il sistema può sennò basarsi su <strong>implicit feedback</strong>:</p>
+<ul>
+<li>elenco dei prodotti che l&#39;utente ha visto/comprato</li>
+<li>tempo di permanenza in una data pagina del sito</li>
+<li>rete sociale dell&#39;utente</li>
+</ul>
+<p>In questo caso non c&#39;è un responso esplicito delle preferenze dell&#39;utente ma vengono usati dei valori impliciti, ad esempio si può presupporre che se l&#39;utente sta molto in una pagina web, quella gli interessa.
+Il vantaggio del feedback implicito è che non viene richiesto direttamente all&#39;utente, ma viene calcolato.</p>
+<h2 id="approcci-per-la-raccomandazione">Approcci per la raccomandazione</h2>
+<p>Ci sono 2 approcci principali per questi sistemi:</p>
+<ul>
+<li><strong>Content base</strong>: dato un utente sul quale si vuole fare predizione e si conosce già il suo storico (di acquisti) gli si va a proporre dei prodotti simili secondo qualche categoria (autore, genere, ecc.).</li>
+<li><strong>Collavorative filtering</strong>: si va a raccomandare agli utente gli più simili a quelli che piaccinono ad altri utenti simili a lui. L&#39;idea è che se un item piace a degli utenti simili all&#39;utente target, è più probabile che piaccia anche al target. La similarità tiene conto delle interazioni tra utenti e item.<ul>
+<li>Similarità item-item: due oggetti sono simili se tendono ad ottenere lo stesso rate da parte degli utenti</li>
+<li>Similarità user-user: due utenti sono simili se tendo a dare lo stesso rate ad item simili.</li>
+<li>Questo approccio non tiene conto delle caratteristiche degli oggetti, ma solo delle preferenze degli utenti.</li>
+</ul>
+</li>
+</ul>
+<p>Il content base risulta migliore quando c&#39;è poco storico (<strong>cold start problem</strong>), ovvero quando ho troppo poche informazioni relative alle interazioni tra l&#39;utente e gli oggetti.</p>
+<p>Il collaborative filtering va di gran lunga meglio del content base quando le informazioni implicite contenute sulle interazioni tra l&#39;utente e gli oggetti diventa prevalente rispetto alle informazioni sugli oggetti.
+Questo perché permette di scoprire nuovi pattern molto più potenti rispetto a quelli che si possono definire sulle caratteristiche degli oggetti (ad esempio: suggerire canzoni dello stesso artista).</p>
+<h2 id="rating-matrix">Rating Matrix</h2>
+<p>Matrice che ha come righe gli utenti e come colonne i vari item.
+Le celle della matrice contengono la valutazione dell&#39;utente per il dato item.</p>
+<p>Nei casi reali queste matrici sono molto sparse, tipicamente 0.1% dei valori presenti.</p>
+<p>C&#39;è poi un&#39;altra sfiga, l&#39;<strong>effetto long tail</strong>: per pochi utenti saranno presenti tanti rate e per pochi prodotti ci saranno tanti rate. Ovvero ci sono poche righe che hanno tanti elementi e tante righe che hanno pochi elementi. Lo stesso vale anche per le colonne.</p>
+<h2 id="problemi-di-predizione">Problemi di predizione</h2>
+<p>Ci sono due problemi tipici:</p>
+<ul>
+<li><strong>Rate prediction</strong>: si vuole predirre il rate per un item che non è stato valutato (tipico del rate esplicito).</li>
+<li><strong>Item top-n recommendation</strong>: ordinamento degli item in funzione del gradimento che l&#39;utente potrebbe avere (tipo del rate implicito).</li>
+</ul>
+<p>Un esempio del secondo problema è <strong>Million Song Dataset</strong>, una sfida di kaggle che consistenva nel predirre quali canzoni avrebbe ascoltato degli utenti, avendo a disposizione lo storico degli ascolti di un gran numero di utenti e metà dello storico degli utenti per i queli si vuole fare la predizione.</p>
+<h3 id="metodi-per-collaborative-filtering">Metodi per Collaborative filtering</h3>
+<ul>
+<li><strong>Rate Prediction</strong> (problema di regressione): Matrix Factorization, ovvero si apprende una rappresentazione per gli utenti e per gli items in modo che il loro prodotto scalare approssimi i rates presenti.</li>
+</ul>
+<blockquote>
+<p>R&#39; = W V</p>
+<ul>
+<li>R&#39; è la matrice approssimata</li>
+<li>W è una matrice NumeroUtenti x m</li>
+<li>V è una matrice m x NumeroItem</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>Top-N recomendation</strong> (problema di ranking): Matrix Factorization su preferenze, ovvero dato un utente si vuole stimare come l&#39;utente valuterebbe gli item per i quali non l&#39;ha ancora espressa. Gli item vengono quindi visti come gli esempi e gli si vuole dare una classe (l&#39;utente) e li si vuole ordinare in base a quanto quella classificazione è probabile.
+C&#39;è un problema con il trattamento dei dati mancanti, perché la mancanza di un rating da parte dell&#39;utente non deve essere interpretata come negativa, ma come ignoranza.
+Il problema è quindi sbilanciato dal momento che non si hanno informazioni riguardo a che cosa non piace all&#39;utente.</li>
+</ul>
+<h2 id="valutazione-dei-rs">Valutazione dei RS</h2>
+<p>Nel caso del rating esplicito si può utilizzare <strong>RMSE</strong> (root mean square error), lo scarto quadratico medio degli errori commessi dall&#39;approssimazione.
+Si tratta della misura più popolare per questi problemi.</p>
+<p>Nel caso di top-N ci sono:</p>
+<ul>
+<li><strong>AUC</strong> (Area Under ROC curve): propozione di coppie di items correttamente ordinate. Ovvero per ogni coppia di item controllo quanti sono ordinati male, proporzionati sul numero di confronto. Il caso ottimo ha AUC uguale a 1. Questa misura viene calcolata su tutto l&#39;ordinamento.</li>
+<li><strong>prec@n</strong>: precisione ottenuta sui primi <em>n</em> item ordinati, una specie di AUC limitato ai primi <em>n</em> elementi.</li>
+</ul>
+<h2 id="collaborative-filtering-la-matematica-">Collaborative filtering (la matematica)</h2>
+<h3 id="matrixfactorization-e-regressione">MatrixFactorization e regressione</h3>
+<blockquote>
+<p>r_ui = x_u<sup>T</sup>y_i</p>
+</blockquote>
+<p>L&#39;algorimto di apprendimento tenta quindi di ottimizzare x e y in modo da minimizzare l&#39;errore al quadrato sommato alla norma al quadrato di xu o yu.</p>
+<p><em>formulone dalle slide</em></p>
+<p>Il problema di minimizzazione non è convesso, quindi o xu o yi deve essere fissato.</p>
+<p>L&#39;approccio tipico è quello di inizializzare a caso yi e fissarlo, per poi minimizzare su xu, una volta raggiunto il minimo, si fissa xu e si minimizza per yi, e via così finché non si raggiunge la precisione desiderata.</p>
+<h3 id="neirest-neightbors-based-cf">Neirest Neightbors based CF</h3>
+<p>Per stimare il rate dell&#39;utente <em>u</em> si fa la media pesata dei rate dati dagli utenti che sono più simili all&#39;utente <em>u</em>.
+C&#39;è anche il reciproco per gli item.</p>
+<p><em>formulona dalle slide</em></p>
+<h2 id="similarit-tra-utenti-e-items">Similarità tra utenti e items</h2>
+<p><em>altre formulone dalla slide</em></p>
+<p>La misura che si usa di più è la <strong>similirtà coseno</strong> (prima formula), dove per coseno si intende il coseno definito tra due vettori.</p>
+<p>L&#39;idea è di prendere un vettore per ogni utente di lunghezza pari alla cardinalità dell&#39;insieme degli item e di mettere a 1 tutti gli elementi  del vettore che corrispondo ad un item che è stato valutato.</p>
+<p>In questo modo, facendo il prodotto scalare tra due vettori utenti, il risultato è il numero di elementi in comunque, in questo caso quanti item sono stati valutati dai due utenti.
+Mentre facendo la radice della norma di ...</p>
+<p>Le formule delle slide ragionano ad insiemi, quanto detto sopra e fatto alla lavagna è espresso in vettori, il punto è che sono la stessa cosa.</p>
+<p>Lo stesso ragionamento può essere fatto per gli item in funzione degli utenti.</p>
+<h2 id="link-prediction">Link prediction</h2>
+<p>Altro argomento correlato ai RS.</p>
+<p>Si ha a disposizione un grafo, con tutti i nodi noti e alcuni archi, si vuole riuscre a predirre se ci saranno dei nuovi archi tra questi nodi in base alla struttura nota del grafo.</p>
+<p>Tipicamente questo problema viene rimappato su un problema di ranking/classificazione.</p>
+<p>Ogni possibile arco può essere rappresentato come un insieme di feature che possono essere usate per fare predizione con:</p>
+<ul>
+<li>Common Neighbours</li>
+<li>Jacacard o altre misure di correlazione</li>
+<li>Analisi dei path esistenti tra due nodi (come il PageRank)</li>
+<li>ecc.</li>
+</ul>
+<p>La differenza con un problema di raccomanazione sta nel come vengono calcolate le feature.</p>
 </body></html>

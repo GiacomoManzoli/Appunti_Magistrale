@@ -1,6 +1,10 @@
-\section{Lezione 3 - Ripasso di probabilità e algebra + Supervised
-Learning}\label{lezione-3---ripasso-di-probabilituxe0-e-algebra-supervised-learning}
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = ../apprendimento_automatico.tex
+% !TEX spellcheck = it-IT
+\section{Lezione 3 - Ripasso di probabilità e algebra + Supervised Learning}\label{lezione-3---ripasso-di-probabilituxe0-e-algebra-supervised-learning}
 
+\todo[inline]{Sistemare}
 \subsection{Variabili aleatorie}\label{variabili-aleatorie}
 
 \subsubsection{Bernoulli}\label{bernoulli}
@@ -46,7 +50,7 @@ la forma \emph{a campana}.
 \begin{quote}
 N(mu, sigma2)
 
-P(x) = {[}1 / sigma(√2Pi){]}*e(x-mu)\^{}2 / 2sigma\^{}2
+%P(x) = {[}1 / sigma(√2Pi){]}*e(x-mu)\^{}2 / 2sigma\^{}2
 \end{quote}
 
 \subsection{Algebra lineare}\label{algebra-lineare}
@@ -131,13 +135,9 @@ maggiori di 0.
 
 \subsection{Supervised Learning}\label{supervised-learning}
 
-Si vuole tradurre un insieme di dati in ingresso \emph{X} in un insieme
-di dati di uscita \emph{Y}.
+Si vuole tradurre un insieme di dati in ingresso \emph{X} in un insieme di dati di uscita \emph{Y}.
 
-Anche in questo caso c'è un \emph{oracolo} che funziona in modo
-stocastico e che sceglie un oggetto \emph{x} in \emph{X} secondo una
-certa probabilità \emph{P(x)} e sceglie \emph{y} in \emph{Y} in base a
-\emph{P(y\textbar{}x)}.
+Anche in questo caso c'è un \emph{oracolo} che funziona in modo stocastico e che sceglie un oggetto \emph{x} in \emph{X} secondo una certa probabilità \emph{P(x)} e sceglie \emph{y} in \emph{Y} in base a \emph{P(y\textbar{}x)}.
 
 L'obiettivo che si vuole raggiungere è quello di approssimare queste
 probabilità.
@@ -147,9 +147,7 @@ può capitare che ad uno stesso \emph{x} corrispondano \emph{y} diversi.
 
 \subsubsection{Operativamente}\label{operativamente}
 
-Si dispone di una serie di coppie \emph{(x,y)} che seguono lo schema
-naturale, l'insieme di queste coppie prende il nome di \textbf{training
-set}.
+Si dispone di una serie di coppie \emph{(x,y)} che seguono lo schema naturale, l'insieme di queste coppie prende il nome di \textbf{training set}.
 
 Viene quindi scelta un funzione \emph{h} che prende il nome di
 \textbf{ipotesi}, definita nello spazio delle ipotesi \emph{H} tale che,
@@ -164,7 +162,6 @@ per valori di \emph{x} non presenti nel training set.
 Da ciò segue che possono essere commessi due tipi di errori:
 
 \begin{itemize}
-\tightlist
 \item
   \textbf{Errore empirico}: è l'errore commesso da \emph{h} in media,
   all'interno del training set. In altre parole è l'errore medio
@@ -181,19 +178,19 @@ set}, cioè un altro insieme di coppie \emph{(x,y)} che non compaiono nel
 training set. Questa discriminazione è importante perché se così non
 fosse l'errore ideale sarebbe influenzato dall'errore empirico.
 
-\emph{Riassumendo: l'errore empirico è quello che si fa sui dati che si
+\emph{\textbf{Riassumendo}: l'errore empirico è quello che si fa sui dati che si
 conoscono, l'errore ideale è quello che si fa su dei dati nuovi.}
 
 Dal momento che lo spazio delle ipotesi non può coincidere con tutte le
 funzioni calcolabili è necessario fare delle assunzioni sulla funzione
-oracolo, queste assunzioni prendono il nome di \textbf{bias induttivo} e
-derivano da delle conscenze a priori che abbiamo sul dominio e che
+oracolo. 
+Queste assunzioni prendono il nome di \textbf{bias induttivo} e
+derivano da delle conscenze a priori che abbiamo sul dominio e
 vengono utilizzate per fare delle previsioni induttive sui dati.
 
 Fanno parte del bias induttivo:
 
 \begin{itemize}
-\tightlist
 \item
   Come vengono rappresentati gli esempi;
 \item
@@ -203,15 +200,13 @@ Fanno parte del bias induttivo:
   viene scelta la funzione \emph{h}.
 \end{itemize}
 
-\paragraph{Es: regressione
-polinomiale}\label{es-regressione-polinomiale}
+\subsubsection{Regressione polinomiale}\label{es-regressione-polinomiale}
 
-\begin{quote}
-TRAIN = \{(x1,y1),\ldots{},(xn,yn)\}
-\end{quote}
+Si vuole trovare una funzione polinomiale in grado di approssimare dei punti in un piano.
 
-Si vuole trovare una funzione polinomiale in grado di approssimare i
-punti.
+$$
+TRAIN = \{(x_1,y_1),\ldots{},(x_n,y_n)\}
+$$
 
 In questo caso il bias induttivo è assumere che esista una funzione
 polinomiale in grado di approssimare i vari punti.

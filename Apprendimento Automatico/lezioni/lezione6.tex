@@ -1,6 +1,6 @@
 % !TEX encoding = UTF-8
 % !TEX TS-program = pdflatex
-% !TEX root = apprendimento_automatico.tex
+% !TEX root = ../apprendimento_automatico.tex
 % !TEX spellcheck = it-IT
 \section{Lezione 6 - Apprendimento di concetti}\label{lezione-6---apprendimento-di-concetti}
 
@@ -12,28 +12,28 @@ oggetto dello spazio \emph{X} e ritorna un booleano che specifica se
 l'elemento appartiene a quel concetto o meno.
 
 Un concetto \emph{C} su uno spazio delle istanze \emph{X} viene definito
-come una coppia \emph{(x,C(x))} con \emph{x ∈ X}, e \emph{C(x)} è la
+come una coppia \emph{(x,C(x))} con $x \in X$, e \emph{C(x)} è la
 funzione concetto applicata ad \emph{x}.
 
 Si dice che un ipotesi booleana \emph{h} per lo spazio delle istanze
-\emph{X} \textbf{soddisfa} \emph{x ∈ X} se \emph{h(x) == 1}.
+\emph{X} \textbf{soddisfa} $x \in X$ se \emph{h(x) = 1}.
 
 La stessa ipotesi \emph{h} si dice che è \textbf{consistente} con un
-esempio \emph{(x,C(x))} se \emph{h(x) == C(x)}.
+esempio \emph{(x,C(x))} se \emph{h(x) = C(x)}.
 
-La definizione di consistenza può essere poi estesa ad in insieme se
+La definizione di consistenza può essere poi estesa ad un insieme se
 l'ipotesi \emph{h} è consistente con tutti gli elementi presenti
 nell'insieme.
 
 \subsection{Ordine parziale}\label{ordine-parziale}
 
-Siano \emph{hi} e \emph{hj} due funzioni booleane definite su uno spazio
-delle istanze \emph{X}, diciamo che \emph{hi} è \textbf{più generale} o
-equivalente di \emph{hj} (\emph{hi \textgreater{}=g hj}) se:
+Siano $h_i$ e $h_j$ due funzioni booleane definite su uno spazio
+delle istanze \emph{X}, diciamo che $h_i$ è \textbf{più generale} o
+equivalente di $h_j$ ($h_i \geq_g h_j$) se:
 
-\begin{quote}
-x  X \textbar{} hj(x) == 1 --\textgreater{} hi(x) == 1
-\end{quote}
+$$
+\forall x \in X,  h_j(x) = 1 \Rightarrow h_i(x) = 1
+$$
 
 Cioè tutti gli esempi che sono soddisfatti dall'ipotesi più specifica
 sono sempre soddisfatti anche dall'ipotesi più generale.
@@ -95,41 +95,38 @@ generali di quelle contenute in \emph{G}, \emph{S} e \emph{G} inclusi.
 
 \subsubsection{Algoritmo}\label{algoritmo}
 
-Si inizializzano gli insiemi \emph{G} e \emph{S} in modo che conengano
+Si inizializzano gli insiemi \emph{G} e \emph{S} in modo che contengano
 rispettivamente le ipotesi più generali e più specifiche.
 
-%\begin{Shaded}
-%\begin{Highlighting}[]
-%\NormalTok{foreach d }\OperatorTok{==} \NormalTok{(x,c(x)) }\OperatorTok{in} \NormalTok{Tr do}
-%    \ControlFlowTok{if} \NormalTok{c(x) }\OperatorTok{=} \DecValTok{1}\NormalTok{:}
-%        \NormalTok{rimuovi da G ogni ipotesi inconsistente con d}
-%        \NormalTok{per ogni ipotesi s }\OperatorTok{in} \NormalTok{S e inconsistente con d}
-%            \NormalTok{rimuovi s da S.}
-%            \NormalTok{aggiungi ad S tutte le generalizzazioni minime h di s tali che sono consistenti con d ed esiste un altra ipotesi g }\OperatorTok{in} \NormalTok{G più generale di h.}
-%            \NormalTok{rimuovi da S tutte le ipotesi s}\StringTok{' che sono più generali di altre ipotesi in S.}
-%\StringTok{    if c(x) == 0:}
-%\StringTok{        rimuovi da S tutte le ipotesi inconsistenti con d}
-%\StringTok{        per ogni ipotesi g in G inconsistente con d}
-%\StringTok{            rimuovi g da G}
-%\StringTok{            aggiungi a G tutte le specificazioni (?) minime h di g tali che siano consistenti con d e che esiste un'}\NormalTok{altra ipotesi s }\OperatorTok{in} \NormalTok{S più %specifica di h.}
-%            \NormalTok{rimuovi da G tutte le ipotesi g}\StringTok{' che sono più specifiche di altre ipotesi in G.}
-%\end{Highlighting}
-%\end{Shaded}
+\begin{lstlisting}[language=python, caption=Canditate Eliminatio]
+foreach d = (x,c(x)) in Tr do
+    if c(x) == 1
+        # rimuovi da G ogni ipotesi inconsistente con d
+        # per ogni ipotesi s in S e inconsistente con d
+            # rimuovi s da S.
+            # aggiungi ad S tutte le generalizzazioni minime h di s tali che sono consistenti con d ed esiste un altra ipotesi g in G più generale di h.
+            # rimuovi da S tutte le ipotesi s' che sono più generali di altre ipotesi in S.
+    if c(x) == 0
+        # rimuovi da S tutte le ipotesi inconsistenti con d
+        # per ogni ipotesi g in G inconsistente con d
+            # rimuovi g da G
+            # aggiungi a G tutte le specificazioni (?) minime h di g tali che siano consistenti con d e che esiste un'altra ipotesi s in S più specifica di h.
+            # rimuovi da G tutte le ipotesi g' che sono più specifiche di altre ipotesi in G.
+\end{lstlisting}
 
 Quando viene trovato un esempio \emph{d} nel training set che soddisfa
 il concetto che si cerca di apprendere:
 
 \begin{itemize}
-\tightlist
 \item
   Vengono rimosse da \emph{G} e da \emph{S} tutte le ipotesi che sono
   inconsistenti con \emph{d}, questo perché il version space deve
-  contenere solo ipotesi consistenti con il traingin set.
+  contenere solo ipotesi consistenti con il training set.
 \item
-  Per ogni ipotesi \emph{s} rimossa da \emph{S} viengono aggiunte tutte
+  Per ogni ipotesi \emph{s} rimossa da \emph{S} vengono aggiunte tutte
   le generalizzazioni minime di \emph{s} che sono in grado di soddisfare
   \emph{d}, questo per andare a definire delle nuove ipotesi specifiche
-  e consistenti con il Tr.
+  e consistenti con il \textit{Tr}.
 \item
   Vengono poi rimosse tutte le ipotesi \emph{s'} da \emph{S} che sono
   più generali di altre ipotesi presenti in \emph{S}, così facendo

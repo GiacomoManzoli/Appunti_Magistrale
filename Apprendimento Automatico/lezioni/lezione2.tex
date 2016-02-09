@@ -1,54 +1,37 @@
-\section{Lezione 2 - Ripasso di
-probabilità}\label{lezione-2---ripasso-di-probabilituxe0}
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = ../apprendimento_automatico.tex
+% !TEX spellcheck = it-IT
+\section{Lezione 2 - Ripasso di probabilità}\label{lezione-2---ripasso-di-probabilituxe0}
 
-(Kaggle){[}https://www.kaggle.com/{]}, sito che offre sfide con problemi
-di machine learing sponsorizzati da grandi compagnie.
+\subsection{Problemi tipici in modo matematico}\label{problemi-tipici-in-modo-matematico}
 
-\textbf{Proposta di un progetto di gruppo (opzionale):} affrontare uno
-dei problemi proposti da Kraggle per ottenere un bonus sul voto finale.
-
-\subsection{Problemi tipici in modo
-matematico}\label{problemi-tipici-in-modo-matematico}
-
-\emph{Notazione: * Ø --\textgreater{} teta, insieme di parametri che
-rappresenta l'apprendimento (lo so è il simbolo dell'insieme vuoto, ma è
-semplice da fare) * X --\textgreater{} insieme di dati su cui applicare
-l'algoritmo * Y --\textgreater{} enumeratore (etichette)}
+Viene utilizzata la seguente notazione:
 
 \begin{itemize}
-\tightlist
-\item
-  Classificazione binaria: h(Ø):
-  \texttt{X\ -\/-\textgreater{}\ \{-1,+1\}} (\emph{h di teta}, funzione
-  che mappa un dato valore in -1 o +1 (oppure 0 o 1) la funzione
-  \emph{h} è sempre parametrica, in qunato i parametri rappresentano
-  l'apprendimento (\emph{teta} Ø));
-\item
-  Classificazione multiclasse: \texttt{h(Ø):\ X\ -\/-\textgreater{}\ Y}
-  con Y che prende come valori un enumeratore o un intervallo di numeri
-  1..k;
-\item
-  Regressione: \texttt{h(Ø):\ X\ -\/-\textgreater{}\ Reale}
-\item
-  Ranking di istanze e classi:
-  \texttt{h(Ø):\ XxY\ -\/-\textgreater{}\ Reale} dati elementi del
-  prodotto cartesiano tra X (esempio) e Y (etichetta) associa un
-  punteggio espresso da un numero reale. Una funzione che valuta la
-  coppia (x,y) con \emph{x} valore e \emph{y} classificazione.
-\item
-  Novelty detection: \texttt{h(Ø):\ X\ -\/-\textgreater{}\ {[}0,1{]}}
-  funzione che dato un'esempio mi calcola il fattore di rischio come
-  numero reale da 0 a 1.
-\item
-  Clustering: \texttt{h(Ø):\ X\ -\/-\textgreater{}\ \{1,..,k\}} funzione
-  che ad un esempio associa una valutazione.
-\item
-  Associazioni (Basket Analysis): \texttt{P(Y\textbar{}X)}.
+\item $\Theta$: insieme di parametri sul quale effettuare l'apprendimento.
+\item $X$: insieme di dati sui quali applicare l'algoritmo.
+\item $Y$: etichette da assegnare ai dati.
 \end{itemize}
 
-\subsection{Ripasso di probabilità e
-statistica}\label{ripasso-di-probabilituxe0-e-statistica}
+\begin{itemize}
+\item \textbf{Classificazione binaria}: $h(\Theta): X \rightarrow \{-1,+1\}$ funzione
+  che mappa un dato valore in -1 o +1 (oppure 0 o 1) la funzione
+  \emph{h} è sempre parametrica, in quanto i parametri rappresentano
+  l'apprendimento;
+\item \textbf{Classificazione multiclasse}: $h(\Theta): X \rightarrow Y$ funzione che associa ad un determinato valore in $X$ un'etichetta in $Y$;
+\item \textbf{Regressione}: $h(\Theta): X \rightarrow {\rm I\!R}$
+\item \textbf{Ranking di istanze e classi}: $h(\Theta): X \times Y \rightarrow {\rm I\!R}$ dati elementi del
+  prodotto cartesiano tra \textit{X} (esempio) e \textit{Y} (etichetta) associa un
+  punteggio espresso da un numero reale. Una funzione che valuta la
+  coppia $(x,y)$ con \emph{x} valore e \emph{y} classificazione.
+\item \textbf{Novelty detection}: $h(\Theta): X \rightarrow [0,1]$  funzione che dato un esempio calcola il fattore di rischio come numero reale da 0 a 1.
+\item \textbf{Clustering}: $h(\Theta): X \rightarrow \{1,\ldots1,k\}$ funzione che ad un esempio associa una valutazione.
+\item \textbf{Associazioni (Basket Analysis)}: $P(Y|X)$
+\end{itemize}
 
+\subsection{Ripasso di probabilità e statistica}\label{ripasso-di-probabilituxe0-e-statistica}
+\todo{sistemare}
 \emph{Evento}: qualcosa che può essere o vero o falso.
 
 La probabilità che si verifichi un'evento è un numero compreso tra 0 e
