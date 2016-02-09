@@ -56,7 +56,7 @@ function parseFile(file){
       parsedLine = parsedLine.substr(0,i) + ' '+ parsedLine.substr(i);
      
     }
-    parsedLine = parsedLine.replace('./immagini/', dirName+'/immagini/');
+    parsedLine = parsedLine.replace('./immagini/', './notes/immagini/');
     parsedFile += parsedLine+'\n';
   });
 
@@ -72,7 +72,7 @@ function buildHtmlPage(body){
     '</body></html>';
 }
 
-glob(''+dirName+'/'+tag.toUpperCase()+'*.md', options, function (er, files) {
+glob(''+dirName+'/notes/'+tag.toUpperCase()+'*.md', options, function (er, files) {
   // files is an array of filenames.
   // If the `nonull` option is set, and nothing
   // was found, then files is ["**/*.js"]
@@ -82,6 +82,7 @@ glob(''+dirName+'/'+tag.toUpperCase()+'*.md', options, function (er, files) {
   var completeFile = '';
 
   files.forEach(function (item) {
+
     completeFile += parseFile(fs.readFileSync(item, 'utf8')) + '\n';
   });
 
@@ -92,6 +93,6 @@ glob(''+dirName+'/'+tag.toUpperCase()+'*.md', options, function (er, files) {
   htmlBody = htmlBody.replace(/&lt;sub&gt;/g,'<sub>');
   htmlBody = htmlBody.replace(/&lt;\/sub&gt;/g,'</sub>');
 
-  fs.writeFileSync(dirName+'.html', buildHtmlPage(htmlBody), 'utf8');
+  fs.writeFileSync('./'+dirName +'/'+dirName+'.html', buildHtmlPage(htmlBody), 'utf8');
 });
  

@@ -1,4 +1,4 @@
-<html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="linguaggi-di-programmazione-lezione-1">Linguaggi di programmazione - Lezione 1</h1>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../_builder/pdf.css"><link rel="stylesheet" href="../_builder/highlight/styles/default.css"><script src="../_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="linguaggi-di-programmazione-lezione-1">Linguaggi di programmazione - Lezione 1</h1>
 <p>I primi linguaggi importanti per la storia sono il C/C++, Java e Haskell.</p>
 <p>Il controllo dei tipi è iniziato dal Fortran (anni 50) con la gestione statica dei valori delle variabili. La prima versione del Fortran tuttavia non ammetteva ricorsinoe.</p>
 <p><em>I linguaggi imperativi hanno un approccio più ingegneristico mentre quelli funzionali sono più matematici e astratti.</em></p>
@@ -572,7 +572,7 @@ f <span class="hljs-tag">:: Num</span> <span class="hljs-subst">-&gt; </span>Num
 <p>Per l&#39;altro nodo <code>@</code> tra <code>+2</code> e <code>x</code> viene generator il vincolo <code>t = u -&gt; s</code>.</p>
 <p>Infine, sapendo che <code>t = Num -&gt; Num</code> allora <code>t = u -&gt; s ==&gt; u = Num, s = Num</code>.</p>
 <p>Possono verificarsi delle situazioni <em>circolari</em> in cui non si riesce ad inferire in modo automatico i tipo. Questo perché una variabile di tipo può dipendere da un&#39;altra variabile di tipo che a sua volta dipende dalla prima.</p>
-<p><img src="Linguaggi di Programmazione/immagini/L09-inferenza.png" alt="alt text" title="Logo Title Text 1"></p>
+<p><img src="./notes/immagini/L09-inferenza.png" alt="alt text" title="Logo Title Text 1"></p>
 <p><em>La profondità dell&#39;albero viene influenzata dal fatto che le funzioni sono currificate</em>.</p>
 <h3 id="creazione-dell-albero">Creazione dell&#39;albero</h3>
 <p>L&#39;albero dell&#39;inferenza è creato da due tipi di nodi, i nodi lambda che hanno come simbolo <code>\</code> e i nodi applicazione che hanno come simbolo <code>@</code>.</p>
@@ -921,7 +921,7 @@ real <span class="hljs-keyword">array</span> A; integer n;
 <h2 id="runtime">Runtime</h2>
 <p>Al giorno d&#39;oggi la memoria durante l&#39;esecuzione di un programma viene gestita con uno stack di record di attivazione, ognuno di questi record contiene tutti gli r-valori delle variabili del blocco.</p>
 <p>Questo stack cresce dall&#39;alto verso il basso.</p>
-<p><img src="Linguaggi di Programmazione/immagini/L10-computer.png" alt=""></p>
+<p><img src="./notes/immagini/L10-computer.png" alt=""></p>
 <p>Nella parte bassa della memoria virtuale c&#39;è l&#39;heap, l&#39;area della memoria adibita a contenere i dati dinamici.</p>
 <p>L&#39;indirizzo dell&#39;ultimo record di attivazione (quello che si trova in cima allo stack) viene gestito dal <strong>enviroment pointer</strong>, un registro fisico della macchina.</p>
 <p>Un record di attivazione contiene:</p>
@@ -933,7 +933,7 @@ real <span class="hljs-keyword">array</span> A; integer n;
 <p>Segue che ogni record di attivazione (RA) ha una lunghezza variabile.</p>
 <p>Da notare che il codice prodotto dal compilatore deve fare riferimento ad indirizzi dello stack dei RA, questo vuol dire che il compilatore deve avere un modello preciso di come sarà lo stack al momento in cui viene eseguito ciascuna operazione.</p>
 <p>Inoltre, dato che lo stack cambia durante l&#39;esecuzione del programma, il compilatore deve essere in grado di andare a calcolare gli indirizzi corretti.</p>
-<p><img src="Linguaggi di Programmazione/immagini/L10-funzione.png" alt=""></p>
+<p><img src="./notes/immagini/L10-funzione.png" alt=""></p>
 <p>Quando si entra in un blocco è necessario che il compilatore faccia il push del blocco corretto, mentre quando si esce dal blocco è necessario fare il pop per deallocarle e liberare la memoria.</p>
 <h3 id="discesa-nello-stack">Discesa nello stack</h3>
 <p>Se all&#39;interno di un blocco vengono utilizzate delle variabili di un altro blocco che contiene il blocco corrente, il compilatore deve essere in grado di andare a calcolare l&#39;indirizzo corretto.</p>
@@ -1710,9 +1710,9 @@ p :- <span class="hljs-keyword">new</span> Point(<span class="hljs-number">1.0</
 <li>La variabile <code>p</code> ha come tipo <code>ref(Point)</code>.</li>
 <li>Ad ogni invocazione della funzione <code>Point</code> viene creato un nuovo record di attivazione che corrisponde all&#39;oggetto.</li>
 </ul>
-<p><img src="Linguaggi di Programmazione/immagini/l18-ra.png" alt=""></p>
+<p><img src="./notes/immagini/l18-ra.png" alt=""></p>
 <p>In modo analogo funziona anche l&#39;invocazione del metodo di un oggetto</p>
-<p><img src="Linguaggi di Programmazione/immagini/l18-point.png" alt=""></p>
+<p><img src="./notes/immagini/l18-point.png" alt=""></p>
 <h3 id="sottoclassi-e-subtyping">Sottoclassi e subtyping</h3>
 <p>Il seguente codice permette di definire una classe <code>C2</code> che deriva da <code>C1</code>.</p>
 <pre><code>class <span class="hljs-type">C1</span>
@@ -1732,7 +1732,7 @@ begin
 <span class="hljs-keyword">end</span>
 
 <span class="hljs-keyword">ref</span>(<span class="hljs-type">ColorPt</span>) cp = new <span class="hljs-type">ColorPt</span>(<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span> giallo);
-</code></pre><p><img src="Linguaggi di Programmazione/immagini/l18-heap.png" alt=""></p>
+</code></pre><p><img src="./notes/immagini/l18-heap.png" alt=""></p>
 <p>Da notare che <code>equals</code> di <code>ColorPt</code> copre l&#39;altro <code>equals</code> della classe <code>Point</code>, mentre quando viene eseguito il metodo <code>distance</code> che non è presente nella classe derivata, viene eseguito il metodo della classe base, raggiunto grazie all&#39;access link.</p>
 <h1 id="lezione-19-oggetti-3">Lezione 19 - Oggetti 3</h1>
 <p>Tutti gli oggetti vengono messi nello heap e vengono riferiti da una variabile presente nello stack.</p>
@@ -1844,7 +1844,7 @@ Se viene ritornato <code>True</code> viene eseguito il corpo, dopodiché viene r
 <p>In Smalltalk è presente anche un oggetto <code>super</code> che rappresenta la classe base, in questo modo quando si ridefinisce un metodo è comunque possibile richiedere l&#39;esecuzione del metodo originale delle classe base inviando lo stesso messaggio all&#39;oggetto <code>super</code>.</p>
 <p>Dal momento che non ci sono tipi statici la scelta del metodo da invocare in risposta ad un determinato messaggio si basa solamente sul nome del metodo e il numero dei parametri, la combinazione <em>nome messaggio</em> e <em>arietà</em> prende il nome di <strong>selettore</strong>.</p>
 <h3 id="rappresentazione-degli-oggetti">Rappresentazione degli oggetti</h3>
-<p><img src="Linguaggi di Programmazione/immagini/l19-oggetti.png" alt=""></p>
+<p><img src="./notes/immagini/l19-oggetti.png" alt=""></p>
 <p>Ci sono due parti, una parte principale relativa all&#39;oggetto di tipo <code>Point</code> che contiene i dati dell&#39;oggetto e un puntatore ad un altro oggetto che rappresenta la definizione della classe <code>Point</code>, la quale contiene tutte le altre informazioni come:</p>
 <ul>
 <li>un puntatore a <code>super</code></li>
@@ -1852,7 +1852,7 @@ Se viene ritornato <code>True</code> viene eseguito il corpo, dopodiché viene r
 <li>un puntatore al template della classe.</li>
 </ul>
 <p>L&#39;oggetto template serve per permettere al codice di una classe derivata di risalire alla posizione delle variabili all&#39;interno di un oggetto della classe base e viceversa.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l19-oggetto-2.png" alt=""></p>
+<p><img src="./notes/immagini/l19-oggetto-2.png" alt=""></p>
 <p>Da notare che la tabella dei metodi della classe <code>ColoredPoint</code> contiene solo i nuovi metodi, inoltre, l&#39;oggetto di tipo <code>ColoredPoint</code> contiene tutti i campi dati, compresi quelli della classe base.</p>
 <p>Spiegando meglio l&#39;utilità del template: se ad un oggetto di una classe derivata invio un messaggio che esegue un metodo della classe base, questo metodo ha informazioni solamente riguardo la struttura della classe base e non di quella derivata, viene quindi utilizzato il template per risalire alla posizione della variabile all&#39;interno dell&#39;oggetto di classe derivata.
 Questo perché i campi dati di una classe derivata possono avere un ordine diverso rispetto a quelli della classe base.</p>
@@ -2009,7 +2009,7 @@ ed quindi non sono accessibili dai nuovi metodi di
 Per questo motivo viene utilizzata una <strong>vtable</strong> per ogni classe, cioè una tabella che contiene le informazioni riguardanti i metodi virtuali della classe.
 La tabella contiene solamente i metodi virtuali perché l&#39;invocazione dei metodi non virtuali viene decisa a compile time.</p>
 <p>Quindi ad ogni oggetto viene associato un record contenente un puntatore <code>vptr</code> che punta alla tabella dei metodi virtuali per la classe dell&#39;oggetto. </p>
-<p><img src="Linguaggi di Programmazione/immagini/l21-colorpt.png" alt=""></p>
+<p><img src="./notes/immagini/l21-colorpt.png" alt=""></p>
 <p>Per eseguire il metodo</p>
 <pre><code class="lang-c++">Pt * p = <span class="hljs-keyword">new</span> Pt(<span class="hljs-number">3</span>);
 p-&gt;move(<span class="hljs-number">2</span>);
@@ -2020,16 +2020,16 @@ p-&gt;move(<span class="hljs-number">2</span>);
 <p><em>Da notare che l&#39;indice della tabella dei metodi virtuali parte da 1 e non da 0. È una notazione del libro anche se si tratta di un libro di informatica.</em></p>
 <p>Tutto questo perché non è possibile determinare il tipo dinamico dell&#39;oggetto puntato da <code>p</code>.
 Tra l&#39;altro lo stesso codice prodotto dal compilatore funziona anche se l&#39;oggetto puntato da <code>p</code> è di tipo <code>ColorPt</code>, perché gli elementi della tabella dei metodi virtuali di una classe derivata hanno lo stesso ordine di quelli della tabella della classe base (sono <strong>conformi</strong>).</p>
-<p><img src="Linguaggi di Programmazione/immagini/l21-vtable-1.png" alt=""></p>
+<p><img src="./notes/immagini/l21-vtable-1.png" alt=""></p>
 <p>In C++ l&#39;erediterietà è <strong>conforme</strong>, cioè sia i campi dati, sia i metodi virtuali che vengono ereditati, compaiono nello stesso ordine con il quale compaiono della classe base.</p>
 <p>Così facendo è possibile evitare di utilizzare un puntantore al sotto-oggetto come succede con Smalltalk, racchiudendo tutte le informazioni di un oggetto o di una classe in uno stesso record.</p>
 <p><em>Ripetendo il concetto:</em> la prima parte della vtable di una classe derivata conincide con l&#39;ordine dei metodi della vtable della classe base (<strong>vtable conformi</strong>).</p>
-<p><img src="Linguaggi di Programmazione/immagini/l21-vtable-2.png" alt=""></p>
+<p><img src="./notes/immagini/l21-vtable-2.png" alt=""></p>
 <p>Questo permette di scrivere le seguenti istruzioni</p>
 <pre><code class="lang-c++"> p = cp<span class="hljs-comment">; </span>
  p-&gt;move(2)<span class="hljs-comment">;</span>
 </code></pre>
-<p><img src="Linguaggi di Programmazione/immagini/l21-vtable-3.png" alt=""></p>
+<p><img src="./notes/immagini/l21-vtable-3.png" alt=""></p>
 <p>Il compilatore produce il codice <code>(*(p-&gt;vptr[1]))(p,2)</code> che funziona correttamente sia se l&#39;oggetto puntato da <code>p</code> è di tipo <code>Pt</code> sia se è di tipo <code>ColorPt</code>, questo grazie alla conformità delle vtable.</p>
 <p>La stessa strategia non può funzionare in Smalltalk perché non essendoci un tipo statico il compilatore non riesce a farsi un idea di che tipo di oggetto potrebbe essere puntato, inoltre due oggetti di due classi in relazione gerarchica potrebbero avere lo stesso metodo in posizioni diverse a causa del fatto che Smalltalk non impone la conformità.</p>
 <p>Volendo si potrebbe utilizzare una mega tabella con tutti i possibili metodi virtuali ma questa imporrebbe troppa rigidità e sarebbe troppo inefficente.</p>
@@ -2407,7 +2407,7 @@ main() {
 </ul>
 <blockquote>
 <p>If A&#39; &lt;: A then A-&gt;B &lt;: A&#39;-&gt;B</p>
-<p><code>int F(ColoredPoint x) è sotto tipo di int F(Point x)</code></p>
+<p><code>int F(Point x) è sotto tipo di int F(ColoredPoint x)</code></p>
 </blockquote>
 <p>Nel caso ci siano più parametri si ha che <code>A::f &lt;: B::f</code> se le due funzioni sono contro-varianti sul dominio e covarianti sul valore di ritorno. Ovvero se i parametri di <code>A::f</code> sono dei sotto-tipi dei parametri di <code>B::f</code> e se il valore di ritorno di <code>A::f</code> <em>è più specifico</em> del valore di ritornodi <code>B::f</code>, cioè il tipo del valore di ritorno di <code>B::f</code> è sotto tipo di <code>A::f</code>.</p>
 <blockquote>
@@ -2416,7 +2416,7 @@ main() {
 <p>se T<sub>1</sub>, ..., T<sub>k</sub> &lt;: S<sub>1</sub>, ..., S<sub>k</sub> e S &lt;: T</p>
 </blockquote>
 <p>Ad esempio, se <code>circle &lt;: shape</code>:</p>
-<p><img src="Linguaggi di Programmazione/immagini/l23-sub.png" alt=""></p>
+<p><img src="./notes/immagini/l23-sub.png" alt=""></p>
 <p>Nell&#39;esempio non si riescono a trovare altri sotto tipi per <code>shape -&gt; circle</code>, perché non c&#39;è nessuna classe più generica di <code>shape</code> e nessuna più specifica di <code>circle</code>.</p>
 <p>Tuttavia si può risalire la gerarchia, rendendo più specifico <code>shape</code> o più generco <code>circle</code>.</p>
 <p>Quindi <code>circle -&gt; circle &lt;: circle -&gt; shape</code>, perché ovunque è richiesta l&#39;esecuzione di una funzione <code>circle -&gt; shape</code> è possibile utilizzare una funzione <code>circle -&gt; circle</code>, questo perché le due funzioni hanno lo stesso dominio e il codominio di <code>circle-&gt;circle</code> è un sotto tipo del dominio di <code>circle -&gt; shape</code>.</p>
@@ -2460,7 +2460,7 @@ B *pb = pc;
 <p>L&#39;ordine con cui vengono dichiarate le classi base influisce sulla struttura dell&#39;oggetto, quindi la classe <code>class C: public A, public B</code> è diversa dalla classe <code>class C: public B, public A</code>.</p>
 <p>Questo perché l&#39;ordine con cui vengono dichiarate le classi base corrisponde con l&#39;ordine dei sotto oggetti.</p>
 <p>Anche per questo motivo il valore di <code>pc</code> è diverso dal valore di <code>pb</code>.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l23-ered-mult.png" alt=""></p>
+<p><img src="./notes/immagini/l23-ered-mult.png" alt=""></p>
 <p>La parte iniziale di un oggetto <code>C</code> è identica ad un oggetto <code>A</code>, dopodiché c&#39;è una parte identica ad un oggetto di tipo <code>B</code> e per finire ci sono le parti aggiunte dalla classe <code>C</code>.</p>
 <p>La classe <code>C</code> ha quindi due vtable, una conforme alla classe <code>A</code> e l&#39;altra conforme alla classe <code>B</code>. C&#39;è anche una colonna aggiuntiva con contenete l&#39;offset dal puntatore all&#39;inzio dell&#39;oggetto. Questo è necessario perché se viene invocata <code>C::f</code> utilizzando un puntatore di tipo <code>B*</code> si ha come valore l&#39;inizio del sotto oggetto di tipo <code>B</code> e quindi per trovare il corretto indirizzo di inzio dell&#39;oggetto è necessario utilizzare il <strong>displacement</strong> presente nella colonna della vtable, così facendo l&#39;esecuzione di <code>f</code> riesce ad accedere sempre agli indirizzi corretti.</p>
 <p>Quindi, alla compilazione di <code>pb-&gt;f(...)</code> il compilatore produrrà il codice <code>(*(pb-&gt;vtbl[2]))(pb,...)</code> mentre per <code>pc-&gt;f(...)</code>, <code>(*(pc-&gt;vtbl[1]))(pc,...)</code>.</p>
@@ -2502,7 +2502,7 @@ B *pb = pc;
 </code></pre>
 <h4 id="domanda-1">Domanda 1</h4>
 <p>Si chiede di disegnare in dettaglio la struttura di un oggetto della classe <code>C</code> spiegando le ragiuni di questa struttura</p>
-<p><img src="Linguaggi di Programmazione/immagini/l23-rappr.png" alt=""></p>
+<p><img src="./notes/immagini/l23-rappr.png" alt=""></p>
 <blockquote>
 <p><strong>Attenzione</strong>: l&#39;ordine delle classi base influisce sull&#39;ordine dei sotto oggetti</p>
 </blockquote>
@@ -2537,7 +2537,7 @@ Tuttavia, il valore dinamico del puntatore <code>o</code> potrebbe già puntare 
 <h2 id="cosa-fa-veramente-il-compilatore">Cosa fa veramente il compilatore</h2>
 <p>Utilizzando il flag <code>-fdump-class-hierarchy</code> il compilatore <code>g++</code> mostra la struttura delle classi.</p>
 <p>Dai risultati forniti dal compilatore si riescono a vedere le due vtable. In particolare tutti i metodi overriden della classe derivata si trovano nella prima vtable e nelle entrate delle altre vtable c&#39;è un riferimento al record relativo alla prima vtable.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l24-compilatore.png" alt=""></p>
+<p><img src="./notes/immagini/l24-compilatore.png" alt=""></p>
 <p>Tuttvia questa potrebbe essere un&#39;ottimizzazione effettuata dal compilatore, non è detto che sia un&#39;implementazione standard.
 Negli esercizi si può utilizzare l&#39;approccio visto in classe (default) oppure se si vuole utilizzare questo approccio è da specificare.</p>
 <h2 id="cast-pericolosi">Cast pericolosi</h2>
@@ -2550,7 +2550,7 @@ d = (D<span class="hljs-keyword">*</span>) a1;
 </code></pre>
 <p>Questo porta ad un errore a runtime, perché non esiste nessun oggetto di tipo <code>D</code>. </p>
 <h2 id="caso-con-3-classi-base">Caso con 3 classi base</h2>
-<p><img src="Linguaggi di Programmazione/immagini/l24-base-multipla.png" alt=""></p>
+<p><img src="./notes/immagini/l24-base-multipla.png" alt=""></p>
 <p>In questo caso il compilatore da un errore, perché <code>E</code> non ridefinisce <code>f</code> e c&#39;è un&#39;ambiguità nella scelta, quindi il compilatore per non sapere né leggere né scrivere, solleva un&#39;errore.</p>
 <p>Nel caso ci fosse anche <code>E::f</code> le varie tabelle utilizzerebbero <code>&amp;E::f</code>, con displacmente <code>0</code>, <code>δ</code> e <code>δ + δ&#39;</code>.</p>
 <p>Se non ci fossero né <code>D::f</code> né <code>E::f</code>, l&#39;istruzione <code>E* e = new E(); e-&gt;f()</code> è senza dubbio corretta, ma come fa il compilatore a trovare <code>f</code>? Dal momento che <code>f</code> viene eriditata da <code>C</code>, aggiunge al valore di <code>e</code> il displacement per arrivare al sotto-oggetto <code>C</code>. </p>
@@ -2564,23 +2564,23 @@ d = (D<span class="hljs-keyword">*</span>) a1;
 <p>Nessuna delle 3 è le migliore, ma la risoluzione esplicita è la meno peggio.</p>
 <h2 id="ereditariet-a-diamante">Ereditarietà a Diamante</h2>
 <p>Utilizzando l&#39;ereditarietà multipla può essere che compaia il diamante della morte, ovvero quando si ha una classe <code>D</code>, dalla quale derivano <code>A</code> e <code>B</code>, e si aggiunge alla festa una classe <code>C</code> che eredita sia da <code>A</code> che da <code>B</code>.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l24-diamante.png" alt=""></p>
+<p><img src="./notes/immagini/l24-diamante.png" alt=""></p>
 <p>Per gestire questa situazione si possono utilizzare due strategie diverse:</p>
 <ul>
 <li>Si tengono due copie dei dati dell&#39;oggetto <code>D</code>, quando un metodo della classe <code>C</code> deve accedere ad un dato dell&#39;sottooggetto <code>D</code> deve specificare con l&#39;operatore di scoping <code>::</code>, alcune istruzioni non possono essere più eseguite, come <code>D* d = new C()</code>.</li>
 <li>Si tiene una copia sola dei dati, rischiando però di avere delle incoerenze.</li>
 </ul>
 <p>C++ permette di utilizzare entrambe le strategie. Se non viene specificato nulla vengono tenute due copie dei sotto-oggetti, mentre con l&#39;<strong>ereditarietà virtuale</strong> viene utilizzato un singolo sotto-oggetto.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l24-virtuale.png" alt=""></p>
+<p><img src="./notes/immagini/l24-virtuale.png" alt=""></p>
 <p>Ovvero il sotto oggetto di tipo <code>D</code> viene distaccato e sostituito con un puntatore.
 Il nuovo sotto oggetto ha una vtable che contiene dei riferimenti ai metodi che sono stati overridati da <code>A</code>.</p>
 <p>Da notare che in questo modo viene aggiunto un livello di indirezione che crea dei problemi quando è necessario fare un downcast, dal momento che la distanza δ non è più costante. È quindi necessario utilizzare il <strong>dynamic cast</strong> il quale utilizza delle informazioni presenti nella vtable del sotto oggetto <code>D</code> per recuperare l&#39;indirizzo dell&#39;oggetto <code>A</code>.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l24-vtable.png" alt=""></p>
+<p><img src="./notes/immagini/l24-vtable.png" alt=""></p>
 <p>Il tutto può essere riassunto dicendo che il sotto oggetto virtuale viene messo in fondo all&#39;oggetto derivato, man mano che si effettuano derivazioni, la distanza del sotto oggetto virtuale aumenta.
 Trattandosi poi di un valore che varia dinamicamente, questa distanza deve essere specificata nella vtable degli oggetti.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l24-sottooggetto.png" alt=""></p>
+<p><img src="./notes/immagini/l24-sottooggetto.png" alt=""></p>
 <h3 id="casi-strani">Casi strani</h3>
-<p><img src="Linguaggi di Programmazione/immagini/l24-f.png" alt=""></p>
+<p><img src="./notes/immagini/l24-f.png" alt=""></p>
 <p>Se viene usata l&#39;ereditarietà virtuale, il compilatore solleva un errore perché nella vtable del sotto oggetto <code>D</code> non può contenere due definizioni di <code>f</code>. Se anche <code>C</code> defince <code>f</code>, allora non ci sono problemi.</p>
 <p>Se invece <code>f</code> viene overridata solamente da <code>A</code>, allora non ci sono problemi.</p>
 <p>C&#39;è un problema anche con i costruttori, in questo caso il compilatore impedisce ai costruttori di <code>A</code> e <code>B</code> di invocare i costruttori di <code>D</code>, solo il costruttore di <code>C</code> può invocarli, questo perché c&#39;è un solo sotto oggetto.</p>
@@ -2718,7 +2718,7 @@ Non sono quindi presenti i cast e l&#39;aritmetica dei puntatoro, inoltre il par
 <p>Per semplificare il linguaggio è stato poi posto il vincolo che gli oggetti possono essere acceduti solamente tramite puntatori, che prendono il nome di <strong>riferimenti</strong> e che vengono &quot;nascosti&quot; dal compilatore.
 Di conseguenza l&#39;unica assegnazione tra oggetti è quella tra i puntatori.</p>
 <p>Il passaggio dei parametri alle funzioni avviene sempre per valore. Quando viene passato un oggetto, viene forinto il valore del puntatore (riferimento).</p>
-<p><img src="Linguaggi di Programmazione/immagini/l26-base.png" alt=""></p>
+<p><img src="./notes/immagini/l26-base.png" alt=""></p>
 <p>In Java vale l&#39;<strong>array covariance</strong>, ovvero se <code>Shape</code> è sotto tipo di <code>Circle</code>, anche <code>Shape[]</code> è sotto tipo di <code>Circle[]</code>. Questo è uno dei punti discutibili del Java.</p>
 <p>La classe <code>ClassLoader</code> rapprenseta la classe che viene utilizzata per caricare dinamicamente le altre classi. Risulta importare avere la possibilità di utilizzare più <code>ClassLoader</code> per una questione di sicurezza: è possibile avere un loader per caricare delle classi ritenute sicure che esegue meno controlli sulla sicurezza e fornisce privilegi maggiori e avere altri loader meno permissivi.</p>
 <p>Tutti gli oggetti Java estendono (ereditano) da una classe, se questa non è specificata viene utilizzato di default <code>Object</code>, che contiene alcuni metodi generici come <code>toString()</code>, <code>equals()</code> e altri metodi legati alla concorrenza.</p>
@@ -2804,7 +2804,7 @@ C&#39;è però un costo maggiore dovuto al fatto che la ricerca dei metodi da in
 <p>Il funzionamento è standard con il <code>throw</code>/<code>catch</code> utilizzando il dynamic scope per la selezione dell&#39;handler (primo trovato).</p>
 <p>Ci sono alcune differenze legate al fatto che le eccezioni sono un oggetto e pertanto è permesso il subtyping delle eccezioni.</p>
 <p>Inoltre, la firma dei metodi deve dichiarare queli eccezioni possono essere sollevate e che non sono <code>Exception</code>, questo perché c&#39;è una gerarchia delle eccezioni.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l26-exc.png" alt=""></p>
+<p><img src="./notes/immagini/l26-exc.png" alt=""></p>
 <p>Se un metodo può sollevare delle eccezioni, queste devono essere sotto-tipo di <code>Exception</code> e devono essere dichiarate nella firma/prototipo.</p>
 <p>Le <code>RuntimeExcpetion</code> rappresentano tutte le eccezioni legate agli errori runtime, come l&#39;out of bound di un&#39;array o un class cast fallito.</p>
 <p>Le cose fighe sono:</p>
@@ -2868,7 +2868,7 @@ a[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> <s
 </code></pre>
 <p>Nell&#39;ultimo caso con <code>a.f(2)</code> l&#39;overloading resolution sceglie <code>f(double)</code> perché è l&#39;unico che risce a vedere. A runtime non vengono trovati override del metodo e di conseguenza viene invocato il metodo di <code>A1</code>.</p>
 <h1 id="lezione-27-jvm">Lezione 27 - JVM</h1>
-<p><img src="Linguaggi di Programmazione/immagini/l27-jvm.png" alt=""></p>
+<p><img src="./notes/immagini/l27-jvm.png" alt=""></p>
 <p>Il compilatore Java produce un file <code>.class</code> che contiene il bytecode prodotto, spetta poi alla JVM eseguire il contenuto del file.</p>
 <p>La JVM è divisa in due parti, la prima dedicata al caricamento delle classi e la seconda dedicata all&#39;interpretazione del codice.</p>
 <p>La prima parte è poi divisa in 3 moduli:</p>
@@ -2919,7 +2919,7 @@ Pertanto il verifier controlla:</p>
 C&#39;è anche la garbage collection automatica, dal momento che non è presente l&#39;aritmetica dei puntatori.</p>
 <h2 id="jvm-data-areas">JVM data areas</h2>
 <p>Ovvero le strutture dati a supporto dell&#39;interpretazione del codice, un po&#39; come per la macchina SECD del progetto.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l27-jvm-areas.png" alt=""></p>
+<p><img src="./notes/immagini/l27-jvm-areas.png" alt=""></p>
 <ul>
 <li><strong>method area</strong>: area di memoria che contiene le informazioni delle classi (il nome è un po&#39; sviante).</li>
 <li><strong>heap</strong>: contiene gli oggetti.</li>
@@ -2927,12 +2927,12 @@ C&#39;è anche la garbage collection automatica, dal momento che non è presente
 <li><strong>PC registers</strong>: un program counter per ogni stack.</li>
 <li><strong>native method stacks</strong>: zona per l&#39;esecuzione dei metodi nativi.</li>
 </ul>
-<p><img src="Linguaggi di Programmazione/immagini/l27-jvm-object.png" alt=""></p>
+<p><img src="./notes/immagini/l27-jvm-object.png" alt=""></p>
 <p>In uno stack della stack area ci sarà un puntatore ad un oggetto allocato nello heap. L&#39;oggetto conterrà poi un puntatore alla sua classe, che si troverà nella method area.</p>
 <p>Nella method area si troverà anche la <strong>method table</strong> della classe, un po&#39; come la vtable del C++, con la differenza che in questa tabella c&#39;è anche un puntatore ai <strong>class data</strong>, ovvero i campi dati statici della classe.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l27-jvm-ra.png" alt=""></p>
+<p><img src="./notes/immagini/l27-jvm-ra.png" alt=""></p>
 <p>Uno stack della stacks area è composto da una pila di record di attivazione e il relativo program counter conterrà l&#39;indizzo di un&#39;istruzione di un metodo che si trova nella method area.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l27-jvm-frame.png" alt=""></p>
+<p><img src="./notes/immagini/l27-jvm-frame.png" alt=""></p>
 <p>Ogni record di attivazione è composto da 3 parti:</p>
 <ul>
 <li><strong>local variables</strong>: area contenti le variabili locali, ovvero i valori dei parametri che vengono passati al metodo al quale è associato il record di attivazione.</li>
@@ -3222,7 +3222,7 @@ fromArrayToCollection(na, <span class="hljs-keyword">cs</span>); // compile-time
 <p>C&#39;è un&#39;altra definzione che risulta essere ancora più corretta ed esplicativa:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-keyword">void</span> fromArrayToCollection (T[] a, Collection&lt;? <span class="hljs-keyword">extends</span> T&gt; c)
 </code></pre>
-<p><img src="Linguaggi di Programmazione/immagini/l29-subtype.png" alt=""></p>
+<p><img src="./notes/immagini/l29-subtype.png" alt=""></p>
 <p>Il caso d&#39;uso principale della wild card è quando si vogliono leggere dei dati generici di una collezione d&#39;oggetti generica. Tutte le operazioni di scrittura su <code>Collection&lt;?&gt;</code> falliscono perché non è possibile fare il controllo di tipo.</p>
 <p>Un&#39;esempio è dato da</p>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printCollection</span>(<span class="hljs-params">Collection&lt;?&gt; c</span>)</span>{ 
@@ -3400,14 +3400,14 @@ In questo caso sarebbe conveniente avere delle riduzioni inner most ed è quello
 <p>Per calcolare <code>&#39;h&#39;:ss = s</code> viene valutato il valore di <code>s</code> per verificare che sia una lista del tipo <code>thunk:thunk</code>, la cosa importante è che <code>s</code> sia una lista non vuota, altrimenti viene sollevato un errore riguardo il pattern matching.
 Poi deve essere matchato il carattere <code>h</code>, quindi viene valutato il primo <code>thunk</code>, ottenendo <code>s = &#39;h&#39;:thunk</code> e <code>ss = thunk</code>, da notare che il thunk di <code>ss</code> corrisponde all&#39;espressione <code>reverse &quot;olle&quot;</code>.</p>
 <p>Tutte le espressioni intermedie che contendono dei thunk prendono il nome di <strong>weak head normale form</strong>.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l30-1.png" alt=""></p>
+<p><img src="./notes/immagini/l30-1.png" alt=""></p>
 <p>Una funzione può essere <strong>strict</strong> o <strong>lazy</strong>:</p>
 <ul>
 <li>una funzione strict è una funzione che utilizza i suoi parametri, quindi è necessario che questi vengono valutati</li>
 <li>una funzione lazy non usa tutti i suoi parametri, quindi può essere che alcuni non vengano valutati.</li>
 </ul>
 <p>Nel caso di funzioni lazy conviene quindi utilizzare la valutazione outer most per limitare il numero di calcoli.</p>
-<p><img src="Linguaggi di Programmazione/immagini/l30-2.png" alt=""></p>
+<p><img src="./notes/immagini/l30-2.png" alt=""></p>
 <p>Non è facile valutare se una funzione è lazy o meno, sempre per il discorso della non decidibilità, dei linguaggi di Turing ecc.</p>
 <p>Perché una funzione sia strict, questa deve forzare il valore di un parametro. Ovvero quando <code>f x</code> forza la valutazione del parametro <code>x</code>.</p>
 <p>Ad esempio verrebbe da pensare che la funzione <code>id</code> non sia strict perché ritorna semplicemente il valore ricevuto come parametro. Tuttavia, questa funzione stampa sull&#39;ambiente di esecuzione il valore del parametro e di conseguenza viene forzata la valutazione.</p>

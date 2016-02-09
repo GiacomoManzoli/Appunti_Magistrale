@@ -1,4 +1,4 @@
-<html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="sistemi-con-vincoli">Sistemi con vincoli</h1>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../_builder/pdf.css"><link rel="stylesheet" href="../_builder/highlight/styles/default.css"><script src="../_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="sistemi-con-vincoli">Sistemi con vincoli</h1>
 <h1 id="lezione-1-introduzione">Lezione 1 - Introduzione</h1>
 <p>Programmazione a vincoli o constraint programmmig è una tecnica utilizzata per risolvere problemi CSP o COP.</p>
 <ul>
@@ -188,7 +188,7 @@ Questo però può risultare problematico all&#39;aumentare delle possibili tipol
 <p>Un valore <em>v</em> in <em>D(x)</em> si dice che ha un <strong>supporto</strong> se esiste un valore <em>w</em> in <em>D(y)</em> tale che <em>(v,w)</em> soddisfa un vincolo.</p>
 <p>Quando tutti i valori presenti nei due domini hanno un supporto si dice che il vincolo <em>c</em> è consistente sugli archi (<strong>Arc Consistency</strong>). Se tutti i vincoli del CSP sono arc consistent, allora anche il CSP è arc consistent.</p>
 <p>Viene usato il termine arco in quanto un CSP può essere visto come un grafo i cui nodi sono dati dalle variabili del problema.</p>
-<p><img src="Sistemi con vincoli/immagini/ac_graph.png" alt=""></p>
+<p><img src="./notes/immagini/ac_graph.png" alt=""></p>
 <p>La consistenza sugli archi garantisce che, vincolo per vincolo, ogni assegnamento delle variabili porta ad una soluzione feasible e permette di formalizzare gli algoritmi di filtering.</p>
 <p>Questa strategia funziona bene a <strong>livello locale</strong>, ma a livello globale no, in quanto la conistenza dei vincoli viene forzata vincolo per vincolo, senza tenere conto degli altri vincoli e quindi non è detto che il problema sia globalmente consistente.</p>
 <p>Avere consistenza globale è complesso quanto risolvere il problema e dal momento che la complessità dell&#39;algoritmo di filtering risulta particolarmente critica dal momento che deve essere eseguito più volte per ogni nodo e il numero di nodi cresce esponenzialmente, si preferisce forzare la consistenza locale che è meno complessa.</p>
@@ -380,8 +380,8 @@ ub = safe upper bound
 <p>In questo modo, viene prima trovata una soluzione feasible, come nel caso di un CSP normale, dopodiché viene aggiunto un vincolo che rende infeasible la soluzione trovata.
 Una volta aggiunto il nuovo vincolo, la ricerca continua facendo il backtracking in modo da trovare una soluzione che soddisfi il nuovo vincolo. Se non viene trovata una soluzione migliore, l&#39;ultima soluzione trovata è quella ottima.</p>
 <p>Ad esempio, nel problema della colorazione della cartina, prima viene risolto il CSP utilizzando 5 colori, dopodiché viene aggiunto il vincolo &quot;<em>numero colori &lt; 5</em> e la ricerca riprende dalla soluzione trovata.</p>
-<p><img src="Sistemi con vincoli/immagini/l4-bb1.png" alt="">
-<img src="Sistemi con vincoli/immagini/l4-bb2.png" alt=""></p>
+<p><img src="./notes/immagini/l4-bb1.png" alt="">
+<img src="./notes/immagini/l4-bb2.png" alt=""></p>
 <p><strong>GIF B AND B</strong></p>
 <p>Utilizzando il branch and bound in CP non c&#39;è bisogno di calcolare per ogni nodo il lower bound, in quanto viene calcolato in modo automatico dai vincoli.</p>
 <p>Quando l&#39;algoritmo trova una soluzione, per capire che è ottima deve comunque andare ad esplorare tutto l&#39;albero (<em>optimality proof</em>).</p>
@@ -479,8 +479,8 @@ Una volta aggiunto il nuovo vincolo, la ricerca continua facendo il backtracking
 <p>Tuttavia questa strategia non limita il <strong>trashing</strong>, se si prende una decisione sbagliata e si genera tutto un sotto-albero infeasible è necessario esaminare tutto il sotto-albero prima di accorgersene.</p>
 <p>Sarebbe bello avere un modo di limitare questo fenomeno.</p>
 <p>Se le variabili hanno domini diversi, queste influenzano la struttura dell&#39;albero di ricerca.</p>
-<p><img src="Sistemi con vincoli/immagini/l5-order1.png" alt="">
-<img src="Sistemi con vincoli/immagini/l5-order2.png" alt=""></p>
+<p><img src="./notes/immagini/l5-order1.png" alt="">
+<img src="./notes/immagini/l5-order2.png" alt=""></p>
 <p>In genere scegliendo come variabile alla quale assegnare un valore, la variabile che ha il dominio più piccolo, si ottengono due grandi vantaggi:</p>
 <ul>
 <li>La propagazione è più forte;</li>
@@ -576,9 +576,9 @@ Questo dipende da come vengono scegli dal risolutore i valori da assegnare alle 
 <p>Possono essere sia di variabile che di valore.</p>
 <p>Quelle di <strong>variabile</strong> si verificano quando, data una soluzione feasible è possibile scambiare (<strong>ri-assegnare</strong>) i valori delle variabili ed ottenere comunque un&#39;altra soluzione feasible.
 Nelle N-Regine equivale a ruotare la scacchiera sull&#39;asse Y.</p>
-<p><img src="Sistemi con vincoli/immagini/l7-nregine-var.png" alt=""></p>
+<p><img src="./notes/immagini/l7-nregine-var.png" alt=""></p>
 <p>In quelle di <strong>valore</strong> invece si va a permutare i vari valori (ridare il nome ai valori), ad esempio in N-Regine c&#39;è una simmetria di valori se si fa una rotazione orizzontale della scacchiera.</p>
-<p><img src="Sistemi con vincoli/immagini/l7-nregine-val.png" alt=""></p>
+<p><img src="./notes/immagini/l7-nregine-val.png" alt=""></p>
 <p>Per rompere queste simmetrie è possibile:</p>
 <ul>
 <li>Riformulare il modello in modo da togliere o diminuire le simmetrie</li>
@@ -596,7 +596,7 @@ Nelle N-Regine equivale a ruotare la scacchiera sull&#39;asse Y.</p>
 <p>L&#39;idea principale di questa strategia è quella di considerare i vincoli che rompono le simmetrie solo quando si fa backtracking.
 In questo modo quando si scende sul ramo sinistro non vengono tagliate le soluzioni simmetriche, ma, quando si fa backtracking, questi vengono considerati in modo da sfoltire il sotto albero destro.</p>
 <p>Ad esempio facendo labeling fermandosi al primo valore simmetrico trovato.</p>
-<p><img src="Sistemi con vincoli/immagini/l7-dynamic.png" alt=""></p>
+<p><img src="./notes/immagini/l7-dynamic.png" alt=""></p>
 <h1 id="lezione-8-vincoli-globali">Lezione 8 - Vincoli globali</h1>
 <p>Anche se viene stabilita la GAC può essere che sia ancora possibile eseguire del filtering.</p>
 <h2 id="global-vs-local-filtering">Global vs Local Filtering</h2>
@@ -644,27 +644,27 @@ La semantica di questo vincolo equivale ai vincoli <em>x<sub>i</sub>≠x<sub>j</
 <p>Per ogni vincolo è possibile andare a definire un <strong>value graph</strong>, un grafo che ha nella parte sinistra tanti nodi quandi sono le variabili e nella destra tanti nodi quanti sono i possibili valori del dominio.
 Il grafo ha tanti archi che collegano ogni nodo a destra con tutti i nodi a sinistra in cui quel valore compare nel dominio di una variabile.</p>
 <p>Questo grafo ha altri due nodi <em>s</em> e <em>t</em>, il primo è collegato a tutti i possibili valori, mentre tutte le variabili sono collegate al secondo.</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-1.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-1.png" alt=""></p>
 <p>Gli archi del grafo che collegano un nodo valore con un nodo variabile rappresentano un possibile assegnamento del valore alla variabile. 
 Quando ad una variabile è assegnato un determinato valore, l&#39;arco è rappresentanto con una linea continua, altrimenti viene utilizzata una linea tratteggiata.</p>
 <p>Una soluzione esiste quando il flusso entrante al nodo <em>t</em> è uguale al numero di variabili.</p>
 <p>Per verificare il flusso massimo viene usato l&#39;algoritmo di Ford-Fulkerson.</p>
 <p>Si parte da un caso base in cui il flusso in goni arco è 0. Il flusso di un arco viene indicato con <em>f(a-&gt;b) = 0</em>.</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-2.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-2.png" alt=""></p>
 <p>Dopodiché si cerca di far passare del flusso dal nodo <em>s</em> al nodo <em>t</em> utilizzando degli archi che non sono ancora saturi. Si ripete questo processo finché non si riescono più a trovare percorsi.</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-3.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-3.png" alt=""></p>
 <p>In alcuni casi, si arriva ad una situazione che non è una soluzione anche se il problema di partenza è feasible e scegliendo dei percorsi diversi sarebbe stato possibile raggiungere una soluzione.</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-4.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-4.png" alt=""></p>
 <p>Quindi deve essere possibile fare l&#39;<strong>undo</strong> delle scelte. 
 Una possibilità è quella di utilizzare il backtracking, ma così facendo si ottiene una complessità esponenziale. Fortunamente c&#39;è una strategia alternativa.</p>
 <p>Si può costruire il grafo residuale, un grafo con gli stessi nodi del grafo del flusso, solamente che gli archi che nel grafo del flusso rappresentano un assegnamento vengono invertiti.</p>
 <p>Più formalmente, c&#39;è un arco <em>a→b</em> nel grafo residuale se e solo se c&#39;è un arco <em>a→b</em> nel grafo originale e <em>f(a→b) = 0</em> oppure c&#39;è un arco <em>b→a</em> nel grafo originale e <em>f(b→a) = 1</em>.</p>
 <p>Ovvero il grafo residuale contiene gli archi nei quali può ancora passare del flusso (indicati con un tratteggio) e gli archi dove è possibile togliere del flusso (indicati con una linea continua).</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-5.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-5.png" alt=""></p>
 <p>Questo nuovo grafo può essere utilizzato per trovare dei nuovi cammini dal nodo <em>s</em> al nodo <em>t</em>. Un possibile nuovo cammino è quello arancione.</p>
 <p>Questo nuovo cammino può essere utilizzato per andare a trovare nuovi flussi nel grafo iniziale.</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-6.png" alt="">
-<img src="Sistemi con vincoli/immagini/l8-grafo-7.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-6.png" alt="">
+<img src="./notes/immagini/l8-grafo-7.png" alt=""></p>
 <p>In questo caso il flusso sul nodo <em>t</em> è uguale al numero di variabili, quindi il vincolo è feasible.</p>
 <p>La complessità dell&#39;algoritmo dipende dalla ricerca dei cammini con Dijkstra, la cui complessità è lineare con il numero di archi e in questo caso coincide con la sommatoria delle cardinalità dei domini delle variabili. 
 La ricerca dei cammini deve essere fatta al massimo per ogni variabile, quindi si ottiene come complessità <em>O(|X| ∑<sub>[x<sub>i</sub> ∈ X]</sub>|D(x<sub>i</sub>)|)</em>, che è molto peggiore rispetto al filtering per il vincolo di diverso, il vantaggio è che viene fatto un filtering più efficace.</p>
@@ -673,12 +673,12 @@ La ricerca dei cammini deve essere fatta al massimo per ogni variabile, quindi s
 <h3 id="parte-2-filtering">Parte 2 - Filtering</h3>
 <p>Per poter filtrare un valore devo considerare un arco che va da un valore ad una variabile e provare a costruire un ciclo tra i due nodi utilizzando il grafo residuale. 
 <strong>Se non viene trovato questo ciclo e tra questi due nodi non c&#39;è flusso, posso togliere quel valore dal dominio di della variabile.</strong></p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-8.png" alt=""></p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-9.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-8.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-9.png" alt=""></p>
 <p>Questa condizione può essere semplificata considerando che non ci sia un ciclo tra il nodo <em>v</em> e il nodo <em>x<sub>i</sub></em> nel grafo residuale. 
 Questo avviene se e solo se <em>v</em> e <em>x<sub>i</sub></em> sono in due componenti fortemente connessi distinti. 
 Questo permette di utilizzare l&#39;algoritmo di Tarjan per ottenere un efficenza maggiore.</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-10.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-10.png" alt=""></p>
 <p>La complessità si riduce ad essere <em>O(|X|+∑<sub>[x<sub>i</sub> ∈ X]</sub>|D(x<sub>i</sub>)|)</em>.</p>
 <h3 id="ricapitolando">Ricapitolando</h3>
 <p>I vincoli globali sono dei vincoli che rappresentano un set di vincoli e risultano essere importanti perché sono molto espressivi e permettono di fare una propagazione più efficente e efficace.</p>
@@ -703,10 +703,10 @@ Questo permette di utilizzare l&#39;algoritmo di Tarjan per ottenere un efficenz
 </ol>
 <h3 id="verifica-della-soddisfacibilit-">Verifica della soddisfacibilità</h3>
 <p>Viene creato un grafo analogo a quello per <em>Alldifferent</em>.</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-11.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-11.png" alt=""></p>
 <p>Con la differenza che gli archi che vanno da <em>s</em> ai valori hanno una capacità massima uguale a <em>u<sub>j</sub></em> e una domanda minima pari a <em>l<sub>j</sub></em>.</p>
 <p>L&#39;algortimo parte cercado di soddisfare i vari vincoli di domanda</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-12.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-12.png" alt=""></p>
 <p>Anche in questo caso per trovare il percorso occorre utilizzare il grafo residuale, che viene definito in modo leggermente diverso, dal momento che ora gli archi hanno una capacità maggiore di 1.</p>
 <p>Questa volta l&#39;arco <em>a → b</em> è presente nel grafo residuo se:</p>
 <ul>
@@ -717,7 +717,7 @@ Questo permette di utilizzare l&#39;algoritmo di Tarjan per ottenere un efficenz
 <p>Un&#39;altra cosa da notare è che <em>Alldifferent</em> è un caso particolare di questo problema.</p>
 <h3 id="filtering-per-gcc">Filtering per GCC</h3>
 <p>Una volta costruito il grafo residuale che rappresenta un assegnamento feasible è possibile andare a filtrare un valore se non compare in un ciclo e sempre allo stesso modo è possibile utilizzare i componenti fortemente connessi per rendere il processo più efficente.</p>
-<p><img src="Sistemi con vincoli/immagini/l8-grafo-13.png" alt=""></p>
+<p><img src="./notes/immagini/l8-grafo-13.png" alt=""></p>
 <p>Nell&#39;esempio non ci sono cicli che utilizzano gli archi <em>0→x<sub>0</sub></em> e <em>2→x<sub>3</sub></em> quindi è possibile effettuare il pruning del valore <em>0</em> da <em>D(x<sub>0</sub>)</em> e <em>2</em> da <em>D(x<sub>3</sub>)</em>.</p>
 <h3 id="considerazione-su-gcc">Considerazione su GCC</h3>
 <p>Tipicamente nei solver non è presente GCC ma è presente <em>Distribute</em>:</p>
@@ -916,11 +916,11 @@ Tuttavia la complessità della propagazione aumenta con la dimensione della tabe
 <h2 id="phase-transition">Phase transition</h2>
 <p>Andando ad aumentare il numero di celle riempite, si arriva ad un punto in cui la probabilità di trovare una soluzione feasibile varia bruscamente.</p>
 <p>Questo prende il nome di transizione di fase ed è molto comune nei problemi combinatori (ovviamente su altri parametri).</p>
-<p><img src="Sistemi con vincoli/immagini/l10-phase.png" alt=""></p>
+<p><img src="./notes/immagini/l10-phase.png" alt=""></p>
 <p>Di conseguenza con poche celle riempite ci sono più soluzioni pertanto è più facile trovare una soluzione.</p>
 <p>Tuttavia risolvere il problema è facile anche se ci sono tante celle riempite perché queste fanno molta propagazione.</p>
 <p>C&#39;è un range di valori per i quali trovare una soluzione difficile e ricadono nella transizione di fase.</p>
-<p><img src="Sistemi con vincoli/immagini/l10-phase-2.png" alt=""></p>
+<p><img src="./notes/immagini/l10-phase-2.png" alt=""></p>
 <p>Pertanto, se un problema ha una transizione di fase, le istanze più difficili tendono ad essere vicine al punto di transizione.</p>
 <p>La transizione di fase dipende da:</p>
 <ul>
@@ -931,7 +931,7 @@ Tuttavia la complessità della propagazione aumenta con la dimensione della tabe
 <h2 id="pls-e-strategie-di-ricerca">PLS e strategie di ricerca</h2>
 <p>Trovare una strategia di ricerca generale per il PLS non è semplice, utilizzare min-size-domain per scegliere la variabile da assegnare aiuta, ma è difficile andare oltre. 
 Questo perché la scelta del valore dipende tanto dall&#39;istanza.</p>
-<p><img src="Sistemi con vincoli/immagini/l10-pls-search.png" alt=""></p>
+<p><img src="./notes/immagini/l10-pls-search.png" alt=""></p>
 <p>Nel grafico le X rappresentano il numero di backtracking e le Y il numero di problemi risolti.</p>
 <p>Questo comportamento è causato dal fatto che ogni tanto l&#39;euristica di selezione del valore/variabile esegue una scelta sbagliata all&#39;inizio della ricerca e pertanto vengono generati tanti rami infeasible.</p>
 <p>La cosa brutta è che questi errori tengono ad apparire in modo casuale e sono comuni alla maggior parte dei problemi combinatori.</p>
@@ -940,7 +940,7 @@ Per andare a rompere questo si può andare a caso.</p>
 <h3 id="randomized-search-strategies">Randomized Search Strategies</h3>
 <p>Questo metodo esegue una scelta casuale sia della viarabile che del valore.
 Così facendo la ricerca diventa stocastica.</p>
-<p><img src="Sistemi con vincoli/immagini/l10-probability.png" alt=""></p>
+<p><img src="./notes/immagini/l10-probability.png" alt=""></p>
 <p>Dal grafico si può notare che la probabilità di risolvere un problema con pochi backtrack è molto alta, anche se rimangono delle situazioni in cui possono essere necessari molti backtrack.</p>
 <p>Per i problemi combinatori la probabilità di dover fare tanti backtrack è bassa ma non trascurabile.
 In questo caso si dice che i problemi sono <strong>heavy tail</strong>, ovvero la coda della distribuzione della probabilità decade con un andamento sub-esponenziale.</p>
@@ -960,9 +960,9 @@ Lo svantaggio c&#39;è quando il problema è infeasbile, perché prima di riusci
 <p>Una modifica comune a queste due strategie di riavvio è quella di utilizzare un fattore di scala <em>s</em>.</p>
 <h4 id="restart-e-problemi-grandi">Restart e problemi grandi</h4>
 <p>Per risolvere dei problemi grandi tipicamente è necessario porre un limite di tempo ottenendo un&#39;esplorazione dell&#39;albero di ricerca come in figura.</p>
-<p><img src="Sistemi con vincoli/immagini/l10-full.png" alt=""></p>
+<p><img src="./notes/immagini/l10-full.png" alt=""></p>
 <p>Utilizzando una ricerca casuale con riavvio è possibile esplorare l&#39;albero in modo più uniforme:</p>
-<p><img src="Sistemi con vincoli/immagini/l10-random.png" alt=""></p>
+<p><img src="./notes/immagini/l10-random.png" alt=""></p>
 <p>Questo approccio risulta utile anche per il problemi di ottimizzazione, in quanto ogni volta che si ottiene una soluzione migliore di quella corrente si ottiene un nuovo bound.</p>
 <h2 id="large-neighborhood-search">Large neighborhood search</h2>
 <p>Per affrontare COP di grandi dimensioni conviene utilizzare un approccio di ricerca locale, questo perché tipicamente nei problemi reali le soluzioni migliori sono tra loro vicine.</p>
@@ -1012,7 +1012,7 @@ Intuitivamente però, viene scelta la variabile con lo score più alto e nel cas
 <p>C&#39;è anche una versione <strong>reverse</strong> di questo algoritmo, nella quale vengono scelte le variabili da tenere rilassate. L&#39;idea è quella di andare ad allargare lo spazio di ricerca finché non diventa abbastanza grande.</p>
 <p>L&#39;idea della versione reverse è corretta ma non è più guidata dalla propagazione ed è più difficile da applicare.</p>
 <p>Gli ideatori di questi algoritmi li applicano assieme, viene prima utilizzato PGLNS e poi la versione reverse, finché non viene trovato un sotto-problema della dimensione voluta e nel caso reverse viene utilizzato come score la riduzione media dei domini per ogni variabile nell&#39;iterazione di PGLNS.</p>
-<p><img src="Sistemi con vincoli/immagini/l11-pglns-reverse.png" alt=""></p>
+<p><img src="./notes/immagini/l11-pglns-reverse.png" alt=""></p>
 <h2 id="advanced-search-heuristic">Advanced Search Heuristic</h2>
 <p>In CP risulta facile andare a definire delle euristiche di ricerca ottimizzate per un problema.</p>
 <p>Tuttavia implementare una ricerca ad hoc richiede di conoscere come funziona la CP e tipicamente trovare un&#39;euristica ottima richiede molto tempo.</p>
@@ -1046,10 +1046,10 @@ Se alla fine del pool ci sono delle variabili non ancora istanziate, vuol dire c
 <p><strong>decision score</strong> = s<sup>+</sup> + s<sup>-</sup></p>
 </blockquote>
 <p>I vari score vengono misurati utilizzando la <strong>reduction</strong>:</p>
-<p><img src="Sistemi con vincoli/immagini/l11-reduction.png" alt=""></p>
+<p><img src="./notes/immagini/l11-reduction.png" alt=""></p>
 <p>ovvero il rapporto tra la dimensione dello spazio di ricerca prima e dopo la propagazione.</p>
 <p>Lo score di ogni branch viene calcolato come:</p>
-<p><img src="Sistemi con vincoli/immagini/l11-branch-score.png" alt=""></p>
+<p><img src="./notes/immagini/l11-branch-score.png" alt=""></p>
 <p>Dove:</p>
 <ul>
 <li><strong>localstore</strong>: inizialmente vale 1 e ogni volta che un branch viene processato, viene aggiornato con <em>0</em> se il branch ha portato ad un fallimento, altrimenti <em>1+R</em>.</li>
@@ -1059,7 +1059,7 @@ Se alla fine del pool ci sono delle variabili non ancora istanziate, vuol dire c
 <p>FDS sceglie sempre la decisione con lo score più basso e segue il branch con lo score più basso, questo perché uno score più basso porta ad una propagazione migliore e l&#39;obiettivo di questa euristica è quello di fallire in fretta.</p>
 <p>Questa euristica funziona particolarmente bene con i restart, perché al primo giro impara quali sono le decisioni migliori e nelle iterazione successive le prende subito in modo da sflotire il più in alto possibile.</p>
 <p>L&#39;utilizzo di FDS porta quindi ad ottenere un albero nel quale i sotto alberi sinistri tendono a fallire più frequentemente e le decisioni che portano ad un doppio fallimento (entrambi i branch falliscono) vengono utilizzate più frequentemente.</p>
-<p><img src="Sistemi con vincoli/immagini/l11-fds-tree.png" alt=""></p>
+<p><img src="./notes/immagini/l11-fds-tree.png" alt=""></p>
 <h1 id="lezione-11-cp-e-scheduling">Lezione 11 - CP e Scheduling</h1>
 <p>Una delle applicazioni classiche di CP riguarda la risoluzione dei problemi di scheduling, questo perché si riescono ad ottenere ottimi risultati.</p>
 <h2 id="rcpsp-resource-constrained-project-scheduling-problem">RCPSP - Resource Constrained Project Scheduling Problem</h2>
@@ -1068,7 +1068,7 @@ Se alla fine del pool ci sono delle variabili non ancora istanziate, vuol dire c
 <li>Ci sono delle risorse limitate ma sono rinnovabili, ovvero quando l&#39;attività termina libera le risorse che occupava.</li>
 <li>Ci sono delle relazioni di precedenza tra alcune attività.</li>
 </ul>
-<p><img src="Sistemi con vincoli/immagini/l11-grafo.png" alt=""></p>
+<p><img src="./notes/immagini/l11-grafo.png" alt=""></p>
 <p>Tipicamente vengono aggiunte due attività farlocche per rappresentare l&#39;inzio e la fine della produzione.</p>
 <p>(Nell&#39;esempio dell&#39;immagine c&#39;è un solo tipo di risorsa)</p>
 <p>L&#39;obiettivo è quello di minimizzare il makespan, assegnando lo start time a tutte le attività, rispettando i vari vincoli.</p>
@@ -1099,16 +1099,16 @@ Un&#39;idea è quella di andare a mettere tanti vincoli per ogni unità di tempo
 <li><em>c</em> is the capacity</li>
 </ul>
 </blockquote>
-<p><img src="Sistemi con vincoli/immagini/l11-cumulative.png" alt=""></p>
+<p><img src="./notes/immagini/l11-cumulative.png" alt=""></p>
 <p>Il problema è che fare filtering risulta NP-Hard pertanto gli algoritmi di filtering utilizzati sono sub-ottimi dal momento che fanno un filtering incompleto.
 Dal momento che questo vincolo è molto utile, sono stati proposti molti algortimi di filtering (tutti incompleti).</p>
 <h3 id="timetable-filtering">Timetable filtering</h3>
 <p>L&#39;idea è quelli di mantenere il controllo dell&#39;utilizzo minimo della risorsa, considerati i vari domini delle variabili.</p>
-<p><img src="Sistemi con vincoli/immagini/l11-est.png" alt=""></p>
-<p><img src="Sistemi con vincoli/immagini/l11-est2.png" alt=""></p>
+<p><img src="./notes/immagini/l11-est.png" alt=""></p>
+<p><img src="./notes/immagini/l11-est2.png" alt=""></p>
 <p>Se LST di un&#39;attività è minore del EET, c&#39;è di sicuro un intervallo temporale in cui quell&#39;attività sarà sicuramente eseguita.
 Aggregando tutte le <strong>compulsory part</strong> di tutte le attvità si riesce a calcolare quante risorse saranno sicuramente richieste.</p>
-<p><img src="Sistemi con vincoli/immagini/l11-sweep.png" alt=""></p>
+<p><img src="./notes/immagini/l11-sweep.png" alt=""></p>
 <p>Una volta ottenuto il <strong>profilo minimo</strong>, si prova per ogni attività a cercare un possibile start time.</p>
 <p>L&#39;algoritmo SWEEP utilizza un cursore che parte dal minimo start time per l&#39;attività corrente e si sposta in avanti in <strong>checking mode</strong>.
 Ad ogni passo eseguito in checking mode, viene controllato se ci sono abbastanza risorse per eseguire l&#39;attività fino alla fine.
@@ -1119,7 +1119,7 @@ Durante questa fase l&#39;algoritmo si sposta solo sugli EET, perché è solo qu
 <p>Quando la seeking mode trova un possibile start time, l&#39;algoritmo torna in fase di <strong>checking</strong> per verificare che l&#39;attività abbia abbastanza risorse per terminare.</p>
 <p>Se l&#39;attività riesce a terminare, allora viene aggiornato il minimo start time, utilizzando il punto in cui si è fermato il cursore in fase di seeking, altrimenti è necessario tornare in modalità seeking, alla ricerca di un nuovo possibile start time.</p>
 <p>Se in fase di seeking si supera LST dell&#39;attività corrente, il problema è infeasible, pertanto si può terminare con un fallimento.</p>
-<p><img src="Sistemi con vincoli/immagini/l11-timetable.png" alt=""></p>
+<p><img src="./notes/immagini/l11-timetable.png" alt=""></p>
 <p>Il profilo minimo delle attività viene fatto in <em>O(n log(n))</em> e può essere fatto durante lo SWEEP. Lo SWEEP ha complessità <em>O(n)</em> e deve essere ripetutata <em>n</em> volte, quindi la complessità totale è <em>O(n<sup>2</sup>)</em>.</p>
 <h3 id="edge-finder">Edge Finder</h3>
 <p><em>quello che conta è l&#39;idea</em></p>
@@ -1163,11 +1163,11 @@ Non sempre però porta ad avere una soluzione ottima al primo colpo ed è necess
 <p>Il problema dello scheduling può comparire anche con la complicazione che le durate delle attività siano stimate, pertanto non è possibile definire subito uno scheduling totale.</p>
 <p>Questo problema può essere risolto andando ad aggiungere delle nuove precedenze per evitare dei conflitti nell&#39;utilizzo delle risorse.</p>
 <p>Si parte dalla soluzione ottima ottenuta risolvendo il CSP, considerando le durate stimate come se fossero esatte.</p>
-<p><img src="Sistemi con vincoli/immagini/l11-pos-1.png" alt=""></p>
+<p><img src="./notes/immagini/l11-pos-1.png" alt=""></p>
 <p>Si vanno poi ad esplicitare tutte le precedenze, sia quelle originali, che quelle implicite fornite dalla soluzione ottima.</p>
-<p><img src="Sistemi con vincoli/immagini/l11-pos-2.png" alt=""></p>
+<p><img src="./notes/immagini/l11-pos-2.png" alt=""></p>
 <p>Rappresentando con un grafo quanto ottenuto e considerando le attività come archi con una richiesta di flusso, è possibile utilizzare un propagatore simile a quello per GCC in modo da trovare solamente le precedenze che fanno parte del POS.</p>
-<p><img src="Sistemi con vincoli/immagini/l11-pos-3.png" alt=""></p>
+<p><img src="./notes/immagini/l11-pos-3.png" alt=""></p>
 <p>Il POS ottenuto diventa quindi:</p>
-<p><img src="Sistemi con vincoli/immagini/l11-pos-4.png" alt=""></p>
+<p><img src="./notes/immagini/l11-pos-4.png" alt=""></p>
 </body></html>

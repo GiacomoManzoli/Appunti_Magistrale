@@ -1,4 +1,4 @@
-<html><head><meta charset="utf-8"><link rel="stylesheet" href="_builder/pdf.css"><link rel="stylesheet" href="_builder/highlight/styles/default.css"><script src="_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="intellegenza-artificiale">Intellegenza Artificiale</h1>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../_builder/pdf.css"><link rel="stylesheet" href="../_builder/highlight/styles/default.css"><script src="../_builder/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script></head><body><h1 id="intellegenza-artificiale">Intellegenza Artificiale</h1>
 <h2 id="introduzione">Introduzione</h2>
 <p><strong>Intelligenza artificiale forte</strong>: si vuole sostituire all&#39;uomo la macchina. IBM Watson si avvicina molto a questo ambito.</p>
 <p><strong>Intelligenza artificiale debole</strong>: abilità particolari che una macchina può riprodurre (robot, auto che si guidano da sole).
@@ -55,31 +55,31 @@ Attività che possono anche essere semplici da fare ma che sono difficili da ese
 <p>Ogni agente può essere trasformato in un agente in grado di apprendere.</p>
 <h3 id="agente-a-riflesso-reattivi-semplice">Agente a riflesso (reattivi) semplice</h3>
 <p>Data una percezione si sa già che azione andare ad intraprendere</p>
-<p><img src="Intelligenza Artificiale/immagini/l2-agente-semplice.png" alt="alt text" title="Agente semplice"></p>
+<p><img src="./notes/immagini/l2-agente-semplice.png" alt="alt text" title="Agente semplice"></p>
 <p>Il programma è una serie di regole <code>if-then-else</code> necessarie per scegliere l&#39;azione da fare.</p>
 <p>Questo tipo di agente è molto semplice da realizzare ed efficace, però funziona solamente nel caso le assunzioni fatte siano corrette.</p>
 <p>Un miglioramento a questa tipologia di agente è quello di introdurre alcune scelte casuali, in modo da cercare di rompere alcuni loop infiniti.</p>
 <h3 id="agente-a-riflesso-con-stato">Agente a riflesso con stato</h3>
 <p>Per eseguire un&#39;azione è necessario andare a considerare sia la percezione corrente, sia lo storico.</p>
-<p><img src="Intelligenza Artificiale/immagini/l2-agente-riflesso.png" alt="alt text" title="Agente a riflesso con stato"></p>
+<p><img src="./notes/immagini/l2-agente-riflesso.png" alt="alt text" title="Agente a riflesso con stato"></p>
 <p>L&#39;attivazione delle regole viene influenzata anche dallo stato interno.</p>
 <p>In questo caso è però necessario che l&#39;agente abbia conoscenza riguardo le leggi che regolano l&#39;ambiente e come le azioni che svolge influenzano l&#39;ambiente.</p>
 <p>Sulla base di queste informazioni vengono poi applicate le regole per la scelta dell&#39;azione da svolgere.</p>
 <p>Si riesce quindi a gestire meglio situazioni parzialmente osservabile, tuttavia le scelte sono <em>hard coded</em> nelle regole.</p>
 <h3 id="agenti-basati-su-goal-obiettivi-">Agenti basati su goal (obiettivi)</h3>
 <p>Agenti più flessibili che cercano di raggiungere un determinato obiettivo.</p>
-<p><img src="Intelligenza Artificiale/immagini/l2-agente-goal.png" alt="alt text" title="Agente con goal"></p>
+<p><img src="./notes/immagini/l2-agente-goal.png" alt="alt text" title="Agente con goal"></p>
 <p>In questo caso le regole vengono sostituite da degli obiettivi.</p>
 <p>La modifica principale sta nell&#39;aggiunta di un componente che cerca di prevedere come il mondo cambia se vado ad effettuare una derterminata azione.</p>
 <p>Viene quindi cercata la sequenza di azioni migliori da svolgere per raggiungere il proprio obiettivo, tenendo sempre in considerazione la percezione attuale dell&#39;ambiente.</p>
 <p>Ci sono però dei problemi nel caso il goal prefissato dall&#39;agente non sia pienamente raggiungibile oppure ci sono più goal in constrasto tra loro.</p>
 <h3 id="agenti-a-misura-di-utilit-">Agenti a misura di utilità</h3>
 <p>Agente che sceglie le azioni da intraprendere in modo che siano le più convenienti per una data misura di utilità.</p>
-<p><img src="Intelligenza Artificiale/immagini/l2-agente-utilita.png" alt="alt text" title="Agente a misura di utilità"></p>
+<p><img src="./notes/immagini/l2-agente-utilita.png" alt="alt text" title="Agente a misura di utilità"></p>
 <p>Il concetto di goal viene sostituito da una funzione che calcola quando l&#39;agente è <em>&quot;contento&quot;</em> di essere in un determinato stato.</p>
 <p>Quando viene valutato l&#39;effetto dell&#39;azione sull&#39;ambiente si tiene conto anche di quanto quello stato è <em>&quot;buono&quot;</em> per l&#39;agente. Tenendo anche conto delle varie probabilità di raggiungere con successo lo stato.</p>
 <h2 id="agenti-in-grado-di-apprendere">Agenti in grado di apprendere</h2>
-<p><img src="Intelligenza Artificiale/immagini/l2-agente-apprende.png" alt="alt text" title="Agente in grado di apprendere"></p>
+<p><img src="./notes/immagini/l2-agente-apprende.png" alt="alt text" title="Agente in grado di apprendere"></p>
 <p>Per garantire l&#39;apprendimento deve essere presente un <strong>elemento critico</strong> che sia in grado di valutare le azioni dell&#39;agente in modo critico. Serve quindi un modo per valutare le prestazioni dell&#39;agente.</p>
 <p>L&#39;emento critico genera quindi un feedback per l&#39;<strong>elemento di apprendimento</strong> che è quello che influenza il <strong>performance element</strong>.</p>
 <p>Il performance element è l&#39;elemento che decide quale azione andare a prendere in base alle informazioni ottenute dai sensori.</p>
@@ -120,7 +120,7 @@ Oppure studio sperimentale di algoritmi diversi. La presentazione pubblica del p
 <li>Soluzione come sequenza di azioni che porta dallo stato iniziale ad uno stato goal.</li>
 </ul>
 <h3 id="esempio-del-puzzle">Esempio del Puzzle</h3>
-<p><img src="Intelligenza Artificiale/immagini/l3-puzzle.png" alt="alt text" title="Puzzle"></p>
+<p><img src="./notes/immagini/l3-puzzle.png" alt="alt text" title="Puzzle"></p>
 <p><strong>Azioni</strong>: spostamento dello spazio vuoto, che non può essere spostato ovunque, la funzione successore deve contenere di questo vincolo;</p>
 <p><strong>Stati</strong>: locazione interne dei tasselli;</p>
 <p><strong>Test goal</strong>: è lo stato con i tasselli ordinati (<em>esplicito</em>), può essere fornito anche come test implicito.</p>
@@ -224,7 +224,7 @@ function Espandi<span class="hljs-list">(<span class="hljs-keyword">nodo</span>,
 <p>La strategia risulta anche ottima solo nel caso i costi di tutti gli archi siano gli stessi.</p>
 <h1 id="lezione-4-rircerca-informata-e-non">Lezione 4 - Rircerca informata e non</h1>
 <p>Tabella riassuntiva delle proprietà degli algoritmi non informati:</p>
-<p><img src="Intelligenza Artificiale/immagini/l4-riassunto.png" alt="alt text" title="Tabella riassuntiva"></p>
+<p><img src="./notes/immagini/l4-riassunto.png" alt="alt text" title="Tabella riassuntiva"></p>
 <h2 id="ricerca-non-informata-stati-ripetuti">Ricerca non informata - stati ripetuti</h2>
 <p>Se non si utilizzano delle strategie per evitare di visitare più volte lo stesso stato si possono generare un numero esponenziale di stati.</p>
 <p>Possono essere usate alcune strategie per gestire questo problema:</p>
@@ -585,7 +585,7 @@ function <span class="hljs-type">RecursiveBacktracking</span>(assigned, csp) <sp
 <p>Gioco perfetto per giochi deterministici e ad informazione perfetta.</p>
 <p>L&#39;idea è quella di scegliere la mossa che conduce alla posizione con valore <em>minimax</em> più alto che equivale al miglior vantaggio raggiungibile con un avversario che gioca in modo ottimo.</p>
 <p><em>ply</em>: mossa di un giocatore, un turno di gioco è composto da 2 ply.</p>
-<p><img src="Intelligenza Artificiale/immagini/l9-minimax.png" alt=""></p>
+<p><img src="./notes/immagini/l9-minimax.png" alt=""></p>
 <p>Con questo algoritmo si cerca di massimizzare l&#39;utilità nel caso pessimo in quanto si suppone che l&#39;avversario stia giocando in modo ottimo.</p>
 <pre><code class="lang-javascript">function <span class="hljs-function"><span class="hljs-title">MiniMaxDecision</span><span class="hljs-params">(state)</span></span> returns an action
     inputs: state, current state <span class="hljs-keyword">in</span> game
@@ -712,7 +712,7 @@ function <span class="hljs-function"><span class="hljs-title">MinValue</span><sp
 <p>Sono giochi in cui sono presenti degli eventi casuali (<em>chance</em>) introdotti mediente dadi, carte prese a caso, lancio in una moneta, ecc.</p>
 <p>Nei giochi deterministici si riesce a propagare il valore di utilità dalle foglie ai nodi interni, mentre nei giochi non deterministici, a causa del non determinismo, non si riesce ad avere la certezza ma una probabilità.</p>
 <p>Nell&#39;albero viene introdotta una nuova tipologia dei nodi detti <em>chance</em> e che Max utilizza per valutare la mossa da fare.</p>
-<p><img src="Intelligenza Artificiale/immagini/l10-albero-chance.png" alt=""></p>
+<p><img src="./notes/immagini/l10-albero-chance.png" alt=""></p>
 <p>Il valore aspettato di uno nodo chance dipende dalla probabilità dei vari valori dei figli del nodo chance.</p>
 <p>La strategia sta quindi nel scegliere le mosse che massimizzano il valore aspettato di utilità.</p>
 <p>La presenza dei nodi chance fa aumentare il numero di nodi dell&#39;albero, perché adesso data una mossa di Max ho due o più possibili mosse di Min.</p>
@@ -726,10 +726,10 @@ if <span class="hljs-keyword">state</span> is a M<span class="hljs-keyword">in</
 if <span class="hljs-keyword">state</span> is a Chance node then
     return average ExpectiMiniMax-Value of Successors(<span class="hljs-keyword">state</span>)
 ...
-</code></pre><p><img src="Intelligenza Artificiale/immagini/l10-valutazione.png" alt=""></p>
+</code></pre><p><img src="./notes/immagini/l10-valutazione.png" alt=""></p>
 <h3 id="potatura-in-alberi-da-gioco-non-deterministici">Potatura in alberi da gioco non deterministici</h3>
 <p>Si riesce comunque a fare una potatura 𝜶-𝜷 solo che risulta meno efficace.</p>
-<p><img src="Intelligenza Artificiale/immagini/l10-potatura-bound.png" alt=""></p>
+<p><img src="./notes/immagini/l10-potatura-bound.png" alt=""></p>
 <h3 id="giochi-non-deterministici-in-pratica">Giochi non deterministici in pratica</h3>
 <p>L&#39;uso dei dadi aumenta il valore del fattore di branching <em>b</em> e questo va ad influire sul valore di lookahead.</p>
 <p>Nonostante la complessità aumenti si riesce comunque ad ottenere dei risultati buoni (sfruttando anche alcune cose non ancora affrontate).</p>
@@ -752,7 +752,7 @@ if <span class="hljs-keyword">state</span> is a Chance node then
 <p>Le cose si complicano notevolmente quando l&#39;informazione è parziale o il gioco non è deterministico.</p>
 <p>L&#39;approssimazione risulta quindi molto importante dal momento che non è possibile raggiungere la perfezione per motivi computazionali.</p>
 <h1 id="lezione-11-agenti-logici">Lezione 11 - Agenti logici</h1>
-<p><img src="Intelligenza Artificiale/immagini/l2-agente-goal.png" alt=""></p>
+<p><img src="./notes/immagini/l2-agente-goal.png" alt=""></p>
 <h2 id="base-di-conoscenza">Base di conoscenza</h2>
 <p>Un agente logico è composto da due componenti che possono essere modificati:</p>
 <ul>
@@ -828,7 +828,7 @@ In questo caso si sa che c&#39;è un Wumpus vicino e si lancia una freccia. Se d
 <li>...</li>
 </ul>
 <p>Con queste informazioni è possibile andare a creare una tabella di verità, con le colonne per i vari letterali, le informazioni presenti nella base di conoscenza e una colonna per l&#39;affermazione 𝜶<sub>1</sub> che vogliamo dedurre.</p>
-<p><img src="Intelligenza Artificiale/immagini/l11-tabella.png" alt=""></p>
+<p><img src="./notes/immagini/l11-tabella.png" alt=""></p>
 <p>Per controllare l&#39;inferenza di 𝜶<sub>1</sub> è necessario andare a verificare tutti i possibili valori di verità (<strong>model checking</strong>).</p>
 <h3 id="inferenza-per-mezzo-di-enumerazione">Inferenza per mezzo di enumerazione</h3>
 <p>Enumerazioni a scandaglio (depth first) di tutti i modelli, è un algoritmo corretto e completo.</p>
@@ -868,11 +868,11 @@ Una clausola definita senza letterali negativi si limita ad asserire una determi
 Una clausola di Horn senza letterali positivi può essere scritta in forma di implicazione la cui conclusione vale False (utili per definire dei vincoli di integrità, come quello che il Wumpus si trova in una sola stanza).</p>
 <p><strong>Modus Ponens</strong>: per la forma di Horn: date due formule 𝜶 =&gt; 𝜷 e 𝜶, si può inferire la formula 𝜷. (cioè se l’implicazione e la promessa sono vere, allora anche 𝜷 deve essere vera). È completo per basi di coscenza espresse nella forma di Horn.</p>
 <p>La correttezza di questa regola si dimostra considerando i possibili valori di verità delle formule.</p>
-<p><img src="Intelligenza Artificiale/immagini/l12-pones.png" alt=""></p>
+<p><img src="./notes/immagini/l12-pones.png" alt=""></p>
 <p>Questo modo dice che se le precondizioni di una regola sono vere allora è vera anche la regola.</p>
 <p>Può essere utilizzato per fare <em>forward chaining</em> o <em>backward chaining</em>, che sono entrambi algoritmi con complessità lineare in tempo.</p>
 <h2 id="foward-chaining">Foward Chaining</h2>
-<p><img src="Intelligenza Artificiale/immagini/l12-albero.png" alt=""></p>
+<p><img src="./notes/immagini/l12-albero.png" alt=""></p>
 <p>L&#39;idea è quella di applicare ogni regola le cui premesse sono soddisfattte nella KB, una volta fatto ciò può essere che alcune regole della KB hanno le promesse soddisfatte grazi alle nuove informazioni precedentemente inserite, fino a quando non viene raggiunto il goal.</p>
 <p>Se questo non viene raggiunto vuol dire che non è conseguenza logia della KB.</p>
 <pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">CP</span>-<span class="hljs-title">CA</span>-<span class="hljs-title">Implica</span><span class="hljs-params">(KB, q)</span></span> returns <span class="hljs-keyword">true</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">false</span>
@@ -915,7 +915,7 @@ Allora la premessa deve essere vera e <em>b</em> falsa, ma questo contraddice l�
 <p>(A ⋁ !B) ⋀ (B ⋁ !C ⋁ !B)</p>
 </blockquote>
 <p>La <strong>risoluzione</strong> è una regola di inferenza per CNF completa e corretta per la logia proposizionale.</p>
-<p><img src="Intelligenza Artificiale/immagini/l12-risoluzione.png" alt=""></p>
+<p><img src="./notes/immagini/l12-risoluzione.png" alt=""></p>
 <p>In pratica si va a togliere un <em>l<sub>i</sub></em> e <em>m<sub>j</sub></em> che sono tra loro complementari (lo stesso letterale sia negato che non).</p>
 <p>Questo procedimento esegue la verifica del modello perché vuol dire che se <em>L</em> e <em>M</em> sono vere e anche la proposizione che si deduce è vera, quindi vuol dire che il letterale tolto non influenzava la verità di <em>L</em> e <em>M</em>.</p>
 <p>La <strong>correttezza</strong> di questa regola è semplice, se tolgo dalla clausola <em>L</em> il letterale <em>l</em> e dalla clausola <em>M</em> il letterale <em>m</em> che è complementare a <em>l</em>, allora se <em>l</em> è vero allora <em>m</em> è falso e quindi <em>M</em> deve essere vero e non a causa di <em>m</em>. Se <em>l</em> è falso, allora <em>L</em> deve essere vero senza <em>l</em>. Il valore di <em>l</em> quindi non incide ne in una clausola ne nell’altra, quindi la sua eliminazione non altera il valore delle clausole.</p>
@@ -1080,16 +1080,16 @@ Ad esempio non si può esprimere &quot;<em>le trappole causano la brezza in quad
 <h2 id="istanziazione-unviersale">Istanziazione unviersale</h2>
 <p>Nel caso del quantificatore universale è possibile dare una rappresentazione con un enumerazione di tutte le possibili istanzazioni del termine, in ⋀ tra loro.</p>
 <p>In questo caso si va a sostiturire ogni vabiarbile <em>v</em> con i vari <strong>termini ground</strong> (termini in cui non compaiono variabili).</p>
-<p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-1.png" alt=""></p>
+<p><img src="./notes/immagini/l14-sostituzione-1.png" alt=""></p>
 <p>Il risultato diella trasfomrazione viene rappresentato con <code>Subst(𝜃,𝜶)</code> e indica il risultato dell’applicazione della sostituzione 𝜃 alla formula 𝜶.</p>
-<p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-2.png" alt=""></p>
+<p><img src="./notes/immagini/l14-sostituzione-2.png" alt=""></p>
 <p>Se non ci sono simboli di funzione allora il numero di istanziazioni è finito.</p>
 <h2 id="istanziazione-esistenziale">Istanziazione esistenziale</h2>
 <p>L&#39;idea è quella di andare a generare una nuova costante <em>k</em> che non appartiene alla base di conoscenza, la quale va a prende il posto del simbolo che soddisfa l&#39;esistenza.</p>
 <p>Non è noto quale sia l&#39;entità associata a <em>k</em>, ma si sa che <em>k</em> riferisce un&#39;entità che soddisfa la condizione esistenzale.</p>
 <p>Questo perché la formula esistenziale afferma che esiste un qualche oggetto che soffisfa una certa condizione e l&#39;istanziazione va a dare un nome a questo oggetto, senza specificare di che oggetto sia.</p>
-<p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-3.png" alt=""></p>
-<p><img src="Intelligenza Artificiale/immagini/l14-sostituzione-4.png" alt=""></p>
+<p><img src="./notes/immagini/l14-sostituzione-3.png" alt=""></p>
+<p><img src="./notes/immagini/l14-sostituzione-4.png" alt=""></p>
 <p>Se una sentenza contiene entrambi i quantificatori, in particolare <em>∀y ∃x</em>, non è possibile utilizzare una singola costante di <strong>Skolem</strong> per istanziare <em>x</em>, questo perché dovrei avere infinite costanti, in questo caso viene usata una <strong>funzione di Skolem</strong> che genera le varie costanti. (<em>verrà approfondito più avanti</em>)</p>
 <p>L&#39;istanziazione esistenziale può essere applicata una sola volta per sentenza esistenziale e la nuova KB non è equivalente a quella vecchia, ma è soddisfacibile se e solo se la vecchia KB era soddisfacibile.</p>
 <p>Mentre l&#39;istanziazione di un quantificatore universale può essere applicata più volte per aggiungere nuove sentenza alla base di conoscenza e la nuova KB è logicamente equivalente a quella vecchia.</p>
@@ -1113,7 +1113,7 @@ Quest&#39;idea è corretta per il teorema di Herbrand.</p>
 Conviene quindi andare ad applicare l&#39;istanziazione universale solo quando è strettamente necessario.</p>
 <h2 id="unificazione">Unificazione</h2>
 <p>Si può ottenere l&#39;inferenza immediatamente se è possibile trovare una sostituzione 𝜃 tale che <code>Re(x)</code> e <code>Avido(x)</code> corrispondano a<code>Re(Giovanni)</code> e <code>Avido(y)</code>.</p>
-<p><img src="Intelligenza Artificiale/immagini/l14-unificazione-1.png" alt=""></p>
+<p><img src="./notes/immagini/l14-unificazione-1.png" alt=""></p>
 <p>Questo perché può capitare che variabili che si trovano in &quot;<em>scope</em>&quot; diversi abbiano lo stesso nome.</p>
 <p>L&#39;unificazione è quel processo che trova le sostituzioni che rendono identiche espressioni logiche diverse.</p>
 <p>Applicando l&#39;unificazione può capitare che si ottenga solamente l&#39;uguaglianza sintattica, con dei predicati che contengono termini che non sono ground. 
@@ -1131,7 +1131,7 @@ In questo caso l&#39;algoritmo funziona comunque, tant&#39;è che il predicato o
 </ul>
 <p>Per poter unificare è necessario che i due predicati siano uguali sintatticamente e che abbiano la stessa lunghezza (<em>n = m</em>).</p>
 <p>Bisogna poi porre uguali tra loro i vari argomenti dei predicati, tenendo in considerazione che la stessa variabile può compararire in più argomenti dello stesso predicato.</p>
-<p><img src="Intelligenza Artificiale/immagini/l14-unificazione-alg.png" alt=""></p>
+<p><img src="./notes/immagini/l14-unificazione-alg.png" alt=""></p>
 <p>L&#39;algoritmo analizza i due predicati, termine per termine, cercando di unificarli con <code>Unify-Var</code>.</p>
 <p>La funzione <code>Controlla-Occorrenza</code> verifica che la variabile <code>var</code> che si vuole unificare non compaia nel termine <code>x</code>, questo serve per bloccare l&#39;unificazione tra due terminiti come <em>T1(a)</em> e <em>T1(T1(a)</em>.</p>
 <p>Questo algoritmo ritorna sempre la <strong>MGU</strong></p>
@@ -1153,7 +1153,7 @@ Ovvero sostituire</p>
 </code></pre><p>Inoltre, all&#39;interno di <code>UnifyVar</code>, anziché aggiungere direttamente la nuova sostituzione a 𝜃, conviene utilizzare il metodo <code>Compose({var/x}, 𝜃)</code> che prima di aggiungerla applica la nuova sostituzione alla sostituzione corrente.</p>
 <h1 id="lezione-15-gmp-e-forward-chaining">Lezione 15 - GMP e Forward Chaining</h1>
 <h2 id="modus-ponens-generalizzato">Modus Ponens Generalizzato</h2>
-<p><img src="Intelligenza Artificiale/immagini/l15-gmp.png" alt=""></p>
+<p><img src="./notes/immagini/l15-gmp.png" alt=""></p>
 <p>Se i vari <em>p&#39;<sub>i</sub>𝜃</em> sono uguali ai <em>p<sub>i</sub>𝜃</em> per una determinata sostituzione 𝜃 allora si possono ridurre ad un unico <em>q𝜃</em>, in modo simile a come avviene nella logica proposizionale, utilizzando una base di conoscenza in clausole definite.</p>
 <p>Le <strong>clausole definite</strong> del primo ordine sono le clausole di Horn riportate nella logica proposizionale, con la differenza che possono includere delle variabili, le quali vengono considerate quantificate universalmente, dal momento che quelle quantificate esistenzialmente vengono sostituite con una costante di Skolem.</p>
 <p>Come sostituzione conviene utilizzare quella più generale possibile in modo da trovare il maggior numero possibile di soluzioni ground.</p>
@@ -1166,16 +1166,16 @@ Ovvero sostituire</p>
 </ol>
 <p>Dal momento che per ipotesi <em>p&#39;<sub>i</sub>𝜃 = p<sub>i</sub>𝜃</em>, sfruttando i risultati dei punti 1 e 2 si riesce a ricarvare <em>q𝜃</em> usando il Modus Ponens ordinario.</p>
 <h3 id="esempio-di-base-di-conoscenza">Esempio di base di conoscenza</h3>
-<p><img src="Intelligenza Artificiale/immagini/l15-esempio-1.png" alt=""></p>
-<p><img src="Intelligenza Artificiale/immagini/l15-esempio-2.png" alt=""></p>
+<p><img src="./notes/immagini/l15-esempio-1.png" alt=""></p>
+<p><img src="./notes/immagini/l15-esempio-2.png" alt=""></p>
 <h2 id="forward-chaining-in-fol">Forward Chaining in FOL</h2>
 <p>L&#39;algoritmo è analogo a quello utilizzato nella logica proposizionale con la differenza che c&#39;è da tener conto della presenza delle variabili e che queste vengono istanziate il più tardi possibile.</p>
 <p>Partendo dai fatti noti si fanno scattare tutte le regole presenti nella KB le cui premesse sono soddisfatte, aggiungendo le varie conclusioni ai fatti noti. Si ripete il processo finché non si trova una risposta oppure non è più possibile aggiungere fatti.</p>
 <p>La base di conoscenza è in forma di Horn, con i quantificatori esistenziali istanziati e i quantificatori universali non ancora istanziati.</p>
-<p><img src="Intelligenza Artificiale/immagini/l15-folfc.png" alt=""></p>
+<p><img src="./notes/immagini/l15-folfc.png" alt=""></p>
 <p><strong>Standardizzazione separata</strong>: serve per evitare conflitti con i nomi delle variabili.</p>
 <h3 id="esempio-di-applicazione">Esempio di applicazione</h3>
-<p><img src="Intelligenza Artificiale/immagini/l15-folfc-alb.png" alt=""></p>
+<p><img src="./notes/immagini/l15-folfc-alb.png" alt=""></p>
 <h3 id="considerazioni">Considerazioni</h3>
 <p>L&#39;algoritmo è <strong>corretto</strong> e <strong>completo</strong> per le clausole definite di primo ordine, questo perché essendo clausole definite l&#39;esecuzione dell&#39;algoritmo termina sempre.</p>
 <p>La correttezza deriva dal fatto che viene semple applicato il Modus Ponens Generalizzato che è corretto.</p>
@@ -1190,7 +1190,7 @@ Inoltre, la presenza di funzioni porta a generare un numero possibilmente infini
 <h1 id="lezione-16-backward-chaining-e-prolog">Lezione 16 - Backward Chaining e Prolog</h1>
 <h2 id="backward-chainging">Backward Chainging</h2>
 <p>In modo analogo alla lgoica proposizionale è possibile utilizzare il backward chaining.</p>
-<p><img src="Intelligenza Artificiale/immagini/l16-backward.png" alt="a"></p>
+<p><img src="./notes/immagini/l16-backward.png" alt="a"></p>
 <p>In questo caso l&#39;algoritmo ritorna un <strong>generatore di sostituzioni</strong>, ovvero una funzione che ritorna più valori, ognuno dei quali rappresenta una sostitizione diversa.</p>
 <p>L&#39;algoritmo di ricerca può essere visto come un algoritmo AND/OR, dove nei nodi OR vengono valutate le clausole che potrebbero unificare con il goal, mentre nei nodi AND vengono valutati i congiunti della premessa delle regole.</p>
 <p>Quindi, <code>FOL-CI-OR</code> esegue il fetch di tutte le clausole che potrebbero unificare con il goal, le standardizza, e se la parte destra <em>rhs</em> della regola unifica con il goal, verfica che tutti i congiunti della parte sinistra <em>lhs</em> siano soddisfatti, utilizzando <code>FOL-CI-AND</code>.
@@ -1321,18 +1321,18 @@ R = [c,d,b]
 <li>Rimuovere i quantificatori universali.</li>
 <li>Distribuire ⋀ su ⋁.</li>
 </ol>
-<p><img src="Intelligenza Artificiale/immagini/l18-conv-1.png" alt="">
-<img src="Intelligenza Artificiale/immagini/l18-conv-2.png" alt=""></p>
+<p><img src="./notes/immagini/l18-conv-1.png" alt="">
+<img src="./notes/immagini/l18-conv-2.png" alt=""></p>
 <p>Se un quantificatore esistenziale si trovata all&#39;interno di due quantificatori esistenziali <em>∀x,q</em>, le funzioni di Skolem devono ricevere due parametri <em>F(x,q)</em>.</p>
 <p>L&#39;algoritmo di inferenza rimane sempre lo stesso, per provare KB|=𝜶, si cerca di provare KB⋁!𝜶, se viene generata la clausola vuota, allora KB|=𝜶.</p>
 <h2 id="completezza-della-risoluzione">Completezza della Risoluzione</h2>
 <p>Non vediamo la dimostrazione completa.</p>
-<p><img src="Intelligenza Artificiale/immagini/l18-dim.png" alt=""></p>
+<p><img src="./notes/immagini/l18-dim.png" alt=""></p>
 <p>La dimostrazione parte dal fatto che se l&#39;insieme delle clasule <em>S</em>, espresse in FOL, è indosddisfacibile, per il teorema di Herbrand, esiste un sotto-insieme di clausole proposizionalizzate che è insoddisfacibile.</p>
 <p>Dal momento che questo sotto-insieme è espresso nella logica proposizionale, si può utilizzare il <strong>ground resolution theorem</strong>: <em>se un insieme di clausole S è insoddisfacibile, allora la chiusura della risoluzione di tali clausole RC(S) contiene la clausola vuota</em>, così facendo si effettua la risoluzione del sottoinsieme di clausole per provare l&#39;insoddisfacibilità.</p>
 <p>Infine, per lemma di lifting, secondo il quale ad ogni prova per risoluzione nella logica proposizionale corrisopone una prova per risoluzione in FOL che utilizza le stesse sentenze, si si arriva alla prova per contrattizione dell&#39;insoddisfacibilità.</p>
 <h2 id="esempio-di-risoluzione">Esempio di risoluzione</h2>
-<p><img src="Intelligenza Artificiale/immagini/l18-esempio.png" alt=""></p>
+<p><img src="./notes/immagini/l18-esempio.png" alt=""></p>
 <h2 id="strategie-di-appplicazione-della-regola-di-risoluzione">Strategie di appplicazione della regola di risoluzione</h2>
 <p>Nella logica proposizionale si può puntare a raggiungere un punto fisso per provare a generare la clausola vuota, tuttavia applicare questa strategia nella logica del primo ordine porta ad un&#39;esplosione combinatoria.</p>
 <p>Con il tempo sono state quindi sviluppate varie strategie di risoluzione:</p>
@@ -1500,7 +1500,7 @@ Inoltre, applicando la risoluzione viene trovata una prova (piano) che non è ne
 ]
 </code></pre><p>Tutte le variabili sono quantificate universalmente e tutte le variabili di situazione sono implicite: le precondizioni devono essere vere nello stato precedente dell&#39;applicazione dell&#39;operatore, gli effetti sono veri immediatamente dopo.</p>
 <h3 id="il-noioso-mondo-dei-blocchi">Il noioso mondo dei blocchi</h3>
-<p><img src="Intelligenza Artificiale/immagini/l20-brick.png" alt=""></p>
+<p><img src="./notes/immagini/l20-brick.png" alt=""></p>
 <p>Il mondo dei blocchi è un micro mondo che consiste in un tavolo, un insieme di blocchi e un manipolatore robotico.</p>
 <p>Alcuni vincoli del dominio:</p>
 <ul>
@@ -1521,8 +1521,8 @@ handempty
     P = HANDEMPTY, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>
     E = ¬HANDEMPTY, ¬<span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(y)</span></span>
 </code></pre><p>Ad esempio l&#39;applicazione dell&#39;azione può avere il seguente effetto:</p>
-<p><img src="Intelligenza Artificiale/immagini/l20-unstack-1.png" alt=""></p>
-<p><img src="Intelligenza Artificiale/immagini/l20-unstack-2.png" alt=""></p>
+<p><img src="./notes/immagini/l20-unstack-1.png" alt=""></p>
+<p><img src="./notes/immagini/l20-unstack-2.png" alt=""></p>
 <p>Le azioni eseguibili sono:</p>
 <pre><code><span class="hljs-function"><span class="hljs-title">Unstack</span><span class="hljs-params">(x,y)</span></span>
     P = HANDEMPTY, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(y)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,y)</span></span>
@@ -1537,8 +1537,8 @@ handempty
     P = <span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">BLOCK</span><span class="hljs-params">(x)</span></span>
     E = <span class="hljs-function"><span class="hljs-title">ON</span><span class="hljs-params">(x,TAVOLO)</span></span>, ¬<span class="hljs-function"><span class="hljs-title">HOLDING</span><span class="hljs-params">(x)</span></span>, <span class="hljs-function"><span class="hljs-title">CLEAR</span><span class="hljs-params">(x)</span></span>, HANDEMPTY
 </code></pre><h4 id="esempi-di-piani">Esempi di piani</h4>
-<p><img src="Intelligenza Artificiale/immagini/l20-plan-a.png" alt="">
-<img src="Intelligenza Artificiale/immagini/l20-plan-b.png" alt=""></p>
+<p><img src="./notes/immagini/l20-plan-a.png" alt="">
+<img src="./notes/immagini/l20-plan-b.png" alt=""></p>
 <h3 id="generazione-di-piani">Generazione di piani</h3>
 <p>La pianificazione può essere fatta a partire dallo stato iniziale o da quello goal.</p>
 <h4 id="forward-planning">Forward Planning</h4>
@@ -1642,15 +1642,15 @@ eventualmente qualche vincolo temporale fra passi</li>
 <li>Se <em>(S<sub>i</sub>, C, S<sub>j</sub>)</em> è in (2) e il passo <em>S<sub>k</sub></em> è in (1) e <em>S<sub>k</sub></em> &quot;<strong>minaccia</strong>&quot; <em>(S<sub>i</sub>, C, S<sub>j</sub>)</em>, cioè rende falso <em>C</em>, allora (3) contiene <em>S<sub>k</sub>\&lt;S<sub>i</sub></em> o <em>S<sub>k</sub>>S<sub>j</sub></em>.</li>
 </ul>
 <p>Ogni piano inizia allo stesso modo con un passo <em>S<sub>1</sub>:Start</em> e un <em>S<sub>2</sub>:Finish</em>.</p>
-<p><img src="Intelligenza Artificiale/immagini/l21-pp.png" alt=""></p>
+<p><img src="./notes/immagini/l21-pp.png" alt=""></p>
 <p>Un piano ottenuto in questo modo può essere rappresentato graficamente con:</p>
-<p><img src="Intelligenza Artificiale/immagini/l21-shoe-plan.png" alt=""></p>
+<p><img src="./notes/immagini/l21-shoe-plan.png" alt=""></p>
 <h3 id="pop-vincoli-e-euristiche">POP - Vincoli e euristiche</h3>
 <p>Per popolare un piano non lineare si torna a fare una ricerca nello spazio dei piani.</p>
 <p>Una strategia di ricerca è quella greedy che aggiunge solo passi che soddisfano una precondizione correntemente non soddisfatta. La filosofia del minimo impegno prevede poi di non ordinare i passi a meno che non sia strettamente necessario.</p>
 <p>Bisogna poi tenere conto dei link causali <em>(S<sub>i</sub>, C, S<sub>j</sub>)</em> che <em>proteggono</em> una condizione <em>C</em>, quindi non deve essere mai aggiunto un passo intermedio <em>S<sub>k</sub></em> tra <em>S<sub>i</sub></em> e <em>S<sub>j</sub></em> che invalida <em>C</em>.
 Se un&#39;azione parallela minaccia (<strong>threatens</strong>) <em>C</em>, cioè ha l&#39;effeto di negare <em>C</em> (<strong>clobbering</strong>) è necessario risolvere la minaccia aggiungendo dei vincoli temporali. Si parla di <strong>demotion</strong> se viene posto <em>S<sub>k</sub> \&lt; S<sub>i</sub></em> oppure di <strong>promotion</strong> se <em>S<sub>k</sub> > S<sub>j</sub></em>.</p>
-<p><img src="Intelligenza Artificiale/immagini/l21-dem-prom.png" alt=""></p>
+<p><img src="./notes/immagini/l21-dem-prom.png" alt=""></p>
 <p>Un piano viene detto <strong>consistente</strong> se non ci sono cicli e non c&#39;è un conflitto tra chi soddisfa e chi minaccia. </p>
 <p>Se ogni precondizione di tutte le azioni del piano sono soddisfatte e nessun passo intermedio le invalida, allora il piano si dice anche <strong>completo</strong>.</p>
 <p>Per rimuovere un conflitto si può aggiungere un vincolo d&#39;ordinamento oppure aggiungere delle nuove azioni.</p>
@@ -1687,12 +1687,12 @@ Applicando la stessa sostituzione a <code>MoveB</code> si ottiene: <code>MoveB(Z
 <li><em>Eat(Cake)</em>: PRE: Have(Cake), POST: ¬Have(Cake) ⋀ Eaten(Cake)</li>
 <li><em>Bake(Cake)</em>: PRE: ¬Have(Cake), POST: Have(Cake)</li>
 </ul>
-<p><img src="Intelligenza Artificiale/immagini/l22-grafo.png" alt=""></p>
+<p><img src="./notes/immagini/l22-grafo.png" alt=""></p>
 <p>Da notare che in S<sub>1</sub> compaiono contemporaneamente sia <em>Have(Cake)</em> che <em>¬Have(Cake)</em> e questo è permesso perché stiamo risolvendo un problema rilassato.</p>
 <p>L&#39;espasione del grafico termina quando il livello <em>i+1</em> coincide con il livello <em>i</em>.</p>
 <p>Da notare che se nei vari livelli non compaiono mai i goal, questi non possono essere raggiunti nel problema rilassato e di conseguenza non sono raggiungibili neanche nel problema originale.</p>
 <h2 id="casi-particolari">Casi particolari</h2>
-<p><img src="Intelligenza Artificiale/immagini/l22-grafo-casi.png" alt=""></p>
+<p><img src="./notes/immagini/l22-grafo-casi.png" alt=""></p>
 <p>Nel grafo di planning possono comparire dei collegamenti che in un piano reale non potrebbero comparire perché sono mutuamente esclusivi (<strong>collegamenti mutex</strong>).
 Questi collegamenti tra le <strong>azioni</strong> si possono verificare in 3 condizioni:</p>
 <ul>
@@ -1763,14 +1763,14 @@ Dal momento che il mondo cambia c&#39;è da prevedere anche un monitoraggio dell
 <p>Esegue una ricerca negli <strong>stati di credenza</strong>, cioè l&#39;insieme degli stati in cui l&#39;agente potrebbe trovarsi.
  Questo insieme può anche contenere degli stati goal, tuttavia si assume di non avere i sensori, quindi l&#39;agente non sa di essere in un goal finché non è sicuro di essere in uno stato goal, cioè quando l&#39;insieme degli stati di credenza contiene un solo stato che è anche goal.</p>
 <p>Questa strategia ha senso quando non è possibile utilizzare alcuni dei sensori dell&#39;agente e le azioni <strong>sono</strong> deterministiche.</p>
-<p><img src="Intelligenza Artificiale/immagini/l22-mega-grafo.png" alt=""></p>
+<p><img src="./notes/immagini/l22-mega-grafo.png" alt=""></p>
 <h3 id="pianificazione-condizionale">Pianificazione condizionale</h3>
 <p>Se il mondo è non deterministico o parazialmente osservabile la percezione di un agente di solito fornisce solamente alcune informazioni, cioè suddivide lo stato di credenza.</p>
 <p>Questi piani controllano quindi tutte le conseguenze della base di conoscenza rispetto alla percezioni.</p>
 <p>Durante l&#39;esecuzione del piano l&#39;agente verifica se è soddisfatta una determinata condizione e in base a quella esegue un piano o un altro.</p>
 <p>Questa strategia necessita di qualche piano per ognugna delle possibili percezioni. In questo caso si utilizzano gli alberi di riceca <em>AND-OR</em>.</p>
 <p>Nell&#39;esempio si assume che aspirare o arrivare in un quadrato pulito può sporcare.</p>
-<p><img src="Intelligenza Artificiale/immagini/l22-doppio-murphy.png" alt=""></p>
+<p><img src="./notes/immagini/l22-doppio-murphy.png" alt=""></p>
 <h1 id="lezione-23-pianficiazione-condizionale-e-cenni-di-apprendimento-automatico">Lezione 23 - Pianficiazione condizionale e cenni di Apprendimento automatico</h1>
 <p>Per vari motivi può esserci un <strong>fallimento</strong>, cioè le precondizioni del resto del piano non sono più soddisfatte, ad esempio a causa delle azioni di un altro agente.
 L&#39;agente quindi arriva in un punto in cui il resto del piano non può essere eseguito.</p>
@@ -1870,37 +1870,37 @@ Formalmente: un&#39;ipotesi <em>h ϵ H</em> è overfit su <em>Tr</em> se <em>∃
 </blockquote>
 <p>Utilizzando la probabilità a priori si riesce ad ottenere un aggiornamento continuo dei valori che vengono aggiornati man mano che la conoscenza dell&#39;agente cambia.</p>
 <p>Il problema diventa quindi quello di scegliere l&#39;azione in base alla probabilità di successo</p>
-<p><img src="Intelligenza Artificiale/immagini/l25-prob.png" alt=""></p>
+<p><img src="./notes/immagini/l25-prob.png" alt=""></p>
 <p>In questo caso la scelta dell&#39;azione dipende dalle preferenze dell&#39;agente, dal momento che non c&#39;è una scelta migliore.</p>
 <p>La <strong>teoria dell&#39;utilità</strong> è utilizzata per rappresentare e inferire preferenze, la <strong>teoria delle decisioni</strong> accorpa la teoria dell&#39;utilità con le probabilità.</p>
 <h2 id="probabilit-a-priori-e-condizionale">Probabilità a priori e condizionale</h2>
 <p>A priori rapprenseta la probabilità incondizionata delle preposizioni sul dominio, ad esempio <em>P(Tempo = sole) = 0.72</em>, e corrispondo a gradi di credenza sull&#39;arrivo di una nuova evidenza.</p>
 <p>Vengono poi utilizzate delle distribuzioni di probabilità per fornire dei valori per tutti i possibili assegnamenti, ad esempio se <em>Tempo</em> può assumere i valori <em>&lt;sole, pioggia, nuvole, neve&gt;</em>, <em>P(Tempo) = &lt;0.72, 0.1, 0.08, 0.1&gt;</em>, da notare che le distribuzioni di probabilità sono tutte <strong>normalizzate</strong>, ovvero sommano a 1.</p>
 <p>Si parla inoltre di probabilità congiunta per un insieme di variabili alleatori, che fornisce la probabilità per ogni evento atomico su tali variabili.</p>
-<p><img src="Intelligenza Artificiale/immagini/l25-tab.png" alt=""></p>
+<p><img src="./notes/immagini/l25-tab.png" alt=""></p>
 <p>Dal momento che si tratta di eventi indipendenti la probabilità congiunta è data dal prodotto delle probabilità.</p>
 <p>La probabilità congiunta permette di effettuare l&#39;inferenza probabilitstica, perché ogni elemento della tabella è la somma dei possibili eventi.</p>
 <p>Per espriemere l&#39;effetto di nuova conoscenza, è possibile utilizzare la <strong>probabilità condizionale</strong> o a posteriori per influenzare il valore, ad esempio <em>P(Cavità</em> | <em>Mal_Di_Denti) = 0.8</em>, ovvero adesso che so di aver mal di denti la probabilità di avere una carie aumenta.</p>
 <p>Inoltre, se arriva una nuova evidenza che aumenta la probabilità, la credenza meno specifica <strong>rimane valida</strong> ma non è necessariamente utilie, ad esempio <em>P(Cavità</em> | <em>Mal_Di_Denti, Cavità) = 1</em>.</p>
 <p>Infine è possibile che della nuova conscenza non influenzi la distribuzione di probabilità congiunta, ad esempio <em>P(Cavità|Mal_Di_Denti, Vince_Inter) = P(Cavità|Mal_Di_Denti) = 0.8</em></p>
-<p><img src="Intelligenza Artificiale/immagini/l25-prob-cond.png" alt=""></p>
+<p><img src="./notes/immagini/l25-prob-cond.png" alt=""></p>
 <p>I fattori della <strong>chain rule</strong> possono essere semplificati se tra delle probabilità c&#39;è una relazione di indipendeza, questo perché mantenere in memoria una distribuzione di <em>n</em> variabile booleane richiede <em>2<sup>n</sup></em> locazioni di memoria, questo perché devo considerare tutte le possibili di combinazioni. In realtà ne servono <em>2<sup>n</sup>-1</em> perché si può sfruttare il fatto che la somma deve essere 1.</p>
 <p>Questa complessità, sommata al fatto che fare inferenza probabilistica è più complessa dell&#39;inferenza logica rende la maggior parte dei problemi intrattabili. <em>forse è una cosa pessimistica, però il punto è che il problema è tanto complesso</em>.</p>
 <h2 id="inferenza-tramite-enumerazione">Inferenza tramite enumerazione</h2>
 <p>Una volta creata la tabella della distribuzione di probabilità congiunta permette di andare a calcolare le probabilità dei vari eventi.</p>
-<p><img src="Intelligenza Artificiale/immagini/l25-tabella.png" alt=""></p>
+<p><img src="./notes/immagini/l25-tabella.png" alt=""></p>
 <p>Se un evento atomico compare più volte, la sua probabilità viene considerata solo una volta.</p>
-<p><img src="Intelligenza Artificiale/immagini/l25-tabella-2.png" alt=""></p>
+<p><img src="./notes/immagini/l25-tabella-2.png" alt=""></p>
 <p>Così come si possono calcolare le probabilità condizionali</p>
-<p><img src="Intelligenza Artificiale/immagini/l25-tabella-3.png" alt=""></p>
+<p><img src="./notes/immagini/l25-tabella-3.png" alt=""></p>
 <h3 id="normalizzazione">Normalizzazione</h3>
 <p>Quando si vuole calcolare la distribuzione di una probabilità di una variabile, si può considerare la probabilità normalizzata, ovvero moltiplicare le probabilità per una costante in modo che la somma sia 1.</p>
 <p>Da notare che la <strong>P</strong> (in grassetto) indica la distribuzione di probabilità e <em>Cavity</em> indica una variabile.</p>
 <p>Con questo è possibile utilizzare la tabella delle probabilità congiunte per ottenere la distribuzione della probabilità per la variabile <em>Cavity</em> sapendo di avere mal di denti.</p>
-<p><img src="Intelligenza Artificiale/immagini/l25-tabella-4.png" alt=""></p>
+<p><img src="./notes/immagini/l25-tabella-4.png" alt=""></p>
 <p>L&#39;idea è quindi quella di calcolare la distribuzione sulla variabile della query (<em>Cavity</em>), fissando le variabili di evidenza, ovverro i fatti dati a priori (<em>tootache</em>) e sommando sulle variabili nascoste (<em>catch</em>) che vengono considerate non influenti per la distribuzione di probabilità della variabile.</p>
 <h3 id="formalmente">Formalmente</h3>
-<p><img src="Intelligenza Artificiale/immagini/l25-enumerazione.png" alt=""></p>
+<p><img src="./notes/immagini/l25-enumerazione.png" alt=""></p>
 <p>La sommatoria per tutti i possibili valori delle variabili nascoste prende il nome di <strong>marginalizzazione</strong>, e viene effettuata per evitare che l&#39;aggiunta di nuove evidenze porti a delle incosistenze.</p>
 <p>Problemi ovvi, descrizione:</p>
 <ol>
@@ -1914,13 +1914,13 @@ Formalmente: un&#39;ipotesi <em>h ϵ H</em> è overfit su <em>Tr</em> se <em>∃
 <blockquote>
 <p><strong>P</strong>(A | B) = <strong>P</strong>(A) o <strong>P</strong>(B | A) = <strong>P</strong>(B) o <strong>P</strong>(A e B) = <strong>P</strong>(A)<strong>*P</strong>(B)</p>
 </blockquote>
-<p><img src="Intelligenza Artificiale/immagini/l25-indipendenza.png" alt=""></p>
+<p><img src="./notes/immagini/l25-indipendenza.png" alt=""></p>
 <p>Se fossero tutte dipendendi servirebbe un entry per ogni possibile combinazione di valori (8 della tabella del dentista x 4 valori del tempo), mentre con l&#39;indipendenza del tempo si ottengono due tabelle, una da 8 entry per il dentista e una separata da 4 per il tempo.</p>
 <p>In questo caso si parla di <strong>indipendenza assulta</strong> che porta ad avere un notevole risparmio di memoria, tuttavia nel mondo reale le variabili non sono indipendenti.</p>
 <h1 id="lezione-26-incertezza-2">Lezione 26 - Incertezza 2</h1>
 <p>L&#39;indipendenza assoluta è molto rara.</p>
 <h2 id="indipendenza-condizionale">Indipendenza condizionale</h2>
-<p><img src="Intelligenza Artificiale/immagini/l26-indcond.png" alt=""></p>
+<p><img src="./notes/immagini/l26-indcond.png" alt=""></p>
 <p>Ovvero alcuni fatti sono indipendenti da altri sotto determinate condizioni.</p>
 <p>Quindi nella applicazioni pratiche è possibile utilizzare l&#39;indipendenza condizionale.</p>
 <p>La distribuzione della probabilità congiunta si può quindi scrivere come (deriva dall&#39;applicazione della Chian rule):</p>
@@ -1933,16 +1933,16 @@ Formalmente: un&#39;ipotesi <em>h ϵ H</em> è overfit su <em>Tr</em> se <em>∃
 <p>C&#39;è sempre da tenere a mente che se viene aggiornata la probabilità di un evento, c&#39;è almento un&#39;altra probabilità da aggiornare dal momento che la somma deve sempre essere 1.</p>
 <h2 id="naive-bayes">Naive Bayes</h2>
 <p>Utilizza la regola di Bayes per fare inferenza probabilistica.</p>
-<p><img src="Intelligenza Artificiale/immagini/l26-naive.png" alt=""></p>
+<p><img src="./notes/immagini/l26-naive.png" alt=""></p>
 <p>Questo modello prende il nome di naive perché assume l&#39;indipendenza condizionale tra gli eventi che non è sempre vero.</p>
 <p>In questo modo per trovare la causa più probabile è possibile calcolare il valore di probabilità per ogni possibile valore della causa trovando così quello più probabile.</p>
 <h3 id="bayes-nel-mondo-nel-wumpus">Bayes nel mondo nel Wumpus</h3>
-<p><img src="Intelligenza Artificiale/immagini/l26-wumpus-1.png" alt="">
-<img src="Intelligenza Artificiale/immagini/l26-wumpus-2.png" alt="">
-<img src="Intelligenza Artificiale/immagini/l26-wumpus-3.png" alt="">
-<img src="Intelligenza Artificiale/immagini/l26-wumpus-4.png" alt="">
-<img src="Intelligenza Artificiale/immagini/l26-wumpus-conti.png" alt="">
-<img src="Intelligenza Artificiale/immagini/l26-wumpus-5.png" alt=""></p>
+<p><img src="./notes/immagini/l26-wumpus-1.png" alt="">
+<img src="./notes/immagini/l26-wumpus-2.png" alt="">
+<img src="./notes/immagini/l26-wumpus-3.png" alt="">
+<img src="./notes/immagini/l26-wumpus-4.png" alt="">
+<img src="./notes/immagini/l26-wumpus-conti.png" alt="">
+<img src="./notes/immagini/l26-wumpus-5.png" alt=""></p>
 <h2 id="riassumendo">Riassumendo</h2>
 <p>Utilizzando il calcolo delle probabilità si ottiene un formalismo per esprimere l&#39;incertezza.</p>
 <p>In particolare la distribuzione congiunta delle probabilità specifica la probabilità di ogni evento atomico e grazie a questa distribuzione si riesce ad effettuare l&#39;inferenza tramite enumerazione, andando a sommare i singoli eventi atomici (tenendo anche in considerazione le variabili nascoscoste).</p>
@@ -1954,13 +1954,13 @@ Formalmente: un&#39;ipotesi <em>h ϵ H</em> è overfit su <em>Tr</em> se <em>∃
 Il grafo è diretto e aciclico, dove un arco rappresenta un&#39;influenza diretta tra due variabile.
 Per ogni nodo viene calcolata la distribuzione condizionale dati i suoi genitori <em><strong>P</strong>(X<sub>i</sub>|Parents(X<sub>i</sub>)</em>.</p>
 <p>Nel caso più semplice, la distribuzione condizionale viene rappresentata come una tabella della probabilità condzionale <strong>CPT</strong> data la distribuzione X<sub>i</sub> per ogni cominazione di valori discreti assunti per i genitori. (Noi non tratteremo il caso continuo)</p>
-<p><img src="Intelligenza Artificiale/immagini/l27-dentista.png" alt=""></p>
+<p><img src="./notes/immagini/l27-dentista.png" alt=""></p>
 <p>Rete bayesiana per il problema del dentista.
 Si può notare che c&#39;è un nodo per ogni variabile e la variabile <em>Weather</em> è disconnessa dal momento che è assolutamente indipendente.</p>
 <h2 id="esempio-giocattolo">Esempio giocattolo</h2>
 <p>Un tizio ha un&#39;allarme che può rilevare sia un&#39;infrazione da parte di un ladro, sia da un terremoto. I vicini John e Mary, se sentono l&#39;allarme, chiamano il tizio per avvisarlo.</p>
 <p>Variabili (booleane): <em>Burglar</em>, <em>Earthquake</em>, <em>Alarm</em>, <em>JohnCalls</em>, <em>MaryCalls</em>.</p>
-<p><img src="Intelligenza Artificiale/immagini/l27-allarme.png" alt=""></p>
+<p><img src="./notes/immagini/l27-allarme.png" alt=""></p>
 <p><em>Per motivi di spazio, le variabili vengono abbreviate con le lettere iniziali.</em></p>
 <p>Dal grafo è possibile notare che:</p>
 <ul>
@@ -1984,10 +1984,10 @@ Cioè l&#39;occupazione cresce in modo lineare anziché esponenziale. (Nella ret
 <p>La stessa fattorizzazione può essere ottenuta applicando la <strong>chain rule</strong> alla distribuzione congiunta completa e semplificando i vari termini utilizzando la nozione di indipendenza e indipendenza condizionale, secondo quanto speficicato dalla topologia della rete.</p>
 <p>Questa rappresentazione oltre ad essere compatta ha anche il pregio di mettere in evidenza le relazioni causa/effetto tra le variabili.</p>
 <p>La semantica <strong>locale</strong> riguarda l&#39;indipendeza condizionale tra un nodo e i suoi non discenti dati i genitori.</p>
-<p><img src="Intelligenza Artificiale/immagini/l27-locale.png" alt=""></p>
+<p><img src="./notes/immagini/l27-locale.png" alt=""></p>
 <p>Quindi, se conosco il valore dei genitori del nodo <em>X</em>, il nodo <em>X</em> è condizionalmente indipendente dai nodi <em>Z</em>.</p>
 <p>Questa definizione non comprende tutte le relazioni di indipendenza condzionale. Una definzione più approssimata è quella della <strong>Markov blanket</strong></p>
-<p><img src="Intelligenza Artificiale/immagini/l27-markov.png" alt=""></p>
+<p><img src="./notes/immagini/l27-markov.png" alt=""></p>
 <p>Ovvero, ogni nodo è condizionalmente indipendente da tutti gli altri dato il suo <strong>markov blanket</strong>: genitori, figli e genitori dei figli.</p>
 <p>Ricapitolando:</p>
 <ul>
@@ -1995,40 +1995,40 @@ Cioè l&#39;occupazione cresce in modo lineare anziché esponenziale. (Nella ret
 <li>Semantica locale --&gt; indipendenza condizionale tra un sotto insieme di nodi</li>
 </ul>
 <h2 id="costruzione-di-una-rete-bayesiana">Costruzione di una rete bayesiana</h2>
-<p><img src="Intelligenza Artificiale/immagini/l27-build.png" alt=""></p>
+<p><img src="./notes/immagini/l27-build.png" alt=""></p>
 <p>Una volta fissato l&#39;ordinamento e un nodo Xi, l&#39;insieme <em>Parent(X<sub>i</sub>)</em> deve essere un sotto-insieme delle variabili <em>X<sub>1</sub>...X<sub>i-1</sub></em>. Le <em>X<sub>j</sub></em> mancanti derivano dall&#39;indipendenza condizionale tra le variabili <em>X<sub>1</sub>...X<sub>i-1</sub></em>.</p>
 <p>La costruzione richiede sempre e comunque un tempo esponenziale perché deve considerare tutte le possibili cominazioni per verificare l&#39;indipiendenza condizionale.</p>
 <p>Resta da definire come ordinare le variabili e come stimare i dati mancanti.
 Entrambi possono fornire da un esperto che conosce il dominio applicativo.</p>
 <p>La scelta dell&#39;ordinamento influenza notevolmente la dimensione del grafo. Ordinare le variabili mettendo prima le cause e poi l&#39;effetto porta ad avere una rete più compatta rispetto all&#39;ordinamento inverso.</p>
 <p>Ad esempio, utilizzando come ordinamento <em>M, J, A, B, E</em> si ottiene la rete seguente che richiede 13 numeri per essere rappresentata.</p>
-<p><img src="Intelligenza Artificiale/immagini/l27-bad.png" alt=""></p>
+<p><img src="./notes/immagini/l27-bad.png" alt=""></p>
 <h2 id="compiti-di-inferenza">Compiti di inferenza</h2>
 <p>Con una rete bayesiana è possibili calcolare la probabilità a posterirori marginale <strong>P</strong>(X<sub>i</sub>|E=e) e congiuntive <strong>P</strong>(X<sub>i</sub>,X<sub>j</sub> | E=e), riducendole ad una serie di query semplici (scomponendola con la regola del prodotto).</p>
 <p>È possibile inoltre utilizzare una rete per prednere decisioni ottimali  del tipo P(outcome|action, evidence).</p>
 <p>Allo stesso modo si possono fare delle meta-query, ovvero ricavare informazioni su quali variabili influenzano maggiormente la distribuzione di probabilità, ovvero quale evidenza mi conviene cercare.</p>
 <h1 id="lezione-28-reti-bayesiane-2">Lezione 28 - Reti Bayesiane 2</h1>
 <p>Con le reti Bayesiane è possibile fare <strong>inferenza esatta</strong> tramite enumerazione.</p>
-<p><img src="Intelligenza Artificiale/immagini/l28-simple.png" alt=""></p>
+<p><img src="./notes/immagini/l28-simple.png" alt=""></p>
 <p>Una possibile query è <strong>P</strong>(B|j,m), per ottenere la distribuzione di probabilità della variabile <em>B</em> dato che entrambi i vicini hanno chiamato.</p>
 <p>L&#39;inferenza per enumerazione viene poi fatta riducendosi alla tabella della distribuzione di probabilità congiunta, andando a sommare sui valori delle variabili nascoste (marginalizzazione sulle variabili nascoste).</p>
 <p>La distribuzione della probabilità congiunta può essere poi fattorializzata utilizzando la semantica globale data dalla topologia della rete bayesiana.</p>
 <p>Nel caso pessimo, per calcolare la distribuzione congiunta servono <em>n*2<sup>n</sup></em> operazioni (variabili booleane), sfruttando la topologia si riesce a scendere a <em>O(n)</em> per il tempo e <em>O(d<sup>n</sup>)</em> per lo spazio.</p>
 <h2 id="algorimto-di-enumerazione">Algorimto di enumerazione</h2>
-<p><img src="Intelligenza Artificiale/immagini/l28-enumerazione.png" alt=""></p>
+<p><img src="./notes/immagini/l28-enumerazione.png" alt=""></p>
 <p>L&#39;algoritmo esegue il calcolo delle varie sommatorie, riscorsivamente, in profondità e a partire da quella più a sinistra. Da notare che prima di ritornare la risposta alla query, questa deve essere normalizzata.</p>
 <p>Questo approccio è inefficente dal momento che esegue dei calcoli ripetuti, ad esempio per rispondere alla query precedente calcola <em>P(j|a)P(m|a)</em> per ogni valore di <em>e</em>.</p>
-<p><img src="Intelligenza Artificiale/immagini/l28-albero.png" alt=""></p>
+<p><img src="./notes/immagini/l28-albero.png" alt=""></p>
 <p><em>Nell&#39;albero i pallini rappresentano le operazioni e gli archi rappresantano i valori</em></p>
 <p>Per limitare il numero di calcoli si può costruire l&#39;albero con un approccio bottom-up, considerando le sommatorie da destra a sinistra ed effettuando i calcoli sono quando è necessario.
 In questo modo si riesce facilmente ad individuare il caso in cui ci siano dei sotto alberi uguali.</p>
 <h2 id="inferenza-tramite-eliminazione-di-variabile">Inferenza tramite eliminazione di variabile</h2>
-<p><img src="Intelligenza Artificiale/immagini/l28-elem.png" alt=""></p>
-<p><img src="Intelligenza Artificiale/immagini/l28-elem-2.png" alt=""></p>
+<p><img src="./notes/immagini/l28-elem.png" alt=""></p>
+<p><img src="./notes/immagini/l28-elem-2.png" alt=""></p>
 <p><em>c&#39;è un esempio nel libro che spiega il prodotto pointwise</em></p>
 <p>In pratica viene creato un tabellone, con una colonna per ogni variabile da cui dipende il fattore. Ad ogni riga corrisponde un valore e nel caso del prodotto point-wise vengono fatte le moltiplicazioni delle corrispettive righe dei fattori.</p>
 <p>L&#39;algoritmo risultante è il seguente:</p>
-<p><img src="Intelligenza Artificiale/immagini/l28-elvar.png" alt=""></p>
+<p><img src="./notes/immagini/l28-elvar.png" alt=""></p>
 <p>Da notare che l&#39;algoritmo inizia rovesciando le variabili e con i fattori vuoti.</p>
 <p>Quando viene trovata una variabile nascosta si esegue il <code>Sum-Out</code> della variabile, il quale per ogni valore possibile delle altre variabili, fissa un valore ed esegue la sommatoria dei valori al variare della variabile da sommare.</p>
 <p>Come sempre alla fine viene normalizzata la risposta.</p>
@@ -2040,7 +2040,7 @@ Dalla topologia di una rete bayesiana si riesca a capire quali sono.</p>
 <p>In questo caso si dice che <em>F</em> è <strong>m-separato</strong> da <em>G</em> tramite <em>H</em> se e solo se è separato tramite <em>H</em> nel grafo moralizzato.
 In particolare <em>Y</em> è irrilevante se m-separato da <em>X</em> tramite <em>E</em>.</p>
 <p>L&#39;algoritmo di eliminazione può quindi rimuovere queste variabili prima di valutare la query.</p>
-<p><img src="Intelligenza Artificiale/immagini/l28-irr.png" alt=""></p>
+<p><img src="./notes/immagini/l28-irr.png" alt=""></p>
 <h2 id="complessit-dell-inferenza-esatta">Complessità dell&#39;inferenza esatta</h2>
 <p>Le considerazioni precedenti portano ad un miglioramento all&#39;efficenza, ma nel caso pessimo, il tempo di esecuzione è comunque esponenziale.</p>
 <p>Più nel dettagli, se una rete è <strong>singolarmente conessa</strong>, ovvero ogni coppia di nodi è connessa da al più un cammino (non diretto) il costo in tempo per l&#39;algoritmo di eliminazione di variabile è <em>O(d<sup>k</sup>n)</em>.</p>
@@ -2062,27 +2062,27 @@ C&#39;è una rete bayesiana con un nodo per ogni variabile e gli archi che rappr
 <p>Una volta generati i campioni, si fissano i valori e si considera il resto della rete, generando il resto del campione utilizzando le probabilità condizionali.
 Terminato ciò si ritorna il campione generato.</p>
 <p><strong>Rete vuota:</strong> rete che non considera evidenza, ovvero le cui variabili non sono assegnate. </p>
-<p><img src="Intelligenza Artificiale/immagini/l29-priorsample.png" alt=""></p>
-<p><img src="Intelligenza Artificiale/immagini/l29-prior-example.png" alt=""></p>
+<p><img src="./notes/immagini/l29-priorsample.png" alt=""></p>
+<p><img src="./notes/immagini/l29-prior-example.png" alt=""></p>
 <p>Vengono quindi generati tanti esempio che vengono poi utilizzati per stimare la distribuzione di probabilità congiunta.
 Di conseguenza se un determinato campione compare più volte, maggiore è la sua probabilità di comparire.</p>
 <p><em>S<sub>PS</sub>(x<sub>1</sub>, ..., x<sub>n</sub>)</em> è la probabilità che venga generato un determinato evento.</p>
-<p><img src="Intelligenza Artificiale/immagini/l29-ps.png" alt=""></p>
+<p><img src="./notes/immagini/l29-ps.png" alt=""></p>
 <h2 id="rejection-sampling">Rejection Sampling</h2>
 <p>Si vuole stimare la probabilità a posteriori data una certa evidenza, pertanto si usa <code>PriorSample</code> per generare i vari campioni, e vengono scartati tutti i campioni che non concordano con l&#39;evidenza.</p>
 <p>I campioni rimanenti vengono utilizzati per stimare la probabilità di un determinato valore per la variabile query.</p>
-<p><img src="Intelligenza Artificiale/immagini/l29-rejection.png" alt=""></p>
+<p><img src="./notes/immagini/l29-rejection.png" alt=""></p>
 <p><em>X</em> sono le variabili di query, <strong>x</strong> è il campione generato, <em>x</em> è il valore della query <em>X</em> per l&#39;esempio <strong>x</strong>.</p>
-<p><img src="Intelligenza Artificiale/immagini/l29-rejection-t.png" alt=""></p>
+<p><img src="./notes/immagini/l29-rejection-t.png" alt=""></p>
 <p>Se la probabilità dell&#39;evidenza è bassa, vengono generati pochi campioni consistenti con l&#39;evidenza, pertanto per raggiungere un risultato significativo è necessario generare molti campioni.</p>
 <h2 id="likelihood-weighthing">Likelihood weighthing</h2>
 <p>Per evitare il problema di rejection sampling, vengono fissati i valori per le variabili di evidenza, in modo da generare solo campioni consistenti.
 Ogni campione viene poi pesato con la likelihood accordata dall&#39;evidenza, altrimenti si perderebbe la consistenza con la distribuzione di probabilità a priori.</p>
 <p>Il peso iniziale viene fissato ad <em>1</em>, dopodiché per ogni variabile di evidenza fissata, viene moltiplicato il peso per la probabilità di ottenere quel determinato valore di evidenza, dato il valore dei genitori del nodo.</p>
-<p><img src="Intelligenza Artificiale/immagini/l29-weight.png" alt=""></p>
-<p><img src="Intelligenza Artificiale/immagini/l29-likelihood.png" alt=""></p>
+<p><img src="./notes/immagini/l29-weight.png" alt=""></p>
+<p><img src="./notes/immagini/l29-likelihood.png" alt=""></p>
 <p>In questo caso si va a stimare la probabilità delle variabili che non hanno evidenza <em>S<sub>WS</sub>(<strong>z</strong>,<strong>e</strong>)</em>, così facendo si tiene in considerazione solamente l&#39;evidenza degli antenati, mentre il peso per un dato campione <em>w(<strong>z</strong>,<strong>e</strong>)</em> rappresenta la probabilità dell&#39;evidenza per le variabili fissate.</p>
-<p><img src="Intelligenza Artificiale/immagini/l29-asd.png" alt=""></p>
+<p><img src="./notes/immagini/l29-asd.png" alt=""></p>
 <p>Utilizzando questa strategia si generano solamente campioni consistenti con le variabili di evidenza, in un modo più efficente rispetto alla versione precedente, tuttavia se le variabili di evidenza sono tante la stima della probabilità diventa meno accurata.</p>
 <h2 id="inferenza-approssimata-tramite-mcmc">Inferenza approssimata tramite MCMC</h2>
 <ul>
