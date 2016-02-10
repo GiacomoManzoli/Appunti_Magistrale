@@ -1,0 +1,241 @@
+\section{Lezione 11 - Pipeline di apprendimento supervisionato}\label{lezione-11---pipeline-di-apprendimento-supervisionato}
+
+L'apprendimento supervisionato può essere visto come una serie di fasi:
+
+\begin{enumerate}
+\item
+  Analisi del problema
+\item
+  Raccolta, analisi e preprocessing dei dati
+\item
+  Studio delle correlazioni tra variabili
+\item
+  Feature selection, definizione dei pesi, normalizzazione
+\item
+  Scelta del predittore e del modello
+\item
+  Verifica del modello
+\end{enumerate}
+
+\subsection{Fase 4 - Feature selection, definizione dei pesi, normalizzazione}\label{fase-4---feature-selection-definizione-dei-pesi-normalizzazione}
+
+Per rappresentare gli oggetti con i quali lavora un algoritmo di apprendimento è possibile utilizzare varie rappresentazioni:
+
+\begin{itemize}
+\item
+  \textbf{vettori} contenti valori reali, ad esempio un vettore che descrive lo stato di salute di un paziente con il valore di pressione del sangue, il battito cardiaco, altezza e peso.
+\item
+  \textbf{stringhe}: una serie di caratteri che rappresentano un documento o la struttura del DNA
+\item
+  \textbf{insiemi}: ad esempio l'insieme di termini che compare in un documento
+\item
+  \textbf{array multidimensionali}: come immagini e video
+\item
+  \textbf{albero o grafi}: un documento XML
+\item
+  \textbf{strutture composte}: ottenute combinando tra loro le
+  precedenti.
+\end{itemize}
+
+Nel corso ci concentriamo principalmente sui vettori.
+
+Per ogni oggetto possiamo avere a disposizione delle \textbf{feature categoriche}, che rappresentano delle caratteristiche nominali
+dell'oggetto (marca di un auto, paese di origine), alcune di queste
+possono essere anche \textbf{ordinali}, cioè che impongono un ordine tra
+gli elementi ma la distanza tra un valore e un altro non è
+quantificabile, come per esempio i gradi militari: soldato, caporale,
+ecc.
+
+Un altro tipo di feature sono le \textbf{feature quantitative}, cioè
+delle caratteristiche che sono \textbf{enumerabili}, come il livello di
+apprezzamento di un prodotto, oppure \textbf{ratio}, ovvero dei numeri
+reali, come il peso di una persona.
+
+\subsubsection{Mapping Feature categoriche}\label{mapping-feature-categoriche}
+
+Per gestire le feature categoriche, queste vengono mappate in un vettore con tante
+componenti quanti sono i possibili valori della variabile (\textbf{one-hot}).
+
+Ad esempio per rappresentare la marca, il colore e la tipologia di una macchina è possibile codificare le tre feature con:
+
+\begin{itemize}
+\item
+  Marca: Fiat {[}c1{]}, Toyota {[}c2{]}, Ford {[}c3{]}
+\item
+  Colore: Bianco {[}c4{]}, Nero {[}c5{]}, Rosso {[}c6{]},
+\item
+  Tipo: Economica {[}c7{]}, Sportiva {[}c8{]}
+\end{itemize}
+
+La macchina\textit{ (Toyota, Rossa, Economica)} viene rappresentata con un
+vettore $ [ \underbrace{0,1,0,}_{\text{marca}} \underbrace{0,0,1,}_{\text{colore}} \underbrace{1,0,}_{\text{tipo}}]$.
+
+
+\subsubsection{Mapping per feature continue}\label{mapping-per-feature-continue}
+
+Tipicamente le feature continue vengono trasformate per ottenere dei valori comparabili con le altre feature.
+
+Per ottenere ciò è possibile applicare una delle seguenti trasformazioni:
+
+\begin{itemize}
+\item
+  \textbf{Centramento}: $f(x) = x - E(x)$
+\item
+  \textbf{Normalizzazione STD}: $f(x) = (x - E(x))/\sigma(x)$
+\item
+  \textbf{Rescaling}: $f(x) = (x - x_{min})/(x_{max}-x_{min})$
+\end{itemize}
+
+Dove:
+
+\begin{itemize}
+\item
+  \emph{E(x)} è la media di tutti i possibili valori di \emph{x}
+\item
+  $\sigma (x)$ è lo scarto quadratico medio
+\end{itemize}
+
+\subsection{Algoritmo K-NN}\label{algoritmo-k-nn}
+
+\textbf{K-Nearest-Neighbors} è un algoritmo di classificazione in cui 
+un esempio di test è classificato come la classe di maggioranza dei sui
+\emph{k}-vicini nel training set.
+
+Si vanno a scegliere i \emph{k} elementi più vicini all'elemento che si
+vuole classificare e viene scelta come classe quella della maggioranza
+dei suoi \emph{k}-vicini.
+
+Trattandosi di vettori la distanza tra i vari esempi viene misurata con
+
+$$ || x - y ||^2 = ||x||^2 + ||y||^2 - 2x^Ty$$
+
+
+Per semplificare i calcoli, si può tenere in considerazione che se i due
+vettori hanno la stessa norma, la loro distanza è uguale alla
+similarità indotta dal prodotto scalare:
+
+$$ || x - y ||^2 = const - 2x^Ty $$
+
+Inoltre, è possibile normalizzare i valori dentro i vettori per ridurre il rumore.
+
+Resta da stabilire quale valore utilizzare per \textit{k} e questo viene tipicamente fatto nella fase di \textbf{Model Selection}. 
+
+\subsection{Fase 5 - Scelta del predittore e del modell}\label{fase-5---scelta-del-predittore-e-del-modell}
+
+I parametri di un algoritmo di apprendimento sono i valori che influiscono nell'apprendimento, come i
+vari pesi \emph{w} delle reti neurali. 
+
+Mentre, gli \textbf{iper-parametri} sono tutti gli
+altri parametri che non influiscono con l'apprendimento, come il numero
+di unità nascoste per le reti neurali o il \emph{k} per l'algoritmo
+k-NN.
+
+La fase in cui questi valori vengono scelti prende il nome di
+\textbf{model selection} e come valori si cerca di scegliere il migliore
+per il task.
+
+\subsubsection{Bias e varianza}\label{bias-e-varianza}
+
+Per valutare le predizioni di uno stimatore vengono utilizzate due
+misure:
+
+\begin{itemize}
+\item \textbf{bias}: che misura la distorsione di una stima quando lo stimatore è corretto: $b = E[\hat{\theta}] - \theta$ dove $\theta$ è il valore corretto e $\hat{\theta}$ è la stima del valore effettuata dal predittore.
+
+\item \textbf{varianza}: che misura la dispersione delle stima: $v = E[(\hat{\theta} - E[\hat{\theta}])^2 ]$
+\end{itemize}
+
+
+\subsubsection{Hold out}\label{hold-out}
+
+Una strategia per ricercare il valore ottimo per un iper-parametro è
+quella dell'\textbf{hold out}, ovvero per ogni possibile valore un
+valore per l'iper-parametro si fa eseguire l'apprendimento allo
+stimatore su un sotto-insieme del training set, dopodiché si confrontano
+i risultati ottenuti effettuando delle predizioni su un insieme di
+validazione, ovviamente viene scelto il valore dell'iper-parametro che
+porta ad ottenere le predizioni migliori.
+
+Più formalmente:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Si sceglie un piccolo sottoinsieme \emph{Tr} del training set che
+  viene utilizzato come set di validazione \emph{Va}.
+\item
+  Il classificatore (algoritmo) apprende utilizzando gli esempi in
+  \emph{Tr} ma senza usare quelli che compaiono in \emph{Va}.
+\item
+  Si osserva come si comporta il classificatore con un determinato
+  valore dell'iper-parametro, e si ripete a partire dal punto 2 per
+  tutti i possibili valori dell'iper-parametro.
+\end{enumerate}
+
+In questo modo riesco a calcolare l'\emph{accuracy} per ogni valore del
+iper-parametro e di conseguenza posso scegliere il valore migliore.
+
+Con l'\textbf{accuracy} si intende la proporzione di predizione corrette
+effettuate dallo stimatore.
+
+Una volta scelto il valore, tipicamente si ri-effettua l'apprendimento
+utilizzando il training set completo.
+
+\subsubsection{K-fold Cross Validation}\label{k-fold-cross-validation}
+
+Alternativa all'hold-out che permette di valutare in modo più preciso la
+bontà dei possibili valori per un iper-parametro.
+
+L'insieme di apprendimento viene partizionato in \emph{k} parti
+disgiunte. Viene poi eseguito l'apprendimento utilizzando \emph{k-1}
+partizioni e utilizzando la restante partizione per fare validazione.
+L'intero processo di apprendimento viene ripetuto quindi \emph{k} volte,
+utilizzando ogni volta una partizione per la validazione diversa.
+
+Così facendo per un singolo valore di un iper-parametro si ottengono
+\emph{k} valori di accuracy e si può utilizzare la media di questi valori
+per ottenere una stima dell'accuracy migliore.
+
+Il tutto viene poi ripetuto per ogni possibile valore
+dell'iper-parametro.
+
+Il valore di \emph{k} influisce sulla dimensione del training set:
+utilizzando un \emph{k} piccolo si ottiene un training set più piccolo,
+quindi il bias induttivo aumenta e la varianza della stima ottenuta
+diminuisce.
+
+Viceversa, se \emph{k} è grande, il training set è più grande e si
+ottiene un minor bias induttivo.
+
+Tipicamente si usa \emph{k=5} o \emph{k=10}.
+
+Se \textit{k=|Tr|} questo approccio prende il nome di \textbf{leave-one-out}.
+
+\subsubsection{Valutazione per dati non bilanciati}\label{valutazione-per-dati-non-bilanciati}
+
+Quando nel training set c'è una classe che domina sulle altre,
+l'accuracy non è più una stima adatta, vengono quindi utilizzate altre
+misure quali: \textbf{precision}, \textbf{recall} e \textbf{F-Measure}.
+
+Infatti, se c'è una classe di maggioranza, l'accuracy di un predittore che classifica tutti gli esempi
+con la classe di maggioranza può risultare più elevata di quella di un predittore che effettua delle predizioni
+utilizzando altri criteri.
+
+\begin{itemize}
+\item
+  \textbf{Precision}: ($\pi$) misura quante volte, quanti tra gli esempi
+  classificati come positivi sono effettivamente positivi, ovvero il grado di correttezza del sistema
+  $$ \pi = \frac{true \: positive}{true \: positive + false \: positive}$$  
+
+\item   \textbf{Recall}: ($\rho$) misura quanti che sono effettivamente positivi
+  sono stati classificati come positivi, ovvero il grado di completezza del sistema
+  
+  $$ \rho = \frac{true \: positive}{true \: positive + false \: negative}$$  
+ \item  \textbf{F-measure}: combina precision e recall:
+  \begin{align*}
+	F_{\beta} &= \frac{(1+\beta)^2\pi\rho}{\beta^2\pi + \rho} \\
+	F_1 &= 2\frac{\pi\rho}{\pi + \rho}
+  \end{align*} 
+\end{itemize}
+ 

@@ -147,28 +147,28 @@ Il che vuol dire che il dataset \emph{N} può essere appreso con un errore empir
 Il massimo numero di punti che possono essere frammentati da \emph{H} è
 detto \emph{VC(H)} e fornisce una misura della capacità di \emph{H}.
 
-\subsection{Bound sull'errore di generalizzazione}\label{bound-sullerrore-di-generalizzazione}
+\subsection{Bound sull'errore di generalizzazione}\label{sec:vcc}
 
 Considerando un problema di apprendimento binario, con:
 
 \begin{align*}
 \text{Training set }S &= \{(x_i,y_i), \ldots (x_N, y_N)\} \\
-\text{Spazio delle ipotes i} H &=\{h_\Theta(x)\} 
+\text{Spazio delle ipotesi } H &=\{h_\theta(x)\} 
 \end{align*}
 
 Supponendo di avere un algoritmo di apprendimento \emph{L} che
-restituisce l'ipotesi $h_{\Theta*}$ che minimizza l'errore empirico su
-\emph{S} espresso come $errore_S(h_\Theta(x))$.
+restituisce l'ipotesi $h_{\theta*}$ che minimizza l'errore empirico su
+\emph{S} espresso come $errore_S(h_\theta(x))$.
 
 È possibile derivare un bound (limite superiore) per l'errore ideale o
 errore di generalizzazione, valido con probabilità \emph{(1 - $\sigma$)} con
 $\sigma$ piccolo a piacere:
 
 $$
-errore_D(h_\Theta(x)) \leq  errore_S(h_\Theta(x)) + g(N, VC(H), \sigma)
+errore_D(h_\Theta(x)) \leq  errore_S(h_{\theta}(x)) + g(N, VC(H), \sigma)
 $$
 
-Il primo termine $errore_S(h_Theta(x))$ dipende dall'ipotesi restituita
+Il primo termine $errore_S(h_{\theta}(x))$ dipende dall'ipotesi restituita
 dall'algoritmo di apprendimento \textit{L}.
 
 Il secondo termine $g(N, VC(H), \sigma)$ non dipende da \emph{L}, ma dal
@@ -179,7 +179,9 @@ confidenza, ovvero dal termine $\sigma$.
 Questo termine viene anche chiamato \textbf{VC-confidence} e risulta essere monotono rispetto al rapporto
 $\frac{VC(H)}{N}$.
 
-\subsection{Structural Risk Minimization (SRM)}\label{structural-risk-minimization-srm}
+\textbf{Morale della favola}: la VC-Dimension sottostima con confidenza $\sigma$ l'errore ideale.
+
+\subsection{Structural Risk Minimization (SRM)}\label{sec:srm}
 
 Approccio per la scelta dello spazio delle ipotesi proposto da Vapnik
 che cerca di trovare un compromesso tra l'errore empirico e la
@@ -188,7 +190,7 @@ VC-Confidence.
 Si considerano spazi delle ipotesi sempre più piccoli $H_1 \subseteq H2 \subseteq \ldots \subseteq H_n$ tali che $ VC(H_1) \leq VC(H_2) \leq \ldots \leq VC(H_n)$
 
 Si seleziona lo spazio delle ipotesi $H_i$ che ha il valore del bound
-sull'errore di generalizzazione più piccolo.
+sull'errore di generalizzazione più piccolo. ovvero la VC-Dimension minore.
 
 \begin{figure}[htbp]
 \centering
