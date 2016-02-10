@@ -1,0 +1,173 @@
+\section{Lezione 14 - Funzioni Kernel}\label{lezione-14---funzioni-kernel}
+
+Dal momento che le funzioni kernel vengono calcolate sulle possibili coppie di vettori, è possibile rappresentare anche come una matrice di dimensione $n \times n$ simmetrica e positiva che prende il nome di \textbf{matrice kernel}.
+
+\subsection{Rappresentazione dei dati con i kernel}\label{rappresentazione-dei-dati-con-i-kernel}
+
+Le funzioni Kernel permettono di andare a definire una serie di metodi
+per l'apprendimento supervisionato.
+
+Ad esempio data una serie di oggetti $S = \{x_1,x_2,.., x_n\}$ può
+essere rappresentata con i Kernel come una funzione
+
+$$
+k : X \times X \rightarrow R
+$$
+
+Cioè una funzione che confronta le varie coppie della serie e le valuta
+utilizzando un numero reale.
+
+Il dataset \emph{S} può essere quindi rappresentato con una matrice
+simmetrica $K_{i,}j = k(x_i,x_j)$ e dal momento che la funzione
+\emph{k} rappresenta un prodotto scalare su un certo spazio, la matrice
+\emph{K} è semi-definita positiva (questa relazione vale in se e solo
+se).
+
+Un kernel semi-definito positivo è una funzione simmetrica $k(x_i,x_j) = k(x_j, x_i)$ tale che, per ogni $n > 0$, $x_1, \ldots, x_n \in S$ e $c_1, \ldots, c_n \in R$:
+
+$$ \sum\limits_{i=1}^n \sum\limits_{j=1}^n c_i c_j k(x_i,x_j) = c^T K c \geq 0$$
+
+\subsubsection{Vantaggi di questa rappresentazione}\label{vantaggi-di-questa-rappresentazione}
+
+La rappresentazione dei dati con matrici kernel ha come vantaggi:
+
+\begin{itemize}
+\tightlist
+\item
+  Lo stesso algoritmo può essere utilizzato per analizzare dati diversi,
+  quindi tutti gli algoritmi \textbf{kernel based} saranno definiti
+  sulla forma della matrice e non specifici per i dati.
+\item
+  La progettazione dei kernel e degli algoritmi è modulare
+\item
+  Risulta più semplice integrare viste diverse di oggetti, non sempre
+  esiste una rappresentazione ottimale dello stesso oggetto, diventa
+  quindi possibile combinare tra loro queste rappresentazioni.
+\item
+  La dimensionalità dei dati dipende solo dal numero di oggetti e non
+  dalla loro dimensione vettoriale.
+\item
+  La comparazione tra oggetti può risultare più semplice rispetto ad una
+  loro esplicita rappresentazione.
+\end{itemize}
+
+\subsubsection{Metodi Kernel}\label{metodi-kernel}
+
+Molti metodi kernel, comprese le SVM possono essere interpretati come
+algoritmi che, dato un insieme di oggetti \emph{S} risolvono un problema
+di minimo di una certa funzione \emph{L} associata al rischio empirico.
+
+$$ min_{f \in H} L(f(x_1),\ldots, f(x_n)) + \bigwedge ||f||_H$$
+
+Si può dimostrare che ognuno di questi problemi ha sempre una soluzione del tipo:
+
+$$ f(x) = w \cdot \phi(x) = \sum\limits_[i=1]^n \alpha_i k(x,x_i)$$
+
+Questa modellazione porta anche ad un vantaggio computazionale se il numero \textit{n} di variabili utilizzato dalla formulazione risulta essere minore del numero di variabili che che devono essere valutate da $\phi(x)$.
+
+\subsubsection{Modularità dei metodi Kernel}\label{modularituxe0-dei-metodi-kernel}
+
+I metodi Kernel possono essere schematizzati in 5 fasi modulari
+
+\begin{enumerate}
+\item
+  Raccolta degli oggetti sui cui fare apprendimento $(x_1,y_1), \ldots, (x_n, y_n))$
+\item
+  Definizione della funzione kernel $k(x_i,x_j)$
+\item
+  Costruzione della matrice \emph{K} di dimensione $n \times n$
+\item
+  Applicazione dell'algoritmo di apprendimento \emph{K} e \emph{Y} per produrre il predittore, che può essere un SVM.
+\item
+  Fornire in output il predittore sotto forma di una funzione.
+\end{enumerate}
+
+\subsection{Kernel Trick}\label{kernel-trick}
+
+Ogni algoritmo per i dati vettoriali che può essere espresso in termini
+del prodotto scalare tra vettori può essere implicitamente eseguito nello
+spazio delle feature associato ad un determinato kernel, rimpiazzando i
+prodotti scalari con valutazioni kernel.
+
+Alcuni esempi sono:
+\begin{enumerate}
+\item
+  Kernelizzazione di metodi lineari o basati su distanze, come il
+  Perceptron e K-NN.
+\item
+  Applicazione di algoritmi definiti su vettori a dati non vettoriali,
+  utilizzando dei kernel definiti per dati non vettoriali.
+\end{enumerate}
+
+Ad esempio K-NN può utilizzare i kernel per calcolare la distanza tra
+due vettori.
+
+\begin{align*}
+d(x,z) &= ||\phi(x) - \phi(z)|| \\
+          &= *magic* \\
+          &= \sqrt{k(x,x) + k(z,z) - 2k(x,z)}
+\end{align*}
+
+\subsection{Tipologie di Kernel}\label{tipologie-di-kernel}
+
+Per \textbf{vettori} si possono utilizzare come kernel:
+
+\begin{itemize}
+\item
+  \textbf{lineare}: $k(x,z) = x \cdot z$
+\item
+  \textbf{polinomiale}: $k(x,z) = (x \cdot z + c)^d$
+\item
+  \textbf{gaussiano} (RBF): $k(x,z) = exp(-\gamma||x-z||^2)$, ha la
+  caratteristica di essere sempre compreso tra 0 e 1.
+\end{itemize}
+
+Il fatto che il kernel sia sempre maggiore di 0, implica che i due
+vettori sono nello stesso ottante (tra i due vettori c'è un angolo
+minore di 90°).
+
+Se \emph{k(x,x)} è uguale a 1 si dice che il kernel è
+\textbf{normalizzato}, ovvero tutti i vettori del feature space sono
+normalizzati. La matrice kernel definita con un kernel normalizzato ha
+tutti 1 nella diagonale.
+
+È sempre possibile normalizzare un kernel \emph{k(x,z)} dividendolo per
+la $\sqrt{k(x,x) \cdot k(z,z)}$
+
+Come kernel per le \textbf{stringhe} si possono contare tutte le
+sequenze di una cerca lunghezza e costruire un vettore delle feature
+delle occorrenze, questo si fa con le tecniche di programmazione
+dinamica.
+
+Per gli alberi si possono utilizzare delle tecniche analoghe,
+considerando i sotto alberi in comune.
+
+C'è un libro \textit{Kernel Methods for Pattern Analysis} che spiega
+molto bene questa tecnica.
+
+\subsection{Operazioni sui Kernel}\label{operazioni-sui-kernel}
+
+Una combinazione lineare positiva di kernel è anch'essa un kernel, quindi
+
+$$
+k(x,z) = \alpha k_1(x,z) + \beta k_2(x,z)
+$$
+
+Se una sequenza di kernel converge puntualmente ad una funzione
+\emph{f}, allora anche \emph{f} è un kernel.
+
+Ma c'è di più, i kernel possono essere tra loro composti per ottenere
+altri kernel.
+
+Tutto questo si può andare a combinare per ottenere un kernel migliore.
+Dato un insieme \emph{S} di kernel si può definire
+
+$$
+k(x,z) = \sum\limits_{S=1}^Q \mu_S k_S(x,z)
+$$
+
+Dove $\mu$ è un vettore tale che $\sum\limits_{S=1}^Q \mu_S = 1$.
+
+Questa è l'idea alla base del \textbf{Multiple Kernel Learning}, cioè definire degli algoritmi per
+apprendere i valori di $\mu_S$ della combinazione in modo da migliorare le
+prestazioni di una SVM usando il kernel combinato al posto dei kernel individuali.
