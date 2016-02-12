@@ -1,0 +1,109 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = apprendimento_automatico.tex
+% !TEX spellcheck = it-IT
+
+\section{Lezione 16 - Naive Bayes}
+
+Questa tipologia di classificatore risulta essere una delle tecniche più semplici e popolari, che in alcuni casi fornisce delle prestazioni simili a quello offerte dalle reti neurali e SVM.
+
+Conviene utilizzare questo classificatore quando:
+
+\begin{itemize}
+	\item Si ha a disposizione un elevato numero di dati;
+	\item Gli attributi che descrivono le istanze sono condizionalmente indipendenti data la classificazione.
+\end{itemize}
+
+Il caso d'uso più famoso per questo classificatore è la categorizzazione di documenti testuali basata sulla frequenza delle parole.
+
+\subsection{Funzionamento del classificatore}
+
+Si ha a disposizione un training set composto da $(x_i, y_i)$, dove $x_i$ sono le istanze sulle quali fare apprendimento e $y_i$ è l'etichetta dell'istanza.
+
+Ogni istanza $x_i$ è descritta da una tupla di attributi $<a_1, \ldots, a_n$ e le possibili etichette $y_i$ sono dei valori $v_j \in V$.
+
+La funzione che si vuole apprendere è quindi $f :  X \rightarrow V $ e questo viene fatto ritornando l'etichetta più probabile:
+
+$$
+v_{MAP} = argmax_{v_j in V} P(v_j | a_1 , \ldots, a_n)
+$$ 
+
+ovvero l'etichetta che ha probabilità a posteriori maggiore data la descrizione dell'esempio.
+
+Utilizzando la regola di Bayes si ottiene:
+
+\begin{align*}
+v_{MAP}  &= argmax_{v_j in V}\frac{ P( a_1 , \ldots, a_n | v_j)P(v_j)}{P( a_1 , \ldots, a_n)} \\
+				&= argmax_{v_j in V} P( a_1 , \ldots, a_n | v_j)P(v_j)
+\end{align*}
+
+Il classificatore Naive Bayes assume che i valori degli attributi di una determinata istanza sono tra loro condizionalmente indipendenti data la classificazione, ovvero
+
+$$
+P(a_1,\ldots, a_n | v_j) = \prod_i P(a_i | v_j)
+$$
+
+con questa ipotesi il classificatore naive di Bayes diventa:
+
+$$ 
+v_{NB} = argmax_{v_j \in V} P(v_j)\prod_i P(a_i | v_j)
+$$
+
+\subsection{Apprendimento del classificatore}
+
+L'apprendimento del classificatore consiste nello stimare i valori per $P(v_j)$ e $P(a_i | v_j)$ ed è possibile farlo andando a contare le occorrenze all'interno del training set.
+
+\begin{enumerate}
+	\item Per ogni valore target $v_j$:
+		\begin{enumerate}
+			\item $\hat{P}(v_j) \leftarrow$ stima di $P(v_j)$
+			\item Per ogni valore $c_k$ di ogni attributo $a_i$:
+				\begin{enumerate}
+					\item $\hat{P}(c_k | v_j) \leftarrow$ stima di $P(c_k | v_j)$
+				\end{enumerate}
+		\end{enumerate}
+\end{enumerate}
+
+La classificazione viene poi effettuata usando le probabilità stimate.
+
+Rispetto agli altri algoritmi di apprendimento finora visti, non viene effettuata una ricerca nello spazio delle ipotesi, ma viene costruita stimando le probabilità delle varie etichette.
+
+
+\subsection{Considerazioni aggiuntive}
+
+L'assunzione dell'indipendenza condizionale utilizzata dal Naive Bayes non sempre viene rispettata, tuttavia questo non influisce sulle prestazioni del classificatore.
+
+Oltretutto, le stime effettuate utilizzando il training set non è necessario che siano precise, basta che valga la relazione:
+
+$$ 
+argmax_{v_j \in V} \hat{P}(v_j)\prod_i \hat{P}(a_i | v_j) = argmax_{v_j \in V} P(v_j)\prod_i P(a_i | v_j)
+$$
+
+Durante la stima delle probabilità può succedere che nessun esempio del training set sia classificato con l'etichetta $v_j$ ed abbia l'attributo $a_i = c$.
+Se questo succede, la probabilità a posteriori stimata risulta essere 0 e la classificazione $v_j$ risulterà essere sempre improbabile.
+
+$$ \hat{P}(c | v_j) = 0 \text{ e } \hat{P}(v_j)\prod_i \hat{P}(a_i | v_j) = 0$$
+
+Una soluzione tipica è quella di andare a prendere in considerazioni degli \textbf{esempi virtuali} che non compaiono nel training set, ovvero:
+
+$$
+\hat{P}(c | v_j) = \frac{n_k + mp}{n +m}
+$$
+
+dove:
+
+\begin{itemize}
+	\item $n$ è il numero di esempi di apprendimento con $v = v_j$;
+	\item $n_k$ è il numero di esempi di apprendimento con $v = v_j \text{ e } a_i = c$;
+	\item $m$ è il numero di esempi virtuali, detto anche \textbf{equivalent sample size};
+	\item $p$ è una stima per la probabilità $\hat{P}(c | v_j)$ nota a priori, che può essere influenza da delle conoscenze sul dominio oppure può essere uniforme per tutti i possibili valori dell'attributo.
+\end{itemize}
+
+
+
+
+
+
+
+
+

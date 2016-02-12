@@ -1,0 +1,209 @@
+\section{Lezione 15 - Apprendimento Bayesiano}\label{lezione-15---apprendimento-bayesiano}
+
+Si tratta di algoritmi di apprendimento basati sulla probabilità e sul
+teorema di Bayes che effettuano la classificazione utilizzando l'ipotesi che
+più probabilmente approssima la funzione target, scegliendola da un'insieme di funzioni $H$.
+
+\subsection{Scelta delle ipotesi}\label{scelta-delle-ipotesi}
+
+Tutto si basa sulla formula di Bayes.
+
+$$
+P(h | D) = \frac{P(D!h)P(h)}{P(D)}
+$$
+
+Dove:
+
+\begin{itemize}
+\item $P(h)$ è la probabilità a priori che l'ipotesi \textit{h} sia corretta e rispecchia la conoscenza a priori che si ha sul dominio;
+\item $P(D)$ è la probabilità a priori che vengano osservati i dati \textit{D};
+\item $P(h|D)$ è la probabilità che l'ipotesi \textit{h} sia corretta per i dati \textit{D};
+\item $P(D|h)$ è la probabilità che i dati \textit{D} vengano classificati correttamente da \textit{h} \end{itemize}
+
+L'obiettivo è quello di massimizzare \emph{P(h\textbar{}D)}, sapendo
+\emph{P(D\textbar{}h)} che viene fornito dal supervisore e \emph{P(h)}
+che viene appresa.
+
+Nel massimizzare si può tralasciare il termine \emph{P(D)} dal momento
+che è sempre costante.
+
+$$
+h_{MAP} = argmax_{h \in H} P(D|h)P(h)
+$$
+
+$H_{MAP}$ prende il nome di \textbf{ipotesi massima a posteriori}.
+
+Si può inoltre assumere che tutte le ipotesi \emph{h} abbiano la stessa probabilità a priori, e nel mondo reale questa assunzione è tipicamente corretta, il
+problema di massimizzazione diventa:
+
+$$
+h_{ML} = argmax_{h \in H} P(D|h)
+$$
+
+In questo caso si sceglie l'ipotesi di \textbf{maximum likelihood}
+
+A pagina 158 del Mitchel c'è un esempio che mette in evidenza come le
+probabilità a priori influenzino il risultato.
+
+\subsection{Brute Force MAP Learning (interpretazione Find-S)}\label{brute-force-map-learning-interpretazione-find-s}
+
+L'apprendimento dell'ipotesi massima avviene adattando l'algoritmo Find-S per l'apprendimento di concetti.
+
+Si assumono fissate le istanze $x_1, \ldots, x_n$ e \textit{D} essere l'insieme dei valori desiderati $D = \{ c(x_1), \ldots, c(x_n)\}$.
+
+Considerando inoltre tutte le ipotesi equiprobabili: $P(h) = \frac{1}{|H|}$, si ha che:
+
+$$
+P(D|h) = 
+	\begin{cases}
+		1,& \text{ se \textit{h} è consistente con \textit{D}} \\
+		0,& \text{ altrimenti }
+	\end{cases}
+$$
+
+L'algoritmo di apprendimento risulta quindi essere:
+
+\begin{enumerate}
+\item Per ogni potesi $h \in H$ calcola $P(h|D)$;
+\item Scegli l'ipotesi che massimizza $P(h|D)$.
+\end{enumerate}
+
+Se i dati di apprendimento sono senza rumore e se la funzione target è contenuta nello spazio delle ipotesi \textit{H}, è possibile calcolare \emph{P(h\textbar{}D)} applicando la regola di Bayes, in particolare:
+
+$$
+P(h|D) = 
+	\begin{cases}
+		\frac{1}{|VS_{H,D}|},& \text{ se \textit{h} è consistente con \textit{D}} \\
+		0,& \text{ altrimenti }
+	\end{cases}
+$$
+
+Quindi se tutte le ipotesi \emph{h} sono equiprobabili, allora qualsiasi
+ipotesi presente in \emph{H} va bene con probabilità $\frac{1}{VS_{H,D}}$, dove $VS_{H,D}$ è un sottoinsieme di \textit{H} consistente con \textit{D}.
+
+Con questa definizione, tutte le ipotesi consistenti hanno probabilità $\frac{1}{VS_{H,D}}$ e tutte quelle non consistenti hanno probabilità \textit{0}, pertanto tutte le ipotesi consistenti possono essere delle $h_{MAP}$.
+
+Segue anche che l'algoritmo Find-S ritorna sempre $h_{MAP}$ anche se non vengono utilizzate esplicitamente le probabilità.
+
+Se vengono cambiate le probabilità in modo che la probabilità di
+un'ipotesi più specifica sia più alta si ottiene che
+\emph{P(h\textbar{}D) = P(h)}.
+
+\subsection{Apprendimento di una funzione (ML)}\label{apprendimento-di-una-funzione-ml}
+
+Si vuole apprendere una funzione $f$ a valori reali, utilizzando come esempi di apprendimento $(x_i, d_i)$ dove il valore target $d_i$ può contenere del rumore:
+
+$$
+d_i = f(x_i) + e_i
+$$
+
+dove $e_i$ è l'errore che segue una probabilità gaussiana con media 0 di
+cui non si conosce la varianza.
+
+Però si vuole valutare l'errore come se al posto di \emph{f} (che è sconosciuta) ci fosse \emph{h}
+
+$$
+e_i = d_i - h(x_i)
+$$
+
+La probabilità di $P(d_i | h)$, cioè che l'ipotesi \emph{h}
+classifichi correttamente $d_i$ segue la distribuzione guassiana di
+$e_i$.
+
+Dalla definzione di ipotesi \textit{maximum likelihood} si ottiene che l'ipotesi $h_{ML}$ è anche quella che minimizza il quadrato degli errori:
+
+\begin{align*}
+h_{ML} &= argmax_{h \in H} P(D|h) \\
+				&=  argmax_{h \in H} \prod\limits_{i=1}^m p(d_i|h) \\
+				&= *\textit{gauassia di } e_i \textit{, logaritmi e altra math-magic*}\\
+				&= arg min_{h \in H} \sum\limits_{i = 1}^m (d_i - h(h_i))^2
+\end{align*}
+
+Quindi per trovare l'ipotesi \textbf{maximum likelihood} è necessario
+minimizzare l'errore quadratico, sotto l'ipotesi che la probabilità di
+ogni ipotesi è uniforme e assumendo che i dati di apprendimento $d_i$ contengano del rumore che segue la distribuzione guassiana con media 0.
+
+L'ipotesi \textit{MAP} coincide con l'ipotesi \textit{ML} solo se tutte le ipotesi hanno probabilità uniforme.
+
+C'è anche da tenere in considerazione che questo approccio assume del rumore solamente nei dati $d_i$ e non dei vari $x_i$.
+
+\subsection{Ipotesi MDL}
+
+La scelta di questa ipotesi segue il principio del rasoio di Occam:``\textit{scegli la spiegazione più semplice per i dati osservati}'', ovvero sceglie l'ipotesi:
+
+$$
+h_{MDL} = argmin_{h \in H} L_{C_1}(h) + L_{C_2}(D|H)
+$$
+
+dove $L_C(x)$ è la lunghezza della descrizione di \textit{x} nella codifica \textit{C}.
+
+Ad esempio, sfruttando la teoria dell'informazione è possibile utilizzare:
+
+\begin{itemize}
+\item $L_{C_1}(h) = - log_2(P(h))$
+\item $L_{C_2}(D|h) = - log_2(P(D|h))$
+\end{itemize}
+
+Con questa codifica si ottiene che
+
+\begin{align*}
+h_{MDL} 	&= argmin_{h \in H} L_{C_1}(h) + L_{C_2}(D|H) \\
+				&= argmin_{h \in H} - log_2(P(h)) - log_2(P(D|h)) \\
+				&= argmax_{h \in H} P(D|h)P(h) \\
+				&= h_{MAP}
+\end{align*}
+
+Ovvero che \textit{MDL} coincide con \textit{MAP}.
+
+L'idea alla base di questo approccio è quella di effettuare un trade-off tra la complessità dell'ipotesi e il numero di errori commessi. L'ipotesi \textit{MDL} commette più errori sui dati di apprendimento a causa della sua brevità, ma ciò può essere visto come una limitazione dell'overfitting.
+
+\subsection{Classificazione}\label{classificazione}
+
+Finora abbiamo cercato l'ipotesi più probabile per i dati \emph{D}
+($h_{MAP}$), ma dato un nuovo esempio, qual'è la classificazione più
+probabile? Non sempre l'idea migliore è quella di calcolare $h_{MAP}(x)$.
+
+Supponiamo di avere 3 ipotesi tali che: \emph{P($h_1$\textbar{}D)=0.4},\emph{P($h_2$\textbar{}D)=0.3},
+\emph{P($h_3$\textbar{}D)=0.3} e che data una nuova istanza \emph{x} può si ottiene \emph{$h_1$(x) = (+)} e \emph{$h_2$(x) = $h_3$(x) = (-)}. 
+
+In questo caso $h_{MAP}$, ovvero $h_1$, fornisce come classificazione $(+)$, anche se la classificazione più probabile è $(-)$.
+
+Il \textbf{classificatore ottimo di Bayes} si basa su questo principio e classifica una nuova istanza $x$ con l'etichetta:
+
+$$
+v_x = argmax_{v_j \in V} \sum\limits_{h_i \in H} P(v_j | h_i)P(h_i | D)
+$$
+
+Dove:
+
+\begin{enumerate}
+\item $V$ è l'insieme di tutte le possibili classi
+\item $
+P(v_j | h_i) = 
+	\begin{cases}
+		1,& \text{ se } h_i(x) = v_j \\
+		0,& \text{ altrimenti }
+	\end{cases}
+$
+\end{enumerate}
+
+Utilizzando lo stesso spazio delle ipotesi e la stessa conoscenza a priori, nessun altro classificatore riesce a superare il classificatore ottimo di Bayes.
+
+Tuttavia, ad ogni classificazione è necessario calcolare la classificazione effettuata da ogni ipotesi $h_i$ e questo può essere computazionalmente oneroso al crescere del numero di ipotesi.
+
+\subsection{Classificatore di Gibbs}\label{classificazione-di-gibbs}
+
+Un'alternativa sub-ottima al classificatore di Bayes è data dall'algoritmo di Gibbs:
+
+\begin{enumerate}
+\item Sceglie un'ipotesi $h$ a caso, secondo $P(h|D)$,
+\item utilizza l'ipotesi scelta per classificare l'istanza.
+\end{enumerate}
+
+Il classificatore così ottenuto è semplice da calcolare e funziona sorprendentemente bene dal momento che l'errore medio che compie è minore del doppio dell'errore effettuato dal classificatore ottimo:
+
+$$
+E[errore_{Gibbs}] \leq 2E[errore_{BayesOttimo}]
+$$
+
+Sempre assumendo probabilità a priori uniforme per tutte le ipotesi del version space.

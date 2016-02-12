@@ -6,6 +6,8 @@
 **/*.pdf
 **/*.new
 **/*.dvi
+**/*.fdb_latexmk
+**/*.fls
 *~
 **/*.asta.lock
 **/*.bak
