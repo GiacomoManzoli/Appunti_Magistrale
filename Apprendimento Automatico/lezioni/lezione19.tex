@@ -1,0 +1,281 @@
+\section{Lezione 19 - Sistemi di
+raccomandazione}\label{lezione-19---sistemi-di-raccomandazione}
+
+Quando Facebook suggerisce gli amici, quando Amazon suggerisce dei
+prodotti e quando Youtube suggerisce dei video, viene utilizzato un
+sistema di raccomandazione.
+
+\subsection{Organizzazione di un RS}\label{organizzazione-di-un-rs}
+
+C'è un sistema di \textbf{esplict feedback} in cui l'utente si esprime in modo
+quantitativo:
+
+\begin{itemize}
+\item
+  valutazione da 1 a 5 o con stelle
+\item
+  un ordinamento dal preferito al meno favorito
+\item
+  preferenze su coppie di oggetti
+\end{itemize}
+
+Tutte queste valutazione sono intrusive e richiedono l'interazione
+dell'utente.
+
+Il sistema può sennò basarsi su \textbf{implicit feedback}:
+
+\begin{itemize}
+\item
+  elenco dei prodotti che l'utente ha visto/comprato
+\item
+  tempo di permanenza in una data pagina del sito
+\item
+  rete sociale dell'utente
+\end{itemize}
+
+In questo caso non c'è un responso esplicito delle preferenze
+dell'utente ma vengono usati dei valori impliciti, ad esempio si può
+presupporre che se l'utente sta molto in una pagina web, questa gli
+interessa. 
+Il vantaggio del feedback implicito è che non viene richiesto
+direttamente all'utente, ma viene calcolato.
+
+\subsection{Approcci per la raccomandazione}\label{approcci-per-la-raccomandazione}
+
+Ci sono 2 approcci principali per questi sistemi:
+
+\begin{itemize}
+\item
+  \textbf{Content based}: dato un utente sul quale si vuole fare
+  predizione e si conosce già il suo storico (di acquisti) e gli si va a
+  proporre dei prodotti simili secondo qualche categoria (autore,
+  genere, ecc.).
+\item
+  \textbf{Collaborative filtering}: si va a raccomandare all'utente gli oggetti
+  più simili a quelli che piacciono ad altri utenti simili a lui.
+  L'idea è che se un item piace a degli utenti simili all'utente target,
+  è più probabile che piaccia anche al target. La similarità tiene conto
+  delle interazioni tra utenti e item.
+
+  \begin{itemize}
+  \item
+    \textit{Similarità item-item}: due oggetti sono simili se tendono ad ottenere
+    lo stesso rate da parte degli utenti
+  \item
+    \textit{Similarità user-user}: due utenti sono simili se tendono a dare lo
+    stesso rate ad item simili.
+  \end{itemize}
+\end{itemize}
+
+C'è da notare che i sistemi di raccomandazione prendono in considerazione solamente le preferenze degli utenti, senza tenere conto delle caratteristiche dei vari oggetti.
+
+Il content based risulta migliore quando c'è poco storico (\textbf{cold
+start problem}), ovvero quando ho troppo poche informazioni relative
+alle interazioni tra l'utente e gli oggetti.
+
+Il collaborative filtering va di gran lunga meglio del content based
+quando le informazioni implicite contenute sulle interazioni tra
+l'utente e gli oggetti diventano prevalenti rispetto alle informazioni
+sugli oggetti. 
+
+Questo perché permette di scoprire nuovi pattern molto
+più potenti rispetto a quelli che si possono definire sulle
+caratteristiche degli oggetti (ad esempio: suggerire canzoni dello
+stesso artista).
+
+\subsection{Rating Matrix}\label{rating-matrix}
+
+I sistemi di raccomandazione si basano sun un \textbf{Rating Matrix}, ovvero una matrice che ha come righe gli utenti e come colonne i vari item. 
+Le celle della matrice contengono la valutazione dell'utente per il dato
+item.
+
+Nei casi reali queste matrici sono molto sparse, tipicamente 0.1\% dei
+valori presenti.
+
+C'è poi un'altra sfiga, l'\textbf{effetto long tail}: per pochi utenti
+saranno presenti tanti rate e, allo stesso modo, per pochi prodotti ci saranno tanti rate.
+Ovvero ci sono poche righe che hanno tanti elementi e tante righe che
+hanno pochi elementi. Lo stesso vale anche per le colonne.
+
+\subsection{Problemi di predizione}\label{problemi-di-predizione}
+
+Ci sono due problemi tipici:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Rate prediction}: si vuole predirre il rate per un item che
+  non è stato valutato (tipico del rate esplicito).
+\item
+  \textbf{Item top-n recommendation}: ordinamento degli item in funzione
+  del gradimento che l'utente potrebbe avere (tipico del rate implicito).
+\end{itemize}
+
+Un esempio del secondo problema è \textbf{Million Song Dataset}, una
+sfida di kaggle che consisteva nel predirre quali canzoni avrebbero
+ascoltato degli utenti, avendo a disposizione lo storico degli ascolti
+di un gran numero di utenti e metà dello storico degli utenti per i
+quelli si vuole fare la predizione.
+
+\subsubsection{Metodi per Collaborative
+filtering}\label{metodi-per-collaborative-filtering}
+
+\begin{itemize}
+\item
+  \textbf{Rate Prediction} (problema di regressione): Matrix
+  Factorization, ovvero si apprende una rappresentazione per gli utenti
+  e per gli items in modo che il loro prodotto scalare approssimi i
+  rates presenti.
+\end{itemize}
+
+$$
+\hat{R} = W V
+$$
+dove:
+\begin{itemize}
+\item
+  $R'$ è la matrice approssimata
+\item
+  $W$ è una matrice \textit{NumeroUtenti x m}
+\item
+  $V$ è una matrice \textit{m x NumeroItem}
+\end{itemize}
+
+
+\begin{itemize}
+\item
+  \textbf{Top-N recomendation} (problema di ranking): Matrix
+  Factorization su preferenze, ovvero dato un utente si vuole stimare
+  come l'utente valuterebbe gli item per i quali non ha ancora espresso una valutazione. Gli item vengono quindi visti come gli esempi e gli si vuole
+  dare una classe (l'utente) e li si vuole ordinare in base a quanto
+  quella classificazione è probabile. C'è un problema con il trattamento
+  dei dati mancanti, perché la mancanza di un rating da parte
+  dell'utente non deve essere interpretata come negativa, ma come
+  ignoranza. Il problema è quindi sbilanciato dal momento che non si
+  hanno informazioni riguardo a che cosa non piace all'utente.
+\end{itemize}
+
+\subsection{Valutazione dei RS}\label{valutazione-dei-rs}
+
+Nel caso del rating esplicito si può utilizzare \textbf{RMSE} (root mean
+square error), lo scarto quadratico medio degli errori commessi
+dall'approssimazione. Si tratta della misura più popolare per questi
+problemi.
+
+$$
+RMSE = \sqrt{\frac{1}{|R_{te}|} \sum_{(u,i) \in R_{te}} (r_{ui} - \hat{r}_{ui})^2}
+$$
+
+Nel caso di top-N ci sono:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{AUC} (Area Under ROC curve): proporzione di coppie di items
+  correttamente ordinate. Ovvero per ogni coppia di item controllo
+  quanti sono ordinati male, proporzionati sul numero di confronto. Il
+  caso ottimo ha AUC uguale a 1. Questa misura viene calcolata su tutto
+  l'ordinamento.
+\item
+  \textbf{prec@n}: precisione ottenuta sui primi \emph{n} item ordinati,
+  una specie di AUC limitato ai primi \emph{n} elementi.
+\end{itemize}
+
+\subsection{Collaborative filtering - la matematica}\label{collaborative-filtering-la-matematica}
+
+\subsubsection{MatrixFactorization e
+regressione}\label{matrixfactorization-e-regressione}
+
+$$
+r_{ui} = \vec{x}_{u}^t\vec{y}_i
+$$
+
+L'algoritmo di apprendimento tenta quindi di ottimizzare x e y in modo
+da minimizzare l'errore al quadrato sommato alla norma al quadrato di $\vec{x}_u$
+o $\vec{y}_i$.
+
+$$ 
+min_{\vec{x}_u}\sum_{i \in R(u)} | r_{ui} - \vec{x}_{u}^t\vec{y}_i |^2 + \beta_u ||\vec{x}_u ||^2
+$$
+
+$$
+min_{\vec{y}_i}\sum_{u \in R(i)} | r_{ui} - \vec{x}_{u}^t\vec{y}_i |^2 + \beta_i ||\vec{y}_i ||^2
+$$
+
+Il problema di minimizzazione non è convesso, quindi o $\vec{x}_u$ o  $\vec{y}_i$ deve
+essere fissato.
+
+L'approccio tipico è quello di inizializzare a caso  $\vec{y}_i$ e fissarlo, per
+poi minimizzare su $\vec{x}_u$, una volta raggiunto il minimo, si fissa $\vec{x}_u$ e si
+minimizza per $\vec{y}_i$, e via così finché non si raggiunge la precisione
+desiderata.
+
+La minimizzazione viene quindi effettuata utilizzando la discesa di gradiente.
+
+\subsubsection{Neirest Neightbors based
+CF}\label{neirest-neightbors-based-cf}
+
+Per stimare il rate dell'utente \emph{u} per i vari item \textit{i} si fa la media pesata dei rate
+dati dagli utenti che sono più simili all'utente \emph{u}. C'è anche il
+reciproco per gli item.
+
+\begin{align*}
+\hat{r}_{ui} &= \frac{\sum_{v \in R(i)} \vec{w}_{uv} r_{vi}}{\sum_{v \in R(i)} \vec{w}_{uv}} \qquad \text{ stima per l'utente }  u \\
+\hat{r}_{ui} &= \frac{\sum_{j \in R(u)} \vec{w}_{ij} r_{uj}}{\sum_{j \in R(u)} \vec{w}_{ij}} \qquad \text{ stima per l'item } i
+\end{align*}
+
+$$
+\vec{w}_{uv} = \frac{|I(u) \cap I(v) |}{|I(u)|^{\frac{1}{2}} |I(v)|^{\frac{1}{2}} } \qquad \vec{w}_{ij} = \frac{|U(i) \cap U(j) |}{|U(i)|^{\frac{1}{2}} |U(j)|^{\frac{1}{2}} } 
+$$
+
+dove:
+
+\begin{itemize}
+	\item $U(i)$ è l'insieme di utenti che hanno comperato l'oggetto \textit{i}
+	\item $I(u)$ è l'insieme di oggetti comperati dall'utente \textit{u}
+\end{itemize}
+
+La misura che si usa di più è la \textbf{similirtà coseno}, dove per coseno si intende il coseno definito tra due vettori.
+
+L'idea è di prendere un vettore per ogni utente di lunghezza pari alla
+cardinalità dell'insieme degli item e di mettere a 1 tutti gli elementi
+del vettore che corrispondo ad un item che è stato valutato.
+
+In questo modo, facendo il prodotto scalare tra due vettori utenti, il
+risultato è il numero di elementi in comunque, in questo caso quanti
+item sono stati valutati dai due utenti. Mentre facendo la radice della
+norma di \ldots{}
+
+Le formule delle slide ragionano ad insiemi, quanto detto sopra e fatto
+alla lavagna è espresso in vettori, il punto è che sono la stessa cosa.
+
+Lo stesso ragionamento può essere fatto per gli item in funzione degli
+utenti.
+
+\subsection{Link prediction}\label{link-prediction}
+
+Altro argomento correlato ai RS.
+
+Si ha a disposizione un grafo, con tutti i nodi noti e alcuni archi, si
+vuole riuscire a predirre se ci saranno dei nuovi archi tra questi nodi
+in base alla struttura nota del grafo.
+
+Tipicamente questo problema viene ri-mappato su un problema di
+ranking/classificazione.
+
+Ogni possibile arco può essere rappresentato come un insieme di feature
+che possono essere usate per fare predizione con:
+
+\begin{itemize}
+\item
+  Common Neighbours
+\item
+  Jaccard o altre misure di correlazione
+\item
+  Analisi dei path esistenti tra due nodi (come il PageRank)
+\item
+  ecc.
+\end{itemize}
+
+La differenza con un problema di raccomandazione sta nel come vengono
+calcolate le feature.
