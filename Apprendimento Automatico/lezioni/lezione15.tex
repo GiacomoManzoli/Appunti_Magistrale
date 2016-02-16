@@ -9,7 +9,7 @@ più probabilmente approssima la funzione target, scegliendola da un'insieme di 
 Tutto si basa sulla formula di Bayes.
 
 $$
-P(h | D) = \frac{P(D!h)P(h)}{P(D)}
+P(h | D) = \frac{P(D|h)P(h)}{P(D)}
 $$
 
 Dove:
@@ -114,7 +114,7 @@ Dalla definzione di ipotesi \textit{maximum likelihood} si ottiene che l'ipotesi
 
 \begin{align*}
 h_{ML} &= argmax_{h \in H} P(D|h) \\
-				&=  argmax_{h \in H} \prod\limits_{i=1}^m p(d_i|h) \\
+				&=  argmax_{h \in H} \prod\limits_{i=1}^m P(d_i|h) \\
 				&= *\textit{gauassia di } e_i \textit{, logaritmi e altra math-magic*}\\
 				&= arg min_{h \in H} \sum\limits_{i = 1}^m (d_i - h(h_i))^2
 \end{align*}

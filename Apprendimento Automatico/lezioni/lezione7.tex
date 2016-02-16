@@ -74,11 +74,10 @@ Lo stesso albero può essere infatti rappresentato come:
 L'algoritmo di apprendimento che costruisce l'albero di decisione
 tramite una procedura top down in stile divide et impera.
 
-Questo algoritmo apprende l'albero di decisioni costruendolo con un
-approccio top-down. La costruzione inizia con la domanda ``\emph{Quale
+La costruzione inizia con la domanda ``\emph{Quale
 attributo dovrebbe essere testato alla radice dell'albero?}''. Per
 scegliere l'attributo vengono valutati tutti i possibili candidati
-utilizzando un test statistico per valutare quando bene il singolo
+utilizzando un test statistico per valutare quanto bene il singolo
 attributo classifica il training set.
 
 Viene selezionato il miglior attributo e utilizzato come test alla
@@ -101,17 +100,17 @@ attributi \emph{A}, algoritmo è definito come:
   Se gli esempi in \emph{T} sono tutti delle stessa classe, ritorna
   l'albero con un solo nodo e etichetta uguale alla classe.
 \item
-  Se \emph{A} è vuoto, ritorna l'lalbero con un solo nodo e come
+  Se \emph{A} è vuoto, ritorna l'albero con un solo nodo e come
   etichetta la classe di maggioranza in \emph{T}.
 \item
   Altrimenti, si sceglie l'attributo \emph{a} tra gli attributi presenti
   in \emph{A} (il migliore) e si partiziona \emph{T} secondo i possibili
-  valori che l'attributo \emph{a} può assumere: $T_a = val_1, \ldots, T_a = val_n$:
+  valori che l'attributo \emph{a} può assumere: $T_a = val_1, \ldots,  T_a = val_n$:
  \begin{enumerate}
   \item
     Per ogni $T_a = val_i$, se è vuoto crea una foglia con
     l'etichetta della classe più frequente in \emph{T}, altrimenti crea un
-    sottoalbero con l'algoritmo ID3 con $T_a = val_i$ e \emph{A -\{}a\emph{\}}.
+    sotto-albero con l'algoritmo ID3 con $T_a = val_i$ e \emph{A -\{}\textit{a}\emph{\}}.
   \end{enumerate}
 \item
   Ritorna \emph{T}.
@@ -186,11 +185,11 @@ ID3 sceglie come attributo \emph{a}, quello che massimizza il guadagno
 entropico.
 
 $$
-G(S,a) = E(S) - \sum_{v \in V(a)} \frac{|S_a = v|}{|S|} E(S_a=v)
+G(S,a) = E(S) - \sum_{v \in V(a)} \frac{|S_{a = v}|}{|S|} E(S_{a=v})
 $$
 
 Il guadagno misura la riduzione aspettata dell'entropia nel partizionare
-i dati utilizzando \emph{a}.
+i dati utilizzando l'attributo \emph{a}.
 
 L'entropia attesa è descritta dal secondo termine ed è semplicemente la
 sommatoria delle entropie di tutti i sottoinsiemi di \emph{S}, pesata
@@ -199,9 +198,11 @@ secondo il numero di esempi che appartengono al sottoinsieme di
 
 \textbf{Problema}: L'utilizzo del guadagno entropico favorisce troppo
 gli attributi che possono assumere tanti valori diversi, ad esempio
-l'attributo \emph{Data}. Seguendo l'esempio della data, scegliere
-quell'attributo porta ad ottenere tante partizioni, ognuna di pochi
+l'attributo \emph{Data}. 
+Scegliere un attributo di questo tipo porta ad ottenere tante partizioni, ognuna di pochi
 elementi e che non forniscono informazioni utili.
+
+Per evitare ciò al posto del guadagno si può utilizzare:
 
 $$
 GainRatio(S, a) = \frac{G(S, a)}{SI(S,a)}
@@ -212,7 +213,7 @@ misura quanti e quanto uniformi sono i sottoinsiemi generati
 dall'attributo \emph{a} a partire dall'insieme \emph{S}.
 
 $$
-SI(S,a) = - \sum_{v \in V(a)}\frac{|S_a = v|}{|S|} log_2(\frac{|S_a = v|}{|S|})
+SI(S,a) = - \sum_{v \in V(a)}\frac{|S_{a = v}|}{|S|} log_2(\frac{|S_{a = v}|}{|S|})
 $$
 
 E corrisponde all'entropia di \emph{S} dati i possibili valori di
@@ -222,7 +223,7 @@ E corrisponde all'entropia di \emph{S} dati i possibili valori di
 attributi significativi e che possono assumere tanti valori vengano
 svantaggiati rispetto al altri.
 
-Un'altra idea può essere quella di calcolare il guadagno \emph{G} per ogni
+L'idea più comunque è quella di calcolare il guadagno \emph{G} per ogni
 attributo e fare la media dei valori trovati, per poi andare a
 scegliere tra gli attributi con \emph{G} sopra la media,
 l'attributo che ha \emph{GainRatio} maggiore.

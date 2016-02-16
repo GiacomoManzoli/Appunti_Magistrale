@@ -34,7 +34,7 @@ rappresentazione influisce sulla misura di similarità.
 
 Serve poi una notazione per la similarità/distanza.
 
-Inoltre c'è il problema di quanti cluster fare, se stabilirlo a priori o
+C'è anche il problema di quanti cluster fare, se stabilirlo a priori o
 sceglierlo in base ai dati, evitando i casi triviali con cluster troppo
 grandi o troppo piccoli.
 
@@ -210,6 +210,8 @@ In base alla misura di similarità l'operazione può essere
 combinazioni di similarità associate a delle operazioni di merge, allora
 $s_1 \geq s_2 \geq \ldots \geq s_{k-1}$
 
+La non monotonicità, ovvero l'aumento della similarità in una serie di merge, contraddice l'assunzione fondamentale che cluster con pochi elementi sono più coerenti di cluster con tanti elementi\footnote{\url{http://nlp.stanford.edu/IR-book/html/htmledition/centroid-clustering-1.html}}.
+
 \subsubsection{HAC - Hierarchical agglormerative
 Clustering}\label{hac---hierarchical-agglormerative-clustering}
 
@@ -230,14 +232,16 @@ Una volta scelta la misura di similarità, questa può essere calcolata per una 
 
 \begin{itemize}
 \item
-  \textbf{single link}: viene calcolata la similiarità tra tutti gli elementi dei due cluster e viene scelto il valore minimo.
+  \textbf{single link}: viene calcolata la similiarità tra tutti gli elementi dei due cluster e viene scelto il valore massimo.
 \item
-  \textbf{complete link}: viene calcolata la similarità tra tutti gli elementi dei due cluster e viene scelto il valore massimo
+  \textbf{complete link}: viene calcolata la similarità tra tutti gli elementi dei due cluster e viene scelto il valore minimo
 \item
   \textbf{centroid link}: viene utilizzata la similarità tra i due centroidi dei due cluster
 \item
   \textbf{average link}: viene calcolata la similarità tra tutti gli elementi dei due cluster e ne viene fatta la media.
 \end{itemize}
+
+Single, complete e average link garantiscono la monotonicità, mentre utilizzando centroid link alcune operazioni di merge potrebbero essere non monotone, ad esempio quando è necessario fare il merge di 3 cluster equidistanti tra loro.
 
 Una volta calcolata la similarità tra tutti i cluster viene scelto il closest pair e viene fatto il merge.
 

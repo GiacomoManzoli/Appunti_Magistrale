@@ -136,7 +136,7 @@ La funzione è continua e compresa tra 0 e 1.
 
 Il vantaggio fondamentale di $\sigma$ è che si tratta di una funzione
 derivabile e quindi permette di utilizzare l'algoritmo di \textbf{back
-propagation}. Un algoritmo che permette di fare apprendimento
+propagation}: un algoritmo che permette di fare apprendimento
 all'indietro in grado di funzionare anche su reti composte da più
 livelli.
 
@@ -151,7 +151,7 @@ $$
 Questa proprietà tornerà utile quando sarà applicato l'algoritmo di back
 propagation.
 
-Infine, il neurone sigmoidale può utilizza altre funzioni come la tangente iperbolica, l'unica condizione
+Infine, il neurone sigmoidale può utilizzare altre funzioni come la tangente iperbolica, l'unica condizione
 è che la derivata della funzione possa essere espressa utilizzando la funzione stessa.
 
 \subsection{Perceptron}\label{perceptron}
@@ -166,7 +166,7 @@ i coefficienti corretti vengono utilizzati gli esempi del training set.
 \subsubsection{Implementazione di funzioni booleane}\label{implementazione-di-funzioni-booleane}
 
 Ad esempio Percepton può implementare l'operatore \emph{or} con gli
-ingressi $\vec{y} \in {0,1}^{n+1}$ (vettori rappresentanti stringhe
+ingressi $\vec{y} \in \{0,1\}^{n+1}$ (vettori rappresentanti stringhe
 binarie), si possono usare come pesi $w_0 = 0.5$ e $w_i = 1$
 per $i = 1 \ldots n$.
 

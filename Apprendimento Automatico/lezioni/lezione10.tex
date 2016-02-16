@@ -28,7 +28,7 @@ locale.
 Si può quindi seguire il segno della derivata prima di una funzione per
 raggiungere un massimo o minimo locale.
 
-Per vedere come funziona la discesa di gradiente conviene considerare un neurone senza Threshold o sigmode, ovvero un neurone che esegue solamente il prodotto scalare tra il vettore dei pesi e degli ingressi.
+Per vedere come funziona la discesa di gradiente conviene considerare un neurone senza Threshold o sigmoide, ovvero un neurone che esegue solamente il prodotto scalare tra il vettore dei pesi e degli ingressi.
 
 La funzione \textit{out} diventa quindi:
 
@@ -98,7 +98,7 @@ Possono essere utilizzate varie condizioni di stop:
 \item
   $E[\vec{w}]$ minore di una soglia prefissata
 \item
-  $\Delta w_i = 0 \forall i$
+  $\Delta w_i = 0 \: \forall i$
 \item
   Il numero di iterazioni ha superato una soglia prefissata.
 \end{itemize}
@@ -124,7 +124,7 @@ La differenza riguarda il calcolo di $\frac{\partial E}{\partial w_i}$ che diven
 \frac{\partial E}{\partial w_i} &= \frac{\partial}{\partial w_i} \frac{1}{2} \sum_{(\vec{x},t) \in Tr} (t - out(\vec{x}))^2 \\
 	&= \text{\textit{*magic*}} \\
 	&= - \sum_{(\vec{x},t) \in Tr} (t - out(\vec{x})) \sigma(\vec{w} \cdot \vec{x})(1-\sigma(\vec{w} \cdot \vec{x}))\cdot x_i \\
-	&= - \sum_{(\vec{x},t) \in Tr} (t - out(\vec{x})) out(\vec{x})  (1-out(\vec{x}) x_i \\
+	&= - \sum_{(\vec{x},t) \in Tr} (t - out(\vec{x})) out(\vec{x})  (1-out(\vec{x})) x_i \\
 \end{align*}
 
 e di conseguenza la formula di aggiornamento per $\Delta w_i$ risulta essere:

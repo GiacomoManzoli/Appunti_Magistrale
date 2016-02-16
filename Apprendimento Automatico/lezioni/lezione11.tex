@@ -125,7 +125,7 @@ Resta da stabilire quale valore utilizzare per \textit{k} e questo viene tipicam
 I parametri di un algoritmo di apprendimento sono i valori che influiscono nell'apprendimento, come i
 vari pesi \emph{w} delle reti neurali. 
 
-Mentre, gli \textbf{iper-parametri} sono tutti gli
+Gli \textbf{iper-parametri} sono tutti gli
 altri parametri che non influiscono con l'apprendimento, come il numero
 di unità nascoste per le reti neurali o il \emph{k} per l'algoritmo
 k-NN.
@@ -176,7 +176,7 @@ Più formalmente:
 In questo modo riesco a calcolare l'\emph{accuracy} per ogni valore del
 iper-parametro e di conseguenza posso scegliere il valore migliore.
 
-Con l'\textbf{accuracy} si intende la proporzione di predizione corrette
+Con l'\textbf{accuracy} si intende la proporzione di predizioni corrette
 effettuate dallo stimatore.
 
 Una volta scelto il valore, tipicamente si ri-effettua l'apprendimento
@@ -191,7 +191,7 @@ L'insieme di apprendimento viene partizionato in \emph{k} parti
 disgiunte. Viene poi eseguito l'apprendimento utilizzando \emph{k-1}
 partizioni e utilizzando la restante partizione per fare validazione.
 L'intero processo di apprendimento viene ripetuto quindi \emph{k} volte,
-utilizzando ogni volta una partizione per la validazione diversa.
+utilizzando ogni volta una diversa partizione per la validazione.
 
 Così facendo per un singolo valore di un iper-parametro si ottengono
 \emph{k} valori di accuracy e si può utilizzare la media di questi valori

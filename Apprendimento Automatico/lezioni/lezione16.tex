@@ -20,12 +20,12 @@ Il caso d'uso più famoso per questo classificatore è la categorizzazione di do
 
 Si ha a disposizione un training set composto da $(x_i, y_i)$, dove $x_i$ sono le istanze sulle quali fare apprendimento e $y_i$ è l'etichetta dell'istanza.
 
-Ogni istanza $x_i$ è descritta da una tupla di attributi $<a_1, \ldots, a_n$ e le possibili etichette $y_i$ sono dei valori $v_j \in V$.
+Ogni istanza $x_i$ è descritta da una tupla di attributi $<a_1, \ldots, a_n>$ e le possibili etichette $y_i$ sono dei valori $v_j \in V$.
 
 La funzione che si vuole apprendere è quindi $f :  X \rightarrow V $ e questo viene fatto ritornando l'etichetta più probabile:
 
 $$
-v_{MAP} = argmax_{v_j in V} P(v_j | a_1 , \ldots, a_n)
+v_{MAP} = argmax_{v_j \in V} P(v_j | a_1 , \ldots, a_n)
 $$ 
 
 ovvero l'etichetta che ha probabilità a posteriori maggiore data la descrizione dell'esempio.
@@ -33,8 +33,8 @@ ovvero l'etichetta che ha probabilità a posteriori maggiore data la descrizione
 Utilizzando la regola di Bayes si ottiene:
 
 \begin{align*}
-v_{MAP}  &= argmax_{v_j in V}\frac{ P( a_1 , \ldots, a_n | v_j)P(v_j)}{P( a_1 , \ldots, a_n)} \\
-				&= argmax_{v_j in V} P( a_1 , \ldots, a_n | v_j)P(v_j)
+v_{MAP}  &= argmax_{v_j \in V}\frac{ P( a_1 , \ldots, a_n | v_j)P(v_j)}{P( a_1 , \ldots, a_n)} \\
+				&= argmax_{v_j \in V} P( a_1 , \ldots, a_n | v_j)P(v_j)
 \end{align*}
 
 Il classificatore Naive Bayes assume che i valori degli attributi di una determinata istanza sono tra loro condizionalmente indipendenti data la classificazione, ovvero

@@ -12,7 +12,7 @@ Nelle precedenti puntate:
   Per ottenere l'iperpiano con margine ottimo è necessario considerare
   l'ipotesi che minimizza la norma di \emph{w}.
 \item
-  Il tutto si fa prima con un polinomio di Lagrange e il suo duale.
+  Il tutto si fa con un polinomio di Lagrange e il suo duale.
 \end{itemize}
 
 \subsection{Dati non separabili linearmente}\label{dati-non-separabili-linearmente}
@@ -20,7 +20,7 @@ Nelle precedenti puntate:
 Tutto quello visto finora funziona se i dati sono linearmente
 separabili.
 
-Nel caso questi non lo siano è necessario aggiungere permettere che alcuni vincoli possano essere violati e per fare ciò vengono introdotte delle nuove variabili $\xi_i \geq 0$, una per ogni vincolo (ovvero per ogni esempio del training set), tale che:
+Nel caso questi non lo siano è necessario permettere che alcuni vincoli possano essere violati e per fare ciò vengono introdotte delle nuove variabili $\xi_i \geq 0$, una per ogni vincolo (ovvero per ogni esempio del training set), tale che:
 
 $$ y_i (\vec{w} \cdot \vec{x}_i + b) \geq 1 - \xi_i $$
 
@@ -74,7 +74,7 @@ Perché dovrei farlo?
   Perché il \textbf{teorema sulla separabilità di Cover} afferma che un problema di classificazione complesso, formulato
   attraverso una trasformazione non lineare dei dati in uno spazio ad
   alta dimensionalità, ha maggiore probabilità di essere linearmente
-  separabile che in uno spazio a bassa dimensionalità).
+  separabile che in uno spazio a bassa dimensionalità.
 \item
   Perché l'iper-piano ottimo minimizza la VC-Dimension e quindi la
   capacità di generalizzazione migliora.
@@ -94,21 +94,21 @@ che se si considera il termine noto $b = w_0$ e si aggiunge $\varphi_0(\vec{x}) 
 
 $$ \sum\limits_{j=0}^M w_j \varphi_j(\vec{x}) = \vec{w} \cdot \vec{\varphi}(\vec{x}) = 0$$
 
-Andando a sostituire il $\vec{w}$ dell'equazione precedente con $ \vec{w} = \sum\limits_{k=1}^n j_k \alpha_k \vec{\varphi}(\vec{x})$ si ottiene:
+Andando a sostituire il $\vec{w}$ dell'equazione precedente con $ \vec{w} = \sum\limits_{k=1}^n j_k \alpha_k \vec{\varphi}(\vec{x}_k)$ si ottiene:
 
 $$ \sum\limits_{j=1}^M w_j \varphi(\vec{x_k}) \cdot \varphi(\vec{x}) = 0 $$
 
-Con il termine $\varphi(\vec{x}) \cdot \varphi(\vec{x})$ rappresenta il prodotto scalare tra un vettore del training set $\vec{x}_k$ e il vettore in input $\vec{x}$ calcolato nello spazio $R^M$.
+Con il termine $\varphi(\vec{x}_k) \cdot \varphi(\vec{x})$ rappresenta il prodotto scalare tra un vettore del training set $\vec{x}_k$ e il vettore in input $\vec{x}$ calcolato nello spazio $R^M$.
 
 \subsection{Funzioni Kernel}\label{funzioni-kernel}
 
 Lo spazio di dimensione superiore serve solo per calcolare il prodotto scalare tra i due vettori, si può quindi definire una funzione $K(\cdot, \cdot)$ che prende il nome di kernel e che calcola il prodotto scalare dei due vettori senza passare esplicitamente nello spazio di dimensione superiore.
 
-$$ K(\vec{x}_k, \vec{x}) = \varphi(\vec{x}) \cdot \varphi(\vec{x})$$
+$$ K(\vec{x}_k, \vec{x}) = \varphi(\vec{x}_k) \cdot \varphi(\vec{x})$$
 
-Assumendo di avere una di queste funzioni, il calcolo del vettore $\vec{w}$ diventa:
+Assumendo di avere una di queste funzioni, l'iper-piano risulta essere:
 
-$$ \vec{w} = \sum\limits_{k=1}^n j_k y_k \alpha_k K(\vec{x}_k, \vec{x}) $$
+$$\sum\limits_{k=1}^n  y_k \alpha_k K(\vec{x}_k, \vec{x}) = 0$$
 
 Per il teorema di Mercer esistono delle funzioni di questo tipo, ma è necessario che soddisfino determinate condizioni.
 

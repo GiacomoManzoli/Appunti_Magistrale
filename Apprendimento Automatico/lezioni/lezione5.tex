@@ -98,21 +98,20 @@ La VC-Dimension è la dimensione di uno spazio delle ipotesi \emph{H}
 definito su uno spazio delle istanze \emph{X} ed è data dalla
 cardinalità del sottoinsieme più grande frammentato da \emph{H}.
 
-\begin{align*}
-VC(H) &= max_{S \subseteq X} |S| \text{ tale che \emph{H} frammenta } S  \\
-&= \infty \text{se S non è limitato}
-\end{align*}
+$$
+VC(H) =
+\begin{cases}
+max_{S \subseteq X} |S|&\text{ tale che \emph{H} frammenta } S  \\
+ \infty& \text{ se S non è limitato}
+\end{cases}
+$$
 
 
-Ad esempio nello spazio delle ipotesi dato dagli iperpiani su $R^2$:
-
-Se nello spazio delle istanze ho 2 punti, questo viene frammentato da
+Ad esempio se nello spazio delle ipotesi dato dagli iperpiani su $R^2$ ho 2 punti, lo spazio delle istanze viene frammentato da
 \emph{H}, perché posso sempre trovare una retta che riesce a realizzare
 tutte le possibili dicotomie di due punti su un piano.
-
 Se nello spazio delle istanze ho 3 punti, riesco comunque a realizzare
 tutte le dicotomie.
-
 Se nello spazio delle istanze ho 4 punti qualsiasi non si riesce a
 trovare un iperpiano che realizza la dicotonomia, quindi \emph{VC(H) =
 3}.
@@ -165,7 +164,7 @@ errore di generalizzazione, valido con probabilità \emph{(1 - $\sigma$)} con
 $\sigma$ piccolo a piacere:
 
 $$
-errore_D(h_\Theta(x)) \leq  errore_S(h_{\theta}(x)) + g(N, VC(H), \sigma)
+errore_D(h_\theta(x)) \leq  errore_S(h_{\theta}(x)) + g(N, VC(H), \sigma)
 $$
 
 Il primo termine $errore_S(h_{\theta}(x))$ dipende dall'ipotesi restituita
@@ -179,7 +178,7 @@ confidenza, ovvero dal termine $\sigma$.
 Questo termine viene anche chiamato \textbf{VC-confidence} e risulta essere monotono rispetto al rapporto
 $\frac{VC(H)}{N}$.
 
-\textbf{Morale della favola}: la VC-Dimension sottostima con confidenza $\sigma$ l'errore ideale.
+\textbf{Morale della favola}: la VC-Dimension sovrastima con confidenza $\sigma$ l'errore ideale.
 
 \subsection{Structural Risk Minimization (SRM)}\label{sec:srm}
 

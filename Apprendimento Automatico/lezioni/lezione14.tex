@@ -7,7 +7,7 @@ Dal momento che le funzioni kernel vengono calcolate sulle possibili coppie di v
 Le funzioni Kernel permettono di andare a definire una serie di metodi
 per l'apprendimento supervisionato.
 
-Ad esempio data una serie di oggetti $S = \{x_1,x_2,.., x_n\}$ può
+Ad esempio data una serie di oggetti $S = \{x_1,x_2, \ldots , x_n\}$ può
 essere rappresentata con i Kernel come una funzione
 
 $$
@@ -18,7 +18,7 @@ Cioè una funzione che confronta le varie coppie della serie e le valuta
 utilizzando un numero reale.
 
 Il dataset \emph{S} può essere quindi rappresentato con una matrice
-simmetrica $K_{i,}j = k(x_i,x_j)$ e dal momento che la funzione
+simmetrica $K_{i,j} = k(x_i,x_j)$ e dal momento che la funzione
 \emph{k} rappresenta un prodotto scalare su un certo spazio, la matrice
 \emph{K} è semi-definita positiva (questa relazione vale in se e solo
 se).
@@ -57,11 +57,11 @@ Molti metodi kernel, comprese le SVM possono essere interpretati come
 algoritmi che, dato un insieme di oggetti \emph{S} risolvono un problema
 di minimo di una certa funzione \emph{L} associata al rischio empirico.
 
-$$ min_{f \in H} L(f(x_1),\ldots, f(x_n)) + \bigwedge ||f||_H$$
+$$ min_{f \in H} L(f(x_1),\ldots, f(x_n)) + \varLambda ||f||_H$$
 
 Si può dimostrare che ognuno di questi problemi ha sempre una soluzione del tipo:
 
-$$ f(x) = w \cdot \phi(x) = \sum\limits_[i=1]^n \alpha_i k(x,x_i)$$
+$$ f(x) = w \cdot \phi(x) = \sum\limits_{i=1}^n \alpha_i k(x,x_i)$$
 
 Questa modellazione porta anche ad un vantaggio computazionale se il numero \textit{n} di variabili utilizzato dalla formulazione risulta essere minore del numero di variabili che che devono essere valutate da $\phi(x)$.
 
@@ -71,13 +71,13 @@ I metodi Kernel possono essere schematizzati in 5 fasi modulari
 
 \begin{enumerate}
 \item
-  Raccolta degli oggetti sui cui fare apprendimento $(x_1,y_1), \ldots, (x_n, y_n))$
+  Raccolta degli oggetti sui cui fare apprendimento $(x_1,y_1), \ldots, (x_n, y_n)$
 \item
   Definizione della funzione kernel $k(x_i,x_j)$
 \item
   Costruzione della matrice \emph{K} di dimensione $n \times n$
 \item
-  Applicazione dell'algoritmo di apprendimento \emph{K} e \emph{Y} per produrre il predittore, che può essere un SVM.
+  Applicazione dell'algoritmo di apprendimento su \emph{K} e \emph{Y} per produrre il predittore, che può essere un SVM.
 \item
   Fornire in output il predittore sotto forma di una funzione.
 \end{enumerate}
