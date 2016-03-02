@@ -23,7 +23,7 @@ Uno o più attributi hanno dei valori continui, escluso il target che
 rimane binario o con un numero discreto di possibili valori.
 
 La soluzione è quella di trasformare dinamicamente un attributo continuo
-\emph{A} nell'attributo booleano $A_c$ in modo che sia true se il
+\emph{A} nell'attributo booleano $A_c$ in modo che sia \texttt{true} se il
 valore di \emph{A} è minore di una certa soglia \emph{c}.
 
 Il tutto sta ne scegliere la soglia \emph{c} migliore cioè che
@@ -68,7 +68,7 @@ Questi casi possono essere trattati in vari modi diversi:
 \item
   Come prima, solo che vengono considerati solamente esempi con target
   uguale a quello dell'esempio corrente (ovviamente devo sapere il
-  valore del target dell'esempio corrente).
+  valore del target).
 \item
   Considerare tutti i valori $a_i$ che può assumere l'attributo e la
   loro probabilità di occorrenza nell'insieme degli esempi associati al
@@ -126,7 +126,7 @@ che ha origine in quel nodo, trasformando il nodo potato in una foglia e
 assegnandogli come valore la classificazione più comune tra gli esempi
 di training associati a quel nodo.
 
-I nodi vengono rimossi solamente se le prestazione dell'albero potato
+I nodi vengono rimossi solamente se le prestazioni dell'albero potato
 non peggiorano rispetto la versione originale, confrontate sul
 validation set.
 
@@ -164,7 +164,7 @@ associati al nodo \emph{n}.
     Si stimano le prestazioni utilizzando solo $R_i$ come
     classificatore
   \item
-    Si rimuovo le precondizioni (una o più) che conducono ad un aumento
+    Si rimuovo le precondizioni $ (Attr_{i} = v_{i_k})$ (una o più) che conducono ad un aumento
     della stima delle prestazioni utilizzando un approccio greedy.
   \end{itemize}
 \item

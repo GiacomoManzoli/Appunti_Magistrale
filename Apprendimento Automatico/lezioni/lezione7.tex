@@ -136,7 +136,7 @@ a = Outlook
 A = Temp, Hum, Wind})
 \end{verbatim}
 
-Al secondo passo mi ritrovo scelgo \texttt{a\ =\ Humidity}, ottenendo:
+Al secondo passo scelgo \texttt{a\ =\ Humidity}, ottenendo:
 
 \begin{verbatim}
                    (Outlook)
@@ -166,7 +166,7 @@ di ID3 vengono utilizzati i concetti di \emph{entropia} e \emph{guadagno
 entropico}.
 
 $$
-E(S) = -p-log_2(p_-) -p+log_2(p_+)
+E(S) = -p_{-}log_2(p_-) -p_{+}log_2(p_+)
 $$
 
 Dove $p_-$ e $p_+$ rappresentano la proporzione degli esempi della di una
@@ -227,3 +227,11 @@ L'idea più comunque è quella di calcolare il guadagno \emph{G} per ogni
 attributo e fare la media dei valori trovati, per poi andare a
 scegliere tra gli attributi con \emph{G} sopra la media,
 l'attributo che ha \emph{GainRatio} maggiore.
+
+Altri criteri che possono essere utilizzati al posto dell'entropia sono:
+
+\begin{itemize}
+	\item \textbf{Variance Impuryty}: $p_- \cdot p_+$
+	\item \textbf{Gini Impurity}: $\sum_{c,c' \in Classi, c\neq c'} \lambda_{c,c'}p_c \cdot p_{c'}$
+	\item \textbf{Missclassification Impurity}: $1 - \max\limits_{c \in Classi} p_c$
+\end{itemize}

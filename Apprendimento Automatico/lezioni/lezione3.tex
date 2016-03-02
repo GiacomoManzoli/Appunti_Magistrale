@@ -166,17 +166,23 @@ Da ciò segue che possono essere commessi due tipi di errori:
   \textbf{Errore empirico}: è l'errore commesso da \emph{h} in media,
   all'interno del training set. In altre parole è l'errore medio
   dell'ipotesi sul training set.
+  $$
+  error_{Tr}(h) = \#\{(x,y) \in Tr \: | \: h(x) \neq y\}
+  $$
 \item
   \textbf{Errore ideale}: è l'errore commesso da \emph{h}~su una
   qualsiasi coppia \emph{(x,y) \textasciitilde{} P(x,y)}, come media su
   un'insieme infinito di coppie. Questo errore può essere solamente
   stimato.
+  $$
+  error_D(h) = P_{(x,y) \in D}(h(x) \neq y)
+  $$
 \end{itemize}
 
 Per calcolare una stima dell'errore ideale si può usare un \textbf{test
 set}, cioè un altro insieme di coppie \emph{(x,y)} che non compaiono nel
-training set. Questa discriminazione è importante perché se così non
-fosse l'errore ideale sarebbe influenzato dall'errore empirico.
+training set. Questa discriminazione è importante perché, se così non
+fosse, l'errore ideale sarebbe influenzato dall'errore empirico.
 
 \emph{\textbf{Riassumendo}: l'errore empirico è quello che si fa sui dati che si
 conoscono, l'errore ideale è quello che si fa su dei dati nuovi.}
@@ -185,7 +191,7 @@ Dal momento che lo spazio delle ipotesi non può coincidere con tutte le
 funzioni calcolabili è necessario fare delle assunzioni sulla funzione
 oracolo. 
 Queste assunzioni prendono il nome di \textbf{bias induttivo} e
-derivano da delle conscenze a priori che abbiamo sul dominio e
+derivano da delle conoscenze a priori che abbiamo sul dominio e
 vengono utilizzate per fare delle previsioni induttive sui dati.
 
 Fanno parte del bias induttivo:

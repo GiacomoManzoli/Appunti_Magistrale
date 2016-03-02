@@ -215,8 +215,12 @@ quelli dei livelli nascosti.
 \item Per ogni esempio del training set $(\vec{x},\vec{t})$:
 	\begin{enumerate}
 	\item Usa la rete neurale per calcolare $\vec{o} = out(\vec{x})$
-	\item Per ogni unità di output \textit{k}: $$\delta_k \leftarrow (t_k - o_k) \cdot o_k \cdot (1 - o_k)$$
-	\item Per ogni unità nascosta \textit{j}: $$\delta_j \leftarrow o_j \cdot (1 - o_j) \sum_{k \in outputs} w_{k,j}\delta_k$$
+	\item Per ogni unità di output \textit{k}: 
+	$$\delta_k \leftarrow \underbrace{(t_k - o_k)}_{\text{differenza tra l'output atteso e quello ottenuto}} \cdot \overbrace{o_k \cdot (1 - o_k)}^{\text{derivata prima della funzione } out(\vec{x})}$$
+	
+	\item Per ogni unità nascosta \textit{j}: 
+	$$\delta_j \leftarrow \overbrace{o_j \cdot (1 - o_j)}^{\text{derivata prima della funzione } out(\vec{x})} \underbrace{\sum_{k \in outputs} w_{k,j}\delta_k}_{\text{peso delle connessioni in uscita aggiornato}}$$
+	
 	\item Aggiorna tutti i pesi $w_{s,q}$ della rete con:
 	$$ w_{s,q} \leftarrow w_{s,q} + \eta \Delta w_{s,q}$$
 	dove
