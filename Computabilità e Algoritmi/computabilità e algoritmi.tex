@@ -1,0 +1,122 @@
+%----------------------------------------------------------------------------------------
+% PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+\documentclass[a4paper, 11pt]{report} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+\usepackage[italian]{babel}      							% Lingua italiana
+\usepackage[margin=1.2in]{geometry}             % Imposta i margini del documento
+
+\usepackage[T1]{fontenc} % Required for accented characters
+\usepackage[mathletters]{ucs}    % Caratteri matematici come UTF8
+\usepackage[utf8]{inputenc}      % Ancora utf8
+
+\usepackage{eurosym}                %simbolo dell'euro
+\usepackage{listings}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\input{listings}
+
+%\tightlist per compatibilità con pandoc
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\usepackage[labelfont=bf]{caption}
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage{wrapfig} % Allows in-line images
+
+
+\usepackage{subfig}
+\usepackage{hyperref}
+\usepackage{mathpazo} % Use the Palatino font
+
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+\usepackage{placeins}
+\usepackage{sourcecodepro}
+\usepackage{hyperref}                   % collegamenti ipertestuali
+
+\usepackage[colorinlistoftodos,prependcaption]{todonotes} %todo
+
+\usepackage{amsmath}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode} % https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmicx_package
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+\begin{flushright} % Right align
+{\LARGE\@title} % Increase the font size of the title
+
+\vspace{50pt} % Some vertical space between the title and author name
+
+{\large\@author} % Author name
+\\\@date % Date
+
+\vspace{100pt} % Some vertical space between the author block and abstract
+\end{flushright}
+}
+
+%----------------------------------------------------------------------------------------
+% TITLE
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Computabilità e Algoritmi}\\ % Title
+A.A. 2015-2016} % Subtitle
+
+\author{\textsc{Giacomo Manzoli}
+\\ 1130822 % Author
+\\{\textit{Università degli Studi di Padova}}} % Institution
+
+\date{\today} % Date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title section
+
+%----------------------------------------------------------------------------------------
+% ABSTRACT AND KEYWORDS
+%----------------------------------------------------------------------------------------
+
+%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
+
+\clearpage
+\tableofcontents
+
+%\hspace*{3,6mm}\textit{Keywords:} lorem , ipsum , dolor , sit amet , lectus % Keywords
+
+\vspace{30pt} % Some vertical space between the abstract and first section
+
+%----------------------------------------------------------------------------------------
+% ESSAY BODY
+%----------------------------------------------------------------------------------------
+\clearpage
+
+\part{Computabilità}
+\input{lezioni/lezione1}
+
+\part{Algoritmi}
+%\chapter{Lezione 2}
+\input{lezioni/lezione2}
+
+%\appendix
+
+
+%----------------------------------------------------------------------------------------
+% BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+%\bibliographystyle{unsrt}
+%\bibliography{sample}
+%----------------------------------------------------------------------------------------
+
+\end{document}
