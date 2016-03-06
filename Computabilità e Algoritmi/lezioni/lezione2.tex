@@ -11,12 +11,9 @@ Libro: Cormen, Introduzione agli algoritmi e strutture dati
 \href{http://catalogo.unipd.it/F/FCKK1DACESL2TDH5CF15FLDL2BUM936U1XG9U15MFDCKI764BV-10675?func=full-set-set\&set_number=011139\&set_entry=000001\&format=999}{BIB}:
 
 \begin{itemize}
-\tightlist
 \item
   Introduzione agli algoritmi sui grafi
-
   \begin{itemize}
-  \tightlist
   \item
     Strutture dati per i grafi
   \item
@@ -56,7 +53,7 @@ estremi, iniziali e finali. Un grafo non semplice prende il nome di
 Se un grafo è semplice, un arco può essere espresso con:
 
 $$
-e = uv \in E \text{, con} u,v \in V
+e = uv \in E \text{, con } u,v \in V
 $$
 
 e si dice che l'arco \emph{e} è incidente in \emph{u} e \emph{v}. Da
@@ -208,7 +205,7 @@ Con la lista delle adiacenze l'algoritmo risulta essere
 
 
 \begin{algorithm}
-	\begin{algorithmic}
+	\begin{algorithmic}[1]
 		\Function{Trasponi}{$Adj,\: Adj^T,\: n$}
 			\For{$v = 1 \: to \: n$}
 				\State $Adj^T[v] \gets nil$
@@ -223,7 +220,7 @@ Con la lista delle adiacenze l'algoritmo risulta essere
 			\EndFor
 		\EndFunction
 	\end{algorithmic}
-	\caption{Calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze}
+	\caption{Trasponi: calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze}
 \end{algorithm}
 
 Ovvero viene attraversata la lista delle adiacenze del grafo originale,
@@ -243,3 +240,16 @@ tutti gli altri vertici del grafo, dal quale però non è possibile
 raggiungere altri vertici.
 
 Trovare un algoritmo che riesce a risolvere il problema in \emph{O(n)}.
+
+
+\begin{verbatim}
+	- Si cerca un arco tra il nodo 2 -> 1
+		- se il bit è a 1, 2 non è un pozzo universale
+		- si passa al successivo fino a che non si trova uno nodo che va verso 1,  ad esempio 4->1 a 0
+			- in questo modo è possibile escludere il nodo 1
+		- in questo modo posso partire dal k+1 in questo caso 5
+			- 6->5
+				se 0, escludo il 5
+				se 1, escludo il 6
+			- ...
+\end{verbatim}

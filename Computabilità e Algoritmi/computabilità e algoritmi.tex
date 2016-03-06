@@ -45,6 +45,7 @@
 
 \usepackage{amsmath}
 
+\usepackage{float}
 \usepackage{algorithm}
 \usepackage{algpseudocode} % https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmicx_package
 
@@ -64,6 +65,28 @@
 \vspace{100pt} % Some vertical space between the author block and abstract
 \end{flushright}
 }
+
+%% breakablealgorithm http://tex.stackexchange.com/questions/33866/algorithm-tag-and-page-break
+\makeatletter
+\newenvironment{breakablealgorithm}
+{% \begin{breakablealgorithm}
+	\begin{center}
+		\refstepcounter{algorithm}% New algorithm
+		\hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+		\renewcommand{\caption}[2][\relax]{% Make a new \caption
+			{\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+			\ifx\relax##1\relax % #1 is \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+			\else % #1 is not \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+			\fi
+			\kern2pt\hrule\kern2pt
+		}
+	}{% \end{breakablealgorithm}
+	\kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+\end{center}
+}
+\makeatother
 
 %----------------------------------------------------------------------------------------
 % TITLE
@@ -92,6 +115,7 @@ A.A. 2015-2016} % Subtitle
 
 \clearpage
 \tableofcontents
+\listofalgorithms
 
 %\hspace*{3,6mm}\textit{Keywords:} lorem , ipsum , dolor , sit amet , lectus % Keywords
 
@@ -108,7 +132,7 @@ A.A. 2015-2016} % Subtitle
 \part{Algoritmi}
 %\chapter{Lezione 2}
 \input{lezioni/lezione2}
-
+\input{lezioni/lezione3}
 %\appendix
 
 
