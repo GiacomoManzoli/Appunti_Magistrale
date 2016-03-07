@@ -251,5 +251,8 @@ Trovare un algoritmo che riesce a risolvere il problema in \emph{O(n)}.
 			- 6->5
 				se 0, escludo il 5
 				se 1, escludo il 6
-			- ...
+		- questo si ripete fino a che non rimane almeno un candidato pozzo
+		- Se non c'è nessun canditato, non può esserci un pozzo
+		- Se c'è un candidato è necessario verificare che sia un pozzo (forse)
+		  la complessità è quindi O(n+n)
 \end{verbatim}

@@ -1,0 +1,249 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\chapter{Lezione 4 - Calcolabilità}\label{lezione-4-computabilituxe0---calcolabilituxe0}
+
+\section{Algoritmo}\label{algoritmo}
+
+\textbf{Algoritmo}: descrizione di una sequenza di passi elementari che
+permettono di raggiungere un certo obiettivo, come la trasformazione di
+certi dati di input in dati di output. Il vincolo dei passi elementari
+si traduce nell'utilizzo di operazioni semplici, direttamente eseguibili
+da un calcolatore. Nel caso l'algoritmo sia deterministico, questo può
+essere visto come una funzione che mappa un certo input in un
+determinato output, in questo caso si dice che la funzione \textbf{è
+calcolata} dall'algoritmo.
+
+\textbf{Funzione calcolabile}: una funzione è calcolabile in modo
+effettivo se \textbf{esiste} un algoritmo in grado di calcolarla. A noi
+interessa sapere che \textbf{esiste} un algoritmo che calcola quella
+determinata funzione, ma non sempre ci interessa conoscere l'algoritmo.
+
+Alcune funzioni calcolabili sono:
+
+$$ MCD(x,y) $$
+
+$$
+P(n) = \begin{cases}
+1, &\text{se \textit{n} è primo} \\
+0, &\text{altrimenti}
+\end{cases}
+$$
+
+$$ p(n) = n-\text{esimo numero primo}$$
+
+$$ f(n) = n-\text{esima cifra di }\pi$$
+
+Una funzione non calcolabile è data da
+
+$$
+g(n) = \begin{cases}
+1, &\text{se $\pi$ contiene esattamente \textit{n} cifre ``5'' consecutive} \\
+0, &\text{altrimenti}
+\end{cases}
+$$
+
+Non si sa se la funzione \emph{g(n)} è calcolabile, perché si riesce a
+trovare un algoritmo che funziona solamente nel caso in cui la sequenza
+è presente.
+
+$$
+h(n) = \begin{cases}
+1, &\text{se $\pi$ contiene almeno \textit{n} cifre ``5'' consecutive} \\
+0, &\text{altrimenti}
+\end{cases}
+$$
+
+Stranamente \emph{h(n)} è calcolabile, perché si può considerare
+
+$$
+k = sup( \{n | \pi \text{contiene \textit{n} cifre ``5'' consecutive}\} )
+$$
+
+\emph{k} può essere un numero qualsiasi o infinito. In ogni caso, la
+funzione \emph{h} può essere definita come
+
+
+$$
+h(n) = \begin{cases}
+1, &\text{se }  n \leq k\\
+0, &\text{altrimenti}
+\end{cases}
+$$
+
+Da notare che l'algoritmo così definito non si preoccupa di quanto sia
+difficile trovare \emph{k}, ma solo di trovare una soluzione per il
+problema.
+ Questo deriva dall'\textbf{esiste} precedentemente riportato in
+grassetto.
+Noi ci accontentiamo del fatto che qualsiasi valore può
+assumere \emph{k} non conosciamo un algoritmo, l'algoritmo per trovare
+\emph{k} può esistere o meno, ma questo non ci interessa perché vogliamo
+che la teoria della calcolabilità non venga influenzata dalla conoscenza
+sul dominio ma che sia una caratteristica della funzione. 
+Ad esempio, in questo caso non ci interessa sapere se il $\pi$ è un numero normale o
+meno e non vogliamo che la definizione di calcolabilità sia influenzata
+da ciò.
+
+Con \emph{g(n)} la stessa funzione può essere implementata con
+l'algoritmo
+
+
+$$
+g'(n) = \begin{cases}
+1, &\text{se } n \in X \\
+0, &\text{altrimenti}
+\end{cases}
+$$
+
+ma l'insieme \emph{X} può essere un insieme infinito e per valutare
+l'appartenenza è necessario un programma infinito.
+
+\subsection{Le funzioni non calcolabili}\label{le-funzioni-non-calcolabili}
+
+\textbf{Modello di calcolo effettivo}: ovvero le caratteristiche che
+deve avere un algoritmo per poter essere eseguibile in modo effettivo:
+
+\begin{itemize}
+\item
+  \textbf{Lunghezza sintattica finita}: deve essere una sequenza finita
+  di istruzioni.
+\item
+  \textbf{Modello realistico}: esegue su un agente di calcolo che può
+  essere realizzato, dotato di una memoria e che lavora a passi discreti
+  (\emph{macchina digitale}) e deterministici.
+\item
+  \textbf{Memoria e input illimitati}: questo perché non si vuole
+  limitare la teoria della computabilità allo stato tecnologico attuale,
+  idealmente si può sempre aggiungere un nuovo banco di RAM.
+\item
+  \textbf{Set di istruzioni finito}: le istruzioni che la macchina
+  riesce ad eseguire sono limitate ed hanno anche una complessità
+  limitata.
+\item
+  \textbf{Computazione}: può terminare dopo un numero finito di passi
+  producendo un output, oppure può non terminare senza produrre output.
+\end{itemize}
+
+Questo modello equivale ad una macchina di Turing.
+
+\subsubsection{Notazione utilizzata}\label{notazione-utilizzata}
+
+Notazioni:
+
+\begin{itemize}
+\item
+  $ \mathbb{N}= \{0,1,2,3,\ldots{}\}$
+\item
+  $A \times B = \{(a,b) \textbar{} a \in A, b \in B\}$ (prodotto cartesiano)
+\item
+  $A \times A \times \ldots \times A = A^n$
+\item
+  Relazione $r \subseteq A \times B$, ovvero un sotto insieme del prodotto
+  cartesiano di uno o più insiemi.
+\item
+  Una funzione è una particolare relazione: $f \subseteq A \times B$ e vale anche
+  $\forall(a,b), (a,b') \in f \therefore b = b' \text{ e } f(a) = b$
+\item
+  Dominio di una funzione: $dom(f) = \{a \textbar{} \exists (a,b) \in f\}$ e
+  per indicare che \textit{f} è definita su \textit{a} si utilizza $f(a)$\emph{freccia verso
+  basso}.
+\item
+  Cardinalità $|A|$, numero di elementi presenti
+  nell'insieme, nel caso di elementi finiti, mentre nel caso di insiemi
+  infiniti si ha che:
+
+  \begin{itemize}
+  \item $|A| = |B|$ se esiste $f: A \rightarrow B$ e biunivoca
+  \item $|A| \leq |B|$ se esiste $f: A \rightarrow B$ e iniettiva
+  \end{itemize}
+\item
+  Un insieme è \textbf{numerabile} quando $|A| \leq |\mathbb{N}|$, ovvero esiste una funzione suriettiva $f: |\mathbb{N}| \rightarrow A$. 
+  Se $ A $ e $ B $ sono numerabili, anche il
+  loro prodotto è numerabile. Allo stesso modo se una sequenza di
+  insiemi è numerabile, anche la loro unione è enumerabile.
+\end{itemize}
+
+\subsubsection{Esistenza delle funzioni non
+calcolabili}\label{esistenza-delle-funzioni-non-calcolabili}
+
+Con il modello di calcolo precedentemente descritto ci sono delle
+funzioni che non possono essere calcolate.
+
+Fissando un insieme di funzioni unarie e parziali
+
+$ F = \{f | f: \mathbb{N} \rightarrow \mathbb{N}\}$
+
+e un modello di calcolo con i relativi algoritmi $\mathcal{A}$.
+
+Le funzioni calcolabili nel modello di calcolo sono date da:
+
+$$
+F_\mathcal{A} = {f | \exists A \in \mathcal{A} \text{ che calcola } f}
+$$
+
+dato un algoritmo $ A \in \mathcal{A}$ riusciamo a trovare una funzione $f_A$ che
+viene calcolata.
+
+La domanda risulta quindi essere ``$F_\mathcal{A} \subseteq F$ o $ F_\mathcal{A} \subsetneq F $?'' e la risposta è che l'inclusione è stretta.
+
+\paragraph{Dimostrazione}\label{dimostrazione}
+
+Sia \emph{I} il set finito di istruzioni della macchina di calcolo.
+
+L'insieme degli algoritmi calcolabili risulta quindi essere:
+
+$$
+\mathcal{A} \subseteq I \cup I \times I \cup I \times I \times I \cup I \times I \times ... = \bigcup_n I^n
+$$
+
+pertanto
+
+$$
+|\mathcal{A}| \leq |\bigcup_n I^n| \leq |\mathbb{N}|
+$$
+
+perché la funzione $ f: \mathcal{A} \rightarrow F_\mathcal{A}$  è
+ovviamente suriettiva, pertanto si ha:
+
+$$
+|F_\mathcal{A}| \leq |\mathcal{A}| \leq |\mathbb{N}|
+$$
+
+L'insieme delle funzioni è certamente infinito e certamente esiste un
+sottoinsieme \emph{T} delle funzioni totali che non è enumerabile.
+
+$$
+T = \{ f | f : \mathbb{N} \rightarrow \mathbb{N} \text{e totatli}\}
+$$
+
+La non enumerabilità si dimostra per assurdo, perché se
+$f_0,\ f_1, \ldots$ è un'enumerazione di \emph{T}:
+
+\begin{verbatim}
+    f0      f1      f2      ...
+0   f0(0)   f1(0)   f2(0)   ...
+1   f0(1)   f1(1)   f2(1)   ...
+2   ...     ...     ...
+\end{verbatim}
+
+È quindi possibile definire  $d(n) = f_n(n) è 1$ che non è
+presente nell'enumerazione sopra riportata, perché $ d(n) \neq f(n) \forall n$.
+
+Pertanto 
+
+$$ |\mathbb{N}| \leq |T| \leq |F|$$
+
+e
+$$
+\begin{rcases}
+F_\mathcal{A} \subseteq F \\
+|F_\mathcal{A} < |F||
+\end{rcases}
+ \Rightarrow \: F_\mathcal{A} \subsetneq F
+$$
+
+Ovvero, esistono delle funzioni che non sono calcolabili. Il numero di
+queste funzioni è dato da $ | F \ F_\mathcal{A}| $ che è
+infinita, questo perché se fosse finita, \textit{F} sarebbe enumerabili.
