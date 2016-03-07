@@ -6,7 +6,7 @@ Con l'evoluzione tencologica abbiamo raggiunto un punto in cui costa poco rileva
 Tipicamente non sono necessarie tutte le informazioni presenti nel DWH, pertanto è necessario tenere in considerazione gli obiettivi delle analisi in modo da utilizzare solamente i dati utili (**datamart**).
 Avendo a disposizione un elevato numero di campioni, può tornare utile estrarre un sottoinsieme casuale.
 
-## Struttura del corso
+# Struttura del corso
 
 Parte 1:
 
