@@ -1,0 +1,243 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\chapter{Lezione 5 - Modelli di calcolo e URM}\label{lezione-5---modelli-di-calcolo-e-urm}
+
+Nel tempo sono stati proposti diversi modelli di calcolo:
+
+\begin{itemize}
+\item
+  Macchina di Turing, 1936
+\item
+  Lambda calcolo, Church 1936
+\item
+  Funzioni parziali ricorsive, G\"{o}edel-Kleene
+\item
+  Sistemi di Post, grammatiche libere da contesto
+\item
+  Markov System, 1951
+\item
+  Macchina a registri, 1963
+\end{itemize}
+
+La lista dei modelli è lunga, pertanto si può pensare che sia necessaria una teoria della computabilità per ogni modello. 
+Tuttavia si è notato che le classi delle funzioni calcolabili dai vari modelli erano sempre quelle. 
+Queste congetture sono state poi formalizzate dalla \textbf{tesi di Church-Turing}: ogni funzione è calcolabile con un procedimento effettivo se e solo se è calcolabile da una macchina di Turing.
+
+\section{URM - Ulimited Register Machine}\label{urm---ulimited-register-machine}
+
+Il modello di calcolo che utilizzeremo è quello della macchina URM, la quale è dota di una serie di registri, ognuno dei quali contiene dei numeri naturali.
+
+\begin{verbatim}
+ R1 R2 R3
+|r1|r2|r3|..|..|..
+\end{verbatim}
+
+$$r_i \in \mathbb{N}$$
+
+C'è inoltre un agente in grado di eseguire un programma, ovvero una sequenza di azioni $ I_1, I_2, \ldots, I_n$.
+Queste istruzioni possono essere:
+
+\begin{itemize}
+\item
+  Aritmetiche:
+  \begin{itemize}
+  \item \texttt{Z(n)}: sposta 0 in $r_n, r_n \gets 0 $
+  \item \texttt{S(n)}: incrementa di 1 il valore del registro $ r_n, r_n \gets r_n +1 $
+  \item \texttt{T(m,n)}: copia il contenuto del registro $r_m$ in $r_n$, $ r_n \gets r_m$.
+  \end{itemize}
+\item Salto condizionato:
+  \begin{itemize}
+  \item \texttt{J(m,n,t)}: se $ r_m $ è uguale a $ r_n $, salta all'istruzione $ I_t  $, altrimenti procede con l'istruzione successiva. 
+	  Se viene fatto un salto ad un'istruzione che si trova fuori dal programma, l'esecuzione termina.
+  \end{itemize}
+\end{itemize}
+
+Un programma d'esempio è dato da:
+
+\begin{lstlisting}[language=URM]
+I1: J(2,3,5)
+I2: S(1)
+I3: S(3)
+I4: J(1,1,1)
+\end{lstlisting}
+
+l'esecuzione del programma risulta quindi essere:
+
+\begin{verbatim}
+     R1 R2 R3 R4
+    |1 |2 |0 |0 |
+
+I1: false, non salta
+
+I2:  R1 R2 R3 R4
+    |2 |2 |0 |0 |
+    
+I3:  R1 R2 R3 R4
+    |2 |2 |1 |0 |
+
+I4: true, esegue I1:
+
+I1: false, non salta
+
+I2:  R1 R2 R3 R4
+    |3 |2 |1 |0 |
+    
+I3:  R1 R2 R3 R4
+    |3 |2 |2 |0 |
+
+I4: true, esegue I1:
+
+I1: true, salta alla terminazione
+\end{verbatim}
+
+La macchina ha memoria infinita e lo stato iniziale della computazione
+del programma \emph{P} viene indicato con:
+
+$$
+P(a_1, a_2, \ldots)\downarrow
+$$
+
+La notazione
+
+$$
+P(a_1, a2, \ldots) \downarrow a
+$$
+
+indica che il programma \emph{P} eseguito sulla configurazione $a_1, a_2, \ldots, a_n, \ldots, 0$ termina producendo in $r_1$ il valore \emph{a}.
+
+Per indicare che il programma non termina viene utilizzato:
+
+$$
+P(a_1, a_2, \ldots)\uparrow
+$$
+
+\subsection{Funzioni URM-calcolabili}\label{funzioni-urm-calcolabili}
+
+Una funzione parziale $f: \mathbb{N}^k \rightarrow \mathbb{N}$ si dice \textbf{URM-calcolabile} se esiste \emph{P} programma URM tale che per ogni input $a_1, \ldots, a_k$ in $\mathbb{N}$, il programma \emph{P} termina producendo $a \in \mathbb{N}$ se e solo se la funzione è definita sulla tupla e il risultato della funzione coincide con \emph{a}.
+
+Più formalmente:
+
+$$
+P(a_1, a_2, \ldots, a_k)\downarrow \: \text{calcola $ f $ se}
+\begin{cases}
+&(a_1, a_2, \ldots, a_k) \in dom(f) \\
+&f(a_1, a_2, \ldots, a_k) = a
+\end{cases}
+$$
+
+
+Con la lettera $\mathcal{C}$ indichiamo la classe delle funzioni URM-calcolabili e con $\mathcal{C}^k$ ci si restringe alle funzioni \emph{k}-arie.
+Un esempio di funzione calcolabile è dato da \emph{f(x,y) = x+y}, laquale può essere calcolata dal programma:
+
+\begin{lstlisting}[language=URM]
+	/*
+		 R1 R2 R3 ...
+		| x| y| 0|...
+		uso r3 come k, e cerco di fare in modo che r1 sia uguale a x+k
+	*/
+	I1: J(2,3,END) #LOOP
+	I2: S(1) // x = x + 1
+	I3: S(3) // k = k + 1 
+	I4: J(1,1,LOOP)
+	#END
+\end{lstlisting}
+
+Un altro esempio è dato da $ f(x) = \begin{cases}
+\frac{x}{2} &\text{ se \textit{x} è pari} \\
+\uparrow &\text{ altrimenti}
+\end{cases}$
+
+\begin{lstlisting}[language=URM]
+ /*
+	 R1 R2 R3 ...
+	| x| 0| 0|...
+	
+	uso r2 come k e r3 come 2k.
+	Incremento 2k di 2 e k di 1, quando 2k = x, allora k è x/2
+*/
+I1: J(1,3,END) #LOOP
+I2: S(2) // k = k + 1
+I3: S(3) // 2k = 2k + 1 
+I3: S(3) // 2k = 2k + 1 
+I4: J(1,1,LOOP)
+I5: T(2,1) #END
+\end{lstlisting}
+
+Come esercizio, provare ad implementare \emph{f(x) = x-1, f(0) = 0}.
+
+Da notare che per individuare la funzione calcolata da un programma URM è necessario specificare sia il programma che il numero di argomenti, altrimenti non è possibile definire l'arietà della funzione.
+
+$$
+f_{p}^{(k)} : \mathbb{N}^k \rightarrow \mathbb{N}
+$$
+
+$$
+f_p(\vec{x}) = 
+\begin{cases}
+y &\text{ se} \: P(\vec{x})\downarrow y \\
+\uparrow &\text{ se il programma non termina}
+\end{cases}
+$$
+
+Quando una funzione è calcolabile, esistono infiniti programmi in grado di calcolarla, perché risulta semplice andare ad aggiungere delle istruzioni ``inutili'' per generare un nuovo programma che calcola la funzione, mentre se non è calcolabile, non esiste nessun programma in grado di calcolarla.
+
+\subsubsection{Esercizio teorico - URM e URM'}\label{esercizio-teorico---urm-e-urm}
+
+Sia URM' la macchina senza \texttt{T(m,n)} e sia $\mathcal{C}'$ la classi di funzioni URM'-calcolabili, questa classe come si relaziona con $\mathcal{C}$?
+Come prima cosa ci si può chiedere se
+
+$$ \mathcal{C}' \subseteq \mathcal{C} $$
+
+Sia $ f: \mathbb{N}^k \rightarrow \mathbb{N}$ URM' calcolabile, ovvero $ f \in \mathcal{C}' $, allora esiste \emph{P'} programma in URM' tale che $f = f_p$.
+Per come è definito il set di istruzione URM', \emph{P'} è anche un programma in URM, quindi $f \in \mathcal{C}$
+
+Resta ora da capire se l'inclusione è stretta o meno. L'istruzione \texttt{T(m,n)} può essere sostituita dalle istruzioni
+
+\begin{lstlisting}[language=URM]
+Z(n)
+J(n,m,END) #LOOP
+S(n)
+J(1,1,LOOP)
+#END
+\end{lstlisting}
+
+quindi, essendoci un modo per simulare l'istruzione del trasferimento si ottiene che
+
+$$
+\mathcal{C} \subseteq \mathcal{C}'
+$$
+
+e quindi le due classi \textbf{sono equivalenti}. 
+Tuttavia, questa è una congettura e non una dimostrazione formale.
+
+\paragraph{Dimostrazione formale} Sia $f \in \mathcal{C}$, ovvero esiste un \emph{P} in URM e $k \in \mathbb{N}$ tale che $f = f_{p}^{(k)}$, si vuole dimostrare che esiste un programma \emph{P'} in URM', tale che $f_{p'}^{(k)} = f_{p}^{(k)}$.
+Questo può essere dimostrato per induzione su \emph{h = \#numero di
+istruzioni \texttt{T(m,n)} in P}.
+Banalmente se \emph{h=0} si ha che \emph{P} è già un programma URM', mentre se $h > 0$, il programma \emph{P} avrà un'istruzione $I_s$ che sarà un trasferimento \texttt{T(m,n)}. 
+Tale programma programma può essere riscritto come \emph{P''}, con $I_s$ uguale a \texttt{J(1,1,l+2)}, dove all'istruzione $I_{l+2}$ iniziano le istruzioni alternative per fare la copia del valore, come precedentemente riportato, e al termine delle quali c'è un salto all'istruzione $I_{s+1}$
+
+Resta un problema riguardo ad i salti oltre la fine, è quindi necessario normalizzare i salti in modo che tutti quelli che puntano al termine del programma finiscano all'istruzione $I_{l+1}$, dove $I_l$ è l'ultima istruzione del programma \emph{P}. L'istruzione $I_{l+1}$ di \emph{P''} sarà quindi un salto all'effettiva fine del programma.
+
+Applicando questo procedimento si ottiene un programma \emph{P''} che avrà un'istruzione \texttt{T(m,n)} in meno e che calcola la stessa funzione calcolata da \emph{P}.
+Ripetendo questo processo si ottiene induttivamente il programma \emph{P'} che non ha istruzioni del tipo \texttt{T(m,n)}.
+
+\subsubsection{Esercizio teorico - URM e URM-S}\label{esercizio-teorico---urm-e-urm-s}
+
+Come si relazione la classe $\mathbb{C}^S$ con $\mathbb{C}$? Dove $\mathbb{C}^S$ è la classe delle funzioni calcolabili da URM-S ovvero dalla macchina URM che non ha l'istruzione \texttt{T(m,n)} ma ha l'istruzione \texttt{TS(m,n)} che fa lo swap del contenuto di dei due registri.
+
+Esercizio lasciato per casa.
+
+\subsubsection{Esercizio teorico - URM e URM-SL}\label{esercizione-teorico---urm-e-urm-sl}
+
+Sempre quella domanda, con la differenza che viene tolta l'istruzione di salto \texttt{J(m,n,l)}.
+
+Ovviamente $\mathbb{C}^{SL}$ è contenuta in $\mathbb{C}$, ma non vale la relazione $\mathbb{C} \subseteq \mathbb{C}^{SL}$ perché $\mathbb{C}^{SL}$ contiene solamente funzioni totali, ovvero che terminano sempre, mentre $\mathbb{C}$ contiene anche delle funzioni parziali.
+
+Per le istruzioni disponibili in URM-SL si riesce a calcolare \emph{f(x) = k} oppure \emph{f(x) = x+k} per $k \in \mathbb{N}$. 
+Ovvero $f \in \mathbb{C}^{SL}$ se e solo se \emph{f(x) = k oppure x+k}.
+
+Questo vuol dire che per ogni programma $P_{sl}$ la funzione che viene calcolata $f_{p_{SL}}$ è del tipo di \emph{f}.
+
+La dimostrazione viene fatta per induzione sulla struttura di un programma URM-SL, ragionando sul cosa succede se si aggiunge un'ulteriore istruzione al programma già esistente e che calcola un valore costante.
