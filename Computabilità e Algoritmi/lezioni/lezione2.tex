@@ -36,7 +36,7 @@ Se c'è un ordine tra i due estremi degli archi, il grafo prende il nome
 di \textbf{orientato} o \textbf{diretto}. In questo caso, il primo
 vertice prende il nome di \textbf{coda} e l'ultimo \textbf{testa}.
 
-Un \textbf{cappio} è un grafo i cui due estremi coincidono.
+Un \textbf{cappio} è un arco i cui due estremi coincidono.
 
 Un grafo non orientato si dice \textbf{semplice} se non ha cappi e non
 ci sono due archi con gli stessi estremi. Mentre se il grafo è
@@ -59,7 +59,7 @@ $$
 e si dice che l'arco \emph{e} è incidente in \emph{u} e \emph{v}. Da
 notare che se il grafo è orientato
 $e = uv \neq vu$ e la terminologia diventa
-``l'arco \emph{e} esce da \emph{u} entra in \emph{v}''.
+``l'arco \emph{e} esce da \emph{u} e entra in \emph{v}''.
 
 Il \textbf{grado} di un vertice \emph{v} viene indicato con $\delta(v)$ e rappresenta il numero di archi incidenti in quel
 vertice. Se il grafo è ordinato, il suo \textbf{grado uscente} $\delta^+(v)$ è il numero di archi uscenti e il suo \textbf{grado entrante} è $\delta^-(v)$.
@@ -69,7 +69,9 @@ Se due vertici sono collegati da un arco, questi vengono detti
 
 Un \textbf{cammino} di lunghezza \emph{k} da un vertice \emph{u} ad un
 vertice \emph{v} in un grafo \emph{G=(V,E)}, è una sequenza di
-\emph{k+1} vertici $x_0 \ldots x_k$, tali che $x_0 = u$, $x_k = v$ e $x_{i-1}x_i \in E \forall i = 1\ldots k$.
+\emph{k+1} vertici $x_0 \ldots x_k$, tali che 
+
+$$x_0 = u$, $x_k = v$ e $x_{i-1}x_i \in E \forall i = 1\ldots k$$.
 
 Se il cammino ha lunghezza 0, questo viene detto \textbf{nullo}, mentre
 se il vertice di partenza coincide con quello di arrivo, il cammino

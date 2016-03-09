@@ -1,5 +1,6 @@
-\section{Lezione 3 - Algoritmi sui
-grafi}\label{lezione-3---algoritmi-sui-grafi}
+\chapter{Lezione 3}
+	
+\section{Algoritmi sui grafi}\label{lezione-3---algoritmi-sui-grafi}
 
 \subsection{Chiusura transitiva e riflessiva}\label{chiusura-transitiva-e-riflessiva}
 
@@ -62,7 +63,7 @@ L'algoritmo naive riesce a trovare una soluzione in \emph{O(n\^{}3)}
 Per \textsc{CRM} l'inizializzazione della matrice \texttt{M*} ha
 complessità $O(n+n^2)$, mentre l'ultimo
 \texttt{for} ha complessità $O(n^2)$ (senza considerare la complessità
-di \textsc{CT}. \textsc{CT} ha complessità \emph{O(n . m* )}, \emph{n}
+di \textsc{CT}. \textsc{CT} ha complessità $O(n \cdot m* )$, \emph{n}
 deriva dal ciclo \texttt{for} e \emph{m*} deriva dal numero di chiamate
 ricorsive che sono limitate dal numero di archi nel grafo riflessivo,
 ovvero \emph{m*}.
@@ -91,7 +92,6 @@ frontiera dell'albero viene espansa in ampiezza.
 Durante l'esplorazione un nodo può essere colorato in tre modi:
 
 \begin{itemize}
-\tightlist
 \item
   \textbf{bianco}: vertice del grafo non ancora raggiunto
 \item
@@ -123,8 +123,8 @@ mantiene in memoria la frontiera.
 	\begin{algorithmic}[1]
 		\Function{BFS}{$ G,s $}
 			\For{$ \forall v \in G.V $}
-				\State $ v.color \gets \text{bianco} $ \Comment{Distanza massima possibile}
-				\State $ v.d \gets \infty $
+				\State $ v.color \gets \text{bianco} $ 
+				\State $ v.d \gets \infty $ \Comment{Distanza massima possibile}
 				\State $ v.\pi \gets nil $\Comment{Padre del nodo}
 			\EndFor
 			\State $ s.color \gets \text{grigio} $
@@ -152,8 +152,8 @@ Il ciclo \texttt{for} di inizializzazione ha complessità \emph{O(n)}.
 
 Il ciclo \texttt{while} viene ripetuto al massimo \emph{n} volte e il
 \texttt{for} interno percorre la lista delle adiacenze di tutti i nodi,
-al massimo una volta sola, quindi le esecuzioni totali dei cicli
-\texttt{for}, ottengo \emph{m} iterazioni. In tutto il ciclo
+al massimo una volta sola, quindi le iterazioni totali dei cicli
+\texttt{for} sono \emph{m}. In tutto il ciclo
 \texttt{while} ha complessità \emph{O(n+m)}, la quale domina la
 complessità dell'inizializzazione.
 
@@ -172,7 +172,7 @@ Indicando con $\delta(u,v)$ la distanza tra il vertice \emph{v} e
 convezione, se i due vertici non sono raggiungibili, la distanza è
 infinita.
 
-La distanza così definita ha la proprietà $\delta(x,v) \leq \delta(x,u) + 1$per ogni $x \in V$ e $uv \in E$. 
+La distanza così definita ha la proprietà $\delta(x,v) \leq \delta(x,u) + 1$ per ogni $x \in V$ e $uv \in E$. 
 Questo perché aggiungendo l'arco \emph{uv} al cammino $ x \rightarrow u$, si ottiene un cammino di
 lunghezza $\delta(x,u) + 1$, pertanto, per definizione $\delta(x,v)$ è
 minore o uguale della lunghezza del nuovo cammino.
@@ -199,7 +199,7 @@ coda \emph{Q} non è vuota, allora è ordinata per distanza crescente.
 Formalmente
 
 $$
-v_1, v_2, \ldots, v_r \in Q \: | \:  v_i.d \leq v_{i+1} + 1 \: \forall i  \text{ e } v_r \leq v_1.d +1
+v_1, v_2, \ldots, v_r \in Q \: | \:  v_i.d \leq v_{i+1}.d + 1 \: \forall i  \text{ e } v_r \leq v_1.d +1
 $$
 
 Questa proprietà è vera per la coda con un solo elemento, la quale è
