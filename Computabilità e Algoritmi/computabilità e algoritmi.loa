@@ -1,3 +1,5 @@
 \contentsline {algorithm}{\numberline {1}{\ignorespaces Trasponi: calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze\relax }}{19}{algorithm.1}
-\contentsline {algorithm}{\numberline {2}CRM/CT: Chiusura di un grafo}{20}{algorithm.2}
-\contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{22}{algorithm.3}
+\contentsline {algorithm}{\numberline {2}CRM/CT: Chiusura di un grafo}{21}{algorithm.2}
+\contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{23}{algorithm.3}
+\contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{26}{algorithm.4}
+\contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{29}{algorithm.5}
