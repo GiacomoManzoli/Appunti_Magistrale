@@ -2,9 +2,11 @@
 % !TEX TS-program = pdflatex
 % !TEX root = computabilità e algoritmi.tex
 % !TEX spellcheck = it-IT
-\chapter{Lezione 2}
-\section{Introduzione e Algoritmi sui grafi}\label{lezione-2---introduzione-e-algoritmi-sui-grafi}
+\chapter{Algoritmi sui Grafi}
 
+\section{Introduzione}
+
+\subsection{Note sul corso}
 C'è la possibilità di fare un pre-orale nella settimana dei compitini.
 
 Libro: Cormen, Introduzione agli algoritmi e strutture dati
@@ -129,8 +131,7 @@ Se il sotto-grafo viene ottenuto rimuovendo solo dei vertici, questo
 prende il nome di \textbf{indotto}, perché la rimozione degli archi
 viene forzata dalla rimozione dei vertici.
 
-\subsection{Rappresentazione dei
-grafi}\label{rappresentazione-dei-grafi}
+\subsection{Rappresentazione dei grafi}\label{rappresentazione-dei-grafi}
 
 Per rappresentare i grafi in un calcolatore è possibile utilizzare la
 matrice delle adiacenze o la lista delle adiacenze.
@@ -194,7 +195,7 @@ La matrice risulta quindi vantaggiosa quando:
 \end{align*}
 
 
-\subsection{Calcolo del grafo trasposto}\label{calcolo-del-grafo-trasposto}
+\section{Calcolo del grafo trasposto}\label{calcolo-del-grafo-trasposto}
 
 Dato un grafo orientato \emph{G=(V,E)} si vuole ottenere $ G^T = (V, E^T)$ in modo che gli archi siano rovesciati, ovvero $E^T = \{uv | vu \in E\}$.
 
@@ -234,8 +235,7 @@ secondo \texttt{for} esamina tutti i possibili archi, quindi anziché
 avere complessità \emph{n} (numero di vertici) ha complessità \emph{m}
 (numero di archi).
 
-\subsection{(Esercizio) Ricerca del pozzo
-universale}\label{esericizio-ricerca-del-pozzo-universale}
+\section{(Esercizio) Ricerca del pozzo universale}\label{esericizio-ricerca-del-pozzo-universale}
 
 Un vertice è un \textbf{pozzo universale} se può essere raggiunto da
 tutti gli altri vertici del grafo, dal quale però non è possibile
@@ -243,18 +243,11 @@ raggiungere altri vertici.
 
 Trovare un algoritmo che riesce a risolvere il problema in \emph{O(n)}.
 
+\paragraph{Soluzione} L'idea è quella di scorrere la matrice delle adiacenze lungo le colonne, a partire dalla cella \textit{(2,1)}. Se la cella contiene un 1, vuol dire che c'è un arco uscente dal nodo 2 e quindi questo non può essere un pozzo universale, mentre se c'è uno 0, il nodo 1 non può essere un pozzo universale perché non ha un arco entrante dal nodo 2.
 
-\begin{verbatim}
-	- Si cerca un arco tra il nodo 2 -> 1
-		- se il bit è a 1, 2 non è un pozzo universale
-		- si passa al successivo fino a che non si trova uno nodo che va verso 1,  ad esempio 4->1 a 0
-			- in questo modo è possibile escludere il nodo 1
-		- in questo modo posso partire dal k+1 in questo caso 5
-			- 6->5
-				se 0, escludo il 5
-				se 1, escludo il 6
-		- questo si ripete fino a che non rimane almeno un candidato pozzo
-		- Se non c'è nessun canditato, non può esserci un pozzo
-		- Se c'è un candidato è necessario verificare che sia un pozzo (forse)
-		  la complessità è quindi O(n+n)
-\end{verbatim}
+Quindi, se nella cella della matrice viene trovato un 1, si passa a controllare la cella successiva della colonna, ovvero \textit{(3,1)}, mentre se c'è uno 0 si passa a controllare la colonna del candidato successivo a partire dall'elemento sotto la diagonale, ovvero se il prossimo candidato è il nodo 4 l'elemento successivo da controllare è l'elemento \textit{(5,4)}.
+
+Dopo aver esaminato \textit{n} elementi, può essere rimasto o un solo candidato come pozzo universale, oppure nessuno.
+Nel caso sia rimasto un solo candidato è necessario verificare che questo sia effettivamente un pozzo universale e questo può essere fatto in $ O(n) $.
+
+La complessità dell'algoritmo è quindi $ O(n + n) = O(n) $.

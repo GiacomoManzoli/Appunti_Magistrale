@@ -2,7 +2,8 @@
 % !TEX TS-program = pdflatex
 % !TEX root = computabilità e algoritmi.tex
 % !TEX spellcheck = it-IT
-\chapter{Lezione 5 - Modelli di calcolo e URM}\label{lezione-5---modelli-di-calcolo-e-urm}
+
+\section{Modelli di calcolo}
 
 Nel tempo sono stati proposti diversi modelli di calcolo:
 
@@ -25,7 +26,7 @@ La lista dei modelli è lunga, pertanto si può pensare che sia necessaria una t
 Tuttavia si è notato che le classi delle funzioni calcolabili dai vari modelli erano sempre quelle. 
 Queste congetture sono state poi formalizzate dalla \textbf{tesi di Church-Turing}: ogni funzione è calcolabile con un procedimento effettivo se e solo se è calcolabile da una macchina di Turing.
 
-\section{URM - Ulimited Register Machine}\label{urm---ulimited-register-machine}
+\subsection{URM - Ulimited Register Machine}\label{urm---ulimited-register-machine}
 
 Il modello di calcolo che utilizzeremo è quello della macchina URM, la quale è dota di una serie di registri, ognuno dei quali contiene dei numeri naturali.
 
@@ -228,6 +229,8 @@ Ripetendo questo processo si ottiene induttivamente il programma \emph{P'} che n
 Come si relazione la classe $\mathbb{C}^S$ con $\mathbb{C}$? Dove $\mathbb{C}^S$ è la classe delle funzioni calcolabili da URM-S ovvero dalla macchina URM che non ha l'istruzione \texttt{T(m,n)} ma ha l'istruzione \texttt{TS(m,n)} che fa lo swap del contenuto di dei due registri.
 
 Esercizio lasciato per casa.
+
+\todo[inline]{TODO}
 
 \subsubsection{Esercizio teorico - URM e URM-SL}\label{esercizione-teorico---urm-e-urm-sl}
 

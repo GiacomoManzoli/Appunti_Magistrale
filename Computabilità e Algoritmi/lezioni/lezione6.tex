@@ -1,7 +1,5 @@
-\chapter{Lezione 6 - Algoritmi sui grafi
-2}\label{lezione-6---algoritmi-sui-grafi-2}
 
-\section{Visita in ampiezza - Correttezza}\label{visita-in-ampiezza---correttezza}
+%\subsubsection{Visita in ampiezza - Correttezza}\label{visita-in-ampiezza---correttezza}
 
 Riassumendo quanto visto finora:
 
@@ -315,12 +313,11 @@ efficiente perché in una foresta con \emph{d} alberi su \emph{n} nodi,
 ci sono \emph{n-d} archi, ottenendo così una complessità \emph{O(n)}.
 
 È ovvio che se viene trovato un arco all'indietro c'è un ciclo
-nell'albero, ma la dimostrazione del contrario risulta meno ovvia:
-supponendo che ci sia un ciclo e che il primo vertice del ciclo scoperto
-sia il vertice \emph{u}. Gli altri nodi che compaiono del ciclo saranno
-quindi bianchi e la visita in profondità andrà a visitare tutti i nodi
-del ciclo, colorandoli. Quando la visita del ciclo sarà finita, il nodo
-\emph{u} si avrà ancora un arco che lo collega all'ultimo nodo del ciclo
+nell'albero, ma la dimostrazione del contrario risulta meno ovvia.
+Supponendo che ci sia un ciclo e che il primo vertice del ciclo scoperto
+sia il vertice \emph{u}, gli altri nodi che compaiono del ciclo saranno bianchi e la visita in profondità andrà a visitare tutti i nodi
+del ciclo colorandoli. Quando la visita del ciclo sarà finita, il nodo
+\emph{u} avrà ancora un arco che lo collega all'ultimo nodo del ciclo
 che è stato visitato e questo sarà un arco all'indietro.
 
 \todo[inline]{Aggiungere esercizio 8, dalla registrazione}

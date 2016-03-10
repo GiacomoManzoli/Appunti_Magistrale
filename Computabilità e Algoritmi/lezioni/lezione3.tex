@@ -1,8 +1,5 @@
-\chapter{Lezione 3}
-	
-\section{Algoritmi sui grafi}\label{lezione-3---algoritmi-sui-grafi}
 
-\subsection{Chiusura transitiva e riflessiva}\label{chiusura-transitiva-e-riflessiva}
+\section{Chiusura transitiva e riflessiva}\label{chiusura-transitiva-e-riflessiva}
 
 La chiusura riflessiva e transitiva di un grafo \emph{G = (V,E)} è il
 grafo \emph{G* = (V,E*)} che si ottiene da \emph{G} aggiungendo tutti
@@ -70,7 +67,7 @@ ovvero \emph{m*}.
 
 La complessità totale è quindi $O(n^3 \cdot m*)$
 
-\subsection{Visita in ampiezza}\label{visita-in-ampiezza}
+\section{Visita in ampiezza}\label{visita-in-ampiezza}
 
 Dato un grafo \emph{G=(V,E)} e fissato un vertice del grafo \emph{s}, la
 visita in ampiezza partendo dalla \textbf{sorgente} \emph{s} visita
@@ -146,7 +143,7 @@ mantiene in memoria la frontiera.
 	\end{algorithmic}
 \end{breakablealgorithm}
 
-\subsubsection{Complessità}\label{complessituxe0}
+\subsection{Complessità}\label{complessituxe0}
 
 Il ciclo \texttt{for} di inizializzazione ha complessità \emph{O(n)}.
 
@@ -165,7 +162,7 @@ Da notare che $O(n*m)$ sarebbe sbagliata come complessità, perché $m$
 tiene in considerazione il fatto che il ciclo \texttt{for} viene
 ripetuto $n$ volte.
 
-\subsubsection{Correttezza}\label{correttezza}
+\subsection{Correttezza}\label{correttezza}
 
 Indicando con $\delta(u,v)$ la distanza tra il vertice \emph{v} e
 \emph{u}, ovvero la lunghezza del cammino minimo che li congiunge. Per
