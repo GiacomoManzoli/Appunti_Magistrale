@@ -28,7 +28,7 @@ Queste congetture sono state poi formalizzate dalla \textbf{tesi di Church-Turin
 
 \subsection{URM - Ulimited Register Machine}\label{urm---ulimited-register-machine}
 
-Il modello di calcolo che utilizzeremo è quello della macchina URM, la quale è dota di una serie di registri, ognuno dei quali contiene dei numeri naturali.
+Il modello di calcolo che utilizzeremo è quello della macchina URM, la quale è dotata di una serie di registri, ognuno dei quali contiene dei numeri naturali.
 
 \begin{verbatim}
  R1 R2 R3
@@ -106,7 +106,7 @@ $$
 P(a_1, a2, \ldots) \downarrow a
 $$
 
-indica che il programma \emph{P} eseguito sulla configurazione $a_1, a_2, \ldots, a_n, \ldots, 0$ termina producendo in $r_1$ il valore \emph{a}.
+indica che il programma \emph{P} eseguito sulla configurazione $a_1, a_2, \ldots, a_n, 0,\ldots$ termina producendo in $r_1$ il valore \emph{a}.
 
 Per indicare che il programma non termina viene utilizzato:
 
@@ -116,21 +116,21 @@ $$
 
 \subsection{Funzioni URM-calcolabili}\label{funzioni-urm-calcolabili}
 
-Una funzione parziale $f: \mathbb{N}^k \rightarrow \mathbb{N}$ si dice \textbf{URM-calcolabile} se esiste \emph{P} programma URM tale che per ogni input $a_1, \ldots, a_k$ in $\mathbb{N}$, il programma \emph{P} termina producendo $a \in \mathbb{N}$ se e solo se la funzione è definita sulla tupla e il risultato della funzione coincide con \emph{a}.
+Una funzione parziale $f: \mathbb{N}^k \rightarrow \mathbb{N}$ si dice \textbf{URM-calcolabile} se esiste \emph{P} programma URM tale che per ogni input $a_1, \ldots, a_k \in \mathbb{N}$, il programma \emph{P} termina producendo $a \in \mathbb{N}$ se e solo se la funzione è definita sulla tupla e il risultato della funzione coincide con \emph{a}.
 
 Più formalmente:
 
 $$
 P(a_1, a_2, \ldots, a_k)\downarrow \: \text{calcola $ f $ se}
 \begin{cases}
-&(a_1, a_2, \ldots, a_k) \in dom(f) \\
-&f(a_1, a_2, \ldots, a_k) = a
+(a_1, a_2, \ldots, a_k) \in dom(f) \\
+f(a_1, a_2, \ldots, a_k) = a
 \end{cases}
 $$
 
 
 Con la lettera $\mathcal{C}$ indichiamo la classe delle funzioni URM-calcolabili e con $\mathcal{C}^k$ ci si restringe alle funzioni \emph{k}-arie.
-Un esempio di funzione calcolabile è dato da \emph{f(x,y) = x+y}, laquale può essere calcolata dal programma:
+Un esempio di funzione calcolabile è dato da \emph{f(x,y) = x+y}, la quale può essere calcolata dal programma:
 
 \begin{lstlisting}[language=URM]
 	/*
@@ -166,8 +166,6 @@ I4: J(1,1,LOOP)
 I5: T(2,1) #END
 \end{lstlisting}
 
-Come esercizio, provare ad implementare \emph{f(x) = x-1, f(0) = 0}.
-
 Da notare che per individuare la funzione calcolata da un programma URM è necessario specificare sia il programma che il numero di argomenti, altrimenti non è possibile definire l'arietà della funzione.
 
 $$
@@ -184,7 +182,33 @@ $$
 
 Quando una funzione è calcolabile, esistono infiniti programmi in grado di calcolarla, perché risulta semplice andare ad aggiungere delle istruzioni ``inutili'' per generare un nuovo programma che calcola la funzione, mentre se non è calcolabile, non esiste nessun programma in grado di calcolarla.
 
-\subsubsection{Esercizio teorico - URM e URM'}\label{esercizio-teorico---urm-e-urm}
+\subsubsection{Esercizio pratico - Programma in URM}
+
+Implementare \emph{f(x) = x-1, f(0) = 0}.
+
+\paragraph{Soluzione}
+
+Prima di tutto controllo se \textit{x = 0}, in questo caso il programma termina ritornando 0, altrimenti eseguo la sottrazione.
+
+Per modellare la sottrazione utilizzo due registri, uno che parte da 0 e uno che parte da 1. Ad ogni passo sommo 1 ad entrambi i registri e quando il registro che inizialmente conteneva 1 è uguale ad \textit{x}, nell'altro registro ho il valore \textit{x-1}.
+
+\begin{lstlisting}[language=URM]
+/*
+R1 R2 R3 ...
+| x| 0| 0|...
+r2 = k
+r3 = k-1
+*/
+J(1,3,END) // x = r3= 0 -> fine ritornando 0
+S(2) // Inizializzo r2 a 1
+J(1,2,END) #LOOP
+S(2) //k++
+S(3) //(k-1)++
+ J(1,1,LOOP)
+T(3,1) #END // ritorna x-1 (0 se x = 0)
+\end{lstlisting}
+
+\subsubsection{Esercizio teorico - URM e URM'}\label{ueu}
 
 Sia URM' la macchina senza \texttt{T(m,n)} e sia $\mathcal{C}'$ la classi di funzioni URM'-calcolabili, questa classe come si relaziona con $\mathcal{C}$?
 Come prima cosa ci si può chiedere se
@@ -216,6 +240,7 @@ Tuttavia, questa è una congettura e non una dimostrazione formale.
 \paragraph{Dimostrazione formale} Sia $f \in \mathcal{C}$, ovvero esiste un \emph{P} in URM e $k \in \mathbb{N}$ tale che $f = f_{p}^{(k)}$, si vuole dimostrare che esiste un programma \emph{P'} in URM', tale che $f_{p'}^{(k)} = f_{p}^{(k)}$.
 Questo può essere dimostrato per induzione su \emph{h = \#numero di
 istruzioni \texttt{T(m,n)} in P}.
+
 Banalmente se \emph{h=0} si ha che \emph{P} è già un programma URM', mentre se $h > 0$, il programma \emph{P} avrà un'istruzione $I_s$ che sarà un trasferimento \texttt{T(m,n)}. 
 Tale programma programma può essere riscritto come \emph{P''}, con $I_s$ uguale a \texttt{J(1,1,l+2)}, dove all'istruzione $I_{l+2}$ iniziano le istruzioni alternative per fare la copia del valore, come precedentemente riportato, e al termine delle quali c'è un salto all'istruzione $I_{s+1}$
 
@@ -226,21 +251,115 @@ Ripetendo questo processo si ottiene induttivamente il programma \emph{P'} che n
 
 \subsubsection{Esercizio teorico - URM e URM-S}\label{esercizio-teorico---urm-e-urm-s}
 
-Come si relazione la classe $\mathbb{C}^S$ con $\mathbb{C}$? Dove $\mathbb{C}^S$ è la classe delle funzioni calcolabili da URM-S ovvero dalla macchina URM che non ha l'istruzione \texttt{T(m,n)} ma ha l'istruzione \texttt{TS(m,n)} che fa lo swap del contenuto di dei due registri.
+Come si relazione la classe $\mathcal{C}^S$ con $\mathcal{C}$? Dove $\mathcal{C}^S$ è la classe delle funzioni calcolabili da URM-S ovvero dalla macchina URM che non ha l'istruzione \texttt{T(m,n)} ma ha l'istruzione \texttt{TS(m,n)} che fa lo swap del contenuto di dei due registri.
 
-Esercizio lasciato per casa.
+\paragraph{Soluzione}
 
-\todo[inline]{TODO}
+\subparagraph{$\mathcal{C} \subseteq \mathcal{C}^S$}
+
+Sia $f \in \mathcal{C} \Rightarrow$ esiste un programma $P$ in URM tale che $f = f_P^{(k)}$, si vuole trovare \textit{P'} in URM-S tale che $f_P^{(k)} = f_{P'}^{(k)}$.
+
+Questo può essere fatto mediante induzione sul numero di istruzioni \texttt{T} presenti in \textit{P}, mostrando come queste possano essere trasformate in istruzioni \texttt{TS}, oppure si può sfruttare quanto dimostrato nell'esercizio della sezione §\ref{ueu}, ovvero che la classe delle funzioni calcolate senza la funzione di trasferimento $\mathcal{C}'$ è equivalente alla classe $\mathcal{C}$ e che sicuramente $\mathcal{C}' \subseteq \mathcal{C}^S$ perché un programma URM' è anche un programma URM-S senza istruzioni \texttt{TS}.
+
+Si ha quindi che $\mathcal{C} \equiv \mathcal{C}' \subseteq \mathcal{C}^S$.
+
+\subparagraph{$\mathcal{C}^S \subseteq \mathcal{C}$}
+
+
+Sia $f \in \mathcal{C}^S \Rightarrow$ esiste un programma $P$ in URM-S tale che $f = f_P^{(k)}$, si vuole trovare \textit{P'} in URM tale che $f_P^{(k)} = f_{P'}^{(k)}$.
+
+Dimostriamo quindi che dato \textit{P} programma in URM-S, esiste \textit{P'} in URM tale che
+$f_P^{(k)} = f_{P'}^{(k)}$ per induzione su \textit{h = numero di istruzioni} \texttt{TS(m,n)}\textit{ in P}.
+
+\begin{itemize}
+	\item $(h=0)$, non ci sono istruzioni \texttt{TS} quindi \textit{P} è già in URM.
+	
+	\item $(h \Rightarrow h+1)$, ovvero il programma ha un certa istruzione \textit{s} \texttt{TS(m,n)} e termina all'istruzione \textit{l+1}.
+	
+	Viene scelto un registro $t = \max(k, \text{\#registri usati da }p)$. Il
+	programma \textit{P} viene quindi modificato in modo che punti ad un blocco di
+	codice del tipo
+	
+	\begin{lstlisting}[language=URM]
+	T(m,t)
+	T(n,m)
+	T(t,n)
+	J(1,1,s+1)\end{lstlisting}
+	
+	e viene anche modificata l'istruzione \textit{l+1} in modo che faccia un salto
+	alla fine del programma, ovvero \textit{l+5}.
+	
+	Si ottiene quindi \textit{P''} con \textit{h} istruzioni \texttt{TS}, quindi per induzione esiste \textit{P'} in URM tale che $f_{P'}^{(k)} = f_{P''}^{(k)} = f_P^k$.
+\end{itemize}
+
+C'è un \textbf{piccolo problema} dato che al passo induttivo si ottiene un programma ibrido che contiene sia istruzioni di scambio, sia istruzioni di trasferimento.
+
+Per sistemare questa sottigliezza è necessario modificare la dimostrazione:
+
+``Dimostriamo che dato un programma \textit{P} che contiene \textbf{sia istruzioni di
+scambio che istruzioni di trasferimento}, esiste \textit{P'} $\ldots$''.
+
 
 \subsubsection{Esercizio teorico - URM e URM-SL}\label{esercizione-teorico---urm-e-urm-sl}
 
 Sempre quella domanda, con la differenza che viene tolta l'istruzione di salto \texttt{J(m,n,l)}.
 
-Ovviamente $\mathbb{C}^{SL}$ è contenuta in $\mathbb{C}$, ma non vale la relazione $\mathbb{C} \subseteq \mathbb{C}^{SL}$ perché $\mathbb{C}^{SL}$ contiene solamente funzioni totali, ovvero che terminano sempre, mentre $\mathbb{C}$ contiene anche delle funzioni parziali.
+\paragraph{Soluzione}
 
-Per le istruzioni disponibili in URM-SL si riesce a calcolare \emph{f(x) = k} oppure \emph{f(x) = x+k} per $k \in \mathbb{N}$. 
-Ovvero $f \in \mathbb{C}^{SL}$ se e solo se \emph{f(x) = k oppure x+k}.
+Ovviamente $\mathcal{C}^{SL}$ è contenuta in $\mathcal{C}$, ma non vale la relazione $\mathcal{C} \subseteq \mathcal{C}^{SL}$ perché $\mathcal{C}^{SL}$ contiene solamente funzioni totali, ovvero che terminano sempre, mentre $\mathcal{C}$ contiene anche delle funzioni parziali.
 
-Questo vuol dire che per ogni programma $P_{sl}$ la funzione che viene calcolata $f_{p_{SL}}$ è del tipo di \emph{f}.
+Per le istruzioni disponibili in URM-SL si riesce a calcolare \emph{f(x) = k} oppure \emph{f(x) = x+k} per $k \in \mathcal{N}$. 
+Ovvero $f \in \mathcal{C}^{SL}$ se e solo se \emph{f(x) = k oppure x+k}.
 
-La dimostrazione viene fatta per induzione sulla struttura di un programma URM-SL, ragionando sul cosa succede se si aggiunge un'ulteriore istruzione al programma già esistente e che calcola un valore costante.
+Questo vuol dire che per ogni programma $P_{SL}$ la funzione che viene calcolata $f_{p_{SL}}$ è del tipo di \emph{f}.
+
+\paragraph{Dimostrazione}
+
+La dimostrazione viene fatta per induzione sulla lunghezza del programma \textit{h=L(P)}.
+
+\subparagraph{$(h = 1)$} in questo caso il programma ha solamente un'istruzione, la quale può essere:
+
+\begin{itemize}
+	\item
+	\texttt{Z(n)}: se \emph{n} è uguale a 1, il programma azzera il primo
+	registro, quindi calcola 0, altrimenti se azzera un registro
+	qualsiasi, il programma non modifica il valore di input, quindi
+	calcola $f_P(x) = x$.
+	\item
+	\texttt{S(n)}: in modo analogo a prima, se \emph{n=1} il programma
+	calcola $f_P(x) = x+1$, altrimenti calcola $f_P(x) = x$.
+	\item
+	\texttt{T(m,n)}: se \emph{n=1} e $m >1$, il programma
+	calcola 0, perché tutti i registri che non sono di input sono per
+	definizione a 0. Se invece $n >1$ oppure se
+	\emph{m=1}, $f_P(x)= x$.
+\end{itemize}
+
+\subparagraph{$(h \Rightarrow h+1)$}
+
+il programma \emph{P} può essere visto come un programma composto dal programma \textit{P'} e dell'istruzione \textit{h+1}. 
+
+Per ipotesi induttiva si ha che $f_{P'}$ ha la forma desiderata, ovvero $f_{P'}(x) = k$ oppure $x+k$.
+
+L'istruzione \emph{h+1}, può essere:
+
+\begin{itemize}
+	\item
+	\texttt{Z(n)}: se \emph{n} è uguale a 1, il programma azzera il primo
+	registro, quindi calcola 0, altrimenti se azzera un registro
+	qualsiasi il programma non modifica il valore attuale del registro,
+	quindi calcola $f_P(x) = f_{P'}(x)$.
+	\item
+	\texttt{S(n)}: se \emph{n=1} il programma calcola $f_P(x) = f_{P'}(x)+1$, se $n >1$ il registro non viene
+	modificato quindi $f_P(x) = f_{P'}(x)$.
+	\item
+	\texttt{T(m,n)}: se $n>1$ oppure \emph{m=1} si ha
+	$f_{P}(x) = f_{P'}(x)$. Se invece \emph{n=1} e $m > 1$ cade il palco, perché non si sa niente sul contenuto
+	del registro \emph{m}. 
+	È necessario quindi \textbf{modificare la dimostrazione} che si vuole fare in $f_{p}^{(1)(t)}(x) = k \text{ o } x+k \:\forall t$. La
+	dimostrazione è molto simile a quella svolta finora, con la differenza
+	che in questo caso si ha la garanzia che nel registro \emph{m} ci sia
+	un valore delle forma desiderata.
+\end{itemize}
+
+Con la modifica indicata è possibile assumere che anche negli altri registri ci può essere solamente \textit{x} oppure \textit{x+k}, rendendo così possibile dimostrare che anche nel caso in cui $m>1$ il valore che viene calcolato è di quella forma.

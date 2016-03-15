@@ -1,0 +1,309 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\subsection{Composizione generalizzata}\label{composizione-generalizzata}
+
+$$f: \mathbb{N}^k \rightarrow \mathbb{N},\: g_1,\ldots g_n : \mathbb{N}^k \rightarrow \mathbb{N}$$
+
+La loro composizione $h: \mathbb{N}^k \rightarrow \mathbb{N}$ è data da: 
+
+$$
+h(\vec{x}) = f(g_1(\vec{x}), \ldots, g_n(\vec{x}))
+$$
+
+La funzione $h(\vec{x})\downarrow$ (è definita) se tutte le
+$g_i \downarrow y_i, f(y_1,\ldots,y_n) \downarrow$.
+
+L'approccio utilizzato nella valutazione delle funzioni è quello
+\textbf{eager}, ovvero vengono valutati prima tutti i parametri.
+
+Ad esempio: $\underline{0} : \mathbb{N} \rightarrow \mathbb{N},\: \underline{0}(x) = 0$ e $d(x) = \uparrow,\: \underline{0}(d(1))$ è
+$\uparrow$ perché prima è necessario valutare i parametri.
+
+\subsubsection{Calcolabilità della funzione
+composta}\label{calcolabilituxe0-della-funzione-composta}
+
+Se $f: \mathbb{N}^n \rightarrow \mathbb{N}, g_1\ldots g_n : \mathbb{N}^k \rightarrow \mathbb{N} \in \mathcal{C}$, allora anche $h: \mathbb{N}^k \rightarrow \mathbb{N}$ è calcolabile in $\mathcal{C}$.
+
+\paragraph{Dimostrazione}\label{dimostrazione}
+
+Siano $F,G_1, \ldots{}, G_n$ programmi URM in forma normale per
+le relative funzioni.
+
+L'input della funzione \emph{h} avrà nei primi \emph{k} registri i
+valori di input, è necessario quindi andare a copiarli in una locazione
+di memoria che non viene usata dai vari programmi, ovvero dalla
+locazione \emph{m+1}, con $m = max\{\rho(F), \rho(G_1), \ldots \rho(G_N), k,n\}$.
+
+I risultati parziali dei programmi vengono poi memorizzati a partire
+dalla locazione \emph{m + k +1} per poi essere utilizzati da \emph{F}
+
+Il programma risultante è:
+
+\begin{lstlisting}[language=URM]
+T([1 ... k],[m+1 ... m+k])
+G1[m+1 ... m+k -> m+k+1]
+...
+Gn[m+1 ... m+k -> m+k+n]
+F[m+k+1 ... m+k+n -> 1]
+\end{lstlisting}
+
+\paragraph{Esempio - Somma di due numeri}\label{esempio}
+
+A partire dalla funzione $sum(x_1, x_2) = x_1+x_2$ è possibile andare a ottenere la funzione
+
+$$f(x_1, x_2, x_3) = x_1 + x_2 +x_3$$
+
+componendo la funzione \textit{sum} con se stessa:
+
+$$f(x_1, x_2, x_3) = sum(sum(x_1,x_2),x_3)$$
+
+Tuttavia, strettamente parlando, le $g_i$ non hanno la stessa
+arietà, pertanto sono necessari dei piccoli aggiustamenti:
+
+$$f(x_1, x_2, x_3) = sum(sum(U_1^{3}(\vec{x}),U_2^3(\vec{x}))), U_3^3(\vec{x}))$$
+
+\subsection{Ricorsione Primitiva}\label{ricorsione-primitiva}
+
+\begin{align*}
+	fact(0) &= 1 \\
+	fact(n+1) &= (n+1)fact(n)
+\end{align*}
+
+\begin{align*}
+	fib(0) &= 1 \\
+	fib(1) &= 1 \\
+	fib(n+2) &= fib(n+1) + fib(n)
+\end{align*}
+
+Date $f: \mathbb{N}^k \rightarrow \mathbb{N}$ e $g:\mathbb{N}^{k+2} \rightarrow \mathbb{N}$, la funzione per ricorsione primitiva $h: \mathbb{N}^{k+1} \rightarrow \mathbb{N}$ è definita come
+
+\begin{align*}
+	h(\vec{x}, 0) &= f(x) \\
+	h(\vec{x}, y+1) &= g(\vec{x}, y, h(\vec{x},y))
+\end{align*}
+
+Così facendo viene definita \emph{h} utilizzando \emph{h} e
+concettualmente è corretto, tuttavia è necessario dimostrare formalmente
+l'esistenza e l'unicità di \emph{h}.
+
+Questo lo si fa considerando l'operatore $\Phi$:
+
+\begin{align*}
+	\Phi : (\mathbb{N}^k \rightarrow \mathbb{N}) &\rightarrow (\mathbb{N}^k \rightarrow \mathbb{N}) \\
+	\Phi(h)(\vec{x}, 0) &= f(\vec{x}) \\
+	\Phi(h)(\vec{x}, y+1) &= g(\vec{x}, y, h(\vec{x},y))
+\end{align*}
+
+tale che $\Phi(h) = h$, ovvero tale che viene raggiunto un punto
+fisso. Ciò sarebbe da dimostrare, ma questo va oltre l'obiettivo del corso, quindi viene dato per buono.
+
+In altre parole, se \emph{h} rispetta lo schema precedentemente definito, allora esiste ed è unica.
+
+Assumendo quindi che la ricorsione primitiva di una funzione calcolabili
+è calcolabile, è possibile definire varie operazioni senza scrivere
+esplicitamente il programma per calcolarle:
+
+Ad esempio la funzione somma può essere definita in modo ricorsivo:
+
+$$
+	x+y = h(x,y) =\begin{cases}
+	x+0 = x &\Rightarrow f(x) = x \\
+	x+(y+1) = (x+y) + 1 &\Rightarrow g(x,y,z) = succ(z)
+	\end{cases}
+$$
+
+In modo simile possono essere anche definiti il prodotto e l'esponenziale:
+
+$$
+x \cdot y = h(x,y) =\begin{cases}
+x \cdot 0 = 0 &\Rightarrow f(x) = 0 \\
+x \cdot (y+1) = (x \cdot y) + x &\Rightarrow g(x,y,z) = z+x
+\end{cases}
+$$
+
+$$
+x^y = h(x,y) =\begin{cases}
+x^0 = 1 &\Rightarrow f(x) = 1 \\
+x^{(y+1)} = (x^y) \cdot x &\Rightarrow g(x,y,z) = z \cdot x
+\end{cases}
+$$
+
+\subsubsection{Calcolabilità della Ricorsione Primitiva}\label{calcolabilituxe0-della-ricorsione-primitiva}
+
+Siano $f:\mathbb{N}^k \rightarrow \mathbb{N}$ e $g:\mathbb{N}^{k+2} \rightarrow \mathbb{N} \in \mathcal{C}$ allora anche \emph{h} definita per
+ricorsione primitiva è in $\mathcal{C}$. Ovvero quello che è stato assunto precedentemente.
+
+\paragraph{Dimostrazione}\label{dimostrazione-1}
+
+Siano \emph{F} e \emph{G} i programmi che calcolano \emph{f} e \emph{g}.
+
+Il programma che calcola \emph{h} verrà invocato con il vettore \emph{x}
+nelle prime \emph{k} locazioni e con \emph{y} nella locazione
+\emph{k+1}.
+
+Come prima cosa è necessario trasferire i dati di input in una zona di
+memoria non utilizzata dai programmi \emph{F} e \emph{G}, ovvero
+\emph{m+1}, dove $m = max\{\rho(F), \rho(G), k+2\}$.
+
+Dopodiché è necessario effettuare un'interazione su un contatore
+\emph{i} che parte da 0, fino a quando non viene raggiunto \emph{y}.
+
+\begin{verbatim}
+h(vec(x), 0) = f(vec(x)) -- i=0 -- i==y? NO
+h(vec(x), 1) = g(vec(x), 0, h(vec(x),0)) -- i=1 -- i==y? NO
+...
+h(vec(x), i+1) = g(vec(x), i, h(vec(x),i)) -- i=n -- i==y? SI -> fine
+\end{verbatim}
+
+ovvero il programma per \emph{h} sarà:
+
+\begin{lstlisting}[language=URM]
+T([1..k], [m+1 ... m+k]) // copia x
+T(k+1, m+k+3) //copia y
+F[m+1 ... m+k -> m+k+2]
+J(m+k+3, m+k+1, END) #LOOP
+G[m+1 ... m+k+2 -> m+k+2] // h(vec(x),i+1)
+S(m+k+1) //i++
+J(1,1,LOOP)
+T(m+k+2,1) #END
+\end{lstlisting}
+
+Se \emph{f} e \emph{g} sono funzioni parziali quanto dimostrato richiede
+maggiori precisazioni, ma a noi basta sapere che se durante il calcolo
+troviamo qualche funzione non definita, anche \emph{h} non è definita.
+
+\subsection{Funzioni totali definite ricorsivamente}\label{osservazione-senza-titolo}
+
+Le funzioni definite a parte da funzioni totali mediante composizione o
+ricorsione sono anche loro totali.
+
+La dimostrazione per le funzioni mediante composizione è vera per
+definizione, l'altra è lasciata per esercizio (si fa per induzione).
+
+\todo[inline]{todo}
+
+\subsection{Esercizio - Libreria di funzioni calcolabili}\label{esercizio---libreria-di-funzioni-calcolabili}
+
+\begin{itemize}
+\item
+  somma \emph{x+y}
+\item
+  prodotto $x \cdot y$
+\item
+  esponenziale $x^y$
+\item
+  fattoriale \emph{fact(x)}
+\end{itemize}
+
+Sguardo d'insieme: vogliamo trovare un programma URM in grado di
+simulare un altro programma URM, le operazioni numeriche sono
+interessanti perché il programma in input verrà rappresentato come un
+numero.
+
+\subsubsection{Predecessore}\label{predecessore}
+
+$$ \text{pred}(x) = \begin{cases}x \dotminus 1 = 0, \:& \text{ se } x=0\\
+x-1, \:& \text{ se } x > 0\end{cases}$$
+
+Può essere calcolata ricorsivamente con
+
+\begin{align*}
+	0 \dotminus 1 &= 0 \\
+	(y+1) \dotminus 1 &= y
+\end{align*}
+
+\subsubsection{Sottrazione tra numeri naturali}\label{sottrazione-tra-numeri-naturali}
+
+$$x \dotminus y =\begin{cases}
+0,\:& \text{se } x \leq y\\
+x-y, \:& \text{altrimenti}
+\end{cases}$$
+
+Può essere calcolata ricorsivamente con:
+
+\begin{align*}
+x \dotminus 0 &= x \\
+x\dotminus (y+1) &= (x \dotminus y) \dotminus 1
+\end{align*}
+
+\subsubsection{Segno}\label{segno}
+
+$$sg(x) =\begin{cases}
+0,\:& \text{se } x = 0\\
+1, \:& \text{altrimenti}
+\end{cases}$$
+
+Può essere calcolata ricorsivamente con:
+
+\begin{align*}
+sg(0) &= 0 \\
+sg(y+1) &= 1
+\end{align*}
+
+In modo simile può essere definito anche $\overline{sg}$.
+
+\subsubsection{Valore assoluto della differenza}\label{valore-assoluto-della-differenza}
+
+$$|x - y|=\begin{cases}
+x-y,\:& \text{se } x \leq y\\
+y-x, \:& \text{altrimenti}
+\end{cases}$$
+
+Può essere calcolata in modo composizionale con:
+
+$$|x - y| = (x \dotminus y) + (y \dotminus x)$$
+
+
+\subsubsection{Minimo}\label{minimo}
+
+$$ \min (x,y) =\begin{cases}
+x,\:& \text{se } x \leq y\\
+y, \:& \text{altrimenti}
+\end{cases}$$
+
+Può essere calcolata con:
+
+$$\min(x,y) = x \dotminus (x \dotminus y)$$
+
+Questo perché se \emph{x} è il minimo, $x\dotminus y$ è 0.
+
+\subsubsection{Resto della divisione intera}\label{resto-della-divisione-intera}
+
+$$\text{rm}(x,y) =\begin{cases}
+y \mod x,\:& \text{se } x \neq y\\
+y, \:& \text{altrimenti}
+\end{cases}$$
+
+
+Può essere calcolato ricorsivamente come:
+
+\begin{align*}
+\text{rm}(x,0) &= 0 \\
+\text{rm}(x, y+1) &= \begin{cases}\text{rm}(x+y) +1, \:& \text{ se rm}(x+y) +1 \neq x\\
+0, \:& \text{ altrimenti} \end{cases}
+\end{align*}
+
+L'\emph{if} può essere espresso in modo algebrico utilizzando la
+funzione \emph{sg}, ottenendo:
+
+$$\text{rm}(x, y+1) = (sg(x \dotminus \text{rm}(x,y) \dotminus 1))(\text{rm}(x,y)+1)$$
+
+\subsubsection{Esercizio - Divisione intera}\label{esercizio---divisione-intera}
+
+$$\text{qt}(x,y) =\begin{cases}
+\floor[\Big]{\frac{y}{x}},\:& \text{se } x \neq y\\
+y, \:& \text{altrimenti}
+\end{cases}$$
+
+\todo[inline]{todo}
+
+\subsubsection{Esercizio - Definizione per casi}\label{esercizio---definzione-per-casi}
+
+$f_1 \ldots f_n : \mathbb{N}^k \rightarrow \mathbb{N}$ totali e calcolabili e
+$Q_1, \ldots, Q_n \subseteq \mathbb{N}^k$ decidibili e tali che per ogni $\vec{x}$ solo un predicato è vero.
+
+Definire $f(x) = f_1(x) \text{ se } Q_1(x) \ldots f_n(x) \text{ se } Q_n(x)$
+
+\todo[inline]{todo}

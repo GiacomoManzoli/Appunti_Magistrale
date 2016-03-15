@@ -90,6 +90,17 @@
 }
 \makeatother
 
+\makeatletter % trattino con punto sopra
+\newcommand{\dotminus}{\mathbin{\text{\@dotminus}}}
+
+\newcommand{\@dotminus}{%
+	\ooalign{\hidewidth\raise1ex\hbox{.}\hidewidth\cr$\m@th-$\cr}%
+}
+\makeatother
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
 %----------------------------------------------------------------------------------------
 % TITLE
 %----------------------------------------------------------------------------------------
@@ -132,6 +143,8 @@ A.A. 2015-2016} % Subtitle
 \input{lezioni/lezione1}
 \input{lezioni/lezione4}
 \input{lezioni/lezione5}
+\input{lezioni/lezione8}
+\input{lezioni/lezione9}
 \part{Algoritmi}
 \input{lezioni/lezione2}
 \input{lezioni/lezione3}

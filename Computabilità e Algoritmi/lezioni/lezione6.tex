@@ -298,13 +298,14 @@ dell'albero, andando a modificare la procedura \textsc{DFS-Visit}:
 	\end{algorithmic}
 \end{breakablealgorithm}
 
-\subsubsection{Visita in profondità su grafi orientati}\label{visita-in-profondituxe0-su-grafi-orientati}
+\subsubsection{Visita in profondità su grafi non orientati}\label{visita-in-profondituxe0-su-grafi-orientati}
 
-Se il grafo sul quale viene effettuata la visita in profondità è
+Se il grafo sul quale viene effettuata la visita in profondità è non
 orientato possono essere presenti solamente archi d'albero e archi
 all'indietro.
 
-\todo[inline]{Integrare con registrazione}
+Infatti, non possono esserci archi in avanti perché ogni arco in avanti è anche un arco all'indietro dato che può essere percorso in entrambe le direzioni e pertanto viene classificato come arco all'indietro.
+Inoltre, non possono esserci archi trasversali perché se ci fosse un arco trasversale \textit{uv}, allora vuol dire che prima viene scoperto e finito \textit{u} e poi viene scoperto \textit{u} e finito \textit{v}. Chiaramente questo non può succedere perché quando viene scoperto \textit{u}, \textit{v} sta nella lista delle adiacenze di \textit{u} ed è un nodo bianco, quindi c'è un cammino bianco tra \textit{u} e \textit{v}, pertanto \textit{v} viene completato prima di \textit{u}.
 
 Si può sfruttare questa proprietà per verificare la presenza di un ciclo
 in un grafo orientato. Se durante la visita in profondità viene trovato
@@ -320,6 +321,36 @@ del ciclo colorandoli. Quando la visita del ciclo sarà finita, il nodo
 \emph{u} avrà ancora un arco che lo collega all'ultimo nodo del ciclo
 che è stato visitato e questo sarà un arco all'indietro.
 
-\todo[inline]{Aggiungere esercizio 8, dalla registrazione}
+\subsubsection{Esercizio - Percorrere tutti gli archi di un grafo non orientato}
 
-\textbf{Provare esercizio 9 e 10}
+Scrivere un algoritmo che dato un grafo non orientato e connesso, riesca a trovare un cammino che attraversa tutti gli archi una e una sola volta in ognuna delle direzioni, con complessità massima \textit{O(n+m)}.
+
+\paragraph{Soluzione} Effettuando una visita in profondità a partire da un vertice qualsiasi su un grafo non orientato e connesso viene costruito un unico albero.
+Trattandosi di un grafo non orientato, durante la visita è possibile trovare solamente archi d'albero, i quali vengono percorsi in entrambe le direzioni esattamente una volta, oppure archi all'indietro, che collegano il vertice corrente con un vertice grigio.
+Per visitare anche gli archi all'indietro basta che l'algoritmo si sposti sul vertice grigio e poi ritorni sul vertice che stava esplorando.
+
+La complessità di questo algoritmo risulta essere \textit{O(n+m)} dal momento che si limita ad effettuare una ricerca in profondità.
+
+\subsubsection{Esercizio - Cammini e discendenti}
+
+Mostrare con un controesempio che se vi è un cammino da \textit{u} a \textit{v} in un grafo orientato e \textit{u} viene scoperto prima di \textit{v}, non necessariamente \textit{v} è un discendente di \textit{u} nella foresta di visita in profondità.
+
+\paragraph{Soluzione}
+
+
+\todo[inline]{TODO}
+
+\subsubsection{Esercizio - Alberi di un solo nodo}
+
+Mostrare come un vertice \textit{u} di un grafo orientato possa essere l'unico vertice di un albero della foresta di visita in profondità pur avendo sia archi entranti che archi uscenti.
+
+\paragraph{Soluzione} Siano $ x_0, x_1, \ldots, x_n $ i vertici del grafo tali che esiste un arco uscente da \textit{u} che li raggiunge e $ y_0, y_1, \ldots, y_n $ i vertici che hanno un arco uscente verso \textit{u}.
+
+Durante la visita in profondità il vertice \textit{u} risulta essere l'unico vertice di un albero se:
+
+\begin{itemize}
+	\item C'è un cammino bianco che collega tutti i vertici $ x_i $ e nessuno dei vertici $ y_k $ e che inizia nel vertice \textit{k}
+	\item $ k.d < u.d < y_k.d \: \forall k$
+\end{itemize}
+
+Se entrambe le condizioni sono verificate, quando viene iniziata la visita in profondità sul vertice \textit{u}, tutti i vertici raggiungibili sono già neri e quindi il vertice viene subito chiuso creando un albero che consiste solamente nel vertice \textit{u}.

@@ -7,16 +7,20 @@
 
 \textbf{Algoritmo}: descrizione di una sequenza di passi elementari che
 permettono di raggiungere un certo obiettivo, come la trasformazione di
-certi dati di input in dati di output. Il vincolo dei passi elementari
+certi dati di input in dati di output. 
+
+Il vincolo dei passi elementari
 si traduce nell'utilizzo di operazioni semplici, direttamente eseguibili
-da un calcolatore. Nel caso l'algoritmo sia deterministico, questo può
+da un calcolatore. 
+
+Nel caso l'algoritmo sia deterministico, questo può
 essere visto come una funzione che mappa un certo input in un
 determinato output, in questo caso si dice che la funzione \textbf{è
 calcolata} dall'algoritmo.
 
 \textbf{Funzione calcolabile}: una funzione è calcolabile in modo
-effettivo se \textbf{esiste} un algoritmo in grado di calcolarla. A noi
-interessa sapere che \textbf{esiste} un algoritmo che calcola quella
+effettivo se \textbf{esiste} un algoritmo in grado di calcolarla. 
+A noi interessa sapere che \textbf{esiste} un algoritmo che calcola quella
 determinata funzione, ma non sempre ci interessa conoscere l'algoritmo.
 
 Alcune funzioni calcolabili sono:
@@ -30,11 +34,11 @@ P(n) = \begin{cases}
 \end{cases}
 $$
 
-$$ p(n) = n-\text{esimo numero primo}$$
+$$ p(n) = n\text{-esimo numero primo}$$
 
-$$ f(n) = n-\text{esima cifra di }\pi$$
+$$ f(n) = n\text{-esima cifra di }\pi$$
 
-Una funzione non calcolabile è data da
+Ci sono però delle funzioni per le quali non si riesce a stabilire se sono calcolabili o meno, come per la funzione:
 
 $$
 g(n) = \begin{cases}
@@ -43,9 +47,9 @@ g(n) = \begin{cases}
 \end{cases}
 $$
 
-Non si sa se la funzione \emph{g(n)} è calcolabile, perché si riesce a
-trovare un algoritmo che funziona solamente nel caso in cui la sequenza
-è presente.
+Questo perché si riesce a trovare un algoritmo che funziona solamente nel caso in cui la sequenza è presente.
+
+Ci sono poi altre funzioni che sembrano simili a \textit{g(n)} ma che in realtà sono calcolabili, come la funzione:
 
 $$
 h(n) = \begin{cases}
@@ -54,7 +58,7 @@ h(n) = \begin{cases}
 \end{cases}
 $$
 
-Stranamente \emph{h(n)} è calcolabile, perché si può considerare
+\`{E} infatti possibile definire un algoritmo per il calcolo utilizzando il numero \textit{k}
 
 $$
 k = sup( \{n | \pi \text{contiene \textit{n} cifre ``5'' consecutive}\} )
@@ -74,10 +78,11 @@ $$
 Da notare che l'algoritmo così definito non si preoccupa di quanto sia
 difficile trovare \emph{k}, ma solo di trovare una soluzione per il
 problema.
- Questo deriva dall'\textbf{esiste} precedentemente riportato in
+Questo deriva dall'\textbf{esiste} precedentemente riportato in
 grassetto.
-Noi ci accontentiamo del fatto che qualsiasi valore può
-assumere \emph{k} non conosciamo un algoritmo, l'algoritmo per trovare
+
+Noi ci accontentiamo del fatto che per qualsiasi valore che può
+assumere \emph{k} siamo in grado di definire un algoritmo. L'algoritmo per trovare
 \emph{k} può esistere o meno, ma questo non ci interessa perché vogliamo
 che la teoria della calcolabilità non venga influenzata dalla conoscenza
 sul dominio ma che sia una caratteristica della funzione. 
@@ -85,8 +90,7 @@ Ad esempio, in questo caso non ci interessa sapere se il $\pi$ è un numero norm
 meno e non vogliamo che la definizione di calcolabilità sia influenzata
 da ciò.
 
-Con \emph{g(n)} la stessa funzione può essere implementata con
-l'algoritmo
+Si potrebbe pensare di calcolare \emph{g(n)} utilizzando una funzione analoga, utilizzando l'insieme \textit{X} contenente tutte le sequenze di numeri presenti nel $ \pi $
 
 
 $$
@@ -101,8 +105,8 @@ l'appartenenza è necessario un programma infinito.
 
 \section{Le funzioni non calcolabili}\label{le-funzioni-non-calcolabili}
 
-\textbf{Modello di calcolo effettivo}: ovvero le caratteristiche che
-deve avere un algoritmo per poter essere eseguibile in modo effettivo:
+\textbf{Modello di calcolo effettivo}: l'insieme delle caratteristiche che
+deve avere un algoritmo per poter essere eseguibile in modo effettivo.
 
 \begin{itemize}
 \item
@@ -143,19 +147,18 @@ Notazioni:
   cartesiano di uno o più insiemi.
 \item
   Una funzione è una particolare relazione: $f \subseteq A \times B$ e vale anche
-  $\forall(a,b), (a,b') \in f \therefore b = b' \text{ e } f(a) = b$
+  $\forall(a,b), (a,b') \in f \Rightarrow b = b' \text{ e } f(a) = b$
 \item
-  Dominio di una funzione: $dom(f) = \{a | \exists (a,b) \in f\}$ e
-  per indicare che \textit{f} è definita su \textit{a} si utilizza $f(a)$\emph{freccia verso
-  basso}.
+  Dominio di una funzione: $dom(f) = \{a \: | \: \exists (a,b) \in f\}$ e
+  per indicare che \textit{f} è definita su \textit{a} si utilizza $f(a)\downarrow$.
 \item
   Cardinalità $|A|$, numero di elementi presenti
-  nell'insieme, nel caso di elementi finiti, mentre nel caso di insiemi
+  nell'insieme nel caso di elementi finiti, mentre nel caso di insiemi
   infiniti si ha che:
 
   \begin{itemize}
-  \item $|A| = |B|$ se esiste $f: A \rightarrow B$ e biunivoca
-  \item $|A| \leq |B|$ se esiste $f: A \rightarrow B$ e iniettiva
+  \item $|A| = |B|$ se esiste $f: A \rightarrow B$ e biunivoca\footnote{Una funzione $ f : X \rightarrow Y$ è biunivoca se e solo se ad ogni elemento di $ X $ è associato un solo elemento di $ Y $ e viceversa.}
+  \item $|A| \leq |B|$ se esiste $f: A \rightarrow B$ e iniettiva\footnote{Una funzione $ f: X\rightarrow Y $ si dice iniettiva se due elementi distinti del dominio hanno immagini distinte, ovvero $a_1\neq a_2$ implica $f(a_1)\neq f(a_2)$.}
   \end{itemize}
 \item
   Un insieme è \textbf{numerabile} quando $|A| \leq |\mathbb{N}|$, ovvero esiste una funzione suriettiva $f: |\mathbb{N}| \rightarrow A$. 
@@ -171,14 +174,14 @@ funzioni che non possono essere calcolate.
 
 Fissando un insieme di funzioni unarie e parziali
 
-$ F = \{f | f: \mathbb{N} \rightarrow \mathbb{N}\}$
+$$ F = \{f \: |\: f: \mathbb{N} \rightarrow \mathbb{N}\}$$
 
 e un modello di calcolo con i relativi algoritmi $\mathcal{A}$.
 
 Le funzioni calcolabili nel modello di calcolo sono date da:
 
 $$
-F_\mathcal{A} = {f | \exists A \in \mathcal{A} \text{ che calcola } f}
+F_\mathcal{A} = \{f \: |\: \exists A \in \mathcal{A} \text{ che calcola } f\}
 $$
 
 dato un algoritmo $ A \in \mathcal{A}$ riusciamo a trovare una funzione $f_A$ che
@@ -193,7 +196,7 @@ Sia \emph{I} il set finito di istruzioni della macchina di calcolo.
 L'insieme degli algoritmi calcolabili risulta quindi essere:
 
 $$
-\mathcal{A} \subseteq I \cup I \times I \cup I \times I \times I \cup I \times I \times ... = \bigcup_n I^n
+\mathcal{A} \subseteq I \cup ( I \times I ) \cup ( I \times I \times I ) \cup \ldots = \bigcup_n I^n
 $$
 
 pertanto
@@ -202,8 +205,7 @@ $$
 |\mathcal{A}| \leq |\bigcup_n I^n| \leq |\mathbb{N}|
 $$
 
-perché la funzione $ f: \mathcal{A} \rightarrow F_\mathcal{A}$  è
-ovviamente suriettiva, pertanto si ha:
+Poiché la funzione $ f: \mathcal{A} \rightarrow F_\mathcal{A}$  è ovviamente suriettiva\footnote{Una funzione $f : X \rightarrow Y $ è detta suriettiva se $ \forall y \in Y, \exists x \in X | f(x) = y$.},  si ha:
 
 $$
 |F_\mathcal{A}| \leq |\mathcal{A}| \leq |\mathbb{N}|
@@ -213,7 +215,7 @@ L'insieme delle funzioni è certamente infinito e certamente esiste un
 sottoinsieme \emph{T} delle funzioni totali che non è enumerabile.
 
 $$
-T = \{ f | f : \mathbb{N} \rightarrow \mathbb{N} \text{e totatli}\}
+T = \{ f | f : \mathbb{N} \rightarrow \mathbb{N} \text{ e totali}\}
 $$
 
 La non enumerabilità si dimostra per assurdo, perché se
@@ -226,7 +228,7 @@ $f_0,\ f_1, \ldots$ è un'enumerazione di \emph{T}:
 2   ...     ...     ...
 \end{verbatim}
 
-È quindi possibile definire  $d(n) = f_n(n) è 1$ che non è
+È quindi possibile definire  $d(n) = f_n(n) +1$ che non è
 presente nell'enumerazione sopra riportata, perché $ d(n) \neq f(n) \forall n$.
 
 Pertanto 
@@ -237,11 +239,11 @@ e
 $$
 \begin{rcases}
 F_\mathcal{A} \subseteq F \\
-|F_\mathcal{A} < |F||
+|F_\mathcal{A}| < |F|
 \end{rcases}
  \Rightarrow \: F_\mathcal{A} \subsetneq F
 $$
 
 Ovvero, esistono delle funzioni che non sono calcolabili. Il numero di
-queste funzioni è dato da $ | F \ F_\mathcal{A}| $ che è
-infinita, questo perché se fosse finita, \textit{F} sarebbe enumerabili.
+queste funzioni è dato da $ | F - F_\mathcal{A}| $ che è
+infinita, questo perché se fosse finita \textit{F} sarebbe enumerabile.

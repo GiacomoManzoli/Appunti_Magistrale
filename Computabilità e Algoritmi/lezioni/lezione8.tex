@@ -1,0 +1,212 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+\section{Predicati decidibili}\label{predicati-decidibili}
+
+Nel mondo matematico spesso ci si chiede se valgono determinate
+proprietà come:
+
+$$ div(n,m) = \exists k : n \cdot k =m$$
+
+La stessa cosa può essere vista come una relazione sui numeri naturali
+$div \subseteq \mathbb{N} \times \mathbb{N}$. Tipicamente questo prende il nome di
+\textbf{problema} o \textbf{predicato} e viene formalmente indicato con
+
+$$Q(x_1, \ldots , x_k)$$
+
+$$Q : \mathbb{N}^k \rightarrow \{vero,falso\} \: \text{oppure} \: Q \subseteq \mathbb{N}^k $$
+
+Una volta formalizzato il predicato, ci si chiede se questo predicato è
+\textbf{calcolabile} o \textbf{decidibile}
+
+Un predicato $Q \subseteq \mathbb{N}^k$ si dice \textbf{decidibile} quando
+$\mathcal{X}_A : \mathbb{N}^k \rightarrow \mathbb{N}$ è calcolabile, ovvero 
+
+$$\mathcal{X}(\vec{x}) = \begin{cases}
+1, \:& \text{ se } Q(\vec{x}) \\
+0, \:& \text{altrimenti}
+\end{cases} $$
+
+Un predicato è decidibile quando la sua funzione $\mathcal{X}_Q$ è totale.
+
+\subsection{Esempi di predicati decidibili}\label{esempi-di-predicati-decidibili}
+
+\subsubsection{Uguaglianza}\label{uguaglianza}
+
+Ad esempio $Q_1(x,y) = ``x=y''$ (uguaglianza) viene calcolato da
+
+$$\mathcal{X}_{Q_1}(x,y) = \begin{cases}
+1, \:& \text{se}\: x=y\\
+0, \:& \text{altrimenti}
+\end{cases}$$ 
+
+Risulta triviale trovare un programma che calcola questa funzione
+
+\begin{lstlisting}[language=URM]
+J(1,2,SI)
+Z(1)
+J(1,1,FINE)
+Z(1) #SI
+S(1)
+#FINE
+\end{lstlisting}
+
+\subsubsection{Pari e dispari}\label{pari-e-dispari}
+
+Altro esempio $Q_2(x) = ``x \:\text{è pari}''$
+
+\begin{lstlisting}[language=URM]
+/*
+    1: x
+    2: 0, lo incremento per vedere se x è pari o meno
+    3: 0, lo uso per tenere il codice compatto
+*/
+J(1,2,SI) #PARI?
+S(2)
+J(1,2,NO) #DISPARI?
+S(2)
+J(1,1,PARI?)
+S(3) #SI
+T(3,1) #NO
+\end{lstlisting}
+
+\subsubsection{Esercizio - Minore e uguale}\label{esercizio---minore-e-uguale}
+
+$Q_3(x,y) = x \leq y$
+
+\todo[inline]{todo}
+
+\subsubsection{Esercizio - Divisibile}\label{esercizio---divisibile}
+
+$Q_4(x,y) = div(x,y)$
+
+\todo[inline]{todo}
+\section{Computabilità su altri domini}\label{computabilituxe0-su-altri-domini}
+
+Ci sono tanti modelli di calcolo che funzionano su svariati domini e noi
+ci siamo concentrati solamente su quelli che utilizzano i numeri. 
+Può però essere interessante vedere come cambiano le regole del gioco se viene
+utilizzato un dominio diverso.
+
+\textbf{Codifica effettiva}: Dato un dominio \emph{D}, si può trovare
+una funzione $\alpha : D \rightarrow \mathbb{N}$ biunivoca e effettiva,
+con inversa effettiva.
+
+Alcuni domini che vanno bene sono $\mathbb{Z}, \mathbb{Q}, \mathbb{A}*$ ma non è possibile
+utilizzare $\mathbb{R}$ perché non è numerabile.
+
+Una volta fissato un dominio con una codifica effettiva, una funzione
+$f: D \rightarrow D$ è \textbf{calcolabile} se $f^* = \alpha \circ f \circ \alpha^{-1}$ è URM-Calcolabile.
+
+Ad esempio: $Q = \mathbb{Z},\: f : \mathbb{Z} \rightarrow \mathbb{Z},\: f(z) =
+|z|$ è calcolabile perché è possibile trovare una funzione $\alpha : \mathbb{Z}
+\rightarrow \mathbb{N}$ che codifica i numeri positivi con i numeri pari e
+quelli negativi con i numeri dispari.
+
+Così facendo viene stabilita una corrispondenza \textit{1-1} tra $\mathbb{Z}$ e $\mathbb{N}$.
+
+
+$$\alpha(z) = \begin{cases}
+2z\:& \text{se \textit{z} è positivo} \\
+-2z-1\:& \text{se z è negativo}
+\end{cases}$$
+
+L'inversa viene definita come
+
+$$\alpha^{-1}(n) = \begin{cases} \frac{n}{2} \:& \text{se \textit{n} è pari}\\
+ \frac{-(n+1)}{2}\:& \text{se \textit{n} è dispari}\end{cases}$$
+
+Pertanto $f^*$ risulta essere
+
+\begin{align*}
+	f^* &=\begin{cases}
+	\alpha(f(\frac{n}{2})), \:\:\:& \text{se \textit{n} è pari}\\
+	\alpha(f(\frac{-(n+1)}{2})), \:\:\:& \text{se \textit{n} è dispari}
+	\end{cases} \\	
+	f^* &= \begin{cases}
+	n, \qquad\qquad\qquad\qquad& \text{se \textit{n} è pari} \\
+	n+1, \qquad\qquad\qquad\qquad& \text{se \textit{n} è dispari}
+	\end{cases} 
+\end{align*}
+
+
+\section{Composizione di funzioni calcolabili}\label{composizione-di-funzioni-calcolabili}
+
+Si possono ottenere delle funzioni calcolabili utilizzando delle
+composizioni di funzioni calcolabili più semplici.
+
+La combinazione può essere fatta mediante:
+
+\begin{itemize}
+\item
+  \textbf{Composizione funzionale}
+\item
+  \textbf{Ricorsione primitiva}, ovvero che termina sempre
+\item
+  \textbf{Minimizzazione illimitata}, ovvero l'iterazione fino a
+  quando una certa condizione non viene soddisfatta.
+\end{itemize}
+
+In termini più tecnici, la classe $\mathcal{C}$ è \textbf{chiusa}
+rispetto alle operazioni sopra riportate.
+
+Ci si può spingere oltre, dimostrando che tutte le funzioni calcolabili
+possono essere ottenute da combinazioni di funzioni calcolabili
+elementari.
+
+\textbf{Funzioni di base}: insieme delle funzioni calcolabili
+elementari:
+
+\begin{itemize}
+\item
+  $\underline{0} : \mathbb{N} \rightarrow \mathbb{N}^k,\: \underline{0}(x_1,\ldots{},x_k) = 0$
+\item
+  $succ: \mathbb{N} \rightarrow \mathbb{N},\: succ(x) = x+1$
+\item
+  $U_i^k : \mathbb{N}^k \rightarrow \mathbb{N},\: U_i^k(x_1,\ldots,x_k) = x_i$
+\end{itemize}
+
+e possono essere tutte calcolate da delle singole istruzioni URM.
+
+\subsection{Notazioni e ipotesi per i programmi}\label{notazioni-e-ipotesi-per-i-programmi}
+
+Per dimostrare la composizione di funzioni calcolabili viene fatta una
+composizione dei programmi che le calcolano.
+
+Per rendere le varie dimostrazioni più semplici si utilizzando varie
+notazioni/ipotesi:
+
+\begin{itemize}
+\item
+  Dato un programma \emph{P} in URM, $\rho(P) = max(\{i |  R_i \text{ è usato in }P\})$
+\item
+  \emph{P} è in forma standard, ovvero tutti i salti che fanno terminare
+  il programma vanno a finire all'istruzione \emph{L(P) + 1}.
+\item
+  La concatenazione dei programmi viene indicata con \emph{P Q} e si
+  assume che questa sia corretta rispetto ai salti a fine programma,
+  ovvero che quando viene effettuata la concatenazione, le istruzioni di
+  salto vengano aggiornate in modo opportuno.
+\item
+  Dato \emph{P}, $P[i_1,\ldots, i_k \rightarrow l]$ indica
+  il programma che prende in input i registri $i_1\ldots, i_k$ e
+  mette l'output in \emph{l} e non assume niente sugli altri registri,
+  ovvero modifica \emph{P} in
+
+\begin{lstlisting}[language=URM]
+T(i1,1)
+...
+T(ik,k)
+Z(k+1)
+...
+Z(rho(P))
+P
+T(1,l)
+\end{lstlisting}
+
+  C'è un piccolo problema con i vari trasferimenti \texttt{T(ij,j)} che
+  possono sovrascrivere alcuni dati, pertanto è necessario stare attenti che
+  questo non succeda utilizzando dei registri di supporto.
+\end{itemize}
