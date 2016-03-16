@@ -219,6 +219,10 @@ connesse.
 
 Se questo grafo contiene un cammino che connette tutti i suoi vertici allora il grafo è semplicemente connesso.
 
+Per trovare il cammino basta ordinare topologicamente il grafo e verificare se da ogni componente c'è un arco che la connette alla componente successiva secondo l'ordine topologico.
+
 Questo perché quando c'è un cammino tra tutte le CFC, si ha esiste un cammino tra tutti i nodi di una CFC a tutti i nodi di tutte le altre CFC.
 
-\todo[inline]{verificare se è corretto}
+Bisogna ora dimostrare che se non c'è questo cammino il grafo non è semi-connesso, supponendo che non ci sia un arco tra la componente \textit{i} e la componente \textit{i+1}.
+
+Per come viene definito l'ordine topologico, se non c'è l'arco $i \rightarrow i+1$, vuol dire che non ci sono altri archi entranti nel vertice \textit{i+1}, pertanto non è possibile trovare alcun cammino che dal vertice \textit{i} in grado di raggiungere il vertice \textit{i+1}, passando anche per altri vertici del grafo.
