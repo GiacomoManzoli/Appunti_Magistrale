@@ -4,3 +4,6 @@
 \contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{35}{algorithm.4}
 \contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{38}{algorithm.5}
 \contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{41}{algorithm.6}
+\contentsline {algorithm}{\numberline {7}Ingenuo: Pattern matching ingenuo}{50}{algorithm.7}
+\contentsline {algorithm}{\numberline {8}Ingenuo: Pattern matching ingenuo}{51}{algorithm.8}
+\contentsline {algorithm}{\numberline {9}Prefisso: Preelaborazione del prefisso in tempo lineare}{54}{algorithm.9}
