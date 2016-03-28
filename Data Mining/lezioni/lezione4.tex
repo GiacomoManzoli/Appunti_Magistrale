@@ -1,0 +1,127 @@
+\chapter{Laboratorio}
+
+\section{Un po' di cose su R}\label{un-po-di-cose-su-r}
+
+\begin{itemize}
+\item
+  Tutti gli oggetti sono vettori
+\item
+  \texttt{ls()} per vedere le variabili disponibili
+\item
+  \texttt{x\ \textless{}-\ c(2,3,4,5)} crea un vettore con 1,2,3,4.
+\item
+  notazione \texttt{{[}1:20{]}} per un vettore con la successione da 1 a
+  20
+\item
+  \texttt{xx\ \textless{}-\ seq(from=100,\ to=1)} crea sempre una
+  sequenza di numeri, con parametro opzionale \texttt{by} per
+  specificare lo step
+\item
+  \texttt{rep(2,5)} crea un vettore con 5 elementi uguali a 2
+\item
+  \texttt{a\ \textless{}-\ c(rep(2,3),4,5,rep(1,5))},
+  \texttt{a\ =\ 2\ 2\ 2\ 4\ 5\ 1\ 1\ 1\ 1\ 1}
+\item
+  \texttt{2*x} esegue il prodotto scalare
+\item
+  \texttt{length(x)} per la lunghezza del vettore
+\item
+  \texttt{max(x)} e \texttt{min(x)}
+\item
+  \texttt{sum(x)} che ritorna un vettore di un solo elemento con la
+  somma
+\item
+  \texttt{mean(x)}, \texttt{var(x)}, \texttt{range(x)}
+\item
+  \texttt{x{[}7{]}} per estrarre il settimo elemento di \texttt{x},
+  l'indice credo parta da 1
+\item
+  \texttt{x{[}-4{]}} ritorna un vettore senza il quarto elemento
+\item
+  \texttt{x\ \textless{}-\ matrix(c(2,3,5,7,11,13),nrow\ =\ 3)} crea una
+  matrice con gli elementi specificati e 3 righe. Alternativamente è
+  possibile specificare anche il numero di colonne.
+\item
+  \texttt{x2\ \textless{}-\ scan("nome\ file",\ sep="")} con
+  \texttt{sep} opzionale, per caricare il contenuto di un file in un
+  vettore, per caricare una matrice
+  \texttt{x2\ \textless{}-\ matrix(scan(...),\ ncol\ =\ 3,\ byrow=TRUE}.
+\item
+  \texttt{str(x)} specifica la struttura dell'oggetto
+\item
+  \texttt{dim(x)} ritorna la dimensione di una matrice, se invocato con
+  un vettore ritorna \texttt{NULL}.
+\item
+  \texttt{x{[}18,{]}} per ottenere la 18-esima riga di una matrice
+\item
+  \textbf{Dataframe}: matrice le cui colonne possono avere formati
+  diversi
+\item
+  \texttt{ciliegi\ \textless{}-\ read.table("nome\ file")}.
+\item
+  \texttt{names(ciliegi)} è il vettore con i nomi delle colonne del
+  dataframe
+\item
+  \texttt{names(ciliegi)\ \textless{}-\ c("diametro",\ "altezza",\ "volume")}
+  permette di impostare il nome delle colonne, può anche essere
+  specificato come parametro opzionale \texttt{col.names} della
+  funzione \texttt{read.table}.
+\item
+  \texttt{summary(ciliegi)} fornisce degli indicatori per ciascuna
+  colonna
+\item
+  \textbf{Mediana}: elemento centrale di una distribuzione ordinata in
+  senso crescente, \textbf{primo e terzo quartile}: generalizzazione
+  della mediana, rispettivamente l'elemento che sta al 25 e 75 per cento
+  della distribuzione. La differenza tra i due quartili da l'idea di
+  quanto è variabile la distribuzione.
+\item
+  I dataframe possono essere acceduti anche con il nome della colonna
+  \texttt{ciliegi\$volume}.
+\item
+  \textbf{attach di un file}: aggiungere al workspace un oggetto, ovvero
+  \texttt{attach(ciliegi)} permette di accedere al nome della colonna
+  direttamente utilizzando \texttt{volume}. Come complementare c'è il
+  comando \texttt{detach}.
+\item
+  \texttt{hist(diametro)} crea l'istogramma per il diametro
+\item
+  \texttt{help(hist)} per avere l'help di una funzione
+\item
+  l'istrogramma che viene generato di default può contenere dei buchi,
+  conviene quindi adattare il numero di colonne utilizzando il parametro
+  \texttt{breaks}
+\item
+  \texttt{boxplot(diametro)} fornisce il box plot di un valore, è un
+  grafico che rappresenta la mediana, i quartili e il 5 e 95\%. Risulta
+  più espressivo dell'istogramma. L'ampiezza della scatola rappresenta
+  la variabilità dei dati.
+\item
+  \texttt{ciliegi{[}altezza\textgreater{}80,{]}} prende tutti i ciliegi
+  con altezza maggiore di 80.
+\item
+  \texttt{library(MASS)} permette di caricare la libreria MASS
+\item
+  \texttt{search()} permette di visualizzare la lista degli ottetti in
+  cui R va a cercare quando deve eseguire un comando
+\item
+  Gli attributi qualitativi vengono trattati come tipo Factor
+\item
+  \texttt{table(painters\$School)} crea la tabella con le frequenze
+  delle varie qualità
+\item
+  \texttt{barplot(..)} fa il plot delle barre per una variabile discreta
+\item
+  \texttt{pie(...)} fa il grafico a torta, anche se è sconsigliabile
+  utilizzare un grafico a torta perché per l'occhio umano fa fatica a
+  vedere la differenza tra gli angoli.
+\item
+  come scale colori si possono utilizzare \texttt{heat.colors(k)},
+  \texttt{rainbow(k)}, \ldots{}
+\item
+  \texttt{plot(x,y)} disegna un diagramma di dispersione, il parametro
+  \texttt{pch} specifica il tipo di carattere, \texttt{pch=16}
+  rappresenta i pallini pieni, \texttt{col} specifica il colore da
+  utilizzare, possono indicare \texttt{col=painter\$School} per far
+  variare il colore in base al valore dell'attributo quantitativo
+\end{itemize}
