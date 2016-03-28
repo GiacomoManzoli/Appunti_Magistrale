@@ -1,0 +1,255 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\paragraph{Soluzione}\label{soluzione-esercizio}
+
+La funzione \emph{f(x)} viene definita per casi e dal momento che i vari
+predicati sono decidibili ed esaustivi, quindi almeno uno dei casi è
+vero.
+
+$$
+f(\vec{x}) = f_1(\vec{x}))\cdot \mathcal{X}_{Q_1} \cdot \ldots \cdot f_m(\vec{x}))\cdot \mathcal{X}_{Q_m}
+$$
+
+Quando un caso è vero, viene calcolata la funzione associata, che è
+totale. Se questa funzione non fosse totale, potrebbe essere che il
+predicato vero su un certo \emph{x}, ma che la funzione su
+quell'\emph{x} non sia definita e quindi neanche \emph{f(x)}
+risulterebbe definita, perdendo così la totalità.
+
+La calcolabilità deriva dal fatto che la definizione per casi viene
+fatta con una serie di \emph{if} che è dimostrato essere calcolabile e
+le funzioni $\mathcal{X}_{Q_i}$ sono calcolabili, perché i predicati sono
+decidibili.
+
+\subsubsection{Algebra della decidibilità}\label{algebra-della-decibilituxe0}
+
+I predicati decidibili sono chiusi rispetto negazione, congiunzione e
+disgiunzione.
+
+Ovvero se \textit{Q} e \textit{Q'} sono due predicati in $\mathbb{N}^k$ decidibili allora anche:
+
+\begin{enumerate}
+\item $\neg Q(\vec(x))$
+\item $ Q(\vec{x}) \wedge Q'(\vec{x})$
+\item $ Q(\vec{x}) \vee Q'(\vec{x}) $
+\end{enumerate}
+
+Questo perché le relative funzioni che li calcolano possono essere definite come:
+
+\begin{enumerate}
+	\item $ \mathcal{X_{\neg Q}}(\vec{x}) = \overline{sg}( \mathcal{X_{Q}}(\vec{x})) $
+	\item $ \mathcal{X_{Q \wedge Q'}}(\vec{x})= \mathcal{X_{Q}}(\vec{x}) \cdot \mathcal{X_{Q'}}(\vec{x})$
+	\item $ \mathcal{X_{Q \vee Q'}}(\vec{x})= sg(\mathcal{X_{Q}}(\vec{x}) + \mathcal{X_{Q'}}(\vec{x}))$
+\end{enumerate}
+
+Tutte le funzioni così definite sono calcolabili perché ottenute da composizioni di funzioni calcolabili.
+
+\subsubsection{Somma e prodotto dei valori di una funzione}
+
+Data una funzione totale e $ f : \mathbb{N}^{k+1} \rightarrow  \mathbb{N}$ totale e calcolabile, è possibile definire le due funzioni che effettuano la somma e il prodotto dei primi \textit{y} valori della funzione.
+
+\begin{align*}
+	s(\vec{x}, y) &= \sum_{z < y} f(\vec{x},z) \\
+	p(\vec{x}, y) &= \prod_{z < y} f(\vec{x},z) 
+\end{align*}
+
+Entrambe le funzioni sono calcolabili e totali perché possono essere definite induttivamente (ricorsivamente) a partire da delle funzioni calcolabili.
+
+\begin{align*}
+s(\vec{x}, y) &= \begin{cases} \sum_{z < 0}f(\vec{x},z) = 0, &\text{ se $ y = 0 $} \\
+\sum_{z < y+1}f(\vec{x},z) = \sum_{z < y}f(\vec{x},z) + f(\vec{x},z), &\text{ altrimenti}
+\end{cases} \\
+p(\vec{x}, y) &=  \begin{cases} \prod_{z < 0}f(\vec{x},z) = 1, &\text{ se $ y = 0 $} \\
+\prod_{z < y+1}f(\vec{x},z) = \prod_{z < y}f(\vec{x},z) \cdot f(\vec{x},z) &\text{ altrimenti}
+\end{cases}
+\end{align*}
+
+La totalità deriva dal fatto che \textit{f} è totale.
+
+\subsubsection{Quantificazione limitata}
+
+Combinando algebra della decidibilità e quanto detto nel paragrafo precedente è possibile la decidibilità di $ \forall $ e $ \exists $.
+
+Dato un predicato $ Q(\vec{x},z) $ per calcolare se $ \forall z < y, Q(\vec{x},z) $ è possibile utilizzare la funzione:
+
+$$
+\mathcal{X}_{Q_\forall} = \prod_{z < y} \mathcal{X}_Q(\vec{x},z)
+$$
+
+In modo simile è possibile calcolare $ \exists z < y, Q(\vec{x},z) $:
+
+$$
+\mathcal{X}_{Q_\exists} = sg(\sum_{z < y} \mathcal{X}_Q(\vec{x},z))
+$$
+
+Trattandosi della composizione di funzioni calcolabili e totali, le funzioni così ottenute sono a loro volta calcolabili e totali.
+
+\section{Minimalizzazione limitata}
+
+Data una funzione $ f(\vec{x},z) : \mathbb{N}^{k+1} \rightarrow \mathbb{N}$ calcolabile e totale è possibile definire una funzione 
+
+$$
+h(\vec{x},y) = \mu z< y | f(\vec{x},z) = 0
+$$
+
+$ h $ è ancora una funzione $ \mathbb{N}^{k+1} \rightarrow \mathbb{N} $ e viene calcolata come il minimo valore di \textit{z} minore di \textit{y} e tale che $ f(\vec{x},z) $ sia uguale a 0 (tipicamente l'uguale a 0 viene omesso). 
+
+La definizione più precisa è:
+
+$$
+h(\vec{x}, y) = \mu z < y . f(\vec{x},z) = \begin{cases}
+\text{minimo $ z < y $ tale che $f(\vec{x},z) = 0$ se questo esiste} \\
+y, \text{altrimenti}
+\end{cases}
+$$
+
+Per come è definita, questa funzione risulta essere \textbf{totale} e \textbf{calcolabile}.
+Intuitivamente è calcolabile perché si tratta di calcolare \textit{f} per vari valori, serve però una dimostrazione più formale, fatta per ricorsione primitiva.
+
+\begin{align*}
+	h(\vec{x}, 0) &= 0\\
+	h(\vec{x}, y+1) &= 	\begin{cases}
+										h(\vec{x},y) < y, &\text{\textit{f} si annulla su un valore minore di \textit{y}, viene resituito $ h(\vec{x},y) $}\\
+										h(\vec{x},y) = y, &\text{per tutti i valori di minori \textit{y} non c'è uno 0 } \begin{cases}
+										\text{se } f(\vec{x},y) = 0 \rightarrow y \\ 
+										\text{se } f(\vec{x},y) \neq 0 \rightarrow y+1
+										\end{cases}
+										\end{cases}
+\end{align*}
+
+La seconda parte può essere facilmente tradotta nell'espressione
+
+$$
+(y \dotminus h(\vec{x},y)) \cdot (h(\vec{x},y)) + \overline{sg}(y \dotminus h(\vec{x},y)) \cdot (y + sg(f(\vec{x},y)))
+$$
+
+Dal momento che la funzione \textit{h} può essere definita per ricorsione primitiva e per composizione di funzioni calcolabili, anche lei è calcolabile.
+
+\subsection{Funzioni calcolabili per ricorsione limitata}
+
+Utilizzando la ricorsione limitata è possibile dimostrare la calcolabilità di varie funzioni.
+
+\subsubsection{Numero di divisori di $x$}
+
+\begin{align*}
+	D(x) &= \text{\# divisori di } x \\
+			&= \sum_{y \leq x}(\overline{sg}(rm(y,x))) 
+\end{align*}
+
+Dove \textit{rm} è la funzione resto, precedentemente dimostrata calcolabile.
+
+\subsubsection{Numeri primi}
+
+Dimostrare la calcolabilità dei funzioni che lavorano con i numeri primi è importante perché torneranno utili in futuro.
+
+\begin{align*}
+	Pr(x) &= \text{``$x$ è primo ''} \\
+			 &= \overline{sg}(|D(x) - 2|)
+\end{align*}
+
+\begin{align*}
+	P_x &= \text{``$x$-esimo numero primo, per convezione: ''} P_0 = 0, P_1 = 2, \ldots \\
+	&= \begin{cases}
+	P_0 = 0& \\
+	P_{x+1} = \mu z \leq (P_x! + 1) \: | Pr(z) \cdot \underbrace{\overline{sg}(P_x +1 \dotminus z)}_{1 \text{ se } z > P_x  } \dotminus 1| &
+	\end{cases}
+\end{align*}
+
+\begin{align*}
+	(x)_y 	&= \text{esponente di  } P_y \text{ nella decomposizione di } y \\
+			   &= \text{max } z \: P_{y}^z \text{ divide } x \rightarrow \mu z \leq x \text{ tale che } P_{y}^{z+1} \text{ non divide } x \\
+			   &= \mu z \leq x \: \overline{sg}(rm(P_{y}^{z+1},x))
+\end{align*}
+
+\subsubsection{Esercizio - mcm, MCD, radice di x}
+
+Dimostrare che sono calcolabili:
+
+\begin{itemize}
+	\item $ floor(\sqrt{x}) $
+	\item $mcm(x,y))$
+	\item $MCD(x,y)$
+\end{itemize}
+
+
+\section{Codifica di coppie}
+
+La funzione di \textit{fibonacci} non può essere definita per ricorsione primitiva, perché il passo induttivo richiede una coppia di valori precedenti.
+
+\`{E} però possibile definire una funzione $\prod : \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$ che codifica il valore di una coppia in un unico numero:
+
+$$
+\prod (x,y) = 2^x(2y+1) \dotminus 1
+$$
+
+Questa funzione risulta essere biunivoca perché è possibile definire l'inversa:
+
+$$
+\prod^{-1}(x) = ((n+1)_1, \frac{1}{2}(\frac{n+1}{(n+1)_1})-1)
+$$
+
+La funzione inversa è effettiva, perché è definita in termini di componenti calcolabili, anche se la definizione di funzione calcolabile non è stata vista per funzioni $\mathbb{N} \rightarrow \mathbb{N} \times \mathbb{N}$.
+
+Utilizzando la funzione accoppiamento, è possibile definire la funzione \textit{fib} per ricorsione primitiva:
+
+\begin{align*}
+	g(x) &= \prod(fib(x), fib(x+1)) \\
+	g(0) &= \prod(fib(0), fib(1)) = \prod(1,1) = 5 \\
+	g(x+1) &= \prod(fib(x+1), fib(x+2)) \\
+				 &= \prod(fib(x+1, fib(x)+fib(x+1)) \\
+				 &= \prod(\prod_2(g(x)),\prod(\prod_1(g(x))+\prod_2(g(x)))\\		 
+\end{align*}
+
+Dove $\prod_1$ e $\prod_2$ sono rispettivamente le funzioni per il calcolo del primo e del secondo elemento della coppia.
+
+Così facendo è stata dimostrata la calcolabilità di \textit{g} per ricorsione primitiva, ma $fib(x) = \prod_1(g(x))$ e di conseguenza \textit{fib} è calcolabile per composizione di funzioni calcolabili.
+
+\section{Minimalizzazione illimtata}
+
+Data $ f : \mathbb{N}^{k+1} \rightarrow \mathbb{N} $, si vuole definire $ h : \mathbb{N}^k \rightarrow \mathbb{N} $ tale che calcoli il minimo \textit{z} che azzera la funzione \textit{f}, ovvero:
+
+$$
+h(\vec{x}) = \mu z.f(\vec{x},z)
+$$
+
+Ci sono però dei problemi se $ f(\vec{x}, z) $ è sempre diversa da zero, perché in questo caso $ h $ è $ \uparrow $.
+
+Un altro problema si ha se la funzione è indefinita per un valore $ z' $ minore dello $ z $ che azzera la funzione. Anche in questo caso si ha che $ h $ è $ \uparrow $.
+
+$$
+h(\vec{x}) = \mu z.f(\vec{x},z) = \begin{cases}
+\text{minimo \textit{z} tale che } f(\vec{x},z) \text{ se esiste e se } \forall z' < z, f(\vec{x},z')\downarrow \neq 0 \\
+\uparrow \text{ altrimenti}
+\end{cases}
+$$
+
+Alternativamente, definendo $ Z_{f, \vec{x}} = \{z | f(\vec{x},z) = 0 \wedge \forall z' < z f(\vec{x},z') \downarrow \} $, si ha che \textit{h} è definita come
+
+$$
+h(\vec{x}) = \begin{cases}
+\min Z_{f,\vec{x}} \text{ se } Z_{f,\vec{x}} \neq \emptyset \\
+\uparrow \text{ altrimenti}
+\end{cases}
+$$
+
+\subsection{Esercizi}
+
+Dimostrare la calcolabilità di 
+
+$$
+f(x) = \begin{cases}
+\sqrt{x} \text{ se \textit{x} è un quadrato} \\
+\uparrow \text{ altrimenti}
+\end{cases}
+$$
+
+Dimostrare che se $ f : \mathbb{N} \rightarrow \mathbb{N} $ è iniettiva, calcolabile e totale, anche la sua inversa è calcolabile.
+
+
+
+
+
+
+

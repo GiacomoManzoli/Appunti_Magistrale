@@ -2,7 +2,7 @@
 % !TEX TS-program = pdflatex
 % !TEX root = computabilità e algoritmi.tex
 % !TEX spellcheck = it-IT
-\subsection{Composizione generalizzata}\label{composizione-generalizzata}
+\section{Composizione generalizzata}\label{composizione-generalizzata}
 
 $$f: \mathbb{N}^k \rightarrow \mathbb{N},\: g_1,\ldots g_n : \mathbb{N}^k \rightarrow \mathbb{N}$$
 
@@ -21,12 +21,12 @@ L'approccio utilizzato nella valutazione delle funzioni è quello
 Ad esempio: $\underline{0} : \mathbb{N} \rightarrow \mathbb{N},\: \underline{0}(x) = 0$ e $d(x) = \uparrow,\: \underline{0}(d(1))$ è
 $\uparrow$ perché prima è necessario valutare i parametri.
 
-\subsubsection{Calcolabilità della funzione
+\subsection{Calcolabilità della funzione
 composta}\label{calcolabilituxe0-della-funzione-composta}
 
 Se $f: \mathbb{N}^n \rightarrow \mathbb{N}, g_1\ldots g_n : \mathbb{N}^k \rightarrow \mathbb{N} \in \mathcal{C}$, allora anche $h: \mathbb{N}^k \rightarrow \mathbb{N}$ è calcolabile in $\mathcal{C}$.
 
-\paragraph{Dimostrazione}\label{dimostrazione}
+\subsubsection{Dimostrazione}\label{dimostrazione}
 
 Siano $F,G_1, \ldots{}, G_n$ programmi URM in forma normale per
 le relative funzioni.
@@ -49,7 +49,7 @@ Gn[m+1 ... m+k -> m+k+n]
 F[m+k+1 ... m+k+n -> 1]
 \end{lstlisting}
 
-\paragraph{Esempio - Somma di due numeri}\label{esempio}
+\subsubsection{Esempio - Somma di due numeri}\label{esempio}
 
 A partire dalla funzione $sum(x_1, x_2) = x_1+x_2$ è possibile andare a ottenere la funzione
 
@@ -64,7 +64,7 @@ arietà, pertanto sono necessari dei piccoli aggiustamenti:
 
 $$f(x_1, x_2, x_3) = sum(sum(U_1^{3}(\vec{x}),U_2^3(\vec{x}))), U_3^3(\vec{x}))$$
 
-\subsection{Ricorsione Primitiva}\label{ricorsione-primitiva}
+\section{Ricorsione Primitiva}\label{ricorsione-primitiva}
 
 \begin{align*}
 	fact(0) &= 1 \\
@@ -130,12 +130,12 @@ x^{(y+1)} = (x^y) \cdot x &\Rightarrow g(x,y,z) = z \cdot x
 \end{cases}
 $$
 
-\subsubsection{Calcolabilità della Ricorsione Primitiva}\label{calcolabilituxe0-della-ricorsione-primitiva}
+\subsection{Calcolabilità della Ricorsione Primitiva}\label{calcolabilituxe0-della-ricorsione-primitiva}
 
 Siano $f:\mathbb{N}^k \rightarrow \mathbb{N}$ e $g:\mathbb{N}^{k+2} \rightarrow \mathbb{N} \in \mathcal{C}$ allora anche \emph{h} definita per
 ricorsione primitiva è in $\mathcal{C}$. Ovvero quello che è stato assunto precedentemente.
 
-\paragraph{Dimostrazione}\label{dimostrazione-1}
+\subsubsection{Dimostrazione}\label{dimostrazione-1}
 
 Siano \emph{F} e \emph{G} i programmi che calcolano \emph{f} e \emph{g}.
 

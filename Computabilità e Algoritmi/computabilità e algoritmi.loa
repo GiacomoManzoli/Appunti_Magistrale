@@ -1,9 +1,10 @@
-\contentsline {algorithm}{\numberline {1}{\ignorespaces Trasponi: calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze\relax }}{29}{algorithm.1}
-\contentsline {algorithm}{\numberline {2}CRM/CT: Chiusura di un grafo}{30}{algorithm.2}
-\contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{32}{algorithm.3}
-\contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{35}{algorithm.4}
-\contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{38}{algorithm.5}
-\contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{41}{algorithm.6}
-\contentsline {algorithm}{\numberline {7}Ingenuo: Pattern matching ingenuo}{50}{algorithm.7}
-\contentsline {algorithm}{\numberline {8}Ingenuo: Pattern matching ingenuo}{51}{algorithm.8}
-\contentsline {algorithm}{\numberline {9}Prefisso: Preelaborazione del prefisso in tempo lineare}{54}{algorithm.9}
+\contentsline {algorithm}{\numberline {1}{\ignorespaces Trasponi: calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze\relax }}{34}{algorithm.1}
+\contentsline {algorithm}{\numberline {2}CRM/CT: Chiusura di un grafo}{35}{algorithm.2}
+\contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{37}{algorithm.3}
+\contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{40}{algorithm.4}
+\contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{43}{algorithm.5}
+\contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{47}{algorithm.6}
+\contentsline {algorithm}{\numberline {7}Ingenuo: Pattern matching ingenuo}{55}{algorithm.7}
+\contentsline {algorithm}{\numberline {8}Ingenuo: Pattern matching ingenuo}{56}{algorithm.8}
+\contentsline {algorithm}{\numberline {9}Prefisso: Preelaborazione del prefisso in tempo lineare}{59}{algorithm.9}
+\contentsline {algorithm}{\numberline {11}KMP: Algorimto di Knuth-Morris-Pratt}{64}{algorithm.11}

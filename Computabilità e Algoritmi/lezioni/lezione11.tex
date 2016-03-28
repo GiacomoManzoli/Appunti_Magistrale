@@ -301,6 +301,10 @@ Dal momento che la complessità della preelaborazione è lineare, anche questo a
 
 \todo[inline]{verificare correttezza}
 
+\paragraph{Soluzione 2}
+
+Si concatenano le stringhe in modo da formare $ S = Y\$XX $, se eseguendo la preelaborazione trovo un prefisso di lunghezza \textit{n} a partire dal \textit{n+1} vuol dire che \textit{Y} compare tra le due \textit{X} e quindi le due stringhe sono la rotazione di una stessa stringa.
+
 \subsubsection{Esercizio - Massima sottostringa comune}
 
 Date due stringhe \textit{X} e \textit{Y} di lunghezza \textit{m} e \textit{n} calcolare, in tempo lineare, il più lungo suffisso di \textit{X} che è anche prefisso di \textit{Y}. 
@@ -314,4 +318,6 @@ Se $ \pi_2^S = 0$ non c'è nessuna sottostringa uguale al prefisso di \textit{Y}
 
 Se  $ \pi_{n+m+1-k}^S = k$ si ha che a partire dal carattere $ n+m+1-k $ c'è un match di una sottostringa di lunghezza \textit{k} che per costruzione è anche suffisso di \textit{X}, pertanto $ \gamma = Y[1,k] $, altrimenti la sottostringa precedentemente identifica si trova o all'interno di \textit{Y} o all'interno di \textit{X}, pertanto $ \gamma = \epsilon $.
 
-\todo[inline]{verificare correttezza}
+\todo[inline]{Quasi corretto, bisogna andare a vedere i $ \pi_j $ per trovare il suffisso più lungo che è anche prefisso.}
+
+

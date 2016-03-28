@@ -34,9 +34,11 @@ L'algoritmo naive riesce a trovare una soluzione in \emph{O(n\^{}3)}
 			\EndFor
 			\For{$u = 1 \: to \: n$}
 				\For{$v = 1 \: to \: n$}
-				\State // Aggiungi tutti gli archi \textit{wz} con \textit{z}
-				\State // raggiungibile da \textit{w} con un cammino passante per \textit{uv}
-				\State \textsc{CT}$(M*,u,v,n)$
+				\If {$ M[u,v] = 1 \: \text{and} \: M*[u,v] = 0 $}
+					\State // Aggiungi tutti gli archi \textit{wz} con \textit{z}
+					\State // raggiungibile da \textit{w} con un cammino passante per \textit{uv}
+					\State \textsc{CT}$(M*,u,v,n)$
+				\EndIf
 				\EndFor
 			\EndFor
 		\EndFunction
