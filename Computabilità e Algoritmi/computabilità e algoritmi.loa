@@ -3,8 +3,12 @@
 \contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{37}{algorithm.3}
 \contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{40}{algorithm.4}
 \contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{43}{algorithm.5}
-\contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{47}{algorithm.6}
+\contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{46}{algorithm.6}
 \contentsline {algorithm}{\numberline {7}Ingenuo: Pattern matching ingenuo}{55}{algorithm.7}
 \contentsline {algorithm}{\numberline {8}Ingenuo: Pattern matching ingenuo}{56}{algorithm.8}
 \contentsline {algorithm}{\numberline {9}Prefisso: Preelaborazione del prefisso in tempo lineare}{59}{algorithm.9}
 \contentsline {algorithm}{\numberline {11}KMP: Algorimto di Knuth-Morris-Pratt}{64}{algorithm.11}
+\contentsline {algorithm}{\numberline {12}BM: Pattern matching con BoyerMoore}{67}{algorithm.12}
+\contentsline {algorithm}{\numberline {13}KMP-Online: Algoritmo di Knuth-Morris-Pratt online}{69}{algorithm.13}
+\contentsline {algorithm}{\numberline {14}ShiftAnd: Algoritmo }{71}{algorithm.14}
+\contentsline {algorithm}{\numberline {16}RabinKarp: Algoritmo di RabinKarp}{74}{algorithm.16}

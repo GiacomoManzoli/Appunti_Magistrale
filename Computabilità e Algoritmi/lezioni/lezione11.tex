@@ -149,13 +149,15 @@ $$
 
 Nel caso ci siano più sottostringhe con lo stesso estremo destro, viene scelto come estremo sinistro uno a caso tra quelli possibili.
 
+La stringa $ S[l_i, r_i] $ risulta quindi essere la sottostringa di \textit{S} più lunga che è anche un prefisso e che inizia prima dell'indice \textit{i}.
+
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width = .9\textwidth]{./notes/immagini/l11-fig4-bis.png}
 	\caption{Alcune occorrenze di prefissi di \textit{S} che iniziano tra le posizioni \textit{2} e \textit{i}. L'occorrenza che termina più a destra è evidenziata in rosso.}
 \end{figure}
 
-Si ha quindi che $ S[1,r_i] $ è il più lungo prefisso di \textit{S} con periodo $ 1 \leq p < i $ e che la stringa $ S[l_i, r_i] $ è la sottostringa di \textit{S} che termina pià a destra tra tutte quelle che sono uguali ad un prefisso di \textit{S}.
+Si ha quindi che $ S[1,r_i] $ è il più lungo prefisso di \textit{S} con periodo $ 1 \leq p < i $ e che la stringa $ S[l_i, r_i] $ è la sottostringa di \textit{S} che termina più a destra tra tutte quelle che sono uguali ad un prefisso di \textit{S}.
 
 Ad esempio se 
 

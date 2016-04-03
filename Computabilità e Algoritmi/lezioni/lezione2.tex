@@ -216,9 +216,10 @@ Con la lista delle adiacenze l'algoritmo risulta essere
 			\For{$u = 1 \: to \: n$}
 				\State {$x \gets Adj[u]$}
 				\While{$x \neq nil$}
-					\State{$v \gets x.v$}
-					\State{$y \gets nodo(u, Adj^T[v])$}
-					\State{$Adj^T[v] \gets y$}
+					\State{$v \gets x.v$} \Comment{$ uv \in E $}
+					\State{$y \gets \textsc{Nodo}(u, Adj^T[v])$} \Comment{Crea il nodo per l'arco $ vu $}
+					\State{$Adj^T[v] \gets y$} \Comment{Aggiunge il nodo alla lista delle adiacenze}
+					\State{$ x \gets x.next $}
 				\EndWhile
 			\EndFor
 		\EndFunction

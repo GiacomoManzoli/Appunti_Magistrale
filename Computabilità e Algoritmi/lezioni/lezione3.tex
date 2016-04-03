@@ -29,7 +29,7 @@ L'algoritmo naive riesce a trovare una soluzione in \emph{O(n\^{}3)}
 					\State $M*[u,v] \gets 0$
 				\EndFor
 			\EndFor
-			\For{$u = 1 \: to \: n$}
+			\For{$u = 1 \: to \: n$} \Comment{Chiusura riflessiva, aggiunge i cappi}
 				\State $M*[u,u] \gets 1$
 			\EndFor
 			\For{$u = 1 \: to \: n$}
@@ -171,7 +171,10 @@ Indicando con $\delta(u,v)$ la distanza tra il vertice \emph{v} e
 convezione, se i due vertici non sono raggiungibili, la distanza è
 infinita.
 
-La distanza così definita ha la proprietà $\delta(x,v) \leq \delta(x,u) + 1$ per ogni $x \in V$ e $uv \in E$. 
+La distanza così definita ha la proprietà (\textbf{proprietà delle distanze}) 
+
+$$\delta(x,v) \leq \delta(x,u) + 1 \text{ per ogni } x \in V \text{ e } uv \in E$$
+ 
 Questo perché aggiungendo l'arco \emph{uv} al cammino $ x \rightarrow u$, si ottiene un cammino di
 lunghezza $\delta(x,u) + 1$, pertanto, per definizione $\delta(x,v)$ è
 minore o uguale della lunghezza del nuovo cammino.
@@ -195,10 +198,11 @@ v.d &= u.d + 1 &\\
 
 Un'altra proprietà utile alla dimostrazione di correttezza è che, se la
 coda \emph{Q} non è vuota, allora è ordinata per distanza crescente.
+
 Formalmente
 
 $$
-v_1, v_2, \ldots, v_r \in Q \: | \:  v_i.d \leq v_{i+1}.d + 1 \: \forall i  \text{ e } v_r \leq v_1.d +1
+v_1, v_2, \ldots, v_r \in Q \: | \:  v_i.d \leq v_{i+1}.d + 1 \: \forall i \: \text{ e } \: v_r \leq v_1.d +1
 $$
 
 Questa proprietà è vera per la coda con un solo elemento, la quale è

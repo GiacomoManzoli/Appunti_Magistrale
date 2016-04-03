@@ -7,11 +7,15 @@
 Riassumendo quanto visto finora:
 
 \begin{itemize}
+	\item
+	\textbf{Proprietà delle distanze}: $\delta(x,v) \leq \delta(x,u) + 1 \text{ per ogni } x \in V \text{ e } uv \in E$
 \item
   \textbf{Proprietà del limite superiore}: $u.d \geq \delta(s,u)$ 
 \item
   \textbf{Proprietà della coda}: $v_1, \ldots, v_n, \: v_i.d \leq v_{i+1}.d, \: v_n.d \leq v_1.d+1$ 
 \end{itemize}
+
+\paragraph{Correttezza di BFS}
 
 L'algoritmo BFS visita tutti e soli i vertici raggiungibili da \emph{s} e
 quando termina $v.d = \delta(s,v)$ per ogni vertice \emph{v} del
@@ -21,6 +25,8 @@ Inoltre, $\forall v \neq s$ e raggiungibile da \emph{s} si ha che $v.\pi
 = u \neq nil$ con $uv \in E$ e uno dei cammini minimi da \emph{s} a
 \emph{v} è costituito da un cammino minimo da \emph{s} a \emph{u}
 seguito dall'arco \emph{uv}.
+
+\subparagraph{Dimostrazione}
 
 Supponiamo per assurdo che $v.d \neq \delta(s,v)$ con $v.d > \delta(s,v)$, \emph{v} raggiungibile da \emph{s} e
 $v\neq s$.
@@ -73,7 +79,7 @@ vertice dal quale è stato scoperto l'ultimo nodo. Il procedimento
 continua fino a che non vengono visitati tutti i vertici del grafo.
 
 Con questa visita viene costruita una foresta di alberi, composta da
-nodi che hanno un puntatore \emph{pi} al padre.
+nodi che hanno un puntatore $\pi$ al padre.
 
 Durante l'esplorazione vengono utilizzati i colori come per la visita in
 ampiezza e altri due \textbf{marcatempi}, \emph{v.d} che contiene un
@@ -90,7 +96,7 @@ vertici raggiungibili dal vertice \emph{v}.
 				\State $ v.\pi = nil $
 			\EndFor
 			\State $ time \gets 0 $
-			\For{$ \forall v in G.v $}
+			\For{$ \forall v \in G.v $}
 				\If{$ v.color = bianco $}
 					\State \textsc{DFS-Visit}$ (v) $
 				\EndIf

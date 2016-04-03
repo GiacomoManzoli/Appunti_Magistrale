@@ -160,8 +160,8 @@ Se $ d(C) > d(C') $, quando viene scoperto il primo vertice \textit{y} di \texti
 C'è quindi un cammino bianco da \textit{y} ad ogni vertice di \textit{C'} e quindi $ y.f = f(C') $.
 Siccome esiste l'arco \textit{uv} non può esister nessun cammino da un vertice di \textit{C'} ad un vertice di \textit{C}, quindi \textit{C} non è raggiungibile da \textit{y}, dunque $ d(C) > f(C') $ e a maggior ragione $ f(C) > f(C') $
 
-Come conseguenza di ciò si ha che se \textit{C} e \textit{C'} sono due \textbf{CFC} distinte del grafo \textit{G} e se nel grafo trasposto $ G^T $ esiste un arco \textit{uv} da $ u \in C$ a $ v \in C' $, allora $ f(C) < f(C') $, ovvero durante la visita in profondità del grafo trasposto viene visitata per prima la \textbf{CFC} che nel grafo originale viene finita per prima.
-Questo perché le \textbf{CFC} del grafo originale sono le stesse del grafo trasposto e la presenza di $ uv \in G^T:E $ implica che $ vu \in G.E$, quindi per quanto precedentemente dimostrato $ f(C) < f(C') $ (considerando il grafo \textit{G}).
+Come conseguenza di ciò si ha che se \textit{C} e \textit{C'} sono due \textbf{CFC} distinte del grafo \textit{G} e se nel grafo trasposto $ G^T $ esiste un arco \textit{uv} da $ u \in C$ a $ v \in C' $, allora $ f(C) < f(C') $ nella visita in profondità del grafo originale.
+Questo perché le \textbf{CFC} del grafo originale sono le stesse del grafo trasposto e la presenza di $ uv \in G^T.E $ implica che $ vu \in G.E$, quindi per quanto precedentemente dimostrato $ f(C) < f(C') $ (considerando il grafo \textit{G}).
 
 \subsection{Correttezza dell'algoritmo}\label{correttezza-dellalgoritmo}
 
@@ -169,9 +169,8 @@ La visita in profondità di $G^T$ parte dal vertice $x_1$
 terminato per ultimo dalla visita in profondità di \emph{G}. Questo
 vertice farà parte di una certa componente connessa $C_1$.
 
-Per ogni altra \textbf{CFC} \emph{C} si ha, per la proprietà dei tempi
-di fine, $x_1.f = f(C_1) > f(C)$ perché non esiste
-nessun arco \emph{vu} in $G^T$ da $v \in C_1$ a $u \in C$ e quindi l'albero costruito a partire da $x_1$ conterrà tutti e
+Si ha quindi che $x_1.f = f(C_1) > f(C)$ (nel grafo di partenza), pertanto non esiste $uv \in G.E$ da $ u \in C $ a $ v \in C' $ (proprietà dei tempi di fine) e quindi non esiste
+nessun arco \emph{vu} in $G^T.E$ da $v \in C_1$ a $u \in C$ e di conseguenza l'albero costruito a partire da $x_1$ conterrà tutti e
 soli i verti di $C_1$.
 
 Dopodiché l'algoritmo continua da $x_2$ tra quelli terminati per
