@@ -38,7 +38,7 @@ con quelle che risultano minori.
 
 È inoltre ragionevole assumere che $\epsilon$ sia indipendente sia
 da \emph{x} che da \emph{y}, ovvero che tutta la relazione tra \emph{x}
-e \emph{y} viene tutta vincolata dalla componente sistematica. Si può
+e \emph{y} viene vincolata dalla componente sistematica. Si può
 quindi dire che la varianza di $\epsilon$ è costante.
 
 Le ipotesi sul modello diventano quindi
@@ -54,7 +54,7 @@ Le ipotesi sul modello diventano quindi
   Le varianze degli $e_i$ sono costanti.
 \end{itemize}
 
-Con questa definizione si ha che anche \emph{y} è una variabile aleatoria di media $\hat{\beta}_2 + \hat{\beta}_1x$ e varianza $\sigma^2$, questo
+Con questa definizione si ha che anche \emph{y} è una variabile aleatoria di media $\hat{\beta}_0 + \hat{\beta}_1x$ e varianza $\sigma^2$, questo
 perché è una trasformazione lineare di una variabile aleatoria:
 
 dalla teoria delle probabilità si ha che se \textit{Z} è una variabile aleatoria e \textit{a} e \textit{b} sono due costanti, allora:
@@ -97,19 +97,19 @@ La varianza degli errori $\sigma^2$ viene assunta nota, al fine di semplificare 
 La stima di $ \beta_1 $ può quindi essere vista come una determinazione di una variabile casuale. Infatti, se le \textit{y} da cui è calcolata sono il risultato di un esperimento casuale, anche $ \hat{\beta}_1 $ lo è:
 
 $$
-\hat{\beta}_1 = \frac{Cov(X,Y)}{Var(X)} = \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \hat{y})}{\sum\limits_{i=1}^n (x_i - \hat{x}^2)} = \frac{\sum\limits_{i=1}^n (x_i - \hat{x})y_i}{\sum\limits_{i=1}^n (x_i - \hat{x}^2)} 
+\hat{\beta}_1 = \frac{Cov(X,Y)}{Var(X)} = \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \bar{y})}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)} = \frac{\sum\limits_{i=1}^n (x_i - \bar{x})y_i}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)} 
 $$
 
 Quindi, se le \textit{n} variabili casuali normali $ y_i $ hanno tutte la stessa varianza $ \sigma^2 $ si ha che
 
 $$
-\hat{\beta}_1 \sim \mathcal{N}\Bigg(\beta_1, \frac{\sigma^2}{\sum_{i=1}^n (x_i - \hat{x})^2}\Bigg)
+\hat{\beta}_1 \sim \mathcal{N}\Bigg(\beta_1 \: , \: \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}\Bigg)
 $$
 
 Questo perché la combinazione lineare di variabili casuali normali è anche essa una variabile casuale normale
 
 $$
-a_0 + \sum\limits_{i = 1}^n a_i Z_i \sim \mathcal{N}\bigg(a_0 + \sum\limits_{i=1}^n a_i\mu_i, \sum\limits_{i=1}^n a_{i}^2 \sigma_{i}^2\bigg)
+a_0 + \sum\limits_{i = 1}^n a_i Z_i \sim \mathcal{N}\bigg(a_0 + \sum\limits_{i=1}^n a_i\mu_i \: , \: \sum\limits_{i=1}^n a_{i}^2 \sigma_{i}^2\bigg)
 $$
 
 Da ciò si può osservare che la varianza della stima di $ \hat{\beta}_1  $ coincide con la varianza delle stima delle $ y_i $, scalata per una misura della dispersione delle \textit{x} e che la media di $ \hat{\beta}_1  $ è $ \beta_1 $, ovvero la stima $ \hat{\beta}_1  $ è centrata sul valore vero del parametro, anche se questo è ignoto. Quando questo succede, lo stimatore si dice \textbf{non distorto} o \textbf{corretto}. 
@@ -119,14 +119,14 @@ Dal momento che la varianza dello stimatore è influenzata dalla varianza dei ca
 Utilizzando il risultato precedente si può calcolare la distribuzione dell'\textbf{errore di stima}, ovvero $ \hat{\beta}_1  - \beta_1 $, che essendo una trasformazione lineare di una variabile aleatoria\todo{verifcare se l'affermazione è corretta}, risulta essere:
 
 $$
-\hat{\beta}_1 - \beta_1 \sim \mathcal{N}\Bigg(0, \frac{\sigma^2}{\sum_{i=1}^n (x_i - \hat{x})^2}\Bigg)
+\hat{\beta}_1 - \beta_1 \sim \mathcal{N}\Bigg(0 \: ,\: \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}\Bigg)
 $$
 
 Utilizzando questa nuova variabile aleatoria è possibile andare a calcolare la probabilità che l'errore di stima sia limitato in un certo intervallo, andando prima a trasformare la distribuzione nella normale $ \mathcal{N}(0,1) $ e poi con le tabelle di conversione, andare a calcolare la probabilità effettiva.
 
 \begin{align*}
-	P(|\hat{\beta}_1  - \beta_1| < 0.05) &= P\Bigg(\Bigg|\mathcal{N}\bigg(0, \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}\bigg)\Bigg| < 0.05\Bigg) \\
-																  &= P\Bigg(\Bigg|\frac{\mathcal{N}\bigg(0, \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}\bigg)}{\sqrt{\frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}}}\Bigg| < \frac{0.05}{\sqrt{\frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}}}\Bigg) \\
+	P(|\hat{\beta}_1  - \beta_1| < 0.05) &= P\Bigg(\Bigg|\mathcal{N}\bigg(0 \:, \: \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}\bigg)\Bigg| < 0.05\Bigg) \\
+																  &= P\Bigg(\Bigg|\frac{\mathcal{N}\bigg(0\:,\: \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}\bigg)}{\sqrt{\frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}}}\Bigg| < \frac{0.05}{\sqrt{\frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}}}\Bigg) \\
 																  &= P(|\mathcal{N}(0,1)| < 2.342) \text{ (valore recuperato dall'esempio delle slide)} \\
 																  &= \Phi(2.342) - \Phi(-2.342) \approx 0.9808\
 \end{align*}
@@ -137,7 +137,7 @@ Più precisamente il procedimento per calcolare un intervallo di confidenza è:
 
 \begin{enumerate}
 	\item Fissa un valore per $ 1-\alpha $.
-	\item Determina il percentile $ 1 - \alpha/2 $ della normale, ovvero $ P(\mathcal{N}(0,1) \leq z_{1 - \alpha/2)}) = 1 - \alpha/2 $.
+	\item Determina il percentile $ 1 - \alpha/2 $ della normale, ovvero $ P(\mathcal{N}(0,1) \leq z_{1 - \alpha/2}) = 1 - \alpha/2 $.
 	\item Si ha quindi che 
 	$$
 	P\Bigg( \Bigg| (\hat{\beta}_1 - \beta_1) \Bigg/ \sqrt{\frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}}\Bigg| \leq z_{1 - \alpha/2}\Bigg) = 1 - \alpha
