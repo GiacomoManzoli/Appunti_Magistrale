@@ -275,6 +275,8 @@ $$
 \hat{y}_0 = \hat{\beta}_0 + \hat{\beta}_1 x_0
 $$
 
+Anche se il valore $ x_0 $ non è compreso nell'intervallo dei campioni è possibile effettuare una previsione (\textbf{estrapolazione}).
+
 Tuttavia può essere interessante avere anche un intervallo di precisione da associare alla stima $ \hat{y}_0 $.
 
 Partendo dal modello di riferimento si ottiene:
@@ -282,7 +284,7 @@ Partendo dal modello di riferimento si ottiene:
 \begin{align*}
 	\hat{y}_0 &= \hat{\beta}_0 + \hat{\beta}_1 x_0 + \epsilon \\
 					&= (\bar{y} - \hat{\beta}_1 \bar{x}) + \hat{\beta}_1 x_0 + \epsilon \\
-					&= \bar{y} + \hat{\beta}_1(x_0 \bar{x}) + \epsilon 
+					&= \bar{y} + \hat{\beta}_1(x_0 - \bar{x}) + \epsilon 
 \end{align*}
 
 Si ha quindi che:
@@ -298,6 +300,8 @@ $$
 \widehat{Var(\hat{y}_0)} = s^2 \Bigg( 1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2} \Bigg)
 $$
 
+Da notare che all'aumentare del numero di campioni e all'aumentare della diversità delle \textit{x}, la varianza della stima diminuisce.
+
 L'intervallo di precisione risulta quindi essere
 
 $$
@@ -310,45 +314,50 @@ Effettuando il calcolo dell'intervallo per ogni punto del dominio è possibile o
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=.6\textwidth]{./notes/immagini/l6-fig10-1.png}
+\includegraphics[width=.5\textwidth]{./notes/immagini/l6-fig10-1.png}
 \caption{Bande di previsione}
 \end{figure}
 
-\subsection{Verifica del modello mediante i residui}
+\section{Verifica del modello mediante i residui}
 
 Anche le previsioni sono influenzate dalle ipotesi riguardo la distribuzione degli errori e dalla non variabilità della varianza.
 Può succedere che i dati analizzati non soddisfino queste ipotesi ed è necessario avere degli strumenti che permettono di identificare questi casi.
 
 Il modo più semplice per verificare ciò è rappresentare con un grafico, ad esempio con un istogramma, la distribuzione dei residui per osservare se questa ha la classica forma campanulare della distribuzione normale.
 
+\todo{Prendere i grafici dalle slide nuove, sono fatti meglio}
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=.5\textwidth]{./notes/immagini/l6-fig11-1.png}
+\includegraphics[width=.7\textwidth]{./notes/immagini/l6-fig11-1.png}
 \caption{Istogramma dei residui per il data set delle vendite. In questo caso la campana non è proprio centrata, ma questo può essere dovuto a fattori casuali.}
 \end{figure}
 
-Un altro grafico è il tracciamento dei residui rispetto la stima $ \hat{y} $ ottenuta il quale aiuta a cogliere alcuni aspetti che ci aspettiamo vengano rappresentati dal modello.
+Un altro grafico è il tracciamento dei residui rispetto la stima $ \hat{y} $ ottenuta il quale aiuta a cogliere alcuni aspetti che ci aspettiamo vengano rappresentati dal modello. In particolare ci si aspetta di ottenere una nuvola di punti senza che ci siano dei pattern.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=.5\textwidth]{./notes/immagini/l6-fig12-1.png}
-\caption{Residui rispetto $ \hat{y} $}
+\includegraphics[width=.6\textwidth]{./notes/immagini/l6-fig12-1.png}
+\caption{Residui rispetto $ \hat{y} $, i punti sono sparsi quindi le assunzioni sembrano rispettate}
 \end{figure}
 
-Alternativamente, è possibile tracciare i residui rispetto alle \textit{x}. In questo modo è possibile osservare se la varianza è costante o se ci sono degli effetti sistematici che il modello non ha colto, oppure se il modello utilizzato non è adeguato.
+In questo modo è possibile osservare se la varianza è costante o se ci sono degli effetti sistematici che il modello non ha colto, oppure se il modello utilizzato non è adeguato.
+Questi aspetti possono essere colti tracciando la dispersione sia per le \textit{x} che per le \textit{y}, il risultato che si ottiene è lo stesso, solo che viene sfasato di un fattore.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{./notes/immagini/l6-fig13-1.png}
-	\caption{Da sinistra verso destra: Varianza non costante, componente sistematica non considerata dal modello, modello inadeguato.}
+	\caption{Da sinistra verso destra: Varianza non costante, componente sistematica non considerata dal modello, modello inadeguato. Tipicamente quando si verifica il caso centrale c'è un errore nei calcoli del modello. }
 \end{figure}
 
+Dai grafici è possibile notare anche la presenza di valori anomali (\textbf{outliers}), osservazioni errate che non rispettano la distribuzione, che devono essere trattate in modo particolare per evitare che influenzino in modo errato il modello.
 
-Dai grafici è possibile notare anche la presenza di valori anomali (\textbf{outliers}), osservazioni errate che non rispettano la distribuzione, che devono essere trattate in modo particolare per evitare che non influenzino in modo errato il modello.
+Per verificare se la distribuzione è normale si può costruire un \textbf{qq-plot} dato che la forma dell'istogramma è influenzata dalla dimensione degli intervalli.
 
-Per verificare se la distribuzione è normale si può costruire un \textbf{qq-plot}.
-Come prima cosa viene creata la distribuzione dei residui per i campioni osservati in modo che ogni punto sia caratterizzato dalla percentuale di punti minori o uguali rispetto alla totalità dei dati. Questa percentuale viene stimata utilizzando le varie frequenze.
-Dopodiché è possibile confrontare i quantili della distribuzione ottenuta con quelli della normale standardizzata. Se per ciascuno punto i quantili sono circa uguali a quelli della normale, allora anche la distribuzione dei residui può essere considerata normale.
+Come prima cosa viene creata la distribuzione dei residui per i campioni osservati in modo che ogni punto sia caratterizzato dalla percentuale di punti minori o uguali rispetto alla totalità dei dati. Questa percentuale viene stimata utilizzando le varie frequenze. 
+
+Dopodiché è possibile confrontare i quantili della distribuzione ottenuta con quelli della normale standardizzata. 
+
+Se per ciascuno punto i quantili sono circa uguali a quelli della normale, allora anche la distribuzione dei residui può essere considerata normale.
 
 \begin{figure}[htbp]
 	\centering
