@@ -220,7 +220,7 @@ Un altro problema si ha se la funzione è indefinita per un valore $ z' $ minore
 
 $$
 h(\vec{x}) = \mu z.f(\vec{x},z) = \begin{cases}
-\text{minimo \textit{z} tale che } f(\vec{x},z) \text{ se esiste e se } \forall z' < z, f(\vec{x},z')\downarrow \neq 0 \\
+\text{minimo \textit{z} tale che } f(\vec{x},z) = 0 \text{ se esiste e se } \forall z' < z, f(\vec{x},z')\downarrow \neq 0 \\
 \uparrow \text{ altrimenti}
 \end{cases}
 $$
@@ -236,6 +236,7 @@ $$
 
 \subsection{Esercizi}
 
+\subsubsection{Esercizio - Radice quadrata}
 Dimostrare la calcolabilità di 
 
 $$
@@ -245,11 +246,65 @@ f(x) = \begin{cases}
 \end{cases}
 $$
 
+\paragraph{Soluzione}
+
+L'idea è quella di trovare un \textit{y} che elevato al quadrato è uguale a \textit{x}: $ y^2 - x = 0 $.
+
+Si ha quindi che
+
+$$ 
+f(x) = \mu y.|y^2-x|
+$$
+
+ed è calcolabile perché minimizza illimitatamente una composizione di funzione calcolabile.
+
+\subsubsection{Esercizio teorico}
+
 Dimostrare che se $ f : \mathbb{N} \rightarrow \mathbb{N} $ è iniettiva, calcolabile e totale, anche la sua inversa è calcolabile.
 
+\paragraph{Soluzione}
+
+$$
+f^{-1}(x) = \begin{cases}
+y, &\text{ tale che } f(y) = x \\
+\uparrow, &\text{ altrimenti}  
+\end{cases}
+$$
+
+$$ 
+f^{-1}(x) = \mu y.|f(y)-x|
+$$
+
+Perché l'uguaglianza sia rispettata è necessario che \textit{f} sia totale, dal momento che se per un certo \textit{y}, \textit{f} non è definita il programma che la calcola non termina, rendendo indefinita anche $ f^{-1} $.
+
+C'è un barbatrucco per gestire anche la non totalità di \textit{f}, ovvero quello di eseguire contemporaneamente il calcolo per ogni \textit{y}, eseguendo tot passi alla volta per ognuno dei calcoli (\textit{dovrebbe essere dimostrato in futuro}).
+
+Dal momento che \textit{f} è calcolabile si ha che anche l'inversa è calcolabile per minimizzazione illimitata di una composizione di funzioni calcolabili.
+
+L'iniettività\footnote{Una funzione $ f: X\rightarrow Y $ si dice iniettiva se due elementi distinti del dominio hanno immagini distinte, ovvero $a_1\neq a_2$ implica $f(a_1)\neq f(a_2)$.} garantisce che il valore trovato sia quello corretto.
 
 
+\subsubsection{Esercizio - Divisione}
 
+$$
+f(x,y) = \begin{cases}
+\frac{x}{y}, &\text{ se } y \neq 0 \text{ e \textit{x} divisibile per \textit{y}}\\
+\uparrow, &\text{altrimenti} 
+\end{cases}
+$$
 
+\paragraph{Soluzione}
 
+$$
+f(x,y) = \mu k. |x \dotminus y\cdot k|
+$$
 
+C'è però un problema, perché la funzione così definita risulta calcolabile se \textit{x} e \textit{y} sono uguali a 0.
+
+$$
+f(x,y) = \mu k.(|x - y\cdot k| + \underbrace{\overline{sg}(y)}_{\text{vale 1 se \textit{y} è uguale a 0}})
+$$
+
+Così facendo se $ y=0 $ la minimalizzazione non converge.
+
+Questo porta ad un discorso un po' più ampio sulla possibilità di aggiustare una funzione che si comporta quasi come un'altra funzione (§\ref{hotfix}).

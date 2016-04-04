@@ -1,0 +1,201 @@
+\subsubsection{Calcolabilità della minimalizzazione}\label{calcolabitliuxe0-della-minimalizzazione}
+
+Se $ f : \mathbb{N}^{k+1} \rightarrow \mathbb{N} $ è in $ \mathcal{C} $, allora anche
+$\mu y.f(\vec{x},y)$ è in $ \mathcal{C} $.
+
+\paragraph{Dimostrazione}\label{dimostrazione}
+
+Sia  $ f : \mathbb{N}^{k+1} \rightarrow \mathbb{N} $ in $ \mathcal{C} $ e sia \textit{P} il programma in
+forma normale che calcola \textit{f}.
+
+L'idea è quella di eseguire \emph{P} incrementando via via un contatore e, quando viene trovato un valore del contatore che azzera la funzione, questo viene ritornato.
+
+\begin{verbatim}
+ 1       k         m+1          m+k|m+k+1|m+k+2|
+|\vec{x} | .....  |x_1|x_2|....|x_k|  0  |  0  |
+\end{verbatim}
+
+Sia $m = \max{\rho(P), k }$, il programma che calcola la minimalizzazione illimitata è:
+
+\begin{lstlisting}[language=URM]
+T([1..k], [m+1..m+k]) //Copio l'input
+P[m+1, ..., m+k+1 -> 1]
+J(1, m+k+2, END) #LOOP
+S(m+k+1)
+J(1,1,LOOP)
+#END
+\end{lstlisting}
+
+Dal momento che è possibile trovare un programma che calcola la
+minimalizzazione illimitata, questa è calcolabile.
+
+\subsubsection{Hot-fix delle funzioni} \label{hotfix}
+Data una funzione  $ f : \mathbb{N} \rightarrow \mathbb{N} $ tale che esiste  $ g : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e tale che
+
+$$
+\Delta = \{ x | f(x) \neq g(x) \}
+$$
+
+e finito.
+
+Allora \emph{f} è calcolabile e può essere modificata in modo da
+coincidere con \emph{g}.
+
+\subsubsection{Funzioni finite}\label{funizioni-finite}
+
+\textbf{Funzione finita} $ \Theta: \mathbb{N}^{k} \rightarrow \mathbb{N}  $è una funzione
+finita quando è definita come:
+
+$$
+\Theta(\vec{x}) = \begin{cases}
+y_1, &\text{ se } \vec{x} = \vec{x}_1 \\
+y_2, &\text{ se } \vec{x} = \vec{x}_2 \\ 
+\cdots \\
+y_n, &\text{ se } \vec{x} = \vec{x}_n \\
+\uparrow, &\text{ altrimenti}
+\end{cases}
+$$
+
+Tutte le funzioni di questo tipo sono calcolabili
+
+\paragraph{Dimostrazione}\label{dimostrazione-1}
+
+(per semplicità è ridotta a funzione unarie)
+
+\begin{align*}
+\Theta &= \begin{cases}
+y_1, &\text{ se } x = x_1 \\
+y_2, &\text{ se } x = x_2 \\ 
+\cdots \\
+y_n, &\text{ se } x = x_n \\
+\uparrow, &\text{ altrimenti}
+\end{cases} \\
+&= y_1 \cdot \overline{sg}(|x - x_1|) + \cdots + y_n \cdot \overline{sg}(|x - x_n|) +  \underbrace{\mu z.\prod\limits_{i=1}^{n}|x - x_i|}_{\text{funzione indipendente da } z}
+\end{align*}
+
+La minimalizzazione su \emph{z} è calcolabile ma risulta indefinita, perché non è possibile minimizzarla rispetto a \emph{z}, quindi anche la funzione $ \Theta $ risulta essere indefinita se tutti i valori sono diversi da $ x_1 \ldots x_n $.
+
+\section{Tesi di Church}\label{tesi-di-church}
+
+Ogni funzione è calcolabile tramite un procedimento effettivo se e solo
+se è URM calcolabile.
+
+Church non ha proprio detto questo, perché non c'era URM quando è stata
+enunciata e ha utilizzato un modello alternativo: le funzioni parziali
+ricorsive $ \mathcal{R} $ (G\"{o}edel).
+
+La classe $ \mathcal{R} $ delle \textbf{funzioni parziali ricorsive} è la \textbf{minima} classe di funzioni che contiene:
+
+\begin{enumerate}[(a)]
+\item  zero: $ z(\vec{x}) = 0 $ per ogni \textit{x}
+\item  successore: $ S(x) = x+1 $
+\item  proiezioni: $ U_{i}^k (x_1 \ldots x_k) = x_i $
+\end{enumerate}
+
+ed è chiusa rispetto:
+
+\begin{enumerate}
+\item
+  composizione generalizzata
+\item
+  ricorsione primitiva
+\item
+  minimalizzazione illimitata.
+\end{enumerate}
+
+Una classe di funzioni \emph{X} è \textbf{ricca} se contiene le funzioni
+di base ed è chiusa rispetto alle 3 operazioni classiche.
+
+C'è almeno una classe ricca, perché anche la classe ``tutte le
+funzioni'' è ricca, anche se ha poco senso considerarla.
+
+Si vuole quindi che $ \mathcal{R} $ sia contenuta in \emph{X} ricca e che anche
+$ \mathcal{R} $ sia ricca.
+
+Questo è possibile perché l'intersezione di due classi ricche è
+ovviamente anch'essa ricca.
+
+$ \mathcal{R} $ può essere definita come l'intersezione di tutte le classi di
+funzioni ricche.
+
+$$
+\mathcal{R} = \bigcap_{X \text{ ricca}} X
+$$
+
+anche se precedentemente $ \mathcal{R} $ è stata definita come
+
+$$
+\mathcal{R} = \{ (a), (b), (c) \text{ con tutte le funzioni che si ottengono da queste utilizzando } 1,2,3 \}
+$$
+
+È dimostrabile che le due definizioni sono equivalenti, anche se non lo
+dimostriamo.
+
+Si può anche definire la classe $ \mathcal{PR} $ delle \textbf{funzioni
+primitive ricorsive}: la minima classe che contiene solamente le funzioni
+di base chiusa rispetto la composizione e la ricorsione primitiva.
+Ovviamente $ \mathcal{PR} $ è più piccola di $ \mathcal{R} $.
+
+\subsection{$ \mathcal{C} $ = $ \mathcal{R} $}\label{c-figa-r-figa}
+
+È già stato dimostrato che $ \mathcal{C} $ è una classe ricca, quindi sicuramente
+$ \mathcal{R} \subseteq \mathcal{C} $.
+
+Resta da dimostrare che $ \mathcal{C} \subseteq \mathcal{R} $.
+
+Sia \textit{f} in $ \mathcal{C} $, ovvero esiste un programma \emph{P} in forma normale
+che la calcola $f = f_p^{(k)}$.
+
+\begin{verbatim}
+P= I_1 ... I_s
+
+|x_1 ... x_k| 0 ... 0
+\end{verbatim}
+
+Supponiamo di avere le funzioni:
+
+$$
+C_{p}^1(\vec{x},y) = \begin{cases}
+\text{contenuto di R1 dopo \textit{t} passi del programma se non è terminato} \\
+\text{altrimenti ritorna il valore finale del registro}
+\end{cases} 
+$$
+
+$$
+J_p(\vec{x},t) = \begin{cases}
+\text{la prossima istruzione da eseguire all'istante \textit{t} di } P(\vec{x}) \text{ se non è terminato}\\
+0 \text{ altrimenti }
+\end{cases}
+$$
+
+Si ha che entrambe le funzioni sono del tipo $\mathbb{N}^{k+1} \rightarrow \mathbb{N} $
+e totali.
+
+Se $f(x)\downarrow$ allora \emph{P} termina su $\vec{x}$ in un qualche
+numero di passi
+
+$$
+t_0 = \mu t.J_p(\vec{x}, t)
+$$
+
+e
+
+$$
+f(\vec{x}) = C_{p}^1(\vec{x}, t_0) =  C_{p}^1(\vec{x}, \mu t.J_p(\vec{x}, t))
+$$
+
+Se invece $f(\vec{x})\uparrow$ si ha che
+
+$$
+\mu t.J_p(\vec{x}, t) = \uparrow
+$$
+
+e
+
+$$
+f(\vec{x}) = C_{p}^1(\vec{x}, t_0) =  C_{p}^1(\vec{x}, \mu t.J_p(\vec{x}, t))
+$$
+
+Ovvero la combinazione di queste funzioni riesce a descrivere un programma URM.
+
+Resta da dimostrare che queste due funzioni sono contenute in $ \mathcal{R} $ e pertanto, dato che \textit{f} è la combinazione di queste funzioni, anche \textit{f} è in $ \mathcal{R} $.
