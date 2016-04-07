@@ -1,0 +1,227 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\chapter{Programmi generici - Lezione 18}
+
+\section{Enumerazione dei programmi}
+
+\textbf{Enumerazione delle funzioni calcolabili}: Un insieme \textit{X} è numerabile se esiste una funzione $ f : \mathbb{N} \rightarrow X $ suriettiva tale che $ \underbrace{f(0), f(1), f(2), \ldots}_{\mathbb{N}} $.
+
+
+\subsection{Enumerazioni di supporto}
+Per poter enumerare e quindi codificare dei programmi è necessario prima definire alcune funzioni biunivoche di supporto:
+
+\begin{enumerate}
+	\item $ \Pi : \mathbb{N}^2 \rightarrow \mathbb{N}$
+	\item $ \nu : \mathbb{N}^3 \rightarrow \mathbb{N}$
+	\item $ \tau : \bigcup\limits_{k \geq 1}\mathbb{N}^k \rightarrow \mathbb{N}$
+\end{enumerate}
+
+\subsubsection{$1. \Pi $}
+
+Già osservata precedentemente, ovvero è la codifica delle coppie:
+
+\begin{align*}
+\Pi(x, y) &= 2^x(2y + 1) - 1\\
+\Pi^{-1}(n) &= (\Pi_1(n), \Pi_2(n))
+\end{align*}
+
+\subsubsection{$2. \nu $}
+
+$\nu $ può essere definita utilizzando $ \Pi $:
+
+\begin{align*}
+\nu(x_1, x_2, x_3) &= \Pi(\Pi(x_1,x_2), x_3) \\
+\nu'(n) &= (v_1(n), v_2(n), v_3(n)) \\
+\nu_1(n) &= \Pi_1(Pi_1(n))
+\end{align*}
+
+\subsubsection{$3. \tau $}
+
+$ \tau $ può essere definita come $ (x_1, \ldots, x_k) \rightsquigarrow \prod\limits{i=1}^{k} = P_{i}^{x_i} -1$ ma questa funzione non è iniettiva:
+
+\begin{align*}
+(2,1) &= 2^2 \cdot 3^1 -1 \\
+(2,1,0) &= 2^2 \cdot 3^1  \cdot 5^0 -1
+\end{align*}
+
+pertanto è necessario utilizzare
+
+$$
+\tau(x_1, \ldots, x_k) \rightsquigarrow \prod\limits{i=1}^{k-1} = P_{i}^{x_i} \cdot P_{k}^{x_k} - 2
+$$
+
+Per decodificare un numero \textit{n} è necessario prima calcolare la lunghezza della decodifica:
+
+$$
+l(n) = \max k.P.k \text{ divide } (n+2) \text{ con } k \leq n
+$$
+
+Anche se si tratta di una massimizzazione limitata è possibile dimostrare che è calcolabile sfruttando la minimalizzazione limitata, e quindi $ l(n) \in \mathcal{PR} $.
+
+$$
+a(n,i) = \begin{cases}
+(n+2)_i &\text{ se } i < l(n)\\
+(n+2)_i -1 &\text{ se } i = l(n)
+\end{cases}
+$$
+
+l'inversa di $ \tau $ può essere definita come:
+
+$$
+\tau^{-1}(n) = \Big(a\big(n,1\big), a\big(n,2\big), \ldots, a\big(n,l(n)\big)\Big)
+$$
+
+\subsection{Enumerazione dei programmi}
+
+Grazie alle funzioni precedentemente definite è possibile definire delle codifiche biunivoche che permettono di codificare con un numero sia una singola istruzione URM, sia un qualsiasi programma URM in $ \mathcal{P} $.
+
+$$
+\beta = \text{Ist URM} \rightarrow \mathbb{N} \quad \text{e} \quad \gamma \mathcal{P} \rightarrow \mathbb{N}
+$$
+
+\subsubsection{$ \beta = \text{Ist URM} \rightarrow \mathbb{N} $}
+
+\begin{align*}
+Z(n) &\rightarrow 4\cdot(n-1) \\
+S(n) &\rightarrow 4\cdot(n-1)+1 \\ 
+T(m,n) &\rightarrow 4\cdot\big(\Pi(m-1,n-1)\big)+2 \\
+J(m,n,t) &\rightarrow 4\cdot\big(\tau(m-1,n-1,t-1)\big)+3
+\end{align*}
+
+I vari $ -1 $ servono perché i registri URM partono da 1, mentre la codifica deve partire da 0, altrimenti non sarebbe biunivoca.
+
+La moltiplicazione per 4 serve per ``\textit{fare spazio}'' nella codifica in modo da continuare ad avere una funzione biunivoca. Allo stesso scopo servono anche le somme finali.
+
+per fare l'inversa di $ \beta $ basta calcolare $ r = rm(4,n) $ e $ q = qt(4,n) $:
+
+$$
+\beta^{-1} \begin{cases}
+Z(q+1) &\text{ se } r=0 \\
+S(q+1) &\text{ se } r=1 \\
+T\big(\Pi_1(q)+1, \Pi_2(q)+1\big) &\text{ se } r=2 \\
+J\big(a(q,1)+1,a(q,2)+1,a(q,3)+1\big)&\text{ se } r=3
+\end{cases}
+$$
+\todo{Verificare J}
+
+In questo modo si ha una codifica per le istruzioni che permette di trasformare una sequenza di istruzioni in una sequenza di numeri
+
+\subsubsection{$ \gamma \mathcal{P} \rightarrow \mathbb{N} $}
+
+$$
+\gamma(P) = \tau\big(\beta(I_1), \beta(I_2), \ldots\big)
+$$
+
+inversa con:
+
+$$
+\gamma^{-1}(n) = \tau^{-1}(n) = \Big(a\big(n,1\big), a\big(n,2\big), \ldots, a\big(n,l(n)\big)\Big)
+$$
+
+\section{Verso il programma 33 e la sua funzione}
+
+Con quanto a disposizione si può parlare del programma 33, ottenuto decodificando il numero 33.
+
+Prima di continuare serve della notazione aggiuntiva:
+
+Dato $ P \in \mathcal{P} $, $ \gamma(P) $ indica il codice di \textit{P} e prende il nome di \textbf{G\"odel number}.
+
+Dato \textit{n}, $ \gamma^{-1}(n) $ rappresenta il programma codificato nel numero \textit{n}, tale programma viene indicato con $ P_n $.
+
+Un esempio è dato da:
+\begin{lstlisting}[language=URM]
+P:
+T(1,2) 		--> 4Pi(1-1, 2-1) +2= 10
+S(2)		  --> 4(2-1) = 4
+T(2,1)   	--> 4Pi(2-1,1-1) +2= 6
+\end{lstlisting}
+
+\begin{align*}
+\gamma(P) &= \tau(10,4,6)\\
+&= 2^10 + 3^4 + 5^{6+1} -2\\
+&= 19.439.999.998
+\end{align*}
+
+\begin{lstlisting}[language=URM]
+P':
+S(1)		--> 2
+\end{lstlisting}
+
+$$
+\gamma(P’) = \tau(P) = 2
+$$
+
+I numeri $ 19.439.999.998 $ e $ 2 $ rappresentano due programmi che calcolano la stessa funzione successore.
+
+Si può fare anche l'operazione inversa:
+
+\begin{verbatim}
+100
+gamma^{-1}(100)  100+2
+= 2^1 + 3^1 + 17 ^1
+P1^1 P2^1 P3^0 P4^0 P5^0 P6^0 P7^1
+1 -> S(1)
+1 -> S(1)
+0 -> Z(1)
+0 -> Z(1)
+0 -> Z(1)
+0 -> Z(1)
+1 -> S(1)
+\end{verbatim}
+
+Il numero $ 100 $ rappresenta quindi il programma che calcola la constante 1.
+
+Dal momento che è possibile codificare i programmi in un numero, viene indotta anche un'enumerazione sulle funzioni calcolate da questi programmi:
+
+Fissata $ \gamma : \mathcal{P} \rightarrow \mathbb{N} $, si ha:
+
+$$
+\phi_{n}^{(k)} = f_{P_n}^{(k)}
+$$
+
+ovvero $ \phi_{n}^{(k)} $ è la funzione di \textit{k} argomenti calcolata da $ P_n = \gamma^{-1}(n) $.
+Per questa funzione è possibile definire anche 
+
+$$
+W_{n}^{(k)} = dom(\phi_{n}^{(k)}) \subseteq \mathbb{N}^k = \{\vec{x}\: | \: \vec{x} \in \mathbb{N}^k \text{ tale che } \phi_{n}^{(k)}(\vec{x}) \downarrow\}
+$$
+
+$$
+E_{n}^{(k)} = cod(\phi_{n}^{(k)}) = \{y\:|\: \exists\vec{x} \: \phi_{n}^{(k)}(\vec{x}) = y  \}
+$$
+
+Ad esempio:
+
+\begin{align*}
+P: S(1) &\rightarrow \gamma(P) = 2 \\
+\phi_{2}^{(1)}(x) &= x+1 \\
+W_{2}^{(1)} &= \mathbb{N} \\
+E_{2}^{(1)} &= \mathbb{N} - \{0\} \\
+\end{align*}
+
+Inoltre, si può definire una sorta di funzione di ordine superiore che, una volta fissato un $ k \geq 1$, associa un numero $ \mathbb{N} $ ad una funzione in $ \mathcal{C}^{(k)} : n \rightarrow  \phi_{n}^{(k)}$. Questa funzione è suriettiva perché data $ f \in \mathcal{C}^{(k)} $ esiste un programma \textit{P} che calcola $ f = f_{P}^{(k)} = \phi_{\gamma(P)}^{(k)} $ .
+Questa funzioni non è iniettiva perché una stessa funzione può essere calcolata da più programmi.
+
+Quindi 
+
+$$
+|\: \mathcal{C}^{(k)}\:| =  |\: \mathbb{N}\:| \leq |\: \mathcal{C}\:| = |\: \bigcup\limits_{k \geq 1} \mathcal{C}^{(k)} \:| = |\: \mathbb{N}\: |
+$$
+\todo{Verificare}
+
+ovvero esistono delle funzioni che non sono calcolabili.
+
+
+
+
+
+
+
+
+
+
+
+
+
