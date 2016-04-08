@@ -1,0 +1,29 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = data mining.tex
+% !TEX spellcheck = it-IT
+\chapter{Formulario}
+
+\section{Formule generiche}
+
+\section{Modello lineare}
+
+\section{Modello lineare con più variabili}
+
+$$
+Y = \beta_0 + \beta_1 X_1+\beta_2X_2 + \epsilon
+$$
+
+Minimi quadrati:
+
+$$
+s^2(\beta_0, \beta_1, \beta_2) = \sum\limits_{i=1}^n(y_i - \beta_0 + \beta_1 x_{1,i}+\beta_2 x_{2,i} )
+$$
+
+$$
+\begin{cases}
+\hat{\beta}_1 &= \frac{cov(X_1,Y)sqm(X_2) - cov(X_2, Y)cov(X_1,X_2)}{sqm(X_1)sqm(X_2)- cov^2(X_1,X_2)} \\
+\hat{\beta}_2 &= \frac{cov(X_2,Y)sqm(X_1) - cov(X_1, Y)cov(X_1,X_2)}{sqm(X_1)sqm(X_2)- cov^2(X_1,X_2)}  \\
+\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1\bar{x}_1 - \hat{\beta}_2\bar{x}_2
+\end{cases}
+$$

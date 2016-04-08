@@ -253,7 +253,7 @@ F-statistic: 472.2 on 1 and 171 DF, p-value: < 2.2e-16
 L'indice $ R^2 $ ottenuto fa riferimento ai residui calcolati sulla scala trasformata, quindi per avere un'indice di adattamento dei dati è possibile utilizzare la media dei quadrati dei residui per la variabile originale:
 
 $$
-\frac{1}{n}\sum\limits_{i=1}^n \Big[ \big(\text{vita media alla nascita}\big)_i - \big(\alpha + \beta \log(\text{reddito nazionale pro capite})_i\big)\Big]
+\frac{1}{n}\sum\limits_{i=1}^n \bigg[ \big(\text{vita media alla nascita}\big)_i - \sqrt[5]{\big(\alpha + \beta \log(\text{reddito nazionale pro capite})_i\big)}\bigg]^2
 $$
 
 Calcolando questo valore si ottiene 55.08, mentre con il secondo modello si aveva la varianza dei residui pari a 58.89. Si ottiene quindi una riduzione del $ 6\% $ del quadrato degli errori di previsione.

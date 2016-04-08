@@ -145,7 +145,7 @@ Questo livello varia da 0 a 1 e più è grande, più i dati sono vicini ad $ H_0
 \end{itemize}
 
 \emph{lontano da $ H_0 $} equivale a dire \emph{``lontano da 0 in entrambe le
-direzione''} quindi, nel caso delle vendite ($ t_oss = 9.921 $):
+direzione''} quindi, nel caso delle vendite ($ t_{oss} = 9.921 $):
 
 \begin{align*}
 \text{livello di significatività osserato } &= P(|t \text{ con 198 gradi}| \geq t_{oss}) \\
@@ -183,7 +183,6 @@ $$
 P\Bigg( -t_{n-2, 1-\alpha/2} \leq \frac{(\hat{\beta}_1 - \beta_1)}{\sqrt{\frac{s^2}{\sum_{i=i}^{n} (x_i - \bar{x})^2}}}\leq  t_{n-2, 1-\alpha/2}\Bigg) = 1 - \alpha
 $$
 
-Da cui si deriva che:\todo[inline]{Nelle slide non c'è il termine $ t_{n-2, 1-\alpha/2} $ ma secondo me è un errore non metterlo}
 
 $$
 \Bigg[ \hat{\beta}_1 - t_{n-2, 1-\alpha/2}  \sqrt{\frac{s^2}{\sum_{i=i}^{n} (x_i - \bar{x})^2}} \:,\: \hat{\beta}_1 + t_{n-2, 1-\alpha/2} \sqrt{\frac{s^2}{\sum_{i=i}^{n} (x_i - \bar{x})^2}}  \Bigg]
@@ -263,6 +262,13 @@ Il vantaggio di questo livello è che nasconde tutti i dettagli riguardo la stat
 Tipicamente, se il livello di significatività osservato è inferiore a $ 0.01 $ i risultati sono considerati altamente significativi \textbf{contro} $ H_0 $, mentre se risulta compreso tra $ 0.01 $ e $ 0.05 $ i risultati sono comunque significativi contro $ H_0 $, ovvero è molto probabile che $ H_0 $ sia falsa.
 
 Viceversa, se risulta maggiore di $ 0.1 $ si conclude che i dati non contengono elementi tali da poter rifiutare $ H_0 $ e quindi sono \textbf{non significativi}.
+
+\section{THE BIGGER PICTURE}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\textwidth]{./notes/immagini/l8-bonus.png}
+\end{figure}
 
 \section{Effettuare previsioni}\label{effettuare-previsioni}
 
