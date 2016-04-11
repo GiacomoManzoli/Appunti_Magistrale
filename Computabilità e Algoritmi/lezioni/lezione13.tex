@@ -21,7 +21,7 @@ Descrivere un algoritmo che dato un testo \textit{T} e una stringa \textit{A} no
 Si concatenano \emph{A} e \emph{T} in modo da formare \emph{S = A\$T} e si calcolano i vari $\pi_i$ in modo da trovare le occorrenze del
 pattern.
 
-Se $\pi_j$ è un occorenza di \emph{A}, si va a controllare
+Se $\pi_j$ è un occorrenza di \emph{A}, si va a controllare
 $\pi_j+len(A)$ e così via, finché non ci sono più occorrenze in
 fila.
 
@@ -46,7 +46,7 @@ Questo algoritmo è una versione estesa dell'algoritmo ingenuo che riesce ad evi
 \caption{Spostamento del pattern dopo è stato trovato un mismatch tra \textit{P[j]} e \textit{T[i+j-1]}}
 \end{figure}
 
-Durante l'esecuzione dell'algoritmo, si ha che il pattern \textit{P} è allineato al carattere \textit{i} della stringa e che ci sia un match parziale del pattern, ovvero che \textit{P[1, j-1] = T[i, i + j-2]} con un mismatch tra \textit{P[j]} e \textit{T[i+j-1]}. 
+Durante l'esecuzione dell'algoritmo, si ha che il pattern \textit{P} è allineato al carattere \textit{i} della stringa e che ci sia un match parziale del pattern, ovvero che $P[1, j-1] = T[i, i + j-2]$ con un mismatch tra $P[j]$ e $T[i+j-1]$. 
 
 Risulta quindi necessario riallineare il pattern con un altro carattere della stringa, per cercare una nuova occorrenza completa (supponendo che questa ci sia).
 
@@ -55,22 +55,22 @@ $P[j]$, perché è già stato fatto un confronto tra $P[j]$ e $T[i+j-1]$, e sono
 
 Questo vuol dire che il prefisso $P[1, j-h-1]$ deve comparire all'interno del pattern, in particolare si ha che $\pi_{1+h} = j - h -1$, ovvero $j = \pi_{1+h} +h +1$.
 
-Pertanto gli spostamenti \textit{h} compresi tra 1 e \textit{j-1} per i quali può esserci un'occorrenza del' pattern in posizione \textit{i+h} sono solamente quelli per cui $j = \pi_{1+h} +h +1$.
-Se questa condizione non è soddisfatta per nessun \textit{h}, la prima posizione del testo in cui può esserci una occorrenza del pattern è \textit{i+j}.
+Pertanto gli spostamenti \textit{h} compresi tra 1 e $j-1$ per i quali può esserci un'occorrenza del' pattern in posizione $i+h$ sono solamente quelli per cui $j = \pi_{1+h} +h +1$.
+Se questa condizione non è soddisfatta per nessun \textit{h}, la prima posizione del testo in cui può esserci una occorrenza del pattern è $i+j$.
 
 $$
 min(\{j\} \cup \{h | 1 <= h < j, j = 1 + h + \pi_{1+h}^P\})
 $$
 
 Nel caso venga trovato un match del pattern, si ha un mismatch sul
-carattere \emph{j=m+1} perché è la sentinella, in questo caso lo
+carattere $j=m+1}$ perché è la sentinella, in questo caso lo
 spostamento equivale al periodo minimo della stringa \emph{P}:
 
 $$
 d[m+1] = min(\{m+1\} \cup \{h | 1 \leq h \leq m, m+1 = 1 + h + \pi_{1+h}^S\})
 $$
 
-Se \emph{h = m}, ovvero la stringa non è periodica, si ha che viene
+Se $h = m$, ovvero la stringa non è periodica, si ha che viene
 preso in considerazione il periodo degenere, che è pari alla lunghezza
 della stringa, quindi anche nel caso di un match completo si ottiene lo
 spostamento corretto.
@@ -79,11 +79,11 @@ Per calcolare $d[j]$ si può utilizzare
 
 \begin{breakablealgorithm}
 	\begin{algorithmic}[1]
-		\For{$ j = 1 \: \text{to} \: m +1 $}
+		\For{$ j = 1 \: \textbf{to} \: m +1 $}
 			\State // Diamo ad ogni \textit{d[j]} il valore \textit{j} che è il massimo dei valori tra cui minimizzare
 			\State $ d[j] = j $
 		\EndFor
-		\For{$ h = m \: \text{downto} \: 1 $}
+		\For{$ h = m \: \textbf{downto} \: 1 $}
 			\State // Aggiorniamo d[j] quando troviamo un h minore che soddisfa la condizione $j = 1 + h + \pi_{1+h} $
 			\State $ d[1 + h + pref[1+h]] = h $
 	    \EndFor
@@ -127,15 +127,15 @@ La complessità della funzione prefisso e dei due cicli \texttt{for}
 risulta essere \emph{O(m)}.
 
 Durante la ricerca, l'operazione che viene effettuata più volte è il test del ciclo \texttt{while} interno. 
-Se il confronto ha esito negativo, il pattern viene ri-allineato e le posizioni possibili in cui è possibile allineare il pattern sono \emph{n - m +1}, quindi possono essere fatti al massimo \emph{n - m +1} confronti con esito negativo.
+Se il confronto ha esito negativo, il pattern viene ri-allineato e le posizioni possibili in cui è possibile allineare il pattern sono $n - m +1$, quindi possono essere fatti al massimo $n - m +1$ confronti con esito negativo.
 
-Quando il confronto ha esito positivo, \emph{i + j - 1} non diminuisce mai e aumenta di uno se viene trovato un match. Dal momento che, all'inizio \emph{i + j - 1 = 1} e alla fine vale $i + j -1\leq n+1$, perché
+Quando il confronto ha esito positivo, $i + j - 1$ non diminuisce mai e aumenta di uno se viene trovato un match. Dal momento che, all'inizio $i + j - 1 = 1$ e alla fine vale $i + j -1\leq n+1$, perché
 deve essere un carattere della stringa \emph{T} o al più la sentinella.
 
 Segue che al massimo il numero di match è $\leq n + 1 - 1$.
 
-Considerando sia i match che i mismatch, si hanno al massimo $2n-m+1$ confronti e considerando l'\emph{O(m)} iniziale, si ha come
-complessità totale dell'algoritmo \emph{O(m+n)}.
+Considerando sia i match che i mismatch, si hanno al massimo $2n-m+1$ confronti e considerando l'$O(m)$ iniziale, si ha come
+complessità totale dell'algoritmo $O(m+n)$.
 
 \subsection{Algoritmo di Boyer e Moore}\label{algoritmo-di-boyer-e-moore}
 
@@ -158,7 +158,7 @@ aggiunta all'inizio, sia del pattern che del testo, nella posizione 0.
 
 Con la sentinella $P[0]$ allineata con il carattere $T[i+j]$ e partendo dal fondo si è trovato un primo mismatch in posizione \emph{j}, vi è una occorrenza del pattern quando la
 sentinella è allineata con $T[i+h]$ per uno spostamento
-\emph{h} compreso tra 1 e \emph{j-1}
+\emph{h} compreso tra 1 e $j-1$
 
 Siccome l'algoritmo confronta i caratteri da destra a sinistra sappiamo
 che ad un certo punto
@@ -167,7 +167,7 @@ $$
 P[j + 1, m] = T[i + j + 1, i + m] \text{ e che } P[j] \neq T[i + j]
 $$
 
-Supponiamo che ci sia un'occorrenza del pattern a partire da $ T[i+h+1] $, ovvero quando la sentinella \textit{P[0]} è allineata con $ T[i+h] $ per un certo spostamento $ 1 \leq h \leq j -1 $.
+Supponiamo che ci sia un'occorrenza del pattern a partire da $ T[i+h+1] $, ovvero quando la sentinella $P[0]$ è allineata con $ T[i+h] $ per un certo spostamento $ 1 \leq h \leq j -1 $.
 
 In questo caso si ha che
 
@@ -205,9 +205,9 @@ $$
 j = m - \pi_{1+h}^{P_{rev}} 
 $$
 
-Pertanto, gli spostamenti \textit{h} compresi tra 1 e \textit{j - 1} tali che ci possa essere una occorrenza del pattern quando $ P[0] $ è allineato con $ T[i+h] $ sono soltanto quelli per cui $ j = m - \pi_{1+h}^{P_{rev}} $.
+Pertanto, gli spostamenti \textit{h} compresi tra 1 e $j - 1$ tali che ci possa essere una occorrenza del pattern quando $ P[0] $ è allineato con $ T[i+h] $ sono soltanto quelli per cui $ j = m - \pi_{1+h}^{P_{rev}} $.
 
-Supponiamo invece che l'occorrenza del pattern ci sia per uno spostamento $ j \leq h leq m $.
+Supponiamo invece che l'occorrenza del pattern ci sia per uno spostamento $ j \leq h \leq m $.
 
 \begin{figure}[htbp]
 	\centering
@@ -221,7 +221,7 @@ $$
 P[1,m-h] = T[i+h +1, i+m]
 $$
 
-e siccome $ P[j+1,m] = T[ièj+1,i+m] $ dovrà essere che
+e siccome $ P[j+1,m] = T[i+j+1,i+m] $ dovrà essere che
 
 $$
 P[h+1,m] = P[1,m-h]
@@ -234,7 +234,7 @@ Pertanto gli spostamenti \textit{h} compresi tra \textit{j} e \textit{m} tali ch
 Si ha quindi che lo spostamento $d[j]$ del pattern che si deve effettuare quando, con la sentinella allineata ala carattere $ T[i] $ del testo e partendo dalla fine del pattern si trova un mismatch tra il carattere $ P[j] $ e $ T[i+j] $ è:
 
 $$
-d[j] = min(\{h | 1 \leq h < j, j ) m , \pi_{1+h}^{P_{rev}}\} \cup \{h | j \leq h \leq m, h = m - \pi_{1+h}^{P_{rev}}\})
+d[j] = min(\{h \:|\: 1 \leq h < j, j = m + \pi_{1+h}^{P_{rev}}\} \cup \{h \:|\: j \leq h \leq m, h = m - \pi_{1+h}^{P_{rev}}\})
 $$
 
-Tale minimo è sempre definito perché \emph{h = m} soddisfa sempre la seconda condizione, dal momento che $ \pi_{1+m}^{P_{rev}}  = 0$ perché il carattere $ P_{rev}[m+1] $ è la sentinella.
+Tale minimo è sempre definito perché $h = m$ soddisfa sempre la seconda condizione, dal momento che $ \pi_{1+m}^{P_{rev}}  = 0$ perché il carattere $ P_{rev}[m+1] $ è la sentinella.

@@ -64,7 +64,7 @@ completo è quello di spostarsi di \emph{m}.
 Versione dell'algoritmo \textsc{KMP} che funziona controllando esattamente una volta ogni carattere del testo. Per poter applicare l'algoritmo è necessario che l'alfabeto $ \Sigma $ sia finito e noto a
 priori.
 
-Supponiamo che il pattern sia allineato nella posizione \textit{j} del testo e che i primi \textit{j-1} caratteri del pattern siano stati trovati uguali a quelli del testo.
+Supponiamo che il pattern sia allineato nella posizione \textit{j} del testo e che i primi $j-1$ caratteri del pattern siano stati trovati uguali a quelli del testo.
 
 Sia $ k =i+j-1 $ la posizione del testo allineata con la posizione \textit{j} del pattern. Si ha quindi che 
 
@@ -105,7 +105,7 @@ Se $ T[k] \neq P[j] $ allora $ i+h $ è la prima posizione in cui valgono le con
 
 Se non è possibile trovare un $ h $ compreso tra $ 0 $ e $ j-1 $ ($ i \leq h \leq i+j-1 $), allora la prima posizione del testo in cui può esserci una occorrenza del pattern è $ i+j $.
 
-Pertanto lo spostamento in funzione $ j = 1, \ldots, m +1 $ e del carattere $ T[k] = x $ è uguale a 0 se $ P[j] = x $, altrimenti è 
+Pertanto lo spostamento del pattern in funzione di $ j = 1, \ldots, m +1 $ e del carattere $ T[k] = x $ è uguale a 0 se $ P[j] = x $, altrimenti è 
 
 $$
 h(j,x) = \min(\{j\} \cup \{h | 0 < h < j, j = 1+h + \pi_{1+h}^P, \: \underbrace{P[ 1+ \pi_{1+h}^P] = x}_{P[j-h] = T[k]}\})
@@ -116,7 +116,7 @@ Inoltre, dato che dopo lo spostamento o il pattern è allineato sul carattere su
  
 Per ogni carattere del testo l'algoritmo sposta il pattern di una quantità $ h $ (che può anche essere 0) che dipende dal carattere stesso e dalla posizione \textit{j} del carattere del pattern che è allineato con il carattere del testo considerato.
 
-Quindi l'unica informazione che serve all'algoritmo per effettuare il passo successivo è la posizione $ j' = j - h+ 1 $ del carattere del pattter che risulterà allineato con il carattere $ T[k+1] $ del testo dopo lo spostamento. Pertanto durante la pre-elaborazione conviene calcolare $ \delta(j,x) $ piuttosto che $ h(j,x) $
+Quindi l'unica informazione che serve all'algoritmo per effettuare il passo successivo è la posizione $ j' = j - h+ 1 $ del carattere del pattern che risulterà allineato con il carattere $ T[k+1] $ del testo dopo lo spostamento. Pertanto durante la pre-elaborazione conviene calcolare $ \delta(j,x) $ piuttosto che $ h(j,x) $
 
 $$
 \delta(j,x) = j - h(j,x)+1

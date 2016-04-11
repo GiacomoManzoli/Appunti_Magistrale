@@ -120,14 +120,14 @@ Ad esempio:
 \end{figure}
 
 Da notare che $Y = S[i, i+\pi_i -1]$ per definizione è un occorrenza in \textit{S} della stringa $S[1, \pi_i -1]$, pertanto si ha che \textit{Y} è un bordo della stringa $S[1, i +\pi_i -1]$. 
-Per la relazione tra prefisso e bordo si ha quindi che $S[1, i +\pi_{i -1}]$ ha periodo \textit{p = i -1}.
+Per la relazione tra prefisso e bordo si ha quindi che $S[1, i +\pi_i -1]$ ha periodo $p = i -1$.
 
-Si ha inoltre che la stringa $S[1, i +\pi_i -1]$ è il più lungo prefisso di \textit{S} con periodo \textit{p= i-1}.
+Si ha inoltre che la stringa $S[1, i +\pi_i -1]$ è il più lungo prefisso di \textit{S} con periodo $p= i-1$.
 
-Questo perché se \textit{i = 1}, si ha che il prefisso \textit{Y} coincide con \textit{S} e \textit{p=0}, ottenendo periodo e bordo degeneri.
+Questo perché se $i = 1$, si ha che il prefisso \textit{Y} coincide con \textit{S} e $p=0$, ottenendo periodo e bordo degeneri.
 
-Se invece $ i \geq 2 $ si ha che, se $i + \pi_i -1 = n $, \textit{Y} è anche un suffisso di \textit{S}, pertanto non possono esserci altri prefissi con periodo \textit{p = i -1} più lunghi perché è la stringa \textit{S} è terminata.
-Oppure se $i + \pi_i -1 \neq n $ vuol dire che il carattere $ S[\pi_i + 1] $ è diverso dal carattere $ S[i+\pi_i] $ per definizione di $ \pi_i $ e quindi non può esistere un prefisso $ S[1, \pi_i +1] $ con periodo \textit{p = i -1} perché $ S[\pi_i  + 1 + p] = S[\pi_i + i] $ che per ipotesi è diverso da $ S[\pi_i +1] $.
+Se invece $ i \geq 2 $ si ha che, se $i + \pi_i -1 = n $, \textit{Y} è anche un suffisso di \textit{S}, pertanto non possono esserci altri prefissi con periodo $p = i -1$ più lunghi perché è la stringa \textit{S} è terminata.
+Oppure se $i + \pi_i -1 \neq n $ vuol dire che il carattere $ S[\pi_i + 1] $ è diverso dal carattere $ S[i+\pi_i] $ per definizione di $ \pi_i $ e quindi non può esistere un prefisso $ S[1, \pi_i +1] $ con periodo $p = i -1$ perché $ S[\pi_i  + 1 + p] = S[\pi_i + i] $ che per ipotesi è diverso da $ S[\pi_i +1] $.
 
 Le varie sottostringhe $ S[i, i + \pi_i -1 ] $ non sono necessariamente disgiunte ma possono sovrapporsi.
 
@@ -170,7 +170,7 @@ il massimo destro con $ 2 \leq j \leq 15 $ è $ r_{15} = 10 + \pi_{10} -1 = 16$,
 \subsection{Pre-elaborazione fondamentale in tempo lineare}\label{preambolazione-fondamentale-in-tempo-lineare}
 
 Seguendo l'approccio di definizione il tempo richiesto è
-$O(n^2)$, ma è possibile scendere a \emph{O(n)}.
+$O(n^2)$, ma è possibile scendere a $O(n)$.
 
 Supponiamo che \emph{S} termini con un carattere diverso da tutti gli
 altri che compaiono nella stringa. Questo non è un problema perché si
@@ -178,7 +178,7 @@ può sempre aggiungere una sentinella.
 
 L'algoritmo calcola $\pi_1 = n$ e poi calcola i valori $\pi_i, r_i, l_i$ per $i = 2,\ldots, n$, basandosi su un'array $ pref[1\ldots n] $ il quale conterrà i vari $ \pi_i $ e due variabili, \textit{r} e \textit{l}, le quali andranno a memorizzare gli estremi massimi tra gli indici precedente calcolati.
 
-Come prima cosa viene effettuato il calcolo di $ \pi_2 $ confrontando da sinistra a destra i caratteri di \textit{S[2,n]}, cosi facendo si ha che $ r = \pi_2 +1 $ e $l = 2$.
+Come prima cosa viene effettuato il calcolo di $ \pi_2 $ confrontando da sinistra a destra i caratteri di $S[2,n]$, cosi facendo si ha che $ r = \pi_2 +1 $ e $l = 2$.
 
 Assumendo induttivamente di aver calcolato $ \pi_j $ per ogni $ j = 2, \ldots, i-1$, si ha che $ r = r_{i-1} = \pi_{i-1} +1 $ e $ l = l_{i-1} $.
 
@@ -219,7 +219,7 @@ Durante il calcolo di $ \pi_i $ possono verificarsi 2 casi:
 		    \State  $ l \gets 2 $
 		    \State $ r \gets 2 + h - 1$
 		    \For{$ i = 3 \: \text{to} \: n $}
-			    \If{$ r < \ $} \Comment{Caso 1}
+			    \If{$ r < i $} \Comment{Caso 1}
 			        \State $ h \gets 0$
 		            \While{$ S[1+h] = S[i+h]$}
 		                \State $ h \gets h + 1 $
@@ -236,7 +236,7 @@ Durante il calcolo di $ \pi_i $ possono verificarsi 2 casi:
 		                    \State $ h \gets h +1 $
 		                \EndWhile
 		                \State $pref[i] \gets h$
-		                \State $l gets i$
+		                \State $l \gets i$
 		                \State $ r \gets i +h -i$
 			         \EndIf
 		          \EndIf
@@ -255,24 +255,24 @@ Se non viene presa in considerazione la complessità dei cicli
 
 I cicli \texttt{while} terminano quando viene trovato un mismatch e al
 massimo vengono trovati \emph{n-1} mismatch (1 dal \texttt{while}
-esterno, \textit{n-2} dai \texttt{while} dentro il ciclo \texttt{for}).
+esterno, $n-2$ dai \texttt{while} dentro il ciclo \texttt{for}).
 
 Ad ogni confronto con successo, il carattere destro ($S[i+h]$)
-viene spostato a destra di 1 e, una volta terminato il \texttt{while}, questo viene posto a \textit{r = i + h - 1}, ovvero risulta essere il carattere alla posizione \textit{S[r+1]}.
+viene spostato a destra di 1 e, una volta terminato il \texttt{while}, questo viene posto a $r = i + h - 1$, ovvero risulta essere il carattere alla posizione $S[r+1]$.
 
-All'iterazione successiva il ciclo \texttt{while} inizia con carattere destro \textit{S[i]} se \textit{i > r}\footnote{Viene quindi sposto a destra perché $ i \geq r+1 $} altrimenti inizia con \textit{S[i + h]} con \textit{h = r - i + 1}. In entrambi i casi il carattere destro non si sposta mai a sinistra durante l'esecuzione dell'algoritmo. 
-Pertanto vengono eseguiti al più \emph{n-1} confronti con successo. +
-Si ottiene quindi una complessità per i \texttt{while} di \emph{O(2n-2)}.
+All'iterazione successiva il ciclo \texttt{while} inizia con carattere destro $S[i]$ se $i > r$\footnote{Viene quindi sposto a destra perché $ i \geq r+1 $} altrimenti inizia con $S[i + h]$ con $h = r - i + 1$. In entrambi i casi il carattere destro non si sposta mai a sinistra durante l'esecuzione dell'algoritmo. 
+Pertanto vengono eseguiti al più $n-1$ confronti con successo. +
+Si ottiene quindi una complessità per i \texttt{while} di $O(2n-2)$.
 
-La complessità totale dell'algoritmo è data da \emph{O(n) + Complessità while = O(n) + O(2n-2) = O(n)}.
+La complessità totale dell'algoritmo è data da $O(n) +\textit{ Complessità while }= O(n) + O(2n-2) = O(n)$.
 
 \subsubsection{Matching esatto in tempo lineare}\label{matching-esatto-in-tempo-lineare}
 
-Per effettuare il pattern matching in tempo \emph{O(m+n)} del pattern \emph{P} in \emph{T} è possibile utilizzare una versione leggermente modifica della funzione prefisso sulla stringa \emph{S = P\$T}, dove \$ è un simbolo che non è presente nelle due stringhe.
+Per effettuare il pattern matching in tempo $O(m+n)$ del pattern \emph{P} in \emph{T} è possibile utilizzare una versione leggermente modifica della funzione prefisso sulla stringa \emph{S = P\$T}, dove \$ è un simbolo che non è presente nelle due stringhe.
 
 Questo viene fatto calcolando $ \pi_i^S $ per $ i = 2, \ldots n + m +1 $.
 Siccome \$ non compare in nessuna delle due stringhe, si ha che $ \pi_i \leq m \: \forall \: i $ perché per ipotesi la sottostringa \textit{P\$} non può comparire all'interno di \textit{T}.
-Inoltre, $ \forall \: i \geq m +1 : \pi_i = m $ si ha che \textit{i - m - 1} identifica l'inizio di un'occorrenza di \textit{P} in \textit{T}, perché $ \pi_i = m $ indica la presenza di prefisso di lunghezza \textit{m} a partire dalla posizione \textit{i}, ma la sottostringa prefissa di lunghezza \textit{m} coincide per costruzione con \textit{P}, quindi \textit{i} indica l'inizio di un'occorrenza del pattern \textit{P} nella stringa \textit{P\$T}.
+Inoltre, $ \forall \: i \geq m +1 : \pi_i = m $ si ha che $i - m - 1$ identifica l'inizio di un'occorrenza di \textit{P} in \textit{T}, perché $ \pi_i = m $ indica la presenza di prefisso di lunghezza \textit{m} a partire dalla posizione \textit{i}, ma la sottostringa prefissa di lunghezza \textit{m} coincide per costruzione con \textit{P}, quindi \textit{i} indica l'inizio di un'occorrenza del pattern \textit{P} nella stringa \textit{P\$T}.
 
 Dal momento che il prefisso viene calcolato in tempo lineare rispetto la lunghezza della stringa, si ottiene una funzione di pattern matching con complessità lineare.
 
@@ -289,23 +289,7 @@ Ovvero se è possibile identificare due stringhe $ \alpha $ e $ \beta $ tali che
 
 \paragraph{Soluzione}
 
-L'idea è quella di concatenare due stringhe in modo da formare $ S= X\$Y $, dove \$ è un carattere che non compare in nessuna delle due stringhe.
-
-Effettuando la preelaborazione è possibile calcolare $ \pi_2^S $ il quale sarà sicuramente un valore $ \leq n $.
-
-Se è esattamente uguale a \textit{n} vuol dire che le due stringhe sono uguali e quindi \textit{Y} è una rotazione nulla di \textit{X}.
-
-In caso contrario è possibile costruire la stringa $ S' = X[\pi_2^S + 1,n] X[1, \pi_2^S]\$Y $ ed effettuare una seconda preelaborazione per calcolare $ \pi_2^{S'} $.
-
-Se  $ \pi_2^{S'} + \pi_2^{S'}  = n   $, si è nel caso in cui $ X = \alpha\beta $ e $ Y = \beta\alpha $, altrimenti se $ \pi_2^{S'} + \pi_2^{S'}  < n $ \textit{Y} non è una rotazione di \textit{X}.
-
-Dal momento che la complessità della preelaborazione è lineare, anche questo algoritmo ha complessità lineare.
-
-\todo[inline]{verificare correttezza}
-
-\paragraph{Soluzione 2}
-
-Si concatenano le stringhe in modo da formare $ S = Y\$XX $, se eseguendo la preelaborazione trovo un prefisso di lunghezza \textit{n} a partire dal \textit{n+1} vuol dire che \textit{Y} compare tra le due \textit{X} e quindi le due stringhe sono la rotazione di una stessa stringa.
+Si concatenano le stringhe in modo da formare $ S = Y\$XX $, se eseguendo la preelaborazione trovo un prefisso di lunghezza \textit{n} a partire dal $n+1$ vuol dire che \textit{Y} compare tra le due \textit{X} e quindi le due stringhe sono la rotazione di una stessa stringa.
 
 \subsubsection{Esercizio - Massima sottostringa comune}
 

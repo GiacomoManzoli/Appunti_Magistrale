@@ -17,7 +17,7 @@ stringa di 4 miliardi di caratteri.
 
 \subsection{Notazione utilizzata}\label{notazione-utilizzata}
 
-Una stringa è composta da un insieme \emph{Sigma} di simboli
+Una stringa è composta da un insieme $\Sigma$ di simboli
 distinguibili e che prendono il nome di \textbf{caratteri dell'alfabeto}.
 
 L'alfabeto, ovvero l'insieme di simboli, può essere finito oppure
@@ -148,7 +148,7 @@ Se $n \geq p + q - MCD(p,q)$ allora la stringa \emph{X} ha anche periodo \emph{M
 
 \subparagraph{Dimostrazione}\label{dimostrazione-2}
 
-Supponendo che $p \leq q$, la dimostrazione viene fatta per induzione su \emph{p+q}.
+Supponendo che $p \leq q$, la dimostrazione viene fatta per induzione su $p+q$.
 
 $(p+q = 1)$ 
 
@@ -169,17 +169,18 @@ Se $1 \leq p < q$, si ha che la stringa \emph{X} ha bordi $\alpha$ e $\beta$ di 
 \emph{q}}
 \end{figure}
 
-La stringa $\beta$ essendo bordo di \emph{X} è anche bordo $\alpha$ dal momento che $\alpha$ è un bordo di \emph{X}, pertanto $\alpha$ ha periodo $r = |\alpha| - |\beta| = q -p$.
+La stringa $\beta$ essendo bordo di \emph{X} è anche bordo di $\alpha$ dal momento che $\alpha$ è un bordo di \emph{X}, pertanto $\alpha$ ha periodo $r = |\alpha| - |\beta| = q -p$.
 
-Si ha che $p+r < p + q$ e \emph{MCD(p,r) = MCD(p,q)}, quindi per ipotesi induttiva
+Si ha che $p+r < p + q$, quindi è possibile applicare l'ipotesi induttiva, e che \emph{MCD(p,r) = MCD(p,q)}:
 
-$$
-|\alpha| = n - p \geq q - MCD(p,q) = p+r+MCD(p,q)
-$$
+\begin{align*}
+|\alpha| &\geq p+r-MCD(p,q)\\
+ n - p &\geq q - MCD(p,q) 
+\end{align*}
 
-$ \alpha $ ha quindi come periodo sia \textit{r} (a causa di $ \beta $), sia \textit{p} (per ipotesi), ovvero ha periodo \textit{MCD(p,r)} che per come è definito \textit{r} è uguale a \textit{MCD(p,r)}.
+$ \alpha $ ha quindi come periodo sia \textit{r} (a causa di $ \beta $), sia \textit{p} (perché è una sottostringa di \textit{X}, la quale ha periodo \textit{p}) e per ipotesi induttiva ha anche periodo $MCD(p,r)$ che per come è definito \textit{r} è uguale a $MCD(p,q)$.
 
-Si ha quindi che
+Considerando inoltre che:
 
 \begin{align*}
 	2|\alpha| &= (n-p) + (n-p) \\
@@ -199,7 +200,7 @@ Presi quindi due caratteri $ x_i $ e $ x_j $ della stringa \textit{X}, tali che 
 \end{figure}
 
 
-In questo caso si ha che $ j > n - |\alpha| = p $ e quindi $ j - p \geq 1$. Si può quindi considerare il carattere $ x_{j-p} = x_j$ per via del periodo \textit{p} di $ \alpha $ e che risulta appartenere a $ \alpha_{(prefisso)} $ perché $ p \geq MCD(p,q) $.
+In questo caso si ha che $ j > n - |\alpha| = p $ e quindi $ j - p \geq 1$. Si può quindi considerare il carattere $ x_{j-p} = x_j$ per via del periodo \textit{p} di $ X $ e che risulta appartenere a $ \alpha_{(prefisso)} $ perché $ p \geq MCD(p,q) $.
 
-La distanza tra $ x_{j-p} \text{ e } x_i$ è \textit{p - MCD(p,q)}, che per definizione è un multiplo di \textit{MCD(p,q)}, pertanto si ha che $ x_{j-p} \text{ e } x_i$ appartengono ad $ \alpha_{(prefisso)} $ che ha periodo \textit{MCD(p,q)}, pertanto $ x_{j-p} = x_i = x_j $ e di conseguenza \textit{X} ha periodo \textit{MCD(p,q)}.
+La distanza tra $ x_{j-p} \text{ e } x_i$ è $p - MCD(p,q)$, che per definizione è un multiplo di \textit{MCD(p,q)}, pertanto si ha che $ x_{j-p} \text{ e } x_i$ appartengono ad $ \alpha_{(prefisso)} $ che ha periodo \textit{MCD(p,q)}, pertanto $ x_{j-p} = x_i = x_j $ e di conseguenza \textit{X} ha periodo \textit{MCD(p,q)}.
 

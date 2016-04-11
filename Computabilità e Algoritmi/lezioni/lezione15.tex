@@ -8,7 +8,7 @@ sui bit e aritmetiche al posto del confronto di caratteri.
 Metodo che funziona molto bene per pattern corti.
 
 L'algoritmo calcola una matrice booleana $M_i[j]$ con
-\emph{n+1} righe e \emph{m} colonne, tale che
+$n+1$ righe e \emph{m} colonne, tale che
 
 $$
 M_i[j] = 1 \text { se e solo se } P[1,j] = T[i-j+1, i]
@@ -51,7 +51,7 @@ carattere 0.
 
 Le righe successive vengono calcolate utilizzando
 
-$$M_i = \textsc{And}(\textsc{Shift}(M_{i-1}), U_{T[i]}$$
+$$M_i = \textsc{And}\big(\textsc{Shift}(M_{i-1}), U_{T[i]}\big) $$
 
 dove \textsc{And} è l'operazione macchina che effettua l'\textit{and} logico bit
 a bit.
@@ -103,7 +103,7 @@ corretto.
     \EndFor
     \State $M_0 \gets \vec{0}$
     \For{$i = 1 \text{ to } n$}
-        \State $M_i \text{\textsc{And}}(\text{\textsc{BitShift}}(M_{i-1}), U_{T[i]})$
+        \State $M_i \gets \text{\textsc{And}}(\text{\textsc{BitShift}}(M_{i-1}), U_{T[i]})$
         \If{$M_i[m] = 1$}
             \State occorrenza in $i -m +1$
         \EndIf
@@ -175,7 +175,7 @@ modulare e la regola di Horner: data una stringa $S = b_1 \ldots b_m$, $H_p(S)$ 
 \Function{H$ _p$}{$S$}
     \State $ H = b_1 $
     \For{$ j = 2 \text{ to } m$}
-        \State $H \gets (2H + b_j) mod p$
+        \State $H \gets (2H + b_j) \mod p$
     \EndFor
     \State \Return $H$
 \EndFunction
