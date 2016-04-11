@@ -1,0 +1,310 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\section{Diagonale di Cantor}
+
+Dato un insieme di oggetti numerabile permette di definire un oggetto simile ma che non appartiene alla numerazione.
+
+$$
+x_0, x_1, x_2
+$$
+
+$ x $ è diverso da $ x_i $ nella componente $ i $-esima.\\
+
+Ad esempio considerando l'insieme della parti dei numeri naturali $ \mathcal{P}(\mathbb{N}) =2^\mathbb{N} =  \{X \: | \: X \subseteq \mathbb{N} \} $, questo non è numerabile:
+
+$$
+|\: 2^\mathbb{N}  \:| > |\:\mathbb{N}\:|
+$$
+
+ovvero non tutti gli infiniti sono uguali.
+
+Questo si dimostra cercando una funzione iniettiva da $ \mathbb{N} \rightarrow 2^\mathbb{N} $, come $ x \rightarrow \{x\} $, ma noi vogliamo trovare una funzione per la quale non valga l'uguale, perché $ 2^\mathbb{N} $ non è numerabile.
+
+Per assurdo supponiamo che $ 2^\mathbb{N} $ sia numerabile, allora $$ \overbrace{X_0, X_1, X_2, \ldots}^{2^\mathbb{N}} $$
+
+\begin{verbatim}
+Si -> il numero appartiene alla partizione X_i
+costruita in modo che 
+	N\2^N	X0		X1		X2 ....
+	0			Si		   Si		No
+	1			No       No     Si
+	2			Si	       No    No
+	3			.........
+
+Si può quindi considerare la diagonale della tabella ...
+
+
+  X= \{i | i \notin X_i \} \subseteq \mathbb{N} \in 2^\mathbb{N}
+  
+  supponendo che esiste i0 in n tale che X = X_i0, 
+	  se i0 \in X_io allora i0 not in X = X_i0, assurdo
+	  se i0 \notin Xio allora io \in X  = X_i0, assurdo
+
+pertanto 2^\mathbb{N} non è numerabile  
+	
+\end{verbatim}
+
+Altro insieme di non numerabile
+
+\begin{verbatim}
+	F-Figa = {f | f : \mathbb{N} \rightarrow \mathbb{N}}
+	
+	|F-figa| > |N|
+	
+	\{ f | f : \mathbb{N} \rightarrow {0,1}\} \subseteq F-Figa
+	
+	|F-figa| >= |\{ f | f : \mathbb{N} \rightarrow {0,1}\} | = |2^\mathbb{N}| > |\mathbb{N}|
+	
+	|F-figa| > |\mathbb{N}|
+	
+	consideriamo una qualunque enumerazione degli elementi di F-Figa, vogliamo dimostare che c'è certamente una funzione f \in F-figa che non compare nell'enumerazione.
+	
+	Prendiamo una di queste enumerazioni
+	
+N	f0 			f1 			f2 .... 
+0	f0(0)	f1(0)              (funzioni viste come l'insieme dei valori che prendono sul loro dominio)
+1	f0(1)
+2
+
+	Con questa definizione è possibile costruire una nuova funzione prendendo i valori della diagonale e mondificando questa funzione in modo che il valore della funzione differisca dai valori assunti dalle altre funzioni.
+	
+	f(n) = \uparrow se f_n(n) è \downarrow
+	           0 se f_n(n) è \uparrow
+	           
+	Per costruzione, questa funzione differisce da ciascuna delle fi riportate in tabella
+	
+	\forall n f_n \neq f, perché f_n(n)\downarrow <==> f(n) \uparrow
+	
+	allora l'enumerazione non contiene tutte le funzioni in F-figa, ovvero F-figa non è numerabile.
+\end{verbatim}
+
+\subsection{Esistenza di una funzione totale non calcolabile}
+
+Esiste una funzione totale non calcolabile:
+
+$$
+f(n) = \begin{cases}
+\phi_n(n) +1 &\text{ se } n \in W_n \\
+0 &\text{ se } n \notin W_n
+\end{cases}
+$$
+
+Per costruzione e per quanto visto prima questa funzione è totale perché è sempre definita e non è calcolabile perché prendendo un qualsiasi enumerazione delle funzioni calcolabili è possibile ``\textit{maltrattare}'' la diagonale in modo simile a quanto precedente fatto, così facendo si costruisce una funzione che è diversa da tutte le funzioni calcolabili.
+
+Il tutto sta in piedi perché $ n \in W_n $ non è decidibile dato che $ n \in W_n \Leftrightarrow (\phi_n \downarrow \text{ e } P_n(n) \text{ termina}) $.
+
+\subsection{Esercizio - Diagonalizzazione}
+
+Sia $ f : \mathbb{N} \rightarrow \mathbb{N} $ parziale e sia $ k \in \mathbb{N} $. Mostrare che esiste $ h : \mathbb{N} \rightarrow \mathbb{N} $ non calcolabile, totale e tale che $ h(x) = f(x) $ per $ x < k $.
+
+\subsubsection{Soluzione}
+
+\begin{verbatim}
+			phi0 				phi1		phi2
+0		phi0(0)			phi1(0)
+1       phi0(1)         phi1(1)
+
+k-1   phi0(k-11)  phi1(k-1)
+k        phi0(k)		phi1(k)
+k+1       phi0(k+1)		phi1(k+1)
+
+in questo caso si prende la diagonale a partire da k, ovvero
+
+h(x) = \begin{cases}
+f(x) se x < k \\
+phi_{x-k}(x) +1 se x \geq k e phi_{x-k}(x)\downarrow \\
+0 se x \geq k e phi_{x-k}(x)\uparrow \\
+\end{cases}
+
+per costruzione h coincide con f fino a k e non è calcolabile perché per ogni phi_n calcolabile, questa è diversa da h sull'argomento n+k
+
+h(n+k) = phi_n(n+k)
+
+osservazione: se non ci fosse x-k nella definizione, la funzione h sarebbe ancora non calcolabile per una motivazione più profonda, perché per ogni n >= k h != phi_n non pone h diversa dalla prime k funzioni calcolabili. La non calcolabilità rimane perché la stessa funzione calcolabile è calcolabile da infiniti programmi e quindi le prime k funzioni ricomparirrano certamente anche con un indice > k.
+
+Più formalmente sia g: N -> N, allora esiste e >= k : phi_e = g perché una funzione è calcolata da inifiniti programmi => h != phi_e = g => h non è calcolabile.
+\end{verbatim}
+
+\subsubsection{Esercizio - Diagonalizzazione 2}
+
+Data f n in n si vuole definire h n in n non calcolabile che coincide con f sui numeri pari.
+
+\section{Teorema S-M-N}
+
+Data una funzione $ f : \mathbb{N}^2 \rightarrow \mathbb{N} $ calcolabile.
+
+Indiciamo con $ f_x : \mathbb{N} \rightarrow \mathbb{N}$:
+
+$$
+f_x (y) = f(x,y)
+$$
+
+Dato che $ f $ è calcolabile si ha
+
+$$
+f = f_{p}^{(2)} \text{ per un programma \textit{P} } = \phi_{e}^{(2)} \text{ con } e = \gamma(P)
+$$
+
+e 
+
+$$
+f_x = \phi_{S(e,x)}^{(1)}
+$$
+
+ovvero la funzione $ f_x $ viene calcolata da un programma che dipende dal programma di indice \textit{e}, ovvero quello che calcola $ f $ e dal valore fissato $ x $.
+
+Ad esempio:
+\begin{align*}
+f(x,y) &= y^x \\
+f_x(y) &= y^x \\
+f_0(y) &= 1 \\
+f_1(y) &= y \\
+f_2(y) &= y^2 \\
+&\vdots 
+\end{align*}
+
+La funzione $ e,x \rightarrow S(e,x) $ dati $ e $ e $ x $ ritorna il programma che calcola $ f $ con $ x $ fissato.
+
+$ S : \mathbb{N}^2 \rightarrow \mathbb{N} $ è totale e calcolabile.
+
+$$
+\phi_{S(e,x)}^{(1)}(y) = \phi_{e}^{(2)}(x,y)
+$$
+
+\begin{verbatim}
+e ed x dati
+
+P_e = \gamma^{-1}(e)   |x|y|....... --> phi_e(x,y)
+
+si vuole ottenere l'indice di un programma che calcola phi_e(x,y) per x fissato
+
+P_{e,x} |y|..... --> phi_e(x,y)
+
+per fare questo basta che il programma:
+	copi y sul secondo registro: |y|y|.....
+	metta x sul primo registro: |x|y|...
+	esegue P
+
+ovvero, P_{e,x} è definito come
+T(1,2)
+Z(1)
+S(1)
+...
+S(1)
+\gamma^{-1}(e)
+
+Pertanto S(e,x) = gamma(P_{e,x})
+\end{verbatim}
+
+Tutto questo può essere maggiormente formalizzato.
+
+Il nome del teorema deriva dal nome della funzione (\textit{S}) e dal fatto che si fissano i primi $ m $ parametri di una funzione con $ m+n $ parametri
+
+\subsection{Teorema S-M-N (Kleene)}
+
+Dato $ m,n \geq 1 $ esiste $ S : \mathbb{N}^{m+1} \rightarrow  \mathbb{N}$ calcolabile e totale, tale che:
+
+$$
+\phi_{e}^{(m+n)}(\vec{x},\vec{y}) = \phi_{S(e,\vec{x})}^{(n)}(\vec{y})
+$$
+
+\subsubsection{Dimostrazione}
+
+Come si calcola $ S(e,\vec{x}) $?
+
+$ P_e = \gamma^{-1}(e) $ 
+
+\begin{verbatim}
+ 
+ 1   n
+|  y   |..... 
+
+P:
+T([1..n], [m+1,m+n])
+Z(1)
+S(1)
+...
+S(1) --> x1
+....
+Z(n)
+S(n)
+...
+S(n) --> xn
+P_e
+
+S(e,\vec{x}) = \gamma(P)
+
+\end{verbatim}
+
+Per dimostrare un po' più formalmente che questa funzione è calcolabile è necessario dimostrare la calcolabilità di alcune funzioni ausiliarie.
+
+$ seq : \mathbb{N}^2 \rightarrow  \mathbb{N}$
+
+$ seq(e_1,e_2) = \gamma\Big(\frac{P_{e_1}}{P_e_2} \Big)$
+
+$$
+ogg:  \mathbb{N}^2 \rightarrow  \mathbb{N}
+$$
+
+$agg(e,t) = $ codice di $ P_e = \gamma^{-1}(e)$ dove ogni \texttt{J(m,n,q)} viene sostituita con \texttt{J(m,n,q+t)}.
+
+$\widetilde{agg}:  \mathbb{N}^2 \rightarrow  \mathbb{N}$
+
+\begin{align*}
+\widetilde{agg}(i,t) &= \text{codice dell'istruzione ottenuta aggiornando } \beta^{-1}(i) \\
+								 &= \begin{cases}
+								 i &\text{ se } rm(4,i) \neq 3 \\
+								 \nu(\nu_1(q), \nu_2(q), \nu_3(q)+t)\cdot 4 +3, q = qt(4,i) &\text{ altrimenti}
+								 \end{cases}
+\end{align*}
+
+Ovvero una volta definita la funzione che aggiorna la codifica dell'istruzione di salto è possibile definire la funzione $ agg $ la quale a sua volta permette di definire 
+
+$$
+seq(e_1, e_2) = \gamma(\gamma^{-1}(e_1, agg(\gamma^{-1}(e_2), l(e_1)))
+$$
+
+dove $ l $ calcola la lunghezza del programma. Così facendo si definisce $ seq $ come composizione di funzioni calcolabili e totali.
+
+Ci sarebbero poi da definire delle funzioni per le altre istruzioni URM, come:
+
+$$
+tras(m,n) = \gamma(\text{T[1..n, m+1..m+n]})
+$$
+
+$$
+set(i,x) = \gamma(\text{Z(i), S(i) ...}) \text{ setta il valore di \textit{i} a \textit{x}}
+$$
+
+Resta poi da definire la funzione $ pref_{m,n} $ la quale fornisce il codice aggiunto al programma $ P_e $:
+
+$$
+pref_{m,n}(\vec{x}) = seq(trasf(m,n), seq( set(1,x_1), seq( \ldots) \ldots )
+$$
+
+Così facendo
+
+$$
+S(e, \vec{x}) = seq(pref_{m,n}(\vec{x}) ,e )
+$$
+
+\subsection{Esercizio}
+
+Dimostrare che esiste una funzione \textbf{calcolabile e totale}  $ S : \mathbb{N}^2 \rightarrow  \mathbb{N} $ tale che:
+
+$$
+\phi_{S(n)}(x) = floor(\sqrt[n]{x})
+$$
+
+
+
+
+
+
+
+
+
+
+
