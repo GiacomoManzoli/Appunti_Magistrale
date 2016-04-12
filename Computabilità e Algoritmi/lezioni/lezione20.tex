@@ -99,14 +99,14 @@ Il tutto sta in piedi perché $ n \in W_n $ non è decidibile dato che $ n \in W
 
 Sia $ f : \mathbb{N} \rightarrow \mathbb{N} $ parziale e sia $ k \in \mathbb{N} $. Mostrare che esiste $ h : \mathbb{N} \rightarrow \mathbb{N} $ non calcolabile, totale e tale che $ h(x) = f(x) $ per $ x < k $.
 
-\subsubsection{Soluzione}
+\paragraph{Soluzione}
 
 \begin{verbatim}
 			phi0 				phi1		phi2
 0		phi0(0)			phi1(0)
 1       phi0(1)         phi1(1)
 
-k-1   phi0(k-11)  phi1(k-1)
+k-1   phi0(k-1)  phi1(k-1)
 k        phi0(k)		phi1(k)
 k+1       phi0(k+1)		phi1(k+1)
 
@@ -127,9 +127,32 @@ osservazione: se non ci fosse x-k nella definizione, la funzione h sarebbe ancor
 Più formalmente sia g: N -> N, allora esiste e >= k : phi_e = g perché una funzione è calcolata da inifiniti programmi => h != phi_e = g => h non è calcolabile.
 \end{verbatim}
 
-\subsubsection{Esercizio - Diagonalizzazione 2}
+\subsection{Esercizio - Diagonalizzazione 2}
 
-Data f n in n si vuole definire h n in n non calcolabile che coincide con f sui numeri pari.
+Data $ f : \mathbb{N} \rightarrow \mathbb{N} $ si vuole definire $ h : \mathbb{N} \rightarrow \mathbb{N} $ non calcolabile che coincide con $ f $ sui numeri pari.
+
+\paragraph{Soluzione}
+
+\begin{verbatim}
+			phi0 				phi1		phi2
+0		phi0(0)			phi1(0)							FISSO
+1       phi0(1)         phi1(1)								!=
+2       phi0(2)         phi1(2)							FISSO
+			
+k-1   phi0(k-1)  phi1(k-1)
+k        phi0(k)		phi1(k)
+k+1  phi0(k+1)		phi1(k+1)
+\end{verbatim}
+
+\begin{align*}
+h(x) = \begin{cases}
+f(x), &\text{ se } x \text{è pari} \\
+\phi_{\frac{x-1}{2}}(x) +1 &\text{ se } x \text{è dispari e} \phi_{\frac{x-1}{2}}(x) \downarrow \\
+0 &\text{ se } x \text{è dispari e} \phi_{\frac{x-1}{2}}(x) \uparrow \\
+\end{cases}
+\end{align*}
+
+Così facendo $ h $ è uguale ad $ f $ se $ x $ è pari e risulta non essere calcolabile sui numeri dispari perché $ \forall n \phi_n(2n+1) \neq h(2n+1) $. \`{E} necessario vincolare il $ \forall n $ per evitare problemi di codifica.
 
 \section{Teorema S-M-N}
 
@@ -242,7 +265,7 @@ Per dimostrare un po' più formalmente che questa funzione è calcolabile è nec
 
 $ seq : \mathbb{N}^2 \rightarrow  \mathbb{N}$
 
-$ seq(e_1,e_2) = \gamma\Big(\frac{P_{e_1}}{P_e_2} \Big)$
+$ seq(e_1,e_2) = \gamma\Big(\frac{P_{e_1}}{P_{e_2}} \Big)$
 
 $$
 ogg:  \mathbb{N}^2 \rightarrow  \mathbb{N}
@@ -295,7 +318,38 @@ $$
 Dimostrare che esiste una funzione \textbf{calcolabile e totale}  $ S : \mathbb{N}^2 \rightarrow  \mathbb{N} $ tale che:
 
 $$
-\phi_{S(n)}(x) = floor(\sqrt[n]{x})
+\phi_{S(n)}(x) = \lfloor\sqrt[n]{x}\rfloor
+$$
+
+\subsubsection{Soluzione}
+
+
+Se dimostriamo che $ f(n,x) =  \lfloor\sqrt[n]{x}\rfloor $ è calcolabile possiamo usare SMN per trovare $ \phi $
+
+\begin{align*}
+f(n,x) &= \lfloor\sqrt[n]{x}\rfloor \\
+			&= \max z."z^n \leq x" \\
+			&= \mu z."(z+1)^n > x" \\
+\end{align*}
+
+queste sono minimizzazioni di predicati, quindi la notazione non è propriamente corretta, sarebbe meglio specificare la funzione caratteristica del predicato $ P(z,n,x) = (z+1)^n > x$:
+
+$$
+\mathcal{X}_P(z,n,x) = sg((z+1)^n \dotminus x)
+$$
+
+la funzione caratteristica è calcolabile perché deriva dalla composizione di funzioni calcolabile quindi
+
+$$
+f(n,x) = \mu z.|: \mathcal{X}_P(z,n,x) - 1 \: |
+$$
+
+è calcolabile.
+
+Per il teorema SMN esiste una qualche funzione $ k : \mathbb{N} \rightarrow \mathbb{N} $ tale che
+
+$$
+\phi_{k(n)}(x) = f(n,x) =  \lfloor\sqrt[n]{x}\rfloor 
 $$
 
 

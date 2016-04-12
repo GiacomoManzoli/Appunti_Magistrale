@@ -1,16 +1,16 @@
-\contentsline {algorithm}{\numberline {1}{\ignorespaces Trasponi: calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze\relax }}{48}{algorithm.1}
-\contentsline {algorithm}{\numberline {2}CRM/CT: Chiusura di un grafo}{49}{algorithm.2}
-\contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{51}{algorithm.3}
-\contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{54}{algorithm.4}
-\contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{57}{algorithm.5}
-\contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{60}{algorithm.6}
-\contentsline {algorithm}{\numberline {7}Ingenuo: Pattern matching ingenuo}{69}{algorithm.7}
-\contentsline {algorithm}{\numberline {8}Ingenuo: Pattern matching ingenuo}{70}{algorithm.8}
-\contentsline {algorithm}{\numberline {9}Prefisso: Preelaborazione del prefisso in tempo lineare}{74}{algorithm.9}
-\contentsline {algorithm}{\numberline {11}KMP: Algorimto di Knuth-Morris-Pratt}{78}{algorithm.11}
-\contentsline {algorithm}{\numberline {12}BM: Pattern matching con BoyerMoore}{80}{algorithm.12}
-\contentsline {algorithm}{\numberline {13}KMP-Online: Algoritmo di Knuth-Morris-Pratt online}{83}{algorithm.13}
-\contentsline {algorithm}{\numberline {14}ShiftAnd: Algoritmo }{85}{algorithm.14}
-\contentsline {algorithm}{\numberline {16}RabinKarp: Algoritmo di RabinKarp}{88}{algorithm.16}
-\contentsline {algorithm}{\numberline {17}\textsc {MathukrishnanTest}: verifica della presenza di false occorrenze}{90}{algorithm.17}
-\contentsline {algorithm}{\numberline {18}Ukkonen: Descrizione generale dell'algoritmo }{94}{algorithm.18}
+\contentsline {algorithm}{\numberline {1}{\ignorespaces Trasponi: calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze\relax }}{56}{algorithm.1}
+\contentsline {algorithm}{\numberline {2}CRM/CT: Chiusura di un grafo}{57}{algorithm.2}
+\contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{59}{algorithm.3}
+\contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{62}{algorithm.4}
+\contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{65}{algorithm.5}
+\contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{68}{algorithm.6}
+\contentsline {algorithm}{\numberline {7}Ingenuo: Pattern matching ingenuo}{77}{algorithm.7}
+\contentsline {algorithm}{\numberline {8}Ingenuo: Pattern matching ingenuo}{78}{algorithm.8}
+\contentsline {algorithm}{\numberline {9}Prefisso: Preelaborazione del prefisso in tempo lineare}{82}{algorithm.9}
+\contentsline {algorithm}{\numberline {11}KMP: Algorimto di Knuth-Morris-Pratt}{86}{algorithm.11}
+\contentsline {algorithm}{\numberline {12}BM: Pattern matching con BoyerMoore}{88}{algorithm.12}
+\contentsline {algorithm}{\numberline {13}KMP-Online: Algoritmo di Knuth-Morris-Pratt online}{91}{algorithm.13}
+\contentsline {algorithm}{\numberline {14}ShiftAnd: Algoritmo }{93}{algorithm.14}
+\contentsline {algorithm}{\numberline {16}RabinKarp: Algoritmo di RabinKarp}{96}{algorithm.16}
+\contentsline {algorithm}{\numberline {17}\textsc {MathukrishnanTest}: verifica della presenza di false occorrenze}{98}{algorithm.17}
+\contentsline {algorithm}{\numberline {18}Ukkonen: Descrizione generale dell'algoritmo }{102}{algorithm.18}
