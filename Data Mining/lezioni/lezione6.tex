@@ -59,7 +59,7 @@ isolare $\epsilon$ e stimarlo utilizzando i residui osservati:
 
 \begin{align*}
 	\hat{\epsilon}_i  &= r_i \\ 
-								&= y_i - \hat{y}_i = \\
+								&= y_i - \hat{y}_i\\
 								  &= y_i - \hat{\beta}_0 - \hat{\beta}_1x_i
 \end{align*}
 
@@ -96,7 +96,7 @@ Per determinare il valore di $ t_{oss} $ non è possibile utilizzare la distribu
 La distribuzione \emph{t di Student} dipende da un solo parametro che
 prende il nome di \textbf{gradi di libertà}. Durante a verifica
 dell'ipotesi sul coefficiente angolare della retta di regressione, il
-grado di libertà è \emph{n-2}, ovvero è stato dimostrato che:
+grado di libertà è $n-2$, ovvero è stato dimostrato che:
 
 $$
 t_{oss} \approx t \text{ di Student con } n - 2 \text{ gradi di libertà.}
@@ -197,7 +197,7 @@ le \emph{y}.
 Come prima cosa è necessario stimare la varianza di $ \hat{\beta}_0 $:
 
 $$
-Var(\hat{\beta}_0) = \frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}s^2
+\var(\hat{\beta}_0) = \frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}s^2
 $$
 
 Le ipotesi diventano
@@ -220,7 +220,7 @@ $$
 con intervallo di confidenza definito da
 
 $$
-\Bigg[ \hat{\beta}_0 - t_{n-2, 1-\alpha/2} s \sqrt{\frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}} \:,\: \hat{\beta}_0 + t_{n-2, 1-\alpha/2} s \sqrt{\frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}}\Bigg]
+\Bigg[ \hat{\beta}_0 - t_{n-2, 1-\alpha/2} \cdot s \cdot \: \sqrt{\frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}} \:,\: \hat{\beta}_0 + t_{n-2, 1-\alpha/2}  \cdot s \cdot  \sqrt{\frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}}\Bigg]
 $$
 
 Da notare che in questo modo non viene definito un intervallo di confidenza simultaneo, ovvero che vale sia per $ \beta_0 $ che per $ \beta_1 $.
@@ -296,14 +296,14 @@ Partendo dal modello di riferimento si ottiene:
 Si ha quindi che:
 
 \begin{align*}
-	Var(\hat{y}_0) &= Var(\bar{y}) + Var(\hat{\beta}_1)(x_0 - \bar{x})^2 + Var(\epsilon) \\
+	\var(\hat{y}_0) &= \var(\bar{y}) + \var(\hat{\beta}_1)(x_0 - \bar{x})^2 + Var(\epsilon) \\
 	                         &= \sigma^2 \Bigg( 1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2 }\Bigg)
 \end{align*}
 
 che può essere stimata utilizzando $ s^2 $ al posto di $ \sigma^2 $
 
 $$
-\widehat{Var(\hat{y}_0)} = s^2 \Bigg( 1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2} \Bigg)
+\widehat{\var(\hat{y}_0)} = s^2 \Bigg( 1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2} \Bigg)
 $$
 
 Da notare che all'aumentare del numero di campioni e all'aumentare della diversità delle \textit{x}, la varianza della stima diminuisce.
@@ -311,7 +311,7 @@ Da notare che all'aumentare del numero di campioni e all'aumentare della diversi
 L'intervallo di precisione risulta quindi essere
 
 $$
-\Bigg[ \hat{y}_0 - t_{n-2, 1-\alpha/2}\sqrt{\widehat{Var(\hat{y}_0)}} \:, \:\hat{y}_0 + t_{n-2, 1-\alpha/2}\sqrt{\widehat{Var(\hat{y}_0)}}\Bigg]
+\Bigg[ \hat{y}_0 - t_{n-2, 1-\alpha/2}\sqrt{\widehat{\var(\hat{y}_0)}} \:, \:\hat{y}_0 + t_{n-2, 1-\alpha/2}\sqrt{\widehat{\var(\hat{y}_0)}}\Bigg]
 $$
 
 Nell'esempio delle vendite, se $ x_0 = 60 $ si ottiene $ y_0 = 21.4614 $ con un intervallo di previsione $ [12.88 \; , \: 30.04] $ valido con il $ 95\% $ di probabilità.

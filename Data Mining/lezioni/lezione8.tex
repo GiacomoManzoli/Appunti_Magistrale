@@ -253,20 +253,20 @@ da notare che $ \vec{\hat{y}} $ ha dimensione $ n \times 1 $, dove \textit{n} è
 Come prima cosa è necessario calcolare la varianza degli stimatori
 
 $$
-var(\vec{\hat{\beta}}) = (\textbf{X}^T\textbf{X})^{-1}\sigma^2
+\var(\vec{\hat{\beta}}) = (\textbf{X}^T\textbf{X})^{-1}\sigma^2
 $$
 
 dove $ \sigma^2 $ è la varianza scalare di ciascuna $ \epsilon_i $.\todo{Capire se è un vettore o no}
 La varianza però non è nota, quindi è necessario effettuare una stima.
 
 $$
-\widehat{var(\vec{\hat{\beta}})} = (\textbf{X}^T\textbf{X})^{-1}s^2
+\widehat{\var(\vec{\hat{\beta}})} = (\textbf{X}^T\textbf{X})^{-1}s^2
 $$
 
 con
 
 $$
-s^2 = \frac{1}{n - p}(\vec{y}^T\vec{y} - \vec{\beta}^T \textbf{X}^T \vec{y})
+s^2 = \frac{1}{n - p}(\vec{y}^T\vec{y} - \vec{\hat{\beta}}^T \textbf{X}^T \vec{y})
 $$
 
 \subsection{Scomposizione della varianza}
@@ -278,7 +278,7 @@ Per semplicità viene considerato solo il numeratore della varianza, spesso nomi
 Si ha quindi che 
 
 $$
-\underbrace{\sum\limits_{i=1}^n (y_i - \bar{y})^2}_{\text{devianza}} = \underbrace{\sum\limits_{i=1}^n (\hat{y}_i - \bar{y})^2}_{\text{devianza spiegata dal modello}} + \underbrace{\sum\limits_{i=1}^n (y_i - \hat{y})^2}_{\text{devianza residua}}  
+\underbrace{\sum\limits_{i=1}^n (y_i - \bar{y})^2}_{\text{devianza}} = \underbrace{\sum\limits_{i=1}^n (\hat{y}_i - \bar{y})^2}_{\text{devianza spiegata dal modello}} + \underbrace{\sum\limits_{i=1}^n (y_i - \hat{y}_i)^2}_{\text{devianza residua}}  
 $$
 
 Dando un po' di nomi ai pezzi si ottiene:
@@ -286,7 +286,7 @@ Dando un po' di nomi ai pezzi si ottiene:
 \begin{itemize}
 	\item $\sum_{i=1}^n (y_i - \bar{y})^2$: somma dei quadrati degli scarti della media o \textbf{devianza totale} (\textbf{SST})
 	\item $\sum_{i=1}^n (\hat{y}_i - \bar{y})^2$: somma dei quadrati degli scarti dalla regressione o \textbf{devianza spiegata dal modello} (\textbf{SSR})
-	\item $ \sum_{i=1}^n (y_i - \hat{y})^2 $: somma dei quadrati degli scarti residui o \textbf{devianza residua} (\textbf{SSE})
+	\item $ \sum_{i=1}^n (y_i - \hat{y}_i)^2 $: somma dei quadrati degli scarti residui o \textbf{devianza residua} (\textbf{SSE})
 \end{itemize}
 
 In modo analogo, anche i gradi di libertà sono scomponibili nella somma di due valori
@@ -298,8 +298,9 @@ $$
 che nel caso della regressione multipla con \textit{p} variabili esplicative sono:
 
 $$
-(n -1) = (p) + (n-p)
+(n) = (p) + (n-p)
 $$
+\todo{nelle slide è n-1}
 
 
 

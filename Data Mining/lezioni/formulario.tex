@@ -6,7 +6,75 @@
 
 \section{Formule generiche}
 
+\begin{align*}
+\var(X) = \frac{\sum\limits_{i=1}^n (x_i - \bar{x}^2)}{n}
+\end{align*}
+
+\begin{align*}
+\cov(X,Y) = \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \bar{y})}{n}
+\end{align*}
+
 \section{Modello lineare}
+
+\begin{align*}
+S^2(\beta_0, \beta_1) = \sum\limits_{i=1}^n (y_i - \beta_0 - \beta_1 x_i)^2
+\end{align*}
+
+\begin{align*}
+\hat{\beta}_1 &= \frac{\cov(X,Y)}{\var(X)} 
+= \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \bar{y})}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)} 
+= \frac{\sum\limits_{i=1}^n (x_i - \bar{x})y_i}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)}  \\
+%
+\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}
+\end{align*}
+
+\subsection{Residui}
+
+$$
+r_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i
+$$
+
+\begin{align*}
+\var(R) &= \frac{1}{n}\sum\limits_{i=1}^n r_i
+= \var(Y) - \frac{\cov^2(X,Y)}{var(X)}
+\end{align*}
+
+\subsection{Coefficiente di determinazione}
+
+$$
+R^2 = 1 - \frac{\var(R)}{\var(Y)}
+$$
+
+
+\subsection{Stima della varianza della distribuzione}
+
+\begin{align*} 
+\hat{s}^2 &= \frac{1}{n-2}\sum\limits_{i=1}^n (r_{i} - 0)^2\\
+&= \frac{1}{n-2}\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_i)^2
+\end{align*}
+
+\begin{align*}
+	\var(\hat{\beta}_0) &= s^2 \bigg( \frac{1}{n} + \frac{\bar{x}^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2}\bigg) \\
+	\var(\hat{\beta}_0) &= s^2 \bigg( \frac{1}{\sum_{i=1}^{n} (x_i - \bar{x})^2} \bigg)
+\end{align*}
+
+
+\subsection{Verifica delle ipotesi}
+
+\begin{align*}
+t_{oss} = \frac{(\hat{\beta}_1 - 0)}{\sqrt{\frac{s^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2}}} \\
+\Bigg[ \hat{\beta}_1 \pm t_{n-2, 1-\alpha/2}  \sqrt{\frac{s^2}{\sum_{i=i}^{n} (x_i - \bar{x})^2}}\Bigg]
+\end{align*}
+
+\begin{align*}
+t_{oss}  = (\hat{\beta}_0 - \beta') \Bigg/ s \sqrt{\frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}} \\
+\Bigg[ \hat{\beta}_0 \pm t_{n-2, 1-\alpha/2} \cdot s \cdot \: \sqrt{\frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}} \Bigg]
+\end{align*}
+
+\begin{align*}
+	F_{oss} = \Bigg( \frac{R^2}{ 1 - R^2}\Bigg) \Bigg( \frac{n -k}{k-1} \Bigg) \\
+	k = \text{numero di parametri del modello}
+\end{align*}
 
 \section{Modello lineare con più variabili}
 
