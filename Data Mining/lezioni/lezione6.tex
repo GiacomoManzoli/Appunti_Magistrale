@@ -113,7 +113,7 @@ che ha delle code più pesanti.
 
 In questo caso però non conviene utilizzare un confronto sulla soglia dei valori, perché questo potrebbe enfatizzare troppo delle differenze minime, portando a dei valori completamente diversi.
 
-L'idea è quindi quello di utilizzare il \textbf{livello di significatività osservato} o \textbf{p-value}, un indicatore uguale alla probabilità di osservare, supponendo vera $ H_0 $, un valore di $ t_{oss} $ uguale o ``più lontano'' da $ H_0 $ di quanto effettivamente è osservato, ovvero costituisce una misura di quanto l'ipotesi nulla è plausibile sulla base dei dati.
+L'idea è quindi quello di utilizzare il \textbf{livello di significatività osservato} o \textbf{p-value}, un indicatore uguale alla probabilità di osservare, supponendo vera $ H_0 $, un valore di $ t_{oss} $ uguale o ``più lontano'' da $ H_0 $ di quanto effettivamente è osservato, ovvero costituisce una misura di quanto l'ipotesi nulla è plausibile sulla base dei dati osservati.
 
 Cosa \textbf{NON} è il \textit{p-value}:
 \begin{itemize}
@@ -145,7 +145,7 @@ Questo livello varia da 0 a 1 e più è grande, più i dati sono vicini ad $ H_0
 \end{itemize}
 
 \emph{lontano da $ H_0 $} equivale a dire \emph{``lontano da 0 in entrambe le
-direzione''} quindi, nel caso delle vendite ($ t_{oss} = 9.921 $):
+direzioni''} quindi, nel caso delle vendite ($ t_{oss} = 9.921 $):
 
 \begin{align*}
 \text{livello di significatività osserato } &= P(|t \text{ con 198 gradi}| \geq t_{oss}) \\
@@ -296,7 +296,7 @@ Partendo dal modello di riferimento si ottiene:
 Si ha quindi che:
 
 \begin{align*}
-	\var(\hat{y}_0) &= \var(\bar{y}) + \var(\hat{\beta}_1)(x_0 - \bar{x})^2 + Var(\epsilon) \\
+	\var(\hat{y}_0) &= \var(\bar{y}) + \var(\hat{\beta}_1)(x_0 - \bar{x})^2 + \var(\epsilon) \\
 	                         &= \sigma^2 \Bigg( 1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2 }\Bigg)
 \end{align*}
 

@@ -13,11 +13,28 @@ la verifica dell'ipotesi si fa al solito modo, utilizzando $ F_{oss} $ che dipen
 
 \begin{align*}
 F_{oss} &= \frac{R^2}{1-R^2} \frac{n - p}{p} \\
-			 &= \frac{\text{devianza spiegata}}{\text{devianza residua}} \frac{n - p}{p} \\
-			 &= \frac{\sum_{i=1}^{n} (\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2} \frac{n - p}{p}
+			 &= \frac{\text{devianza spiegata}}{\text{devianza residua}} \cdot \frac{n - p}{p-1} \\
+			 &= \frac{\sum_{i=1}^{n} (\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2} \cdot \frac{n - p}{p -1} \\
+			 &= \frac{\sum_{i=1}^{n} (\hat{y}_i - \bar{y})^2 \big/ (p-1)}{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \big/(n-p)}
 \end{align*}
 
-\todo[inline]{Inserire confronto tra slide 42-43 vecchie e versione nuova}
+\subsubsection{Riassumendo}
+
+Con la notazione $ MSR $ ci si riferisce alla somma dei quadrati degli scarti delle regressione ($ SSR $) divisi i gradi di libertà della regressione, ottenendo quindi:
+
+$$
+MRS = \frac{SSR}{p}
+$$
+
+In modo analogo 
+
+$$
+MST = \frac{SST}{n} \quad \text{e} \quad MSE = \frac{SSE}{n-p}
+$$
+
+ovvero $ MST $ coincide con la varianza totale.
+
+
 
 \section{Gestione delle variabili esplicative}
 
@@ -28,7 +45,7 @@ Tracciando i vari diagrammi di dispersione per le variabili esplicative del data
 Una volta notata una sorta di correlazione è possibile provare ad utilizzare tutte le variabili per calcolare il modello lineare:
 
 $$
-\text{(valore)} = \beta_0 + \beta_1 \text{(crimine)} + \ldtos + \beta_13 \text{(poveri)} + \text{errore}
+\text{(valore)} = \beta_0 + \beta_1 \text{(crimine)} + \ldots + \beta_13 \text{(poveri)} + \text{errore}
 $$
 
 C'è però da notare una cosa, il dataset contiene delle variabili qualitative, come \textit{fiume} che può prendere come valore \textit{0 o 1} e \textit{str} che ha 9 possibili valori.
@@ -127,9 +144,9 @@ $$
 Nel caso della regressione multipla è possibile ottenere la stessa cosa con
 
 $$
-\underbrace{\vec{y}^T\vec{y}}_{\textbf{SST}: somma dei quardati totale} = 
-\underbrace{(\vec{y} - \vec{\bar{y}})^T (\vec{y} - \vec{\bar{y}})}_{\textbf{SSE}: somma dei quadrati degli errori} +
-\underbrace{\vec{\hat{\beta}} \textbf{X}^T\vec{y}}_{\textbf{SSR}: somma dei quadrati della regressione}
+\underbrace{\vec{y}^T\vec{y}}_{\textbf{SST}: \text{somma dei quardati totale}} = 
+\underbrace{(\vec{y} - \vec{\bar{y}})^T (\vec{y} - \vec{\bar{y}})}_{\textbf{SSE}: \text{somma dei quadrati degli errori}} +
+\underbrace{\vec{\hat{\beta}} \textbf{X}^T\vec{y}}_{\textbf{SSR}: \text{somma dei quadrati della regressione}}
 $$
 
 e $F_{oss} $ per la validità globale del modello può essere espressa come

@@ -66,7 +66,7 @@ $$
 e
 
 $$
-Var(aZ+b) = a^2Var(z)+b
+\var(aZ+b) = a^2\var(Z)+b
 $$
 
 Sempre per quanto riguarda la distribuzione degli errori, sembra essere
@@ -97,7 +97,7 @@ La varianza degli errori $\sigma^2$ viene assunta nota, al fine di semplificare 
 La stima di $ \beta_1 $ può quindi essere vista come una determinazione di una variabile casuale. Infatti, se le \textit{y} da cui è calcolata sono il risultato di un esperimento casuale, anche $ \hat{\beta}_1 $ lo è:
 
 $$
-\hat{\beta}_1 = \frac{Cov(X,Y)}{Var(X)} = \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \bar{y})}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)} = \frac{\sum\limits_{i=1}^n (x_i - \bar{x})y_i}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)} 
+\hat{\beta}_1 = \frac{\cov(X,Y)}{\var(X)} = \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \bar{y})}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)} = \frac{\sum\limits_{i=1}^n (x_i - \bar{x})y_i}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)} 
 $$
 
 Quindi, se le \textit{n} variabili casuali normali $ y_i $ hanno tutte la stessa varianza $ \sigma^2 $ si ha che
@@ -131,7 +131,7 @@ Utilizzando questa nuova variabile aleatoria è possibile andare a calcolare la 
 																  &= \Phi(2.342) - \Phi(-2.342) \approx 0.9808\
 \end{align*}
 
-In generale un intervallo che contiene il vero valore di un parametro ignoto con probabilità $ 1 - \alpha $ viene chiamato \textbf{intervallo di confidenza $ 1 - \alpha $} e costituisce il modo più semplice di rappresentare la precisione di una stima. Tipicamente come valori di $ \alpha $ vengono utilizzati $ 0.5, 0.9, 0.95, 0.99 $.
+In generale un intervallo che contiene il vero valore di un parametro ignoto con probabilità $ 1 - \alpha $ viene chiamato \textbf{intervallo di confidenza $ 1 - \alpha $} e costituisce il modo più semplice di rappresentare la precisione di una stima. Tipicamente come valori di $1 - \alpha $ vengono utilizzati $ 0.5, 0.9, 0.95, 0.99 $.
 
 Più precisamente il procedimento per calcolare un intervallo di confidenza è:
 

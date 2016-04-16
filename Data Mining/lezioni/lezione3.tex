@@ -110,7 +110,7 @@ che interessa è:
 
 \begin{align*}
 	\beta_1 &= \frac{\sum\limits_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{ \sum\limits_{i=1}^{n} (x_i - \bar{x})^2} \\
-	 &= \frac{cov(X,Y)}{var(X)} \\
+	 &= \frac{\cov(X,Y)}{\var(X)} \\
 	 \: \\
 	\beta_0 &= \bar{y} - \beta_1 \bar{x}
 \end{align*}
@@ -150,19 +150,19 @@ Quindi per valutare la retta è necessario utilizzare la
 retta.
 
 \begin{align*}
-	var(r_1, \ldots, r_n) &= \frac{1}{n} \sum\limits_{i=1}^{n} (r_{i} - 0)^2 \\
-									  &= var(Y) - \frac{cov^2(X,Y)}{var(X)}
+	\var(r_1, \ldots, r_n) &= \frac{1}{n} \sum\limits_{i=1}^{n} (r_{i} - 0)^2 \\
+									  &= \var(Y) - \frac{\cov^2(X,Y)}{\var(X)}
 \end{align*}
 
 Nel caso peggiore, la varianza dei residui ha come bound superiore la
-varianza della risposta, ovvero \emph{var(Y)}.
+varianza della risposta, ovvero $\var(Y)$.
 
 Più piccola è la varianza dei residui, più la retta di regressione ``spiega'' le variazioni della risposta.
 
 È quindi possibile definire il \textbf{coefficiente di determinazione}:
 
 $$
-R^2 = 1 - \frac{var(r_i, \ldots, r_n)}{var(Y)}
+R^2 = 1 - \frac{\var(r_i, \ldots, r_n)}{\var(Y)}
 $$
 
 $R^2$ varia tra 0 e 1, dove 1 è il valore ottimo e 0 è il valore

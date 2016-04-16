@@ -1,0 +1,32 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = data mining.tex
+% !TEX spellcheck = it-IT
+\chapter{Soluzioni Parziali}
+
+\section{Aprile 2015}
+
+\subsection{Esercizio 5}
+
+\subsubsection{Domanda a}
+
+
+\subsubsection{Domanda b}
+
+Bisogna completare i dati dell'output.
+
+I gradi di libertà per la $ F_{oss} $ sono 2 e 19, rispettivamente $ p-1 $ e $ n-p $ con \textit{p} numero di parametri. I gradi di libertà degli errori sono sempre $ n-p = 19 $.
+
+Per calcolare $ RSE $ serve $ s^2 $ che è la stima della varianza degli errori (e dei residui).
+
+$$
+RSE = \sqrt{\frac{SSE}{n-p}} = \sqrt{\frac{\sum\limits_{i=1}^n (y_i - \hat{y}_i)^2}{n-p}} = \sqrt{s^2} 
+$$
+
+Sappiamo che:
+
+$$
+\widehat{\var(\vec{\hat{\beta}})} = (\textbf{X}^T\textbf{X})^{-1}s^2
+$$
+
+e che $ \sqrt{\var (\hat{\beta}_0)} = 126,758$ e $(\textbf{X}^T\textbf{X})_{11}^{-1} = 0,6363  $ da cui segue $ s^2 = \frac{126,758^2}{0,6363} =  25.251,596$, pertanto $ RSE = \sqrt{s^2} = 158,..$.

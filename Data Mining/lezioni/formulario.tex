@@ -3,16 +3,48 @@
 % !TEX root = data mining.tex
 % !TEX spellcheck = it-IT
 \chapter{Formulario}
-
+%(a - b)(a -b) = aa -ab +bb -ab
 \section{Formule generiche}
 
 \begin{align*}
-\var(X) = \frac{\sum\limits_{i=1}^n (x_i - \bar{x}^2)}{n}
+\var(X) &= \frac{\sum\limits_{i=1}^n (x_i - \bar{x})^2}{n}
+= \frac{ \sum\limits_{i=1}^n ( x_i^2 + \bar{x}^2   - 2 x_i \bar{x}) }{n}
+= \frac{ \sum\limits_{i=1}^n x_i^2 + n\bar{x}^2 -2\bar{x} \sum\limits_{i=1}^n x_i }{ n} \\
+&= \frac{\sum_{i=1}^{n} x_i^2}{n} - \bar{x}^2
 \end{align*}
 
 \begin{align*}
-\cov(X,Y) = \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \bar{y})}{n}
+\cov(X,Y) &= \frac{\sum\limits_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{n}
+= \frac{ \sum\limits_{i=1}^n (x_iy_i - x_i\bar{y} -\bar{x}y_i + \bar{x}\bar{y})}{n}
+= \frac{ \sum\limits_{i=1}^n x_iy_i -\bar{y}\sum\limits_{i=1}^n x_i -\bar{x}\sum\limits_{i=1}^ny_i + n\bar{x}\bar{y}}{n} \\
+&= \frac{\sum\limits_{i=1}^{n} (x_iy_i)}{n} - \bar{x}\bar{y}
 \end{align*}
+
+\subsection{Coefficiente di correlazione di Pearson}
+
+$$
+\rho_{YX_1:X_2} = \frac{\cov(Z_Y, Z_{X_1})}{\sqrt{\var(Z_Y)\var(Z_{X_1})}}
+$$
+
+$$
+-1 \leq \rho_{YX_1:X_2} \leq 1
+$$
+
+Se $\rho_{YX_1:X_2} = 0$ le variabili $ Y $ e $ X_1 $ non sono correlate, se invece vale 1 o $ -1 $ sono correlate (direttamente o indirettamente).
+
+\subsection{Scomposizione della varianza}
+
+$$
+\underbrace{\sum\limits_{i=1}^n (y_i - \bar{y})^2}_{\text{SST: devianza}} = 
+\underbrace{\sum\limits_{i=1}^n (y_i - \hat{y}_i)^2}_{\text{SSE: devianza residua}}  +
+\underbrace{\sum\limits_{i=1}^n (\hat{y}_i - \bar{y})^2}_{\text{SSR: devianza spiegata dal modello}}
+$$
+
+$$
+\underbrace{\vec{y}^T\vec{y}}_{\textbf{SST}: \text{somma dei quardati totale}} = 
+\underbrace{(\vec{y} - \vec{\bar{y}})^T (\vec{y} - \vec{\bar{y}})}_{\textbf{SSE}: \text{somma dei quadrati degli errori}} +
+\underbrace{\vec{\hat{\beta}} \textbf{X}^T\vec{y}}_{\textbf{SSR}: \text{somma dei quadrati della regressione}}
+$$
 
 \section{Modello lineare}
 
@@ -22,8 +54,8 @@ S^2(\beta_0, \beta_1) = \sum\limits_{i=1}^n (y_i - \beta_0 - \beta_1 x_i)^2
 
 \begin{align*}
 \hat{\beta}_1 &= \frac{\cov(X,Y)}{\var(X)} 
-= \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \bar{y})}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)} 
-= \frac{\sum\limits_{i=1}^n (x_i - \bar{x})y_i}{\sum\limits_{i=1}^n (x_i - \bar{x}^2)}  \\
+= \frac{\sum\limits_{i=1}^n (x_i - \hat{x})(y_i - \bar{y})}{\sum\limits_{i=1}^n (x_i - \bar{x})^2} 
+= \frac{\sum\limits_{i=1}^n (x_i - \bar{x})y_i}{\sum\limits_{i=1}^n (x_i - \bar{x})^2}  \\
 %
 \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}
 \end{align*}
@@ -35,8 +67,8 @@ r_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i
 $$
 
 \begin{align*}
-\var(R) &= \frac{1}{n}\sum\limits_{i=1}^n r_i
-= \var(Y) - \frac{\cov^2(X,Y)}{var(X)}
+\var(R) &= \frac{1}{n}\sum\limits_{i=1}^n r_{i}^2
+= \var(Y) - \frac{\cov^2(X,Y)}{\var(X)}
 \end{align*}
 
 \subsection{Coefficiente di determinazione}
@@ -48,33 +80,63 @@ $$
 
 \subsection{Stima della varianza della distribuzione}
 
+La varianza degli errori può essere approssimata con la varianza dei residui, scalata per un opportuno fattore, che potrebbero essere i gradi di libertà della distribuzione dei residui.
+Nel caso della regressione lineare a due parametri si ha che i gradi di libertà sono $ n - p  = n-2 $
+
 \begin{align*} 
 \hat{s}^2 &= \frac{1}{n-2}\sum\limits_{i=1}^n (r_{i} - 0)^2\\
-&= \frac{1}{n-2}\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_i)^2
+				 &= \frac{1}{n-2}\sum\limits_{i=1}^n (y_i - \hat{\beta}_0 - \hat{\beta}_1x_i)^2 \\
+				 &= \frac{SSE}{n-p}
 \end{align*}
 
 \begin{align*}
-	\var(\hat{\beta}_0) &= s^2 \bigg( \frac{1}{n} + \frac{\bar{x}^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2}\bigg) \\
-	\var(\hat{\beta}_0) &= s^2 \bigg( \frac{1}{\sum_{i=1}^{n} (x_i - \bar{x})^2} \bigg)
+	\var(\hat{\beta}_0) &= s^2 \bigg( \frac{1}{n} + \frac{\bar{x}^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2}\bigg) = s^2 \bigg(\frac{\sum_{i=1}^{n}x_i^2}{n\sum_{i=1}^{n} (x_i - \bar{x})^2}\bigg) \\
+	\var(\hat{\beta}_1) &= s^2 \bigg( \frac{1}{\sum_{i=1}^{n} (x_i - \bar{x})^2} \bigg)
 \end{align*}
 
+Varianza della stima, ha gli stessi gradi di libertà della varianza dei residui $n-p$:
+
+$$
+\widehat{\var(\hat{y}_0)} = s^2 \Bigg( 1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2} \Bigg)
+$$
 
 \subsection{Verifica delle ipotesi}
-
+$ t_{oss} $ per $ \hat{\beta}_1 $
 \begin{align*}
 t_{oss} = \frac{(\hat{\beta}_1 - 0)}{\sqrt{\frac{s^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2}}} \\
 \Bigg[ \hat{\beta}_1 \pm t_{n-2, 1-\alpha/2}  \sqrt{\frac{s^2}{\sum_{i=i}^{n} (x_i - \bar{x})^2}}\Bigg]
 \end{align*}
 
+$ t_{oss} $ per $ \hat{\beta}_0 $
 \begin{align*}
 t_{oss}  = (\hat{\beta}_0 - \beta') \Bigg/ s \sqrt{\frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}} \\
 \Bigg[ \hat{\beta}_0 \pm t_{n-2, 1-\alpha/2} \cdot s \cdot \: \sqrt{\frac{\sum_{i=1}^{n} x_{i}^2}{n \sum_{i=1}^{n} (x_i - \bar{x})^2}} \Bigg]
 \end{align*}
+\textbf{livello di significatività osservato} o \textbf{p-value}: indicatore uguale alla probabilità di osservare, supponendo vera $ H_0 $, un valore di $ t_{oss} $ uguale o ``più lontano'' da $ H_0 $ di quanto effettivamente è osservato, ovvero costituisce una misura di quanto l'ipotesi nulla è plausibile sulla base dei dati osservati.
+
+$$
+p-value = 2 \times P(t \text{con } n-p \text{ gradi} \geq t_{oss} )
+$$
+
+Per valutare l'andamento globale del modello è possibile utilizzare $ F_{oss} $ che si comporta in modo simile a $ t_{oss} $ con la differenza che la distribuzione di riferimento è la $ F $ di Snedecor con $ p-1 $ gradi di libertà al numeratore e $ n-p $ gradi di libertà al denominatore.
 
 \begin{align*}
-	F_{oss} = \Bigg( \frac{R^2}{ 1 - R^2}\Bigg) \Bigg( \frac{n -k}{k-1} \Bigg) \\
-	k = \text{numero di parametri del modello}
+F_{oss} = \Bigg( \frac{R^2}{ 1 - R^2}\Bigg) \Bigg( \frac{n -k}{k-1} \Bigg) \\
+k = \text{numero di parametri del modello}
 \end{align*}
+
+
+
+\subsubsection{Regola di accettazione/rifiuto}
+
+\begin{enumerate}
+	\item Fisso un intervallo di confidenza $ 1-\alpha $
+	\item Calcolo, utilizzando le tavole $ t_{n-p, 1-\alpha/2} $
+	\item Calcolo il $ t_{oss} $ opportuno (per $ \hat{\beta}_0 $ o$ \hat{\beta}_1 $)
+	\item Controllo se $ | \: t_{oss}\: \leq t_{n-p, 1-\alpha/2}  $, se è vero accetto $ H_0 $, altrimenti la rifiuto.
+\end{enumerate}
+
+
 
 \section{Modello lineare con più variabili}
 
