@@ -313,7 +313,7 @@ Se il grafo sul quale viene effettuata la visita in profondità è non
 orientato possono essere presenti solamente archi d'albero e archi
 all'indietro.
 
-Infatti, non possono esserci archi in avanti perché ogni arco in avanti è anche un arco all'indietro dato che può essere percorso in entrambe le direzioni e pertanto viene classificato come arco all'indietro.
+Infatti, non possono esserci archi in avanti perché ogni arco in avanti è anche un arco all'indietro dato che può essere percorso in entrambe le direzioni, pertanto viene classificato come arco all'indietro.
 Inoltre, non possono esserci archi trasversali perché se ci fosse un arco trasversale \textit{uv}, allora vuol dire che prima viene scoperto e finito \textit{u} e poi viene scoperto \textit{u} e finito \textit{v}. Chiaramente questo non può succedere perché quando viene scoperto \textit{u}, \textit{v} sta nella lista delle adiacenze di \textit{u} ed è un nodo bianco, quindi c'è un cammino bianco tra \textit{u} e \textit{v}, pertanto \textit{v} viene completato prima di \textit{u}.
 
 Si può sfruttare questa proprietà per verificare la presenza di un ciclo
@@ -347,7 +347,11 @@ Mostrare con un controesempio che se vi è un cammino da \textit{u} a \textit{v}
 \paragraph{Soluzione}
 
 
-\todo[inline]{TODO}
+\begin{verbatim}
+    u <---->  w  ---> v
+\end{verbatim}
+
+Se visitando le adiacenze di \textit{w} viene trovato prima \textit{u}, \textit{v} non diventa un discendente di \textit{u}.
 
 \subsubsection{Esercizio - Alberi di un solo nodo}
 

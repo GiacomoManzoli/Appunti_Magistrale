@@ -67,7 +67,7 @@ deriva dal ciclo \texttt{for} e \emph{m*} deriva dal numero di chiamate
 ricorsive che sono limitate dal numero di archi nel grafo riflessivo,
 ovvero \emph{m*}.
 
-La complessità totale è quindi $O(n^3 \cdot m*)$
+La complessità totale è quindi $O(n^2 + n \cdot m*)$
 
 \section{Visita in ampiezza}\label{visita-in-ampiezza}
 
@@ -101,7 +101,7 @@ Durante l'esplorazione un nodo può essere colorato in tre modi:
   frontiera.
 \end{itemize}
 
-Ad alto livello, l'algoritmo parte dal vertice \emph{s}, utilizzandolo
+Ad alto livello, l'algoritmo parte dal vertice \emph{s} utilizzandolo
 come radice dell'albero. Quando viene scoperto un vertice bianco
 \emph{v} a causa di un arco \emph{uv} che lo connette al vertice \emph{u}
 scoperto precedentemente (all'inizio \emph{u=s}), questo viene aggiunto
@@ -166,7 +166,7 @@ ripetuto $n$ volte.
 
 \subsection{Correttezza}\label{correttezza}
 
-Indicando con $\delta(u,v)$ la distanza tra il vertice \emph{v} e
+Indichiamo con $\delta(u,v)$ la distanza tra il vertice \emph{v} e
 \emph{u}, ovvero la lunghezza del cammino minimo che li congiunge. Per
 convezione, se i due vertici non sono raggiungibili, la distanza è
 infinita.
@@ -179,7 +179,7 @@ Questo perché aggiungendo l'arco \emph{uv} al cammino $ x \rightarrow u$, si ot
 lunghezza $\delta(x,u) + 1$, pertanto, per definizione $\delta(x,v)$ è
 minore o uguale della lunghezza del nuovo cammino.
 
-Un'altra proprietà è quella del \textbf{limite inferiore}, ovvero per
+Un'altra proprietà è quella del \textbf{limite superiore}, ovvero per
 ogni vertice \emph{u} e per tutta l'esecuzione di \textbf{BFS} vale la
 disuguaglianza $u.d \geq \delta(s,u)$.
 

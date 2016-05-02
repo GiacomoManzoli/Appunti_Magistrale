@@ -1,0 +1,234 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+\section{Funzione inversa con i corollari}
+
+Data una funzione $ f : \mathbb{N} \rightarrow \mathbb{N} $iniettiva, totale e calcolabile. Allora
+
+$$ 
+f^{-1}(y) =\begin{cases}
+x \text{ tale che } f(x) = y \\
+\uparrow \text{ altrimenti}
+\end{cases}
+$$
+
+è calcolabile con
+
+$$
+f^{-1}(y) = \mu x. |\: f(x) - y\:|
+$$
+
+Però se \textit{f} non è totale, non è più garantita la calcolabilità.
+
+L'idea è quindi quella di eseguire un certo numero di passi via via crescente su ogni programma. (In teoria questa cosa è già stata fatta. Però non si poteva spiegare in modo formale).
+
+Essendo \textit{f} calcolabile questa sarà calcolata da un certo programma \textit{e}.
+
+$$
+f^{-1}(y) = \mu (x,t). S(e, x,y, t)
+$$
+
+Peccato che non esiste un operatore che minimizza le coppie. Neanche la minimalizzazione innestata funziona, perché scorrerei la tabella prima solo sulle colonne e poi solo sulle righe.
+
+Serve quindi un barbatrucco, in modo da riuscire a codificare una coppia con un numero intero.
+
+$$
+\mu w.  S(e, (w)_1, y, (w)_2 )
+$$
+
+Ovvero del numero \textit{w} ci interessano solo gli esponenti dei primi due divisori primi del numero.
+Piccola nota: usiamo un predicato nella minimalizzazione quando sarebbe necessario utilizzare una funzione. Sarebbe quindi più corretto utilizzare il valore assoluto della funzione caratteristica del predicato, meno uno.
+
+$$
+f^{-1}(y) = \Big( \mu w.  S(e, (w)_1, y, (w)_2 ) \Big)
+$$
+
+\section{Cose non calcolabili}
+
+Ci sono un sacco di cose che non sono calcolabili e un sacco di cose non decidibili.\\
+
+\subsection{Totalità di un programma}
+
+Predicato $ Tot(x) = \phi_x \text{ è totale} $ non è decidibile.
+
+\subsubsection{Dimostrazione}
+
+Supponiamo per assurdo che $ Tot(x) $ sia decidibile.
+
+Definiamo
+
+$$
+f = \begin{cases}
+\phi_x(x) +1 \text{ se \textit{x} è totale}\\
+1 \text{ altrimenti}
+\end{cases}
+$$
+
+Questa funzione è certamente totale e $ f \neq \phi_x \forall x \text{ tale che } \phi_x \text{ è totale perché se }\phi_x $ è totale $ f(x) = \phi_x(x)+1 \neq \phi_x(x) $ e quindi non è calcolabile.
+
+Sfruttando però la totalità di \textit{Tot} è possibile scrivere la funzione $ \phi_(x) \text{ come } \Phi_U(x,x)$ e quindi \textit{f} risulterebbe definita per casi, utilizzando solamente funzioni calcolabili e quindi anch'essa sarebbe calcolabile.
+Non è però possibile utilizzare la classica aritmetizzazione dell'\textit{if}, perché quando $ \phi_x $ non è totale si ha un risultato indefinito.
+
+$$
+f(x)= \bigg( \mu w. \Big( S(x,x,(w)_1, (w)_2) \wedge Tot(x) \vee (w)_1 = 0 \wedge \neg Tot(x) \Big) \bigg)_1 +1
+$$
+
+Con questa definizione il programma $ \phi_x $ vengono eseguiti sempre un po' di passi alla volta, così quando $ Tot(x) $ non è totale viene ritornato il valore corretto.
+
+\textit{f} risulta quindi calcolabile e questo è assurdo per costruzione di \textit{f}.
+
+\subsection{Esercizio}
+
+
+\textit{Q(x)} decidibile, f1,f2 N -> N calcolabili.  f(x) = f1(x) se Q(x), f2(x) altrimenti è calcolabile?
+
+\todo[inline]{TODO}
+
+\subsection{Esercizio - Terminazione del programma sul suo indice}
+
+$H(x) = \phi_x(x) \downarrow$ non è decidibile.
+
+
+\section{Operazioni effettive su programmi}
+
+Dati due programmi $ P_x, P_y $ questi calcoleranno le due funzioni $\phi_x, \phi_y$.
+
+$$
+(\phi_x + \phi_y)(z) = \phi_x(z) + \phi_y(z) = \phi_e(z) = \phi_{k(x,y)}(z)
+$$
+
+Con \textit{K} funzione totale e calcolabile.
+
+Ovvero esiste $ K : \mathbb{N}^2 \rightarrow \mathbb{N} $ tale che $ \phi_{k(x,y)}(z) = \phi_x(z) + \phi_y(z)$.
+
+Questo si dimostra prima utilizzando il teorema SMN:
+
+$$
+g(x,y,z) = \phi_x(z) + \phi_y(z) = \Phi_U(x,z) + \Phi_U(y,z)
+$$
+
+è calcolabile e quindi per il teorema SMN esiste $ K : \mathbb{N}^2 \rightarrow \mathbb{N} $ totale e calcolabile tale che 
+
+$$
+g(x,y,z) = \phi_{K(x,y)}(z)
+$$
+
+\subsection{Funzione inversa}
+
+Un ragionamento simile può essere fatto con la funzione inversa.
+
+Esiste $ K : \mathbb{N} \rightarrow \mathbb{N} $ totale e calcolabile, tale che
+
+$$
+\phi_{K(x)}(y) = (\phi_x)^{-1}(y)
+$$
+
+Definisco quindi 
+
+$$
+g(x,y) =  (\phi_x)^{-1}(y) = \Big(\mu w. S\big(x,(w)_1, y, (w)_2\big)\Big)_1
+$$
+
+\textit{g} è calcolabile e quindi per il teorema SMN si ha che esiste $ K : \mathbb{N} \rightarrow \mathbb{N} $  calcolabile e totale, tale che
+
+$$
+g(x,y,z) = \phi_{K(x,y)}(z)
+$$
+
+
+
+\subsection{Programmi con lo stesso domino}
+
+Esiste $ K : \mathbb{N}^2 \rightarrow \mathbb{N} $ totale e calcolabile, tale che
+
+$$
+W_{K(x,y)} = W_x \cup W_y
+$$
+
+ovvero si vuole che il programma composto abbia come dominio l'unione dei due domini.
+
+Serve quindi una funzione per l'esecuzione dei due programmi passo passo:
+
+$$
+g(x,y,z) = \mathbb{1}(\mu w. ( H(x,z,w) \vee H(y,z,w)))
+$$
+
+questa funzione è definita se \textit{z} appartiene ad almeno uno dei due domini ed è indefinita se non compare in nessuno dei due domini.
+
+$$
+g(x,y,z) = \begin{cases}
+1 \text{ se } z \in W_x \cup W_y \\
+\uparrow \text{ altrimenti}
+\end{cases}
+$$
+
+Essendo questa funzione calcolabile, per il teorema SMN esiste una funzione $ K : \mathbb{N}^2 \rightarrow \mathbb{N} $ totale e calcolabile tale che
+
+$$
+\phi_{K(x,y)}(z) = g(x,y,z)
+$$
+
+Così facendo si ottiene proprio la funzione desiderata perché
+
+$$
+z \in W_{K(x,y)} \Leftrightarrow \phi_{K(x,y)}(z)\downarrow \Leftrightarrow z \in W_x \cup W_y
+$$
+
+\subsection{Programmi con gli stessi codomini}
+
+Esiste $ S : \mathbb{N}^2 \rightarrow \mathbb{N} $ totale e calcolabile tale che 
+
+$$
+E_{S(x,y)} = E_x \cup E_y
+$$
+
+L'idea è quella di eseguire $ P_x $ se $ z $ è pari altrimenti se è dispari viene eseguito $ P_y $. I due programmi devono però essere eseguiti su $ z/2 $ in modo che possano essere eseguiti su tutti i numeri.
+
+$$
+g(x,y,z) =\bigg( \mu w. \Big( \big(Pari(z) \wedge S(x,z/2, (w)_1, (w)_2)\big) \vee \big( \neg Pari(z) \wedge S(y,z/2, (w)_1, (w)_2) \big) \Big) \bigg)_1
+$$
+
+Si ha quindi che la funzione 
+
+$$
+g(x,y,z) = \begin{cases}
+\phi_x(z/2) \text{se \textit{z} è pari} \\
+\phi_y(z/2) \text{se \textit{z} è dispari}
+\end{cases}
+$$
+
+è calcolabile per come è stata precedentemente definita. (Sarebbe da ricopiare la definizione, utilizzando \textit{qt} al posto della divisione classica).
+
+Essendo calcolabile segue che per il teorema SMN esiste $ S : \mathbb{N}^2 \rightarrow \mathbb{N} $ calcolabile e totale, tale che
+
+$$
+\phi_{S(x,y)}(z) = g(x,y,z)
+$$
+
+ed è la funzione cercata perché:
+
+$$
+v \in E_{S(x,y)} \Rightarrow \exists z | \phi_{S(x,y)}(z) = v \Rightarrow \begin{cases}
+g(x,y,z) = v = \phi_x(z/2) \text{ se \textit{z} è pari} \Rightarrow v \in E_x \\
+g(x,y,z) = v = \phi_y(z/2) \text{ se \textit{z} è dispari} \Rightarrow v \in E_y 
+\end{cases} \Rightarrow v \in E_x \cup E_y
+$$
+
+e vale anche l'altra inclusione, perché, sia $ v \in E_x $, esiste $ z $ tale che $ \phi_x(z) = v  \Rightarrow \phi_{S(x,y)}(2z) = g(x,y,2z) = \phi_x(z)$ e siccome per un qualche argomento \textit{z} si ha che $ v \in E_{S(x,y)} $.
+
+
+\section{Esercizi}
+
+\begin{enumerate}
+	\item Esiste $ K : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale, tale che $ E_{K(x)} = W_x $?
+	\item Data $ f : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile, esiste $ K : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale, tale che $ \forall x \: W_{K(x)} = f^{-1}(W_x) $
+\end{enumerate}
+
+
+
+
+
+
+

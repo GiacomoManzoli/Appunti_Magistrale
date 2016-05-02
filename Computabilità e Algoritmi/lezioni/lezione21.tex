@@ -5,9 +5,14 @@
 
 \chapter{Esercizi in preparazione al parziale}
 
+
+\section{Teorema SMN}
+
+\subsection{Esercizio 1}
+
 Dimostrare che esiste $ S : \mathbb{N} \rightarrow \mathbb{N}$ tale che $|\: W_{S(x)}\:|  = 2 x$ e $ |\: E_{S(x)}\:| =x $
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 Si cerca una funzione $ f(x,y) $ che con $ x $ fissato abbia esattamente le caratteristiche richieste, ci pensa il teorema SMN a fare il resto.
 
@@ -27,7 +32,10 @@ $$
 
 e per costruzione $W_{S(x)} = [0,2x-1]$ e $ E_{S(x)} = [0,x-1] $.
 
-%------------
+\section{Calcolabilità delle funzioni}
+
+\subsection{Esercizio 1}
+
 Dimostrare che 
 
 $$
@@ -39,7 +47,7 @@ $$
 
 non è calcolabile.
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 Non si può usare il \textit{trick} della diagonale, perché la funzione deve essere proprio uguale alla diagonale.
 
@@ -62,6 +70,8 @@ ma \textbf{NON \`{E} VERO}
 $$ f(x) \text{ non calcolabile } \Rightarrow f(x) = h(x) +1 \text{ non calcolabile }$$
 %------------
 
+\subsection{Esercizio 2}
+
 Sia $ \mathbb{P} $ l'insieme dei numeri pari, dimostrare che la funzione caratteristica è primitiva ricorsiva.
 
 $$
@@ -71,7 +81,7 @@ $$
 \end{cases}
 $$
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 \begin{align*}
 \mathcal{X}_\mathbb{P}(0) &= 1
@@ -86,10 +96,11 @@ Dal momento che in un esercizio non sappiamo dell'esistenza del segno negato è 
 \end{align*}
 
 
-%-----
+\subsection{Esercizio 3}
+
 Dimostrare che la funzione $ half(x) = \lfloor\frac{x}{2}\rfloor $ è primitiva ricorsiva.
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 \begin{align*}
 half(0) &= 0 \\
@@ -110,8 +121,9 @@ ma anche $ \overleftarrow{sg} $ è in $ \mathcal{PR} $
 \overline{sg}(x+1) &= 0
 \end{align*}
 
+\section{Macchina URM}
 
-%-----------
+\subsection{Esercizio 1}
 
 Consideriamo la macchina $ \text{URM}^- $ che al posto dell'istruzione successore ha quella che effettua il predecessore.
 Come sono in relazione le due classi? 
@@ -119,7 +131,7 @@ Come sono in relazione le due classi?
 Ovvero:
  $$\mathcal{C}^- \text{ ? } \mathcal{C}$$
  
- \textbf{Soluzione}
+ \subsubsection{Soluzione}
  
  \`{E} chiaro che  $\mathcal{C}^- \subseteq \mathcal{C}$ perché la funzione predecessore può essere sostituita da un programma che calcola il predecessore.
  
@@ -136,24 +148,26 @@ Se $ n \rightarrow n+1 $, l'istruzione aggiunta può essere:
 	\item il trasferimento non incrementa i valori
 \end{itemize}
 
-Dal momento che i registri di un programma in $ \text{URM}^- $ non aumentano mai, non è possibile implementare la funzione successore, quindi \textbf{non vale} la relazione $\mathcal{C}^- \supseteq} \mathcal{C}$.
+Dal momento che i registri di un programma in $ \text{URM}^- $ non aumentano mai, non è possibile implementare la funzione successore, quindi \textbf{non vale} la relazione $\mathcal{C}^- \supseteq \mathcal{C}$.
 
 
-%-------
+\subsection{Esercizio 2}
 $ \text{URM}^S$ che non ha \texttt{S(n)} e \texttt{J(m,n,t)} ma ha \texttt{JS(m,n,t)} che prima fa il test e poi incrementa il registro $ m $.
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 $\mathcal{C}^S \subseteq \mathcal{C}$ perché un programma URM riesce ad emulare l'istruzione \texttt{JS}.
 
 $\mathcal{C}^S \supseteq \mathcal{C}$ non vale, perché un programma $ \text{URM}^S$ non riesce a calcolare la funzione successore.
 
 
-% --------
+\section{Diagonalizzazione}
+
+\subsection{Esercizio 1}
 
 $ F_0 = \{f \: | \: \text{cod}(f) \subseteq \{0\} \text{ e parziali}\}$ è numerabile?
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 L'unica differenza tra queste funzioni è data dai domini che sono tanti quanti i numeri naturali.
 
@@ -170,20 +184,20 @@ considerando la diagonale, posso definire
 
 $$
 f(x) = \begin{cases}
-0 &\text{se } f_x(x)\uparrow
+0 &\text{se } f_x(x)\uparrow \\
 \uparrow &\text{se } f_x(x)=0
 \end{cases}
 $$
 
 $ f $ dovrebbe appartenere a $ F_0 $ ma per costruzione non compare nella enumerazione, quindi $ F_0 $ non è enumerabile.
 
-%---------
+\subsection{Esercizio 2}
 
 $ f : \mathbb{N} \rightarrow \mathbb{N} $ totale e decrescente se $ \forall x,y \: x \leq y \Rightarrow f(y) \leq f(x) $.
 
 $ F_d = \{ f : \mathbb{N} \rightarrow \mathbb{N} \: \ \: f \text{ totale e descrescente e } \text{cod}(f) \subseteq \{0,1\} \} $ è numerabile?
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 Le funzioni dell'insieme possono essere o costanti uguali a 0 o 1, oppure uguali a 1 fino ad un certo valore per poi diventare costanti a 0.
 
@@ -198,11 +212,11 @@ $$
 quindi $ n : F_d \rightarrow \mathbb{N} \cup \{\infty\} $ è una funzione iniettiva e suriettiva, pertanto $ |\: F_d \:| = |\: \mathbb{N} \cup \{ \infty \} \:| $, ovvero $ F_d $ è numerabile.
 
 
-%----- 
+\subsection{Esercizio 3}
 
 Trovare $ f : \mathbb{N} \rightarrow \mathbb{N} $ totale e non calcolabile tale che $ f(x)  =x $ per infiniti $ x $.
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 $$
 f(x) = \begin{cases}
@@ -212,11 +226,11 @@ x, &\text{ se $ x $ è pari} \\
 \end{cases}
 $$
 
-%---
+\subsection{Esercizio 4}
 
 Trovare una funzione $ f $ crescente, totale e non calcolabile.
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 $$
 h(x) = \begin{cases}
@@ -238,7 +252,7 @@ Così definita $ f $ è:
 	\item $ \forall x $ se $ \phi_x(x) \downarrow \: f(x) = \sum\limits_{y \leq x} h(y) \geq h(x) = \phi_x(x) +1 \neq \phi_x(x) $ e se $ \phi_x(x) \uparrow $, $ h(x) = 0 \neq \phi_x(x) $, ovvero $ f $ non è calcolabile.
 \end{itemize}
 
-%------------
+\subsection{Esercizio 5}
 
 Può esistere $ f : \mathbb{N} \rightarrow \mathbb{N} $ non calcolabile tale che $ \forall g : \mathbb{N} \rightarrow \mathbb{N} $ non calcolabile $ f+g  $ è calcolabile?
 
@@ -246,7 +260,7 @@ $$
 (f+g)(x) = f(x) + g(x)
 $$
 
-\textbf{Soluzione}
+\subsubsection{Soluzione}
 
 Non può esistere, perché per assurdo, sia $ f $ una funzione tale che $ (f+f) $ è calcolabile:
 
