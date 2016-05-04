@@ -1,246 +1,37 @@
-% !TEX encoding = UTF-8
-% !TEX TS-program = pdflatex
-% !TEX root = computabilità e algoritmi.tex
-% !TEX spellcheck = it-IT
-
-\section{Correzione compitino}
-
-\subsection{Esercizio 1}
-
-Definire la classe delle funzioni ricorsive e dimostrare che $ pow2(y)  \in \mathcal{PR} $
-
-\subsubsection{Soluzione}
-
-La definizione è negli appunti.
-
-Per dimostrare che la funzione è primitiva ricorsiva la si definisce per ricorsione primitiva:
-
-$$
-\begin{cases}
-pow2(0) &= 1 \\
-pow2(y+1) &= double(pow2(y))
-\end{cases}
-$$
-
-Serve definire anche $ double $ come primitiva ricorsiva:
-
-$$
-\begin{cases}
-double(0) &= 0 \\
-double(y+1) &= S(S(double(y)))
-\end{cases}
-$$
-
-$ pow2 $ è quindi primitiva ricorsiva.
-
-\subsection{Esercizio 2}
-
-Analizzare la classe delle funzioni calcolabili $ \mathcal{C}' $ associate alla macchina URM' che al posto dell'istruzione di salto e dell'istruzione successore ha l'istruzione \texttt{JI(m,n,t)} che se trova i due registri uguali, prima incrementa il registro \texttt{m} e poi effettua il salto all'istruzione \texttt{t}.
-
-\subsubsection{Soluzione}
-
-Le istruzioni \texttt{J} e \texttt{S} della macchina URM possono essere replicate con 
-
-\begin{lstlisting}[language=URM]
-// J(m,n,t)
-T(m,k)
-JI(k,n,t)
-// S(n)
-Il: JI(n,n,l+1)
-\end{lstlisting}
-
-Serve poi la prova induttiva sul numero di istruzioni che è sempre quella, l'importante è specificare che nei passi intermedi della dimostrazione si ottiene un programma ibrido.
-
-C'è poi da fare la dimostrazione dell'altro verso, che avviene in modo analogo.
-
-\subsection{Esercizio 3}
-
-Può esistere una funzione $ f $ totale e non calcolabile tale che $ cod(f) = \mathbb{P} $.
-
-\subsubsection{Soluzione}
-
-Perché sia totale basta che sia sempre definita, per ottenere la non calcolabilità la devo rendere diversa da tutte le funzioni calcolabili.
-
-$$
-f(x) = \begin{cases}
-x, &\text{se $ x $ è pari}\\
-2(\phi_{\frac{x-1}{2}}(x) +1), &\text{se $ x $ è disparie e $ \downarrow $} \\
-0, &\text{ altrimenti}
-\end{cases}
-$$
-
-Ma anche una definizione più semplice va bene:
-
-$$
-f(x) = \begin{cases}
-2 (\phi_x(x) +1), &\text{ se }\phi_x { è totale} \\
-0, \text{ altrimenti}
-\end{cases}
-$$
-
-\chapter{Funzione universale}
-
-Vogliamo un programma universale che prende in input il numero del programma e l'input da utilizzare e fornisce in output il risultato dell'esecuzione del programma sul dato input.
-
-$$
-\Psi_U(x,y) = \phi_{x}(y)
-$$
-
-La funzione universale ha in generale $ k+1 $ argomenti:
-
-\begin{align*}
-\Psi_U^{(k)} &: \mathbb{N}^{k+1} \rightarrow \mathbb{N} \\
-\Psi_U(e, \vec{x}) = \phi_{e}^{k}(\vec{x})
-\end{align*}
-
-\section{Calcolabilità della funzione universale}
-
-Per calcolare $ \Psi_U(e, \vec{x}) = \phi_{e}^{k}(\vec{x}) $ è necessario come prima cosa recuperare il programma rappresentato da $ e $ utilizzando $ \gamma^{-1}(e) = P_e$.
-
-Dopodiché è necessario eseguire $ P_e(\vec{x}) $, la quale può produrre un output $\phi_{e}^{k}(\vec{x}) = \Psi_U(e, \vec{x}) $ oppure può non terminare e in questo caso $ \Psi_U(e, \vec{x})\uparrow $.
-
-\subsection{Dimostrazione pseudo-formale}
+\todo[inline]{TODO}
 
 \begin{verbatim}
-	|r1|r2|r3|...|0|...
+	## Miglioramento dell'efficienza - Suffix link
+	
+	Sia alfa una stringa e *x* un carattere.
+	
+	Se in un albero dei suffissi esiste un nodo interno esplicito *u* con etichetta *xalpha* ed un nodo interno esplicito *s(u)* la cui etichetta è alpha, allora un **suffix link** tra *u* e *s(u)* è un puntantore che collega i due nodi.
+	
+	![In questo caso alpha=a e x=d](./immagini/l22-fig1.png)
+	
+	Così facendo durante la costruzione dell'albero, quando viene esteso il cammino ad una foglia, posso tornare indietro fino a che non trovo un nodo esplicito con un suffix link e posso riprendere la costruzione dell'albero a partire dal nodo collegato.
+	
+	Però al momento non c'è la garanzia che da ogni nodo interno esplicito esca un suffix link.
+	
+	### Lemma 5.4 - Esitenza del suffix link
+	
+	Se, durante la fase *i*-esima, per estendere il suffisso *S[j,1]*, viene crato un nuovo nodo interno con etichetta *xalpha*, con *xalpha* prefisso di *S[j,i]*, allora o nell'albero esiste già un nodo splicito con etichetta *alpha* oppure tale nodo verrà creato estendeno il sufffisso successivo *S[j+1,i]*.
+	
+	#### Dimostrazione
+	
+	L'unico caso in cui viene creato un nodo interno *v* con etichetta *S[j,i] = xalpha* viene creato solo se il suffisso *S[j,i]* viene esteso con il caso 2.
+	
+	```
+	quando nell’albero corrente il cammino etichettato S[j,i] termina in un nodo interno implicito e tale cammino continua con un carattere c diverso da S[i+1].
+	Quindi, nell’albero corrente, il cammino di etichetta S[j+1, i] = alpha ha una continuazione che inizia con il carattere c.
+	```
+	
+	Questo perché entrambi i suffissi, terminando in nodi interni, sono prefissi di suffissi più lunghi.
+	
+	
+	...
+	
+	### Costruzione dell'albero con i suffix link
+	
+	### Skip/count
 \end{verbatim}
-
-$ C = \prod_{i \geq 1} = p_{i}^{r_i} $ con questa codifica della memoria è possibile accedere al contenuto del registro $ i $-esimo con $ r_i = (C)_i$.
-
-Qualcosa sulla codifica dello stato del programma: s$ \sigma = \Pi(C,J) $.
-
-$ C_k(e,\vec{x}, t)  = $ contenuto dei registri dopo $ t $ passi del programma $ P_e $ sull'input $ \vec{x} $.
-
-$ J_k() = \begin{cases}
-&\text{istruzione da eseguire dopo di passi di } P_e(\vec{x}) \text{, se non termina.}\\
-&0 \text{ altrimenti}
-\end{cases} $ 
-
-C'è da dimostrare che $ C_k, J_k \in \mathcal{PR} \subseteq \mathcal{R}  = \mathcal{C}$, una volta fatto ciò è possibile definire:
-
-$$
-\Psi_U(e, \vec{x}) = \phi_{e}^{k}(\vec{x}) = \Big( C_k(e,\vec{x}, \mu t.J_k(e,\vec{x},t)) \Big)_1 \in \mathcal{R} = \mathcal{C}
-$$
-
-Sulla base di $ C_p(\vec{x},t) $ e $ J_p(\vec{x}, t) $ si possono definire per ricorsione primitiva:
-
-$$
-C_p()
-$$
-
-
-Servono prima un po' di funzioni ausiliarie.
-
-Argomenti di un istruzione URM $ i = \beta(\text{Istr) $.
-
-$$
-Z_{arg}(i) = qt(4,i) +1
-$$
-
-$$
-S_{arg}(i) = qt(4,i) +1 \qquad \qquad i = (n-1)\times 4
-$$
-
-$$
-T_{arg_1} = \Pi_1 (qt(4,i)) +1 \qquad \qquad i =\ldots
-$$
-
-$$
-T_{arg_2} = \Pi_2 (qt(4,i)) +1
-$$
-
-Effetto dell'esecuzione di un istruzione:
-
-$$
-zero(C,n) = qt(p_{n}^{(C)_n} , C)
-$$
-
-$$
-succ(C,n) = p_n \cdot C
-$$
-
-$$
-trasf(C,m,n) = zero(C,n) \cdot p_{n}^{(C)_m}
-$$
-
-Effetto dell'esecuzione di un istruzione $ i = \beta(\text{Itrs})$:
-
-$$
-change : \mathbb{N}^2 \rightarrow \mathbb{N}
-$$
-
-$$ 
-change(C,i) = \begin{cases}
-zero(C, Z_{arg}(i)) se \: rm(4,i) = 0 \\
-succ(C, S_{arg}(i)) se \: rm(4,i) = 1 \\
-trasf(C, T_{arg_1}(i), T_{arg_2}(i)) se rm(4,i) = 2 \\
-C altrimenti (il salto non cambia la configurazione di memoria)
-\end{cases}
-$$ 
-
-
-Prossima configurazione di memoria
-
-\begin{align*}
-nextconf(e, C, t) &= \text{Configurazione dei registri al prossimo passo partendo da } C \text{ e eseguendo la \textit{t}-esima istruzione di }P_e \\
-	&= change(C, a(e,t))
-\end{align*}
-
-dove \textit{a} è la funzione che data la codifica di un programma ritorna il codice della $ t $-esima istruzione.
-
-$ is(C,i,t) =$ numero dell'istruzione successiva se al passo corrente eseguo $ i = \beta(\text{Istr}) $ che si trova in posizione $ t $ del programma.
-
-$$
-is(C,i,t) = \begin{cases}
-t+1, &\text{se } rm(4.i) \neq 3 \text{ oppure } (C)_{J_{arg_1}(i)} \neq (C)_{J_{arg_2}(i)}  \\
-J_{arg_3}(i), &\text{ altrimenti}
-\end{cases}
-$$ 
-
-$$
-nextistr(e, C, t) = \text{prossima istruzione a partire da C ed eseguendo t}
-$$
-
-$$
-nextistr(e,C,t) =\begin{cases}
-is(C, a(e,t), t ), &\text{ se } is(C, a(e,t), t ) \neq l(e) +1 \\
-0, &\text{ altrimenti}
-\end{cases} 
-$$
-
-Siamo quasi alla fine
-
-\begin{align*}
-C_k (e, \vec{x}, 0) &= \prod\limits_{i=1}^{k} p_{i}^{r_i}\\
-J_k(e,\vec{x}, 0) &= 1 \\
-C_k (e, \vec{x}, t+1) &= nextconf(e, C_k(e,\vec{x}, t) , J_k(e, \vec{x}, t)) \\
-J_k(e,\vec{x}, t+1) &= nextistr(e, C_k(e, \vec{x}, t) , J_k(e, \vec{x}, t)) 
-\end{align*}
-
-Dato che tutte le funzioni utilizzate, anche $ C_k $ e $ J_k $ sono primitive ricorsive e quindi calcolabili.
-
-$$
-\Psi_{U}^{(k)} = \Big(  C_k(e, \vec{x}, \mu t.J_k(e, \vec{x}, t)) \Big)_1 \in \mathcal{R}
-$$
-
-
-
-\section{Corollari-rio}
-
-Sono decidibili i seguenti predicati
-
-\begin{enumerate}
-	\item $ H_k (e,\vec{x}, t) = P_e(\vec{x}) \downarrow $ in $ t $ o meno passi.
-	\item $ S_k (e,\vec{x},y, t) = P_e(\vec{x}) \downarrow y $ in $ t $ o meno passi.
-\end{enumerate}
-
-Entrambi sono calcolabili perché basta fare andare il programma per $ t $ passi e osservare l'output.
-
-$$
-\mathcal{X}_{H_k}(e, \vec{x}, t) = \overline{sg}(J_k{e,\vec{x},t})
-$$
-
-
-$$
-\mathcal{X}_{S_k}(e, \vec{x}, y, t) =  \overline{sg}((J_k(e,\vec{x},t)) + |\: y - (C_k(e,\vec{x},t) )_1\:|)
-$$
