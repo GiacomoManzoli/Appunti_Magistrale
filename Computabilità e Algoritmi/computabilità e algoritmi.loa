@@ -15,3 +15,9 @@
 \contentsline {algorithm}{\numberline {17}\textsc {MathukrishnanTest}: verifica della presenza di false occorrenze}{93}{algorithm.17}
 \contentsline {algorithm}{\numberline {18}Ukkonen: Descrizione generale dell'algoritmo }{96}{algorithm.18}
 \contentsline {algorithm}{\numberline {19}P-Fib: fibonacci in versione parallela}{99}{algorithm.19}
+\contentsline {algorithm}{\numberline {20}\textsc {MatVec}: Moltiplicazione di una matrice per un vettore}{103}{algorithm.20}
+\contentsline {algorithm}{\numberline {23}\textsc {P-Merge}: merge di due array parallelizzato}{106}{algorithm.23}
+\contentsline {algorithm}{\numberline {24}\textsc {P-Merge-Sort}: merge sort parallelizzato bene}{107}{algorithm.24}
+\contentsline {algorithm}{\numberline {26}\textsc {P-Scan}: funzione principale}{108}{algorithm.26}
+\contentsline {algorithm}{\numberline {27}\textsc {P-Scan-Up}}{108}{algorithm.27}
+\contentsline {algorithm}{\numberline {28}\textsc {P-Scan-Up}}{109}{algorithm.28}

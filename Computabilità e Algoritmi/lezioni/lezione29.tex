@@ -1,0 +1,197 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+\chapter{Insiemi Ricorsivi e Ricorsivamente Enumerabili}
+
+Ogni proprietà interessante del comportamento dei programmi non è calcolabile (correttezza, assenza di bug, terminazione).
+
+
+Dal punto di vista della computabilità tutti i problemi decidibili vengono considerati facili, anche se richiedono un carico computazionale estremamente elevato.
+
+Ci sono poi i problemi semi-decidibili, per i quali si riesce a rispondere solo in caso positivo e i problemi indecidibili per i quali non è sempre possibile fornire una risposta.
+
+\section{Insiemi}
+
+Dato un sottoinsieme $ X \subseteq \mathbb{N} $, $ x \in X $? Quando questa proprietà è decidibile si dice che l'insieme è \textbf{ricorsivo}, mentre se è semi-decidibile, l'insieme è \textbf{ricorsivamente enumerabile}.
+
+La definizione utilizza i numeri, ma per noi questi possono essere considerati come dei programmi:
+
+$$
+X = \{ x | P_x \ldots \}
+$$
+
+\subsection{Insiemi ricorsivi}
+
+$A \subseteq \mathbb{N}$ si dice ricorsivo se la sua funzione caratteristica
+
+$$
+\mathcal{X}_A : \mathbb{N} \rightarrow \mathbb{N}
+$$ 
+
+che vale 1 se $ x \in A $ e 0 altrimenti è calcolabile, ovvero se il predicato $ x \in A $ è decidibile.
+
+$\mathbb{N}$ è ricorsivo, perché la sua funzione caratteristica è la costante 1.
+
+$P_r = \{x | x \text{ è primo}\}$ è anche esso ricorsivo.
+
+Come risultato più generale si ha che tutti gli insiemi $ A \subseteq \mathbb{N} $ e finiti sono ricorsivi, perché la loro funzione caratteristica può essere sempre definita come una serie di \textit{if}.
+
+L'insieme $ K = \{ x | \phi_x(x)\downarrow \} $ non è ricorsivo, perché se per assurdo lo fosse, sarebbe possibile definire una funzione calcolabile diversa da tutte quelle calcolabili:
+
+$$
+f(x) = \begin{cases}
+\phi_x(x)+1 &x \in K \\
+1 & x \notin K
+\end{cases}
+$$
+
+la funzione così definita è totale e calcolabile, perché può essere definita come 
+
+\begin{align*}
+f(x) &= (\mu w. (x in K \wedge (w)_1 = \phi_x(x) \wedge (w)_2 = \text{ numero di passi per termianre}) \vee (x \notin K \wedge (w)_1 = 0))_1 +1 \\
+&= (\mu w. (x \in K \wedge S(x,x,(w)_1, (w)_2)) \vee (x \notin K \wedge (w)_1 = 0))_1 +1
+\end{align*}
+
+e per combinazione di funzione calcolabili e minimalizzazione è calcolabile. $f$ risulta quindi calcolabile e questo è un problema perché
+
+$$
+\forall x \phi_x(x) \begin{cases}
+x \in K & f(x) = \phi_x(x) +1 \neq \phi_x(x) \\
+x \notin K & f(x) = 1 \neq \phi_x(x)\uparrow
+\end{cases}
+$$
+
+quindi $ K $ non può essere ricorsivo.
+
+Anche $T = \{x |  \phi_x \text{ è totale}\}$ non è ricorsivo.
+
+\subsubsection{Chiusura degli insiemi ricorsivi}
+
+Se $ A $ e $ B $ sono due insiemi ricorsivi, anche
+
+\begin{itemize}
+	\item $ \bar{A} = \mathbb{N} \ A$
+	\item $ A \cup B $
+	\item $ A \cap B$
+\end{itemize} 
+
+sono ricorsivi.
+
+\section{Riduzione}
+
+Si hanno due problemi, $ \mathcal{A} $ e $ \mathcal{B} $ e si vuole poter dire se $ \mathcal{A} $ è più facile o più difficile di $ \mathcal{B} $.
+
+Questo prende il nome di \textbf{m-riducibilità}\footnote{Ometteremo il prefisso m-.} e con questo si intende che dati $ A,B \subseteq \mathbb{N} $, il problema $ x \in A $ si riduce al problema $ x \in B $ (notazione $ A \leq_m B $) se esiste $ f : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale, tale che $ \forall x \: x \in A \Leftrightarrow f(x) \in B$.
+
+Ovvero esiste un modo che permette di trasformare un'istanza del problema $ \mathcal{A} $ in un'istanza del problema $ \mathcal{B} $ tale che se l'istanza $ x $ soddisfa $ \mathcal{B} $, questa soddisfa anche $ \mathcal{A} $.
+
+In questo caso il problema $ \mathcal{A} $ è più facile da risolvere perché sapendo risolvere il problema $ \mathcal{B} $ si riesce a risolvere anche $ \mathcal{A} $.
+
+Più formalmente, se $ A, B \subseteq \mathbb{N} \: A \leq_m B $ allora
+
+\begin{enumerate}
+	\item se $ B $ è ricorsivo anche $ A $ è ricorsivo
+	\item se $A $ non è ricorsivo, anche $ B $ non è ricorsivo
+\end{enumerate}
+
+Il punto 1 si dimostra a partire dalla funzione caratteristica di \textit{B}: se \textit{B} è ricorsivo,
+
+$$
+\mathcal{X}_B(x) = \begin{cases}
+1 & x \in B \\
+0 & x \notin B
+\end{cases}
+$$
+
+la funzione caratteristica di $ A $ può essere definita come
+
+$$
+\mathcal{X}_A(x) = \begin{cases}
+1 & x \in A \\
+0 & x \notin A
+\end{cases} = \mathcal{X}_B(f(x))
+$$
+
+Il punto 2 si dimostra in modo simile.
+
+L'insieme $ T = \{x | \phi_x(x) \text{totali}\} $ non è ricorsivo e può essere dimostrato utilizzando la riduzione $ K \leq_m T $\footnote{la \textit{m} si può omettere}.
+
+\`E quindi necessario trovare una funzione $ f : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale, tale che $ x \in K $ se e solo se $ f(x) \in T $.
+Vogliamo quindi una funzione che fornisca sempre un output se $ x \in K (P_x(x)\downarrow)$ e che non fornisca mai un output se $ x \notin K $.
+
+Possiamo quindi definire una funzione $ g(x,y) $ con $ x $ il programma da trasformare e $ y $ l'input di tale programma (che non verrà mai usato).
+
+$$
+g(x,y) = \begin{cases}
+\phi_x(x) & x \in K \\
+\uparrow & \text{ altrimenti}
+\end{cases} = \phi_x(x) = \Phi_U(x,x)
+$$
+
+essendo $ g $ calcolabile, per il teorema SMN esiste una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che
+
+$$
+g(x,y) = \phi_{f(x)}(y)
+$$
+
+$ f $ è quindi una funzione di riduzione di $ K $ a $ T $ perché se $ x \in K $, $ f(x) \in T $ si ha  $\phi_{f(x)}(y) = g(x,y) = \phi_x(x)\downarrow \forall y$ totale ($f \in T$), viceversa se $ x \notin K $, $f(x) \notin T$ perché $\phi_{f(x)}(y) = g(x,y) = \phi_x(x) \uparrow \forall y$ e non è totale, quindi $f \notin T$.
+
+Quindi $ K \leq_m T $ tramite $ f $, pertanto essendo $ K $ non ricorsivo neppure $ T $ lo sarà.
+
+\subsection{Problema dell'input}
+
+$$
+A_n = \{ x | \phi_x(n)\downarrow \}
+$$
+
+Per un \textit{n} fissato, questo insieme non è ricorsivo e lo si dimostra per riduzione con $ K \leq_m A_n $.
+
+Serve quindi una funzione \textit{S} calcolabile e totale, tale che se $ x \in K $, $ f(x) \in A_n $, ovvero si vuole trasformare un programma $ P_x $ in un altro programma che prende in input un valore $ y $ e che se $x \in K$ allora $P_{f(x)}(n)\downarrow$ e che se $ x \notin K $, $P_{f(x)}(n)\uparrow$.
+
+In modo simile a prima è possibile definire
+
+$$
+g(x,y) = \phi_x(x) = \Phi_U(x,x)
+$$
+
+per il teorema SMN esiste quindi $ S : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale, tale che 
+
+$$
+g(x,y) = \phi_{S(x)}(y)
+$$
+
+$ S $ è la funzione di riduzione di $ K $ a $ A_n $ perché se $ x \in K $, $ \phi_{S(x)}(y) = g(x,y) = \phi_x(x)\downarrow $ e in particolare $\phi_{S(x)}(n) = \phi_x(n) $ che è definita e quindi $S(x) \in A_n$.
+
+Se invece $ x \notin K $, $\phi_{S(x)}(y) = \phi_x(x)\uparrow \forall y$ e quindi, per definizione di $A_n$ si ha che $S(x) \notin A_n$
+
+\subsection{Problema dell'output}
+
+$$
+B_n = \{ x | n \in E_x \}
+$$
+
+Per un \textit{n} fissato, questo insieme non è ricorsivo e lo si dimostra per riduzione con $ K \leq_m B_n $.
+
+Serve quindi una funzione \textit{f} tale che $ x \in K \Leftrightarrow f(x) \in B_n$.
+
+La dimostrazione è uguale a quella precedente con la differenza che il programma $ P_{f(x)}(x) $ deve sempre ritornare \textit{n}:
+
+$$
+g(x,y) = \begin{cases}
+n & x \in K \\
+\uparrow & \text{ altrimenti} 
+\end{cases} = n \cdot 1(\phi_x(x))
+$$ 
+
+Essendo calcolabile, per il teorema SMN esiste $ f : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale, tale che 
+
+$$
+g(x,y) = \phi_{f(x)}(y)
+$$
+
+$f$ è la funzione di riduzione di $ K \leq_m B_n $ perché se $ x \in K  $, $\phi_{f(x)}(y) = g(x,y) = n $ che certamente ha $ n $ nel suo codominio ($ n \in E_{f(x)} = \{n\}$) e quindi $f(x) \in B_n$.
+Se invece $ x \notin K $, $\phi_{f(x)}(y) \uparrow = g(x.y) \forall y $, ovvero $E_{f(x)} = \emptyset $ e quindi $f(x) \notin B_n$.
+
+
