@@ -25,3 +25,5 @@
 \contentsline {algorithm}{\numberline {30}\textsc {Turn-Left}: rotazione rispetto ad un segmento}{118}{algorithm.30}
 \contentsline {algorithm}{\numberline {31}\textsc {Segment-Intersect}: due segmenti si intersecano?}{119}{algorithm.31}
 \contentsline {algorithm}{\numberline {32}\textsc {Any-Segment-Intersect}: intersezioni in un insieme di segmenti}{122}{algorithm.32}
+\contentsline {algorithm}{\numberline {34}\textsc {Graham-Scan}: algoritmo per la costruzione dell'involucro convesso}{125}{algorithm.34}
+\contentsline {algorithm}{\numberline {35}\textsc {Jarvis}: algoritmo per la costruzione dell'involucro convesso}{126}{algorithm.35}
