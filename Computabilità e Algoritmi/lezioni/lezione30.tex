@@ -1,0 +1,174 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+\section{Teorema di Rice}
+
+Ogni proprietà del comportamento di un programma non è decidibile (es: il programma termina sempre, termina in un certo input, ecc.).
+Queste proprietà sono quelle che riguardano che cosa calcola il programma, non come è definito.
+
+Un \textbf{insieme saturato} (versione formale delle proprietà dei programmi) $ A \subseteq \mathbb{N} $ tale che se $ x \in A $ e $ y \in \mathbb{N} $ e tale che $ \phi_x = \phi_y $, allora anche $ y \in A $.
+
+$ A $ è saturato se e solo se esiste $ \mathcal{A} \subseteq \mathcal{C} $ tale che $ A = \{ x | \phi_x \in A \} $, ovvero il fatto che un programma appartenga ad un insieme saturo non dipende dalla struttura del programma ma dalla funzione che esso calcola.
+
+Ad esempio $ T = \{ x | \phi_x \text{ è totale} \} $ è un insieme saturo, perché la proprietà che un programma termina è come dire che la funzione calcolata dal programma termina sempre.
+
+Anche $ \{ x | \phi_x = \lambda y . \sqrt{y} \} $ è saturo, perché contiene tutte le funzioni che calcolano la radice quadrata.
+
+$ K = \{ x | x \in W_x \} $ non è saturo perché intuitivamente non si riesce definire in modo preciso un insieme di funzioni. L'idea è quella di mostrare che esiste una funzione calcolabile $ e \in \mathbb{N} $ tale che
+
+$$
+\phi_e(x) = \begin{cases}
+e &\:x=e \\
+\uparrow &\:\text{altrimenti}
+\end{cases}
+$$ 
+
+per come è definita questa funzione $ e \in W_e \Rightarrow e \in K$ ed esiste $ e' \in \mathbb{N} $ tale che $ \phi_e = \phi_{e'} $ e $ e \neq e' $.
+
+Si ha che $\phi_{e'}(e') = \phi_e(e') = \uparrow$ e quindi $ e' \notin K $, ovvero l'insieme $ K $ non contiene tutti gli indici che calcolano la stessa funzione.
+
+Tutto questo si basa sul fatto che $ e $ esiste e arriveremo più avanti a dimostrarlo.
+
+\subsection{Enunciato del teorema di Rice}
+
+Sia $ A $ una qualunque proprietà del comportamento dei programmi, ovvero $ A \subseteq \mathbb{N} $ e saturo.
+
+Se la proprietà non è banale, l'insieme non è ricorsivo.
+
+Con proprietà non banale si intente $ A \neq \mathbb{N}$ (sempre vera) e $ A \neq \emptyset $ (sempre falsa).
+
+\subsubsection{Dimostrazione}
+
+L'obiettivo è quello di dimostrare che $ K \leq_m A $.
+
+Per ipotesi sappiamo che $ A $ non è vuoto e non è tutto $ \mathbb{N} $, quindi è definito anche l'insieme $ \bar{A} $.
+Vogliamo trovare una funzione $ f : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale tale che $ x \in K \Leftrightarrow f(x) \in A$.
+
+Consideriamo un qualunque indice $ e_0 \in \mathbb{N} \: \phi_{e_0} = \emptyset$ ovvero che non termina mai.
+
+Ci sono due possibili casi:
+
+\begin{enumerate}
+	\item $e_0 \in \bar{A}$: sia $ e_1 \in A $ un programma qualsiasi (che sappiamo esistere perché $ \bar{A} \neq \emptyset$). Possiamo definire
+	$$
+	g(x,y) = \begin{cases}
+	\phi_{e_1}(y) & x \in K\\
+	\phi_{e_0}(y) & x \notin K
+	\end{cases} = \begin{cases}
+	\phi_{e_1}(y) & x \in K \\
+	\uparrow & x \notin K
+	\end{cases} = \phi_{e_1}(y) \cdot 1(\phi_x(x))
+	$$
+	che è calcolabile perché può essere scritta utilizzando la funzione calcolabile. Perciò è possibile utilizzare il teorema SMN per avere la garanzia dell'esistenza di una funzione $ f : \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale, tale che $ g(x,y) = \phi_{f(x)}(y)  \forall x,y$, che può essere utilizzata come funzione di riduzione. Questo perché se $ x \in K \Rightarrow \phi_{f(x)}(y) = \phi_{e_1}(y) \forall y$ e dato che $ A $ è saturato e che $ e_1 \in A $, allora anche $ f(x) \in A$ perché essendo saturo $ A $ contiene tutti gli indici che calcolano quella funzione. Se invece $ x \notin K \Rightarrow \phi_{f(x)}(y) = \phi_{e_0} \forall y$ e allo stesso modo dato $ e_0 \notin A $ anche $ f(x) \notin A $ perché se questo non fosse vero anche $ e_0 $ dovrebbe appartenere ad $ A $.  Concludendo, dato che $ K $ non è ricorsivo e che $ K \leq_m A $, anche $ A $ non è ricorsivo.
+	\item $e_0 \in A$: sia $ B = \bar{A} $, $ B \neq \emptyset \neq \mathbb{N} $ e saturo perché è l'insieme complementare di un insieme saturo ed $ e_0 \notin B $. Per quanto dimostrato al punto 1, si ha che $ B $ non è ricorsivo e quindi anche $ \bar{A} $ non è ricorsivo, allora anche $ A $ non è ricorsivo perché è l'insieme complementare di un insieme ricorsivo.
+\end{enumerate}
+
+
+$ A_n = \{ x | n \in W_x \}  = \{ x | \phi_x(n) \downarrow  \}$ è saturo perché può essere visto come
+
+\begin{align*}
+A_n &= \{ x | \phi_x \in \mathcal{A}_n \}  \\
+\mathcal{A}_n &= \{ f \in \mathcal{C} | n \in dom(f) \} 
+\end{align*} 
+
+Si ha poi che 
+\begin{enumerate}
+	\item $ A_n \neq \emptyset $: $ e_1 $ tale che $ \phi_{e_1} = id $, $ e_1 \in A_n $ 
+	\item $A_n \neq \mathbb{N}$: $e_0$ tale che $ \phi_{e_0} = \emptyset $, $ e_0 \notin A $
+\end{enumerate}
+
+
+Quindi per il teorema di Rice $ A_n $ non è ricorsivo.
+
+$ B_n = \{  x | n \in E_x\} $ è saturo, perché $ B_n  = \{ x | x \in \mathcal{B}_n\}$ con $ \mathcal{B}_n = \{ f \in \mathcal{C} | n \in cod(f) \} $ e:
+\begin{itemize}
+	\item $ B_n \neq \emptyset $ se $ e_1 $ tale che $ \phi_{e_1} = id \: n \in E_{e_1} = \mathbb{N} \Rightarrow e_1 \in B_n$ 
+	\item $ B_n \neq \mathbb{N} $ se $ e_0 $ tale che $\phi_{e_0} = \emptyset \: n \notin E_{e_0} \Rightarrow e_0 \notin B_n$ 	
+\end{itemize}
+
+Quindi per il teorema di Rice anche $ B_n $ non è ricorsivo.
+
+
+Sia $ f : \mathbb{N} \rightarrow \mathbb{N} $ una funzione $ B_f = \{ x | \phi_x = f \} $ è saturo per definizione e per il teorema di Rice non è ricorsivo a meno che $ f \notin \mathcal{C} $ perché in quel caso si ha $ B_f = \emptyset $. Infatti, se $ f \in \mathcal{C} $, $ B_f \neq \emptyset $ perché banalmente esiste un programma che non la calcola. $ B_f \neq \mathbb{N} $ perché sia $ e_2 $ tale che $ \phi_{e_2} \neq f$ ed esiste perché le funzioni calcolabili sono infinite si ha che $ e_2 \notin B_f $.
+Quindi per Rice $ B_f $ non è ricorsivo.
+
+
+$ C = \{ x | x \in W_x \cap E_x \} $ non sappiamo se questo insieme è saturato, ma intuitivamente se proviamo a definire $ C = \{x | \phi_x \in \mathcal{A} \} $ abbiamo dei problemi a definire $ \mathcal{A} $.
+
+Mostrare che $ K \leq_m C $.
+\todo[inline]{TODO}
+
+$ D = \{ x | E_x infinito \}$ dire se è ricorsivo o meno
+\todo[inline]{TODO}
+
+\section{Insiemi ricorsivamente enumerabili (RE)}
+
+$A \subseteq \mathbb{N}$ è \textbf{RE} se la sua funzione semi-caratteristica è calcolabile:
+
+$$
+SC_A(x) = \begin{cases}
+1 & x \in A \\
+\uparrow & x \notin A
+\end{cases}
+$$
+
+Il fatto che un insieme $ A $ è RE equivale a dire che il predicato ``$ x \in A $'' è semi-decidibile.
+
+\subsection{ Ricorsivo $\subseteq $ RE} 
+
+Se $ A \subseteq \mathbb{N} $ è ricorsivo $\Leftrightarrow A, \bar{A}$ sono ricorsivamente enumerabili.
+
+\subsubsection{$A \text{ ricorsivo } \Rightarrow A \text{ RE}$}
+
+Sia $ A $ ricorsivo, allora la sua funzione caratteristica è 
+
+$$
+\mathcal{X}_A(x) = \begin{cases}
+1 &x \in A \\
+0 & x \notin A
+\end{cases}
+$$
+
+allora 
+
+$$
+SC_A = 1\Big( \mu w \overline{\text{sg}}\big( \mathcal{X}_A(x) \big) \Big)
+$$
+
+è definita per minimalizzazione di una combinazione di funzione calcolabili e pertanto è anch'essa calcolabile.
+
+Per dimostrare che anche $ \bar{A} $ è ricorsivamente enumerabile basta osservare che se $ A $ è ricorsivo anche il suo complementare $\bar{A} $ è ricorsivo e quindi per quanto dimostrato finora è anche ricorsivamente enumerabile.
+
+\subsubsection{$A, \bar{A} \text{ RE } \Rightarrow A \text{ ricorsivo}$}
+
+Dato che $ A \text{ e } \bar{A} $ sono RE e quindi $ SC_A $ e $ SC_{\bar{A}} $ sono calcolabili.
+
+Si possono quindi trovare $ e_1, e_0 $ tali che $ \phi_{e_1} = SC_A1 $ e $ \phi_{e_0} = SC_{\bar{A}} $.
+
+Intuitivamente è possibile definire un programma che esegue in parallelo entrambi i programmi sull'input $ x $ e attende che uno dei due programmi termini. Se termina prima $ e_1 $ ritorna 1, altrimenti se termina $ e_0 $ ritorna 0.
+
+Per fare questo con una macchina URM serve un $ e_0 $ leggermente diverso, ovvero tale che $ \phi_{e_0} = \overline{\text{sg}} \cdot SC_{\bar{A}} $.
+Così facendo la funzione ritorna 0 quando $ x \in \bar{A} $.
+
+La funzione calcolata dal programma che esegue i due programmi in parallelo può essere definita come:
+
+$$
+\mathcal{X}_A = \bigg( \mu w. S\Big(e_1, x, (w)_1, (w)_2\Big) \vee S\Big(e_0, x, (w)_1, (w)_2\Big) \bigg)
+$$
+
+e risulta essere calcolabile.
+
+
+
+
+
+
+
+
+
+
+
+
+
