@@ -24,3 +24,4 @@
 \contentsline {algorithm}{\numberline {29}\textsc {Angle-Left}: angolazione di un segmento rispetto ad un segmento di riferimento}{118}{algorithm.29}
 \contentsline {algorithm}{\numberline {30}\textsc {Turn-Left}: rotazione rispetto ad un segmento}{118}{algorithm.30}
 \contentsline {algorithm}{\numberline {31}\textsc {Segment-Intersect}: due segmenti si intersecano?}{119}{algorithm.31}
+\contentsline {algorithm}{\numberline {32}\textsc {Any-Segment-Intersect}: intersezioni in un insieme di segmenti}{122}{algorithm.32}
