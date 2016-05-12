@@ -1,0 +1,158 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\section{I primi problemi semplici:}\label{la-soluzione-ai-semplici-problemi}
+
+
+
+\begin{itemize}
+	\item
+	Dati due segmenti orientati con un vertice in comune, il secondo segmento è ruotato in senso orario o antiorario rispetto il primo?
+	\item
+	Seguendo il percorso dato da due segmenti orientati, per spostarmi sul secondo devo girare a sinistra o a destra?
+	\item
+	Due segmenti si intersecano?
+\end{itemize}
+
+Abbiamo però il limite che non possiamo utilizzare la divisione e le funzioni trigonometriche perché abbiamo a disposizione solo numeri interi.
+
+
+\subsection{Rotazione in senso orario o antiorario}\label{rotazione-in-senso-orario-o-antiorario}
+
+In questo caso basta calcolare il prodotto vettoriale
+
+\begin{breakablealgorithm}
+	\caption{\textsc{Angle-Left}: angolazione di un segmento rispetto ad un segmento di riferimento}
+	\begin{algorithmic}[1]
+		\Function{Angle-Left}{$p_0,p_1,p_2$}
+			\State $d = (x_1-x_0)(y_2-y_0) - (x_2-x_0)(y_1-y_0)$
+			\State \Return $d$
+		\EndFunction
+	\end{algorithmic}
+\end{breakablealgorithm}
+
+\emph{d} risulta essere maggiore di 0 se l'angolo tra i segmenti $\overrightarrow{p_0p_1}$ e $\overrightarrow{p_0p_2}$ è orientato in senso antiorario, se invece è minore di 0 l'angolo è
+ruotato in senso orario e se è uguale a 0 l'angolo è 0 oppure uno dei
+due segmenti è degenere.
+
+\subsection{Il giro del volante}\label{il-giro-del-volante}
+
+Devo girare a sinistra se tra $\overrightarrow{p_0p_1}$ e il vettore $\overrightarrow{p_0p_2}$ c'è una rotazione in senso antioraria. (Da notare che in questo caso i segmenti di interesse sono $\overrightarrow{p_0p_1}$ e $\overrightarrow{p_1p_2}$).
+
+\begin{breakablealgorithm}
+	\caption{\textsc{Turn-Left}: rotazione rispetto ad un segmento}
+	\begin{algorithmic}[1]
+		\Function{Turn-Left}{$p_0,p_1,p_2$}
+			\State $d \gets \textsc{AngleLeft}(p_0,p_1,p_2)$
+			\State \Return $d$
+		\EndFunction
+	\end{algorithmic}
+\end{breakablealgorithm}
+
+Se $d >0 $c'è una svolta a sinistra, se invece è minore di 0 la svolta è a destra e se è 0 si prosegue nella stessa direzione o si fa un'inversione ad U.
+
+\subsection{Intersezione di due segmenti}\label{intersezione-di-due-segmenti}
+
+Si vuole sapere se i due segmenti $\overline{p_1p_2}$ e $\overline{p_3p_4}$ si intersecano o meno.
+
+Ci sono due possibili casi:
+
+\begin{enumerate}
+\item
+  I due segmenti stanno sulla stessa retta (collineari). In questo caso si intersecano solo se uno dei due estremi $p_3$ o $p_4$ appartiene al segmento $\overline{p_1p_2}$ oppure uno dei due segmenti contiene l'altro.
+\item
+  I due segmenti non sono sulla stessa retta. In questo caso bisogna vedere se $p_1$ e $p_2$ stanno dalla parte opposta della retta $\overline{p_3p_4}$ e se $p_3$  e $p_4$ stanno dalla parte opposta della retta $\overline{p_1p_2}$.
+\end{enumerate}
+
+Per verifica che due segmenti siano collineari basta calcolare il prodotto vettoriale
+
+$$
+d_1 = (p_1-p_3) \times (p_4-p_3) \text{// } p_1\text{ rispetto } \overline{p_3p_4}
+$$
+
+Se uno dei due segmenti è degenere si ottiene sempre $d_1 = 0$, è necessario quindi verificare che non ci siano segmenti degeneri.
+
+$$
+d_2 = (p_2-p_3) \times (p_4-p_3) \text{// } p_2\text{ rispetto } \overline{p_3p_4}
+$$
+
+$$
+d_3 = (p_3-p_1) \times (p_2-p_1) \text{// } p_3\text{ rispetto } \overline{p_1p_2}
+$$
+
+$$
+d_4 = (p_4-p_1) \times (p_2-p_1) \text{// } p_4\text{ rispetto } \overline{p_1p_2}
+$$
+
+Se $d_1 = d_2 = 0$ o i due segmenti sono sulla stessa retta o $\overline{p_3p_4}$ è degenere. 
+Se $d_3=d_4=0$ o i due segmenti sono sulla stessa retta o $\overline{p_1p_2}$ è degenere.
+
+Basta quindi calcolare i 4 prodotti scalari e controllare se sono tutti 0. In caso affermativo si ha che i due segmenti sono collineari ed è corretto anche se entrambi i segmenti sono degeneri perché due segmenti degeneri sono anche collineari.
+
+\begin{breakablealgorithm}
+	\caption{\textsc{Segment-Intersect}: due segmenti si intersecano?}
+	\begin{algorithmic}[1]
+		\Function{Segment-Intersect}{$p_1,p_2,p_3,p_4$}
+		    \State $d_1 \gets \textsc{Angle-Left}(p_3,p_4,p_1)$
+		    \State $d_2 \gets \textsc{Angle-Left}(p_3,p_4,p_2)$
+		    \State $d_3 \gets \textsc{Angle-Left}(p_1,p_2,p_3)$
+		    \State $d_4 \gets \textsc{Angle-Left}(p_1,p_2,p_4)$
+		    \If{$d_1 = d_2 = d_3 = d_4 = 0$} \Comment{Caso con segmenti collineari}
+		        \State \Return $((x_2 - x_3)(x_1 - x_3) \leq 0 \textbf{ and } (y_2 - y_3)(y_1 - y_3)) \textbf{ or } \text{// }p_3 \text{ in } \overline{p_1p_2}$
+		        \Statex $\qquad \qquad \qquad((x_2 - x_4)(x_1 - x_4) \leq 0 \textbf{ and } (y_2 - y_4)(y_1 - y_4)) \textbf{ or } \text{// }p_4 \text{ in } \overline{p_1p_2}$
+		        \Statex $\qquad \qquad \qquad ((x_4 - x_1)(x_3 - x_1) \leq 0 \textbf{ and } (y_4 - y_1)(y_3 - y_4)) \text{ // }p_1 \text{ in } \overline{p_3p_4} $\Comment{serve perché $\overline{p_1p_2}$ potrebbe essere contenuto in $\overline{p_3p_4}$}
+		    \Else
+				\State \Return $((d_1 \leq 0 \textbf{ and } d_2 \geq 0)\textbf{ or }(d_1 \geq 0\textbf{ and }d_2 \leq 0))\textbf{ and }$
+		        \Statex $ \qquad \qquad \qquad((d_3 \leq 0 \textbf{ and } d_4 \geq 0)\textbf{ or } (d_3 \geq 0 \textbf{ and }d_4 \leq 0)) $
+		    \EndIf
+		\EndFunction
+       	\end{algorithmic}
+\end{breakablealgorithm}
+
+Nel primo caso non viene fatta la moltiplicazione tra le $x$ e le $y$ per evitare la moltiplicazione tra due aree e quindi un probabile overflow (lo stesso vale per i prodotti tra i $d_i$).
+
+Sempre nel primo caso, per verificare che un punto sia compreso tra due valori viene utilizzata una moltiplicazione, come $(x_2 - x_4)(x_1 - x_4)$ al posto del confronto diretto $x_1 \leq x4 \leq x_2$. In questo caso si ha che se il prodotto risultante è negativo $x_4$ è compreso tra i due valori, mentre se risulta positivo $x_4$ è esterno ai due valori ed infine se risulta 0, $x_4$ coincide con uno degli estremi.
+
+Nel secondo caso se $\overline{p_1p_2}$ è degenere si ha $d_3=d_4=0$ e $d_1=d_2\neq 0$ quindi viene ritornato correttamente \textsc{False} (il caso con $\overline{p_3p_4}$ è analogo).
+
+\subsection{Esercizio 1 - Calcolare l'area di un triangolo}\label{esercizio-1---calcolare-larea-di-un-triangolo}
+
+Dimostrare che l'area orientata del triangolo di vertici $p_0, p_1, p_2$ è data dalla formula
+
+$$
+A = \frac{1}{2}[(x_0 -x_1)(y_0 +y_1)+(x_1 -x_2)(y_1 +y_2)+(x_2 -x_0)(y_2 +y_0)]
+$$
+
+Verificare che $A$ è positiva se i vertici $p_0, p_1, p_2$ sono presi nel verso antiorario ed è negativa se vengono presi nel verso orario.
+
+\begin{verbatim}
+y
+^
+|     p2
+|    /  \
+|   /    \
+|  /      \ 
+| p0 ----- p1
+|
+|--------------->x
+\end{verbatim}
+
+\subsection{Esercizio 3 - Calcolare l'area di un poligono}\label{esercizio-3---calcolare-larea-di-un-poligono}
+
+Usare il risultato dell'Esercizio 1 per dimostrare per induzione su $n$ che l'area orientata di un poligono di $n$ vertici $p_0, p_1, \ldots , p_{n-1}$ che sia semplice ma non necessariamente convesso si può calcolare in tempo lineare $O(n)$ mediante la formula
+
+$$
+A = \frac{1}{2} \sum\limits_{i=1}^{n} y_i(x_{i-1} -x_{i+1})
+$$
+
+dove i vertici si intendono ordinati circolarmente in senso antiorario e
+quindi $x_{i-1} = x_{n-1}$ quando $i=0$ e $x_{i+1}=x_0$ quando $i=n-1$.
+
+\subsection{Esercizio 4}\label{esercizio-4}
+
+Da ricopiare
+
+\subsection{Esercizio 5}\label{esercizio-5}
+
+\subsection{Esercizio 6 e 7 e 8}\label{esercizio-6-e-7-e-8}

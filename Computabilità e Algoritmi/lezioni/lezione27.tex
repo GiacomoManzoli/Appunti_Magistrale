@@ -5,7 +5,7 @@
 \subsection{Codice del merge parallelo}\label{codice-del-merge-parallelo}
 
 Ci sarebbe prima il codice della ricerca binaria, ma è quella classica
-sequenziale e che ritorna l'indice dell'elemento in tempo O(log n)
+sequenziale e che ritorna l'indice dell'elemento in tempo $O(\log n)$
 
 \begin{breakablealgorithm}
 	\caption{\textsc{P-Merge}: merge di due array parallelizzato}
@@ -70,7 +70,7 @@ $$
 
 e si ottiene uno speedup quasi lineare già per $n$ maggiore di 10.
 
-\subsection{Merge sort parallelo v2}\label{merge-sort-parallelo-v2}
+\subsection{Merge Sort parallelo v2}\label{merge-sort-parallelo-v2}
 
 \begin{breakablealgorithm}
 	\caption{\textsc{P-Merge-Sort}: merge sort parallelizzato bene}
@@ -179,7 +179,7 @@ Quando entrambe le chiamate ricorsive sono terminate, viene ritornata la somma d
 	\begin{algorithmic}[1]
 \Function{P-Scan-Up}{$x,t,i,j$}
     \If {$i = j$}
-        \State \textbf{return} $ x[i]$
+        \State \Return $ x[i]$
     \EndIf
    \State $k \gets \lfloor (i+j)/2\rfloor$
    \State $t[k] \gets $ \textbf{spawn} \textsc{P-Scan-Up}$(x,t,i,k)$
@@ -255,7 +255,7 @@ Il parallelismo dell'algoritmo risulta essere $\Theta(n \log n)$ che è molto bu
 
 Ci sono varie applicazioni della geometria computazionale
 
-Noi ci concentriamo sulla spazio bi-dimensionale.
+Noi ci concentriamo sullo spazio bi-dimensionale.
 
 L'elemento alla base di tutto è il punto, che sarà caratterizzato da due coordinate, le quali saranno tipicamente dei numeri float che sono soggetti a degli errori di arrotondamento.
 
@@ -263,30 +263,51 @@ Ma c'è sempre il piano B, ovvero utilizzare le coordinate intere a 32 bit.
 
 Le nostre coordinate saranno quindi compresi tra un $-$\textsc{Maxint} e \textsc{Maxint}.
 
-C'è però un problema, tipicamente nella geometria computazionale vengono calcolate delle aree, che devono anch'esse essere contenute in un intero e quindi i valori delle coordinate devono essere compresi in un intervallo $-$\textsc{CMax} e \textsc{CMax} con $\textsc{CMax} \leq \sqrt{\textsc{Maxint}}$, quindi facendo due conti si ha $\textsc{Maxint} = 2^{31} $ e $\textsc{CMax} = 2^{15}$.
+C'è però un problema, tipicamente nella geometria computazionale vengono calcolate delle aree, che devono anch'esse essere contenute in un intero e quindi i valori delle coordinate devono essere compresi in un intervallo $-$\textsc{CMax} e \textsc{CMax} con $\textsc{CMax} \leq \sqrt{\textsc{Maxint}} /2$, quindi facendo due conti si ha $\textsc{Maxint} = 2^{31} $ e $\textsc{CMax} = 2^{15}$.
 
 E' poco ma sufficientemente buono, perché su uno schermo di un metro per un metro si ottengono 32 punti per ogni millimetro.
 
 Una volta stabilito come rappresentare i punti si possono rappresentare:
 
 \begin{itemize}
-\item
-  un segmento, utilizzando due punti
-\item
-  un cerchio, con il centro e il raggio
-\item
-  un poligono, con una serie di punti che rappresentano i vertici.
+\item   un segmento, utilizzando due punti
+\item   un cerchio, con il centro e il raggio
+\item   un poligono, con una serie di punti che rappresentano i vertici.
 \end{itemize}
 
-I primi problemi semplici:
+Il vettore \emph{v} di coordinate $(v_x, v_y)$ viene rappresentato con uno qualsiasi dei segmenti orientati $\overrightarrow{pq}$ tali
+che $v_x = x_q-x_p$ e $v_y = y_q - y_p$.
 
-\begin{itemize}
-\item
-  Dati due segmenti orientati con un vertice in comune, il secondo segmento è ruotato in senso orario o antiorario rispetto il primo?
-\item
-  Seguendo il percorso dato da due segmenti orientati, per spostarmi sul secondo devo girare a sinistra o a destra?
-\item
-  Due segmenti si intersecano?
-\end{itemize}
+Talvolta con lo stesso simbolo può essere rappresentato sia il punto di coordinate $(x_p,y_p)$ che il \textbf{vettore posizione} $(x_p,y_p)$ rappresentato dal segmento orientato $\overrightarrow{op}$, dove \textit{o} è l'origine degli assi.
 
-Abbiamo però il limite che non possiamo utilizzare la divisione e le funzioni trigonometriche perché abbiamo a disposizione solo numeri interi.
+Il \textbf{prodotto vettoriale} di due vettori $v_1 = (x_1,y_1)$ e $v_2 = (x_2,y_2)$ è definito come:
+
+$$
+v_1 \times v_2 = (x_1+x_2, y_1+y_2)
+$$
+
+ovvero l'area orientata del parallelogramma di vertici $o, p_1, q,p_2$, l'orientamento è positivo se l'angolo da $v_1$ a $v_2$ è orientato in
+senso antiorario, con segno negativo altrimenti.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{./notes/immagini/l27-fig1.png}
+	\caption{L'area orientata del parallelogramma individuato dai due vettori $v_1$ e $v_2$.}
+\end{figure}
+
+L'area orientata può essere calcolata come il determinate della matrice
+
+$$
+v_1 \times v_2 = \det \: \begin{bmatrix}
+x_1 & x_2 \\
+y_1 & y_2
+\end{bmatrix} = x_1 y_2 - x_2 y_1
+$$
+
+questo perché l'area del trapezio è uguale a
+
+$$
+A = \frac{x_2y_2}{2} + x_1\frac{y_2+(y_1+y_2)}{2} - \frac{x_2y_2}{2} - x_2\frac{y_2+ (y_1+y_2)}{2} = x_1y_2 - x_2y_1
+$$
+
+Se cambio l'ordine dei punti, il segno dell'area cambia.
