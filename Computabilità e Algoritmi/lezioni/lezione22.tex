@@ -156,9 +156,35 @@ L'esecuzione di una dell'algoritmo quindi procede sempre secondo un determinato 
 	\item Termina non appena viene eseguito il primo caso 3.
 \end{enumerate}
 
+Sia $j_{i-1}$ l'ultima estensione che usa i casi 1 o 2 nella fase $(i-1)$-esima. Siccome ogni applicazione del caso 2 crea una nuova foglia, alle prime $j_{i-1}$ estensione della fase successiva si applica il caso 1, per quanto precedentemente osservato.
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.9\textwidth]{./notes/immagini/l22-fig8.png}
+\end{figure}
 
+Dunque per la fase successiva si avrà $j_i \geq j_{i-1}$ e questo ci suggerisce di cercare un trucco che faccia evitare, nella fase successiva, le prime $j_{i-1}$ estensioni che utilizzano il caso 1.
 
+Si può osservare che il caso 1 si limita ad aggiungere all'etichetta dell'arco che termina nella foglia di etichetta $S[j,i]$ il carattere $S[i+1]$. Quando viene creata una foglia con il caso 2 nella fase $i$-esima all'arco che termina nella foglia viene assegnato solamente il carattere $S[i+1]$ come etichetta. Da quel momento in poi l'etichetta verrà via via allungata di un carattere per ogni fase, fino a diventare $S[i+1,n]$.
 
+Si può quindi assegnare, alla creazione della foglia come caso 2, l'etichetta $S[i+1,n]$, sempre se la stringa è nota a priori. Se questo non lo è come coppia che identifica l'etichetta è possibile utilizzare il valore $(i+1,e)$.
 
+Così facendo le prime $j_{i-1}$ estensioni nella fase $i$-esima, non richiedono alcuna operazione e possono essere saltate, iniziando all'estensione $(j_{i-1}+1)$-esima. La fase $i$-esima inizia quindi con l'estensione $j = i_{j-1}+1$ e termina con la prima estensione che usa il caso 3 oppure quando tutti i suffissi sono stati estesi.
 
+Il valore per la fase successiva risulta essere $j_i = j-1$.
+
+\paragraph{Dimostrazione del tempo di esecuzione costante}
+
+Se $S[j*, i-1]$ è l'ultimo suffisso esteso nella fase $(i-1)$-esima, la fase $i$-esiama inizia con l'estensione del suffisso $S[j*,i]$. Dunque soltanto il suffisso $j*$-esimo viene esteso sia nella fase $(i-1)$-esima che nella fase $i$-esima.
+
+Siccome gli indici $j$ dei suffissi sono tutti minori o uguali ad $n$ e le fasi sono $n$, in totale vengono eseguite al più $2n$ estensioni durante tutta l'esecuzione dell'algoritmo, con ogni estensione che richiede un tempo costante più un tempo proporzionale al numero di archi discesi nella ricerca di $\gamma$, che è un $O(n)$.
+
+Siccome la fase $i$-esima inizia con il suffisso $j*$-esimo in cui è avvenuta l'ultima estensione della fase precedente, il libello corrente non cambia passando da una fase alla successiva (anche nel caso in cui $j_{i-1}=i$, il livello corrente quando si è esteso l'ultimo suffisso $S[i,i-1] = \epsilon$ nella fase $(i-1)$-esima era 0, uguale al livello corrente quando si estende il primo suffisso $S[i+1,i] = \epsilon$ nella fase $i$-esima).
+
+Dunque il fatto che il livello corrente non diminuisca mai più di due volte vale sia all'interno di una singola fase che per tutto l'algoritmo e siccome il livello rimane sempre compreso tra 0 e $n$, il numero di archi discesi durante tutta l'esecuzione dell'algoritmo deve essere minore o uguale a $3n$.
+
+Siccome durante tutta l'esecuzione dell'algoritmo vengono eseguite al più $2n$ estensioni ciascuna delle quali richiede un tempo costante più un tempo porporzionale agli archi discesi e il numero totale di archi discri + mionre o uguale a $3n$ si può concludere che l'algoritmo richiede un tempo $O(n)$.
+
+Se la lunghezza della stringa non è nota a priori, una volta completata l'esecuzione è necessario andare a correggere le etichette delle foglie.
+
+L'algoritmo di Ukkonen quindi, costruisce on-line l'albero dei suffissi di una stringa di lunghezza $n$ in $O(n)$.
