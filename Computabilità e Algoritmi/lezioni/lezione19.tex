@@ -101,7 +101,7 @@ Per evitare questo problema è necessario aggiungere un carattere sentinella all
 
 Nell'esempio \emph{S=dabdac} è \emph{c} che fa da sentinella, se non ci fosse non sarebbe possibile costruire l'albero.
 
-L'\textbf{etichetta di un cammino} è la concatenazione delle etichette degli archi del cammino, mentre l'etichetta di un nodo \emph{u} è data dall'etichetta della cammino dalla radice al nodo.
+L'\textbf{etichetta di un cammino} è la concatenazione delle etichette degli archi del cammino, mentre l'etichetta di un nodo \emph{u} è data dall'etichetta del cammino dalla radice al nodo.
 
 Se l'etichetta di un arco $ (u,v) $ tra due noti interni ha lunghezza \textit{k} maggiore di 1, l'arco è in realtà diviso in \textit{k} parti, una per ogni carattere dell'etichetta, mediante $ k-1 $ \textbf{nodi impliciti} le cui etichette sono la concatenazione dell'etichetta di \textit{u} con i caratteri dell'etichetta dell'arco $ (u,v) $ che precedono il nodo stesso.
 
@@ -114,7 +114,7 @@ Se l'etichetta di un arco $ (u,v) $ tra due noti interni ha lunghezza \textit{k}
 		\item Si esauriscono i caratteri del pattern e si passa al passo successivo
 		\item Ci sono ancora dei caratteri del pattern ma non è possibile proseguire il cammino, in questo caso non ci sono occorrenze del pattern nel testo e l'algoritmo può terminare.
 	\end{enumerate}
-	\item Se si arrriva alla fine del pattern, allora questo è uguale all'etichetta del nodo \textit{u} a cui si è arrivati, indipendentemente dal fatto che \textit{u} sia un nodo implicito o meno. Il pattern \textit{P} è quindi prefisso di tutti i associati alle foglie del sottoalbero radicato in \textit{u}. Le posizioni d'inizio di questi suffissi sono quindi tutte e sole le posizioni in cui \textit{P} occorre in \textit{T} e dal momento che queste posizioni sono memorizzate nelle foglie del sottoalbero, è sufficiente esplorarlo fino alle foglie per risalire alle posizioni di occorrenza del pattern.
+	\item Se si arriva alla fine del pattern, allora questo è uguale all'etichetta del nodo \textit{u} a cui si è arrivati, indipendentemente dal fatto che \textit{u} sia un nodo implicito o meno. Il pattern \textit{P} è quindi prefisso di tutti i suffissi associati alle foglie del sotto-albero radicato in \textit{u}. Le posizioni d'inizio di questi suffissi sono quindi tutte e sole le posizioni in cui \textit{P} occorre in \textit{T} e dal momento che queste posizioni sono memorizzate nelle foglie del sotto-albero, è sufficiente esplorarlo fino alle foglie per risalire alle posizioni di occorrenza del pattern.
 \end{enumerate}
 
 \subsubsection{Complessità del matching esatto}\label{complessituxe0-del-matching-esatto}
@@ -129,8 +129,8 @@ Durante il secondo passo, per ogni carattere del pattern viene fatto
 
 In ogni caso il numero di confronti è minore o uguale di una costante e quindi il passo 2 ha complessità $ O(m) $.
 
-Il terzo passo richiede tempo proporzionale al numero di nodi del sottoalbero radicato in \textit{u}.
-Se nel testo ci sono \textit{k} occorrenze del pattern, questo sottoalbero ha esattamente \textit{k} foglie e siccome ogni nodo interno ha almeno due archi uscenti, il numero di noti interni è $ \leq k-1 $, quindi il terzo passo richiede $ O(k) $.
+Il terzo passo richiede tempo proporzionale al numero di nodi del sotto-albero radicato in \textit{u}.
+Se nel testo ci sono \textit{k} occorrenze del pattern, questo sotto-albero ha esattamente \textit{k} foglie e siccome ogni nodo interno ha almeno due archi uscenti, il numero di nodi interni è $ \leq k-1 $, quindi il terzo passo richiede $ O(k) $.
 
 Siccome $ k \leq n $, il tempo totale richiesto è $ O(n+m) $, come per gli altri algoritmi, con la differenza che il carico di lavoro è sbilanciato verso la preelaborazione e non verso la ricerca (risulta più conveniente cercare più pattern nello stesso testo).
 
@@ -215,3 +215,4 @@ Dopo aver esteso tutti i suffissi di $ S[1,i] $ l'albero contiene tutti i suffis
 	\caption{Estensione dell'albero dei suffissi implicito per la stringa $ adabd $ quando si aggiunge alla stringa il carattere $ b $. I primi 4 suffissi vengono estesi con il caso 1, il quinto viene esteso con il caso 2 e il suffisso nullo viene esteso per il caso 3.}
 \end{figure}
 
+Tuttavia con questa implementazione si riesce a calcolare in $ O(i^2) $ l'albero $ I_{i+1} $ a partire da $ I_i $, portando ad una complessità totale di $ O(n^3) $ che è peggiore di quella dell'algoritmo naive.

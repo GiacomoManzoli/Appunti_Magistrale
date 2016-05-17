@@ -1,0 +1,161 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+%\section{Teorema di Rice Shapiro}
+
+\subsection{Dimostrazione}
+
+La dimostrazione è qualcosa del tipo
+
+\begin{enumerate}
+	\item $\exists f \: f \notin \mathcal{A} \text{ e } \exists \theta \subseteq f \: \theta \in \mathcal{A} \Rightarrow A$ non è RE
+	\item $\exists f \: f \in \mathcal{A} \text{ e } \forall \theta \subseteq f \: \theta \notin \mathcal{A} \Rightarrow A$ non è RE
+\end{enumerate}
+	
+\subsubsection{Dimostrazione caso 1}
+
+ $$
+ \exists f \: f \notin \mathcal{A} \text{ e } \exists \theta \subseteq f \: \theta \in \mathcal{A} \Rightarrow A \text{ non è RE }
+ $$
+ 
+ Sia $f \notin \mathcal{A}$ e sia $\theta \subseteq f \: \theta \in \mathcal{A}$.
+ 
+ Per provare che $A$ non è RE possiamo provare a fare la riduzione $\overline{K} \leq_m A$. 
+ 
+ Definiamo quindi 
+ 
+\begin{align*}
+ g(x,y) &= \begin{cases}
+ \theta(y) x \in \overline{K} \\
+ f(y) x \in K
+ \end{cases} \\
+  &= \begin{cases}
+ \uparrow x \in \overline{K} \text{ e } y \notin dom(\theta)\\
+ f(y) x \in \overline{k} \text{ e } y \in dom(\theta) \\
+ f(y) x \in K
+ \end{cases} \\
+ &=\begin{cases}
+  f(y) x \in K \text{ oppure } y \in dom(\theta) \\
+  \uparrow \text{ altrimenti}
+ \end{cases}
+ \end{align*}
+ 
+$x \in K$ è semidecidibile, quindi il predicato $Q(x,y) \equiv \text{``}x \in K\text{''}\vee \text{``}y \in dom(\theta)\text{''}$ è semidecidibile.
+ 
+Si può quindi definire $g$ come:
+
+$$
+g(x,y) = f(y) \cdot SC_Q(x,y)
+$$
+ 
+ e dato che sia la funzione caratteristica, sia $f$ sono calcolabili, anche $g$ è calcolabile.
+ 
+ Essendo calcolabile, per il teorema SMN $ g(x,y) = \phi_{S(x)}(y)$ per $S : \mathbb{N} \rightarrow \mathbb{N}$. $S$ è quindi una funzione di riduzione per $\overline{K} \leq_m A$:
+ 
+ \begin{itemize}
+ 	\item $x \in \overline{K}$: $\phi_{S(x)}(y) = g(x,y) = \begin{cases}
+ 	 f(y) x \in K \text{ oppure } y \in dom(\theta) \\
+ 	 \uparrow \text{ altrimenti}
+ 	\end{cases} = \theta(y) \forall y \Rightarrow \phi_{S(x)} = \theta$ ed essendo $A$ saturo, $S(x) \in A$
+ 	\item $x \in K$:  $\phi_{S(x)}(y) = g(x,y) = f(y) \forall y \Rightarrow \phi_{S(x)} = f \notin \mathcal{A} \Rightarrow S(x) \notin A$
+ \end{itemize}
+ 
+ Si ha quindi che $\overline{K} \leq_m A$ e quindi $A$ non è ricorsivamente enumerabile.
+ 
+ \subsubsection{Dimostrazione caso 2}
+ 
+$$
+\exists f \: f \in \mathcal{A} \text{ e } \forall \theta \subseteq f \: \theta \notin \mathcal{A} \Rightarrow A \text{ non è RE}
+$$
+ 
+Anche in questo caso dimostriamo che $\overline{K} \leq_m A$.
+
+\begin{align*}
+g(x,y) &= \begin{cases}
+f(y) \text{ se } \neg H(x,x,y) \\
+\uparrow \text{ altrimenti}
+\end{cases} \\
+&= f(y) \cdot 1(\mu w.\mathcal{X}_H(x,x,y))
+\end{align*}
+
+$g$ è calcolabile e quindi per il teorema SMN esiste $S: \mathbb{N} \rightarrow \mathbb{N} $ calcolabile e totale, tale che $\phi_{S(x)}(y) = g(x,y)$.
+
+$S$ è la funzione di riduzione di $\overline{K} \leq_m A$:
+
+\begin{itemize}
+	\item $x \in \overline{K}$: $\forall y \neg H(x,x,y) \Rightarrow \phi_{S(x)}(y) = f(y) \Rightarrow \phi_{S(x)} = f \in \mathcal{A} \Rightarrow S(x) \in A$
+	\item $x \in K$: $\exists y_0 \text{ tale che } H(x,x,y_0)$ prendo il minimo $y_0$ tale che $\neg H(x,x,y) \forall y < y_0$ e $H(x,x,y) \forall y \geq y_0$. Si ha quindi che $\phi_{S(x)}(y) = g(x,y) = \begin{cases}
+	f(y) y < y_0 \\
+	\uparrow \text{ altrimenti}
+	\end{cases}$. Essendo $\phi_{S(x)} \subseteq f$ ed è finito ($dom(\phi_{S(x)}) \subseteq [0,y_0[$) e quindi $\phi_{S(x)} \notin \mathcal{A} \Rightarrow S(x) \notin A$.
+\end{itemize}
+
+\subsection{Applicazioni del teorema}
+
+$ A= \{ x | \phi_x \text{ totale} \}$ e $\mathcal{A} = \{ f | f \text{totale} \}$.
+
+La funzione $id \in \mathcal{A}$ e per ogni $\theta \subseteq id, \theta \text{ finita }, \theta \text{ non è totale, quindi } \theta \notin \mathcal{A}$. Per il teorema di Rice Shapiro $A$ non è RE.
+
+Per dimostrare che $\overline{A}$ non è RE, si può considerare $\mathcal{A} = \{ f | f \text{ non totale} \}$, utilizzando RS si riesce a trovare $\emptyset \in \overline{A}$ e $\emptyset \subseteq id$ con $id \notin \overline{\mathcal{A}}$.
+
+$ U = \{ x | \phi_x = 1 \}$ e $\mathcal{U} = \{ 1 \}$.
+
+$1 \in \mathcal{U} $ e $\forall \theta \subseteq 1$ $\theta \notin \mathcal{U}$, quindi $U$ non è RE per Rice Shapiro.
+
+Ma non vale nel caso generale $\forall f \: A_f = \{ x | \phi_x = f \}$, $\mathcal{A}_f = \{ f \}$.
+
+Se $f \notin \mathcal{C}$, $A_f = \emptyset$ e quindi $A_f$ è ricorsivo.
+
+Se invece $f \in \mathcal{C}$, bisogna distinguere i vari casi.
+
+\begin{itemize}
+	\item $f = \emptyset$: $\mathcal{A}_f = \{ x | \phi_x = \emptyset \} \neq \emptyset \neq \mathbb{N}$ e quindi $A_f$ non è ricorsivo per il teorema di Rice. $\overline{A}_f = \{ x | \phi_x \neq \emptyset \}$ è RE perché la sua funzione caratteristica è $SC_{\overline{A}_f}(x) = 1\Big( \mu w. H(x, (w)_1, (w)_2) \Big)$. Così facendo se $x \in \overline{A}_f$ allora $W_x \neq \emptyset$, sia $y \in W_x$ ovvero $\phi_x(y) \downarrow \Rightarrow H(x,y,t) $ per qualche $t$, segue che $\mu w. H(x,(w)_1 , (w)_2) \downarrow$ e quindi la funzione caratteristica è corretta. Il tutto vale anche in $\Leftrightarrow $. Ricapitolando $A_f$ non è ricorsivo, $\overline{A}_f$ è ricorsivamente enumerabile e pertanto $A_f$ non è RE, perché altrimenti $A_f$ sarebbe ricorsivo.
+	\item $f \neq \emptyset $ e finita:  $A_f$ non è RE, $f \in \mathcal{A}_f = \{ f \}$ considero $g(x) = \begin{cases}
+	f(x) x \in dom(f) \\
+	1 \text{ altrimenti}
+	\end{cases}$, $g \notin \mathcal{A}_f$ e quindi per Rice Shapiro $A_f$ non è RE.
+	\item $f$ non finita: $f \in \mathcal{A}_f = \{ f \}$ ma $\forall \theta \subseteq f$ $\theta \notin A_f$ e quindi sempre per Rice Shapiro $A_f$ non è RE.
+\end{itemize} 
+
+In entrambe i casi $\emptyset \in \overline{\mathcal{A}}_f $ e $\emptyset \subseteq f$ e $f \notin \overline{\mathcal{A}}_f$ e quindi per Rice Shapiro $\overline{A}_f$ non è RE.
+
+Ricapitolando:
+\begin{itemize}
+	\item $f \notin \mathcal{C}$: $A_f$ e $\overline{A}_f$ sono ricorsivi ($\emptyset , \mathbb{N}$)
+	\item $f \in \mathcal{C}$ \begin{itemize}
+		\item $A_f$ non è RE.
+		\item $\overline{A}_f$ è RE se $f = \emptyset$, non RE altrimenti.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Rice Shapiro non è un se e solo se}
+
+$\mathcal{A} \subseteq \mathcal{C}$, $A = \{ x | \phi_x \in \mathcal{A} \}$.
+
+Sappiamo che se $A$ è RE allora $\forall f \big( f \in \mathcal{A} \Leftrightarrow \exists \theta \subseteq f \:\: \theta \in \mathcal{A} \big)$ ma l'altro verso non è sempre vero.
+
+$\mathcal{A} = \{ f \in \mathcal{C} | dom(f) \cap \overline{K} = \emptyset \}$.
+
+Se $f \in \mathcal{A} \Rightarrow dom(f) \cap \overline{K} \neq \emptyset$, sia $x_0 \in dom(f) \cap \overline{K}$, allora $\theta(x_0) = \begin{cases}
+f(x) \text{ se } x = x_0 \\
+\uparrow \text{ altrimenti}
+\end{cases}$
+Per costruzione $\theta \subseteq f$ e $x_0 \in dom(f) \cap \overline{K} \neq \emptyset$, quindi $\theta \in \mathcal{A}$.
+
+Viceversa se $\theta \subseteq f \: \: \theta \in \mathcal{A}$, $dom(f) \cap \overline{K} \neq \emptyset $ e $dom(\theta) \subseteq dom(f)$ e quindi $dom(\theta) \cap \overline{K} \subseteq dom(f) \cap \overline{K}$ e quindi $dom(f) \cap \overline{K} \neq \emptyset$ e $f \in \mathcal{A}$.
+
+Abbiamo quindi dimostrato che la parte è unitaria, adesso osserviamo che $A$ non è RE.
+
+Dato $x_0$, $\theta(x) = \begin{cases}
+1 \text{ se }x = x_0 \\
+\uparrow \text{altrimenti}
+\end{cases}$, $\theta \in \mathcal{A} \Leftrightarrow x_0 \in \overline{K}$.
+
+Questo può essere formalizzato considerando $g(x,y) = \begin{cases}
+1 \text{ se } x= y\\
+\uparrow \text{ altrimenti}
+\end{cases}$ che è calcolabile con $1\big( \mu z. |x-y|\big)$ e quindi per il teorema SMN esiste $S:\mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che $g(x,y) = \phi_{S(x)}(y)$ e che sia funzione di riduzione per $\overline{K} \leq_m A$, perché $dom(\phi_{S(x)}) = \{x\}$ e quindi se $x \in \overline{K} \Rightarrow dom(\phi_{S(x)}) \cap \overline{K} \neq \emptyset \Rightarrow S(x) \in A$. Analogamente se $x \notin \overline{K}$ $dom(\phi_{S(x)}) \cap \overline{K} = \emptyset \Rightarrow x \notin A$.
+
+Abbiamo quindi un contro esempio che mostra che $A$ non è RE, anche se valgono le condizioni di Rice Shapiro.

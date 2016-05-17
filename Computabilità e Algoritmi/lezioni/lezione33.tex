@@ -1,0 +1,208 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+\subsection{L'insieme $K$}
+
+$$ 
+K= \{x | x \in W_x \} = \{ x | \phi_x(x) \downarrow \}
+$$
+
+è ricorsivamente enumerabile anche se non è ricorsivo perché 
+
+$$
+SC_K(x) = \begin{cases}
+1 x \in K \\
+\uparrow \text{ altrimenti}
+\end{cases} = \begin{cases}
+1 \phi_x(x)\downarrow \\
+\uparrow \: \text{altrimenti}
+\end{cases} = 1(\phi_x(x))
+$$
+
+che può essere calcolata utilizzando la funzione universale.
+
+Banalmente $\overline{K}$ non è ricorsivamente enumerabile perché se lo fosse, $K$ sarebbe ricorsivo e sappiamo che non lo è.
+
+\subsection{Teorema di struttura dei predicati semidecidibili}
+
+Sia $P(\vec{x})$ un predicato $k$-ario, $P(\vec{x})$ è semidecidibile se e sole se esiste $Q(t,\vec{x})$ decidibili tale che $P(\vec{x}) \equiv \exists t Q(t,\vec{x})$.
+
+Ovvero il predicato $P$ è una generalizzazione di un predicato decidibile che viene calcolato su più punti.
+
+In generale, quantificare esistenzialmente trasforma un predicato decidibile in uno semidecidibile.
+
+\subsubsection{Dimostrazione}
+
+Supponiamo che $P(\vec{x}) \equiv Q(t,\vec{x})$ con $Q$ decidibile. La funzione caratteristica di $P$ non farà altro che cercare la un $t$ utilizzando una minimalizzazione illimitata.
+
+$$
+SC_P(\vec{x}) = \begin{cases}
+1 \text{ se } P(\vec{x}) \\
+\uparrow \text{ altrimenti} 
+\end{cases} = 1 \big(\mu t. \text{``}Q(t,\vec{x})\text{''} \big) = 1\big( \mu t . |\mathcal{X}_Q(t,\vec{x})  - 1| \big)
+$$
+
+$SC_P$ è calcolabile perché $\mathcal{X}_Q$ è calcolabile per ipotesi e quindi $P\vec{x}$ è semidecidibile.
+
+Viceversa, sia $P(\vec{x})$ semidecidibile, allora anche $SC_P(\vec{x})$ è calcolabile, ovvero $SC_P = \phi_e$ per qualche $e \in \mathbb{N}$.
+
+Il predicato $P(\vec{x})$ vale se e solo se $SC_P(\vec{x}) = \phi_e(\vec{x}) = 1 \Leftrightarrow \phi_e(\vec{x})\downarrow \Leftrightarrow \exists t . H(e, \vec{x}, t)$, dove $H$ è la funzione che ritorna 1 se la macchina $e$ termina in $t$ passi sull'input $\vec{x}$ che sappiamo essere decidibile.
+
+Indicando con $Q(t,\vec{x}) \equiv H^{(k)}(e, \vec{x},t)$ decidibile e $P(\vec{x}) \equiv \exists t Q(t,\vec{x})$.
+
+\subsection{Chiusura per quantificazione esistenziale (teorema di proiezione)}
+
+La classe degli insiemi ricorsivamente enumerabili è chiusa rispetto la quantificazione esistenziale.
+
+Dato $P(x,\vec{y}) \subseteq \mathbb{N}^{k+1}$ semidecidibile, allora anche $P'(\vec{y}) \equiv \exists x. P(x,\vec{y})$ è semidecidibile.
+
+\subsubsection{Dimostrazione}
+
+Per ipotesi $P(x,\vec{y})$ è semidecidibile e quindi per il teorema di struttura può essere espresso come
+
+$$
+P(x,\vec{y}) = \exists t . Q(t,x, \vec{y})
+$$
+
+ con $Q$ decidibile e utilizzando ciò è possibile definire:
+ 
+ $$
+ P'(x,\vec{y}) \equiv \exists x.\exists t . Q(t,x, \vec{y}) \equiv \exists w . \underbrace{Q((w)_1, (w)_2, \vec{y})}_{Q'}
+ $$
+ 
+ con $Q'(w,\vec{y}) \equiv Q((w)_1, (w)_2, \vec{y})$, che ha come funzione caratteristica $\mathcal{X}_{Q'} = \mathcal{X}_Q((w)_1, (w)_2, \vec{y})$ calcolabile.
+ 
+ Si ha quindi che $Q'$ è decidibile e quindi per il teorema di struttura $P'(\vec{y})$ è semidecidibile.
+ 
+ \subsection{Chiusura per and e or}
+ 
+ Siano $P_1(\vec{x})$ e $P_2(\vec{x})$ semidecidibili, allora:
+ 
+ \begin{enumerate}
+ 	\item $P_1(\vec{x}) \vee P_2(\vec{x})$
+ 	\item $P_1(\vec{x}) \wedge P_2(\vec{x})$
+ \end{enumerate}
+ 
+ sono semidecidibile.
+ 
+ \subsubsection{Dimostrazione}
+ 
+ Per il teorema di struttura possiamo vedere i due predicati come la quantificazione esistenziale di due predicati $Q_1$ e $Q_2$ decidibili.
+ 
+ Si ha quindi che i due predicati possono essere visti come
+ 
+ \begin{enumerate}
+	 \item $P_1(\vec{x}) \vee P_2(\vec{x}) = \exists t Q_1(t,\vec{x}) \vee \exists t Q_2(t,\vec{x}) = \exists t ( Q_1(t,\vec{x}) \vee Q_2(t,\vec{x}))$
+	 \item  $P_1(\vec{x}) \wedge P_2(\vec{x}) = \exists t Q_1(t,\vec{x}) \wedge \exists t Q_2(t,\vec{x}) = \exists w ( Q_1((w)_1,\vec{x}) \wedge Q_2((w)_2,\vec{x}))$
+ \end{enumerate}
+ 
+ Siccome i predicati $Q_1$ e $Q_2$ sono decidibili, anche le loro congiunzioni/disgiunzioni sono decidibili e quindi, sempre per il teorema di struttura, la congiunzione e la disgiunzione di predicati semidecidibili è semidecidibile.
+ 
+ \subsection{La quantificazione universale}
+ 
+ La quantificazione universale è rognosa da trattare perché anche un predicato decidibile, se viene quantificato universalmente può diventare non semidecidibile.
+ 
+ Intuitivamente questo è vero perché risulta indefinito andare a testare un predicato su infiniti valori.
+ 
+ Ad esempio $Q(t,x) \equiv \neg H(x,x,t)$ è decidibile, ma $Q'(x) \equiv \forall t . Q(t,x) \equiv \phi_x(x) \uparrow \equiv x \in \overline{K}$ che non è neanche semidecidibile.
+ 
+ Si ha anche che $x \in K$ è semidecidibile ma $\neg (x \in K) \equiv x \in \overline{K}$ non semidecidibile. 
+ 
+ \subsection{Riducibilità per gli insiemi RE}
+ 
+ Dati due insiemi $A,B \subseteq \mathbb{N}$ e $A \leq_m B$
+ 
+ \begin{enumerate}
+ 	\item se $B$ è RE $\Rightarrow A$ è RE
+ 	\item  se $A$ non è RE $\Rightarrow B$ non è RE 
+ \end{enumerate}
+ 
+ Questo può essere utilizzato per dimostrare che $A$ è ricorsivamente enumerabile, con la riduzione $A \leq_m K$ oppure che $A$ non è ricorsivamente enumerabile $\overline{K} \leq_m A$.
+ 
+ \subsubsection{Dimostrazione}
+ 
+Per il primo punto: sia $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale e $x \in A \Leftrightarrow f(x) \in B$ per riduzione, allora 
+
+$$
+SC_A(x) = SC_B(f(x))
+$$
+
+è calcolabile per composizione di funzioni calcolabili e quindi $A$ è RE.
+
+L'altro caso è analogo.
+
+\subsection{Perché RE? (Teorema di etimologia)}
+
+Da dove deriva il nome ricorsivamente enumerabili?
+
+L'enumerabile deriva dal fatto che esiste una funzione $f : \mathbb{N} \rightarrow A$ suriettiva che equivale a dire che $f : \mathbb{N} \rightarrow \mathbb{N}$, totale e tale che $cod(f) = A$.
+
+Il ricorsivo invece richiama il fatto che l'enumerazione può essere fatta con una funzione calcolabile.
+
+Si ha quindi che l'insieme degli insiemi ricorsivamente enumerabili è effettivamente ricorsivamente enumerabile.
+
+\subsubsection{Dimostrazione}
+
+Sia $A \subseteq \mathbb{N}$, $A$ è RE se e solo se $A = \emptyset $ oppure esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile, totale e tale che $A = cod(f)$.
+
+\paragraph{$\Rightarrow$}
+
+Sia $A$ RE.
+
+Se $A = \emptyset$ il teorema è trivialmente vero.
+
+Se $A \neq \emptyset$, sia $a_0 \in A$ fissato e sia $e$ un programma tale che $\phi_e = SC_A$.
+
+Il programma \textit{e} può essere modificato in modo che possa eseguire al massimo $t$ passi e che ritorni $x$ se $x \in A$ e riesce a deciderlo in massimo $t$ passi, altrimenti ritorna $a_0$. Si ha quindi che $\phi_{e'}$ ha come codominio $A$ ed è totale.
+
+Più formalmente
+
+$$
+f(w) = \begin{cases}
+(w)_1 \text{ se } H(e, (w)_1, (w)_2) \\
+a_0 \text{ altrimenti}
+\end{cases} = (w)_1 \mathcal{X}_H(e, (w)_1, (w)_2) + a_0 \: | \:1 - \mathcal{X}_H(e, (w)_1, (w)_2)\:|
+$$ 
+
+$f$ è totale perché è sempre definita ed è calcolabile perché è la composizione di funzioni calcolabili.
+
+Inoltre, $A = cod(f)$ perché se $x \in A \Rightarrow \phi_e(x) = SC_A(x) = 1$ e quindi esiste un numero finito di passi $t$ entro i quali l'esecuzione di $e$ termina. Sia $w \in \mathbb{N}$ tale che $(w)_1 = x$ e $(w)_2 = t$, si ha che $f(w) = x$ e che $x \in cod(f)$.
+$w$ esiste e ce ne sono possibilmente infiniti, perché basta un numero naturale tale che $w = 2^x \cdot 3^t \cdot \ldots $
+
+Viceversa se $z \in cod(f)$, $z = f(w)$ per un qualche $w \in \mathbb{N}$. Ci sono quindi due possibilità:
+
+\begin{enumerate}
+	\item $f(w) = a_0 \in A$
+	\item $f(w) = (w)_1 \rightsquigarrow H(e, (w)_1, (w)_2) \Rightarrow \phi_e((w)_1) \downarrow \Rightarrow SC_A((w)_1) = 1$ e quindi $z = (w)_1 \in A$.
+\end{enumerate}
+
+\paragraph{$\Leftarrow$}
+
+Se $A = \emptyset$, $A$ è ricorsivo e quindi è anche RE.
+
+Se $A = cod(f)$ con $f$ calcolabile e totale.
+
+$$
+SC_A(x) = 1 \big( \mu w. |f(w) - x| \big)
+$$
+
+definita per composizione di funzioni calcolabili e quindi è calcolabile il che implica che $A$ è RE.
+
+\section{Teorema di Rice-Shapiro}
+
+Le proprietà del comportamento (funzione calcolata) dei programmi possono essere semidecidibili se sono sono finitarie ovvero dipendono da un numero finito di argomenti.
+
+Ad esempio ``\textit{la funzione termina su 5}'' oppure ``\textit{la funzione termina in un punto}'' sono semidecidibili.
+
+\textbf{Funzione finita}: $\theta : \mathbb{N}  \rightarrow \mathbb{N}$ tale che $dom(\theta)$ è finito, ovvero è una funzione definita solamente su un insieme finito di elementi.
+
+\textbf{Pezzo di una funzione}: date due funzioni $f,g : \mathbb{N} \rightarrow \mathbb{N}$, \textit{f} è un pezzo di $g$, $f \subseteq g$ se $\forall x . f(x) \downarrow \Rightarrow g(x) \downarrow \text{ e } f(x) = g(x) $.
+
+Più formalmente:
+
+Sia $\mathcal{A} \subseteq \mathcal{C}$ e sia $A = \{ x | \phi_x \in \mathcal{A} \}$.
+
+Se $ A $ è ricorsivamente enumerabile, allora $\forall f \in \mathcal{C} . \Big( f \in \mathcal{A} \Leftrightarrow \exists \theta \subseteq f \in \mathcal{A} \Big)$.
+

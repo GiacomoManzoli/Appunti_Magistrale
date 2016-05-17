@@ -18,7 +18,7 @@ Per poter enumerare e quindi codificare dei programmi è necessario prima defini
 	\item $ \tau : \bigcup\limits_{k \geq 1}\mathbb{N}^k \rightarrow \mathbb{N}$
 \end{enumerate}
 
-\subsubsection{$1. \Pi $}
+\subsubsection{$1. \: \Pi $}
 
 Già osservata precedentemente, ovvero è la codifica delle coppie:
 
@@ -27,7 +27,7 @@ Già osservata precedentemente, ovvero è la codifica delle coppie:
 \Pi^{-1}(n) &= (\Pi_1(n), \Pi_2(n))
 \end{align*}
 
-\subsubsection{$2. \nu $}
+\subsubsection{$2. \: \nu $}
 
 $\nu $ può essere definita utilizzando $ \Pi $:
 
@@ -37,9 +37,9 @@ $\nu $ può essere definita utilizzando $ \Pi $:
 \nu_1(n) &= \Pi_1(Pi_1(n))
 \end{align*}
 
-\subsubsection{$3. \tau $}
+\subsubsection{$3. \: \tau $}
 
-$ \tau $ può essere definita come $ (x_1, \ldots, x_k) \rightsquigarrow \prod\limits{i=1}^{k} = P_{i}^{x_i} -1$ ma questa funzione non è iniettiva:
+$ \tau $ può essere definita come $ (x_1, \ldots, x_k) \rightsquigarrow \prod\limits_{i=1}^{k} P_{i}^{x_i} -1$ ma questa funzione non è iniettiva:
 
 \begin{align*}
 (2,1) &= 2^2 \cdot 3^1 -1 \\
@@ -49,16 +49,16 @@ $ \tau $ può essere definita come $ (x_1, \ldots, x_k) \rightsquigarrow \prod\l
 pertanto è necessario utilizzare
 
 $$
-\tau(x_1, \ldots, x_k) \rightsquigarrow \prod\limits{i=1}^{k-1} = P_{i}^{x_i} \cdot P_{k}^{x_k} - 2
+\tau(x_1, \ldots, x_k) \rightsquigarrow \prod\limits_{i=1}^{k-1} P_{i}^{x_i} \cdot P_{k}^{x_{k+1}} - 2
 $$
 
 Per decodificare un numero \textit{n} è necessario prima calcolare la lunghezza della decodifica:
 
 $$
-l(n) = \max k.P.k \text{ divide } (n+2) \text{ con } k \leq n
+l(n) = \max k.P_k \text{ divide } (n+2) \text{ con } k \leq n
 $$
 
-Anche se si tratta di una massimizzazione limitata è possibile dimostrare che è calcolabile sfruttando la minimalizzazione limitata, e quindi $ l(n) \in \mathcal{PR} $.
+Anche se si tratta di una massimizzazione illimitata è possibile dimostrare che è calcolabile sfruttando la minimalizzazione illimitata, e quindi $ l(n) \in \mathcal{PR} $.
 
 $$
 a(n,i) = \begin{cases}
@@ -78,10 +78,10 @@ $$
 Grazie alle funzioni precedentemente definite è possibile definire delle codifiche biunivoche che permettono di codificare con un numero sia una singola istruzione URM, sia un qualsiasi programma URM in $ \mathcal{P} $.
 
 $$
-\beta = \text{Ist URM} \rightarrow \mathbb{N} \quad \text{e} \quad \gamma \mathcal{P} \rightarrow \mathbb{N}
+\beta : \text{Ist URM} \rightarrow \mathbb{N} \quad \text{e} \quad \gamma : \mathcal{P} \rightarrow \mathbb{N}
 $$
 
-\subsubsection{$ \beta = \text{Ist URM} \rightarrow \mathbb{N} $}
+\subsubsection{$ \beta : \text{Ist URM} \rightarrow \mathbb{N} $}
 
 \begin{align*}
 Z(n) &\rightarrow 4\cdot(n-1) \\
@@ -108,7 +108,7 @@ $$
 
 In questo modo si ha una codifica per le istruzioni che permette di trasformare una sequenza di istruzioni in una sequenza di numeri
 
-\subsubsection{$ \gamma \mathcal{P} \rightarrow \mathbb{N} $}
+\subsubsection{$ \gamma : \mathcal{P} \rightarrow \mathbb{N} $}
 
 $$
 \gamma(P) = \tau\big(\beta(I_1), \beta(I_2), \ldots\big)
