@@ -1,0 +1,252 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+\section{Primo teorema di ricorsione}
+
+Cosa vuol dire essere calcolabile nel lavorare con le funzioni?
+
+\textbf{Funzionale}: una qualunque funzione totale del tipo $\Phi : \mathcal{F}(\mathbb{N}^k) \rightarrow  \mathcal{F}(\mathbb{N}^h) $ dove $\mathcal{F}(\mathbb{N}^k) = \{ f | f : \mathbb{N}^k \rightarrow \mathbb{N} \}$.
+
+Quando è che un funzionale è ricorsivo? (calcolabile).
+
+Tipicamente a noi interessa sapere il valore di $\Phi(f)(x)$ per qualche \textit{x} ma non infiniti \textit{x}.
+Questo è calcolabile quanto il risultato dipende da una parte finita di \textit{f}: $\vartheta \subseteq f$.
+
+Si ha quindi che $\Phi (f) (x)$ è \textbf{ricorsivo} se esiste $\phi$ calcolabile tale che
+
+$$
+\Phi(f)(x) = \phi(\vartheta, x) \text{ per qualche }\vartheta \subseteq f \text{ finita}
+$$
+
+\subsubsection{Funzioni finite come numeri}
+
+$$
+\hat{\vartheta} = \begin{cases}
+0 \text{ se } \vartheta = \emptyset \\
+\prod\limits_{x \in dom(\vartheta)} P_{x}^{\vartheta(x) +1}
+\end{cases}
+$$
+
+Così facendo, dato un numero $z \in \mathbb{N}$ tale che $z = \hat{\varphi}$ è possibile determinare se $x \in dom(\vartheta)$ andando a verificare se $ P_x | z$.
+
+In modo simile è possibile applicare la parte di funzione rappresentata da \textit{z} ad un numero \textit{x}.
+
+$$
+app(z, x) = \begin{cases}
+(z)_x \dotminus 1 \text{ se } x \in dom(z)\\
+\uparrow \text{ altrimenti}
+\end{cases}
+$$
+
+\subsubsection{Funzionare ricorsivo}
+
+Un funzionale
+
+$$
+\Phi : \mathcal{F}(\mathbb{N}^k) \rightarrow  \mathcal{F}(\mathbb{N}^h) 
+$$
+
+si dice \textbf{ricorsivo} se esiste una funzione $\phi : \mathbb{N}^{h+1}\rightarrow \mathbb{N}$ tale che per ogni $f \in \mathcal{F}(\mathbb{N}^k)$ e per ogni $\vec{x} \in \mathbb{N}^h, y \in \mathbb{N}$  abbiamo
+
+$$
+\Phi(f)(\vec{x})  = y \text{ sse } \exists \vartheta \subseteq f \text{ finito } \phi(\vartheta, \vec{x}) = y
+$$
+
+Ad esempio, il funzionale $\Phi : \mathcal{F}(\mathbb{N}^1) \rightarrow  \mathcal{F}(\mathbb{N}^1) $:
+
+$$
+\Phi(f)(x) = f(x) +1
+$$
+
+è ricorsivo perché posso trovare
+
+\begin{align*}
+	\phi(\hat{\vartheta}) &= \hat{\vartheta}(x) +1 \\
+										&= app(\hat{\vartheta} ,x) +1
+\end{align*}
+
+Anche la funzione di Ackermann è un funzionale ricorsivo $\Psi : \mathcal{F}(\mathbb{N}^2) \rightarrow  \mathcal{F}(\mathbb{N}^2) $.
+
+\subsection{Calcolabilità dei funzionali ricorsivi}
+
+Se prendo un funzionale ricorsivo $\Phi : \mathcal{F}(\mathbb{N}^k) \rightarrow  \mathcal{F}(\mathbb{N}^h) $ e prendo una funzione calcolabile $f : \mathbb{N}^k \rightarrow \mathbb{N}$, allora anche l'immagine $\Phi(f) : \mathbb{N}^h \rightarrow \mathbb{N}$ è calcolabile.
+
+\subsection{Myhill - Shepherodson}
+
+$$
+\Phi \text{ ricorisvo e } f \text{ calcolabile } \Rightarrow \Phi(f) \text{ calcolabile}
+$$
+
+$$
+\Phi(\phi_e) \text{ calcolabile } = \phi_{e'} = \phi_{h(e)}
+$$
+
+Diciamo che $h : \mathbb{N} \rightarrow \mathbb{N}$ è \textbf{estensionale} se
+
+$$
+\forall e, e' \: \phi_e = \phi_{e'} \rightarrow \phi_{h(e)} = \phi_{h(e')}
+$$
+
+Il \textbf{Teorema di Myhill - Shepherdson - Parte 1} è quindi il seguente:
+
+Sia $\Phi : \mathcal{F}(\mathbb{N}^k) \rightarrow  \mathcal{F}(\mathbb{N}^h) $ un funzionale ricorsivo. Allora esiste una funzione calcolabile, totale ed estensionale $h : \mathbb{N} \rightarrow \mathbb{N}$ tale che $\forall e \in \mathbb{N}$:
+
+$$
+\Phi(\phi_e) = \phi_{h(e)}
+$$
+
+La \textbf{Parte 2} del teorema dice anche che:
+
+Sia $h : \mathbb{N} \rightarrow \mathbb{N}$ una funzione calcolabile, totale ed estensionale. Allora esiste un'unico funzionare ricorsivo $\Phi : \mathcal{F}(\mathbb{N}^k) \rightarrow  \mathcal{F}(\mathbb{N}^h) $ tale che
+
+$$
+\Phi(\phi_{e}^{(k)}) = \phi_{h(e)}^{h}
+$$
+
+\subsection{Il primo teorema di ricorsione (Kleene)}
+
+Sia $\Phi : \mathcal{F}(\mathbb{N}^k) \rightarrow  \mathcal{F}(\mathbb{N}^k) $ un funzionale ricorsivo. 
+Allora questo funzionale $\Phi$ ha un minimo punto fisso $f_\Phi : \mathbb{N}^k \rightarrow \mathbb{N}^k$ calcolabile.
+
+\begin{enumerate}
+	\item $\Phi(f_\phi) = f_\phi$
+	\item $\Phi(g) = g \Rightarrow f_\phi \subseteq g$
+	\item $f_\Phi$ è calcolabile.
+\end{enumerate}
+
+Inoltre
+
+$$
+f_\phi = \bigcup\limits_{n \in \mathbb{N}} \Phi^{n}(\emptyset)
+$$
+
+Ad esempio, la funzione $x \dotminus 1$ può essere scritta come 
+
+$$
+\Phi(f)(x) = \begin{cases}
+0 \text{ se } x = 0,1 \\
+f(x-1) +1
+\end{cases}
+$$
+
+si ha quindi che per il primo teorema di ricorsione:
+
+\begin{align*}
+	\Phi^n(\emptyset)(3) &= \Phi^{n-1}(\emptyset)(2) +1 \\
+								     &= (\Phi^{n-2}(\emptyset)(1) + 1) +1 \\
+								     &= 0 + 1 +1 = 2
+\end{align*}
+
+\todo[inline]{segue al dimostrazione del perché la ricorsione primitiva è calcolabile}
+
+Ad esempio la minimalizzazione illimitata $\mu y . f(\vec{x}, y)$ può essere definita dal funzionale:
+
+$$
+\Phi(h)(\vec{x},y) = \begin{cases}
+	y \text{ se } h(\vec{x},y) = 0 \\
+	h(\vec{x}, y+1) \text{ se } h(\vec{x},y)\downarrow \neq 0\\
+	\uparrow \text{  altrimenti}
+\end{cases}
+$$
+
+Si ha quindi che:
+
+$$
+\mu y . f(\vec{x},y) = f_{\Phi_\mu}(\vec{x},0)
+$$
+
+La cosa importante è che il funzionale ricorsivo sia definito utilizzando solamente un numero finito di volte la funzione che riceve come argomento.
+
+Considerando il funzionale
+
+$$
+\Phi(f)(x) = \begin{cases}
+	1 \text{ se } x =0\\
+	f(x+1) \text{ se } x > 0
+\end{cases}
+$$
+
+Si ottengono come possibili punti fissi:
+
+$$
+f_\Phi(x) = \begin{cases}
+	1 \text{ se } x = 0 \\
+	\uparrow \text{ altrimenti}
+\end{cases}  \qquad \text{e} \qquad f_\Phi(x) = \begin{cases}
+	1 \text{ se } x =0 \\
+	k \text{ se } x > 0
+\end{cases}
+$$
+
+\section{Secondo teorema di ricorsione} 
+
+Sia $h : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale.
+
+Allora esiste $n \in \mathbb{N}$ tale che $\phi_{h(n)} = \phi_n$. Ovvero esiste un programma che anche se viene modificato dalla funzione $h$, continua a calcolare la stessa funzione.
+
+La differenza con il primo teorema è che viene persa l'ipotesi dell'estensionabilità.
+
+\subsection{Dimostrazione}
+
+\begin{align*}
+g(x,y) &= \phi_{h(\phi_x(x))}(y) \\
+			&= \Psi_U\big( h(\Psi_U(x,x)), y \big)
+\end{align*}
+
+Dal momento che la funzione universale è calcolabile, anche \textit{g} è calcolabile, e quindi per il teorema SMN esiste $S : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che
+
+$$
+g(x,y) = \phi_{S(x)}(y)
+$$
+
+Essendo $S$ calcolabile, esiste un programma $e \in \mathbb{N}$ tale che $\phi_e = S$ e quindi:
+
+$$
+g(x,y) = \phi_{\phi_e(x)}(y)
+$$
+
+Andando a considerare il caso in cui $x = e$ si ha:
+
+$$
+\phi_{h(\phi_e(e))}(y) = \phi_{\phi_e(e)}(y)
+$$
+
+detto $n = \phi_e(e)$ si ottiene che 
+
+$$
+\phi_{h(n)}(y) = \phi_n(y) \: \forall y
+$$
+
+che è proprio quello che volevamo.
+
+Inoltre, abbiamo la garanzia che $\phi_e(e) \neq \uparrow$ perché $S$ è totale.
+
+La dimostrazione fatta è una diagonalizzazione, perché \textit{h} può essere vista come una enumerazione di funzioni calcolabili.
+
+\subsection{Conseguenza: Teorema di Rice}
+
+$A \neq \emptyset , \mathbb{N}$ saturato. Allora $A$ non è ricorsivo.
+
+\textbf{Dimostrazione} utilizzando il secondo teorema di ricorsione
+
+Supponiamo per assurdo che \textit{A} sia ricorsivo. Siano quindi $a_1 \in A$ e $a_0 \notin A$, risulta possibile definire
+
+\begin{align*}
+f(x) &= \begin{cases}
+	a_0 \text{ se } x \in A \\
+	a_1 \text{ se } x \notin A
+\end{cases} \\
+& = a_0 \chi_{A}(x) + a_1 \chi_{\overline{A}}(x)
+\end{align*}
+
+calcolabile e totale.
+
+Per il secondo teorema di ricorsione esiste un $n$ tale che $\phi_n = \phi_{f(n)}$.
+
+Se $n \in A$ allora $f(n) = a_0 \notin A$ ma questo non può essere, perché $\phi_n \neq \phi_{f(n)}$ a causa del fatto che $A$ è saturo e che che $f(n) \notin A$.
+
+Allo stesso modo se $n \notin A$, allora $f(n) = a_1 \in A$ e quindi $\phi_n \neq \phi_{f(n)}$.
+
+Segue che $A$ non è ricorsivo.

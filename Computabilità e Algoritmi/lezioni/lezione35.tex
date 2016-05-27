@@ -1,0 +1,72 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\subsubsection{Inserimento del segmento $s_i$}\label{inserimento-del-segmento-si}
+
+\begin{enumerate}
+\item   Cerca le regioni intersecate dal segmento $s_i$.
+\item   Suddividi le regioni intersecate dal segmento $s_i$. Se vengono trovate due regioni adiacenti che hanno gli stessi segmenti superiori e inferiori, uniscile.
+\end{enumerate}
+
+La ricerca delle regioni intersecate può essere fatta in $O(\log(i))$ e può essere fatta in modo analogo alla ricerca di un punto nella regione. In totale per questa fase si ha $O(n \log n)$.
+
+Per quanto riguarda il secondo passo, ogni regione può essere suddivisa in al più quattro parti con un costo costante $O(1)$. 
+Si può quindi effettuare un analisi ammortizzata attribuendo ad ogni regione che viene creata e successivamente suddivisa un costo ammortizzato che comprende anche il costo della sua successiva suddivisione.
+
+Otteniamo quindi un costo ammortizzato costante per ogni regione creata e poi suddivisa mentre il costo delle regioni finali risulta nullo, in quanto prepagato con il costo ammortizzato delle regioni suddivise.
+
+Dobbiamo quindi calcolare il numero di regioni che venogno suddivise durante la costruzione del trapezioidale.
+
+In una partizione i lati verticali sono in corrispondenza dei vertici dei segmenti inseriti. Per ogni vertice di un segmento inserito ci sono al più due lati sulla sua verticale: quello che congiunge il vertice con il segmento immediatamente sopra e quello che lo congiunge con quello immediatamente sotto.
+
+Siccome i vertici dei segmento sono $2n$, il numero totale di vertici della partizione trapezioidale è minore o uguale di $6n$. \todo{Da dove viene il 6n?}
+
+Possiamo vedere la partizione trapezioidale come un grafo planare con al più $6n+1$ vertici, facendo convergere tutti i lati illimitati ad un vertice \textit{z}.
+
+Per la formula di Eulero in un grafo planare il numero di regioni \textit{f}, il numero di lati \textit{e} ed il numero di vertici \textit{v} sono legati dalla relazione
+
+$$
+v -e +f = 2
+$$ 
+
+Inoltre in un grafo planare con almeno 3 vertici vale la disuguaglianza
+
+$$
+e \leq 3v -6
+$$
+
+Combinando le due cose si ottiene
+
+$$
+f = 2 + e -v \leq 2v - 4 \leq 12n -2 = O(n)
+$$
+
+Dunque il numero di regioni della partizione trapezioidale di partenza finale è $O(n)$ e quindi anche le regioni suddivise durante la costruzioni sono $O(n)$.
+
+Siccome abbiamo attribuito un costo ammortizzato costante ad ogni regione che viene suddivisa, il coso totale dell'esecuzione dei secondi passi è $O(n)$ e quindi l'interno costo della procedura è dato da
+
+$$
+\underbrace{O(n \log n)}_{\text{tot fase 1}} + \underbrace{O(n)}_{\text{tot fase 2}} = O(n \log n)
+$$
+
+\todo[inline]{la parte relativa all'implementazione è stata fatta ma non sarà chiesta.}
+
+
+\chapter{Algoritmi Randomizzati}
+
+\section{Problema del Rendering}\label{problema-del-rendering}
+
+C'è una serie di segmenti che deve essere proiettata su un altro segmento secondo un determinato punto d'osservazione.
+
+L'idea è quella di effettuare prima la proiezione dei segmenti più lontani, spostandosi via via su quelli più vicini.
+
+Possiamo assumere che effettuare la proiezione di un segmento sia fatta in tempo costante dalla scheda grafica.
+
+Se ci sono dei segmenti che si intersecano è necessario suddividere uno dei due in due segmenti, stando attenti che con le coordinate intere non possiamo calcolare il punto di intersezione di un segmento.
+
+Si può quindi supporre di non avere segmenti che si intersecano.
+
+Il test di vicinanza può essere fatto con il prodotto scalare in tempo costante e pertanto l'ordinamento può essere fatto in $O(n \log n)$ e poi possono essere proiettati dal più lontano al più vicino.
+
+Se però il punto di osservazione si sposta, sarebbe carino pre-elaborare la scena in modo da poter fare l'aggiornamento in tempo costante.

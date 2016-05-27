@@ -87,7 +87,7 @@ e si ottiene uno speedup quasi lineare già per $n$ maggiore di 10.
     \State \textbf{spawn } \textsc{P-Merge-Sort}$(A,p,q, T, 1)$
     \State \textsc{P-Merge-Sort}$(A,q+1,r, T, q'+1)$
     \State \textbf{sync}
-    \State \texttt{P-Merge}$(T, 1, q', q'+1, n, B, s)$
+    \State \textsc{P-Merge}$(T, 1, q', q'+1, n, B, s)$
 \EndIf
 \EndFunction
 \end{algorithmic}
@@ -108,7 +108,7 @@ che è lo stesso della versione precedente.
 La durata invece è
 
 \begin{align*}
-MS_\infty (n) &= MS_\infty (n/2) + \Theta(\log^2 n) = \Theta (n) \\
+MS_\infty (n) &= MS_\infty (n/2) + \Theta(\log^2 n) \\
               &=\Theta (\log^3 n)
 \end{align*}
 

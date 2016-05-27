@@ -47,7 +47,7 @@ Se da un programma parallelo togliamo tutte queste istruzioni, otteniamo un clas
     \State \Return $n$
 \EndIf
 \State $x \gets \textbf{ spawn } \textsc{P-Fib}(n-1)$ 
-\State $y \gets \textsc{P-Fib}(n-1)$
+\State $y \gets \textsc{P-Fib}(n-2)$
 \State $\textbf{sync}$
 \State \Return $ x + y$
 \EndFunction
@@ -97,7 +97,7 @@ Se invece si hanno a disposizione infiniti processori, la durata è il tempo min
 Infine, se si hanno a disposizione \emph{P} processori, valgono:
 
 \begin{itemize}
-	\item \textbf{legge del lavoro}: $T_P \geq \frac{T_1}{p}$
+	\item \textbf{legge del lavoro}: $T_P \geq \frac{T_1}{P}$
 	\item \textbf{legge della durata}: $T_P \geq T_\infty$.
 \end{itemize}
 
@@ -154,7 +154,7 @@ $$T_P \leq \frac{T_1}{P} + T_\infty$$
 Il numero di passi completi è $\leq \frac{T_1}{P}$, perché se per assurdo non lo fosse, verrebbe eseguito più lavoro di quanto necessario:
 
 $$
-\underbrace{P \cdot \bigg\lfloor \frac{T_1}{P}\bigg\rfloor}_{\text{lavoro svolto dai passi completi}} \geq P \bigg( \frac{T_1}{P} +1 \bigg) = T_1 + P > T_1
+\underbrace{P \cdot \bigg(\bigg\lfloor \frac{T_1}{P}\bigg\rfloor +1 \bigg)}_{\text{lavoro svolto dai passi completi assumendo di farne più del necessario}} = P \bigg( \frac{T_1}{P} - (T_1 \mod P) +1 \bigg) = T_1 + P > T_1
 $$
 \todo[inline]{Verificare che sia corretto, nel libro fa un passo in più e Colussi ha fatto un giro strano}
  il che è assurdo.
