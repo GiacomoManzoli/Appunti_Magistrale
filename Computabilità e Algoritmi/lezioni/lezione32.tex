@@ -125,15 +125,17 @@ Da notare che si può ottenere un leggero miglioramento andando a rimuovere da \
 
 \subsection{Tecnica incrementale per il poligono convesso}\label{tecnica-incrementale-per-il-poligono-convesso-es-14}
 
-\textbf{\textit{Esercizio 14}} \todo{completare}
+\textbf{\textit{Esercizio 14}} \todo{Verificare correttezza}
 
-Vengono ordinati i punti dell'insieme \emph{Q} da sinistra verso destra, per poi iniziare ad aggiungerli uno ad uno al poligono convesso, il quale all'inizio è composto dal punto più a sinistra.
+Vengono ordinati i punti dell'insieme \emph{Q} da sinistra verso destra, per poi iniziare ad aggiungerli uno ad uno al poligono convesso, il quale inizialmente è composto dal punto più a sinistra.
 
 Per memorizzare i punti del poligono vengono utilizzate due pile, una per i punti della parte bassa e una per i punti della parte alta.
 
-\ldots{}
+Per ogni nuovo punto che arriva lo si aggiunge alla pila della parte bassa se si trova sotto il punto di partenza o nella pila della parte alta se si trova sopra. L'aggiunta viene fatta in modo analogo a quella dell'algoritmo di Graham in modo da garantire che la pila sulla quale è stato inserito rappresenti ancora un poligono convesso.
 
-La complessità è la stessa dell'algoritmo di Graham, perché viene dominata dall'ordinamento dei punti.
+Una volta inserito nella pila rimane da controllare che la congiunzione delle due pile sia ancora un poligono convesso e questo viene fatto controllando l'angolo che c'è tra il punto $p_i$ appena inserito in cima alla pila e i due punti che si trovano in cima all'altra pila. Se il punto in cima all'altra pila risulta essere interno al poligono questo viene tolto e viene ripetuto il test fino a che non si ottiene un'involucro convesso.
+
+La complessità è la stessa dell'algoritmo di Graham, perché viene dominata dall'ordinamento dei punti, dato che i test vengono effettuati al massimo $n$ controlli (una volta tolto il punto da una pila questo non ci rientra più).
 
 \subsection{Tecnica divide et impera}\label{tecnica-divide-et-impera-es-15}
 

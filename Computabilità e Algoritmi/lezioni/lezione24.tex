@@ -80,8 +80,20 @@ Come notazione per il grafo viene utilizzato:
 \caption{DAG per \textsc{P-Fib}(4)}
 \end{figure}
 
-(sistemare immagine, aggiungere la versione alternativa, spiegare gli
-archi)
+Nel DAG sopra riportato gli archi hanno vari significati:
+
+\begin{itemize}
+	\item \textbf{archi di continuazione}: sono quelli orizzontali che connettono uno strand a quello successivo all'interno della stessa procedura.
+	\item \textbf{archi di spawn}: sono quelli che vanno verso il basso e rappresentano il fatto che uno strand ha richiesto lo spawn di un altro strand.
+	\item \textbf{archi di chiamata}: anche questi vanno verso il basso e rappresentano l'invocazione di un'altra funzione. Nel grafico fatto dal professore rimangono interni allo stesso blocco.
+	\item \textbf{archi di ritorno}: sono quelli che vanno verso l'alto e rappresentano la terminazione di una funzione.
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.6\textwidth]{./notes/immagini/l24-alt.png}
+	\caption{DAG per \textsc{P-Fib}(4) rappresentato come ha fatto il prof. Anziché evidenziare le chiamate delle funzioni, vengono evidenziati i possibili thread.}
+\end{figure}
 
 \subsection{Metriche per la complessità}\label{metriche-per-la-complessituxe0}
 
@@ -97,11 +109,11 @@ Se invece si hanno a disposizione infiniti processori, la durata è il tempo min
 Infine, se si hanno a disposizione \emph{P} processori, valgono:
 
 \begin{itemize}
-	\item \textbf{legge del lavoro}: $T_P \geq \frac{T_1}{P}$
-	\item \textbf{legge della durata}: $T_P \geq T_\infty$.
+	\item \textbf{legge del lavoro}: $T_P \geq \frac{T_1}{P}$ che deriva dal fatto che idealmente un computer con \textit{P} processori in $T_P$ riesce a produrre un lavoro pari a $P T_P$
+	\item \textbf{legge della durata}: $T_P \geq T_\infty $ che deriva dal fatto che un computer con $P$ processori non può andare più veloce di un computer con processori illimitati.
 \end{itemize}
 
-Lo \textbf{speedup} di un algoritmo misura quanto viene velocizzato l'algoritmo utilizzando \emph{P} processori:
+Lo \textbf{speedup} di un algoritmo misura quanto viene velocizzato l'algoritmo utilizzando \emph{P} processori al posto di uno solo: 
 
 $$\textbf{speedup} = \frac{T_1}{T_P} \leq P$$
 
@@ -117,9 +129,17 @@ $$\frac{T_1}{T_P}  = P$$
 
 Un'altra misura è data dal \textbf{parallelismo} che è il rapporto tra $T_1$ e $T_\infty$ e misura il lavoro medio che può essere eseguito in parallelo, fornendo un limite superiore per lo speedup.
 
-Il parallelismo fornisce anche un limite allo speedup perfetto, ovvero supponendo di avere un numero di processori molto più grande del parallelismo:
+Il parallelismo fornisce anche un limite allo speedup perfetto, ovvero supponendo di avere un numero di processori molto più grande del parallelismo ($P > T_1 / T_\infty$):
 
-$$P >> \frac{T_1}{T_\infty} \quad \text{ allora } \quad \frac{T_1}{T_P} << P$$
+$$
+T_1/T_P \leq T_1/T_\infty < P
+$$
+
+e quindi se 
+
+$$P \gg \frac{T_1}{T_\infty} \quad \text{ allora } \quad \frac{T_1}{T_P} \ll P$$
+
+più processori si hanno rispetto il parallelismo, peggiore è lo speedup. Questo perché avere un numero di processori maggiori rispetto al parallelismo implica che alcuni di questi rimarranno inattivi, ovvero non contribuiscono ad abbassare $T_P$.
 
 Il \textbf{lasco} del parallelismo viene definito come
 
@@ -131,13 +151,13 @@ Se il lasco è minore di 1, si ha che
 
 $$\frac{T_1}{T_P} \leq \frac{T_1}{T_\infty} < P$$
 
-quindi si ha che lo speedup non potrà mai essere perfetto. 
+e quindi lo speedup non potrà mai essere perfetto. 
 
 Se invece il lasco è maggiore di 1, ci si può avvicinare allo speedup perfetto.
 
 \subsection{Lo scheduling dei thread}\label{lo-scheduling-dei-thread}
 
-L'ordine ottimo che minimizza la durata dell'algoritmo è dato dall'ordinamento topologico del DAG, il quale non è noto a priori.
+L'ordine ottimo che minimizza la durata dell'algoritmo è dato dall'ordinamento topologico del DAG, ma dal momento che il DAG non è noto a priori, non è possibile calcolarlo.
 
 Lo scheduler più semplice è quello \textbf{goloso}, il quale assegna il maggior numero possibile di strand ai processori che ha a disposizione. Se ci sono più strand che thread, la scelta degli strand da assegnare viene fatta casualmente.
 
@@ -145,7 +165,7 @@ Se tutti i thread sono in esecuzione si verifica un passo \textbf{completo} ovve
 Se non ci sono strand a sufficienza per tenere impegnati tutti i processori si ha un passo \textbf{incompleto}. 
 Si ottiene così una durata che è pari alla somma dei passi completi e di quelli incompleti.
 
-\subsubsection{Durata di un algoritmi con lo scheduler goloso}
+\subsubsection{Durata di un algoritmo con lo scheduler goloso}
 
 Usando lo scheduler goloso è sempre vero che:
 
@@ -153,11 +173,13 @@ $$T_P \leq \frac{T_1}{P} + T_\infty$$
 
 Il numero di passi completi è $\leq \frac{T_1}{P}$, perché se per assurdo non lo fosse, verrebbe eseguito più lavoro di quanto necessario:
 
-$$
-\underbrace{P \cdot \bigg(\bigg\lfloor \frac{T_1}{P}\bigg\rfloor +1 \bigg)}_{\text{lavoro svolto dai passi completi assumendo di farne più del necessario}} = P \bigg( \frac{T_1}{P} - (T_1 \mod P) +1 \bigg) = T_1 + P > T_1
-$$
-\todo[inline]{Verificare che sia corretto, nel libro fa un passo in più e Colussi ha fatto un giro strano}
- il che è assurdo.
+\begin{align*}
+\underbrace{P \cdot \bigg(\bigg\lfloor \frac{T_1}{P}\bigg\rfloor +1 \bigg)}_{\text{lavoro svolto dai passi completi assumendo di farne più del necessario}} &= P \bigg( \frac{T_1}{P} - (T_1 \mod P) +1 \bigg) \\
+&= T_1 - (T_1 \mod P) + P \\
+&> T_1
+\end{align*}
+
+ il che è assurdo, perché verrebbe svolto più lavoro del necessario.
 
 Dopo aver eseguito un certo numero di passi completi, verrà eseguito un passo incompleto, quando questo succederà il DAG della computazione sarà un grafo $G'$ che avrà un numero di nodi iniziali (senza dipendenze) minore di \emph{P}, perché il passo è incompleto. 
 Per forza di cose, uno di questi nodi appartiene al cammino critico e verrà eseguito, diminuendo di 1 la lunghezza di tale cammino. 
@@ -184,9 +206,9 @@ T_{P} &\leq T_1/P + T_\infty \\
 		 &\leq 2T_{P}^*
 \end{align*}
 
-Inoltre, se $ P << T_1 / T_\infty $ si ha che $ T_P \approx T_1/P$, ovvero lo scheduler goloso riesce ad approssimare il parallelismo perfetto al crescere del lasco.
+Inoltre, se $ P \ll T_1 / T_\infty $ si ha che $ T_P \approx T_1/P$, ovvero lo scheduler goloso riesce ad approssimare il parallelismo perfetto al crescere del lasco.
 
-Questo perché se $ P << T_1 / T_\infty $ si ha anche che $T_\infty << T_1 / P$ e, per quanto precedentemente dimostrato si ha:
+Questo perché se $ P \ll T_1 / T_\infty $ si ha anche che $T_\infty \ll T_1 / P$ e, per quanto precedentemente dimostrato si ha:
 
 $$
 T_P \leq \frac{T_1}{P} + T_\infty \approx \frac{T_1}{P}

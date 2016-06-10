@@ -65,7 +65,7 @@ $$
 Il parallelismo di questo algoritmo risulta essere buono, perché
 
 $$
-\frac{PM_1}{PM_\infty} = \Theta (\frac{n}{log^2 n})
+\frac{PM_1}{PM_\infty} = \Theta \Big(\frac{n}{\log^2 n}\Big)
 $$
 
 e si ottiene uno speedup quasi lineare già per $n$ maggiore di 10.
@@ -117,7 +117,7 @@ ovvero la durata di una delle due chiamate ricorsive parallele, che tanto sono u
 Anche in questo caso il parallelismo risulta essere
 
 $$
-O(n \log^2 n)
+O(\frac{n}{\log^2 n})
 $$
 
 \section{P-Scan}\label{p-scan}
@@ -172,7 +172,9 @@ Prima vediamo il codice:
 La procedura \textsc{P-Scan-Up} calcola ricorsivamente la somma della prima metà dell'array e pone il risultato al centro dell'array \emph{t}, dopodiché si invoca ricorsivamente sulla seconda parte dell'array \emph{x}. (Le due invocazioni ricorsive vengono fatte in parallelo).
 Quando entrambe le chiamate ricorsive sono terminate, viene ritornata la somma dei due risultati.
 
-\todo[inline]{inserire albero chiamate}
+Così facendo, vengono calcolati nel vettore di supporto i risultati parziali relativi alla parte sinistra dell'array.
+
+Il nome della procedura deriva dal fatto che prima viene diviso l'array fino ad arrivare ai singoli elementi e poi nella risalita dell'albero delle chiamate vengono effettuati i conti e memorizzati i risultati.
 
 \begin{breakablealgorithm}
 	\caption{\textsc{P-Scan-Up}}
@@ -190,10 +192,20 @@ Quando entrambe le chiamate ricorsive sono terminate, viene ritornata la somma d
 \end{algorithmic}
 \end{breakablealgorithm}
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{./notes/immagini/l27-pscanup.png}
+	\caption{Albero delle chiamate per \textsc{P-Scan-Up}}
+\end{figure}
+
 La funzione \textsc{P-Scan-Down} utilizza le somme parziali prodotte da \textsc{P-Scan-Up} per calcolare e memorizzare nell'array \textit{y} i risultati finali.
 
+Da notare che quando viene invocata la procedura per il calcolo dei valori a destra di $k$ viene utilizzato sia il valore \textit{v} della somma fino ad \textit{i} che il valore $T[k]$ che rappresenta la somma parziale dei valori della parte sinistra.
+
+Anche in questo caso il nome della procedura indica la direzione in cui vengono effettuati i conti, ovvero durante la discesa dell'albero delle chiamate.
+
 \begin{breakablealgorithm}
-		\caption{\textsc{P-Scan-Up}}
+		\caption{\textsc{P-Scan-Down}}
 		\begin{algorithmic}[1]
 \Function{P-Scan-Down}{$v,x,t,y,i,j$}
     \State // $ v $ è il valore della somma fino ad $ i $ escluso
@@ -209,14 +221,21 @@ La funzione \textsc{P-Scan-Down} utilizza le somme parziali prodotte da \textsc{
 \end{algorithmic}
 \end{breakablealgorithm}
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{./notes/immagini/l27-pscandown.png}
+	\caption{Albero delle chiamate per \textsc{P-Scan-Down}}
+\end{figure}
+
+Combinando le due procedure si ha quindi che le due chiamate parallele di entrambe le procedure lavorano sempre su dati distinti, evitando così delle race condition.
+
 Il lavoro di \textsc{P-Scan} è
 
 $$
 T_{1}^{pscan}(n) = T_{1}^{pscan-up}(n) + T_{1}^{pscan-down}(n) + \Theta(1)
 $$
 
-e dal momento che anche le due chiamate vengono fatte in modo
-sequenziale, anche la durata è uguale a
+e dal momento che anche le due chiamate vengono fatte in modo sequenziale, anche la durata è uguale a
 
 $$
 T_{\infty}^{pscan}(n) = T_{\infty}^{pscan-up}(n) + T_{\infty}^{pscan-down}(n) + \Theta(1)
@@ -248,7 +267,7 @@ $$
 T_{\infty}^{pscan}(n) = 2T_{\infty}^{pscan-up}(n) = \Theta(\log n)
 $$
 
-Il parallelismo dell'algoritmo risulta essere $\Theta(n \log n)$ che è molto buono.
+Il parallelismo dell'algoritmo risulta essere $\Theta(\frac{n}{\log n})$ che è molto buono.
 
 
 \chapter{Geometria computazionale}
@@ -261,7 +280,7 @@ L'elemento alla base di tutto è il punto, che sarà caratterizzato da due coord
 
 Ma c'è sempre il piano B, ovvero utilizzare le coordinate intere a 32 bit.
 
-Le nostre coordinate saranno quindi compresi tra un $-$\textsc{Maxint} e \textsc{Maxint}.
+Le nostre coordinate saranno quindi comprese tra un $-$\textsc{Maxint} e \textsc{Maxint}.
 
 C'è però un problema, tipicamente nella geometria computazionale vengono calcolate delle aree, che devono anch'esse essere contenute in un intero e quindi i valori delle coordinate devono essere compresi in un intervallo $-$\textsc{CMax} e \textsc{CMax} con $\textsc{CMax} \leq \sqrt{\textsc{Maxint}} /2$, quindi facendo due conti si ha $\textsc{Maxint} = 2^{31} $ e $\textsc{CMax} = 2^{15}$.
 
@@ -280,14 +299,8 @@ che $v_x = x_q-x_p$ e $v_y = y_q - y_p$.
 
 Talvolta con lo stesso simbolo può essere rappresentato sia il punto di coordinate $(x_p,y_p)$ che il \textbf{vettore posizione} $(x_p,y_p)$ rappresentato dal segmento orientato $\overrightarrow{op}$, dove \textit{o} è l'origine degli assi.
 
-Il \textbf{prodotto vettoriale} di due vettori $v_1 = (x_1,y_1)$ e $v_2 = (x_2,y_2)$ è definito come:
-
-$$
-v_1 \times v_2 = (x_1+x_2, y_1+y_2)
-$$
-
-ovvero l'area orientata del parallelogramma di vertici $o, p_1, q,p_2$, l'orientamento è positivo se l'angolo da $v_1$ a $v_2$ è orientato in
-senso antiorario, con segno negativo altrimenti.
+Il \textbf{prodotto vettoriale} di due vettori $v_1 = (x_1,y_1)$ e $v_2 = (x_2,y_2)$ è definito come l'area orientata del parallelogramma dato dai vertici: $o \equiv (0,0)$, $p_1 \equiv (x_1,y_1)$, $q \equiv  (x_1+x_2, y_1+y_2)$ e $p_2 \equiv (x_2, y_2)$.
+L'orientamento è positivo se l'angolo da $v_1$ a $v_2$ è orientato in senso antiorario, con segno negativo altrimenti.
 
 \begin{figure}
 	\centering

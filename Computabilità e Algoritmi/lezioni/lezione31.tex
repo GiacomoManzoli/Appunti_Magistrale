@@ -62,6 +62,13 @@ Per implementare \emph{T} è possibile utilizzare un albero rosso-nero il quale 
 Se due segmenti si intersecano si troveranno per forza contemporaneamente nello stato della spazzola. 
 Però comunque controllare tutte le coppie di segmenti richiederebbe $O(n^{2})$ pertanto l'algoritmo si limita a controllare ogni segmento con quello precedente e quello successivo.
 
+Inoltre, tra un'evento $e_1$ e il successivo $e_2$, l'ordine dei due segmenti $s'$ e $s''$ cambia soltanto se i due segmenti segmenti si intersecano in un punto di coordinata $x$ compresa tra $x_1$ e $x_2$
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.3\textwidth]{./notes/immagini/l31-fig23.png}
+\end{figure}
+
 Assumendo che non siano ancora stati trovati dei segmenti che si intersecano, quanto si verifica un nuovo evento questo può essere associato ad un estremo sinistro o destro.
 
 Se l'evento è sinistro, basta controllare che il nuovo segmento non si intersechi con il precedente e successivo. 
@@ -73,7 +80,7 @@ Il controllo dell'intersezione è già stato affrontato e viene fatto in tempo c
 	\begin{algorithmic}[1]
 		\Function{Any-Segment-Intersect}{$S$} 
 		    \State // $S$ insieme di $n$ segmenti
-		    \State // Ordina gli estremi dei segmenti $s_i = (p_i,qi_)$ in modo che $p_i$ sia l'estremo sinistro
+		    \State // Ordina gli estremi dei segmenti $s_i = (p_i,q_i)$ in modo che $p_i$ sia l'estremo sinistro
 		    \State // Costruisci la sequenza degli eventi $e_1 \ldots e_{2n}$
 		    \State // Ordina la sequenza di eventi come precedentemente definito
 		    \For{$i = 1 \textbf{ to } 2n$}
@@ -108,7 +115,7 @@ Il controllo dell'intersezione è già stato affrontato e viene fatto in tempo c
 Risulta però più difficile dimostrare che quando l'algoritmo ritorna \textsc{False} nessun segmento si intersechi. 
 Ovvero che se c'è un'intersezione allora l'algoritmo ritorna \textsc{True}.
 
-Assumendo quindi che ci sia una o più intersezioni e tra tutte quelle presenti prendiamo quella con la coordinata del punto d'intersezione $x_p$ più a sinistra con tie-break $y_p$ più basso.
+Assumiamo quindi che ci siano una o più intersezioni, e tra tutte prendiamo quella con la coordinata del punto d'intersezione $x_p$ più a sinistra con tie-break $y_p$ più basso.
 
 Consideriamo quindi l'evento in cui viene inserito l'ultimo segmento che si interseca nel punto $x_p$. 
 Sia \emph{s} il segmento che viene inserito e \emph{s'} il segmento con cui \emph{s} si interseca. 
@@ -128,7 +135,7 @@ Lo stesso discorso vale se ci sono più segmenti tra \emph{s} e \emph{s'}.
 
 Da notare che quando viene inserito \emph{s} all'interno della spazzola possono essere già presenti altri segmenti che si intersecano tra loro, ma che hanno un punto di intersezione maggiore di $x_p$.
 
-(C'è anche da dimostrare che la spazzola non supera mai un'intersezione, ma questo segue da quanto appena dimostrato.)
+(C'è anche da dimostrare che la spazzola non supera mai un'intersezione, ma questo segue da quanto appena dimostrato, perché abbiamo visto che la spazzola è in grado di rilevare correttamente la prima intersezione ed una volta che l'ha rilevata, l'esecuzione dell'algoritmo termina)
 
 Per quanto riguarda la \textbf{complessità} il tempo di esecuzione dell'algoritmo è $O(n)$ per costruire la sequenza degli eventi, $O(n \log n)$ per ordinarli e infine $O(n)$ per esaminarli nel ciclo \texttt{for}. 
 In totale tempo $O(n \log n)$.
@@ -137,7 +144,7 @@ In totale tempo $O(n \log n)$.
 
 \textit{\textbf{Esercizio 9}} \todo{Verificare correttezza}
 
-Abbiamo detto che se lo stato della spazzola viene rappresentato con un albero rosso-nero le quattro operazione possono essere eseguite in tempo logaritmico.
+Abbiamo detto che se lo stato della spazzola viene rappresentato con un albero rosso-nero le quattro operazioni possono essere eseguite in tempo logaritmico.
 Questo è vero soltanto se riusciamo ad effettuare in tempo costante il test su quale tra i due segmenti ha l'intersezione più alta con la retta della spazzola.
 
 L'algoritmo riportato, dati due segmenti $s = (p_1,p_2)$, $s' = (p_3, p_4)$ e la coordinata \textit{x} della spazzola, ritorna \textsc{True} in tempo costante se $s$ precede $s'$ nella spazzola.
@@ -178,7 +185,7 @@ Per fare ciò basta modificare in \textsc{Any-Segment-Intersect} in modo che qua
 
 C'è un possibile problema perché l'algoritmo continua dopo un punto di intersezione, il che non era previsto quando è stata dimostrata la correttezza.
 
-Bisogna quindi dimostrare che l'ordinamento della spazzola rimanga corretto anche dopo un punto di intersezione.
+Bisogna quindi dimostrare che l'ordinamento della spazzola rimane corretto anche dopo un punto di intersezione.
 
 Se almeno uno dei due è un estremo destro, un segmento viene tolto e quindi non ci sono problemi. 
 

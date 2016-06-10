@@ -165,11 +165,9 @@ Così facendo si ha che il valore atteso del numero di nodi (segmenti) è $O(n \
 \includegraphics[width=.7\textwidth]{./notes/immagini/l36-fig4.png}
 \end{figure}
 
-Se il segmento \emph{s} taglia un segmento \emph{s'}, la distanza $d(s,s') = k$ è definita come il numero di segmenti che la retta
-passante per \emph{s} taglia prima di tagliare \emph{s'}.
+Se il segmento \emph{s} taglia un segmento \emph{s'}, la distanza $d(s,s') = k$ è definita come il numero di segmenti che la retta passante per \emph{s} taglia prima di tagliare \emph{s'}. $d(s,s')=\infty$ se non lo taglia.
 
-Si ha quindi che il segmento \emph{s} venga scelto dall'algoritmo di partizione prima dei segmenti $s_1, s_2, s_{k-1}, s'$ e la
-probabilità che questo succeda è minore o uguale $1/(k+1)$. 
+Supponendo quindi che la retta passante per $s$ tagli il segmento $s'$ a distanza $k$, si ha che durante l'esecuzione dell'algoritmo, il segmento $s'$ viene tagliato solo se il segmento $s$ viene scelto prima di tutti gli altri segmenti $s_1, s_2, s_{k-1}, s'$ e la probabilità che questo succeda è minore o uguale $1/(k+1)$. 
 Il minore o uguale deriva dal fatto che il segmento \emph{s'} può essere già stato tagliato da un segmento, inoltre, per definizione, se \emph{s} non taglia \emph{s'}, $d(s,s') = \infty$ e quindi la probabilità di taglio risulta essere 0.
 
 Sia $X_{s,s'}$ la variabile casuale che vale 0 se \emph{s} non suddivide \emph{s'} e vale 1 altrimenti.
@@ -219,13 +217,13 @@ Assumiamo che i canali di comunicazione siano sincroni, ovvero che ad ogni istan
 
 Ad un certo istante c'è il processore \emph{i} che invia un pacchetto $p_i$ ad un processore di destinazione $d_i$. 
 Una prima idea è quella di far girare il pacchetto sul cammino minimo, ma questo può causare un problema, perché un processore potrebbe ricevere più pacchetti da instradare contemporaneamente sullo stesso canale. 
-\`{E} quindi necessario che i canali siano dotato di un \textbf{buffer} in grado da tenere in memoria al coda dei pacchetti.
+\`{E} quindi necessario che i canali siano dotati di un \textbf{buffer} in grado da tenere in memoria al coda dei pacchetti.
 
 Si perdere quindi la garanzia del tempo di trasmissione costante, perché dipende dalla coda nel canale di comunicazione.
 
-Consideriamo quindi il caso in cui tutti i processori \emph{i} inviino un pacchetto $p_i$ ad un altro processore $d_i$, assumendo che i vari $d_i$ siano tutti distinti, ovvero le destinazioni $d_i$ sono una permutazione delle sorgenti \emph{i} (\textbf{problema di instradamento di una partizione}).
+Consideriamo quindi il caso in cui tutti i processori \emph{i} inviino un pacchetto $p_i$ ad un altro processore $d_i$, assumendo che i vari $d_i$ siano tutti distinti, ovvero le destinazioni $d_i$ sono una permutazione delle sorgenti \emph{i} (\textbf{problema di instradamento di una permutazione}).
 
 Riguardo a questo problema c'è il \textbf{teorema di Valiant}: sia \emph{R} una rete di \emph{n} processori tale che ogni processore abbia al più \emph{k} canali di output. 
-Per ogni algoritmo di routing deterministico, esiste una permutazione $d_1 \ldots d_n$ tale che il numero di passi per far arrivare a destinazione tutti gli \emph{n} pacchetti è $\omega(\sqrt{n/k})$ (limitato inferiormente).
+Per ogni algoritmo di routing deterministico, esiste una permutazione $d_1 \ldots d_n$ tale che il numero di passi per far arrivare a destinazione tutti gli \emph{n} pacchetti è $\Omega(\sqrt{n/k})$ (limitato inferiormente).
 
 Ad esempio se ci sono $2^{32}$ processori, con $k = 32$ si ha che il numero di passi è almeno $\sqrt{2^{32} /32} = 11585$ e considerando che in un iper-cubo di grado 32 (la rete descritta), il cammino più lungo è di 32 archi.

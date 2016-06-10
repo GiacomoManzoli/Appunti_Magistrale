@@ -1,0 +1,218 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+
+\subsection{Esercizio 5}
+
+Tipicamente è un'applicazione del secondo teorema di ricorsione.
+
+Dato l'insieme $C = \{ x \in \mathbb{N} \: | \: [0,x] \subseteq W_x \} $, enunciare il secondo teorema di ricorsione ed utilizzarlo per dimostrare che l'insieme $C$ non è saturo.
+
+\subsubsection{Soluzione}
+
+Siccome dipende da una proprietà di un programma, è probabile che non sia saturo.
+
+L'idea è quella di trovare un certo indice $e$ tale che $W_e = [0,e]$. Se riusciamo a trovare un programma del genere abbiamo sostanzialmente concluso, perché siamo certi che esistono infiniti indici che calcolano la stessa funzione $\phi_e$ e tra tutti questi ce ne è sicuramente uno che è più grande di $e$, ovvero esiste $e' \in \mathbb{N}$ tale che $\phi_{e'} = \phi_e$ e $e' > e$.
+
+Trovato questo $e'$ abbiamo $[0, e'] \nsubseteq W_{e'} = W_e = [0,e]$ e quindi $e' \notin C$ e pertanto $C$ non è saturo.
+
+Dimostriamo che $e$ esiste e per farlo consideriamo la funzione
+
+$$
+g(x,y) = \begin{cases}
+0 \: y \in [0,x] \\
+\uparrow
+\end{cases} = \mu z . y \dotminus x
+$$
+
+questa funzione è calcolabile e pertanto per il teorema SMN esiste $S : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che $g(x,y) = \phi_{S(x)}(y) \forall x,y$.
+
+Per il secondo teorema della ricorsione esiste un indice $e$ tale che $\phi_e = \phi_{S(e)}$ e quindi
+
+$$
+\phi_e(y) = \phi_{S(e)}(y) = g(e,y) = \begin{cases}
+0 \: y \in [0,x] \\
+\uparrow
+\end{cases}
+$$
+ 
+ovvero $W_e = [0,e]$ e quindi $e$ è proprio l'indice che cercavamo.
+
+\section{Esercizio 3 di un vecchio appello}
+ 
+ Studiare la ricorsività dell'insieme $A = \{ x \in \mathbb{N} | \mathbb{P} \subseteq W_x \}$.
+ 
+ \subsection{Soluzione}
+ 
+ Si può osservare che l'insieme è saturo, perché riguarda la proprietà di una funzione. Trattandosi di un insieme probabilmente saturo è impossibile che sia ricorsivo, inoltre dal momento che per verificare che il dominio contenga solo numeri pari è necessario andare a controllare tutti i possibili valori di input e quindi è probabile che non sia neanche RE.
+ 
+ Per quanto riguarda $\overline{A} = \{ x \in \mathbb{N} \: | \: \mathbb{P} \nsubseteq \mathbb{N}\}$, il ragionamento è simile perché per sapere se un numero pari non compare nel dominio di una funzione richiede di provare tutti i valori e quindi probabilmente anche questo insieme non è RE.
+ 
+ Come prima cosa, dimostriamo che $A$ è saturo.
+ 
+\begin{align*}
+ A &= \{ x \in \mathbb{N} | \phi_x \in \mathcal{A}\} \\
+ \mathcal{A} &= \{ f \in \mathcal{C} | \mathbb{P} \in dom(f) \}
+\end{align*}
+
+Per Rice Shapiro $A$ non è RE perché $id \in A$, ma per ogni $\vartheta \subseteq f$ finita, dato che $dom(\vartheta)$ è finito si ha che $\mathbb{P} \nsubseteq dom(\vartheta)$ e quindi $\vartheta \notin \mathcal{A}$.
+
+Anche $\overline{A}$ non è RE per Rice Shapiro, $id \notin \overline{\mathcal{A}}$ e $\vartheta = \emptyset \in  \overline{\mathcal{A}}$, $\vartheta \subseteq id$ e parte finita, quindi per Rice Shapiro l'insieme non è RE.
+
+\subsection{Soluzione per riduzione}
+
+$\overline{K} \leq_m A$, ovvero devo trovare una funzione $f$ calcolabile e totale che manda gli elementi di $\overline{K}$ in $A$ e gli elementi di $K$ in $\overline{A}$.
+
+\begin{align*}
+x \in \overline{K} &\rightsquigarrow \phi_{f(x)} \text{ totale} \\
+x \in K &\rightsquigarrow \phi_{f(x)} \text{ finita}
+\end{align*}
+
+Serve quindi una funzione 
+
+$$
+g(x,y) = \begin{cases}
+\text{ totale se } x \in \overline{K} \\
+\text{ finita se } x \in K
+\end{cases} = \begin{cases}
+0 \text{ se } \neg H(x,x,y) \\
+\uparrow \text{ se } H(x,x,y)
+\end{cases} = \mu z . \mathcal{X}_H(x,x,y)
+$$
+
+La funzione è calcolabile è varrà sempre 0 se la computazione del programma \textit{x} termina su input \textit{x} in \textit{y} passi e questo è sempre vero se $x \in \overline{K}$.
+
+Per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che $\phi_{f(x)} = g(x,y)$.
+
+Questa funzione $f$ è funzione di riduzione da $\overline{K} \leq_m A$ perché
+
+\begin{itemize}
+	\item $x \in \overline{K}$: si ha che $\phi_x(x) \uparrow$ e quindi il predicato $H(x,x,y)$ è sempre falso. Per cui la funzione $g(x,y)$ è sempre uguale a 0 per ogni $y$ e in particolare $\mathbb{P} \subseteq W_{f(x)} = \mathbb{N}$ e quindi $f(x) \in A$. 
+	\item $x \in K$: si ha che $\phi_x(x)\downarrow$ e quindi $\exists y_0$ tale che $\forall y > y_0$ vale $H(x,x,y)$ e quindi da quel punto in poi $\phi_{f(x)}(y) = g(x,y) = \uparrow \forall y > y_0$ e quindi $W_{f(x)} = dom(\phi_{f(x)}) \subseteq [0, y_0]$ finito e quindi $\mathbb{P} \nsubseteq W_{f(x)}$ e pertanto $f(x) \notin A$.
+\end{itemize}
+
+
+\section{Altro esercizio sulla ricorsività}
+
+$A = \{ x \in \mathbb{N} | \exists k . \phi_x(x+3k) \uparrow \}$, studiare la ricorsività.
+
+\subsection{Soluzione}
+
+Probabilmente questo insieme non è RE perché ci si chiede se la funzione non è definita per certi valori.
+
+Per quanto riguarda $A = \{ x | \forall k \phi_x(x+3k)\downarrow \}$, anche in questo caso probabilmente non è RE, perché l'insieme è quantificato universalmente.
+
+Tra l'altro l'insieme probabilmente non è saturo perché non riguarda una caratteristica della funzione.
+
+Procediamo quindi per riduzione $\overline{K} \leq_m A$, cercando di mandare tutti gli $x \in \overline{K}$ in un elemento di $A$, in particolare nella funzione $\emptyset$. Mentre se $x \in K$, $f(x)$ deve finire in $\overline{A}$, ma in $\overline{A}$ ci sono tutte le funzioni totali e quindi me ne va bene una qualsiasi di queste.
+
+Si può quindi definire
+
+$$
+g(x,y) = \begin{cases}
+\uparrow \: x \in \overline{K} \\
+1 \: x \in K
+\end{cases} = SC_K(x)
+$$
+
+e sappiamo essere calcolabile, quindi per SMN esiste la funzione calcolabile e totale $S : \mathbb{N} \rightarrow \mathbb{N}$ tale che $g(x,y) = \phi_{S(x)}(y)$.
+
+$S$ è funzione di riduzione di $\overline{K}$ a $A$:
+
+\begin{itemize}
+	\item $x \in \overline{K}$: $\phi_{S(x)} (y) \uparrow \forall y$ e in particolare per $k=0$ abbiamo $\phi_{S(x)}(S(x) + 3k)  \uparrow$ e quindi $S(x) \in A$.
+	\item $x \in K$: $\phi_{S(x)}(y) = 1 \forall y $, allora $\forall k \phi_{S()}(S(x) +3k) = 1 \downarrow$ e quindi $S(x) \notin A$.
+\end{itemize}
+
+Quindi dato che $A$ si riduce a $\overline{K}$, $A$ non è RE.
+
+Resta da studiare $\overline{A}$. Riduciamo $\overline{K} \leq_M \overline{A}$.
+
+In questo caso, quando $x \in \overline{A}$, $f(x)$ deve essere una funzione totale e quando $x \in K$, $f(x)$ deve essere una funzione finita\footnote{$\overline{A}$ contiene tutte le funzioni totali, $A$ contiene tutte le funzioni finite.}.
+
+Si può quindi definire
+
+$$
+g(x,y) = \begin{cases}
+0 \text{ se } \neg H(x,x,y) \\
+\uparrow \text{ se } H(x,x,y)
+\end{cases} = \phi_{S(x)}(y)
+$$
+
+\`{E} calcolabile e quindi per SMN esiste la classica $S$ che funziona da funzione di riduzione perché
+
+\begin{itemize}
+	\item $x \in \overline{K}$: $\forall y \: \neq H(x,x,y)$ è sempre vero e quindi $\phi_{S(x)}(y) = 0$ e quindi $\forall k \phi_{S(x)}(S(x)+3k) = 0$ e quindi è definita. Pertanto $S(x) \in \overline{A}$.
+	\item $x \in K$: $\phi_x(x) \downarrow$ perché $\exists y_0 > 0 . H(x,x,y)$ è vero per $\forall y \geq y_0$ e quindi $\phi_{S(x)}(y) = g(x,y) = \uparrow \forall y \geq y_0$. Se $k = y_0$, $S(x) + 3k \geq y_0$ e quindi la funzione $\phi_{S(x)} (S(x) + 3k) \uparrow$. Quindi $S(X) \in A$.
+\end{itemize}
+
+\section{Altro esercizio che si fa in 30 secondi (Secondo teorema di ricorsione)}
+ 
+Dimostrare che la funzione $ \bigtriangleup : \mathbb{N} \rightarrow \mathbb{N}$ non è calcolabile.
+
+$$
+\bigtriangleup (x) = min \{  y | \phi_y \neq \phi_x \}
+$$
+
+\subsection{Soluzione}
+
+Il pattern è 
+\begin{enumerate}
+	\item Osservo che $\bigtriangleup$ è totale
+	\item Osservo che $\bigtriangleup$ non ha punti fissi
+	\item Deduco che $\bigtriangleup$ non è calcolabile perché sennò dovrebbe avere dei punti fissi
+\end{enumerate}
+
+Per dimostrare che $\bigtriangleup$ è totale si può osservare che dato $x$ esiste certamente $y$ tale che $\phi_x \neq \phi_y$, quindi l'insieme da minimizzare non è vuoto e quindi la funzione è sempre definita.
+
+Per dimostrare che $\bigtriangleup$ non ha punti fissi si può osservare che $\forall e \phi_{\bigtriangleup(e)} \neq \phi_e$ per definizione della funzione $\bigtriangleup$.
+
+Segue quindi che per il secondo teorema di ricorsione $\bigtriangleup$ non è calcolabile.
+
+\section{Altro esercizio}
+
+Dato $X \subseteq \mathbb{N}$ indichiamo con $X+1 = \{ x+1 | x \in X \}$, ovvero l'insieme dei successori.
+
+Studiare la ricorsività di $A = \{ x | E_x = W_x +1 \}$.
+
+\subsection{Soluzione}
+
+L'insieme è saturato perché contiene le funzioni il cui codominio è l'insieme dei successori del dominio.
+
+Probabilmente non è RE, perché si vogliono confrontare il dominio con il codominio ed è già difficile valutare l'appartenenza di un numero ad un dominio.
+
+Per dimostrare che non è RE usiamo Rice Shapiro, stando attenti però che la funzione $\emptyset \in \mathcal{A}$ perché $cod(\emptyset) = \emptyset$ e $dom(\emptyset) = \emptyset$. Lo stesso vale per la funzione successore $S$.
+
+Si può però osservare che $id \notin \mathcal{A}$ perché $dom(id) = \mathbb{N}$ e $cod(id) = \mathbb{N} \neq \mathbb{N} +1$.
+
+Tuttavia $\emptyset \subseteq id$ e finita, $\emptyset \in \mathcal{A}$ e quindi per Rice Shapiro $A$ non è RE.
+
+Per quanto riguarda il complementare di $\mathcal{A}$:
+
+$$
+\overline{\mathcal{A}} = \{ f | cod(f) \neq dom(f) +1 \}
+$$
+
+Sappiamo che $S \notin \overline{\mathcal{A}}$ e consideriamo
+
+$$
+sm(x) = \begin{cases}
+	2 \text{ se } x = 0
+	1 \text{ se } x = 1
+	x+1 
+\end{cases}
+$$
+
+Si ha quindi che $dom(sm) = \mathbb{N}$ e $cod(sm) = \mathbb{N} +1$ e quindi $sm \notin \overline{\mathcal{A}}$. 
+
+Possiamo considerare la parte finita di $sm$:
+
+$$
+\vartheta(x) = \begin{cases}
+	1 \text{ se } x= 1\\
+	\uparrow
+\end{cases}
+$$
+
+quindi $\vartheta \subseteq sm$, $dom(\vartheta) = \{1\}$, $cod(\vartheta) = \{1\} \neq \{ 1\} +1$ e quindi $\vartheta \in \overline{\mathcal{A}}$. Per Rice Shapiro si ha che $\overline{A}$ non è RE.

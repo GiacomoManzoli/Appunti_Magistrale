@@ -15,7 +15,7 @@ Per calcolare la durata è necessario tenere conto se due attività possono esse
 \caption{}
 \end{figure}
 
-Se due computazioni devono essere eseguite in sequenza la durata è la somma dei $T_\infty$ delle due compitazioni. Se invece possono essere eseguite in parallelo, la durata è il massimo dei due $T\infty$.
+Se due computazioni devono essere eseguite in sequenza la durata è la somma dei $T_\infty$ delle due compitazioni. Se invece possono essere eseguite in parallelo, la durata è il massimo dei due $T_\infty$.
 
 \subsection{Loop paralleli}\label{loop-paralleli}
 
@@ -44,7 +44,7 @@ Moltiplicazione di un vettore per una matrice di dimensione $n \times n$
 
 Per quanto riguarda il lavoro si ha $T_1(n) = \Theta(n^2)$.
 
-La durata invece $T_\infty(n)$ si ha che il primo blocco \textbf{parallel} ha durata $\Theta(\log(n))$, perché il ciclo di azzeramento viene ottimizzato in modo analogo dalla piattaforma parallela in qualcosa di simile:
+La durata invece $T_\infty(n)$ si ha che il primo blocco \textbf{parallel} ha durata $\Theta(\log n )$, perché il ciclo di azzeramento viene ottimizzato dalla piattaforma parallela in qualcosa di simile a:
 
 \begin{breakablealgorithm}
 \begin{algorithmic}[1]
@@ -63,9 +63,11 @@ La durata invece $T_\infty(n)$ si ha che il primo blocco \textbf{parallel} ha du
 
 Il lavoro di questa procedura in funzione di $n = j-i+1$ è $T_1(n)= 2T_1(n/2)+ C = \Theta(n)$. $T_\infty(n)$ è invece uguale a $T_\infty(n/2)+C = \Theta(\log(n))$ che deve essere sommata alla durata del blocco, che in questo caso è costante.
 
-In modo simile a prima il secondo blocco ha complessità $\Theta(\log(n)) +\Theta(n) = \Theta(n)$.
+Si ha quindi che quando viene calcolata la durata di un \textbf{parallel for} c'è da tenere in considerazione un $\Theta(\log n )$ dovuto al lavoro svolto dalla piattaforma parallela per parallelizzare le istruzioni.
 
-Si ha quindi che quando c'è un parallel c'è sempre una costante $\log(n)$ da sommare alla complessità a causa dell'implementazione del for.
+In modo simile a prima il secondo blocco ha complessità $\Theta(\log n ) +\Theta(n) = \Theta(n)$.
+
+Si ha quindi che quando c'è un parallel c'è sempre una costante $\log n$ da sommare alla complessità a causa dell'implementazione del for.
 
 $T_\infty$ di tutto l'algoritmo è quindi $\Theta(n)$.
 
@@ -74,6 +76,8 @@ $T_\infty$ di tutto l'algoritmo è quindi $\Theta(n)$.
 Se l'esecuzione dell'algoritmo fornisce sempre lo stesso risultato viene detto \textbf{deterministico} e questo avviene quando l'ordine di esecuzione degli strand non è influente sul risultato.
 
 Se invece l'ordine è influente sul risultato si ha che l'algoritmo è \textbf{non deterministo} e questo può essere causato da delle \textbf{race condition} ovvero quando due strand eseguiti in parallelo accedono alla stessa locazione di memoria.
+
+Ci sono vari modi per evitare queste situazioni, noi ci limitiamo ad analizzare del codice che non le prevede, ovvero che tutte le operazioni eseguite in parallelo sono tra loro \textbf{indipendenti}.
 
 \subsection{Una lezione di scacchi}\label{una-lezione-di-scacchi}
 
@@ -96,6 +100,42 @@ $$T_{512} = 2048/512 + 1 = 5 \quad \text{e} \quad  T_{512} = 1024/512 + 8 = 10$$
 
 Morale della favola, diminuire il lavoro non sempre porta ad una riduzione della durata.
 
+\section{Moltiplicazione di due matrici}
+
+\begin{breakablealgorithm}
+	\caption{\textsc{P-Square-Matrix-Multiply}: moltiplicazione di due matrici parallelizzata}
+	\begin{algorithmic}[1]
+		\Function{P-Square-Matrix-Multiply}{A,B}
+			\State $n \gets A.rows$
+			\State $C \gets n \times n $ Matrix
+			\State \textbf{parallel}
+			\For{$i = 1 \textbf{ to } n$}
+				\State \textbf{parallel}
+				\For{$j = 1 \textbf{ to } n$}
+					\State $C_{i,j} \gets 0$
+					\For{$k = 1 \textbf{ to } n$}
+						\State $C_{i,j} \gets C_{i,j} + a_{i,j} \cdot B_{i,j}$
+					\EndFor
+				\EndFor
+			\EndFor
+			\State \Return $C$
+		\EndFunction
+	\end{algorithmic}
+\end{breakablealgorithm}
+
+Il lavoro svolto da questo algoritmo è lo stesso delle versione sequenziale, si ha quindi $T_1(n) = \Theta(n^3)$.
+
+Per quanto riguarda la durata, c'è un tempo costante per l'inizializzazione delle matrice, due complessità logaritmiche per i due loop paralleli innestati e un $\Theta(n)$ per il for non parallelo. Si ha quindi:
+
+\begin{align*}
+	T_\infty(n) &= O(1) + \Theta(\log n) + \Theta(\log n) + \Theta(n) \\
+		&= \Theta(n)
+\end{align*}
+
+Il parallelismo è quindi $\Theta(n^2)$ e può essere migliorato utilizzando l'approccio divide-and-conquer del metodo di Strassen.
+
+Da notare che il terzo ciclo for di questo algoritmo non può essere parallelizzato perché altrimenti si creerebbero delle race condition.
+
 \section{Merge Sort}\label{merge-sort}
 
 La versione sequenziale dell'algoritmo prende un array \emph{A} e due indici \emph{p} e \emph{r} e deve ordinare la porzione dell'array compresa tra \emph{p} e \emph{r}.
@@ -114,9 +154,9 @@ La versione sequenziale dell'algoritmo prende un array \emph{A} e due indici \em
 	\end{algorithmic}
 \end{breakablealgorithm}
 
-Il lavoro $T_1(n)$ è $\Theta(n \log(n))$ che deriva dalla versione sequenziale del \textsc{MergeSort}.
+Il lavoro $T_1(n)$ è $\Theta(n \log n)$ che deriva dalla versione sequenziale del \textsc{MergeSort}.
 
-La durata è invece uguale ad un tempo costante, più la massima durata delle chiamata ricorsive, che possono essere considerate uguali, più la durata del merge, che se viene fatto in modo sequenziale è $\Theta(n)$. 
+La durata è invece uguale ad un tempo costante, più la massima durata delle chiamate ricorsive, che possono essere considerate uguali, più la durata del merge, che se viene fatto in modo sequenziale è $\Theta(n)$. 
 
 Si ha quindi che 
 
@@ -124,7 +164,7 @@ $$T_\infty = T_\infty(n/2) + \Theta(n) = \Theta(n)$$
 
 (\emph{per il metodo dell'esperto o qualcosa del genere}).
 
-Il parallelismo di questo algoritmo risulta quindi essere $\Theta(\log(n))$ che non risulta essere buono.
+Il parallelismo di questo algoritmo risulta quindi essere $\Theta(\log n)$ che non è buono.
 
 Questo perché nell'ordinamento di un numero elevato di elementi, si riesce a raggiungere uno speedup lineare con pochi processori, ma all'aumentare del numero dei processori l'algoritmo non scala.
 

@@ -20,7 +20,7 @@ Dobbiamo quindi calcolare il numero di regioni che venogno suddivise durante la 
 
 In una partizione i lati verticali sono in corrispondenza dei vertici dei segmenti inseriti. Per ogni vertice di un segmento inserito ci sono al più due lati sulla sua verticale: quello che congiunge il vertice con il segmento immediatamente sopra e quello che lo congiunge con quello immediatamente sotto.
 
-Siccome i vertici dei segmento sono $2n$, il numero totale di vertici della partizione trapezioidale è minore o uguale di $6n$. \todo{Da dove viene il 6n?}
+Siccome i vertici dei segmento sono $2n$, il numero totale di vertici della partizione trapezioidale è minore o uguale di $6n$. 
 
 Possiamo vedere la partizione trapezioidale come un grafo planare con al più $6n+1$ vertici, facendo convergere tutti i lati illimitati ad un vertice \textit{z}.
 
@@ -42,7 +42,7 @@ $$
 f = 2 + e -v \leq 2v - 4 \leq 12n -2 = O(n)
 $$
 
-Dunque il numero di regioni della partizione trapezioidale di partenza finale è $O(n)$ e quindi anche le regioni suddivise durante la costruzioni sono $O(n)$.
+Dunque il numero di regioni della partizione trapezioidale di finale è $O(n)$ e quindi anche le regioni suddivise durante la costruzioni sono $O(n)$.
 
 Siccome abbiamo attribuito un costo ammortizzato costante ad ogni regione che viene suddivisa, il coso totale dell'esecuzione dei secondi passi è $O(n)$ e quindi l'interno costo della procedura è dato da
 
@@ -61,7 +61,7 @@ C'è una serie di segmenti che deve essere proiettata su un altro segmento secon
 
 L'idea è quella di effettuare prima la proiezione dei segmenti più lontani, spostandosi via via su quelli più vicini.
 
-Possiamo assumere che effettuare la proiezione di un segmento sia fatta in tempo costante dalla scheda grafica.
+Possiamo assumere la proiezione di un segmento sia fatta in tempo costante dalla scheda grafica.
 
 Se ci sono dei segmenti che si intersecano è necessario suddividere uno dei due in due segmenti, stando attenti che con le coordinate intere non possiamo calcolare il punto di intersezione di un segmento.
 
