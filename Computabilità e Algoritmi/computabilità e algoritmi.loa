@@ -1,33 +1,34 @@
-\contentsline {algorithm}{\numberline {1}{\ignorespaces Trasponi: calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze\relax }}{71}{algorithm.1}
-\contentsline {algorithm}{\numberline {2}CRM/CT: Chiusura di un grafo}{72}{algorithm.2}
-\contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{73}{algorithm.3}
-\contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{76}{algorithm.4}
-\contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{81}{algorithm.5}
-\contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{83}{algorithm.6}
-\contentsline {algorithm}{\numberline {7}Ingenuo: Pattern matching ingenuo}{90}{algorithm.7}
-\contentsline {algorithm}{\numberline {8}Ingenuo: Pattern matching ingenuo}{90}{algorithm.8}
-\contentsline {algorithm}{\numberline {9}Prefisso: Preelaborazione del prefisso in tempo lineare}{94}{algorithm.9}
-\contentsline {algorithm}{\numberline {11}KMP: Algorimto di Knuth-Morris-Pratt}{97}{algorithm.11}
-\contentsline {algorithm}{\numberline {12}BM: Pattern matching con BoyerMoore}{100}{algorithm.12}
-\contentsline {algorithm}{\numberline {13}KMP-Online: Algoritmo di Knuth-Morris-Pratt online}{102}{algorithm.13}
-\contentsline {algorithm}{\numberline {14}ShiftAnd: Algoritmo }{104}{algorithm.14}
-\contentsline {algorithm}{\numberline {16}RabinKarp: Algoritmo di RabinKarp}{107}{algorithm.16}
-\contentsline {algorithm}{\numberline {17}\textsc {MathukrishnanTest}: verifica della presenza di false occorrenze}{109}{algorithm.17}
-\contentsline {algorithm}{\numberline {18}Ukkonen: Descrizione generale dell'algoritmo }{112}{algorithm.18}
-\contentsline {algorithm}{\numberline {19}P-Fib: fibonacci in versione parallela}{120}{algorithm.19}
-\contentsline {algorithm}{\numberline {20}\textsc {MatVec}: Moltiplicazione di una matrice per un vettore}{124}{algorithm.20}
-\contentsline {algorithm}{\numberline {23}\textsc {P-Merge}: merge di due array parallelizzato}{127}{algorithm.23}
-\contentsline {algorithm}{\numberline {24}\textsc {P-Merge-Sort}: merge sort parallelizzato bene}{128}{algorithm.24}
-\contentsline {algorithm}{\numberline {26}\textsc {P-Scan}: funzione principale}{129}{algorithm.26}
-\contentsline {algorithm}{\numberline {27}\textsc {P-Scan-Up}}{129}{algorithm.27}
-\contentsline {algorithm}{\numberline {28}\textsc {P-Scan-Up}}{130}{algorithm.28}
-\contentsline {algorithm}{\numberline {29}\textsc {Angle-Left}: angolazione di un segmento rispetto ad un segmento di riferimento}{132}{algorithm.29}
-\contentsline {algorithm}{\numberline {30}\textsc {Turn-Left}: rotazione rispetto ad un segmento}{132}{algorithm.30}
-\contentsline {algorithm}{\numberline {31}\textsc {Segment-Intersect}: due segmenti si intersecano?}{133}{algorithm.31}
-\contentsline {algorithm}{\numberline {32}\textsc {Any-Segment-Intersect}: intersezioni in un insieme di segmenti}{136}{algorithm.32}
-\contentsline {algorithm}{\numberline {34}\textsc {Graham-Scan}: algoritmo per la costruzione dell'involucro convesso}{139}{algorithm.34}
-\contentsline {algorithm}{\numberline {35}\textsc {Jarvis}: algoritmo per la costruzione dell'involucro convesso}{140}{algorithm.35}
-\contentsline {algorithm}{\numberline {36}\textsc {Precede}: confronto tra due segmenti}{146}{algorithm.36}
-\contentsline {algorithm}{\numberline {37}\textsc {Proietta}: proiezione utilizzando l'albero di partizionamento}{146}{algorithm.37}
-\contentsline {algorithm}{\numberline {38}\textsc {Partizione-Binaria}: costruzione dell'albero di partizione binaria}{147}{algorithm.38}
-\contentsline {algorithm}{\numberline {39}\textsc {Random-Partizione-Binaria}: partizione binaria casuale}{148}{algorithm.39}
+\contentsline {algorithm}{\numberline {1}{\ignorespaces Trasponi: calcolo del grafo trasposto utilizzando la rappresentazione con la lista delle adiacenze\relax }}{80}{algorithm.1}
+\contentsline {algorithm}{\numberline {2}CRM/CT: Chiusura di un grafo}{81}{algorithm.2}
+\contentsline {algorithm}{\numberline {3}BFS: Esplorazione in ampiezza di un grafico}{82}{algorithm.3}
+\contentsline {algorithm}{\numberline {4}DFS: Visita di un grafo in profondit\IeC {\`a}}{85}{algorithm.4}
+\contentsline {algorithm}{\numberline {5}DFS-Visit: versione con classificazione degli archi}{90}{algorithm.5}
+\contentsline {algorithm}{\numberline {6}TS: ordinamento topologico di un grafo}{92}{algorithm.6}
+\contentsline {algorithm}{\numberline {7}Ingenuo: Pattern matching ingenuo}{99}{algorithm.7}
+\contentsline {algorithm}{\numberline {8}Ingenuo: Pattern matching ingenuo}{99}{algorithm.8}
+\contentsline {algorithm}{\numberline {9}Prefisso: Preelaborazione del prefisso in tempo lineare}{103}{algorithm.9}
+\contentsline {algorithm}{\numberline {11}KMP: Algorimto di Knuth-Morris-Pratt}{106}{algorithm.11}
+\contentsline {algorithm}{\numberline {12}BM: Pattern matching con BoyerMoore}{109}{algorithm.12}
+\contentsline {algorithm}{\numberline {13}KMP-Online: Algoritmo di Knuth-Morris-Pratt online}{111}{algorithm.13}
+\contentsline {algorithm}{\numberline {14}ShiftAnd: Algoritmo }{113}{algorithm.14}
+\contentsline {algorithm}{\numberline {16}RabinKarp: Algoritmo di RabinKarp}{116}{algorithm.16}
+\contentsline {algorithm}{\numberline {17}\textsc {MathukrishnanTest}: verifica della presenza di false occorrenze}{118}{algorithm.17}
+\contentsline {algorithm}{\numberline {18}Ukkonen: Descrizione generale dell'algoritmo }{121}{algorithm.18}
+\contentsline {algorithm}{\numberline {19}P-Fib: fibonacci in versione parallela}{129}{algorithm.19}
+\contentsline {algorithm}{\numberline {20}\textsc {MatVec}: Moltiplicazione di una matrice per un vettore}{134}{algorithm.20}
+\contentsline {algorithm}{\numberline {22}\textsc {P-Square-Matrix-Multiply}: moltiplicazione di due matrici parallelizzata}{136}{algorithm.22}
+\contentsline {algorithm}{\numberline {24}\textsc {P-Merge}: merge di due array parallelizzato}{137}{algorithm.24}
+\contentsline {algorithm}{\numberline {25}\textsc {P-Merge-Sort}: merge sort parallelizzato bene}{139}{algorithm.25}
+\contentsline {algorithm}{\numberline {27}\textsc {P-Scan}: funzione principale}{140}{algorithm.27}
+\contentsline {algorithm}{\numberline {28}\textsc {P-Scan-Up}}{140}{algorithm.28}
+\contentsline {algorithm}{\numberline {29}\textsc {P-Scan-Down}}{142}{algorithm.29}
+\contentsline {algorithm}{\numberline {30}\textsc {Angle-Left}: angolazione di un segmento rispetto ad un segmento di riferimento}{145}{algorithm.30}
+\contentsline {algorithm}{\numberline {31}\textsc {Turn-Left}: rotazione rispetto ad un segmento}{145}{algorithm.31}
+\contentsline {algorithm}{\numberline {32}\textsc {Segment-Intersect}: due segmenti si intersecano?}{146}{algorithm.32}
+\contentsline {algorithm}{\numberline {33}\textsc {Any-Segment-Intersect}: intersezioni in un insieme di segmenti}{152}{algorithm.33}
+\contentsline {algorithm}{\numberline {35}\textsc {Graham-Scan}: algoritmo per la costruzione dell'involucro convesso}{155}{algorithm.35}
+\contentsline {algorithm}{\numberline {36}\textsc {Jarvis}: algoritmo per la costruzione dell'involucro convesso}{156}{algorithm.36}
+\contentsline {algorithm}{\numberline {37}\textsc {Precede}: confronto tra due segmenti}{162}{algorithm.37}
+\contentsline {algorithm}{\numberline {38}\textsc {Proietta}: proiezione utilizzando l'albero di partizionamento}{162}{algorithm.38}
+\contentsline {algorithm}{\numberline {39}\textsc {Partizione-Binaria}: costruzione dell'albero di partizione binaria}{163}{algorithm.39}
+\contentsline {algorithm}{\numberline {40}\textsc {Random-Partizione-Binaria}: partizione binaria casuale}{164}{algorithm.40}

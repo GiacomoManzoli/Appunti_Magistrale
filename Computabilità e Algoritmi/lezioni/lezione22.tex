@@ -15,13 +15,12 @@ Così facendo durante la costruzione dell'albero, quando viene esteso il cammino
 Per ogni albero implicito $ I_i $, ogni nodo esplicito ha un suffix link uscente (\textbf{Lemma 5.4}), perché se durante la fase \textit{i}-esima per estendere il suffisso $ S[j,i] $, viene creato un nuovo nodo non foglia con etichetta $ x\alpha $ ($x\alpha$ prefisso di $ S[j,i] $) allora:
 
 \begin{itemize}
-	\item o nell'albero corrente esiste già un nodo interno esplicito con etichetta $\alpha$
-	\item oppure tale nodo verrà creato immediatamente dopo con l'estensione del suffisso successivo $ S[j+1,i] $
+	\item o nell'albero corrente esiste già un nodo interno esplicito con etichetta $\alpha$. Ad esempio perché la stringa $\alpha$ è un prefisso del suffisso $S[j+1, i-1]$ precedentemente inserito nell'albero.
+	\item oppure tale nodo verrà creato immediatamente dopo con l'estensione del suffisso successivo $ S[j+1,i] $.
+	
+	Questo perché un nuovo nodo interno esplicito \textit{v} con etichetta $ S[j,i] = x\alpha $ viene creato soltanto se il suffisso $ S[j,i] $ viene esteso con il caso 2, quando nell'albero corrente il cammino $ S[j,i] $ termina in un nodo interno implicito e tale cammino continua con un carattere \textit{c} diverso da $S[i+1]$.
+	Quindi nell'albero corrente c'è anche il cammino di etichetta $S[j+1,i] = \alpha$ che ha una continuazione che inizia con il carattere \textit{c}.
 \end{itemize}
-
-Questo perché un nuovo nodo interno esplicito \textit{v} con etichetta $ S[j,i] = x\alpha $ viene creato soltanto se il suffisso $ S[j,i] $ viene esteso con il caso 2, quando nell'albero corrente il cammino $ S[j,i] $ termina in un nodo interno implicito e tale cammino continua con un carattere \textit{c} diverso da $S[i+1]$.
-
-Quindi nell'albero corrente c'è anche il cammino di etichetta $S[j+1,i] = \alpha$ che ha una continuazione che inizia con il carattere \textit{c}.
 
 Dunque il nodo $ w $ con etichetta $ S[j+1, i]  = \alpha$ è un nodo interno che può essere esplicito o implicito. Se è esplicito $w = s(v)$ altrimenti, il cammino di etichetta $ S[j+1, i] = \alpha $ che termina nel nodo \textit{w} può continuare solo con \textit{c} e quindi nel passo successivo l'estensione del suffisso $ S[j+1,i] $ sostituisce il nodo implicito con un nodo esplicito per cui $s(v) = w$.
 
@@ -35,7 +34,7 @@ In altre parole, in ogni albero dei suffissi impliciti $ I_i $, se un nodo inter
 
 \subsubsection{Costruzione dell'albero utilizzando i suffix link}
 
-Nella fase di costruzione dell'albero $ I_{i+1} $ (fase $ i $-esima), l'algoritmo di Ukkonen cerca i nodi in cui terminano i suffissi $ S[j,i] $ per estenderli con il carattere $ S[i+1] $ (Nella fase $i$-esima viene esteso l'albero implicito $I_i$ per ottenere l'albero implicito $_{i+1}$).
+Nella fase di costruzione dell'albero $ I_{i+1} $ (fase $ i $-esima), l'algoritmo di Ukkonen cerca i nodi in cui terminano i suffissi $ S[j,i] $ per estenderli con il carattere $ S[i+1] $ (Nella fase $i$-esima viene esteso l'albero implicito $I_i$ per ottenere l'albero implicito $I_{i+1}$).
 
 Il cammino relativo al suffisso $ S[1,i] $ sarà sempre presente e terminerà ogni volta in una foglia numerata, quindi questo può essere aggiornato sempre in tempo costante utilizzando il caso 1 e memorizzando un puntatore alla foglia.
 
@@ -48,7 +47,7 @@ A questo punto, l'algoritmo per estendere il suffisso $ S[j,i] $ deve cercare ne
 Se \textit{v} è la radice, l'algoritmo si comporta come la versione ingenua e cerca il nodo a partire da essa.
 Se invece \textit{v} è un nodo interno, per il corollario precedente, \textit{v} ha un suffix link $ s(v) $ e dato che l'etichetta di \textit{v} è un prefisso di $ x\alpha $, l'etichetta di $ s(v) $ è un prefisso di $\alpha$ e quindi per cercare il nodo con etichetta $ \alpha $ è possibile partire da $ s(v) $.
 
-Più in dettaglio, l'estensione del suffisso $ S[j-1,i] $ avviene come segue:
+Più in dettaglio, l'estensione del suffisso $ S[j,i] $ avviene come segue:
 
 \begin{enumerate}
 	\item Sia $\beta$ l'etichetta del nodo $ s(v) $ e $ S[j,i] = \alpha = \beta\gamma $
@@ -69,7 +68,7 @@ Come esempio vedi la figura \ref{sadefe2}
 Combinando il tutto l'algoritmo per l'estensione di un suffisso diventa:
 
 \begin{enumerate}
-	\item Partendo dal noto $ w $ dove termina il suffisso $ S[j,i] $ e risalendo verso la radice, cerca il primo nodo esplicito \textit{v} che o ha un suffix link oppure è la radice. Per i corollari precedenti richiede di risalire al massimo di un solo arco.
+	\item Partendo dal nodo $ w $ dove termina il suffisso $ S[j,i] $ e risalendo verso la radice, cerca il primo nodo esplicito \textit{v} che o ha un suffix link oppure è la radice. Per i corollari precedenti richiede di risalire al massimo di un solo arco.
 	
 	Sia $\gamma$ l'etichetta, eventualmente nulla, del cammino dal nodo \textit{v} al nodo \textit{w}.
 	
@@ -111,7 +110,7 @@ $$
 l\big(s(v)\big) \geq l\big(v\big) -1
 $$
 
-Questo perché ogni nodo esplicito che precede \textit{v}, esclusa la radice, ha un suffix link che punto ad un nodo che precede $s(v)$. Infatti se l'etichetta del cammino di $v$ è $x\beta$, prefisso del suffisso precedente $S[j,i]$, l'etichetta di cammino di $s(v)$ è $\beta$, prefisso del suffisso $S[j+1,i]$.
+Questo perché ogni nodo esplicito che precede \textit{v}, esclusa la radice, ha un suffix link che punta ad un nodo che precede $s(v)$. Infatti se l'etichetta del cammino di $v$ è $x\beta$, prefisso del suffisso precedente $S[j,i]$, l'etichetta di cammino di $s(v)$ è $\beta$, prefisso del suffisso $S[j+1,i]$.
 
 Usando quindi lo skip/count, ogni fase dell'algoritmo di Ukkonen richiede tempo $O(n)$.
 
@@ -127,8 +126,8 @@ Siccome $l$ rimane sempre $\leq i$, ogni arco ha un'etichetta di almeno un carat
 Ricapitolando:
 \begin{itemize}
 	\item Estendere un suffisso con uno dei 3 casi viene fatto in tempo costante, l'importante è trovare cammino dell'albero da estendere
-	\item Utilizzano il suffix-link e lo skip/count ogni fase, ovvero l'estensione dell'albero dei suffissi $I_i$ per la stringa $S[1,i]$ nell'albero dei suffissi $I_{i+1}$ per la stringa $S[1,i+1]$, può essere fatta in $O(n)$, questo perché entrambi gli accorgimenti velocizzano la ricerca dei cammini.
-	\item Per ottenere l'albero dei suffissi per la stringa sono necessari $n$ fasi.
+	\item Utilizzando il suffix-link e lo skip/count ogni fase, l'estensione dell'albero dei suffissi $I_i$ per la stringa $S[1,i]$ nell'albero dei suffissi $I_{i+1}$ per la stringa $S[1,i+1]$, può essere fatta in $O(n)$, questo perché entrambi gli accorgimenti velocizzano la ricerca dei cammini e il numero di archi discesi durante la fase è al massimo $3i = O(n)$.
+	\item Per ottenere l'albero dei suffissi per la stringa sono necessarie $n$ fasi.
 \end{itemize}
 
 In tutto si ha una complessità di $O(n^2)$.
@@ -139,7 +138,7 @@ Al momento l'albero dei suffissi può richiedere uno spazio $O(n^2)$ e ovviament
 
 Questa occupazione in spazio deriva dal fatto che, anche se i nodi dell'albero non possono essere più di $2n-1$, la somma delle lunghezze delle etichette può richiedere $O(n^2)$. I nodi dell'albero sono le $n$ foglie ed al più $n-1$ nodi interni (perché ogni nodo ha almeno due figli). Nel caso di una stringa con tutti i caratteri distinti, l'albero dei suffissi è costituito soltanto dalla radice e dalle $n$ foglie e la somma delle lunghezze delle etichette è $\sum_{i=1}^n i = O(n^2)$.
 
-La soluzioni è quindi quella di rappresentare l'etichetta di un arco con una coppia di indici $(p,q)$ tale che l'etichetta sia $\beta = S[p,q]$, resta inoltre possibile calcolare la lunghezza per effettuare lo skip count con $b = q -p+1$.
+La soluzione è quindi quella di rappresentare l'etichetta di un arco con una coppia di indici $(p,q)$ tale che l'etichetta sia $\beta = S[p,q]$, resta inoltre possibile calcolare la lunghezza per effettuare lo skip count con $b = q -p+1$.
 
 Utilizzando le coppie di indici lo spazio richiesto per memorizzare un'etichetta diventa costante.
 

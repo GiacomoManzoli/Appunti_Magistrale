@@ -14,6 +14,8 @@ Due processori sono connessi se le loro due rappresentazioni binarie differiscon
 
 L'algoritmo \textbf{bit a bit} consiste nel fissare un bit della destinazione alla volta: l'algoritmo confronta i bit della destinazione con i bit del processore in cui si trova attualmente il pacchetto e lo invia sul canale corrispondente al primo bit diverso.
 
+Questo algoritmo è \textbf{ignaro} in quanto calcola il percorso del pacchetto prendendo in considerazione solamente il processore di partenza e quello di arrivo, senza considerare il percorso degli altri pacchetti.
+
 Ad esempio, assumendo di avere $k=4$ e di dover mandare un pacchetto da $i = 1011$ a $d_i = 1100$. Per trovare un cammino si deve cercare di rendere simili i codici binari, ovvero si passa prima per $1111$ e $1101$, per arrivare in fine a $1100$.
 
 \subsection{Algoritmo randomizzato}\label{una-prima-versione-dellalgoritmo-randomizzato}
@@ -41,7 +43,7 @@ Sia $s$ l'ultima posizione in cui le due rappresentazioni binarie di $i$ e $j$ d
 
 Se $s \geq t$ i due percorsi non hanno processori in comune e quindi non si incrociano mai.
 
-Se $s  < t$ i dure pacchetti stanno su processori distinti finché l'algoritmo non processa tutti i bit da $0$ a $s$, mentre transitano sugli stessi processori quando vengono processati i bit da $s+1$ a $t-1$, per poi finire su processori diversi dal bit $t$ in poi.
+Se $s  < t$ i due pacchetti stanno su processori distinti finché l'algoritmo non processa tutti i bit da $0$ a $s$, mentre transitano sugli stessi processori quando vengono processati i bit da $s+1$ a $t-1$, per poi finire su processori diversi dal bit $t$ in poi.
 
 Si ha quindi che il numero di processori in comune è dato da $t - s - 1$ e i canali in comune sono quindi $t-s-2$ e sono anche consecutivi tra loro.
 
@@ -84,7 +86,7 @@ $$
 r_i \leq \sum\limits_{j \neq i} X_{i,j} < \sum\limits_{j} X_{i,j} \leq \sum\limits_{i = 1}^{n} P(e_i)
 $$
 
-dove $p(e_i)$ è il numero totale di pacchetti che passano per il canale $e_i$.
+dove $P(e_i)$ è il numero totale di pacchetti che passano per il canale $e_i$.
 
 Si ha quindi che
 
@@ -94,7 +96,12 @@ $$
 
 Dal momento che le destinazioni intermedie sono scelte a caso, si ha che il valore atteso di $P(e_i)$ non dipende dal canale, dato che l'ipercubo è perfettamente simmetrico.
 
-Il valore atteso della lunghezza di un cammino generico è $E[m] = k/2$. Considerando che ci sono $k 2^k$ canali e che i canali percorsi sono $k/2 \cdot  2^{k}$, si ha che il valore atteso dei pacchetti che passano su un canale qualsiasi è $m/2$ che è minore o uguale di $k/2$.
+Il valore atteso della lunghezza di un cammino generico è $E[m] = k/2$, perché dal momento che la destinazione intermedia viene scelta casualmente, ogni bit ha probabilità 1/2 di essere diverso dal corrispondente bit del processore di partenza. 
+Considerando che ci sono $k 2^k$ canali e che il valore atteso della somma dei canali percorsi è $k/2 \cdot  2^{k}$, si ha che il valore atteso dei pacchetti che passano su un canale qualsiasi è $1/2$ e quindi
+
+$$
+\sum\limits_{i = 1}^{m} \textbf{E}[P(e_i)] = m/2 \leq k/2
+$$
 
 Quindi il ritardo medio di un singolo pacchetto minore o uguale di $k/2$.
 
@@ -120,7 +127,7 @@ $$
 
 ovvero la probabilità che un pacchetto impieghi più di $4k$ per arrivare a destinazione è minore di $2^{-6k}$.
 
-Siccome i pacchetti sono \emph{n}, la probabilità che almeno uno arrivi dopo $4k$ è minore o uguale di $2^{-5k} = 1/32^k$.
+Siccome i pacchetti sono \emph{n}, la probabilità che almeno uno arrivi dopo $4k$ è minore o uguale di $2^{-5k} = 1/32^k$. Analogamente, la probabilità che tutti i pacchetti arrivino a destinazione con un ritardo inferiore a $4k$ (ovvero in meno di $5k$) è $1-1/32^k$
 
 Tutto questo riguarda la prima fase.
 

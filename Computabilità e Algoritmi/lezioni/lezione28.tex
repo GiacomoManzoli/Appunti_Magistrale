@@ -252,4 +252,28 @@ L'idea è quella di considerare la semiretta destra che ha origine in $p$.
 
 Se il punto $p$ è interno al poligono, la semiretta si intersecherà con un numero dispari di lati perché deve limitarsi ad ``uscire'' dal poligono, mentre se il punto è esterno la semiretta può non intersecare mai il poligono, oppure attraversarlo, intersecando un numero pari di lati. Questo è tendenzialmente vero, tranne in alcuni casi particolari, quando la semiretta interseca uno o più vertici del poligono e quando uno o più lati del poligono sono contenuto nella semiretta.
 
-\todo{Completare}
+Per gestire i casi particolari occorre considerare anche il numero di vertici del poligono che hanno la stessa altezza del punto di interesse e quanti lati orizzontali del poligono sono contenuti/intersecati dalla semiretta destra.
+In base a questi valori è necessario aggiustare il il contatore delle intersezioni, perché ad esempio, se c'è un lato del poligono che è contenuto nella semiretta, l'algoritmo conta 3 intersezioni, sfasando i conti.
+
+\textbf{Quello che segue non è del tutto corretto.}
+
+L'idea è quindi quella di controllare il numero \textit{z} di lati orizzontali contenuti nella semiretta destra  ($O(n)$) e che hanno almeno uno degli estremi a destra di \textit{p}.
+
+Si può quindi calcolare il numero di intersezioni \textit{int} e poi aggiustarlo opportunamente prendendo in considerazione i casi particolari:
+
+\begin{itemize}
+	\item Se $z=0$, nessun lato del poligono è contenuto nella semiretta destra, il numero di intersezioni non deve essere modificato in quanto se la semiretta passa esattamente per un vertice del poligono, questa interseca due lati e quindi non altera i conti.
+	\item Se $z > 0$, controllo se \textit{p} appartiene ad uno dei lati.
+		\begin{itemize}
+			\item Se $p$ è contenuto in un lato, allora è anche interno al poligono (tecnicamente è di frontiera)
+			\item Se $p$ non è contenuto in un lato, allora il numero di intersezioni deve essere ridotto di $2z$, perché per ogni lato contenuto nella semiretta, vengono intersecati 3 lati del poligono:
+			$$
+			int = int - 2z
+			$$
+		\end{itemize}
+\end{itemize}
+
+Se alla fine degli aggiustamenti il numero di intersezioni è pari, allora \textit{p} è un punto esterno, in caso contrario è un punto interno.
+
+Per quanto riguarda la complessità, c'è un $O(n)$ per il calcolo di $z$, un $O(n)$ per il calcolo delle intersezioni e un $O(z)$ per il controllo se il punto $p$ è all'interno di uno dei lati che interseca la semiretta. Dal momento che $z$ è sicuramente $<n$ e che tutte queste complessità si sommano, l'algoritmo risponde in tempo $O(n)$. 
+ 

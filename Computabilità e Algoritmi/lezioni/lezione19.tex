@@ -103,7 +103,7 @@ Nell'esempio \emph{S=dabdac} è \emph{c} che fa da sentinella, se non ci fosse n
 
 L'\textbf{etichetta di un cammino} è la concatenazione delle etichette degli archi del cammino, mentre l'etichetta di un nodo \emph{u} è data dall'etichetta del cammino dalla radice al nodo.
 
-Se l'etichetta di un arco $ (u,v) $ tra due noti interni ha lunghezza \textit{k} maggiore di 1, l'arco è in realtà diviso in \textit{k} parti, una per ogni carattere dell'etichetta, mediante $ k-1 $ \textbf{nodi impliciti} le cui etichette sono la concatenazione dell'etichetta di \textit{u} con i caratteri dell'etichetta dell'arco $ (u,v) $ che precedono il nodo stesso.
+Se l'etichetta di un arco $ (u,v) $ tra due nodi interni ha lunghezza \textit{k} maggiore di 1, l'arco è in realtà diviso in \textit{k} parti, una per ogni carattere dell'etichetta, mediante $ k-1 $ \textbf{nodi impliciti} le cui etichette sono la concatenazione dell'etichetta di \textit{u} con i caratteri dell'etichetta dell'arco $ (u,v) $ che precedono il nodo stesso.
 
 \subsection{Matching esatto con l'albero dei suffissi}\label{matching-esatto-con-lalbero-dei-suffissi}
 
@@ -188,7 +188,7 @@ L'algoritmo di Ukkonen costruisce un albero dei suffissi implicito $ I_i $ per o
 			\State ``Costruisci $ I_0 $ ''
 			\For{$ i = 0 \textbf{ to } n $}
 				\For{$ j = 1 \textbf{ to } i+1 $}
-					\State ``Cera la file del cammino relativo al suffisso $ S[j,i] $ in $ I_i $''
+					\State ``Cerca la fine del cammino relativo al suffisso $ S[j,i] $ in $ I_i $''
 					\State ``Se necessario estendi il cammino con il carattere $S[i+1] $ in modo che il suffisso $ S[j,i] $ diventi un suffisso di $ S[1,i+1] $''
 				\EndFor
 			\EndFor
