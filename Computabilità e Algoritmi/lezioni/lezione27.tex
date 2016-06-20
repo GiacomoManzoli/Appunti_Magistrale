@@ -270,6 +270,33 @@ $$
 Il parallelismo dell'algoritmo risulta essere $\Theta(\frac{n}{\log n})$ che è molto buono.
 
 
+\subsection{Correttezza dell'algoritmo}
+
+Partiamo dalla funzione \textsc{P-Scan-Down}, la quale dato l'array di partenza e l'array di supporto contente le somme parziali delle varie parti sinistre, calcola nell'array finale il risultato.
+
+La procedura riceve in input in valore \textit{v} con il risultato parziale degli elementi a sinistra della porzione dell'array sul quale viene invocata la procedura. La prima chiamata viene fatta utilizzando il valore in posizione 1, dato che entrambe le procedure iniziano a lavorare dal secondo elemento, perché il primo basta che venga semplicemente ricopiato.
+
+Si ha quindi che se si verifica il caso base, ovvero la procedura viene invocata su un array con un solo elemento, viene effettuata la somma di \textit{v} con il corrispettivo elemento in input, la quale viene poi memorizzata nella corretta posizione dell'array con i risultati. Si ha quindi che il caso base gestito correttamente.
+
+Nel caso ricorsivo, si ha che viene calcolata la posizione centrale dell'array sul quale si sta lavorando e viene invocata ricorsivamente la procedura sulla due parti destre e sinistre. Alla procedura che lavora sulla parte sinistra viene passato come valore di \textit{v} lo stesso ricevuto come parametro, ovvero la somma parziale dei valori che si trovano a sinistra della porzione dell'array sul quale si sta lavorando ed è il valore corretto perché la parte sinistra inizia alla stessa posizione della porzione corrente. Si ha quindi che la procedura ricorsiva sinistra viene invocata correttamente e su una porzione di array inferiore, quindi si può assumere induttivamente che vengano effettuate le operazioni corrette.
+
+Per quando riguarda la parte destra, questa viene invocata con \textit{v} uguale a $v + T[k]$, ovvero la somma parziale della parte \textbf{a sinistra} della porzione corrente più la somma parziale della parte \textbf{sinistra} dell'array corrente e, assumendo che l'array \textit{T} sia stato calcolato correttamente, l'invocazione è corretta e quindi si può assumere induttivamente che vengano eseguiti i calcoli corretti.
+
+Per quanto riguarda \textsc{P-Scan-Up}, si ha che, dato l'array dei valori, deve essere calcolato l'array $T$ contenente le somme parziali, in modo che 
+
+$$
+T\big[\lfloor n/2 \rfloor \big] = \sum\limits_{i=1}^{n/2} x[i]
+$$
+
+e deve ritornare la somma di tutti gli elementi della porzione dell'array di input che gli è stata fornita.
+
+Nel caso base, con l'array contenente un solo elemento, si ha che il risultato parziale non viene calcolato perché la parte sinistra è vuota e viene ritornato il valore dell'unico elemento dell'array che è uguale alla somma di tutti gli elementi. Si ha quindi che il caso base viene gestito correttamente.
+
+Nel caso ricorsivo, viene calcolato l'elemento mediano ed invocata ricorsivamente la funzione sulle due porzioni dell'array. Dal momento che le invocazioni vengono effettuate su una porzione ridotta dell'array, si può assumere che queste ritorno i valori corretti.
+Si ha quindi che in $T[k]$ viene memorizzata la somma parziale della parte sinistra dell'array corrente, che è l'operazione corretta da fare, e che viene ritornato correttamente $T[k]+r$, ovvero la somma dei due parziali delle due parti, cioè la somma di tutti gli elementi dell'array d'invocazione.
+
+Dato che entrambe le funzioni sono corrette, anche \text{P-Scan} è corretta.
+
 \chapter{Geometria computazionale}
 
 Ci sono varie applicazioni della geometria computazionale

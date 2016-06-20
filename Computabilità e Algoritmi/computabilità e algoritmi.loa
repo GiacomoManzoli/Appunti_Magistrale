@@ -22,13 +22,13 @@
 \contentsline {algorithm}{\numberline {27}\textsc {P-Scan}: funzione principale}{140}{algorithm.27}
 \contentsline {algorithm}{\numberline {28}\textsc {P-Scan-Up}}{140}{algorithm.28}
 \contentsline {algorithm}{\numberline {29}\textsc {P-Scan-Down}}{142}{algorithm.29}
-\contentsline {algorithm}{\numberline {30}\textsc {Angle-Left}: angolazione di un segmento rispetto ad un segmento di riferimento}{145}{algorithm.30}
-\contentsline {algorithm}{\numberline {31}\textsc {Turn-Left}: rotazione rispetto ad un segmento}{145}{algorithm.31}
-\contentsline {algorithm}{\numberline {32}\textsc {Segment-Intersect}: due segmenti si intersecano?}{146}{algorithm.32}
-\contentsline {algorithm}{\numberline {33}\textsc {Any-Segment-Intersect}: intersezioni in un insieme di segmenti}{152}{algorithm.33}
-\contentsline {algorithm}{\numberline {35}\textsc {Graham-Scan}: algoritmo per la costruzione dell'involucro convesso}{155}{algorithm.35}
-\contentsline {algorithm}{\numberline {36}\textsc {Jarvis}: algoritmo per la costruzione dell'involucro convesso}{156}{algorithm.36}
-\contentsline {algorithm}{\numberline {37}\textsc {Precede}: confronto tra due segmenti}{162}{algorithm.37}
-\contentsline {algorithm}{\numberline {38}\textsc {Proietta}: proiezione utilizzando l'albero di partizionamento}{162}{algorithm.38}
-\contentsline {algorithm}{\numberline {39}\textsc {Partizione-Binaria}: costruzione dell'albero di partizione binaria}{163}{algorithm.39}
-\contentsline {algorithm}{\numberline {40}\textsc {Random-Partizione-Binaria}: partizione binaria casuale}{164}{algorithm.40}
+\contentsline {algorithm}{\numberline {30}\textsc {Angle-Left}: angolazione di un segmento rispetto ad un segmento di riferimento}{146}{algorithm.30}
+\contentsline {algorithm}{\numberline {31}\textsc {Turn-Left}: rotazione rispetto ad un segmento}{146}{algorithm.31}
+\contentsline {algorithm}{\numberline {32}\textsc {Segment-Intersect}: due segmenti si intersecano?}{147}{algorithm.32}
+\contentsline {algorithm}{\numberline {33}\textsc {Any-Segment-Intersect}: intersezioni in un insieme di segmenti}{153}{algorithm.33}
+\contentsline {algorithm}{\numberline {35}\textsc {Graham-Scan}: algoritmo per la costruzione dell'involucro convesso}{156}{algorithm.35}
+\contentsline {algorithm}{\numberline {36}\textsc {Jarvis}: algoritmo per la costruzione dell'involucro convesso}{157}{algorithm.36}
+\contentsline {algorithm}{\numberline {37}\textsc {Precede}: confronto tra due segmenti}{163}{algorithm.37}
+\contentsline {algorithm}{\numberline {38}\textsc {Proietta}: proiezione utilizzando l'albero di partizionamento}{163}{algorithm.38}
+\contentsline {algorithm}{\numberline {39}\textsc {Partizione-Binaria}: costruzione dell'albero di partizione binaria}{164}{algorithm.39}
+\contentsline {algorithm}{\numberline {40}\textsc {Random-Partizione-Binaria}: partizione binaria casuale}{165}{algorithm.40}
