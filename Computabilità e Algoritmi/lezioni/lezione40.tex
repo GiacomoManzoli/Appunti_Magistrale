@@ -13,7 +13,7 @@ Dimostrare che \textit{K} non è ricorsivo.
 
 \subsubsection{Soluzione}
 
-Assumiamo che \textit{K} sia ricorsivo,sia $e_0 \in \overline{K}$ e tale che $\phi_{e_0} = \emptyset$.
+Assumiamo che \textit{K} sia ricorsivo, sia $e_0 \in \overline{K}$ e tale che $\phi_{e_0} = \emptyset$.
 
 Dato un $x$, se $x \in K$ allora cerchiamo una funzione che lo manda in $e_0$ e se $x \in \overline{K}$ lo mandiamo in $e_1 \in K$ tale che $\phi_{e_1} = id$.
 
@@ -25,7 +25,7 @@ $$
 
 risulta essere totale, perché definita su ogni input e calcolabile, perché entrambe le funzioni caratteristiche sono calcolabili (\textbf{perché c'è l'assunzione che \textit{K} sia ricorsivo}).
 
-Per il secondo teorema di ricorsione esiste un punto fisso, $\exists e \: \phi_{f(e)} = \phi_e$.
+Per il secondo teorema di ricorsione esiste un punto fisso, $\exists e \:\: \phi_{f(e)} = \phi_e$.
 Per questo programma abbiamo due possibilità
 
 \begin{itemize}
@@ -54,9 +54,9 @@ $$
 \end{cases}
 $$
 
-$e_1 \in K$ dato che $\phi_{e_1}(e_1) = 1 \downarrow$, siccome ci sono infiniti indici per calcolare $\phi_{e_1}$, sia $e_2 \neq e_1$ tale che $\phi_{e_2} = \phi_{e_1}$.
+SI ha che $e_1 \in K$ perché $\phi_{e_1}(e_1) = 1 \downarrow$ e siccome ci sono infiniti indici per calcolare $\phi_{e_1}$, si può trovare $e_2 \neq e_1$ tale che $\phi_{e_2} = \phi_{e_1}$.
 
-Si ha che $e_2 \notin K$ dato che $\phi_{e_2}(e_2) = \phi_{e_1}(e_2) \updownarrow$, segue quindi che $K$ non è saturo.
+Si ha che $e_2 \notin K$ dato che $\phi_{e_2}(e_2) = \phi_{e_1}(e_2) \uparrow$, segue quindi che $K$ non è saturo.
 
 Resta da dimostrare che esiste $e_1$.
 
@@ -69,181 +69,14 @@ g(e,x) = \begin{cases}
 \end{cases} = 1(\mu z. |e-x|)
 $$
 
-Questa funzione è calcolabile per minimalizzazione illimitata e quindi per il teorema SMN  esiste una funzione $S : \mathbb{N} \rightarrow \mathbb{B}$ calcolabile e totale tale che $\phi_{S(e)}(x) = g(e,x)$.
+Questa funzione è calcolabile per minimalizzazione illimitata e quindi per il teorema SMN  esiste una funzione $S : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che $\phi_{S(e)}(x) = g(e,x)$.
 
 Siccome $S$ è calcolabile e totale, per il secondo teorema di ricorsione esiste $e_1$ tale che $\phi_{S(e_1)} = \phi_{e_1}$.
 Ovvero:
 
 $$\phi_{e_1}(x) = \phi_{S(e_1)}(x) = g(e_1, x) = \begin{cases}
-1 &x = e \\
+1 &x = e_1 \\
 \uparrow &\text{altrimenti}
 \end{cases}$$
 
 $e_1$ è quindi il programma che cercavamo.
-
-\section{Soluzione di un'esame} 
-
-\subsection{Esercizio 1}
-
-Tipicamente è una dimostrazione vista a lezione, oppure molto simile.
-Non lo facciamo.
-
-\subsection{Esercizio 2}
-
-$A, B \subseteq \mathbb{N}$, $A \leq_m B$ se esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che $x \in A$ se e solo se $f(x) \in B$.
-
-\`{E} vero che per ogni $A \subseteq \mathbb{N}$, $A \leq_m A \cup \{0\}$? Che condizioni possono essere aggiunte perché questo sia vero?
-
-\subsubsection{Soluzione}
-
-Sembra ragionevole pensare che se si è in grado di decidere l'appartenenza a $A \cup \{0\}$, sia possibile definire anche l'appartenenza per $A$.
-
-Conviene quindi provare questa strada, ovvero cercare una funzione $f$ tale che se $x \in A$, allora $f(x) \in A\cup \{0\}$.
-
-Se $x =0$, $x \in \overline{A}$, devo quindi mandarlo in $\overline{A \cup \{0\} }$.
-
-$$
-f(x) = \begin{cases}
-x &x \neq 0 \\
-x_0 &x = 0
-\end{cases}
-$$
-
-Riassumendo, c'è un caso banale se $0 \in A$, perché $A \cup \{0\} = A$ e quindi $A \leq_m A$ e come funzione di riduzione posso utilizzare l'identità.
-
-Se invece $0 \in \overline{A}$, basta prendere un elemento $x_0 \neq 0 \notin A$ e ritornare quello, ovvero la funzione di riduzione risulta essere la $f$ sopra riportata.
-
-Resta da dimostrare che questa funzione è calcolabile e che funzioni da funzione di riduzione.
-Ovviamente è calcolabile perché può essere definita come
-
-$$
-f(x) = x \cdot \text{sg}(x) + x_0 \cdot  \overline{\text{sg}}(x)
-$$
-
-Per dimostrare che $f$ è funzione di riduzione da $A \leq_m A \cup \{0\}$:
-
-\begin{enumerate}
-	\item $x \in A$ ovvero $x \neq 0$, $f(x) = x \in A\cup\{0\}$ ed è corretto.
-	\item $x \notin A$, devo distinguere i due casi, se $x \neq 0$ si ha $f(x) = x$, ovvero $x \in \overline{A \cup \{0\}} $ ed è quello che vogliamo. Se invece $x = 0$, $f(x) = x_0$ e per costruzione $x_0 in \overline{A \cup \{0\}}$.
-\end{enumerate}
-
-$f$ si comporta quindi come una funzione di riduzione, ma funziona perché esiste $x_0$ e quindi il ragionamento fatto finora vale $A \neq \mathbb{N}  - \{0\}$.
-
-Se $A = \mathbb{N}  - \{0\}$, si ha che $A \cup \{0\} = \mathbb{N}$ e quindi non è possibile trovare un'immagine in $\overline{A \cup \{0\}}$ per $0$.
-
-Tornando alla domanda, non è sempre vero che $A \leq_m A \cup \{0\}$, perché se $A = \mathbb{N}-\{0\}$ una funzione di riduzione dovrebbe assicurare che $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale che $x \in A$ se e solo se $f(x) \in A \cup \{0\}$ perché non si riesce a trovare $f(0) \notin \mathbb{N}$.
-
-Per rispondere alla seconda parte si ha che $A \neq \mathbb{N} - \{0\}$ è condizione necessaria e \textbf{} per far valere la riduzione: \textbf{sufficiente} perché $A \neq \mathbb{N} - \{0\} \Rightarrow A \leq_m A \cup \{0\}$, due casi:
-
-\begin{itemize}
-	\item Se $0 \in A$: la riduzione può essere fatta trivialmente dalla funzione identità.
-	\item Se $0 \notin A $: sia $x_0 \neq 0$, $x_0 \notin A$ ed $x_0$ esiste per ipotesi. Così facendo è possibile definire $f(x)$ come prima e per quanto dimostrato è funzione di riduzione. 
-\end{itemize}
-
-La condizione è anche \textbf{necessaria} perché sennò vale il controesempio iniziale.
-
-In alternativa, un'altra condizione solamente sufficiente è quella che $0 \in A$, è più stretta rispetto la prima e quindi è una risposta peggiore.
-
-\subsection{Esercizio 3}
-
-Gli esercizi 3 e 4 sono spesso di questo tipo.
-
-Studiare la ricorsività dell'insieme $A = \{ x \in \mathbb{N} \: | \: x \in E_x \cup W_x \}$, ovvero dire se $A$ è ricorsivo o ricorsivamente enumerabile, e com'è il suo complementare.
-
-\subsubsection{Soluzione}
-
-Per sapere se è in $E_x$ posso provare tutti gli input, e questo si può fare anche se in alcuni input non termina, andando ad eseguire un po' di passi per ognuno dei valori fino a che non termina.
-Allo stesso modo posso provare se $x \in W_x$.
-
-Sembrerebbe quindi che $A$ sia ricorsivamente enumerabile.
-
-Per dimostrare che $A$ non è ricorsivo posso provare a ridurre $K \leq_m A$.
-
-Se avessi un programma $P$ che prende in input $x$ e risponde alla domanda $x \in A$? SI/NO, potrei usare questo programma per risolvere l'halting problem, perché potrei estendere il programma in modo che prima venga eseguito $P_x(x)$ su un input $y$ non rilevante e poi fornire il risultato a $P$.
-
-Voglio quindi una funzione $f$ calcolabile e totale, tale che $x \in K$ se e solo se $f(x) \in A$.
-
-Definisco quindi 
-
-$$
-g(x, y) = \begin{cases}
-\phi_x(x) & x \in K \\
-\uparrow &\text{altrimenti}
-\end{cases} = \Phi_U(x,x)
-$$
-
-questa funzione è calcolabile e quindi per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che $\phi_{f(x)}(y) = g(x,y)s$.
-
-$f$ è funzione di riduzione $K \leq_m A$ perché se:
-
-\begin{itemize}
-	\item $x \in K$: $\phi_{f(x)}(y) = g(x,y) = \phi_x(x) \downarrow \forall y$. In particolare $W_{f(x)} = \mathbb{N}$ e quindi per ogni valore di $x$ lo trovo nel dominio della funzione e quindi sta anche nell'unione tra il dominio e il codominio e quindi $f(x) \in A$.
-	\item $x \notin K$: $\phi_{f(x)}(y) = g(x,y) \uparrow \forall y$, ovvero $W_{f(x)} = \emptyset$ e $E_{f(x)} = \emptyset$ e quindi di sicuro $f(x)$ non compare nell'unione dei due, in particolare $f(x) \notin A$.
-\end{itemize}
-
-Dato che $K$ si riduce ad $A$ e che $K$ non è ricorsivo, anche $A$ non è ricorsivo.
-
-Per dimostrare che $A$ è RE si può provare a ridurre $A \leq_m K$ ma è sconsigliato, oppure si può definire la funzione semi-caratteristica di $A$ come funzione calcolabile.
-Ovvero:
-
-$$
-SC_A(x) = \begin{cases}
-1 &x \in A
-\uparrow
-\end{cases}  = p(x) =  1 \Big( \mu w . \underbrace{S(x, (w)_1, x, (w)_2)}_{x \in E_x} \vee \underbrace{H(x,x,(w)_3)}_{x \in W_x} \Big)
-$$
-
-$p(x)$ è quindi la funzione semi caratteristica  perché\footnote{Questa è opzionale, diciamo che se c'è del tempo da perdere conviene farla}:
-
-\begin{itemize}
-	\item $x \in A$:  $ x \in E_x $ oppure $ x \in W_x$
-	\begin{itemize}
-		\item $x \in E_x$: esiste $z$ tale che $\phi_x(z) = x$ e quindi esiste $t$ tale che $S(x,z,x,t)$ e quindi esiste anche un $w$ le cui componenti prime producono lo stesso risultato
-		\item $x \in W_x$: esiste $t$ tale che $H(x,x,t)$, quindi esiste $w$ tale che $(w)_3 = t$.
-	\end{itemize}
-	In entrambi i casi la minimalizzazione termina e produce $p(x) = 1$. Da notare che le osservazioni effettuate sono invertibili e quindi valgono tutte in se e solo se.
-\end{itemize}
-
-La funzione $p(x)$ è ovviamente calcolabile per minimalizzazione illimitata.
-
-Possiamo quindi dire che $A$ non è ricorsivo e che è RE, quindi per forza di cose $\overline{A}$ non è RE, perché altrimenti $A$ sarebbe ricorsivo.
-
-\subsection{Esercizio 4}
-
-Studiare la ricorsività dell'insieme $ B = \{ x \in \mathbb{N} | 1 \leq | E_x| \leq 2 \}$. Dire se è saturo.
-
-\subsubsection{Soluzione}
-
-L'insieme $B$ può essere definito come un insieme di programmi che calcolano funzioni con un codominio di cardinalità 1 o 2, quindi per definizione è saturo.
-
-\begin{align*}
-	B &= \{ x \in \mathbb{N} | \phi_x \in \mathcal{B} \} \\
-	\mathcal{B} &= \{ f \in \mathcal{C} | 1 \leq |cod(f) | \leq 2 \} \subseteq \mathcal{C}
-\end{align*}.
-
-$B$ probabilmente non è RE perché per determinare se un programma appartiene a $B$ è necessario provare tutti i possibili valori di input e verificare che in output vengono ottenuti al massimo 2 valori distinti.
-
-Considero la funzione 
-
-$$
-f(x) = x \dotminus 2
-$$
-
-Si ha che $cod(f) = \mathbb{N}$ e quindi $f \notin \mathcal{B}$ .
-
-Possiamo trovare una funzione
-
-$$
-\vartheta(x) = \begin{cases}
-	x \dotminus 2 &x \leq 2
-	\uparrow
-\end{cases}
-$$
-
-Per come è definita $\vartheta \subseteq f$, è finita e $cod(\vartheta) = \{0\}$, ovvero ha cardinalità 1 e quindi $\vartheta \in \mathcal{B}$. Abbiamo quindi una funzione $f$ che non sta in $\mathcal{B}$ ma che ammette una parte finita in $\mathcal{B}$ e quindi per il teorema di Rice Shapiro, $B$ non è RE.
-
-Per quanto riguarda $\overline{B}$ $\overline{\mathcal{B}} = \{ f | |cod(f)| < 1 \text{ oppure } |cod(f)| > 2 \}$, la funzione $g = \vartheta \notin \overline{\mathcal{B}}$ e $\varphi \subseteq g$, $\varphi$ finita e $\varphi \notin \overline{\mathcal{B}}$ si ha che $\overline{B}$ non è RE.
-
-Quindi sia $B$ che $\overline{B}$ non sono RE e quindi non sono neanche ricorsivi\footnote{Specificarlo è bene}.
-
-

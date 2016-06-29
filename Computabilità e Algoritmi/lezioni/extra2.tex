@@ -1,0 +1,201 @@
+\chapter{Soluzione compiti}
+
+\section{Appello 2015-07-16}
+
+\subsection{Esercizio 1 - Teorema di proiezione}
+
+$$
+P(x,\vec{y}) \text{ semi-dedibile} \Rightarrow \exists x \: P(x,\vec{y}) \text{ semi-decidibile}
+$$
+
+\subsubsection{Soluzione}
+
+Per il teorema di struttura: $P(\vec{x})$ è semi-decidibile $\Leftrightarrow$ esiste un predicato $Q(\vec{x}, y)$ tale che $P(\vec{x}) \equiv \exists y \: Q(\vec{x}, y)$.
+
+Quindi essendo $P(x,\vec{y})$ è semi-decidibile, per il teorema di struttura esiste $Q(x, \vec{y}, z)$ decidibile.
+
+Si può quindi riscrivere $P'$ come:
+
+$$
+P'(\vec{y}) \equiv \exists x \: \exists z Q(x, \vec{y}, z) \equiv \exists w . Q( (w)_1, \vec{y}, (w)_2)
+$$
+
+con $Q$ decidibile e quindi per il teorema di struttura $P'(\vec{y})$ è semi-decidibile.
+
+\subsection{Esercizio 2 - Teoria sulla riduzione}
+
+$$
+A \text{ è RE } \Leftrightarrow A \leq_m K
+$$
+
+\subsubsection{Soluzione}
+
+\paragraph{$(\Rightarrow)$} 
+
+Essendo $K$ RE, la sua funzione semi-caratteristica $SC_K(x)$ è calcolabile ed esiste per ipotesi una funzione di riduzione $f : \mathbb{N} \rightarrow \mathbb{N}$.
+
+Si possono quindi combinare queste due funzioni per definire la funzione semi-caratteristica di $A$:
+
+$$
+SC_A(x) = SC_K(f(x))
+$$ 
+
+la quale risulta calcolabile e quindi $A$ è RE.
+
+\paragraph{$(\Leftarrow)$}
+
+Per ipotesi $A$ è RE, quindi la sua funzione semi-caratteristica è calcolabile.
+
+Serve quindi una funzione di riduzione $f : \mathbb{N} \rightarrow \mathbb{N}$ per dimostrare che $A$ si riduce a $K$.
+
+Vogliamo quindi trovare una funzione tale che se $x \in A$, allora $f(x) \in K$, ovvero $\phi_{f(x)}(x) = \downarrow$ e che se $x \notin A$ allora $f(x) \notin K$ e quindi $\phi_{f(x)}(x) = \uparrow $.
+
+Possiamo quindi definire la funzione
+
+$$
+g(x,y) = \begin{cases}
+1 &\text{se } x \in A \\
+\uparrow &\text{altrimenti}
+\end{cases} = SC_A(x)
+$$
+
+Questa funzione è calcolabile perché equivale alla funzione semi-caratteristica di $A$. 
+
+Possiamo quindi utilizzare il teorema SMN per trovare una funzione calcolabile e totale che ritorni un programma che calcoli $g$:
+
+$$
+\phi_{f(x)}(y) = g(x,y)
+$$ 
+
+La funzione $f$ è quindi la funzione di riduzione cercata, perché:
+
+\begin{itemize}
+	\item $x \in A$: $\phi_{f(x)}(y)$ è $\downarrow \: \forall y$ ed in particolare $\phi_{f(x)}(x) \downarrow$ e quindi il programma $f(x) \in K$
+	\item $x \notin A$: $\phi_{f(x)}(y)$ è sempre indefinita ed in particolare $\phi_{f(x)}(x) $ è indefinita e quindi $f(x) \notin K$.
+\end{itemize}
+
+
+\subsection{Esercizio 3 - Studio della ricorsività (riduzione)}
+
+$$
+A = \{ x \in \mathbb{N} \:|\: \exists y \in E_x, \exists z \in W_x, x = y \cdot z  \}
+$$
+
+\subsubsection{Soluzione}
+
+L'insieme $A$ sembra essere RE perché per stabilire l'appartenenza ad $A$ di una determinato programma è necessario andare ad eseguirlo su un certo numero di valori, fino a che non viene trovata una coppia che soddisfa la condizione.
+
+La funzione semi-caratteristica può quindi essere scritta come:
+
+$$
+SC_A(x) = 1 \bigg( \mu w . \Big( S\big(x, (w)_1, (w)_2, (w_3)\big) \wedge H\big(x, (w)_4, (w)_5\big) \wedge \big( x = (w)_2 \cdot (w)_4 \big)  \Big) \bigg)
+$$
+
+che risulta calcolabile e quindi $A$ è RE.
+
+Il primo termine cerca un numero di passi $(w)_3$ entro i quali il programma $x$ produce un output $(w)_2 = y$ avendo in input $(w)_1$. In pratica prova vari valori di input per trovare i valori del dominio.
+
+Il secondo termine cerca tutti i valori di input $(w)_4$ che fanno terminare il programma $x$ in meno di $(w)_5$ passi.
+
+$A$ sembra inoltre essere non ricorsivo e questo può essere dimostrato riducendo $K \leq_m A$.
+
+Si vuole quindi una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ tale che se $x \in K$, ovvero il programma $x$ termina quando riceve in input se stesso, produca un programma $f(x)$ tale che ci siano almeno un elemento del dominio e uno del codominio che possono essere tra loro moltiplicati per ottenere l'indice del programma. 
+
+Viceversa se $x \notin K$, il programma $f(x)$ non deve avere questa coppia di valori nel dominio/codominio.
+
+\textbf{Osservazione}: basta trovare un programma che termina producendo in output 1 quando in input riceve se stesso. In questo caso si ha che $1 \in E_x$ e che $x \in W_x$ e quindi la condizione di appartenenza ad $A$ è soddisfatta.
+
+Si può quindi definire la funzione
+
+$$
+g(x,y) = \begin{cases}
+1 &\text{se } x \in K\\
+\uparrow &\text{altrimenti}
+\end{cases} = SC_K(x)
+$$
+
+tale funzione è calcolabile e quindi per il teorema SMN esiste una funzione $f$ tale che $\phi_{f(x)}(y) = g(x,y)$.
+
+Questa funzione è proprio quella di riduzione perché:
+
+\begin{itemize}
+	\item $x \in K$: $\phi_{f(x)}(f(x)) = 1$ e $f(x) \in W_{f(x)}$ e quindi $f(x) \in A$.
+	\item $x \notin K$: $\phi_{f(x)}$ è sempre indefinita e quindi $E_{f(x)} = W_{f(x)} = \emptyset$, non è quindi possibile trovare $y$ e $z$ e pertanto $f(x) \notin A$.
+\end{itemize}
+
+Dal momento che $A$ è RE e non è ricorsivo, $\overline{A}$ non è RE.
+
+\subsection{Esercizio 4 - Studio della ricorsività (Rice-Shapiro)}
+
+\begin{align*}
+	B &= \{ x \:| \: x \in \mathcal{B} \} \\
+	\mathcal{B} = \{ f \: |\: |dom(f) \ cod(f) | \geq 2 \}
+\end{align*}
+
+Ovvero $\mathcal{B}$ contiene tutte le funzioni che hanno il dominio con più di due elementi diversi dal codominio.
+
+\subsubsection{Soluzione}
+
+Dal momento che $\mathcal{B}$ descrive una proprietà (non banale) di una funzione, l'insieme è saturo e quindi di sicuro $B$ non è ricorsivo.
+
+L'idea è quindi quella di applicare Rice-Shapiro per dimostrare che $B$ non è RE. Per fare questo si può trovare una funzione $f \notin \mathcal{B}$ ma che ha almeno un parte finita $\vartheta \in \mathcal{B}$.
+
+$$
+f(x) = x \dotminus 2 = \begin{cases}
+0 &x \leq 2 \\
+x -2 
+\end{cases}
+$$
+
+In questo caso si ha $dom(f) = cod(f) = \mathbb{N}$, $| dom(f) \ cod(f)| = 0$ e quindi $f \notin \mathcal{B}$.
+
+Come parte finita di $f$ si può considerare
+
+$$
+\vartheta(x) = \begin{cases}
+0 & x \leq 2 \\
+\uparrow &\text{altrimenti}
+\end{cases}
+$$
+
+Si ha che $dom(\vartheta) = \{0,1,2\}$, $cod(f) = \{0\}$ e quindi $\vartheta \in \mathcal{B}$.
+
+Abbiamo quindi una funzione $f \notin \mathcal{B}$ che ha una parte finita $\vartheta \subseteq f$ che appartiene a $\mathcal{B}$ e quindi per Rice-Shapiro $B$ non è RE.
+
+Resta da valutare $\overline{\mathcal{B}} = \{ f \: | \: |dom(f) \ cod(f)| < 2 \}$, che può essere fatto allo stesso modo.
+
+Basta osservare che la funzione $1 \notin \overline{\mathcal{B}}$  e che ha come parte finita la funzione $\emptyset \in \overline{\mathcal{B}}$ e quindi sempre per Rice-Shapiro $\overline{\mathcal{B}}$ non è RE.
+
+
+\subsection{Esercizio 5 - Secondo teorema di ricorsione}
+
+Dimostrare che 
+
+$$
+ \exists x . W_x = \{ kx \: | \: k \in \mathbb{N} \}
+$$
+
+\subsubsection{Soluzione}
+
+Il secondo teorema di ricorsione afferma che data una funzione calcolabile e totale $h : \mathbb{N} \rightarrow \mathbb{N}$, esiste $e \in \mathbb{N}$ tale che $\phi_{h(e)} = \phi_e$.
+
+Come prima cosa è necessario cercare una funzione che produca un programma $f(x)$ con le caratteristiche desiderate, ovvero che termini quando riceve un multiplo di se stesso in input.
+
+Si può quindi definire la funzione
+
+$$
+g(x,y) = \begin{cases}
+k &\text{se } y = kx \text{ per qualche }k \\
+ \uparrow &\text{altrimenti}
+\end{cases} = \mu k . |kx - y|
+$$
+
+Essendo $g$ calcolabile, per il teorema SMN, esiste una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che il programma $f(x)$ calcoli $\phi_{f(x)}(y) = g(x,y)$.
+
+Si ha quindi che $W_{f(x)} =  \{ kx \: | \: k \in \mathbb{N} \}$, ma noi stiamo cercando un programma $e$.
+	
+Però la funzione $f$ soddisfa le condizioni del secondo teorema di ricorsione, quindi $\exists e \in \mathbb{N} \text{ tale che } \phi_e = \phi_{f(e)}$ e quindi si ha che
+
+$$
+W_e = W_{f(e)} =  \{ ke \: | \: k \in \mathbb{N} \}
+$$

@@ -21,8 +21,8 @@ Dimostriamo che $e$ esiste e per farlo consideriamo la funzione
 
 $$
 g(x,y) = \begin{cases}
-0 \: y \in [0,x] \\
-\uparrow
+0 & y \in [0,x] \\
+\uparrow &\text{altrimenti}
 \end{cases} = \mu z . y \dotminus x
 $$
 
@@ -32,8 +32,8 @@ Per il secondo teorema della ricorsione esiste un indice $e$ tale che $\phi_e = 
 
 $$
 \phi_e(y) = \phi_{S(e)}(y) = g(e,y) = \begin{cases}
-0 \: y \in [0,x] \\
-\uparrow
+0 & y \in [0,x] \\
+\uparrow &\text{altrimenti}
 \end{cases}
 $$
  
@@ -52,8 +52,8 @@ ovvero $W_e = [0,e]$ e quindi $e$ è proprio l'indice che cercavamo.
  Come prima cosa, dimostriamo che $A$ è saturo.
  
 \begin{align*}
- A &= \{ x \in \mathbb{N} | \phi_x \in \mathcal{A}\} \\
- \mathcal{A} &= \{ f \in \mathcal{C} | \mathbb{P} \in dom(f) \}
+ A &= \{ x \in \mathbb{N} \:|\: \phi_x \in \mathcal{A}\} \\
+ \mathcal{A} &= \{ f \in \mathcal{C} \:|\: \mathbb{P} \in dom(f) \}
 \end{align*}
 
 Per Rice Shapiro $A$ non è RE perché $id \in A$, ma per ogni $\vartheta \subseteq f$ finita, dato che $dom(\vartheta)$ è finito si ha che $\mathbb{P} \nsubseteq dom(\vartheta)$ e quindi $\vartheta \notin \mathcal{A}$.
@@ -95,13 +95,13 @@ Questa funzione $f$ è funzione di riduzione da $\overline{K} \leq_m A$ perché
 
 \section{Altro esercizio sulla ricorsività}
 
-$A = \{ x \in \mathbb{N} | \exists k . \phi_x(x+3k) \uparrow \}$, studiare la ricorsività.
+$A = \{ x \in \mathbb{N} \:|\: \exists k \:.\: \phi_x(x+3k) \uparrow \}$, studiare la ricorsività.
 
 \subsection{Soluzione}
 
 Probabilmente questo insieme non è RE perché ci si chiede se la funzione non è definita per certi valori.
 
-Per quanto riguarda $A = \{ x | \forall k \phi_x(x+3k)\downarrow \}$, anche in questo caso probabilmente non è RE, perché l'insieme è quantificato universalmente.
+Per quanto riguarda $A = \{ x \:|\: \forall k \:\phi_x(x+3k)\downarrow \}$, anche in questo caso probabilmente non è RE, perché l'insieme è quantificato universalmente.
 
 Tra l'altro l'insieme probabilmente non è saturo perché non riguarda una caratteristica della funzione.
 
@@ -111,8 +111,8 @@ Si può quindi definire
 
 $$
 g(x,y) = \begin{cases}
-\uparrow \: x \in \overline{K} \\
-1 \: x \in K
+\uparrow & x \in \overline{K} \\
+1 & x \in K
 \end{cases} = SC_K(x)
 $$
 
@@ -198,9 +198,9 @@ Sappiamo che $S \notin \overline{\mathcal{A}}$ e consideriamo
 
 $$
 sm(x) = \begin{cases}
-	2 \text{ se } x = 0
-	1 \text{ se } x = 1
-	x+1 
+	2 &\text{ se } x = 0 \\
+	1 &\text{ se } x = 1 \\
+	x+1 &\text{altrimenti}
 \end{cases}
 $$
 
@@ -210,8 +210,8 @@ Possiamo considerare la parte finita di $sm$:
 
 $$
 \vartheta(x) = \begin{cases}
-	1 \text{ se } x= 1\\
-	\uparrow
+	1 &\text{ se } x= 1\\
+	\uparrow&\text{altrimenti}
 \end{cases}
 $$
 

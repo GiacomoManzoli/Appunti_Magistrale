@@ -83,7 +83,7 @@ Siano due pacchetti $p_i$ e $p_j$ e $X_{ij}$ la variabile aleatoria che vale 1 s
 Così facendo si ha che il ritardo $r_i$ del pacchetto \emph{i} è dato da
 
 $$
-r_i \leq \sum\limits_{j \neq i} X_{i,j} < \sum\limits_{j} X_{i,j} \leq \sum\limits_{i = 1}^{n} P(e_i)
+r_i \leq \sum\limits_{j \neq i} X_{i,j} < \sum\limits_{j} X_{i,j} \leq \sum\limits_{i = 1}^{m} P(e_i)
 $$
 
 dove $P(e_i)$ è il numero totale di pacchetti che passano per il canale $e_i$.
@@ -91,7 +91,7 @@ dove $P(e_i)$ è il numero totale di pacchetti che passano per il canale $e_i$.
 Si ha quindi che
 
 $$
-E[r_i] \leq \sum\limits_{j \neq i} E[X_{i,j}] \leq \sum\limits_{j} E[X_{i,j}] \leq \sum\limits_{i = 1}^{n} E[P(e_i)]
+E[r_i] \leq \sum\limits_{j \neq i} E[X_{i,j}] \leq \sum\limits_{j} E[X_{i,j}] \leq \sum\limits_{i = 1}^{m} E[P(e_i)]
 $$
 
 Dal momento che le destinazioni intermedie sono scelte a caso, si ha che il valore atteso di $P(e_i)$ non dipende dal canale, dato che l'ipercubo è perfettamente simmetrico.
@@ -116,7 +116,7 @@ la probabilità che $X_{i,j}$ sia uguale a 1 è sicuramente minore di 1 e la med
 Sotto queste ipotesi è possibile applicare il limite di Chernov:
 
 $$
-Pr[X > (1 + \delta)\frac{k}{2}] \leq \Big[ \frac{e^h}{(1+\delta)^{1+\delta}} \big]^{k/2}
+Pr[X > (1 + \delta)\frac{k}{2}] \leq \Big[ \frac{e^\delta}{(1+\delta)^{1+\delta}} \big]^{k/2}
 $$
 
 Se prediamo $\delta = 7$, abbiamo che

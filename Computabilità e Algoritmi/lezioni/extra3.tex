@@ -1,0 +1,169 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = computabilità e algoritmi.tex
+% !TEX spellcheck = it-IT
+\section{Appello 2015-09-03}
+
+\subsection{Esercizio 1 - Minimalizzazione illimitata}
+
+Definizione della minimalizzazione illimitata e dimostrazione della chiusura rispetto ad essa.
+
+\subsubsection{Soluzione}
+
+Vedi §\ref{ex:minima}
+
+
+\subsection{Esercizio 2 - Funzione decrescente totale e non calcolabile}
+
+Esiste una funzione decrescente e non calcolabile?
+
+Decrescente:
+
+$$
+\forall x,y \in \mathbb{N} \: x \leq y \Rightarrow f(x) \geq f(y) 
+$$
+
+\subsubsection{Soluzione}
+
+\todo[inline]{verificare correttezza, perché mi sembra sbagliato}
+
+Tale funzione non esiste.
+
+Sia $f$ una funzione decrescente e totale. Si può quindi individuare $k = \{ f(x) \: | \: x \in \mathbb{N} \}$ e $x_0 \in \mathbb{N} $ tale che $f(x_0) = k$.
+
+Si ha quindi che $\forall x \geq x_0$, $f(x) \leq f(x_0) = k $ e quindi $f(x) = k$, perché $k$ è il minimo valore assunto dalla funzione.
+
+Si può quindi definire
+
+$$
+\vartheta(x) = \begin{cases}
+f(x) &\text{se } x < x_0 \\
+\uparrow &\text{altrimenti}
+\end{cases}
+$$
+
+la quale può essere utilizzata per definire
+
+$$
+g(x) = \begin{cases}
+\vartheta(x) &\text{ se } x < x_0 \\
+k \text{ altrimenti}
+\end{cases}
+$$
+
+Si potrebbe già concludere qui ma si può essere più precisi
+
+$$
+g(x) = \mu w. \Bigg(  \bigg( x < x_0 \wedge S\Big( e,x,(w)_1, (w)_2\Big) \bigg)   \vee \Big(   x \geq x_0 \wedge (w)_1 = k  \Big)   \Bigg)
+$$
+\todo[inline]{Anche questa cosa non ha molto senso IMHO}
+
+\subsection{Esercizio 3 - Ricorsività}
+
+Studiare la ricorsività di $A = \{ x \: | \: E_x = W_x +1  \}$ sapendo che se  $X \subseteq \mathbb{N}$, $X +1 = \{ x+1 \: | \: x \in \mathbb{N}\}$
+
+\subsubsection{Soluzione}
+
+Si può osservare che l'insieme è saturo in quanto contiene tutte le funzioni il cui codominio è il successore del dominio.
+
+Inoltre, probabilmente $A$ non è RE perché per poter verificare l'appartenenza di una funzione all'insieme è necessario provare tutti i valori del dominio.
+
+Si può quindi applicare Rice-Shapiro: la funzione $id$ non appartiene a $\mathcal{A}$ perché il suo dominio coincide con il codominio e la funzione $\emptyset$ appartiene ad $\mathcal{A}$ perché sia il codominio che il dominio sono l'insieme vuoto.
+
+Si ha quindi che $id \notin \mathcal{A}$, $\emptyset \in \mathcal{A}$ e $\emptyset$ è parte finita di $id$, quindi per il teorema di Rice-Shapiro $A$ non è RE.
+
+Resta da valutare $\overline{A}$ (saturo).
+
+Posso definire la funzione 
+
+$$
+f(x) = \begin{cases}
+1 &\text{se } x= 0,1 \\
+x &\text{altrimenti}
+\end{cases}
+$$
+
+che ha codominio $\mathbb{N} - \{ 0 \}$ e dominio $\mathbb{N}$, quindi $f \in \mathcal{A}$ e $f \notin \overline{\mathcal{A}}$.
+
+Una parte finita di $f$ è:
+
+$$
+\vartheta(x) = \begin{cases}
+1 &\text{se } x=1 \\
+\uparrow &\text{altrimenti}
+\end{cases}
+$$
+
+e dato che $dom(\vartheta) = cod(\vartheta)$, $\vartheta \in \overline{\mathcal{A}}$ e quindi per Rice-Shapiro, $\overline{A}$ non è RE.
+
+
+\subsection{Esercizio 4 - Ricorsività  }
+
+$$
+B = \{ x \in \mathbb{N} \: | \: \forall y > x, 2y \in W_x \}
+$$
+
+\subsubsection{Soluzione}
+
+$B$ non è saturo, in quanto descrive una proprietà non banale delle funzioni, inoltre, dato che per verificare l'appartenenza a $B$ è necessario provare tutti i valori del dominio, probabilmente $B$ non è RE.
+
+Si tratta quindi di effettuare la riduzione $\overline{K} \leq_m B$, dove $\overline{K}$ è noto non essere RE e contiene tutti i programmi che non terminano su se stessi.
+
+Serve quindi una funzione di riduzione che dato un programma $x$ con $\phi_x(x) \uparrow$ fornisca un programma $f(x)$ tale che per tutti i valori maggiori del suo indice ($y > f(x)$), $2y \in W_{f(x)}$ e che se $x \in K$, $W_{f(x)}$ non contenga $2y$.
+
+Possiamo quindi definire la funzione
+
+$$
+g(x,y) = \begin{cases}
+1 &x \in \overline{K} \\
+\uparrow &\text{altrimenti}
+\end{cases} = 1\bigg(\mu w. |\mathcal{X}_{H(x,x, y}|\bigg)
+$$
+
+Trattandosi di una funzione calcolabile, per il teorema SMN esiste una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ tale che $\phi_{f(x)}(y) = g(x,y)$.
+
+$f$ è proprio la funzione di riduzione perché
+
+\begin{itemize}
+	\item $x \in \overline{K}$: $\phi_{f(x)}(y) = 1 \forall y$ e quindi $\phi_{f(x)}$ è definita su tutto $\mathbb{N}$ e quindi $f(x) \in B$.
+	\item $x \in K$: $\phi_{f(x)}$ è sempre indefinita $\forall y$ e quindi anche se $y > f(x)$, $2y \notin W_{f(x)}$, pertanto $f(x) \notin B$.
+\end{itemize}
+
+Quindi $B$ non è RE.
+
+Per quanto riguarda $\overline{B}$, anche questo sembra non essere RE e si può provare la stessa riduzione $\overline{K} \leq_m \overline{B}$.
+
+Serve quindi una funzione che dato un programma $x$ che non termina quando riceve se stesso in input, fornisca un programma $f(x)$ tale che esiste un $y > x \: 2y \notin W_{f(x)}$ e che se $x$ termina su se stesso in input, $f(x)$ termina su $2y$ per qualche $y > x$.
+
+Possiamo quindi definire la funzione:
+
+$$
+g(x,y) = \begin{cases}
+\uparrow &x \in \overline{K} \\
+1 &x \in K \equiv x \notin\overline{K}
+\end{cases} = SC_K(x) 
+$$
+
+$g$ è calcolabile perché $SC_K$ è calcolabile e quindi per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che $\phi_{f(x)}(y) = g(x,y)$ ed è quindi la funzione di riduzione cercata, perché:
+
+\begin{itemize}
+	\item $x \in \overline{K}$: $W_{f(x)} = \emptyset$ e quindi $f(x) \in \overline{B}$.
+	\item $x \in K$: $W_{f(x)} = \mathbb{N}$ e quindi $\forall y > f(x) \: 2y \in W_{f(x)}$ e quindi $f(x) \notin \overline{B}$. 
+\end{itemize}
+
+Segue quindi che anche $\overline{B}$ non è RE.
+
+\subsection{Esercizio 5 - Secondo teorema di ricorsione}
+
+Dimostrare che $f(x) = min \{ y \: | \: \phi_x \neq \phi_y  \}$ non è calcolabile.
+
+\subsubsection{Soluzione}
+
+Il secondo teorema di ricorsione dice che data $h : \mathbb{N} \rightarrow \mathbb{N}$ totale e calcolabile, $\exists e \in \mathbb{N}$ tale che $\phi_e = \phi_{h(e)}$.
+
+La funzione $f$ è totale perché fissato un programma $x$ è sempre possibile trovare un programma $y$ che calcola una funzione diversa.
+
+Inoltre, per come è definita $f$, questa non ha punti fissi, perché fissato un $e$, $\phi_{f(e)} \neq \phi_e$.
+
+Quindi per il secondo teorema di ricorsione, $f$ non può essere calcolabile perché altrimenti dovrebbe esistere un punto fisso.
+
