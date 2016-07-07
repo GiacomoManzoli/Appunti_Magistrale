@@ -56,7 +56,7 @@ Se $A = \mathbb{N}  - \{0\}$, si ha che $A \cup \{0\} = \mathbb{N}$ e quindi non
 
 Tornando alla domanda, non è sempre vero che $A \leq_m A \cup \{0\}$, perché se $A = \mathbb{N}-\{0\}$ una funzione di riduzione dovrebbe assicurare che $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale che $x \in A$ se e solo se $f(x) \in A \cup \{0\}$ perché non si riesce a trovare $f(0) \notin \mathbb{N}$.
 
-Per rispondere alla seconda parte si ha che $A \neq \mathbb{N} - \{0\}$ è condizione necessaria e \textbf{} per far valere la riduzione: \textbf{sufficiente} perché $A \neq \mathbb{N} - \{0\} \Rightarrow A \leq_m A \cup \{0\}$, due casi:
+Per rispondere alla seconda parte si ha che $A \neq \mathbb{N} - \{0\}$ è condizione necessaria e sufficiente per far valere la riduzione: \textbf{sufficiente} perché $A \neq \mathbb{N} - \{0\} \Rightarrow A \leq_m A \cup \{0\}$, due casi:
 
 \begin{itemize}
 	\item Se $0 \in A$: la riduzione può essere fatta trivialmente dalla funzione identità.
@@ -95,7 +95,7 @@ g(x, y) = \begin{cases}
 \end{cases} = \Phi_U(x,x)
 $$
 
-questa funzione è calcolabile e quindi per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che $\phi_{f(x)}(y) = g(x,y)s$.
+questa funzione è calcolabile e quindi per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che $\phi_{f(x)}(y) = g(x,y)$.
 
 $f$ è funzione di riduzione $K \leq_m A$ perché se:
 
@@ -169,3 +169,38 @@ Per quanto riguarda $\overline{B}$, $\overline{\mathcal{B}} = \{ f \:|\: |cod(f)
 
 Quindi sia $B$ che $\overline{B}$ non sono RE e quindi non sono neanche ricorsivi\footnote{Specificarlo è bene}.
 
+\subsection{Esercizio 5}
+
+Tipicamente è un'applicazione del secondo teorema di ricorsione.
+
+Dato l'insieme $C = \{ x \in \mathbb{N} \: | \: [0,x] \subseteq W_x \} $, enunciare il secondo teorema di ricorsione ed utilizzarlo per dimostrare che l'insieme $C$ non è saturo.
+
+\subsubsection{Soluzione}
+
+Siccome dipende da una proprietà di un programma, è probabile che non sia saturo.
+
+L'idea è quella di trovare un certo indice $e$ tale che $W_e = [0,e]$. Se riusciamo a trovare un programma del genere abbiamo sostanzialmente concluso, perché siamo certi che esistono infiniti indici che calcolano la stessa funzione $\phi_e$ e tra tutti questi ce ne è sicuramente uno che è più grande di $e$, ovvero esiste $e' \in \mathbb{N}$ tale che $\phi_{e'} = \phi_e$ e $e' > e$.
+
+Trovato questo $e'$ abbiamo $[0, e'] \nsubseteq W_{e'} = W_e = [0,e]$ e quindi $e' \notin C$ e pertanto $C$ non è saturo.
+
+Dimostriamo che $e$ esiste e per farlo consideriamo la funzione
+
+$$
+g(x,y) = \begin{cases}
+0 & y \in [0,x] \\
+\uparrow &\text{altrimenti}
+\end{cases} = \mu z . y \dotminus x
+$$
+
+questa funzione è calcolabile e pertanto per il teorema SMN esiste $S : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che $g(x,y) = \phi_{S(x)}(y) \forall x,y$.
+
+Per il secondo teorema della ricorsione esiste un indice $e$ tale che $\phi_e = \phi_{S(e)}$ e quindi
+
+$$
+\phi_e(y) = \phi_{S(e)}(y) = g(e,y) = \begin{cases}
+0 & y \in [0,x] \\
+\uparrow &\text{altrimenti}
+\end{cases}
+$$
+
+ovvero $W_e = [0,e]$ e quindi $e$ è proprio l'indice che cercavamo.

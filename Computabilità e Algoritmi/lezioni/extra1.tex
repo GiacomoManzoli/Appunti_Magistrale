@@ -5,14 +5,16 @@
 
 \chapter{Riassunto in preparazione all'esame}
 
-\section{Parte teorica}
 
-\subsection{Definizioni utili / conoscenze base}
+
+\section{Definizioni utili / conoscenze base}
 
 \begin{itemize}
+	\item \textbf{Teorema SMN}: Dato $m,n \geq 1$, esiste $S : \mathbb{N}^{m+1} \rightarrow \mathbb{N}$ calcolabile e totale, tale che $\phi_{e}^{(m+n)}(\vec{x}, \vec{y}) =\phi_{S(e,\vec{x})}^{(n)}(\vec{y}) $ per qualche $\vec{x} \in \mathbb{N}^m$ e $\vec{y} \in \mathbb{N}^n$.
+	
 	\item \textbf{Insiemi ricorsivi e RE}: dato un sottoinsieme $X \subseteq \mathbb{N}$, se la funzione caratteristica dell'insieme è calcolabile si dice che l'insieme è \textbf{ricorsivo}, mentre se è calcolabile solo la funzione semi-caratteristica si dice che è \textbf{Ricorsivamente Enumerabile}. Se un insieme è ricorsivo, il predicato $x \in A$ è decidibile, mentre se è RE, il predicato è semi-decidibile.
 	
-	\item \textbf{Insieme saturo}: un insieme $A \subseteq \mathbb{N}$ si dice \textbf{saturo} se, dati $x \in A$ e $y \in \mathbb{N}$, tali che $\phi_x = \phi_y$, allora anche $y \in A$. Ovvero un insieme è saturo quando contiene tutti gli indici che calcolano una determinata funziona. Alternativamente $A$ è saturo se e solo se esiste $\mathcal{A} \subseteq \mathcal{C}$ tale che $A = \{ x \: | \: \phi_x \in \mathcal{A} \}$.
+	\item \textbf{Insieme saturo}: un insieme $A \subseteq \mathbb{N}$ si dice \textbf{saturo} se, dati $x \in A$ e $y \in \mathbb{N}$, tali che $\phi_x = \phi_y$, allora anche $y \in A$. Ovvero un insieme è saturo quando contiene tutti gli indici che calcolano una determinata funzione. Alternativamente $A$ è saturo se e solo se esiste $\mathcal{A} \subseteq \mathcal{C}$ tale che $A = \{ x \: | \: \phi_x \in \mathcal{A} \}$, cioè l'appartenenza all'insieme dipende da delle caratteristiche della funzione calcolata dal programma e non da come questo è definito.
 	
 	\item $K = \{ x \: | \: \phi_x(x) \downarrow \} = \{ x \: | \: x \in W_x \}$, ovvero l'insieme dei programmi che terminano quando ricevono se stessi in input, \textbf{non} è ricorsivo, ma è RE. L'insieme \textbf{non è saturo} (si dimostra cercando un $e'$ che calcola la stessa funzione di $e$ ma che non termina su se stesso).
 	
@@ -33,9 +35,11 @@
 		\item $A \leq_m K$ per provare che $A$ è RE (se so che $A$ non è ricorsivo, posso definire $SC_A$ per provare che è RE, senza fare la riduzione)
 		\item $\overline{K} \leq_m A$ per provare che $A$ non è RE.
 	\end{itemize}
+	
+	\item Una parte finitaria di una funzione totale è sempre calcolabile
 \end{itemize}
 
-\subsection{Minimalizzazione illimitata}\label{ex:minima}
+\section{Minimalizzazione illimitata}\label{ex:minima}
 
 Data $f : \mathbb{N}^{k+1} \rightarrow \mathbb{N}$, si vuole definire $h : \mathbb{N}^{k} \rightarrow \mathbb{N}$ tale che calcoli il minimo $z$ che azzera la funzione $f$, ovvero:
 
@@ -56,7 +60,7 @@ $$
 
 La classe $\mathcal{C}$ delle funzioni URM calcolabili è chiusa rispetto all'operazione di minimalizzazione illimitata, ovvero, se $f : \mathbb{N}^{k+1} \rightarrow \mathbb{N}$ è in $\mathcal{C}$, allora anche $\mu z . f(\vec{x},z)$ è in $\mathcal{C}$.
 
-\textbf{Dimostrazione:} Sia \textit{P} il programma URM in forma normale che calcola \textit{f}. L'idea è quella di eseguire i\textit{P} incrementando via via un contatore, e quando viene trovato un valore che azzera la funzione, questo viene ritornato.
+\textbf{Dimostrazione:} Sia \textit{P} il programma URM in forma normale che calcola \textit{f}. L'idea è quella di eseguire \textit{P} incrementando via via un contatore, e quando viene trovato un valore che azzera la funzione, questo viene ritornato.
 
 Si tratta quindi di scrivere un programma che esegua il programma $P$, ogni volta su un valore diverso e in modo che non ci siano conflitti sui registri. Come prima cosa è quindi necessario stabilire il numero di registri utilizzato da \textit{P}:
 
@@ -83,7 +87,7 @@ J(1,1,LOOP)
 
 Dal momento che è possibile trovare un programma che calcola la minimalizzazione illimitata, questa è calcolabile.
 
-\subsection{Funzioni primitive ricorsive}
+\section{Funzioni primitive ricorsive}
 
 La classe delle funzioni primitive ricorsive $\mathcal{PR}$ è la \textbf{minima} classe di funzioni che contiene le funzioni
 
@@ -100,11 +104,11 @@ ed è chiusa rispetto a
 	\item ricorsione primitiva
 \end{enumerate}
 
-Si ha che $\mathcal{PR} \nsubseteq \mathcal{R} = \mathcal{C}$ perché la classe $\mathcal{R}$ delle funzioni parziali ricorsive è chiusa anche rispetto la minimalizzazione illimitata.
+Si ha che $\mathcal{PR} \subsetneq \mathcal{R} = \mathcal{C}$ perché la classe $\mathcal{R}$ delle funzioni parziali ricorsive è chiusa anche rispetto la minimalizzazione illimitata.
 
-Da notare che la minimalizzazione illimitata permette di definire delle funzioni che non sono totali e che $\mathcal{PR} \nsubseteq \mathcal{R} \cap \text{Totali}$ perché esiste la funzione di Ackermann che è totale e calcolabile ma non è primitiva ricorsiva.
+Da notare che la minimalizzazione illimitata permette di definire delle funzioni che non sono totali e che $\mathcal{PR} \subsetneq \mathcal{R} \cap \text{Totali}$ perché esiste la funzione di Ackermann che è totale e calcolabile ma non è primitiva ricorsiva.
 
-\subsection{Riduzione}
+\section{Riduzione}
 
 Si hanno due problemi $\mathcal{A}$ e $\mathcal{B}$ e si vuole poter dire se $\mathcal{A}$ è più facile o più difficile di $\mathcal{B}$.
 
@@ -151,13 +155,13 @@ Ad esempio, si ha che $A$ è RE $\Leftrightarrow A \leq_m K =  \{ x \: | x \in W
 	\end{itemize}
 \end{itemize}
  
-\subsection{Teorema di Rice}
+\section{Teorema di Rice}
 
 Ogni proprietà del comportamento di un programma non è decidibile.
 
 Sia $A \subseteq \mathbb{N}$ una proprietà del comportamento di un programma (insieme saturo). Se la proprietà non è banale, l'insieme non è ricorsivo. Con proprietà banale si intende $A \neq \mathbb{N}$ e $A \neq \emptyset$. 
 
-\subsubsection{Dimostrazione per riduzione}
+\subsection{Dimostrazione per riduzione}
 
 L'obiettivo è quello di dimostrare che $K = \{ x \: | x \in W_x\: \} \leq_m A$. $K$ è noto non essere ricorsivo.
 
@@ -174,7 +178,7 @@ Consideriamo un programma $e_0 \in \mathbb{N}$ tale che $\phi_{e_0} = \emptyset$
 	g(x,y) = \begin{cases}
 	\phi_{e_1}(y) &x \in K \\
 	\phi_{e_0}(y) = \uparrow & x \notin K
-	\end{cases} = \phi_{e_1}(y) \cdot 1 \big( \phi_x(x) \big)
+	\end{cases} = \phi_{e_1}(y) \cdot \mathbb{1} \big( \phi_x(x) \big)
 	$$ 
 	
 	Questa funzione è calcolabile e quindi è possibile utilizzare il teorema SMN per trovare una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che 
@@ -197,7 +201,7 @@ Consideriamo un programma $e_0 \in \mathbb{N}$ tale che $\phi_{e_0} = \emptyset$
 \end{itemize} 
 
 
-\subsection{Relazione tra R e RE}
+\section{Relazione tra R e RE}
 
 Un insieme $A \subseteq \mathbb{N}$ è ricorsivo se la sua funzione caratteristica $\mathcal{X}_A$ è calcolabile
 
@@ -219,7 +223,7 @@ $$
 
 Si ha quindi che $A \subseteq \mathbb{N}$ è ricorsivo $\Leftrightarrow$ $A$, $\overline{A}$ sono RE.
 
-\subsubsection{$A$ ricorsivo $\Rightarrow$ $A$, $\overline{A}$ RE. }
+\subsection{$A$ ricorsivo $\Rightarrow$ $A$, $\overline{A}$ RE. }
 
 Se $A$ è ricorsivo, la sua funzione caratteristica è calcolabile ed è definita come
 
@@ -233,14 +237,14 @@ $$
 Si può quindi definire la funzione semi-caratteristica come minimalizzazione illimitata di $\mathcal{X}_A$:
 
 $$
-SC_A(x) = 1 \Bigg( \mu w. \overline{sg} \Big( \mathcal{X}_A(x) \Big) \Bigg)
+SC_A(x) = \mathbb{1} \Bigg( \mu w. \overline{sg} \Big( \mathcal{X}_A(x) \Big) \Bigg)
 $$
 
 così facendo si ottiene una funzione calcolabile che vale 1 se $x \in A$ (perché il segno negato vale 0) e risulta indefinita se $x \notin A$, perché la minimalizzazione non termina dato che il segno negato sarà sempre uguale a 1.
 
 Per dimostrare che anche $\overline{A}$ è RE basta osservare che se $A$ è ricorsivo, anche il suo complementare $\overline{A}$ è ricorsivo e quindi è possibile ripetere la stessa dimostrazione utilizzando $\mathcal{X}_{\overline{A}}$ per dimostrare che anche $\overline{A}$ è RE.
 
-\subsubsection{$A$, $\overline{A}$ RE $\Rightarrow$ $A$ ricorsivo}
+\subsection{$A$, $\overline{A}$ RE $\Rightarrow$ $A$ ricorsivo}
 
 Le due funzioni $SC_A$ e $SC_{\overline{A}}$ sono calcolabili e quindi esistono due programmi $e_1$ ed $e_2$ le cui funzioni coincidono con le due funzioni semi-caratteristiche.
 
@@ -249,7 +253,7 @@ Si può quindi definire un programma che esegue i due programmi in parallelo e i
 Questa funzione può essere definita come 
 
 $$
-\mathcal{X_A}(x) = \Bigg( \mu w . S\bigg( e_1, x, (w)_1, (w)_2\bigg)  \vee S\bigg( e_2, x, (w)_1, (w)_2\bigg)  \Bigg)
+\mathcal{X_A}(x) = \Bigg( \mu w . S\bigg( e_1, x, (w)_1, (w)_2\bigg)  \vee S\bigg( e_2, x, (w)_1, (w)_2\bigg)  \Bigg)_1
 $$
 
 ed è calcolabile perché definita per minimalizzazione illimitata.
@@ -262,7 +266,7 @@ Alcune osservazioni:
 	\item Perché tutto funzioni è necessario che la funzione $\phi_{e_2}$ sia uguale a $\overline{\text{sg}} (SC_{\overline{A}} (x))$, perché deve valere 0 quando $x \in \overline{A}$.
 \end{itemize}
 
-\subsection{Teorema di struttura}
+\section{Teorema di struttura}
 
 Sia $P(x)$ un predicato $k$-ario, $P(x)$ è semi-decidibile se e solo se esiste $Q(t,x)$ decidibile e tale che
 
@@ -279,8 +283,8 @@ Questo perché la funzione semi-caratteristica di $P$ non farà altro che applic
 		1 \text{ se } P(x)\\
 		\uparrow \text{ altrimenti}
 	\end{cases} \\
-	&= 1 \bigg( \mu t. \text{``} Q(t,x)\text{''} \bigg) \\
-	&= 1 \bigg( \mu t. | \: \mathcal{X}_Q(t,x) - 1 \: | \bigg)
+	&= \mathbb{1} \bigg( \mu t. \text{``} Q(t,x)\text{''} \bigg) \\
+	&= \mathbb{1} \bigg( \mu t. | \: \mathcal{X}_Q(t,x) - 1 \: | \bigg)
 \end{align*}
 
 Viceversa, assumendo $P(x)$ semi-decidibile, si ha che $SC_P$ è calcolabile, ovvero esiste un certo programma $e$ tale che $\phi_e = SC_P$.
@@ -298,12 +302,12 @@ Si ha quindi che, indicando il predicato $Q(t,x) \equiv \exists t \: H(e,x,t)$ �
 Utilizzando questo teorema è poi possibile andare a dimostrare il \textbf{teorema di proiezione}, ovvero che la classe RE è chiusa rispetto la quantificazione esistenziale. Lo si fa estraendo dal predicato semi-decidibile quello decidibile e poi si ragiona su come esprimere il predicato semi-decidibile come l'altro predicato semi-decidibile:
 
  $$
- P'(x,\vec{y}) \equiv \exists x.\exists t . Q(t,x, \vec{y}) \equiv \exists w . \underbrace{Q((w)_1, (w)_2, \vec{y})}_{Q'}
+ P'(\vec{y}) \equiv \exists x.\exists t . Q(t,x, \vec{y}) \equiv \exists w . \underbrace{Q((w)_1, (w)_2, \vec{y})}_{Q'}
  $$
 
 
 
-\subsection{Teorema di Rice-Shapiro}
+\section{Teorema di Rice-Shapiro}
 
 Le proprietà del comportamento (funzione calcolata) dei programmi possono essere decidibili se sono finitarie, ovvero dipendono da un numero finito di argomenti (es: \textit{la funzione termina su 5}).
 
@@ -315,7 +319,7 @@ $$
 
 A parole, sia $\mathcal{A}$ un sottoinsieme delle funzioni calcolabili e $A$ l'insieme che contiene gli indici che calcolano queste funzioni. Se $A$ è RE, allora una funzione $f$ calcolabile appartiene ad $\mathcal{A}$ solo se esiste una sua parte finita che appartiene ad $\mathcal{A}$.
 
-\subsubsection{Dimostrazione}
+\subsection{Dimostrazione}
 
 La dimostrazione si fa in due passi:
 
@@ -369,7 +373,7 @@ g(x,y) &= \begin{cases}
 f(y) &\text{ se } \neg H(x,x,y) \\
 \uparrow & \text{ altrimenti}
 \end{cases} \\
-&= f(y) \cdot 1 \big( \mu w . \mathcal{X}_H (x,x,y) \big)
+&= f(y) \cdot \mathbb{1} \big( \mu w . \mathcal{X}_H (x,x,y) \big)
 \end{align*}
 
 Essendo \textit{g} calcolabile, per SMN esiste $S$ che funziona da funzione riduzione:
@@ -386,6 +390,6 @@ Essendo \textit{g} calcolabile, per SMN esiste $S$ che funziona da funzione ridu
 	Essendo che $\phi_{S(x)}$ è una parte finita di $f$, si ha che $\phi_{S(x)} \notin A$ e quindi $S(x) \notin A$. 
 \end{itemize}
 
-\subsection{Secondo teorema di Ricorsione}
+\section{Secondo teorema di Ricorsione}
 
-...
+Sia $h : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale. Allora esiste $e \in \mathbb{N}$ tale che $\phi_e = \phi_{h(e)}$. 

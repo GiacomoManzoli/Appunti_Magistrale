@@ -1,0 +1,159 @@
+\section{Appello 2014-07-02}
+
+\subsection{Esercizio 1}
+
+Dimostrare che $A \subseteq \mathbb{N}$ è ricorsivo solo se $A, \overline{A}$ sono RE.
+
+\subsubsection{Soluzione}
+
+$A$ ricorsivo $\Rightarrow$ $A, \overline{A}$ sono RE.
+
+Essendo $A$ ricorsivo, la sua funzione caratteristica $\mathcal{X}_A$ è calcolabile e può essere utilizzata per definire la funzione semi-caratteristica di $A$:
+
+$$
+SC_A(x) = \mathbb{1}\Big( \mu w . \overline{sg}\big(\mathcal{X}_A(x)\big) \Big)
+$$
+
+La funzione semi-caratteristica di $\overline{A}$ può essere definita in modo analogo
+
+$$
+SC_{\overline{A}}(x) = \mathbb{1}\Big( \mu w . \mathcal{X}_A(x) \Big)
+$$
+
+$A, \overline{A}$ sono RE $\Rightarrow$ $A$ ricorsivo 
+
+Entrambe le funzioni semi-caratteristiche sono calcolabili e possono essere combinate per definire la funzione caratteristica.
+
+Sia $e_1$ un programma tale che $\phi_{e_1} = SC_A$ e $e_2$ tale che $\phi_{e_2} = \overline{sg}(SC_{\overline{A}})$, entrambi esistono perché le loro funzioni sono calcolabili.
+
+\begin{align*}
+\mathcal{X}_A(x) &= \begin{cases}
+1 & x \in A \\
+0 & x \notin A
+\end{cases} = \begin{cases}
+SC_A(x) & x \in A \\
+\overline{sg}(SC_{\overline{A}}(x)) & x \notin A
+\end{cases}   \\
+&= \Bigg( \mu w . \bigg(  S\Big(e_1, x,  (w)_1, (w)_2\Big) \wedge S\Big(e_2, x,  (w)_1, (w)_2\Big) \bigg) \Bigg)_1
+\end{align*}
+
+\subsection{Esercizio 2}
+
+Definire una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ totale, non calcolabile tale che $f(x) = x/2$ per ogni $x \in \mathbb{N}$ e pari, oppure dimostrare che tale funzione non esiste.
+
+\subsubsection{Soluzione}
+
+La funzione deve essere totale e non viene specificato nulla per quanto riguarda il valore della funzione sui numeri dispari.
+
+Sia $\{ \phi_n \}$ una qualsiasi enumerazione delle funzioni calcolabili.
+
+La funzione $f$ può essere definita come 
+
+$$
+f(x) = \begin{cases}
+x/2 &x \text{ è pari} \\
+\phi_x(x)+1 &\text{altrimenti}
+\end{cases}
+$$
+
+Si ha quindi che la funzione $f$:
+\begin{itemize}
+	\item è totale, perché definita su tutto $\mathbb{N}$
+	\item vale $x/$ se $x$ è pari
+	\item è diversa da tutte le funzioni calcolabili se $x$ è dispari e quindi negli infiniti punti dispari non è calcolabile
+\end{itemize}
+
+\subsection{Esercizio 3}
+
+$$
+A = \{ x | \forall k \in \mathbb{N} . x +k \in W_x \}
+$$
+
+\subsubsection{Soluzione}
+
+$A$ sembra non essere RE, perché per provare l'appartenenza è necessario andare a provare infiniti valori di $k$.
+
+Si può quindi provare la riduzione $\overline{K} \leq_m A$.
+
+Serve quindi una funzione tale che se $x \in \overline{K}$, $f(x)$ sia definita $\forall x' \geq x$ ed una funzione definita su tutto $\mathbb{N}$ soddisfa questa condizione, mentre se $x \in K$, $f(x)$ non deve essere definita in almeno un punto $x' \geq x$.
+
+$$
+g(x,y)= \begin{cases}
+1 & \neg H(x,x,y) \\
+\uparrow & H(x,x,y) 
+\end{cases}
+$$
+
+Non posso usare $x \in \overline{K}$ perché la funzione semi-caratteristica non è calcolabile, devo ragionare sul numero di passi $y$ impiegati dal programma per terminare.
+
+Essendo calcolabile, per SMN esiste $f$ calcolabile e totale, che funziona da funzione di riduzione, perché:
+
+\begin{itemize}
+	\item $x \in \overline{K}$: $\forall y \: \neg H(x,x,y)$ è vero e quindi $\forall y \: \phi_{f(x)}(y) = 1$ ed in particolare $\phi_{f(x)}(f(x)+k) = 1 \: \forall k$, ovvero $f(x) \in A$.
+	\item $x \in K$: $\exists y_0 $ tale che $\forall y \: > y_0$, $\phi_{f(x)}(y) = g(x,y) = \uparrow$, è quindi possibile trovare almeno un valore $y' > y_0$ tale che $y' > x + 0$, pertanto $f(x) \notin A$.
+\end{itemize}
+
+Si ha quindi che $A$ non è RE.
+
+$\overline{A} = \{ x | \exists k \in \mathbb{N} . x +k \notin W_x \}$, anche in questo caso sembra non essere RE, perché per verificare l'appartenenza è necessario che il programma $x$ non termini quando riceve in input $x+k$.
+
+Si può quindi provare la riduzione $\overline{K} \leq_m \overline{A} $.
+
+Serve quindi una funzione tale che se $x \in \overline{K}$, $f(x)$ non termini quanto riceve in input $x+k$ e si può osservare che i programmi che calcolano $\emptyset$ sono in $\overline{A}$. Se invece $x \in K$, $f(x)$ deve essere definita su tutti gli input $> x$.
+
+$$
+g(x,y) = \begin{cases}
+\uparrow & x \in \overline{K}  \\
+1 & x \in K
+\end{cases} = SC_K(x)
+$$
+
+Essendo calcolabile, per SMN esiste $f$ calcolabile e totale, che funziona da funzione di riduzione, perché:
+
+\begin{itemize}
+	\item $x \in \overline{K}$: il predicato $\neg H(x,x,y)$ vale $\forall y$ e quindi $\phi_{f(x)}(y) = \uparrow \forall y$, pertanto $f(x) \in \overline{A}$.
+	\item $x \in K$: $\phi_{f(x)}(y) = g(x,y) = 1 \forall y$ ed in particolare $\phi_{f(x)}(y)\downarrow \forall y > x$ e quindi $f(x) \in A$
+\end{itemize}
+
+Segue quindi che anche $\overline{A}$ non è RE.
+
+\subsection{Esercizio 4}
+
+$$V = \{x | E_x \text{ infinito}\}$$
+
+\subsubsection{Soluzione}
+
+$V$ è saturo, perché $\mathcal{V} = \{f | \:  |cod(f)| = \infty \}$.
+
+Banalmente la funzione $id \in \mathcal{V}$ e tutte le sue parti finite non appartengono per definizione a $\mathcal{V}$, quindi per Rice Shapiro $V$ è non RE.
+
+Analogamente $id \notin \overline{\mathcal{V}}$ e la funzione $\emptyset$ appartiene a $ \overline{\mathcal{V}}$ ed è parte finita di $id$, quindi per Rice Shapiro, $ \overline{V}$ è non RE.
+
+\todo{Sembra troppo facile, forse c'è un trabocchetto}
+
+\subsection{Esercizio 5}
+
+Enunciare il secondo teorema di ricorsione e dimostrare che $\exists k | W_k = \{k * i | i \in \mathbb{N}\}$.
+
+\subsubsection{Soluzione}
+
+Il teorema dice che, data una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, $\exists e . \phi_e = \phi_{f(e)}$
+
+$$
+g(x, y) = \begin{cases}
+1 &\text{\textit{x} è multiplo di \textit{y}} \\
+\uparrow &\text{altrimenti}
+\end{cases} = \mathbb{1}\Big( \mu z . |xz - y| \Big)
+$$
+
+Essendo $g$ calcolabile, per SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che $g(x,y) = \phi_{f(x)}(y) \forall y$ e quindi si ha che
+
+$$
+W_{f(x)} = \{x * i | i \in \mathbb{N}\}
+$$
+
+e per il secondo teorema di ricorsione, esiste $x$ tale che $\phi_x = \phi_{f(x)}$, ovvero $\exists x$ tale che:
+
+$$
+W_x = W_{f(x)} = \{x * i | i \in \mathbb{N}\}
+$$

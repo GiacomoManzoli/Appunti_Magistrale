@@ -129,7 +129,7 @@ Dal momento che $A$ è RE e non è ricorsivo, $\overline{A}$ non è RE.
 
 \begin{align*}
 	B &= \{ x \:| \: x \in \mathcal{B} \} \\
-	\mathcal{B} = \{ f \: |\: |dom(f) \ cod(f) | \geq 2 \}
+	\mathcal{B} &= \{ f \: |\: |dom(f) \setminus cod(f) | \geq 2 \}
 \end{align*}
 
 Ovvero $\mathcal{B}$ contiene tutte le funzioni che hanno il dominio con più di due elementi diversi dal codominio.
@@ -143,11 +143,11 @@ L'idea è quindi quella di applicare Rice-Shapiro per dimostrare che $B$ non è 
 $$
 f(x) = x \dotminus 2 = \begin{cases}
 0 &x \leq 2 \\
-x -2 
+x -2 &\text{altrimenti}
 \end{cases}
 $$
 
-In questo caso si ha $dom(f) = cod(f) = \mathbb{N}$, $| dom(f) \ cod(f)| = 0$ e quindi $f \notin \mathcal{B}$.
+In questo caso si ha $dom(f) = cod(f) = \mathbb{N}$, $| dom(f) \setminus cod(f)| = 0$ e quindi $f \notin \mathcal{B}$.
 
 Come parte finita di $f$ si può considerare
 
@@ -162,7 +162,7 @@ Si ha che $dom(\vartheta) = \{0,1,2\}$, $cod(f) = \{0\}$ e quindi $\vartheta \in
 
 Abbiamo quindi una funzione $f \notin \mathcal{B}$ che ha una parte finita $\vartheta \subseteq f$ che appartiene a $\mathcal{B}$ e quindi per Rice-Shapiro $B$ non è RE.
 
-Resta da valutare $\overline{\mathcal{B}} = \{ f \: | \: |dom(f) \ cod(f)| < 2 \}$, che può essere fatto allo stesso modo.
+Resta da valutare $\overline{\mathcal{B}} = \{ f \: | \: |dom(f) \setminus cod(f)| < 2 \}$, che può essere fatto allo stesso modo.
 
 Basta osservare che la funzione $1 \notin \overline{\mathcal{B}}$  e che ha come parte finita la funzione $\emptyset \in \overline{\mathcal{B}}$ e quindi sempre per Rice-Shapiro $\overline{\mathcal{B}}$ non è RE.
 

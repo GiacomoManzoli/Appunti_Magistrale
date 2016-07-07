@@ -25,11 +25,9 @@ $$
 
 \subsubsection{Soluzione}
 
-\todo[inline]{verificare correttezza, perché mi sembra sbagliato}
-
 Tale funzione non esiste.
 
-Sia $f$ una funzione decrescente e totale. Si può quindi individuare $k = \{ f(x) \: | \: x \in \mathbb{N} \}$ e $x_0 \in \mathbb{N} $ tale che $f(x_0) = k$.
+Sia $f$ una funzione decrescente e totale. Si può quindi individuare $k =  \min	\{ f(x) \: | \: x \in \mathbb{N} \}$ e $x_0 \in \mathbb{N} $ tale che $f(x_0) = k$.
 
 Si ha quindi che $\forall x \geq x_0$, $f(x) \leq f(x_0) = k $ e quindi $f(x) = k$, perché $k$ è il minimo valore assunto dalla funzione.
 
@@ -42,21 +40,22 @@ f(x) &\text{se } x < x_0 \\
 \end{cases}
 $$
 
-la quale può essere utilizzata per definire
+la quale essendo una parte finita di $f$ è calcolabile.
+Con $\vartheta$ si può definire:
 
 $$
 g(x) = \begin{cases}
 \vartheta(x) &\text{ se } x < x_0 \\
-k \text{ altrimenti}
+k &\text{ altrimenti}
 \end{cases}
 $$
 
-Si potrebbe già concludere qui ma si può essere più precisi
+che è calcolabile.
+Si potrebbe già concludere qui ma si può essere più precisi, sia $e$ il programma che calcola $\vartheta$:
 
 $$
 g(x) = \mu w. \Bigg(  \bigg( x < x_0 \wedge S\Big( e,x,(w)_1, (w)_2\Big) \bigg)   \vee \Big(   x \geq x_0 \wedge (w)_1 = k  \Big)   \Bigg)
 $$
-\todo[inline]{Anche questa cosa non ha molto senso IMHO}
 
 \subsection{Esercizio 3 - Ricorsività}
 
@@ -117,7 +116,7 @@ $$
 g(x,y) = \begin{cases}
 1 &x \in \overline{K} \\
 \uparrow &\text{altrimenti}
-\end{cases} = 1\bigg(\mu w. |\mathcal{X}_{H(x,x, y}|\bigg)
+\end{cases} = 1\bigg(\mu w. |\mathcal{X}_{H(x,x, y)}|\bigg)
 $$
 
 Trattandosi di una funzione calcolabile, per il teorema SMN esiste una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ tale che $\phi_{f(x)}(y) = g(x,y)$.
@@ -125,7 +124,7 @@ Trattandosi di una funzione calcolabile, per il teorema SMN esiste una funzione 
 $f$ è proprio la funzione di riduzione perché
 
 \begin{itemize}
-	\item $x \in \overline{K}$: $\phi_{f(x)}(y) = 1 \forall y$ e quindi $\phi_{f(x)}$ è definita su tutto $\mathbb{N}$ e quindi $f(x) \in B$.
+	\item $x \in \overline{K}$: $\phi_{f(x)}(y) = 1 \: \forall y$ e quindi $\phi_{f(x)}$ è definita su tutto $\mathbb{N}$, pertanto $f(x) \in B$.
 	\item $x \in K$: $\phi_{f(x)}$ è sempre indefinita $\forall y$ e quindi anche se $y > f(x)$, $2y \notin W_{f(x)}$, pertanto $f(x) \notin B$.
 \end{itemize}
 
@@ -133,7 +132,7 @@ Quindi $B$ non è RE.
 
 Per quanto riguarda $\overline{B}$, anche questo sembra non essere RE e si può provare la stessa riduzione $\overline{K} \leq_m \overline{B}$.
 
-Serve quindi una funzione che dato un programma $x$ che non termina quando riceve se stesso in input, fornisca un programma $f(x)$ tale che esiste un $y > x \: 2y \notin W_{f(x)}$ e che se $x$ termina su se stesso in input, $f(x)$ termina su $2y$ per qualche $y > x$.
+Serve quindi una funzione che dato un programma $x$ che non termina quando riceve se stesso in input, fornisca un programma $f(x)$ tale che esiste un $y > x, \: 2y \notin W_{f(x)}$ e che se $x$ termina su se stesso in input, $f(x)$ termina su $2y$ per qualche $y > x$.
 
 Possiamo quindi definire la funzione:
 
@@ -148,7 +147,7 @@ $g$ è calcolabile perché $SC_K$ è calcolabile e quindi per il teorema SMN esi
 
 \begin{itemize}
 	\item $x \in \overline{K}$: $W_{f(x)} = \emptyset$ e quindi $f(x) \in \overline{B}$.
-	\item $x \in K$: $W_{f(x)} = \mathbb{N}$ e quindi $\forall y > f(x) \: 2y \in W_{f(x)}$ e quindi $f(x) \notin \overline{B}$. 
+	\item $x \in K$: $W_{f(x)} = \mathbb{N}$ e quindi $\forall y > f(x), \: 2y \in W_{f(x)}$ e quindi $f(x) \notin \overline{B}$. 
 \end{itemize}
 
 Segue quindi che anche $\overline{B}$ non è RE.

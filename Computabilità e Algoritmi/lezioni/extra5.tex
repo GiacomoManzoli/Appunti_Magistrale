@@ -1,0 +1,164 @@
+\section{Appello 2014-08-25}
+
+\subsection{Esercizio 1}
+
+Enunciare e dimostrare il teorema di Rice.
+
+\subsubsection{Soluzione}
+
+Ogni proprietà non banale relativa al comportamento dei programmi non è decidibile. 
+
+Ovvero sia $A \subseteq \mathbb{N}$ l'insieme dei programmi che hanno una qualche proprietà e quindi $A$ è un insieme saturo, se $A \neq \mathbb{N}$ e $\neq \emptyset$, allora $A$ non è ricorsivo.
+
+Questo può essere dimostrato per riduzione $K \leq_m A$.
+
+Sia $e_0$ un programma che calcola la funzione sempre indefinita ($\phi_{e_0} = \emptyset$). Questo programma può essere in $A$ o in $\overline{A}$. Assumiamo che sia in $\overline{A}$.
+
+Possiamo quindi scegliere un qualsiasi programma $e_1 \in A$ e almeno uno deve esserci perché $A \neq \emptyset$.
+
+Questi due programmi possono essere utilizzati per definire la funzione 
+
+$$
+g(x,y) = \begin{cases}
+\phi_{e_1}(y) &\text{se } x \in K \\
+\phi_{e_0}(y) &\text{se } x \notin K
+\end{cases} = \begin{cases}
+\phi_{e_1}(y) &\text{se } x \in K \\
+\uparrow &\text{se } x \notin K
+\end{cases} = \phi_{e_1}(y) \cdot \mathbb{1}\big(\phi_x(x) \big)
+$$ 
+
+la quale è calcolabile e quindi per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ tale che $g(x,y) = \phi_{f(x)}(y)$ e che può essere usata come funzione di riduzione, perché:
+
+\begin{itemize}
+	\item Se $x \in K$: $\phi_{f(x)} = \phi_{e_1}$ e quindi dal momento che $A$ è saturo e che $e_1 \in A$, allora anche $f(x) \in A$.
+	\item Se $x \notin K$: $\phi_{f(x)} = \phi_{e_0}$ e quindi dal momento che $e_0 \notin A$, anche $f(x) \notin A$, perché se $f(x)$ fosse in $A$, anche $e_0$ dovrebbe esserci, perché $A$ è saturo e i due programmi calcolano la stessa funzione.
+\end{itemize}
+
+Se invece $e_0 \in A$, basta osservare che il complementare di un insieme saturo è saturo e, indicando con $B = \overline{A}$, $\overline{B} = A$, si ha che $e_0 \in \overline{B}$ e quindi vale la dimostrazione precedente.
+
+\subsection{Esercizio 2}
+
+Può esistere una funzione \textbf{non calcolabile} $f : \mathbb{N} \rightarrow \mathbb{N}$ tale che \textbf{per ogni} funzione non calcolabile $g : \mathbb{N} \rightarrow \mathbb{N}$, la funzione $h$ definita come $h(x) = f(x) + g(x)$ sia calcolabile? Motivare la risposta, fornendo un'esempio di $f$ oppure dimostrando che non può esistere.
+
+\subsubsection{Soluzione}
+
+Supponiamo che $f$ esista e che quindi $h(x) = f(x) + g(x)$ sia calcolabile. Dal momento che $h$ è calcolabile per tutte le $g$ non calcolabili, si ha anche che $h(x) = f(x) + f(x) = 2\cdot f(x)$ deve essere calcolabile.
+
+Si ha quindi che $f$ può essere definita come
+
+$$
+f(x) = qt\big(h(x) , 2\big) 
+$$
+
+$f$ risulta quindi essere calcolabile per composizione di funzioni calcolabili il che va contro l'ipotesi della non calcolabilità di $f$ e pertanto $f$ non può esistere.
+
+\subsection{Esercizio 3}
+
+Studiare la ricorsività dell'insieme $A = \{ x \: | \: \phi_x(y+x)\downarrow \text{ per qualche } y \geq 0 \}$
+
+\subsubsection{Soluzione}
+
+$A$ sembra essere RE, perché per determinare l'appartenenza è necessario determinare se il programma $x$ termina ricevendo in input se stesso più una qualche costante.
+
+$$
+SC_A(x) = \begin{cases}
+1 &x \in A \: \exists y \geq 0 \: | \: \phi_x(x+y)\downarrow\\
+\uparrow &x \notin A
+\end{cases} =\mathbb{1}\Big( \mu w . \overline{sg}\Big( S\big(x,x+(w)_1,(w)_2, (w)_3 \big) \Big)\Big)
+$$
+
+La funzione semi-caratteristica è calcolabile per composizione di funzioni calcolabili e quindi $A$ è RE.
+
+Per provare che $A$ non è ricorsivo, si può effettuare la riduzione $K \leq_m A$.
+
+Ovvero bisogna trovare una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ che dato  $x \in K$, $f(x) \in A$ e se $x \notin K$, $f(x) \notin A$.
+
+Si può osservare che se $x \in K$, $\phi_x(x)\downarrow$ e quindi anche $\phi_x(x+0)\downarrow$ e pertanto $x$ è anche in $A$.
+
+Si può quindi definire la funzione 
+
+$$
+g(x,y) = \begin{cases}
+\phi_x(x) &x \in K \\
+\uparrow &x \notin K
+\end{cases} = \phi_x(x) = \Phi_U(x,x)
+$$
+
+la quale è calcolabile e quindi per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile, totale e tale che $g(x,y) = \phi_{f(x)}(y)$.
+
+$f $ è funzione di riduzione perché:
+
+\begin{itemize}
+	\item $x \in K$: $\phi_{f(x)}(z) = g(x,z) = \phi_x(x) = \downarrow \:\forall z$ e quindi anche $\phi_{f(x)}(f(x) + 0)\downarrow$ e quindi $f(x) \in A$ per $y = 0$.
+	\item $x \notin K$: $\phi_{f(x)}(z) = g(x,z)= \uparrow \: \forall z$ e quindi non esiste $y \geq 0$ tale che $\phi_{f(x)}(f(x) + y) \downarrow$ e quindi $f(x) \notin A$.
+\end{itemize}
+
+In alternativa potevo usare
+
+$$
+g(x,y) = \begin{cases}
+1 & x \in K \\
+\uparrow & x \notin K
+\end{cases} = SC_K(x)
+$$
+
+Essendo $A$ non ricorsivo e RE, $\overline{A}$ non è RE.
+
+\subsection{Esercizio 4}
+
+Studiare la ricorsività dell'insieme $B = \{ x \: | \: Pr \subseteq W_x \}$, dove $Pr \subseteq \mathbb{N}$ è l'insieme dei numeri primi.
+
+\subsubsection{Soluzione}
+
+Si può osservare che l'insieme $B$ è saturo perché riguarda una proprietà della funzione calcolata dai programmi:
+
+\begin{align*}
+	B &= \{ x \: | \: \phi_x \in \beta \} \\
+	\beta &= \{f \: | \: Pr \subseteq dom(f)\}
+\end{align*}
+
+Inoltre si può osservare che $B$ probabilmente non è RE perché per determinare l'appartenenza bisogna verificare infiniti valori del dominio.
+
+La funzione $id$ appartiene a $\beta$ in quanto è definita su tutto $\mathbb{N}$ e quindi anche su tutti i numeri primi, mentre tutte le sue parte finite non appartengono a $\beta$ perché hanno un dominio finito, il quale non può contenere tutti gli infiniti numeri primi.
+
+Si ha quindi una funzione che appartiene all'insieme e tutte le sue parti finite che non ci appartengono, quindi per Rice-Shapiro $B$ non è RE.
+
+Per quanto riguarda $\overline{B}$, si ha che contiene tutti i programmi che calcolano funzioni definite su qualche numero primo, anche nessuno (ma non tutti) ed è sempre un insieme saturo.
+
+Analogamente a prima, la funzione $id$ non appartiene a $\overline{\beta}$ e la funzione 
+
+$$
+\vartheta(x) = \begin{cases}
+x &\text{se } x \leq 5 \\
+\uparrow &\text{altrimenti}
+\end{cases}
+$$
+
+è una parte finita di $id$ e appartiene a $\overline{\beta}$. Si ha quindi che per il teorema di Rice-Shapiro anche $\overline{B}$ non è RE.
+
+\subsection{Esercizio 5}
+
+Dimostrare che esiste $n \in \mathbb{N} $ tale che $\phi_n = \phi_{n+1}$ ed esiste anche $m \in \mathbb{N}$ tale che $\phi_m \neq \phi_{m+1}$.
+
+\subsubsection{Soluzione}
+
+ Il programma composto dalla sola istruzione \texttt{Z(1)} viene codificato con $2^{4\cdot(1 -1) +1} -2 = 0$ mentre il programma \texttt{Z(1)Z(1)} viene codificato con $2^{0}\cdot 3^1 -2 = 1$, entrambi i programmi calcolano la funzione $f(x) = 0$ e quindi il primo caso è dimostrato.
+ 
+ Il programma composto dall'istruzione \texttt{S(1)} viene codificato con $2^{(4(1-1) +1) + 1} -2 = 2$ e calcola la funzione $f(x) = x +1$ che è diversa dalla funzione calcolata dal programma di indice 1.
+ 
+ Ricapitolando:
+ 
+ \begin{itemize}
+ 	\item $\phi_0(x) = 0$
+ 	\item $\phi_1(x) = 1$
+ 	\item $\phi_2(x) = x+1$
+ \end{itemize}
+ 
+ Segue quindi che esistono $n=0$ e $m=1$ che soddisfano quanto richiesto.
+ 
+ \subsubsection{Soluzione decisamente migliore}
+ 
+ La funzione $succ$ è una funzione calcolabile e totale, quindi per il secondo teorema di ricorsione $\exists e \in \mathbb{N}$ tale che $\phi_e = \phi_{succ(e)} = \phi_{e+1}$.
+ 
+ Tuttavia deve esistere almeno un $e$ tale che $\phi_e \neq \phi_{e+1}$ perché se così non fosse, tutti i programmi calcolerebbero la stessa funzione e quindi solamente una funzione sarebbe calcolabile, ma è noto che ci sono più di due funzioni calcolabili.

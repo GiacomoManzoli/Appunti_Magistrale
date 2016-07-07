@@ -1,0 +1,165 @@
+\section{Appello 2014-07-21}
+
+\subsection{Esercizio 1}
+
+Enunciare e dimostrare il teorema di Rice
+
+\subsubsection{Soluzione}
+
+Il teorema di Rice asserisce che le proprietà non banali di un programma non sono ricorsive.
+
+Ovvero dato $A \subseteq \mathbb{N}$ saturo e tale che $A \neq \mathbb{N}$ e $\neq \emptyset$, $A$ è ricorsivo.
+
+Questo si dimostra per riduzione $K \leq_m A$.
+
+Sia $e_0$ un programma che calcola la funzione sempre indefinita ($\phi_{e_0} = \emptyset$). Questo programma può essere in $A$ o in $\overline{A}$. Assumiamo che sia in $\overline{A}$.
+
+Sia $e_1$ un programma in $A$, ed esiste perché $A \neq \emptyset$.
+
+Serve quindi una funzione tale che $x \in K \Leftrightarrow f(x) \in A$.
+
+Possiamo definire
+
+$$
+g(x,y) = \begin{cases}
+\phi_{e_1}(y) &x \in K \\
+\phi_{e_0}(y) = \uparrow \forall y&x \notin K
+\end{cases} = \phi_{e_1} \cdot \mathbb{1}\big(SC_K(x)\big)
+$$ 
+
+$g$ è calcolabile e totale, quindi per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, tale che $g(x,y) = \phi_{f(x)}(y)$.
+
+$f$ è funzione di riduzione perché
+
+\begin{itemize}
+	\item $x \in K$: $\phi_{f(x)}(y) = g(x,y) = \phi_{e_1}(y) \: \forall y $ e quindi dal momento che $A$ è saturo e che $e_1 \in A$, anche $f(x) \in A$.
+	\item $x \notin K$: $\phi_{f(x)}(y) = g(x,y)  = \uparrow=\phi_{e_0}(y)\: \forall y $ e quindi, dato che $e_0 \notin A$, anche $f(x) \notin A$, perché se $f(x) \in A$, anche $e_0$ dovrebbe essere in $A$ dato che calcolano la stessa funzione. 
+\end{itemize}
+
+Segue quindi che $A$ non è ricorsivo, se $e_0 \notin A$.
+Assumendo invece che $e_0 \in A$, si può osservare che il complementare di un insieme saturo è anch'esso saturo e che se $B = \overline{A}$, $\overline{B} = A$ e $e_0 \in \overline{B}$ e quindi vale la dimostrazione precedente.
+
+\subsection{Esercizio 2}
+
+Esiste una funzione totale non calcolabile $f : \mathbb{N} \rightarrow \mathbb{N}$ tale che la funzione $g : \mathbb{N} \rightarrow \mathbb{N}$ definita per ogni $x \in \mathbb{N}$, da $g(x) = f(x) \dotminus x$ sia calcolabile? Fornire un esempio di $f$ oppure dimostrare che tale funzione non esiste.
+
+\subsubsection{Soluzione}
+
+Si esiste:
+
+$$
+f(x) = \mathcal{X}_K(x) = \begin{cases}
+1 &x \in K\\
+0 &x \notin K
+\end{cases} 
+$$
+
+(funzione caratteristica dell'insieme $K$, è noto che non è calcolabile).
+
+Con questa funzione si ha che:
+
+$$
+g(x) = \begin{cases}
+0 &x \geq 1 \\
+1 &x = 0 \text{ e } f(x) = 1 \\
+0 &x = 0 \text{ e } f(x) = 0 
+\end{cases} = \begin{cases}
+0 &x \geq 1 \\
+1 &x = 0 \text{ e } x \in K \\
+0 &x = 0 \text{ e } x \notin K 
+\end{cases} = \begin{cases}
+0 &x \geq 1 \\
+1 &x = 0 \text{ e } \phi_x(x)\downarrow \\
+0 &x = 0 \text{ e } \phi_x(x)\uparrow 
+\end{cases}
+$$
+
+$g$ risulta quindi essere calcolabile in quanto viene definita per casi e utilizzando solamente funzioni calcolabili. $\phi_x(x)$ può essere calcolato utilizzando la funzione universale.
+\todo{verificare il caso in cui f(x) vale 0}
+
+\subsection{Esercizio 3}
+
+Una funzione parziale è iniettiva quando per ogni $x, y \in dom(f)$, se $f(x) = f(y)$, allora $x = y$. Studiare la ricorsività di $A = \{ x | \phi_x \text{è iniettiva} \}$.
+
+\subsubsection{Soluzione}
+
+L'insieme è saturo perché descrive una proprietà non banale delle funzioni calcolate dai programmi che appartengono all'insieme
+
+Probabilmente $A$ non è RE, perché per provare se una funzione è iniettiva è necessario verificare tutti i valori del dominio.
+
+La funzione 
+
+$$
+f(x) = \begin{cases}
+x &x \leq 3 \\
+0 &\text{altrimenti}
+\end{cases}
+$$
+
+non è iniettiva e quindi non appartiene ad $\mathcal{A}$, ma ammette una parte finita $\vartheta \in \mathcal{A}$:
+
+$$
+\vartheta = \begin{cases}
+x &x \leq 3 \\
+\uparrow &\text{altrimenti}
+\end{cases}
+$$
+
+e quindi per il teorema di Rice Shapiro, $A$ non è RE.
+
+Per quanto riguarda $\overline{A}$ non si può fare lo stesso ragionamento perché una funzione iniettiva ha tutte le parti finite iniettive, e sembra valere anche il viceversa.
+
+Per vedere se una funzione non è iniettiva, basta trovare $x,y$ tali che $x \neq y$ e $f(x) = f(y)$ e quindi stabilire l'appartenenza ad $\overline{A}$ sembra essere semi-decidibile.
+
+$$
+SC_{\overline{A}}(x)  = \mathbb{1}\Bigg(\mu w . \bigg( \underbrace{ S\Big(x, (w)_1, (w)_2, (w)_3\Big)}_{a = (w)_1 \in W_x} \wedge \underbrace{S\Big(x, (w)_4, (w)_5, (w)_6\Big)}_{b = (w_4) \in W_x} \wedge \Big( \underbrace{(w)_1 \neq (w)_4}_{a \neq b} \Big) \wedge \Big(\underbrace{(w)_2 = (w)_5}_{\phi_x(a)= \phi_x(b)}\Big) \bigg) \Bigg)
+$$
+
+$SC_{\overline{A}}$ è calcolabile per composizione di funzioni calcolabili (quasi, l'uguaglianza e la disuguaglianza sono predicati, ma la loro funzione caratteristica è calcolabile) e quindi $\overline{A}$ è RE.
+
+\subsection{Esercizio 4}
+
+Studiare la ricorsività di $B = \{  x | x \in W_x \setminus \{0\} \}$
+
+\subsubsection{Soluzione}
+
+$B$ sembra essere RE, perché molto simile a $K$.
+
+$$
+SC_B(x) = \begin{cases}
+1 & x \in K \wedge x \neq 0 \\
+\uparrow & x = 0 \\
+\uparrow & x \notin K
+\end{cases} = \mathbb{1}\big(\mu w. \overline{sg}(x) \big) \cdot SC_K(x)
+$$
+
+$SC_B$ è calcolabile per composizione di funzioni calcolabili e quindi $B$ è RE.
+
+
+$\overline{B} = \{ x | \phi_x(x) \uparrow  \} \cup \{ 0 \} = \overline{K} \cup \{0\}$ e quindi $\overline{K} \cup \{0\} \subseteq \overline{B}$. 
+Essendo $\overline{K}$ non RE si può effettuare la riduzione $\overline{K} \leq_m \overline{B}$ utilizzando come funzione la funzione identità e quindi anche $\overline{B}$ non è RE.
+
+
+\subsection{Esercizio 5}
+
+Enunciare il secondo teorema di ricorsione e dimostrare che esiste $n \in \mathbb{N}$ tale che $W_n  = E_n = \{ k n \: | \: k \in \mathbb{N} \}$
+
+\subsubsection{Soluzione}
+
+Il teorema asserisce che data una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, $\exists e \in \mathbb{N}$ tale che $\phi_e = \phi_{f(e)}$.
+
+Definisco
+
+$$
+g(x,y) = \begin{cases}
+x \cdot y & \text{se }x \text{ è multiplo di }y \\
+\uparrow &\text{altrimenti}
+\end{cases} = xy \cdot \mathbb{1}\big( \mu z . |zx - y|\big)
+$$
+
+ed è calcolabile perché definita utilizzando funzioni calcolabili, quindi per SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che $g(x,y) = \phi_{f(x)}(y) \forall y$ e tale che $W_{f(x)}= E_{f(x)} =  \{ k x \: | \: k \in \mathbb{N} \}$.
+
+Per il secondo teorema di ricorsione, esiste $x \in \mathbb{N}$ tale che $\phi_x = \phi_{f(x)}$ e quindi tale che $W_x = E_x = W_{f(x)}= E_{f(x)} =  \{ k x \: | \: k \in \mathbb{N} \}$
+
+
+
