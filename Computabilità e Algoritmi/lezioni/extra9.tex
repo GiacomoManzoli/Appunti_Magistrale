@@ -1,0 +1,186 @@
+\section{Appello 2014-03-21}
+
+\subsection{Esercizio 1}
+
+Enunciare e dimostrare il teorema di Rice
+
+\subsubsection{Soluzione}
+
+Il teorema di Rice asserisce che qualsiasi proprietà non banale delle funzioni calcolate dai programmi  non è decidibile.
+In altre parole, sia $A \subseteq \mathbb{N}$ l'insieme che contiene tutti i programmi la cui funzione calcolata gode di una determinata proprietà (ovvero $A$ è un insieme saturo), se la proprietà non è banale ($A \neq \emptyset, \neq \mathbb{N}$) allora $A$ non è ricorsivo.
+
+La non ricorsività si dimostra per riduzione $K \leq_m A$.
+
+Sia $e_0$ un programma tale che $\phi_{e_0} = \emptyset$. Questo programma può trovarsi in $A$ oppure in $\overline{A}$. Assumiamo che $e_0 \in \overline{A}$.
+
+Essendo $A$ non vuoto, ci sarà almeno un programma $e_1 \in A$ che calcola una qualche funzione.
+
+Si può quindi definire la funzione
+
+$$
+g(x,y) = \begin{cases}
+\phi_{e_1}(y) &x \in K \\
+\phi_{e_0}(y) = \uparrow &x \notin K
+\end{cases} = SC_K(x)
+$$
+
+Tale funzione è calcolabile, perché la funzione semi-caratteristica di $K$ è noto che è calcolabile e quindi per il teorema SMN esiste $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale tale che $\phi_{f(x)}(y) = g(x,y)$.
+
+$f$ è funzione di riduzione perché
+
+\begin{itemize}
+	\item $x \in K$, $\phi_{f(x)}(y) = g(x,y) = \phi_{e_1}(y) \forall y$ e dal momento che $A$ è saturo e che $\phi_{f(x)} = \phi_{e_1}$, $f(x) \in A$.
+	\item $x \notin K$, $\phi_{f(x)} = \emptyset(y) = \phi_{e_0}(y) \forall y$ e dal momento che anche $\overline{A}$ è saturo e che $\phi_{f(x)} = \phi_{e_0}$, $f(x) \in \overline{A}$ e quindi $f(x) \notin A$.
+\end{itemize}
+
+Dal momento che $K$ si riduce ad $A$, $A$ è non ricorsivo.
+
+Se invece $e_0\in A$ si può effettuare lo stesso ragionamento, indicando con $\overline{B} = A$ e $B = \overline{A}$. $e_0 \in \overline{B}$ e quindi la dimostrazione è la stessa.
+
+\subsection{Esercizio 2}
+
+Sia $A \subseteq \mathbb{N}$ un insieme e $f : \mathbb{N} \rightarrow \mathbb{N}$ una funzione calcolabile. Dimostrare che se A è RE allora $f(A) = \{ y \in \mathbb{N} | \exists x \in A . y = f(x) \}$ è RE. Vale anche il contrario?
+
+
+\subsubsection{Soluzione}
+
+Se $A$ è RE, la sua funzione semi-caratteristica è calcolabile e quindi esiste un programma $e_0$ che la calcola e che può essere utilizzato per calcolare la funzione semi-caratteristica di $f(A)$:
+
+$$
+SC_{f(A)}(x) = \mathbb{1}\Bigg( \mu w. \overline{sg}\bigg(\underbrace{H\Big(e_0, (w)_1, (w)_2\Big)}_{(w)_1 \in A} \wedge \underbrace{S\Big(e_1, (w)_1, x, (w)_3 \Big)}_{f\big((w)_1\big) = x}\bigg) \Bigg)
+$$
+
+dove $e_1$ è un programma che calcola $f$.
+Devo utilizzare la minimalizzazione illimitata perché $f$ può essere indefinita su qualche punto. Il segno negato serve per azzerare l'espressione quando entrambe le condizioni sono soddisfatte.
+
+Se $f(A)$ è RE la sua funzione semi-caratteristica è calcolabile e può essere utilizzata per definire $SC_A$:
+
+$$
+SC_A(x) = SC_{f(A)}(f(x))
+$$
+
+Perché questo funzioni è necessario che $f$ sia iniettiva e totale, perché sennò possono verificarsi dei casi in cui o $x \in A, x \notin dom(f)$, oppure $fy \in f(A)$ perché $\exists z \in A. f(z) = y, z \neq x$.  
+
+Quindi, se $f$ è iniettiva e totale, allora anche $A$ è RE. Altrimenti non è detto che $A$ sia RE.
+
+
+\subsection{Esercizio 3}
+
+Sia $X \subseteq \mathbb{N}$ un insieme finito, $X \neq \emptyset$ e si definisca $A_X = \{x \in \mathbb{N} : W_x = E_x \cup X \}$. Studiare la ricorsività di $A_X$.
+
+\subsubsection{Soluzione}
+
+L'insieme è saturo perché può essere visto come
+
+$$
+\mathcal{A}_X = \{ f \in\mathcal{C} | dom(f) = cod(f) \cup X \}
+$$
+
+Inoltre, $id \in \mathcal{A}_X$ e $\emptyset \notin \mathcal{A}_X$, ovvero $A_X$ non è banale e quindi per Rice $A_X$ non è ricorsivo.
+
+L'insieme $A_X$ sembra anche essere non-RE, perché per valutare l'appartenenza è necessario esaminare tutti gli elementi del dominio e del codominio.
+
+%Se $X = \mathbb{N}$, $\mathcal{A}_X = \{ f \in\mathcal{C} | dom(f) = \mathbb{N} \}$, $id \in\mathcal{A}_X$, tutte le parti finite di $id$ non sono in $\mathcal{A}_X$ e quindi per Rice-Shapiro $A_X$ è non RE.
+
+%Inoltre, sempre se $X = \mathbb{N}$, $\overline{\mathcal{A}_X} = \{f \in\mathcal{C} | dom(f) \neq \mathbb{N} \}$, $id \notin \overline{\mathcal{A}_X}$, $\emptyset \in \overline{\mathcal{A}_X}$, $\emptyset$ è parte finita di $id$ e quindi per Rice-Shapiro, $A_X$ è non RE.
+
+%Se invece $X \neq \mathbb{N}$, posso definire la funzione: 
+
+$$
+f(x) = \begin{cases}
+x & x \in X \\
+x_0 & \text{altrimenti}
+\end{cases}
+$$
+
+con $x_0 \in X$. Questa funzione non appartiene a $\mathcal{A}_X$ perché $dom(f) = \mathbb{N} \neq cod(f)\cup X = X$, mentre la sua parte finita
+
+$$
+\vartheta(x) = \begin{cases}
+x & x \in X \\
+\uparrow & \text{altrimenti}
+\end{cases}
+$$
+
+appartiene ad $A_X$ perché $dom(\vartheta) = cod(\vartheta) = X$. Quindi per Rice-Shapiro $A_X$ è non RE.
+
+Per quanto riguarda il complementare, il ragionamento è simile. $id \notin \overline{\mathcal{A}_X}$ ($dom(id) = cod(id) = \mathbb{N}$), $\emptyset \in \overline{\mathcal{A}_X}$ perché $dom(\emptyset) = \emptyset \neq cod(\emptyset) \cup X$, $\emptyset$ è parte finita di $id$ e quindi per Rice-Shapiro $\overline{\mathcal{A}_X}$ è non RE.
+
+\subsection{Esercizio 4}
+
+Studiare la ricorsività dell'insieme $B = \{ x \in \mathbb{N} : \exists k \in \mathbb{N} . k \cdot x \in W_x \}$.
+
+\subsubsection{Soluzione}
+
+$B$ sembra essere RE:
+
+$$
+SC_B(x) =\mathbb{1}\bigg( \mu w . S\Big(x, (w)_1 \cdot x, (w)_2, (w)_3 \Big) \bigg)
+$$
+
+La funzione semi-caratteristica è calcolabile e quindi $B$ è RE.
+
+Probabilmente $B$ non è ricorsivo, $K \leq_m B$.
+
+Se $x \in K$, $f(x) \in B$ e questo è banale dato che $B$ contiene anche le funzioni che sono totali. Se $x \notin K$, $f(x)$ non deve essere in $B$ e quindi non deve esserci un multiplo dell'indice del programma nel dominio della funzione, quindi gli indici dei programmi che calcolano la funzione sempre indefinita non sono in $B$.
+
+Posso quindi definire
+
+$$
+g(x,y) = \begin{cases}
+1& x \in K \\
+\uparrow & \text{altrimenti}
+\end{cases} = SC_K(x) 
+$$
+
+$g$ è calcolabile e quindi per il teorema SMN esiste $f$ calcolabile, totale, tale che $\phi_{f(x) } = g(x,y)$ e che può essere utilizzata come funzione di riduzione perché
+
+\begin{itemize}
+	\item $x \in K$: $\phi_{f(x)}(y) = g(x,y) = 1 \forall y$, ovvero $W_{f(x)} = \mathbb{N}$ e quindi di sicuro $\exists k \in \mathbb{N}. k\cdot f(x) \in W_{f(x)}$
+	\item $x \notin K$: $\phi_{f(x)}(y) = g(x,y) = \uparrow \forall y$ ovvero $W_{f(x)} = \emptyset$ e quindi di sicuro $\nexists k \in \mathbb{N}. k\cdot f(x) \in W_{f(x)}$.
+\end{itemize}
+
+Quindi $B$ non è ricorsivo ed è RE. $\overline{B}$ è per forza non RE.
+
+\subsection{Esercizio 5}
+
+Enunciare il secondo teorema di ricorsione.
+Dimostrare che $B = \{ x \in \mathbb{N} : \exists k \in \mathbb{N} . k \cdot x \in W_x \}$ non è saturo.
+
+\subsubsection{Soluzione}
+
+Sia $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, allora $\exists e . \phi_e = \phi_{f(e)}$.
+
+$$
+g(x,y) = \begin{cases}
+1 & y = x\\
+\uparrow &\text{altrimenti}
+\end{cases} = \mathbb{1}\Big( \mu k . |x - y| \Big)
+$$
+
+Essendo $g$ calcolabile, posso applicare SMN per trovare $\phi_{f(x)}(y) = g(x,y)$ e per il secondo teorema di ricorsione si ha che:
+
+$$
+\exists e \text{ tale che} \phi_e(y) = \phi_{f(e)}(y) = g(e,y) = \begin{cases}
+1 & y = e \\
+\uparrow &\text{altrimenti}
+\end{cases} 
+$$
+
+e quindi tale che $W_e = W_{f(e)} = \{e\}$ e quindi $e \in B$ per $k = 1$.
+
+Dal momento che $\phi_e$ è calcolabile, ci sono infiniti indici che la calcolano e di sicuro ci sono degli indici $e' > e$. Ovvero tali che $W_{e'} = W_e = {e}$.
+
+Essendo $e' > e$, $\forall k \in \mathbb{N}, k\cdot e' \notin W_{e'} = W_e$ e quindi $e'$ non è in $B$, ovvero $B$ non è saturo.
+
+C'è un caso particolare se $e = 0$, perché in quel caso tutti gli $e'$ sono multipli per $k = 0$.
+
+Per gestire ciò si può forzare il fatto che il punto fisso sia $\neq 0$, ovvero si sceglie un $e_0$ tale che $\phi_{e_0} = \phi_0$ e si riapplica il secondo teorema di ricorsione utilizzando come funzione:
+
+$$
+f'(x) = \begin{cases}
+f(x) = e& f(x)\neq 0\\
+e_0 &\text{altrimenti} 
+\end{cases}
+$$
+

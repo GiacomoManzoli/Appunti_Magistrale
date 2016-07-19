@@ -1,0 +1,143 @@
+\section{Appello 2016-01-25}
+
+\subsection{Esercizio 1}
+
+Dimostrare che $A \subseteq \mathbb{N}$ è ricorsivo se e solo se $A$ e $\overline{A}$ sono RE.
+
+\subsubsection{Soluzione}
+
+Se $A$ è ricorsivo posso definire 
+
+$$
+SC_A(x) = \mathbb{1}\Big( \mu w . \overline{sg}\big(\mathcal{X}_A(x)\big)\Big)
+$$
+
+che risulta calcolabile perché definita utilizzando funzioni calcolabili e quindi $A$ è anche RE. Per ottenere $SC_{\overline{A}}$ basta togliere il segno negato, oppure utilizzare $\mathcal{X}_{\overline{A}}$.
+
+Se invece sono entrambi RE, posso definire 
+
+$$
+\mathcal{X}_A(x) = \bigg( \mu w . S\Big(e_1, x, \big(w\big)_1, \big(w\big)_2\Big) \vee S\Big(e_2, x, \big(w\big)_1,\big(w\big)_2\Big) \bigg)_1
+$$
+
+dove $e_1$ e $e_2$ sono i programmi che calcolano le due funzioni semi-caratteristiche (quella di $\overline{A}$ deve essere composta con il segno negato).
+
+\subsection{Esercizio 2}
+
+Definire una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ totale e non calcolabile tale che $f(x) = x$ per infiniti argomenti $x \in \mathbb{N}$ oppure dimostrare che questa funzione non esiste.
+
+\subsubsection{Soluzione}
+
+La funzione deve essere definita su tutto $\mathbb{N}$ e $f(x) = id(x) = x$.
+
+Dato che le due funzioni sono uguali e sono definite sullo stesso dominio, un programma che calcola $id$ calcola anche $f$ ed essendo $id$ calcolabile, esistono infiniti programmi che sono in grado di calcolarla e che quindi riescono a calcolare anche $f$.
+
+Tuttavia, la funzione può essere non calcolabile:
+
+$$
+f(x) = x \cdot \mathbb{1}\Big(\mathcal{X}_K(x)\Big)
+$$
+
+Così definita, è totale, uguale all'identità e non calcolabile perché $\mathcal{X}_K$ è non calcolabile.
+
+\subsection{Esercizio 3}
+
+$$
+A = \{ x | \phi_x \text{ strettamente crescente}  \}
+$$
+
+\subsubsection{Soluzione}
+
+$A$ probabilmente è non-RE perché per valutare l'appartenenza è necessario controllare infiniti punti del dominio.
+
+$A$ è saturo:
+
+$$
+\mathcal{A} = \{f | \forall x,y \in dom(f) : x < y \rightarrow f(x) < f(y) \}
+$$
+
+Una qualsiasi funzione gradino:
+
+$$
+f(x) = \begin{cases}
+0 & x \leq x_0 \\
+1 & x > 0
+\end{cases}
+$$
+
+non appartiene a $\mathcal{A}$, ma la parte finita 
+
+$$
+\vartheta(x) = \begin{cases}
+0 & x= x_0 \\
+1 & x = x_0+1 \\
+\uparrow &\text{altriementi}
+\end{cases}
+$$
+
+appartiene ad $\mathcal{A}$ e quindi per Rice-Shapiro, $A$ è non-RE.
+
+Per quanto riguarda $\overline{A}$, per decidere l'appartenenza basta trovare una coppia di punti sui quali la funzione è non crescente, quindi potrebbe essere RE.
+
+$$
+SC_{\overline{A}}(x) =\mathbb{1} \Bigg( \mu w . \overline{sg}\bigg(S\Big(x, (w)_1, (w)_2, (w)_3 \Big) \wedge S\Big(x, (w)_4, (w)_5, (w)_6 \Big) \wedge (w)_1 < (w)_4 \wedge (w)_2 \geq (w)_5\bigg) \Bigg)
+$$
+
+Essendo la funzione semi-caratteristica calcolabile, $\overline{A}$ è non-RE.
+
+\subsection{Esercizio 4}
+
+$$
+B = \{ x : x > 0 \wedge x/2 \notin E_x \}
+$$
+
+\subsubsection{Soluzione}
+
+$B$ probabilmente è non-RE, perché dovrei provare il programma $x$ su infiniti input.
+
+$$\overline{K} \leq_m B$$
+
+$$
+g(x,y) = \begin{cases}
+\uparrow & x \notin K \\
+y/2 & x \in K
+\end{cases} = y/2 \cdot SC_K(x)
+$$
+
+Per SMN esiste la funzione di riduzione $f$:
+
+\begin{itemize}
+	\item $x \notin K$: $\phi_{f(x)}(y) = g(x,y) = \uparrow \forall y \:\Rightarrow E_{f(x)} = \emptyset \Rightarrow f(x) \in B$.
+	\item $x \in K$: $\phi_{f(x)}(y) = g(x,y) = y/2 \forall y \: \Rightarrow \phi_{f(x)}(f(x)) = f(x)/2 \Rightarrow f(x)/2 \in E_{f(x)}  \Rightarrow f(x) \notin B $
+\end{itemize}
+
+E quindi $B$ è non RE.
+
+$\overline{B}$ invece sembra essere ricorsivo, perché basta eseguire in parallelo il programma su tutti i possibili input fino a che non viene trovato in output il valore $x/2$.
+
+$$
+SC_{\overline{B}}(x) =\mathbb{1} \Bigg( \mu w. \overline{sg} \bigg(S(x,(w)_1, x/2, (w)_2 ) \bigg) \Bigg)
+$$
+
+$\overline{B}$ è RE e non ricorsivo.
+
+\subsection{Esercizio 5}
+
+$$\exists x . \phi_x(y) = x+y$$
+
+
+\subsubsection{Soluzione}
+
+Definisco $g(x,y) = x+y$.
+
+Per SMN:
+
+$$
+\phi_{f(x)}(y) = g(x,y) = x+y
+$$
+
+Per il secondo teorema di ricorsione
+
+$$
+\exists x . \phi_x(y) = \phi_{f(x)}(y) = g(x,y) = x +y
+$$

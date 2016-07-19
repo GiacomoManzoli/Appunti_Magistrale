@@ -1,0 +1,180 @@
+\section{Appello 2016-07-01}
+
+Correzione di Baldan.
+
+\subsection{Esercizio 1}
+
+Sia $A$ un insieme ricorsivo e siano $f_1, f_2 : \mathbb{N} \rightarrow \mathbb{N}$ funzioni calcolabili. Dimostrare che è calcolabile la funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ definita da
+
+$$
+f(x) = \begin{cases}
+f_1(x) & x \in A \\
+f_2(x) & x \notin A
+\end{cases}
+$$
+
+Il risultato continua a valere se indeboliamo le ipotesi e assumiamo $A$ RE? Spiegare come si adatta la dimostrazione, in caso positivo, o fornire un controesempio in caso negativo.
+
+\subsubsection{Soluzione}
+
+Siano $e_1, e_2$ i programmi che calcolano le due funzioni date.
+
+La funzione $f$ può essere calcolata con:
+
+$$
+f(x) = \Bigg( \mu w. \bigg( S\Big(e_1, x, (w)_1, (w)_2 \Big) \wedge x \in A \bigg) \vee \bigg( S\Big(e_2, x, (w)_1, (w)_2 \Big) \wedge x \notin A \bigg) \Bigg)_1
+$$
+
+questo perché l'appartenenza o meno ad $A$ è decidibile in quanto $A$ è ricorsivo.
+
+Utilizzare 
+
+$$
+f(x) = f_1(x) \mathcal{X}_A(x) + f_2(x)\mathcal{X}_{\overline{A}}
+$$
+
+è \textbf{sbagliato} perché una delle due funzioni può \textbf{non essere totale} e quindi verrebbe prodotto un risultato sbagliato, utilizzando una funzione sempre indefinita. Se ci fosse anche l'ipotesi della totalità il discorso sarebbe stato diverso.
+
+Se invece $A$ è ricorsivamente enumerabile, la non appartenenza ad $A$ non è più decidibile.
+
+Per dimostrare questo conviene trovare un contro esempio.
+
+Posso prendere $A=K$, $f_1(x) = 1, f_2(x) = 0$, così facendo $f$ risulta essere:
+
+$$
+f(x) = \begin{cases}
+1 & x \in K \\
+0 & x \notin K
+\end{cases}
+$$
+
+ed essendo $f_1, f_2$ calcolabili, anche $f = \mathcal{X}_K$ è calcolabile, ma è noto che questa funzione non è calcolabile e quindi in generale $f$ non è calcolabile.
+
+\subsection{Esercizio 2}
+
+Dimostrare che un insieme $A$ è RE se e solo se esiste una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile tale che $A = img(f) = \{ f(x) : x \in \mathbb{N} \}$.
+
+\subsubsection{Soluzione}
+
+Se $A$ è RE, allora la sua funzione $SC_A$ è calcolabile ed è definita solo su $A$.
+
+Per fare in modo che $A$ sia l'immagine di $f$, si può prendere
+
+$$
+f(x) = x \cdot SC_A(x)
+$$
+
+In questo modo, quando $x \in A$, $SC_A(x) = 1$ e quindi $f(x) = x$ e pertanto $f(x) \in A$.
+$f$ è calcolabile in quanto è ottenuta componendo funzioni calcolabili.
+
+Se $A = img(f)$ con $f$ calcolabile. L'idea è quella di definire la funzione semi-caratteristica di $A$ in modo che valga $1$ solo quando viene calcolata su un valore $x$ che viene fornito in output dalla funzione.
+
+Sia $e$ un programma che calcola $f$. La funzione semi-caratteristica di $A$ può essere definita come:
+
+$$
+SC_A(x) = \mathbb{1}\bigg( \mu w. S \Big(e, (w)_1, x, (w)_2, \Big) \bigg)
+$$
+
+\`E necessario effettuare la minimalizzazione perché $f$ può non essere totale, ovvero \textbf{non} può essere definita come:
+
+$$
+SC_A(x) = \mathbb{1}\bigg( \mu w. |f(w) - x)| \bigg)
+$$
+
+\subsection{Esercizio 3}
+
+$$
+A = \{ x | x \in W_x \wedge \phi_x(x) > x \}
+$$
+
+\subsubsection{Soluzione}
+
+L'insieme è molto simile a $K$, quindi probabilmente è RE:
+
+$$
+SC_A(x) = \mathbb{1} \bigg(\mu w .  x+1 \dotminus \phi_x(x) \bigg) = \mathbb{1} \bigg(\mu w .  x+1 \dotminus \Phi_u(x,x) \bigg)
+$$
+
+La funzione è calcolabile, quindi $A$ è RE e va bene anche se $x \notin W_x$ perché la funzione è correttamente indefinita.
+
+Per dimostrare che $A$ non è ricorsivo posso fare la riduzione $K \leq_m A$.
+
+Serve quindi una funzione $g(x,y)$ tale che vista come funzione di $y$ appartenga ad $A$ solo se $x \in K$.
+
+$$
+g(x,y) = \begin{cases}
+y+1 &x \in K \\
+\uparrow &x \notin K
+\end{cases} = (y+1) \cdot SC_K(x)
+$$
+
+Quando $x$ in $K$, $g(x,x) = x+1$ quindi la condizione di appartenenza ad $A$ è soddisfatta.
+
+Per SMN esiste $f$ che funziona come funzione di riduzione e tale che $g(x,y) = \phi_{f(x)}(y)$:
+
+\begin{itemize}
+	\item $x \in K$: $\phi_{f(x)}(y) = g(x,y) = y+1 \forall y$ in particolare, $\phi_{f(x)}(f(x)) = f(x) +1 \forall f(x)$ ed inoltre $f(x) \in W_{f(x)}$, quindi $f(x) \in A$.
+	\item $x \notin K$: $\phi_{f(x)} = g(x,y) = \uparrow \forall y$, quindi $f(x) \notin W_{f(x)}$ e pertanto $f(x) \notin A$.
+\end{itemize}
+
+$A$ non è ricorsivo ed è RE, quindi $\overline{A}$ è non RE.
+
+\subsection{Esercizio 4}
+
+$$
+B = \{ x \in \mathbb{N} | \forall y \in W_x \exists z \in W_x \: (y < z) \wedge \phi_x(y) > \phi_x(z) \}
+$$
+
+\subsubsection{Soluzione}
+
+L'insieme contiene tutti gli indici, tali che per ogni valore del dominio, esiste un valore più grande tale che il valore della funzione calcolato in quel punto sia più basso.
+
+L'insieme è saturo, perché
+
+$$
+\beta = \{ f \in \mathcal{C} : \forall y \in dom(f). \exists z \in dom(f). y < z \vee f(y) > f(z) \}
+$$
+
+C'è una quantificazione universale, quindi è probabile che sia non RE.
+
+Ad occhio c'è una sola funzione che appartiene a $\beta$ è ed $\emptyset$ perché è sempre indefinita.
+Dato che $\emptyset$ è una parte finita di tutte le funzioni, basta trovarne una che non appartiene a $\beta$.
+Per non appartenere a $\beta$ basta che una funzione non sia decrescente, quindi la funzione $id$ non appartiene a $\beta$ ma ammette parte finta che ci appartiene e quindi per Rice Shapiro, B è non RE.
+
+$$
+\overline{\beta} = \{ f \in \mathcal{C} : \exists y \in dom(f). \forall z \in dom(f). y > z \vee f(y) \leq f(z) \}
+$$
+
+Osservando $\overline{\beta}$ a prima vista sembra essere non RE, però ragionando meglio sulle condizioni di appartenenza a $\overline{\beta}$ si può notare che viene richiesto che la funzione abbia un minimo e questo è sempre vero per le funzioni definite sui numeri naturali.
+
+Quindi $f \in \overline{\beta} \Leftrightarrow f \neq \emptyset$, ovvero $\overline{\beta} = \mathcal{C} \setminus \{ \emptyset \}$, $\beta = \{\emptyset\}$.
+
+Si può definire la funzione semi-caratteristica:
+
+$$
+SC_{\overline{B}}(x) = \mathbb{1}\bigg(  \mu w. H\Big( x, (w)_1, (w)_2\Big) \bigg)
+$$ 
+
+Quindi $\overline{B}$ è RE e non ricorsivo, perché $B$ è non-RE.
+
+\subsection{Esercizio 5}
+
+Enunciare il secondo teorema di ricorsione. Utilizzarlo per dimostrare che esiste un indice $e \in \mathbb{N}$ tale che $W_e = \{e^n \: |\: n \in \mathbb{N} \}$.
+
+\subsubsection{Soluzione}
+
+Il secondo teorema dice che, data una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ calcolabile e totale, $\exists e \in \mathbb{N}$ tale che $\phi_e = \phi_{f(e)}$.
+
+Definisco quindi una funzione che vista come funzione di $y$ abbia le caratteristiche desiderate:
+
+$$
+g(x,y) = \begin{cases}
+\log_x y &\text{se } y = x^n \text{ per qualche }n \\
+\uparrow
+\end{cases} = \mu n . |x^n - y |
+$$
+
+Essendo $g$ calcolabile, per SMN esiste $f$ calcolabile e totale, tale che $\phi_{f(x)}(y) = g(x,y)$. 
+
+Quindi $W_{f(x)} = \{ x^n \: | \: n \in \mathbb{N} \}$. Per il secondo teorema di ricorsione $\exists e$ tale che $\phi_e = \phi_{f(e)}$.
+

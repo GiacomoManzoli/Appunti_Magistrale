@@ -1,0 +1,153 @@
+\section{Appello 2016-07-18}
+
+\todo[inline]{La soluzione non è del tutto corretta}
+
+\subsection{Esercizio 1}
+
+Dimostrare il teorema di Rice.
+
+\subsubsection{Soluzione}
+
+Già fatto in altri appelli.
+
+\subsection{Esercizio 2}
+
+Data una funzione $f : \mathbb{N} \rightarrow \mathbb{N}$ si definisce il predicato $P(x,y) \equiv \text{``}f(x) = y\text{''}$, ovvero $P(x,y)$ è vero se e solo se $x \in dom(f)$ e $f(x) = y$. Dimostrare che la funzione $f$ è calcolabile se e solo se $P(x,y)$ è semi-decidibile.
+
+\subsubsection{Soluzione}
+
+Se $f$ è calcolabile c'è un programma $e$ che la calcola.
+
+$$
+SC_P(x,y) = \begin{cases}
+1 &f(x) = y \\
+\uparrow
+\end{cases}  = \mathbb{1}\bigg( \mu w. S(e,x,y,w) \bigg)
+$$
+
+$SC_P$ è definita in modo calcolabile ed è corretta.
+
+Se $P$ è semi-decidibile, $SC_P$ è calcolabile.
+
+$$
+f(x) = \mu w. SC_P(x,w)
+$$
+
+$f$ è calcolabile. C'è qualche problema se la $f$ non è iniettiva, ma se non ricordo male noi assumiamo che tutte le funzioni lo siano.
+
+\paragraph{Possibile errore}
+
+Sulla definizione di $f$ può esserci un'errore. Se per un $w$ non $SC_P$ è $\uparrow$, $f$ risulta indefinita su $x$ anche quando non lo è. 
+
+Forse così va meglio ($e$ è il programma che calcola $SC_P$):
+
+$$
+f(x) = \bigg(\mu w . S\Big(e, x, (w)_1, (w)_2\Big)\bigg)_1
+$$
+
+perché vengono fatti un po' di passi alla volta.
+
+\subsection{Esercizio 3}
+
+$$
+A = \{ x | x \in W_x \wedge \phi_x(x) = x^2 \}
+$$
+
+\subsubsection{Soluzione}
+
+$A$ RE.
+
+$$
+SC_A(x) = \mathbb{1} \Bigg( \mu w. \bigg( S\Big(x,x,(w)_1, (w)_2\Big) \wedge (w)_1 = x^2 \bigg) \Bigg)
+$$
+
+$A$ non ricorsivo, $K \leq_m A$.
+
+$$
+g(x,y) = \begin{cases}
+y^2 & x \in K \\
+\uparrow
+\end{cases} = y^2 \cdot SC_K(x)
+$$
+
+SMN.
+
+\begin{itemize}
+	\item $x \in K$: $\phi_{f(x)} = y^2 \forall y$. $\phi_{f(x)}(f(x)) = f(x)^2 \rightarrow f(x) \in A$.
+	\item $x \notin K$: $\phi_{f(x)}(y) = \uparrow \forall y$.  $\phi_{f(x)}(f(x)) = \uparrow \rightarrow f(x) \notin A$.
+\end{itemize}
+
+$A$ è RE, non ricorsivo, $\overline{A}$ è quindi non-RE.
+
+\paragraph{Note}
+Forse da qualche parte nel pdf c'è una soluzione migliore di questo esercizio.
+
+\subsection{Esercizio 4}
+
+$$
+B = \{ x | \forall y \in W_x, \exists z \in W_x. (y < z) \wedge f(y) < f(z) \}
+$$
+
+\subsubsection{Soluzione}
+
+$B$ è saturo, contiene tutte le funzioni strettamente crescenti.
+
+$id, \emptyset \in \beta$, la funzione gradino e quella definita in un punto solo $\in \overline{\beta}$.
+
+$$
+f(x) = \begin{cases}
+0 & x = 0 \\
+1 & \text{altrimenti}
+\end{cases} = sg(x)
+$$
+
+$$
+\vartheta(x) = \begin{cases}
+0 & x= 0 \\
+1 & x = 1 \\
+\uparrow 
+\end{cases}
+$$
+
+$f \notin \beta$, $\vartheta \in \beta$, $\vartheta \subseteq f$, $B$ è non-RE per Rice-Shapiro.
+
+$$
+g(x) = \begin{cases}
+0 & x= 0 \\
+\uparrow & \text{altrimenti}
+\end{cases}
+$$
+
+
+$id \notin \overline{\beta}$, $g \in \overline{\beta}$, $g \subseteq id$, $\overline{B}$ è non-RE per Rice Shapiro.
+
+\subsection{Esercizio 5}
+
+Dimostrare che non è saturo
+
+$$
+C = \{x | x \in E_x \}
+$$
+
+\subsubsection{Soluzione}
+
+$$
+g(x,y) = \begin{cases}
+x & x= y \\
+\uparrow
+\end{cases} = x \cdot \mathbb{1}\bigg( \mu w . |x-y| \bigg)
+$$
+
+SMN + Secondo teorema
+
+$$
+\phi_e(y) = \phi_{f(e)}(y) = g(e,y)
+$$
+
+e
+
+$$
+E_e = E_{f(e)} = \{ e\}
+$$
+
+Sia $e'$ tale che $\phi_e =\phi_{e'}$, $E_{e'} = \{e\}$, $e' \notin C$, $e \in C$, l'insieme non è saturo.

@@ -1,0 +1,161 @@
+\section{Appello 2014-04-03}
+
+\subsection{Esercizio 1}
+
+Dimostrare il teorema di struttura dei predicati semidecidibili.
+
+\subsubsection{Soluzione}
+
+Se $Q(x,y)$ è decidibile, allora la sua funzione caratteristica $\mathcal{X}_Q$ è calcolabile e può essere utilizzata per definire quella semi-caratteristica di $P$.
+
+$$
+SC_P(x) = \begin{cases}
+1  & \exists y . Q(x,y) \\
+\uparrow &\text{altrimenti}
+\end{cases} = \mathbb{1}\Bigg( \mu w. \overline{sg} \Big(\mathcal{X}_Q(x,w)  \Big)\Bigg)
+$$
+
+Se invece $P$ è semi-decidibile, allora esiste un programma $e$ che calcola la sua funzione semi-caratteristica. Inoltre, se $P$ è vero, esiste un numero di passi che fanno terminare il programma $e$:
+
+$$
+P(x) \equiv \mu y . H(e, x, y )
+$$
+
+Indicando con $Q(x,y)$ il predicato $H(e,x,y)$ si ottiene il predicato decidibile desiderato.
+
+
+\subsection{Esercizio 2}
+
+Sia $A \subseteq \mathbb{N}$ e sia $f : \mathbb{N} \rightarrow \mathbb{N}$ una funzione calcolabile. Dimostrare che se $A$ è ricorsivo allora $f^{-1}(A) = \{ x \in \mathbb{N} | f(x) \in A \}$ è RE. L'insieme $f^{-1}(A)$ è anche ricorsivo?
+
+\subsubsection{Soluzione}
+
+Sia $e$ un programma che calcola $f$. Questo programma può essere utilizzato per definire la funzione semi-caratteristica di $f^{-1}(A)$:
+
+$$
+SC_{f^{-1}(A)}(x) = \begin{cases}
+1 & x \in f^{-1}(A) \\
+\uparrow &\text{altrimenti}
+\end{cases}  = \begin{cases}
+1 & f(x) \in A \\
+\uparrow &f(x) \notin A
+\end{cases} = \mathbb{1}\Bigg( \mu w . \overline{sg}\bigg(S\Big(e,x,(w)_1, (w)_2 \Big) \wedge \mathcal{X}_A\Big((w)_1\Big) \bigg)\Bigg)
+$$
+
+Questa funzione è calcolabile perché definita utilizzando funzioni calcolabili, e quindi $f^{-1}(A)$ è RE.
+
+Dal momento che non è garantito che $f$ è totale, l'insieme $f^{-1}(A)$ non è ricorsivo, perché può esistere un $x$ per il quale $f(x)$ non è definita e quindi non può essere determinato se $f(x)$ è in $A$ o meno.
+
+\subsection{Esercizio 3}
+
+$$
+A = \{x : W_x \cap E_x \neq \emptyset \}
+$$
+
+\subsubsection{Soluzione}
+
+L'insieme è saturo, perché contiene tutti i programmi le cui funzioni calcolate hanno $dom(f) \cap cod(f) \neq \emptyset$.
+
+$$
+\mathcal{A} = \{f \in \mathcal{C} : dom(f) \cap cod(f) \neq \emptyset \}
+$$
+
+Quindi per il teorema di Rice $A$ non è ricorsivo.
+
+$A$ sembra essere ricorsivo, perché una volta trovato un punto in comune tra il dominio e il codominio, il test di appartenenza può terminare.
+
+$$
+SC_A(x) = \mathbb{1} \Bigg(\mu w . \overline{sg} \Big( S\big(x, (w)_1, (w)_1, (w)_2 \big) \Big) \Bigg)
+$$
+
+Essendo la funzione semi-caratteristica calcolabile, $A$ è RE e non ricorsivo per quanto detto prima. $\overline{A}$ deve quindi essere non RE.
+
+\paragraph{Dimostrazione che $\overline{A}$ è non RE}
+
+$\overline{\mathcal{A}}$ probabilmente è non RE, perché per determinare l'appartenenza è necessario valutare tutto il dominio e il codominio per determinare se l'intersezione è vuota.
+
+La funzione $f(x) = 1$ è in $\overline{A}$ perché $dom(f) \cap cod(f) = \{1\}$ e quindi $f \notin \overline{\mathcal{A}}$.
+
+La sua parte finita:
+
+$$
+\vartheta(x) = \begin{cases}
+1 & x = 0 \\
+\uparrow &\text{altrimenti}
+\end{cases}
+$$
+
+è in $\overline{\mathcal{A}}$ perché $dom(\vartheta) \cap cod(\vartheta) = \emptyset$. Quindi per Rice-Shapiro $\overline{A}$ è non RE. 
+
+\subsection{Esercizio 4}
+
+$$
+B = \{ x \in \mathbb{N} : \forall k \in \mathbb{N}. k+x \in W_x \}
+$$
+
+\subsubsection{Soluzione}
+
+$B$ sembra essere non-RE perché per decidere l'appartenenza bisogna controllare infiniti valori.
+
+Si va quindi di riduzione $\overline{K} \leq_m B$.
+
+$$
+g(x,y) = \begin{cases}
+1 & \neg H(x,x,y) \\
+\uparrow & H(x,x,y)
+\end{cases} = \mathbb{1} \Big( \mu w. H(x,x,y) \Big)
+$$
+
+\`E calcolabile, quindi per SMN esiste $f$ che fa da funzione di riduzione:
+
+\begin{itemize}
+	\item $x \in \overline{K}$: $\phi_{f(x)}(y) = g(x,y) = 1 \forall y$. $\phi_{f(x)}(y)$ è quindi sempre definita ed in particolare $\forall k \in \mathbb{N}, f(x) + k \in W_{f(x)}$ e quindi $f(x) \in B$.
+	\item $x \in K$: $\exists y_0 \in \mathbb{N} .\phi_{f(x)}(y) = g(x,y) = \uparrow \forall y > y_0$. Quindi $\exists k \in \mathbb{N} . f(x) + k \notin W_{f(x)}$ e quindi $f(x) \notin B$.
+\end{itemize}
+
+Si ha quindi che $B$ è non-RE.
+
+$\overline{B} = \{ x : \exists k \in \mathbb{N} . x + k \notin W_x \}$ sembra essere non-RE perché per trovare un $k$ che soddisfa la condizione di appartenenza è necessario aspettare la terminazione del programma su un input in cui non termina.
+
+$$
+g(x,y) = \begin{cases}
+\uparrow & x \in \overline{K} \\
+1 & x \in K
+\end{cases} = SC_K(x)
+$$
+
+Per SMN esiste $f$:
+
+\begin{itemize}
+	\item $x \in \overline{K}$: $\phi_{f(x)}(y) = g(x,y) = \uparrow \forall y$ e quindi $f(x) \in \overline{B}$.
+	\item $x \in K$: $\phi_{f(x)}(y) = g(x,y) = 1 \forall y$, in particolare $W_{f(x)} = \mathbb{N}$ e quindi $f(x) \in B$.
+\end{itemize}
+
+$\overline{B}$ quindi è non-RE.
+
+\subsection{Esercizio 5}
+
+Dimostrare che l'insieme non è saturo:
+
+$$
+C = \{ x : \phi_x(x) = x^2 \}
+$$
+
+\subsubsection{Soluzione}
+
+Il secondo teorema dice che data $f$ calcolabile e totale, esiste $e$ tale che $\phi_e = \phi_{f(e)}$.
+
+$$
+g(x,y) = \begin{cases}
+y^2 &y = x \\
+\uparrow &\text{altrimeniti}
+\end{cases} = y^2 \cdot \mathbb{1}\Big( \mu w . |y - x|\Big)
+$$ 
+
+Per SMN esiste $f$. $\phi_{f(x)}(x) = g(x,x) = x^2 \rightarrow f(x) \in C$. 
+
+Per il secondo teorema $\exists e . \phi_e(e) = \phi_{f(e)}(e)= g(e,e) = e^2 \rightarrow e \in C, W_e = \{e^2\}$. 
+
+Sia $e' \in \mathbb{N} : \phi_{e'} = \phi_e, e' \neq e \rightarrow \phi_{e'}(e') = \uparrow \neq e'^2 \rightarrow e' \notin C$.
+
+Ma dato che $\phi_e = \phi_{e'}$ si ha che l'insieme $C$ non è saturo.

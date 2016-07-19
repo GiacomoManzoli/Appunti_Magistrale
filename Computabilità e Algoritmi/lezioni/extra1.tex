@@ -18,6 +18,9 @@
 	
 	\item $K = \{ x \: | \: \phi_x(x) \downarrow \} = \{ x \: | \: x \in W_x \}$, ovvero l'insieme dei programmi che terminano quando ricevono se stessi in input, \textbf{non} è ricorsivo, ma è RE. L'insieme \textbf{non è saturo} (si dimostra cercando un $e'$ che calcola la stessa funzione di $e$ ma che non termina su se stesso).
 	
+	\item \textbf{Teorema di Rice}: Il teorema di Rice asserisce che qualsiasi proprietà non banale delle funzioni calcolate dai programmi  non è decidibile.
+	In altre parole, sia $A \subseteq \mathbb{N}$ l'insieme che contiene tutti i programmi la cui funzione calcolata gode di una determinata proprietà (ovvero $A$ è un insieme saturo), se la proprietà non è banale ($A \neq \emptyset, \neq \mathbb{N}$) allora $A$ non è ricorsivo.
+	
 	\item $T = \{ x | \phi_x \text{ è totale} \}$, è saturo, non è ricorsivo, è RE.
 	
 	\item \textbf{Funzione finita}: una funzione si dice finita se è definita solamente in un numero finito di elementi.
@@ -28,6 +31,8 @@
 	\forall x \: f(x) \downarrow \Rightarrow g(x) \downarrow \text{ e } f(x) = g(x)
 	$$
 	Ovvero \textit{f} è un pezzo di \textit{g} solo se nei punti in cui è definita è uguale a \textit{g}.
+	
+	\item \textbf{$g(x,y)$}: durante la \textbf{riduzione} $A \leq_m B$ si cerca una funzione $g(x,y)$ calcolabile e tale che vista come funzione di $y$ appartenga a $B$ solo se $x \in A$. Tipicamente viene utilizzata una funzione costante rispetto ad $y$, tuttavia in alcuni casi, ad esempio quando c'è la condizione $\phi_x(x) > x$ è necessario usare anche $y$, in modo che venga soddisfatta la condizione, ad esempio $g(x,x) > x$. Alternativamente $y$ viene utilizzato quando la funzione deve avere determinate proprietà per qualche $n \in \mathbb{N}$.
 	
 	\item \textbf{Riduzioni tipiche:}
 	\begin{itemize}
