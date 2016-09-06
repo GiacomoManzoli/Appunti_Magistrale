@@ -22,3 +22,7 @@ Leggenda:
 - Data Mining [LaTeX (prima parte)][Markdown (seconda parte)][Completato]
 - Sistemi Multimediali [Markdown][Completato]
 - Computabilità e Algoritmi [LaTeX][Completato]
+
+### Sessione di recupero AA 2015-16
+
+- Tecnologie Open Source [LaTeX]: appunti basati su quelli dell'AA 2013-14 di Luca De Franceschi <https://github.com/FIUP/Tecnologie-Open-Source>

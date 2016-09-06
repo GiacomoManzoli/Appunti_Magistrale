@@ -1,0 +1,160 @@
+\chapter{Introduzione}
+
+Questo corso si divide fondamentalmente in due parti:
+
+\begin{enumerate}
+
+	\item Una prima parte \textbf{teorica} in cui si studierà il software libero, le licenze software, il progetto GNU, ...
+	\item Una seconda parte \textbf{pratica} che si baserà su diverse tecnologie e in cui verrà enfatizzato l'aspetto pratico.
+
+\end{enumerate}
+
+\section{Informazioni tecniche}
+
+Sito web del corso:
+
+\begin{center}
+
+\url{http://www.math.unipd.it/~tapparo/TOS/}
+
+\end{center}
+
+Indirizzo email del docente:
+
+\begin{center}
+
+\url{tapparo@math.unipd.it} [\textit{attivo solo durante il periodo del corso}]
+
+\end{center}
+
+Le lezioni si terranno in \textbf{Aula 1BC50}
+
+Gli orari sono i seguenti:
+
+\begin{itemize}
+
+\item \textbf{Giovedì}, 9:30 - 12:05
+\item \textbf{Venerdì}, 9:30 - 12:05
+
+\end{itemize}
+
+Il ricevimento avverrà durante gli intervalli, su appuntamento e dopo lezione.
+
+\textbf{48 ore} di lezione, \textbf{6 CFU}, tutte lezioni frontali.
+
+La modalità d'esame è solamente \textbf{orale}, e avviene tramite iscrizione su \textit{Uniweb}. Verterà in due parti: la prima parte è una discussione sugli argomenti affrontati a lezione, la seconda è una parte pratica sulle tecnologie libere affrontate lungo il corso.
+
+\section{Programma del corso}
+
+\begin{itemize}
+
+\item Storia del software libero;
+\item Licenze libere e caratteristiche del software libero;
+\item Problemi aperti e prospettive del software libero;
+\item Strumenti liberi di supporto allo sviluppo e alla cooperazione.
+
+\end{itemize}
+
+\section{Materiale}
+
+Appunti delle lezioni. [\textbf{PRINCIPALE}]
+
+Materiale nelle \textbf{slides}.
+
+Molti libri di riferimento si possono trovare nelle slides. Molti sono reperibili liberamente.
+
+Libri:
+
+\begin{itemize}
+
+\item \textbf{Open Source: strategie, organizzazione}, è il più accademico e viene toccato marginalmente dal corso. Offre buoni spunti per quanto riguarda la gestione manageriale del software;
+\item \textbf{Il software libero in Italia}, un libro molto interessante composto da diversi interventi. Contiene una buona sezione riguardante le licenze;
+\item \textbf{Hackers: Heroes of the Computers}, libro leggibile come un romanzo, molto consigliato, molto leggero ma va ben oltre gli obiettivi del corso;
+\item \textbf{Software libero, pensiero libero}, per chi ha poca dimestichezza con il progetto GNU. Anche questo libro è composto da una serie di interventi. \textit{Stallman} ha una grande capacità di organizzazione degli argomenti;
+\item \textbf{Free culture}, di \textit{Lawrence Lessig}. Quest'ultimo, oltre a essere l'ex leader di \textit{Creative Common}, ha scritto una serie di libri in cui affronta le tematiche di libertà di accesso ai \textbf{contenuti}. È un libro scritto molto bene, affronta il problema della rivisitazione dei modelli di proprietà a fronte di forti cambiamenti (es. l'introduzione di Internet, l'introduzione dei voli aerei...);
+\item \textbf{Privilege and property}, accessibile da Internet. Viene affrontata la nascita del copyright.
+
+\end{itemize}
+
+\section{Note su questi appunti}
+Gli appunti sono stati realizzati in \LaTeX\xspace e sono il prodotto dell'unione degli appunti presi a lezione e la trascrizione delle registrazioni nell'A.A. 2013/2014. \\
+
+Il contenuto degli appunti potrebbe non coprire eventuali aspetti ed argomenti tenuti negli anni accademici successivi, Il registro utilizzato è simile a quello tenuto a lezione.\\
+
+\begin{wrapfigure}{L}{0.15\textwidth}
+    \includegraphics[width=20mm]{images/cc_by_sa}
+\end{wrapfigure}
+
+\noindent Il PDF ottenuto, eventuali stampe e altre opere derivate da questo sorgente sono da intendersi come rilasciate sotto licenza CC-BY-SA 4.0 \\
+\url{https://creativecommons.org/licenses/by-sa/4.0/}
+
+
+\section{Introduzione al software libero}
+
+Il software libero è software che rispetta la libertà degli utenti e la comunità. Significa che gli utenti hanno la libertà di eseguire, copiare, distribuire, studiare, modificare e migliorare il software.
+
+Il software libero non ha nulla a che vedere con il \textit{prezzo}, ma è un software che rispetta \textbf{4 concetti fondamentali}, ovvero 4 libertà per l'utente:
+
+\begin{itemize}
+
+\item \textbf{Libertà 0} - di \textbf{usare}/eseguire il software come si desidera, usandolo senza restrizioni. Es. libertà di prendere il prodotto ed utilizzarlo senza limiti di tempo, senza vincoli di paese e per \textit{qualunque scopo} (didattico, lavorativo, privato, ...). Il tipo di utilizzo non è mai precluso. Questa è da un lato la libertà meno importante, ma dal punto di vista dell'impatto sull'utente sviluppatore non è la maggiore;
+\item \textbf{Libertà 1} - di \textbf{studiare} il software. A differenza del software proprietario è possibile vedere il \textit{codice sorgente} e capire come funziona il software, ciò da una garanzia di protezione all'individuo. Senza questa libertà si ha un blocco della conoscenza ed è una forte limitazione alla crescita del prodotto;
+\item \textbf{Libertà 2} - di \textbf{ridistribuzione}, in questo caso le aziende non solo possono creare per se stesse, ma anche mettere la nuova versione a disposizione di altri. Software libero come bene comune (\glossario{Routes}, \glossario{Beowulf}, \glossario{nslu2}). Una volta che posso ridistribuire ad altri allora il mio lavoro diventa realmente usabile. La redistribuzione abbatte i costi e aumenta l'apporto di contributi tramite la community che acquisisce competenze e visibilità al migliorare del software. Con un piccolo sforzo di molti si ottiene un grande risultato. Un software libero non proibirà mai di prestare/cedere la propria copia ad un'altra persona.
+\item \textbf{Libertà 3} - di \textbf{modifica}, ovvero posso prendere il software e cambiarlo, costruire nuove soluzioni, per poi ridistribuirle alla comunità. Il software libero è visto in questo contesto come \textit{piattaforma}. Si tratta di costruire delle proprie versioni a partire da una base, senza dover comunicarlo o chiedere il permesso a qualcuno in particolare.
+
+La libertà di distribuire significa anche che si è liberi di ridistribuire copie, con o senza modifiche, gratis o addebitando delle spese di distribuzione, a chiunque ed ovunque e per farlo \textbf{non} è necessario chiedere o pagare un permesso.
+
+
+\end{itemize}
+
+\subsection{Libero != Gratuito}
+
+È un errore comune confondere questi due concetti, ma essi sono realmente due cose distinte. Esiste software gratuito ma che non è libero ed esiste software libero non gratuito (\textit{openerp}, i programmi della \glossario{fsf}, i binari \glossario{RedHat Enterprise Linux}). C'è tutta una serie di software \glossario{freeware} o \glossario{shareware} (es. \textit{winzip}). Un software shareware è collegato ad un acquisto successivo, invita l'utente ad acquistare una versione commerciale.
+
+``Software libero'' non vuol dire non commerciale: un programma libero deve essere disponibile per uso commerciale, sviluppo commerciale e distribuzione commerciale e può essere ottenuto pagandolo o meno, ma a prescindere da come lo si è ottenuto, rimane sempre la possibilità di copiare e modificare il software, persino di venderne delle copie.
+
+\glossario{\textbf{openerp}} è un software a pagamento che fornisce supporto e assistenza tecnica garantendo plugin e funzionalità aggiuntive. 
+\glossario{\textbf{Free Software Foundation}} distribuisce software libero disponibile per diverse architetture. Ha una serie di programmi non facili da compilare. Si scarica il sorgente e si tenta di compilarlo, oppure si richiede il CD con i file già compilati, e questo CD viene fatto pagare.
+
+\glossario{\textbf{RedHat Enterprise}} risolve bug e problemi nel minor tempo possibile e fa il porting di nuove funzioni su vecchie versioni. Vengono distribuiti i sorgenti ma non i binari. Molte di queste modifiche apportate da sviluppatori RedHat vengono integrate in \glossario{\textbf{CentOS}}
+
+I concetti di \textbf{libero} e \textbf{gratuito} sono dunque concetti ortogonali.
+
+\subsection{L'importanza del software libero}
+
+\begin{itemize}
+	\item \textbf{Riduzione dei costi}: non è importante per il pagamento in sé ma in quanto mobilita le leggi del mercato. Viene un mercato aperto, con un tasso più alto di competizione ed innovazione nel quale è facile entrare (ha basse tariffe d'ingresso) ed investire. (\textit{Ad esempio: PHP, apache}).
+	\item \textbf{Trasparenza}: se quello che faccio è visibile, è anche controllabile da altri sviluppatori. È difficile fidarsi di un software che non si sa bene cosa faccia. Il software libero è una \textbf{garanzia} in quanto il controllo collettivo migliora la qualità del software.
+	
+	\item \textbf{Nessun lock-in}: il software libero si può adattare facilmente alle versioni precedenti e quindi non si creano dipendenze da software specifico (come nel caso di software proprietario come \textit{Microsoft Office}).
+	
+	Ad esempio, nel 2004 quanto è stata modificata la licenza della libreria XFree86, una libreria per la gestione delle finestre utilizzata da BSD, è stato possibile sostituire la libreria con un suo fork \textit{X.Org} il quale aveva una licenza diversa, portando così all'abbandono di XFree86\footnote{La licenza originale la MIT, alla quale è stata aggiunta una clausola di credito ritenuta troppo invasiva. Attualmente la licenza di XFree86 è compatibile con GPLv3}. 
+	
+	\item \textbf{Sicurezza e affidabilità}: non ci sono dimostrazioni effettive che questo sia vero. Da un lato il software libero è visibile a tutti, ma dall'altro la manutenzione è costosa ed è facile introdurre bug. Il software proprietario vive molto spesso di un inflazione di \textit{features}, questo per aumentare le vendite.
+	
+	Questo perché il software proprietario si basa un modello gerarchico \textit{produttore - consumatore} in cui c'è [\textbf{chi fa}] ed ha il potere derivato dalla conoscenza e [\textbf{chi usa}], e sta alle condizioni. Citando Bill Gates: ``We do not do a new version to fix bugs. We don't. Not enough people would buy it''. 
+	
+	Il software libero, invece, segue un modello ``\textit{social}'': il software vale molto di più per il fatto che c'è una \textbf{comunità} che gli gira intorno. Il rapporto che si viene a creare con gli utenti è molto importante (\textit{Innovation happens elsewhere}). Intorno al software libero si può creare una comunità in modo che la somma dei costi per fare un prodotto è minore rispetto al costo della comunità stessa.
+	
+	\item Costituisce una libreria disponibile a tutti che permette di apprendere nuove tecniche di sviluppo software.
+	
+	\item Influenza anche sul mondo aziendale: \textit{OpenERP} è un software per la gestione del magazzino/contabilità, \textit{Android}, ecc.
+\end{itemize}
+
+\section{Introduzione a GPL}
+
+Per molto tempo il software libero ha avuto una \textbf{posizione di inferiorità}. Le aziende prendevano software libero, sviluppavano una nuova versione e le rilasciavano come software proprietario. 
+
+Il progetto \textbf{GNU} voleva creare una versione completamente libera del software. Ha creato dunque una nuova licenza, chiamata \textbf{GPL} (General Public License), in modo che avesse un \textit{effetto virale}. Una licenza libera ma con una restrizione particolare, ovvero ogni redistribuzione deve essere rilasciata sotto licenza GPL (circolo virtuoso e virale). Vedere il software libero come un'enorme libreria di conoscenza sempre disponibile.
+
+Il software libero con questa licenza si arricchisce molto, cresce nel tempo e diventa sempre più interessante. Questa licenza è ancora molto presente (60\%, 70\% del software libero è sotto GPL).
+
+\subsection{Copyleft}
+
+Le licenze GPL si basano sul copyleft, un metodo generico per rendere un programma libero e per imporre che tutte le modifiche e le versioni estese dello stesso siano anch'esse libere.
+
+Il modo più semplice per rendere libero del software è quello di rilasciarlo nel dominio pubblico, ma così facendo non c'è alcun vincolo che impedisca a terzi di renderlo software proprietario.
+
+Il copyleft invece, pone il questo vincolo, così facendo chi redistribuisce il software, con o senza modifiche, deve mantenere il software libero.
+
+Per rilasciare un programma sotto copyleft, prima è necessario indicare che è sotto copyright, dopodiché vengono aggiunti i termini di distribuzione, un strumento legale che fornisce a chiunque il permesso di usare, modificare e ridistribuire il codice del programma, a patto che le condizioni di distribuzione non vengano modificate.

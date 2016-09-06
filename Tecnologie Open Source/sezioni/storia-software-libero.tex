@@ -1,0 +1,102 @@
+\chapter{La storia del software libero}
+
+\subsection*{Materiale di riferimento}
+
+\begin{itemize}
+
+\item Steven Levy - \textit{Heroes of the Computer Revolution}.
+
+\end{itemize}
+
+\section{Gli albori}
+
+1950 - 1960, la cultura hacker nasce ai laboratori del \textbf{MIT}. Nel 58/59 nascono i primi corsi di \textbf{intelligenza artificiale} (di fatto era informatica). Vi era un rapporto \textit{giocoso} tra il gruppo di ricerca e i ragazzi, un rapporto che funzionava molto bene. Il primo gruppo hacker nasce dal sottogruppo del \glossario{Tech Model Railroad Club} un club per appassionati di modellismo, lo \glossario{S\&P} che si occupava della parte elettronica. All'inizio non era una vera e propria comunità hacker ma c'era solamente un gruppo che frequentava i corsi. L'accesso ai PC all'epoca era molto riservato (ai docenti, al personale). Questo gruppo aveva trovato una sala (407) con delle macchine perforatrici (per programmare le schede perforate). 
+
+Il rapporto cambierà con l'evoluzione delle tecnologie, con l'accesso più libero alle nuove macchine (TX0). Con il cambiamento delle tecnologie cambia anche la gestione (si poteva accedere liberamente alle macchine), si cominciò a formare un gruppo di persone che \textit{bazzicavano} sulle macchine. Si formò così una comunità con idee e un'etica in comune. 
+
+Con il \glossario{PDP} (computer) le cose cambiarono ulteriormente. IL PDP era pensato non per il \textit{best-processing} ma per una computazione interattiva (aveva un monitor ...), costava inoltre molto meno ed era quindi più accessibile. A quel punto diventava possibile utilizzare le macchine a costo zero.
+
+\section{Etica hacker}
+
+L'etica che si sviluppò all'interno della comunità si basava sui seguenti 4 punti:
+
+\begin{enumerate}
+
+\item \textbf{Libero accesso all'informazione}, bisogna poter metterci le mani, e questo non era all'epoca garantito a tutti;
+\item \textbf{Decentralizzazione}, potere che si sposta dal centro, occorre avere un sistema aperto e privo di ostacoli per favorire il libero accesso all'informazione, senza rallentamenti burocratici;
+\item Gli hacker dovrebbero essere \textbf{giudicati solo per il loro valore};
+\item Il software come \textbf{espressione artistica}, va oltre quello che è la pura utilità, va a fare qualcosa che è divertente e bello (creazione di giochi). Doveva essere un piacere che andasse agli altri;
+
+\end{enumerate}
+
+\section{Conseguenze dello sviluppo software}
+
+In questo momento c'è una libera condivisione del codice, non esiste software protetto da copyright visto che non c'era interesse nel proteggerlo. Il software era un'appendice dell'hardware. Le macchine erano in continua evoluzione e modifica. L'avere un accesso a come il software funzionava era vitale per gli sviluppatori. Dato che il tempo macchina era oneroso, bisognava sfruttarlo al meglio e quindi era importante la condivisione del lavoro tra gli sviluppatori.
+
+\textbf{Incopatible Time Sharing}, ci si compra un terminale e poi si accede alle reti di calcolo di un enorme computer. ITS era la base di questo concetto. Non c'erano password, ogni utente aveva i propri file personali accedibili da tutti. Era disegnato per la cooperazione tra gli hacker ed assumeva una grossa fiducia negli utenti.
+
+\section{La fine del periodo degli hacker}
+
+\begin{itemize}
+
+\item 68: il computer lab viene isolato;
+\item 70's-80's: frammentazione della cultura hacker:
+
+	\begin{itemize}
+
+	\item 1976: copyright act;
+	\item 1979: \glossario{LMI} e \glossario{Symbolics} reclutano la maggior parte degli hacker rimasti al MIT per la produzione di LISP Machine, di fatto frammentando la comunità;
+	\item 1982: Symbolics rende le proprie modifiche al sistema operativo per Lisp Machine proprietario.
+	
+	\end{itemize}
+
+\item Negli '80 cessa la produzione del PDP-10, condannando definitivamente ITS. Al MIT entrano software proprietari, e iniziano ad essere inclusi sistemi di sicurezza come password, limitando così la condivisione.
+
+\end{itemize}
+
+\section{Nasce unix}
+
+Una serie di circostanze ha voluto che \glossario{unix} venisse rilasciato con licenza libera (era comunque protetto da copyright). Nasce come una risposta a \glossario{MUTIX} per creare un sistema diverso, più piccolo e con minor risorse. Fu il primo sistema scritto non direttamente in linguaggio macchina ma scritto in linguaggio C. Questo sistema ebbe subito un grosso successo anche e soprattutto in ambito universitario. 
+
+L'\glossario{AT\&T} era un monopolio telefonico del governo, aveva la restrizione che non poteva vendere software e quindi si decise di distribuire gratuitamente unix. Al suo lancio esso si diffuse molto rapidamente. Una delle università che lo utilizzò fin da subito fu \textbf{Berkeley}, che aveva interesse dal punto di vista della programmazione interna di unix. Nel 1977 nacque \glossario{BSD}, una versione modificata di unix utilizzata dall'università. Due anni dopo la AT\&T annunciò di voler commercializzare unix. 
+
+Nel 1983 AT\&T viene divisa e unix diventa commerciale. A questo punto c'era BSD ed era una possibile scelta. \glossario{ARPA} lo utilizzò per creare \glossario{ARPANET}, per collegare diversi computer via network, garantendo un'uniformità a livello software del sistema operativo. Il software libero ebbe quindi un impatto notevole. ARPA mise inoltre a disposizione dei fondi per migliorare BSD e facilitare il suo sviluppo. In seguito venne citata in giudizio dalla AT\&T perché si diceva volesse il codice di unix. Questo bloccò di fatto lo sviluppo di ARPANET. Se ciò non fosse successo probabilmente non sarebbe nato unix.
+
+\section{Nasce il progetto GNU}
+
+Nel momento in cui il software è chiuso emerge la necessità di creare un movimento alternativo. Al MIT c'era una stampante, la \textit{Xerox 9700}, modificata a partire da un fax. Ma fax e stampanti hanno modi e utilizzi molto diversi. Mancava ad essa una funzionalità del driver, non comunicava al sistema operativo se la carte si era inceppata, e quindi era impossibile capirlo se non andando a verificare di persona. Richard Stallman si mise a scrivere questa funzionalità in modo che la stampante comunicasse al sistema operativo il suo stato. Però non riuscì a trovare il codice sorgente del software di essa e invano la chiese. Questo fu uno dei motivi che portarono Stallman alla creazione del progetto GNU. Ci furono diverse volte in cui Stallman si ritrovò di fronte a codice bloccato da parte del MIT. Lui si ritrovò a dover confrontarsi con questa realtà.
+
+Nel 1983 ci fu la chiusura di Unix e nello stesso anno Stallman fondò GNU, che aveva tra gli altri scopi quello di creare un sistema operativo libero. Cominciò dunque a creare questo nuovo sistema operativo a partire dalla basi (compilatori, editor di testo, ...).
+
+Nel 1984 lasciò il MIT proprio per togliergli la possibilità di rivendicare il codice scritto da lui, e nel 1985 scrisse il manifesto GNU.
+
+Nel 1990 nasce \glossario{Linux}, con un nuovo \glossario{kernel} a partire da \glossario{minix}. All'inizio l'interesse dei GNU non era quello di creare un sistema completo, ma voleva mettere a disposizione uno strumento fin da subito (in tempi rapidi), per cui non venne progettato un kernel ma riutilizzato minix. Il software minix era stato sviluppato da \textit{Tanenbaum}. Da qui nacque la comunità Linux, che venne annunciata al mondo. Nel 1991 venne rilasciato Linux 0.0.2.
+
+Nel 1994 nacque la prima distribuzione commerciale di Linux, ovvero \glossario{RedHat}. Poi nasce \glossario{apache} nel 1995, un web server nato da NCSA e dall'unione di diverse patch. Nel 1999 nasce la \glossario{apache software foundation} e si ha una vera e propria maturazione del software libero.
+
+\section{Il movimento Open-source}
+
+Nel 1997 nasce il movimento open-source, Raymond pubblica ``\textit{The Cathedral and the Bazaar}'' (presentato alla O'Reilly Perl Conference). Raymond si mise ad analizzare la diffusione di Linux. Si crea un modello di sviluppo che invece di essere a cattedrale è a bazaar (come un mercato, in cui ci sono tante persone che contribuiscono tutte in modo diverso). Con questa nuova ottica si riesce dunque a produrre software in modo migliore.
+
+Nel 1998 \glossario{Netscape} rilasciò il sorgente del proprio browser. Netscape all'epoca controllava il mercato dei browser ma era in crisi con l'incursione del colosso Microsoft e l'avvento di Internet Explorer. Temevano che la Microsoft sarebbe divenuta dominante e quindi rilasciarono il codice sorgente (primo grande rilascio della storia), il che costrinse inoltre loro ad un'ingente pulizia del codice (codice scritto male e con tanta spazzatura). Questo fu un passo epocale, infatti \textit{firefox} nacque da questo. All'interno della comunità ci fu subito la percezione che questo rilascio fosse molto particolare e fosse qualcosa da sfruttare. L'interesse era creare un sistema funzionante e che si facesse rispettare. Nasce dunque il concetto di open-source e la \glossario{OSI}. Ci si rese conto che la produzione di software libero coincide con la produzione di software migliore. I grossi leader entrarono in questo movimento. Nel 2000 \glossario{Sun} richiese il codice sorgente di \glossario{StarOffice}. Mancava infatti un software di produttività che fosse all'altezza di ad esempio \textit{Microsoft Office}.
+
+Per evitare che il termine venisse diluito e svalutato ci fu la necessità di renderlo un \textbf{marchio}, in modo che un software per essere considerato libero dovesse rispettare questo marchio ed essere approvato dalla OSI. 
+
+\section{Open Source Definition}
+
+Ci fu quindi la creazione di una serie di \textbf{linee guida} chiare per considerare un software come open-source. L'idea era quella di riutilizzare le line guide della \glossario{debian}, le \glossario{DFSG},in vigore dal 1997 rendendole più adatte in senso generale. Queste linee guida sono state sviluppate dall'interazione di decine di sviluppatori e sono state pensate in modo da non lasciare fuori tanto software libero importante già esistente.
+
+\begin{itemize}
+
+\item Libera redistribuzione;
+\item Inclusione del codice sorgente;
+\item La licenza deve permettere modifiche e lavori derivati e deve permettere la loro distribuzione con i medesimi termini della licenza del software originale;
+\item Integrità del codice sorgente dall'autore, modifiche che esplicitino ``chi ha fatto cosa'', in modo che chiunque sia responsabile di ciò che scrive;
+\item Nessuna discriminazione di persone o gruppi;
+\item Nessuna discriminazione per i campi di impiego;
+\item La licenza dev'essere distributa, per fare chiarezza;
+\item La licenza non può essere specifica per Debian;
+\item La licenza non deve contaminare altro software, non si possono imporre condizioni su software già esistente. La licenza dev'essere indipendente.
+
+\end{itemize}
+

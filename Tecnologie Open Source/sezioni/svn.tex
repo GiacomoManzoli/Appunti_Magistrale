@@ -1,0 +1,562 @@
+\chapter{SVN}
+
+\section*{Materiale di riferimento}
+
+\begin{itemize}
+
+\item \textbf{Version Control with Subversion} Rilasciato sotto licenza CC all'indirizzo: \url{http://svnbook.red-bean.com/};
+
+\item \textbf{Introduzione a git} - Luca De Franceschi \url{https://prezi.com/ayb1s8iahdi3/introduzione-a-git}
+ \item \textbf{Pro Git} \url{https://git-scm.com/book/it/v1/}
+\item \textbf{Pragmatic Version Control using Subversion} - Mike Mason 
+\url{https://asudev.jira.com/wiki/download/attachments/49419503/Pragmatic_Version_Control_using_Subversion.pdf}.
+
+\item \textbf{SVN version control system} - Tutorials point \url{http://www.tutorialspoint.com/svn/svn_tutorial.pdf}.
+
+\end{itemize}
+
+\section{Version Control System}
+Il controllo di versione è un sistema che registra, nel tempo, i cambiamenti di uno o più file, così da poter richiamare una specifica versione in un secondo momento. Qualsiasi file di un computer può essere posto sotto controllo di versione.
+
+Un Sistema per il Controllo di Versione (Version Control System - VCS)  permette di ripristinare i file ad una versione precedente, ripristinare l'intero progetto a uno stato precedente, revisionare le modifiche fatte nel tempo, vedere chi ha cambiato qualcosa che può aver causato un problema, chi ha introdotto un problema e quando, riprtistinare il tutto in caso di problemi e molto altro ancora. 
+
+I sistemi di controllo di versione si dividono in varie tipologie: 
+\begin{itemize}
+\item \textbf{Locali} Molte persone gestiscono le diverse versioni copiando i file in un'altra directory, questo semplice approccio è semplice, ma soggetto a frequenti errori. 
+
+I VCS locali hanno un database semplice che mantiene tutti i cambiamenti dei file sotto controllo di revisione. Uno dei più famosi VCS locali è rcs che  funziona salvando sul disco una serie di patch (ovvero le differenze tra i file) tra una versione e l'altra, in un formato specifico; può quindi ricreare lo stato di qualsiasi file in qualsiasi momento determinato momento, aggiungendo le varie patch.
+
+\item \textbf{Centralizzati} Affrontano il problema del collaborare con altri sviluppatori su altri sistemi. \textit{Subversion (SVN)} e \textit{Perforce}, hanno un unico server che contiene tutte le versioni dei file e gli utenti scaricano i file dal server centrale. Questo è stato lo standard del controllo di versione per molti anni.
+
+\textbf{Pro:} 
+\begin{itemize}
+\item Chiunque sa, cosa stia facendo un'altra persona del progetto. \item Gli amministratori hanno un controllo preciso sugli utenti
+\end{itemize}
+
+\textbf{Contro:} 
+In caso il server sia offline non è possibile lavorare, se il server centrale viene danneggiato e non c'è backup si perde tutto.
+
+\item \textbf{Distribuiti} Es. \textit{git}, \textit{Mercurial}, \textit{Bazaar}, \textit{Darcs}. I client locali non solo controllano lo snapshot (una panoramica completa dello stato del repository) più recente dei file, ma fanno una copia completa del repository. In questo modo se un server morisse il repository di un qualsiasi client può essere copiato sul server per ripristinarlo. Ogni checkout è un backup completo di tutti i dati.
+\end{itemize}
+
+\section{SVN: I primi passi}
+\subsection{Terminologia}
+\begin{itemize}
+\item \textbf{Repository} E' dove i file sono memorizzati, spesso su un server o in locale. Talvolta è chiamato anche depot (ad esempio in Perforce). Un repository può contenere uno o più progetti.
+
+\item \textbf{Working copy} La directory di lavoro locale.
+
+\item \textbf{Commit}
+Un commit (o, più raramente, submit) si effettua quando si copiano le modifiche fatte su file locali nella directory del repository (il software di controllo versione controlla quali file sono stati modificati dall'ultima sincronizzazione).
+
+\item \textbf{Modifica}
+Una modifica (change) rappresenta una specifica modifica ad un documento sottoposto al VCS. La granularità delle modifiche considerate come cambiamenti varia tra i sistemi di controllo versione.
+
+\item \textbf{Change List}
+Su molti sistemi di controllo versione con commit di modifiche multiple atomiche, una changelist identifica un insieme di changes fatti in un singolo commit.
+
+\item \textbf{Checkout}
+Un check-out (o checkout o co) effettua una copia di lavoro dal repository (può essere visto come l'operazione inversa dell'importazione).
+
+\item \textbf{Update}
+Un update (o sync) copia le modifiche fatte sul repository nella propria directory di lavoro (può essere visto come l'operazione inversa del commit).
+
+\item \textbf{Merge}
+Un merge o integrazione unisce modifiche concorrenti in una revisione unificata.
+
+\item \textbf{Revisione}
+Una revisione o versione è una versione in una catena di modifiche.
+
+\item \textbf{Import}
+Il termine import è usato per descrivere la copiatura dell'intero albero di directory locale sul repository.
+
+\item \textbf{Export}
+Un export è simile ad un check-out eccetto il fatto che crea un albero di directory vuoto senza metadati di controllo versione (spesso è usato precedentemente alla pubblicazione dei contenuti).
+
+\item \textbf{Conflitto}
+Un conflitto si presenta quando diversi soggetti fanno modifiche in contemporanea allo stesso documento non vedendo l'uno le modifiche che sta apportando l'altro e che potrebbero sovrapporsi. Non essendo il software abbastanza intelligente da decidere quale tra le modifiche è quella 'corretta', si richiede ad un utente di risolvere il conflitto.
+
+\item \textbf{Risolvere}
+L'intervento di un utente per la risoluzione di un conflitto tra modifiche differenti di uno stesso documento.
+\end{itemize}
+
+\subsection{Installare SVN}
+E' possibile installare agevolmente SVN su tutti i sistemi operativi più diffusi:
+
+\begin{itemize}
+\item \textbf{Windows}: Il miglior pacchetto comprensivo di gui è TortoiseSVN scaricabile al link \url{http://tortoisesvn.net/downloads.html}
+\item \textbf{Linux}: Basta aprire un terminale e dare il comando adatto 
+\begin{itemize}
+\item Ubuntu \textit{sudo apt-get install subversion} 
+\item Fedora \textit{sudo dnf install subversion} 
+\item openSUSE \textit{sudo zypper install subversion} 
+\end{itemize}
+\item Mac: \url{https://subversion.apache.org/packages.html#osx}
+\end{itemize}
+
+\section{Repositories}
+
+Un singolo repository SVN può contenere al suo interno più progetti, ognuno contenuto in una determinata cartella e per ogni singolo progetto, le varie ramificazioni o branch vengono memorizzate come copie della cartella principale.
+Tutto questo viene reso possibile perché l'operazioni di copia è molto efficiente e mantiene lo storico delle modifiche.
+
+Per accedere ai file contenuti nel repository è possibile utilizzare varie interfacce: http, https, svn, svn+ssh, file.
+
+
+\section{Locking}
+
+Dal momento che più utenti possono accedere contemporaneamente allo stesso file può verificarsi il seguente scenario:
+
+\begin{enumerate}
+	\item Harry e Sally ottengono una working copy dello stesso file dal repository.
+	\item Harry modifica la sua working copy ed esegue il commit delle modifiche che ha fatto.
+	\item Sally modifca la sua working copy ed esegue il commit delle sue modifiche, sovrascrivendo involontariamente quelle effettuate da Harry.
+\end{enumerate}
+
+Per evitare questo problema possono essere adottate due soluzioni:
+
+\begin{itemize}
+	\item \textbf{lock-modify-unlock}: prima di modificare un file l'utente richiede un lock, che deve essere rilasciato una volta terminate le modifiche. Ci sono vari problemi sia a livello amministrativo, che a livello pratico, perché viene creata una serializzazione del lavoro che non sempre è necessaria. SVN supporta anche questo tipo di soluzione, ma non è quella di default.
+	\item \textbf{copy-modify-merge}: (\textit{locking ottimistico}) nel repository possono essere inseriti solo file non \textit{out-of-date}, ovvero è possibile fare il commit delle modifiche solo se il file remoto non ha subito altre modifiche da quando è stato copiato nella working copy. Se è stato modificato è necessario effettuare manualmente l'operazione di \textit{merge} (fusione delle modifiche) per risolvere il conflitto.
+\end{itemize}
+
+\section{Revisioni e file}
+
+SVN memorizza per ogni file:
+
+\begin{itemize}
+\item La revisione del repository su cui è basato;
+\item Un timestamp di quando è stato aggiornato da repository l'ultima volta;
+\item I file originali prelevati dal repository.
+\end{itemize}
+
+Un file può essere:
+
+\begin{itemize}
+\item Inalterato localmente e aggiornato 
+\item Alterato localmente e aggiornato 
+\item Inalterato localmente e non aggiornato 
+\item Alterato localmente e non aggiornato
+\end{itemize}
+
+\section{Struttura di un repository}
+
+Un repository creato con SVN ha una certa struttura standard:
+
+\begin{itemize}
+	\item \texttt{conf/}: cartella contenente la configurazione del repository.
+	\begin{itemize}
+		\item \texttt{svnserve.conf}: file contenete la configurazione di \texttt{svnserve}, specifica le modalità di accesso al repository e gli utenti che possono accedere.
+		\item \texttt{passwd}: file contenete gli username e le password degli utenti.
+		\item \texttt{authz}: file che descrive i permessi dei vari utenti o gruppi di utenti, ad esempio può essere utilizzato per limitare l'accesso ad determinate directory.
+	\end{itemize}
+	\item \texttt{db/}: cartella contenente tutte le cartelle del repository.
+	\item \texttt{hooks/}: cartella contenente tutti gli script che vengono eseguiti quando si verificano determinati eventi.
+	\item \texttt{format}
+	\item \texttt{readme.txt}
+	\item \text{locks/}
+\end{itemize}
+
+
+\section{Ciclo fondamentale}
+
+\subsection{Checkout}
+
+Per scaricare in locale e creare una working copy a partire dal repository è necessario come prima cosa effettuare il checkout con l'apposito comando \texttt{svn checkout \textit{URL} \textit{[PATH]}} il quale scarica nel percorso locale \textit{\texttt{PATH}} il contenuto del repository che si trova nel \textit{\texttt{URL}} specificato.
+
+Dopo aver effettuato il check out è possibile aggiornare il contenuto della working copy utilizzando il comando \texttt{svn update}.
+
+\subsection{Modifiche}
+
+Prima di effettuare delle modifiche alla working copy è bene assicurarsi che questa sia aggiornata rispetto alla revisione corrente del repository, in modo da evitare di modificare file che sono già obsoleti.
+
+Una volta modificati i file, per pubblicare le modifiche sul repository è necessario effettuare un commit, un'operazione atomica che copia nel repository le modifiche subite dalla working copy.
+
+Se dall'ultimo update effettuato della working copy, il file ha subito altre modifiche, il commit fallisce. 
+\`E quindi necessario effettuare un ulteriore update per aggiornare la working copy. 
+Questa operazione crea un merge, ovvero il contenuto del file che è stato modificato nella working copy deve essere integrato con il contenuto del file che è stato aggiornato nel repository. Se la risoluzione del merge è triviale, SVN la esegue in automatico, altrimenti richiede all'utente di intervenire e specificare come unire in modo corretto i due file.
+
+Una volta uniti i due file è necessario segnalarlo ad SVN utilizzando il comando \texttt{svn resolve --accept=ARG \textit{[PATH]}}.
+Fatto ciò è possibile effettuare il commit della propria working copy.
+
+\section{Revisioni miste}
+
+Ogni volta che un utente del repository effettua il commit di una modifica, la revisione corrente del repository viene avanzata di uno. Tuttavia, a livello di working copy, viene avanzato solamente il numero di revisione per i file che sono coinvolti nel commit.
+
+Così facendo si ottiene una \textbf{revisione mista}, perché all'interno della working copy ci possono essere file che hanno revisioni diverse.
+
+Ad esempio, supponendo che venga fatto il check out della revisione più recente del repository (in questo caso la revisione 4) e che quindi la working copy contenga i seguenti file:
+
+\begin{verbatim}
+calc/
+	Makefile:4
+	integer.c:4
+	button.c:4
+\end{verbatim}
+
+Assumendo che nessun altro utente faccia modifiche nel mentre, viene effettuato il commit di una modifica a \texttt{button.c}. Così facendo sul repository remoto viene creata la revisione 5, ma all'interno della working copy, solo il file \texttt{button.c} viene portato alla revisione 5:
+
+\begin{verbatim}
+calc/
+	Makefile:4
+	integer.c:4
+	button.c:5
+\end{verbatim}
+
+Se adesso un'altro utente crea la revisione 6 e viene effettuato un update della working copy, la situazione diventa:
+
+\begin{verbatim}
+calc/
+	Makefile:6
+	integer.c:6
+	button.c:6
+\end{verbatim}
+
+e la revisione locale non è più mista.
+
+Per ottenere le informazioni relative alle revisione dei file presenti nella working copy è possibile utilizzare i comandi \texttt{svn info} e \texttt{svn status}.
+
+Si ha quindi che con SVN le azioni di \textit{push} non causano automaticamente un \textit{pull} e vice versa. Questo fa si che un utente può pubblicare le proprie modifiche senza dover necessariamente aggiornare tutta la working copy. E analogamente se sta ancora lavorando su alcuni file deve poter essere libero di aggiornare gli altri senza essere obbligato a pubblicare quelli che sta modificando.
+
+Ci sono però delle limitazioni alle revisioni miste:
+\begin{itemize}
+	\item Non è possibile effettuare il commit della cancellazione di un file o directory se la working copy è mista.
+	\item Non è possibile effettuare il commit delle modifiche dei metadata delle directory.
+	\item Non è possibile effettuare un merge.
+\end{itemize}
+
+\subsection{Valori simbolici di revisione}
+
+All'interno di SVN vengono utilizzate delle etichette per riferirsi a determinate revisioni ``\textit{notevoli}'':
+
+\begin{itemize}
+	\item \texttt{HEAD}: ultima revisione presente nel repository
+	\item \texttt{BASE}: la revisione di un elemento del working space. Se l'elemento è stato modificato ma non è ancora stato effettuato il commit della modifica, \texttt{BASE} riferisce lo stato dell'elemento senza le modifiche locali.
+	\item \texttt{COMMITTED}: l'ultime revisione in cui è stato modificato un determinato elemento.
+	\item \texttt{PREV}: la penultima revisione in cui è stato modificato un determinato elemento.
+\end{itemize}
+
+Se invece si vuole specificare una revisione per data è necessario utilizzare il formato \texttt{\{aaaa-mm-dd\},\{hh:mm\}}.
+
+\section{Creazione di un repository}
+
+Per creare un repository sul server \todo{verificare} è necessario invocare il comando \texttt{svnadmin create \textit{path}}, ad esempio:
+
+\begin{lstlisting}
+$ svnadmin create /usr/local/svn/newrepo
+\end{lstlisting}
+
+In questo modo viene creato un nuovo repository vuoto su quel determinato path.
+
+Una volta creato il repository, per avviare il demone del server SVN che rende disponibile online il repository è necessario utilizzare il comando \texttt{svnserve -d}. Un'alternativa all'utilizzo di questo comando è dato dai tool di Apache.
+Al comando è possibili aggiungere il flag \texttt{-r \textit{path}} per specificare il percorso base del repository. In questo caso, tutti gli URL forniti dal client vengono interpretati come relativi rispetto al percorso specificato.
+
+Il server viene quindi avviato secondo quanto specificato all'interno dei file \textit{svnserve.conf} presente nella directory \textit{conf} del repository. All'interno di questo file è possibile definire la configurazione del repository, come il database da utilizzare per le autenticazioni e la politica di gestione degli accessi.
+
+\begin{lstlisting}
+[general]
+password-db = userfile
+realm = example realm
+
+# anonymous users aren't allowed
+anon-access = none
+
+# authenticated users can both read and write
+auth-access = write
+\end{lstlisting}
+
+\section{Popolazione del repository}
+
+\begin{lstlisting}
+$ svn import [PATH] URL
+\end{lstlisting}
+
+Aggiunge al repository, effettuando anche il commit, un file o un albero che non sono sotto controllo versione.
+L'import viene fatto effettuando la copia ricorsiva da \textit{\textit{PATH}} ad \textit{\texttt{URL}}. Se \textit{\texttt{PATH}} non viene specificata, viene utilizzata la directory corrente e se il path indica una directory, il contenuto di questa viene copiato direttamente all'interno della directory \textit{\texttt{URL}}. 
+
+\todo{Nelle slide c'è questa frase ``La cartella usata per l'import non viene posta automaticamente sotto version control . svn commit . *.tmp  e svn commit -f''}
+
+\section{Manipolazione del repository manualmente}
+
+\subsection{Add}
+
+Per aggiungere dei file e delle cartelle all'interno del repository è necessario utilizza il comando \texttt{svn add \textit{path}}. Una volta eseguito il comando, i file specificati non vengono inseriti direttamente all'interno del repository, ma vengono messi in lista per essere aggiunti con il prossimo commit.
+
+\begin{lstlisting}
+$ svn add file:///.../file1 file:///.../file2
+\end{lstlisting}
+
+Se il percorso specificato è relativo ad una cartella è possibile specificare che cosa aggiungere al repository, utilizzando il flag \texttt{--depth \textit{arg}}, dove \textit{\texttt{arg}} specifica come gestire il contenuto della cartella:
+
+\begin{itemize}
+	\item \texttt{empty}: viene aggiunta solamente la cartella;
+	\item \texttt{files}: vengono aggiunte sia la cartella, che i file direttamente contenuti;  
+	\item \texttt{immediates}: l'operazione viene eseguita anche per il primo livello delle sotto-cartelle;
+	\item \texttt{infinity}: vengono aggiunte tutte i file e tutte le sotto-cartelle.
+\end{itemize}
+
+
+\todo{Cosa succede se aggiungo un file che è già sotto controllo versione?}
+
+\subsection{rm}
+
+Al contrario, per rimuovere un file dal controllo di versione è necessario utilizzare il comando \texttt{svn rm \textit{path}}. Anche in questo caso la modifica non ha effetto immediato e viene applicata al commit successivo. Se il file o la cartella della working copy hanno subito delle modifiche rispetto alla versione presente sul server, queste non vengono rimosse a meno che non viene aggiunto il flag \texttt{--force}.
+
+\textbf{Da notare}: il comando \texttt{rm} può essere invocato anche con un URL che punta ad un file del repository principale e non della working copy. Il funzionamento è analogo, ma la differenza è che viene eseguito automaticamente un commit della modifica.
+
+\subsection{mkdir}
+
+Per creare una nuova directory ed inserirla sotto controllo di versione è necessario utilizzare il comando \texttt{svn mkdir \textit{path}}. Se il percorso contiene delle directory intermedie, queste devono essere presenti, altrimenti per far si che vengono aggiunte in automatico è necessario utilizzare il flag \texttt{--parents}.
+
+In modo analogo a \texttt{rm}, il comando può essere invocato anche con un URL per creare direttamente la cartella all'interno del repository con un commit immediato.
+
+\subsection{mv}
+
+Permette di spostare o rinominare un file o una cartella all'interno della working copy. Può essere invocato anche utilizzando degli URL del repository, la cosa importante è che il comando venga invocato o con due percorsi locali o con due URL.
+
+\begin{lstlisting}
+$ svn mv file:///.../fileA file:///.../fileB
+\end{lstlisting}
+
+Possono essere anche specificati più percorsi di partenza, in questo caso il secondo percorso deve essere quello di una directory dove spostare i file.
+
+\begin{verbatim}
+	Note:  this subcommand is equivalent to a 'copy' and 'delete'.
+	
+	SRC and DST can both be working copy (WC) paths or URLs:
+	WC  -> WC:   move and schedule for addition (with history)
+	URL -> URL:  complete server-side rename.
+	All the SRCs must be of the same type.
+\end{verbatim}
+
+\subsection{cp}
+
+Comando che permette di copiare un file un file o una cartella all'interno della working copy o del repository, copiando anche lo storico delle revisioni.
+
+\begin{lstlisting}
+$ svn cp SRC DEST
+\end{lstlisting}
+
+\textit{\texttt{SRC}} e \textit{\texttt{DST}} possono essere sia path relativi alla working copy (\textit{WC}), che URL del repository \textit{URL}:
+
+\begin{itemize}
+	\item \textit{WC $\rightarrow$ WC}: viene fatta la copia locale, la quale viene messa in lista per essere commitata.
+	\item \textit{WC $\rightarrow$ URL}: viene effettuata la copia del file della working copy nel repository. La modifica viene committata subito.
+	\item \textit{URL $\rightarrow$ WC}: viene effettuato il check out dell'URL all'interno della working copy. L'aggiunta dei file viene messa in lista per il commit.
+	\item \textit{URL $\rightarrow$ URL}: viene fatta la copia direttamente sul server, di solito viene usata per il \textit{branch \& tag}.
+\end{itemize}
+
+\subsection{cat}
+
+Questo comando viene utilizzato per ottenere in output il contenuto di un determinato file, che può trovarsi sia nella working copy che sul repository. \`E possibile specificare una determinata revisione del file con il flag \texttt{-r}.
+
+\begin{lstlisting}
+$ svn cat path
+\end{lstlisting}
+
+\begin{verbatim}
+	Valid options:
+	-r [--revision] ARG      : ARG (some commands also take ARG1:ARG2 range)
+	A revision argument can be one of:
+	NUMBER       revision number
+	'{' DATE '}' revision at start of the date
+	'HEAD'       latest in repository
+	'BASE'       base rev of item's working copy
+	'COMMITTED'  last commit at or before BASE
+	'PREV'       revision just before COMMITTED
+\end{verbatim}
+
+\subsubsection{ls}
+
+\begin{lstlisting}
+$ svn ls PATH [-r REV]
+\end{lstlisting}
+
+Questo comando elenca il contenuto del repository. Può essere specificato il percorso di una directory, che può essere della working copy o del repository. Se viene specificato un percorso della working copy, viene visualizzato il contenuto della corrispettiva directory del repository.
+
+\subsection{info}
+
+\begin{lstlisting}
+$ svn info PATH [-r REV]
+\end{lstlisting}
+
+Questo comando visualizza le informazioni relative al file o directory specificato. Il percorso può essere relativo alla working copy o al repository.
+
+\section{Changelist}
+
+Le changelist di SVN permettono di creare dei gruppi di file o directory logici all'interno della working copy. Ad esempio è possibile creare una changelist che contiene tutti i file relativi ad una nuova feature del progetto per poi effettuare in modo più semplice il commit delle modifiche.
+
+\begin{lstlisting}
+$ svn changelist NAME PATH...
+\end{lstlisting}
+
+Con il flag \texttt{--remove} è possibile rimuovere i file dalla changelist, mentre con il flag \texttt{--recursive} vengono aggiunte alla changelist tutte le sotto-directory.
+
+\begin{verbatim}
+$ svn changelist issue1729 foo.c bar.c baz.c
+Path 'foo.c' is now a member of changelist 'issue1729'.
+Path 'bar.c' is now a member of changelist 'issue1729'.
+Path 'baz.c' is now a member of changelist 'issue1729'.
+$ svn status
+A       someotherfile.c
+A       test/sometest.c
+
+--- Changelist 'issue1729':
+A       foo.c
+A       bar.c
+A       baz.c
+$ svn commit --changelist issue1729 -m "Fixing Issue 1729."
+Adding         bar.c
+Adding         baz.c
+Adding         foo.c
+Transmitting file data ...
+Committed revision 2.
+$ svn status
+A       someotherfile.c
+A       test/sometest.c
+
+## Only the files in changelist issue1729 were committed
+\end{verbatim}
+
+\section{Controllo delle proprie modifiche}
+
+Per controllare le modifiche apportate alla working copy è possibile utilizzare il comando \texttt{svn status PATH} il quale esegue la stampa dello stato di tutti i file e cartelle presenti nel \textit{\texttt{PATH}} della working copy. Se non viene specificato un percorso, viene utilizzata la root.
+
+Se non vengono utilizzati flag, il comando stampa solamente i file che sono stati modificati in locale. Specificando il flag \texttt{-u} vengono aggiunte le informazioni riguardo la revisione presente nella working copy e se questa non è aggiornata rispetto a quella presente sul server. Con il flag \texttt{-v} vengono stampate, per ogni elemento, le informazioni complete riguardanti la sua revisione.
+
+Ogni output prodotto da questo comando produce una tabella che contiene tutte le informazioni. In particolare la prima colonna specifica lo stato del file o della cartella:
+\begin{itemize}
+\item \texttt{' '}: no modifications
+\item \texttt{'A'}: Added
+\item \texttt{'C'}: Conflicted
+\item \texttt{'D'}: Deleted
+\item \texttt{'I'}: Ignored
+\item \texttt{'M'}: Modified
+\item \texttt{'R'}: Replaced
+\item \texttt{'X'}: an unversioned directory created by an externals definition
+\item \texttt{'?'}: item is not under version control
+\item \texttt{'!'}: item is missing (removed by non-svn command) or incomplete
+\item \texttt{'}\textasciitilde\texttt{'}: versioned item obstructed by some item of a different kind
+\end{itemize}
+
+\section{Usiamo diff}
+
+Il comando \texttt{svn diff} permette di visualizzare le differenze tra due path o due revisioni.
+Se il comando viene eseguito senza nessun parametro, vengono visualizzate tutte le differenze che ci sono tra la working copy e la versione BASE. Se si è interessanti alle modifiche subite da un unico file o cartella basta aggiungere come parametro il path. Si può utilizzare il flag \texttt{-r} con un range di revisioni per confrontare i cambiamenti che ci sono stati tra le due revisioni.
+Allo stesso modo è possibile utilizzare degli URL del repository.
+
+\section{Annulliamo le nostre modifiche}
+
+Per annullare le modifiche effettuate alla working copy e ripristinarla all'ultimo checkout effettuato è necessario utilizzare il comando \texttt{svn revert [PATH]}. Con il flag \texttt{--recursive} vengono modificate anche le sotto cartelle.
+
+L'esecuzione di questo comando può essere effettuata anche senza una connessione al repository.
+ 
+Se dopo aver fatto il revert delle modifiche si vuole aggiornare la working copy è possibile utilizzare il comando \texttt{svn update \textit{[path]}}, il quale scarica dal repository le modifiche subite dai vari file sotto controllo versione.
+
+Purtroppo il mondo è brutto e cattivo, pertanto può succedere che alcune modifiche errate siano già state committate all'interno del repository. In questo caso il comando \texttt{revert} è inutile e per rimuovere le modifiche errate è necessario effettuare un \texttt{merge} con una revisione precedente che è nota essere corretta con \texttt{svn merge -r \textit{CURRENTREV:OLDREV [path]}} e poi effettuare il commit delle modifiche.
+
+Ad esempio
+	
+\begin{lstlisting}
+$ svn merge -r 22:21 array.c
+$ svn commit -m "Ripristinata versione 21"
+\end{lstlisting}
+
+\section{Branches e Tags}
+
+Un \textbf{branch} è una ramificazione di un progetto che permette di creare una nuova linea di sviluppo diversa dal trunk principale, la quale può essere utilizzata per differenziare varie release stabili, effettuare dei bugfix oppure testare nuove features.
+
+Un \textbf{tag} invece è un nome che viene dato ad una specifica revisione dei file del progetto.
+
+Sia i branch che i tag vengono implementati con una semplice copia delle cartelle, rispettivamente all'interno della directory \texttt{branches} e \texttt{tags}. La differenza sta nella semantica, un branch è pensato per essere modificato nel tempo, mentre un tag no.
+
+\begin{lstlisting}[caption=Creazione di un tag]
+$ svn copy --revision=4 trunk/ tags/VERSIONE_1
+$ svn commit -m "Creazione del tag VERSIONE_1"
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Creazione e utilizzo di un branch]
+$ svn copy  trunk/ branches/MyBranch
+$ svn commit -m "Creato branch MyBranch"
+## Spostamento all'interno del branch
+$ cd branches/MyBranch
+## Modifico i file e committo le modifiche
+## Aggiorno il branch (update dal repository)
+$ svn up
+## Controllo le modifiche
+$ svn log
+## Mi sposto sul trunk
+$ cd ../trunk
+$ svn merge ../branches/MyBranch
+$ svn commit -m "Merge di MyBranch"
+\end{lstlisting}
+
+\section{Metadata}
+
+Con SVN è possibile aggiungere dei metadati, i quali prendono il nome di proprietà, a dei file o a delle revisioni. Nel caso la proprietà venga aggiunta ad un file, anch'essa è posta sotto controllo di versione.
+
+Per gestire le proprietà ci sono vari comandi: \texttt{svn propset}, \texttt{svn propget},\texttt{svn propedit},\texttt{svn proplist},\texttt{svn propget}.
+
+Ci sono poi delle proprietà speciali che iniziano con il prefisso \texttt{svn:} e che hanno un particolare effetto s come SVN gestisce i file con quelle determinate proprietà.
+
+Tra queste ci sono:
+
+\begin{itemize}
+	\item \texttt{svn:ignore}: per specificare che un determinato elemento non deve essere posto sotto controllo versione.
+	\item \texttt{svn:externals}: per referenziare altre repository/directory esterne che devono essere copiate nella directory corrente. Utilizzato per includere librerie esterne, ecc.
+	Aggiungendo questa proprietà, ogni volta che viene fatto il checkout dal repository, SVN effettua in modo automatico anche il checkout del repository esterno\footnote{\url{http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html}}.
+	\item \texttt{svn:eol-style}: per specificare qual'è il carattere di line break per un determinato file.
+	\item \texttt{svn:mimi-type}: descrive il tipo di file, viene settata automaticamente da SVN in base all'estensione del file oppure utilizzando delle euristiche. Se anche le euristiche falliscono, il mime-type di default è \texttt{application/octet-stream} che identifica uno stream di bit. In ogni caso se il setting automatico risulta errato è sempre possibile modificare il valore della proprietà.
+
+\end{itemize}
+
+\`E inoltre possibile configurare SVN in modo che aggiunga in modo automatico delle proprietà agli elementi che vengono posti sotto controllo versione. Per attivare questa funzionalità su macOS è necessario andare a modificare il file \texttt{\textasciitilde/.subversion/config}, decommentando la riga \texttt{enable-auto-props=yes}.
+
+Per configurare le proprietà da settare in automatico è necessario andare a modificare la sezione \texttt{[auto-props]} dello stesso file.
+
+Sempre dallo stesso file è possibile andare a selezionare quale editor di testo e tool di confronto utilizzare.
+
+\begin{lstlisting}
+# ~/.subversion/config
+...
+[helpers]
+editor-cmd = subl
+diff-cmd = gdiff
+...
+[miscellany]
+...
+enable-auto-props = yes
+...
+[auto-props]
+# imposta svn:eol-style=native per tutti i file con estensione .cpp
+*.cpp = svn:eol-style=native 
+\end{lstlisting}
+
+\section{Lock esplicito}
+
+Anche se non è necessario, in SVN è possibile utilizzare un meccanismo di lock per impedire ad altri utenti di modificare alcuni file per un certo periodo di tempo.
+
+Per bloccare una risorsa è necessario utilizzare il comando \texttt{svn lock \textit{PATH}}. Può essere bloccato anche un URL ed è possibile aggiungere un commento al lock utilizzando il flag \texttt{-m "commento"}.
+Per sbloccare un file c'è il corrispettivo comando \texttt{svn unlock PATH}, che funziona in modo duale. 
+
+Entrambi i comandi possono essere eseguiti con il flag \texttt{--force} per forzare e \textit{rubare} eventuali lock già esistenti.
+
+Per specificare che un determinato elemento dovrebbe essere bloccato prima di essere modificato è possibile andare a settare la proprietà \texttt{svn:needs-lock}.
+
+\section{Svnadmin}
+
+Il comando \texttt{svnadmin} pul anche essere utilizzato per eseguire altre operazioni oltre alla creazione di un repository, in particolare:
+
+\begin{itemize}
+	\item \texttt{svnadmin hotcopy \textit{FROMPATH TOPATH}} crea una copia del repository.
+	\item \texttt{svnadmin dump \textit{REPOPATH}}: crea un dump del contenuto del repository in un file. Possono essere specificate un'intervallo di revisioni da inserire nel dump, così come è possibile creare un file dump incrementale. 
+	\item \texttt{svnadmin load \textit{REPOPATH}}: legge da \textit{stdin} uno stream formattato come dump file e lo carica all'interno del repository.
+\end{itemize}
+
+Se si vuole migrare un progetto da un repository conviene utilizzare la coppia di comandi \texttt{dump/load}:
+
+\begin{lstlisting}
+$ svnadmin dump path/to/repos > repos.out
+$ svnadmin load path/to/newrepos < repos.out
+\end{lstlisting}
+
+perché così facendo viene mantenuto lo storico delle modifiche, cosa che non viene fatta dal comando \texttt{svn export \textit{URL [PATH]}}/\texttt{svn export \textit{PATH1} [PATH2]}.

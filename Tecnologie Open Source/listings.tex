@@ -1,0 +1,75 @@
+% Imposta lo spazio nella list of listing in modo simile alla list of figures/tables
+%\makeatletter
+%\let\my@chapter\@chapter
+%\renewcommand*{\@chapter}{%
+%  \addtocontents{lol}{\protect\addvspace{10pt}}%
+%  \my@chapter}
+%\makeatother
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolor}{rgb}{0.98,0.98,0.98}
+
+\renewcommand{\lstlistingname}{Codice}% Listing -> codice
+\renewcommand{\lstlistlistingname}{Elenco dei frammenti di codice}% List of Listings -> Frammenti di codice
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolor},   
+    commentstyle=\color{Peach}\ttfamily,
+    keywordstyle=\color{RoyalBlue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{SeaGreen}\ttfamily,
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=trbl, % draw a frame at the top, right, left and bottom of the listing
+	frameround=ftff, % angolo in basso a destro curvo
+	framesep=4pt, % quarter circle size of the round corners,
+	inputencoding=utf8,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {à}{{\`a}}1 {é}{{\'e}}1 {è}{{\`e}}1 {ù}{{\`u}}1 {ò}{{\`o}}1,
+    belowskip=1em,
+    aboveskip=1em,
+}
+
+ 
+\lstset{style=mystyle}
+
+\lstdefinelanguage{JavaScript}
+{
+  % list of keywords
+  morekeywords={ true, false, catch, function, break,	new, class, extends, var, require, switch, return, import, if, while, for, this, View, Text, StyleSheet},
+  sensitive=false, % keywords are not case-sensitive
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]' % defines that strings are enclosed in double quotes
+}
+
+\lstdefinelanguage{JSON}
+{
+  % list of keywords
+  morekeywords={string, boolean, int, Array, Node, Asset, AssetDetail, Filter, FilterItem},
+  sensitive=false, % keywords are not case-sensitive
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]" % defines that strings are enclosed in double quotes
+}
+
+\lstdefinelanguage{URM}
+{
+	% list of keywords
+	morekeywords={ S, J, T, Z, I},
+	sensitive=false, % keywords are not case-sensitive
+	morecomment=[l]{//}, % l is for line comment
+	morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+	morestring=[b]' % defines that strings are enclosed in double quotes
+}
