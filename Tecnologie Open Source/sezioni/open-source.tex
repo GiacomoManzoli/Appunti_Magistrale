@@ -14,71 +14,33 @@ Disponibile sotto Creative Common all'indirizzo: \\
 
 \end{itemize}
 
-\section{MINIX}
 
-Unix era un sistema operativo vero e proprio, ed era molto complesso. John Lions, un famoso sviluppatore Australiano, pubblica il codice sorgente commentato di UNIX in un'opera storica denominata: \textbf{Lions' Commentary on UNIX 6th Edition, with Source Code}. Ma con l'avvento della versione 7 di unix vengono imposti tutta una serie di blocchi: l'opera di Lyons viene bloccata, aumentano i costi delle licenze e vi sono delle restrizioni sull'insegnamento in classe. Molte università interruppero dunque l'insegnamento di unix; questo fu un cambiamento abbastanza stupido, perché ciò che aveva reso forte unix era la diffusione nel mondo accademico. 
+\section{Il movimento Open-source}
 
-Andrew S. Tanenbaum era all'epoca un insegnante di \textit{computer science} e venne molto toccato da questa decisione, in quanto aveva sempre insegnato basandosi su unix. Decise allora di creare \textbf{MINIX}, un sistema operativo abbastanza importante, minimale, per scopi didattici, pensato per essere \textbf{semplice}. Era un sistema a micro kernel, rilasciato sotto \textbf{licenza permissiva} ma non libera. Aveva inoltre scritto un libro che documentava e spiegava MINIX. Ma questo sistema operativo aveva una grossa limitazione: \textbf{mancava un emulatore di terminale}.
+Nel 1997 nasce il movimento open-source, Raymond pubblica ``\textit{The Cathedral and the Bazaar}'' (presentato alla O'Reilly Perl Conference). Raymond si mise ad analizzare la diffusione di Linux. Si crea un modello di sviluppo che invece di essere a cattedrale è a bazaar (come un mercato, in cui ci sono tante persone che contribuiscono tutte in modo diverso). Con questa nuova ottica si riesce dunque a produrre software in modo migliore.
 
-\section{Linux}
+Nel 1998 \glossario{Netscape} rilasciò il sorgente del proprio browser. Netscape all'epoca controllava il mercato dei browser ma era in crisi con l'incursione del colosso Microsoft e l'avvento di Internet Explorer. Temevano che la Microsoft sarebbe divenuta dominante e quindi rilasciarono il codice sorgente (primo grande rilascio della storia), il che costrinse inoltre loro ad un'ingente pulizia del codice (codice scritto male e con tanta spazzatura). Questo fu un passo epocale, infatti \textit{firefox} nacque da questo. All'interno della comunità ci fu subito la percezione che questo rilascio fosse molto particolare e fosse qualcosa da sfruttare. L'interesse era creare un sistema funzionante e che si facesse rispettare. Nasce dunque il concetto di open-source e la \glossario{OSI}. Ci si rese conto che la produzione di software libero coincide con la produzione di software migliore. I grossi leader entrarono in questo movimento. Nel 2000 \glossario{Sun} richiese il codice sorgente di \glossario{StarOffice}. Mancava infatti un software di produttività che fosse all'altezza di ad esempio \textit{Microsoft Office}.
 
-Linus Torvalds è stato uno dei primi utilizzatori di MINIX. Nasce ad Helsinki nel 1969. Nel 1990 frequenta l'Università di Helsinki, comincia a studiare Tanenbaum e comincia a fare le prime modifiche per provare a creare un emulatore di terminale. Nel 1991 Lars Wirzenius (un amico di Torvalds) lo porta alla conferenza di Stallman, nella quale ebbe una prima esposizione al progetto GNU. Il 5 Gennaio 1991 Torvalds:
+Per evitare che il termine venisse diluito e svalutato ci fu la necessità di renderlo un \textbf{marchio}, in modo che un software per essere considerato libero dovesse rispettare questo marchio ed essere approvato dalla OSI. 
+
+\section{Open Source Definition}
+
+Ci fu quindi la creazione di una serie di \textbf{linee guida} chiare per considerare un software come open-source. L'idea era quella di riutilizzare le line guide della \glossario{debian}, le \glossario{DFSG},in vigore dal 1997 rendendole più adatte in senso generale. Queste linee guida sono state sviluppate dall'interazione di decine di sviluppatori e sono state pensate in modo da non lasciare fuori tanto software libero importante già esistente.
 
 \begin{itemize}
-
-\item Compra un PC (un 80386);
-\item Ci installa MINIX;
-\item Inizia a scriverci un emulatore di terminale (scritto in C e in assembly).
-
+	
+	\item Libera redistribuzione;
+	\item Inclusione del codice sorgente;
+	\item La licenza deve permettere modifiche e lavori derivati e deve permettere la loro distribuzione con i medesimi termini della licenza del software originale;
+	\item Integrità del codice sorgente dall'autore, modifiche che esplicitino ``chi ha fatto cosa'', in modo che chiunque sia responsabile di ciò che scrive;
+	\item Nessuna discriminazione di persone o gruppi;
+	\item Nessuna discriminazione per i campi di impiego;
+	\item La licenza dev'essere distributa, per fare chiarezza;
+	\item La licenza non può essere specifica per Debian;
+	\item La licenza non deve contaminare altro software, non si possono imporre condizioni su software già esistente. La licenza dev'essere indipendente.
+	
 \end{itemize}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=50mm]{images/linus-torvalds.jpg}
-\caption{Linus Torvalds}
-\end{figure}
-
-La prima versione di \textbf{Linux} è la A e la B, fatta solamente da due finestre. Da emulatore di terminale com'era pensato in origine Linux d lì il è stato espanso fino a crearci un vero e proprio sistema operativo \textbf{Linux 0.0.1} con un kernel funzionante.
-
-Già nel 1992 il sistema era diventato molto importante. Torvalds decide dunque di rendere il sistema \textbf{indipendente} da MINIX (ci fu anche una disputa con Tanenbaum). Cambiò dunque la licenza adottando la GPL, che considerava buona per il suo sistema operativo, a prescindere dal software GNU stesso. Nascono inoltre già le prime distribuzioni basate su linux, come ad esempio SUSE, MCC o la prima distribuzione commerciale: LGX. Queste distribuzioni rendevano decisamente più facile l'utilizzo di Linux (di per sè molto complesso).
-
-Nel 1994 viene rilasciato \textbf{Linux 1.0} e fu lo stesso Torvalds a presentarlo in una conferenza tenutasi ad Helsinki. Già allora era un sistema utilizzabile.
-
-Ancora nel 1993 erano nate le prime versioni commerciali: Bolzern, Flagship e \textbf{Linux Pro}. Nel 1994 nasce inoltre \textbf{RedHat}, creato da Marc Ewing, e diventa ben presto la più diffusa distribuzione Linux.
-
-Nel 1996 fu scelto come logo ufficiale di Linux un pinguino disegnato da Larry Ewing, chiamato \textbf{Tux}, come abbreviazione di \textbf{T}orvalds \textbf{U}nix.
-
-Sempre nel 1996 esce \textbf{Linux 2.0} con supporto a microprocessore. Con la versione 3.0, uscita nel 2011, le modifiche sono state molto più incrementali. Nel corso degli anni con la 2.0 il grado di utenza era ancora molto piccolo.
-
-\begin{table}[htp]
-\centering
-	\begin{tabular}[c]{l | l | l}
-	\hline
-	& 1992 & 2012 \\
-	\hline
-	Sviluppatori Linux & 100 & 1000 \\
-	\hline
-	Linee di codice Linux & 250.000 & 14.000.000 \\
-	\hline
-	\end{tabular}
-\caption{Sviluppo di Linux negli anni}
-\end{table}
-
-Una volta c'erano molti sviluppatori \textit{volontari}, ad oggi il supporto è dato da grosse aziende che possono investire tempo e denaro su Linux.
-
-\section{Debian}
-
-C'era un forte legame tra il mondo degli hackers e il mondo del software libero. Si venne a creare una \textbf{nuova generazione di sviluppatori}. Volevano provare a costruire una distribuzione che fosse fortemente legata a certi principi, che mettesse insieme varie cose, che facesse da collante. A quel punto nacque \textbf{Debian}. Linux da un lato stava procedendo e crescendo velocemente ed aveva molte caratteristiche interessanti, ma dall'altro c'era una lontananza dai principi del software libero e dalla GNU. Questo era percepito come un problema da parte di una fetta della comunità. Ad altri invece la cosa andava più che bene, dunque si venne a creare una \textbf{divergenza}. 
-
-Il progetto Debian venne fondato da Ian Murdock nel 1993, con l'intento di fare una distribuzione di Linux \textbf{completamente libera}. Entrò a far parte del progetto GNU nel 1994-1995. Nel 1994 venne redatto il \textbf{manifesto debian}, nel quale si riassumeva il significato e la filosofia di debian. La prima versione stabile (Debian 1.1 ``Buzz'') venne rilasciata nel 1996. Il project leader della Debian divenne Bruce Perens
-
-La caratteristica principale di Debian è che pone l'attenzione in modo quasi maniacale alla qualità del software (a volte perdendo anche molto tempo) e al fatto che il software sia libero (solo software DFSG. Si basa su una \textbf{forte comunità} che gestisce (tramite votazioni) tutte le decisioni sullo sviluppo; chiunque può proporre cambiamenti e ognuno è responsabile delle proprie azioni (attenzione alla sicurezza). Un altro cardine su cui puntano gli sviluppatori Debian è una strenua \textbf{disponibilità} del software.
-
-Debian è caratterizzato da un suddivisione (politica) in più parti del repository. Le uniche componenti che sono della Debian sono quelle libere e quelle che dipendono da software libero. Il software che è all'interno della Debian entra nell'archivio principale, \textbf{FREE}. Poi all'interno ci sono altre componenti ospitate nel server della Debian ma che non sono della Debian, \textbf{NON-FREE} che non aderisce alle \textit{DFSG}, \textbf{CONTRIB} (che è libero ma dipende da componenti non libere).
-
-C'è una versione di Debian \textbf{stabile} (software un po' vecchio però), quella che ha superato tutti i bugfix, una versione \textbf{non stabile} e una versione \textbf{testing}. Nella versione non stabile ``\textit{può esplodere tutto da un momento all'altro}'', viene aggiornata ogni giorno. La testing entra nel pacchetto solamente se nell'ultimo mese non sono stati segnalati bug importanti.
-
-Da un lato Debian ha molto software e dall'altro non avendo interessi commerciali, non ha interessi nel penalizzare la concorrenza. È gestita essenzialmente da volontari.
 
 \section{La cattedrale e il bazaar}
 
@@ -211,7 +173,7 @@ L'Open Source Definition è nata perché quando si è sviluppato il movimento OS
 
 \textit{Nota}: no al mouse click obbligatorio.
 
-\section{Libertà del software libero}
+\section{ !!  ! ! ! ! ! ! Libertà del software libero}
 
 \begin{itemize}
 
