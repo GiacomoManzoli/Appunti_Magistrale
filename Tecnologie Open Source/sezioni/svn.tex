@@ -560,3 +560,16 @@ $ svnadmin load path/to/newrepos < repos.out
 \end{lstlisting}
 
 perché così facendo viene mantenuto lo storico delle modifiche, cosa che non viene fatta dal comando \texttt{svn export \textit{URL [PATH]}}/\texttt{svn export \textit{PATH1} [PATH2]}.
+
+
+\section{Informazioni utili}
+
+Un po' di banalità scoperte giocando con SVN:
+
+\begin{itemize}
+	\item Le cartelle \texttt{branches}, \texttt{trunk} e \texttt{tags} non vengono create automaticamente, è necessario farle a mano.
+	\item Se vengono dati dei comandi SVN in una directory che non è la root della working copy e non viene fornito un path locale, i comandi interagiscono solamente all'interno di quella directory. Ad esempio, se dentro \texttt{trunk} do il comando \texttt{svn update}, viene effettuato l'update solamente della directory \texttt{trunk} mentre \texttt{branches} e \texttt{tags} non vengono aggiornate.
+	\item Dopo aver fatto un reverse-merge per ripristinare un file, per riavere il file in locale devo effettuare un update.
+	\item Per visualizzare le differenze con tra due directory, come tra il trunk ed un determinato branch, devo usare gli URL remoti e non i path locali.
+	\item Per cancellare un singolo commit basta utilizzare il comando \texttt{svn merge . -c -REV}. Il comando deve però essere dato all'interno della directory che ha subito le modifiche. 
+\end{itemize}
