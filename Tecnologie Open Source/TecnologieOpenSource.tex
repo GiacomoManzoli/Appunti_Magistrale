@@ -1,33 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Classic Lined Title Page 
-% LaTeX Template
-% Version 1.0 (27/12/12)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% Peter Wilson (herries.press@earthlink.net)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-% 
-% Instructions for using this template:
-% This title page compiles as is. If you wish to include this title page in 
-% another document, you will need to copy everything before 
-% \begin{document} into the preamble of your document. The title page is
-% then included using \titleAT within your document.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
-
-
-
-\documentclass[a4paper, 11pt]{report} 
-
+\documentclass[a4paper, 11pt]{report} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
 \usepackage[italian]{babel}      							% Lingua italiana
 \usepackage[margin=.9in]{geometry}             % Imposta i margini del documento
 
@@ -35,113 +6,108 @@
 \usepackage[mathletters]{ucs}    % Caratteri matematici come UTF8
 \usepackage[utf8,utf8x]{inputenc}      % Ancora utf8
 
-\usepackage{hyperref}
-\usepackage{titlesec}
-\usepackage{amssymb,amsmath}
-\usepackage[italian]{babel}
-\usepackage[titles]{tocloft}
-\usepackage{appendix}
-\hypersetup{%
-    pdfborder = {0 0 0}
-}
-\usepackage{graphicx}
-\usepackage{wrapfig}
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-\usepackage{eurosym}
-
-\newcommand*{\plogo}{\fbox{$\mathcal{PL}$}} % Generic publisher logo
+\usepackage{eurosym}                %simbolo dell'euro
 \usepackage{listings}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \input{listings}
-\usepackage{fancyhdr}
-\usepackage{lastpage}
-\usepackage{ragged2e}
+
+%\tightlist per compatibilità con pandoc
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\usepackage[labelfont=bf]{caption}
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage{wrapfig} % Allows in-line images
+
+
+\usepackage{subfig}
+\usepackage{hyperref}
+\usepackage{placeins}
+\usepackage{sourcecodepro}
+\usepackage{hyperref}                   % collegamenti ipertestuali
+
+\usepackage[colorinlistoftodos,prependcaption]{todonotes} %todo
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode} % https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmicx_package
+\usepackage{amssymb}  %$\mathbb{N}$ per il simbolo dei numeri naturali 
+
+\usepackage{enumerate} % permette di personalizzare enumerate
+
 \usepackage{xmpincl}	%Aggiunge metadati sulla licenza CC
-\usepackage{todo}
 \usepackage{xspace}
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
 
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+	\begin{flushright} % Right align
+		{\LARGE\@title} % Increase the font size of the title
+		
+		\vspace{50pt} % Some vertical space between the title and author name
+		
+		{\large\@author} % Author name
+		\\\@date % Date
+		
+		\vspace{100pt} % Some vertical space between the author block and abstract
+	\end{flushright}
+}
 
-\newcommand*{\titleAT}{\begingroup % Create the command for including the title page in the document
-\newlength{\drop} % Command for generating a specific amount of whitespace
-\drop=0.1\textheight % Define the command as 10% of the total text height
-
-\rule{\textwidth}{1pt}\par % Thick horizontal line
-\vspace{2pt}\vspace{-\baselineskip} % Whitespace between lines
-\rule{\textwidth}{0.4pt}\par % Thin horizontal line
-
-\vspace{\drop} % Whitespace between the top lines and title
-\begin{center} % Center all text
-\textcolor{Black}{ % Red font color
-{\Huge Appunti}\\[0.5\baselineskip] % Title line 1
-{\Large di}\\[0.75\baselineskip] % Title line 2
-{\Huge Tecnologie Open Source}} % Title line 3
-\\[2\baselineskip]
-{\Large \version{}}
-
-\vspace{0.25\drop} % Whitespace between the title and short horizontal line
-\rule{1\textwidth}{0.4pt}\par % Short horizontal line under the title
-\vspace{\drop} % Whitespace between the thin horizontal line and the author name
-
+%% breakablealgorithm http://tex.stackexchange.com/questions/33866/algorithm-tag-and-page-break
+\makeatletter
+\newenvironment{breakablealgorithm}
+{% \begin{breakablealgorithm}
+	\begin{center}
+		\refstepcounter{algorithm}% New algorithm
+		\hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+		\renewcommand{\caption}[2][\relax]{% Make a new \caption
+			{\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+			\ifx\relax##1\relax % #1 is \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+			\else % #1 is not \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+			\fi
+			\kern2pt\hrule\kern2pt
+		}
+	}{% \end{breakablealgorithm}
+	\kern2pt\hrule\relax% \@fs@post for \@fs@ruled
 \end{center}
-\vfill % Whitespace between the author name and publisher text
-\vfill 
-{\large Luca De Franceschi}
-\hfill
-{\large Università degli studi di Padova}
-
-
-
-%\rule{\textwidth}{0.4pt}\par % Thin horizontal line
-%\vspace{2pt}\vspace{-\baselineskip} % Whitespace between lines
-%\rule{\textwidth}{1pt}\par % Thick horizontal line
-
-\endgroup}
-
-\titleformat{\chapter}[display]
-{}{\hfill\rule{.7\textwidth}{3pt}}{2pt}
-{\hspace*{.3\textwidth}\huge\bfseries}[\addvspace{1pt}]
-\titleformat{name=\chapter,numberless}[display]
-{}{\hfill\rule{.7\textwidth}{3pt}}{2pt}
-{\hspace*{.3\textwidth}\huge\bfseries}[\addvspace{1pt}]
-
-\renewcommand*\contentsname{Indice}
-
-\newcommand{\glossario}[1]{\textit{#1\ped{G}}}
-\newcommand{\virg}[1]{``#1''}
-
-\lstset{frame=shadowbox,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true
-  tabsize=3
 }
+\makeatother
 
-\renewcommand{\lstlistingname}{Listato}
-\renewcommand{\footrulewidth}{0.4pt}
+\makeatletter % trattino con punto sopra
+\newcommand{\dotminus}{\mathbin{\text{\@dotminus}}}
 
-\newcommand{\changefont}{%
-    \fontsize{5}{7}\selectfont
+\newcommand{\@dotminus}{%
+	\ooalign{\hidewidth\raise1ex\hbox{.}\hidewidth\cr$\m@th-$\cr}%
 }
+\makeatother
 
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 
 %----------------------------------------------------------------------------------------
-%	CONSTANTS
+% TITLE
 %----------------------------------------------------------------------------------------
 
-\newcommand{\version}{v0.9.3}
+\title{\textbf{Tecnologie Open Source}\\ % Title
+	A.A. 2015-2016 } % Subtitle
 
-\newcommand{\authorName}{Luca De Franceschi}
+\author{\textsc{Giacomo Manzoli}
+	\\ 1130822 % Author
+	\\{\textit{Università degli Studi di Padova}}} % Institution
+
+\date{\today} % Date
+
+%----------------------------------------------------------------------------------------
+
 
 %----------------------------------------------------------------------------------------
 %	DOCUMENT HEADER
@@ -149,47 +115,48 @@
 \includexmp{CC_BY_SA_ATOS}
 
 \begin{document}
-\justifying
-\titleAT % This command includes the title page
-\pagestyle{empty}
-\newpage
-
-\tableofcontents
-\clearpage
-
-%----------------------------------------------------------------------------------------
-%	HEADER FORMAT
-%----------------------------------------------------------------------------------------
-
-\fancyhf{}
-\fancyhead[RE]{\small\scshape\nouppercase{\leftmark}}
-\fancyhead[LO]{\small\scshape\nouppercase{\rightmark}}
-\fancyhead[LE,RO]{\small\thepage}
-\lhead{\rightmark}
-\rhead{\leftmark}
-\rfoot{\thepage/\pageref{LastPage}}
-\lfoot{\authorName}
-
-\pagestyle{fancy}
-
-
-%----------------------------------------------------------------------------------------
-%	CONTENT
-%----------------------------------------------------------------------------------------
-
-\include{sezioni/capitolo-introduzione}
-\include{sezioni/nascita-copyright}
-\include{sezioni/storia-software-libero}
-\include{sezioni/ultimo-degli-hacker}
-\include{sezioni/open-source}
-\include{sezioni/licenze-software}
-\include{sezioni/open-content}
-%\include{rdf}
-\include{sezioni/svn}
-
-%\appendix
-
-%\input{glossario}
-
-
+	
+	\maketitle % Print the title section
+	
+	\begin{center}
+		Versione modificata degli appunti di Luca De Franceschi e Federico Busetto
+	\end{center}
+	
+	%----------------------------------------------------------------------------------------
+	% ABSTRACT AND KEYWORDS
+	%----------------------------------------------------------------------------------------
+	
+	%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
+	
+	\clearpage
+	\tableofcontents
+	\listofalgorithms
+	
+	%\hspace*{3,6mm}\textit{Keywords:} lorem , ipsum , dolor , sit amet , lectus % Keywords
+	
+	\vspace{30pt} % Some vertical space between the abstract and first section
+	
+	%----------------------------------------------------------------------------------------
+	% ESSAY BODY
+	%----------------------------------------------------------------------------------------
+	\clearpage
+	
+	%----------------------------------------------------------------------------------------
+	%	CONTENT
+	%----------------------------------------------------------------------------------------
+	
+	\include{sezioni/capitolo-introduzione}
+	\include{sezioni/nascita-copyright}
+	\include{sezioni/storia-software-libero}
+	\include{sezioni/open-source}
+	\include{sezioni/licenze-software}
+	\include{sezioni/open-content}
+	%\include{rdf}
+	\include{sezioni/svn}
+	
+	%\appendix
+	
+	%\input{glossario}
+	
+	
 \end{document}

@@ -1,12 +1,5 @@
 \chapter{La storia del software libero}
 
-\subsection*{Materiale di riferimento}
-
-\begin{itemize}
-
-\item Steven Levy - \textit{Heroes of the Computer Revolution}.
-
-\end{itemize}
 
 \section{Gli albori}
 
@@ -124,16 +117,33 @@ Quindi a un certo punto PDP divenne obsoleto e la comunità si ritrovò di front
 Alla fine si decise di comprare il sistema operativo proprietario di Digital e a partire da esso si creò \textbf{Twenex}, con caratteristiche molto diverse da un sistema standard (sicurezza costruita nel sistema). 
 Il gruppo \textit{wheel} era un gruppo i cui programmatori erano gli unici che potevano divenire amministratori e apportare modifiche alla macchina. In seguito ci fu la nascita di GNU.
 
+\
 \section{Il progetto GNU}
 
+\subsection{In principio c'erano UNIX e BSD}
 
-\subsection{In principio c'era UNIX}
+Durante il periodo hacker del MIT, il progetto MAC, finanziato dalla DARPA, stava sviluppando Multics, un sistema operativo modulare, facile da estendere e da riconfigurare.
+Questo sistema però è risultato troppo complesso e ciò ha portato al fallimento commerciale del progetto.
 
-Una serie di circostanze ha voluto che UNIX venisse rilasciato con licenza libera (era comunque protetto da copyright). Nasce come una risposta a \glossario{MUTIX} per creare un sistema diverso, più piccolo e con minor risorse. Fu il primo sistema scritto non direttamente in linguaggio macchina ma scritto in linguaggio C. Questo sistema ebbe subito un grosso successo anche e soprattutto in ambito universitario. 
+All'interno del progetto Multics c'era anche AT\&T, che nel 1969 decide di abbandonarlo. Tuttavia, Dennis Richie e Ken Thompson continuano la a sviluppare le idee alla base di Multics e sviluppano una versione più leggera del sistema operativo, così nel 1972 nasce UNIX.
 
-L'AT\&T era un monopolio telefonico del governo, aveva la restrizione che non poteva vendere software e quindi si decise di distribuire gratuitamente unix. Al suo lancio esso si diffuse molto rapidamente. Una delle università che lo utilizzò fin da subito fu \textbf{Berkeley}, che aveva interesse dal punto di vista della programmazione interna di unix. Nel 1977 nacque BSD, una versione modificata di unix utilizzata dall'università. Due anni dopo la AT\&T annunciò di voler commercializzare unix. 
+In quel periodo AT\&T aveva il monopolio telefonico e quindi non poteva commercializzare software, pertanto UNIX è stato distribuito liberamente.
 
-Nel 1983 AT\&T viene divisa e unix diventa commerciale. A questo punto c'era BSD ed era una possibile scelta. \glossario{ARPA} lo utilizzò per creare \glossario{ARPANET}, per collegare diversi computer via network, garantendo un'uniformità a livello software del sistema operativo. Il software libero ebbe quindi un impatto notevole. ARPA mise inoltre a disposizione dei fondi per migliorare BSD e facilitare il suo sviluppo. In seguito venne citata in giudizio dalla AT\&T perché si diceva volesse il codice di unix. Questo bloccò di fatto lo sviluppo di ARPANET. Se ciò non fosse successo probabilmente non sarebbe nato unix.
+Tra le varie versioni modificate di UNIX c'è BSD, la versione sviluppata da due studenti della Berkley, Chuck Haley e Bill Joy, che comprendeva dei miglioramenti al kernel, un editor di testo e un compilatore Pascal. 
+
+La prima versione di BSD viene rilasciata nel 1978  e nel 1980 la DARPA stanzia dei fondi per portare avanti lo sviluppo di BSD, il quale doveva essere utilizzato per costruire ARPANET. 
+Nasce così il Computer Systems Reserach Group, guidato da Bill Joy e nel 1980 viene rilasciato 4BSD.
+
+Successivamente vennero rilasciate altre versioni, come la 4.1aBSD che conteneva la bozza del protocollo TCP/IP e la 4.3BSD che implementò la prima versione di TCP/IP (1986), che verrà poi scelto dalla DARPA come standard per le comunicazioni di rete. 
+
+Nel 1979 AT\&T annuncia di voler commercializzare UNIX e nel 1983, dopo essere stata scorporata, UNIX diventa commerciale e viene distribuito con licenze molto costose. Si iniziò quindi a staccare BSD da UNIX e il primo passo è stato il rilascio di NET/1, la parte relativa al networking di BSD che venne rilasciata con l'apposita licenza BSD.
+
+La parte mancante di BSD viene liberalizzata nel 1991 ad opera di Keith Bostik. Questo nuovo sistema operativo perse il nome di NET/2 e fu rilasciato sotto licenza BSD.
+
+Da NET/2 nacque poi BSD/386, poi rinominato BSDi, una ridistribuzione commerciale e più completa.
+AT\&T, tramite gli UNIX System Laboratories, fa causa a BSD, ma nel 1994 la perde, dato che la maggior parte del codice era stato riscritto. Nello stesso anno viene rilasciato 4.4BSD-Lite, la prima versione del sistema operativo senza marchio AT\&T.
+
+Nonostante la causa sia stata dalla Berkley, questa ha rallentato la diffusione di BSD in favore di Linux.
 
 \subsection{La nascita di GNU}
 
@@ -142,7 +152,7 @@ Nel momento in cui il software è chiuso emerge la necessità di creare un movim
 Nel 1983 Richard Stallman fece un appello su \texttt{net.unix-wizards}:
 
 \begin{center}
-	\textit{``Starting this Thanksgiving I am going to write a complete Unix-compatible software system called GNU (for Gnu’s Not Unix), and give it away free to everyone who can use it. Contributions of time, money, programs and equipment are greatly needed''}.
+	\textit{``Starting this Thanksgiving I am going to write a complete UNIX-compatible software system called GNU (for Gnu’s Not UNIX), and give it away free to everyone who can use it. Contributions of time, money, programs and equipment are greatly needed''}.
 \end{center}
 
 Le ragioni della scelta di UNIX furono:
@@ -162,7 +172,7 @@ La prima cosa che serviva era un programma per eseguire il codice, quindi ci fu 
 
 Unipress a quel punto minacciò legalmente Emacs (aveva acquistato la versione di Gosling), ma per fortuna di Stallman la versione era stata riscritta praticamente da zero, per cui non ebbe problemi e nel 1985 rilasciò ufficialmente il programma. 
 
-Stallman decise di pensare bene a una licenza per la versione, basandosi su GNU. La licenza era basata principalmente sulla licenza implicita della comunità Emacs. È il primo grosso progetto di GNU, che sotto sotto era una GPL. A partire da esso si svilupparono tutta un'altra serie di progetti, bisognava creare dunque una licenza che fosse comune a tutti. Gilmore suggerì dunque il cambio di nome e nacque la \textbf{GNU General Public License} che venne distribuita in versione 1.0 con il rilascio di gdb.
+Stallman decise di pensare bene a una licenza per la versione, basandosi su GNU. La licenza era basata principalmente sulla licenza implicita della comunità Emacs. È il primo grosso progetto di GNU, che sotto sotto era una GPL. A partire da esso si svilupparono tutta un'altra serie di progetti, bisognava creare dunque una licenza che fosse comune a tutti. Gilmore suggerì dunque il cambio di nome e nacque la \textbf{GNU General Public License} che venne distribuita in versione 1.0 con il rilascio di gdb\footnote{GNU Project Debugger}.
 
 \subsection{FSF - Free Software Foundation}
 
@@ -177,7 +187,7 @@ Con la fondazione dell'organizzazione, Stallman rilasciò anche il manifesto del
 
 \subsection{L'incontro con BSD}
 
-AT\&T cominciò a focalizzarsi sull'utilizzo di Unix a scopo commerciale e nel frattempo si sviluppò BDS, una distribuzione di Unix derivata con scopi accademici e con diversi contributi esterni. L'idea era di trasformare i loro sistemi operativi \textit{batch} con una versione di Unix.
+AT\&T cominciò a focalizzarsi sull'utilizzo di UNIX a scopo commerciale e nel frattempo si sviluppò BDS, una distribuzione di UNIX derivata con scopi accademici e con diversi contributi esterni. L'idea era di trasformare i loro sistemi operativi \textit{batch} con una versione di UNIX.
 Due studenti si erano appassionati e avevano reso una versione migliore di BSD, aggiungendo tutta una serie di cose, iniziando dapprima a effettuare modifiche esterne e poi interne. Quindi si formò una distribuzione indipendente, ma c'era la necessità della licenza AT\&T. 
 Stallman convinse Bostic e i suoi a creare una versione completamente libera (all'inizio era un po' deficitaria ma col tempo si è messa in pari). A questo punto c'era un sistema operativo (e un kernel) libero.
 
@@ -185,7 +195,7 @@ Stallman convinse Bostic e i suoi a creare una versione completamente libera (al
 
 Intorno alla costellazione GNU ci furono vari programmatori che iniziarono a rilasciare codice sotto licenza GPL. Bruce Perens rilascia \textit{electric fence} sotto licenza GPL, una libreria per le chiamate all'allocazione di memoria. Bruce Perens sarebbe diventato in seguito il project leader di Debian.
 
-GPL stava dunque divenendo una licenza molto importante. Rich Marin fonda \glossario{Prime Time Freeware}, un'azienda che rilascia software solo sotto GPL. L'azienda \glossario{Cygnus} con Micheal Tiemann aveva cominciato a lavorare al progetto \glossario{gcc}, aggiungendo il supporto al C++. Il progetto era quella di contribuire (fare modifiche) al gcc e poi rivenderlo. L'idea ebbe un notevole successo. Cygnus venne fondata nel 1990 e per la fine dell'anno valeva 725000\$ in supporto e contratti.
+GPL stava dunque divenendo una licenza molto importante. Rich Marin fonda Prime Time Freeware, un'azienda che rilascia software solo sotto GPL. L'azienda Cygnus con Micheal Tiemann aveva cominciato a lavorare al progetto gcc, aggiungendo il supporto al C++. Il progetto era quella di contribuire (fare modifiche) al gcc e poi rivenderlo. L'idea ebbe un notevole successo. Cygnus venne fondata nel 1990 e per la fine dell'anno valeva 725000\$ in supporto e contratti.
 
 \subsection{Espansione del progetto GNU}
 
@@ -204,26 +214,26 @@ Il progetto GNU si espanse in modo molto rapido e virale. Di seguito vengono rip
 
 \subsection{GNU Hurd}
 
-Quello che mancava era un kernel, ed era molto complesso svilupparlo. All'inizio le macchine disponevano di un sistema unix proprietario. Vi era dunque la necessità di creare un \textbf{kernel libero}. Nel 1986 ci fu il primo tentativo di basare il kernel su TRIX, ma oltre a non funzionare sulle macchine standard richiedeva troppi cambiamenti. In seguito si sviluppò l'idea di basarsi su BSD, ma c'era poca collaborazione da parte degli sviluppatori bsd, si preferisce un approccio più ambizioso.
-Svilupparono dunque un micro-kernel basato su \textbf{Mach}, ma inizialmente non era libero e dovettero aspettare che ``\textit{venisse liberato}''. Nel 1990 iniziarono dunque i lavori sul kernel, ma ci furono diverse difficoltà nello sviluppo. Poi arrivò \textbf{linux} e dunque molti sviluppatori posarono ad esso la loro attenzione. Allo stato attuale ci sono stati tutta una serie di progressi:
+Quello che mancava era un kernel, ed era molto complesso svilupparlo. All'inizio le macchine disponevano di un sistema UNIX proprietario. Vi era dunque la necessità di creare un \textbf{kernel libero}. Nel 1986 ci fu il primo tentativo di basare il kernel su TRIX, ma oltre a non funzionare sulle macchine standard richiedeva troppi cambiamenti. In seguito si sviluppò l'idea di basarsi su BSD, ma c'era poca collaborazione da parte degli sviluppatori BSD, si preferisce un approccio più ambizioso.
+Svilupparono dunque un micro-kernel basato su \textbf{Mach}, ma inizialmente non era libero e dovettero aspettare che ``\textit{venisse liberato}''. Nel 1990 iniziarono dunque i lavori sul kernel, ma ci furono diverse difficoltà nello sviluppo. Poi arrivò \textbf{Linux} e dunque molti sviluppatori posarono ad esso la loro attenzione. Allo stato attuale ci sono stati tutta una serie di progressi:
 
 \begin{itemize}
 	
-	\item Driver linux disponibili via DDE;
+	\item Driver Linux disponibili via DDE;
 	\item Supportato X, iceweasel, ...;
-	\item Porting di debian.
+	\item Porting di Debian.
 	
 \end{itemize} 
 
 \section{Linux}
 
-Nel 1990 nasce Linux, con un nuovo kernel a partire da Minix. All'inizio l'interesse dei GNU non era quello di creare un sistema completo, ma voleva mettere a disposizione uno strumento fin da subito (in tempi rapidi), per cui non venne progettato un kernel ma riutilizzato Minix. Il software Minix era stato sviluppato da \textit{Tanenbaum}. Da qui nacque la comunità Linux, che venne annunciata al mondo. Nel 1991 venne rilasciato Linux 0.0.2.
+Nel 1990 nasce Linux, con un nuovo kernel a partire da MINIX. All'inizio l'interesse dei GNU non era quello di creare un sistema completo, ma voleva mettere a disposizione uno strumento fin da subito (in tempi rapidi), per cui non venne progettato un kernel ma riutilizzato MINIX. Il software MINIX era stato sviluppato da \textit{Tanenbaum}. Da qui nacque la comunità Linux, che venne annunciata al mondo. Nel 1991 venne rilasciato Linux 0.0.2.
 
 \subsection{MINIX}
 
-Unix era un sistema operativo vero e proprio, ed era molto complesso. John Lions, un famoso sviluppatore Australiano, pubblica il codice sorgente commentato di UNIX in un'opera storica denominata: \textbf{Lions' Commentary on UNIX 6th Edition, with Source Code}. Ma con l'avvento della versione 7 di unix vengono imposti tutta una serie di blocchi: l'opera di Lyons viene bloccata, aumentano i costi delle licenze e vi sono delle restrizioni sull'insegnamento in classe. Molte università interruppero dunque l'insegnamento di unix; questo fu un cambiamento abbastanza stupido, perché ciò che aveva reso forte unix era la diffusione nel mondo accademico. 
+UNIX era un sistema operativo vero e proprio, ed era molto complesso. John Lions, un famoso sviluppatore Australiano, pubblica il codice sorgente commentato di UNIX in un'opera storica denominata: \textbf{Lions' Commentary on UNIX 6th Edition, with Source Code}. Ma con l'avvento della versione 7 di UNIX vengono imposti tutta una serie di blocchi: l'opera di Lyons viene bloccata, aumentano i costi delle licenze e vi sono delle restrizioni sull'insegnamento in classe. Molte università interruppero dunque l'insegnamento di UNIX; questo fu un cambiamento abbastanza stupido, perché ciò che aveva reso forte UNIX era la diffusione nel mondo accademico. 
 
-Andrew S. Tanenbaum era all'epoca un insegnante di \textit{computer science} e venne molto toccato da questa decisione, in quanto aveva sempre insegnato basandosi su unix. Decise allora di creare \textbf{MINIX}, un sistema operativo abbastanza importante, minimale, per scopi didattici, pensato per essere \textbf{semplice}. Era un sistema a micro kernel, rilasciato sotto \textbf{licenza permissiva} ma non libera. Aveva inoltre scritto un libro che documentava e spiegava MINIX. Ma questo sistema operativo aveva una grossa limitazione: \textbf{mancava un emulatore di terminale}.
+Andrew S. Tanenbaum era all'epoca un insegnante di \textit{computer science} e venne molto toccato da questa decisione, in quanto aveva sempre insegnato basandosi su UNIX. Decise allora di creare \textbf{MINIX}, un sistema operativo abbastanza importante, minimale, per scopi didattici, pensato per essere \textbf{semplice}. Era un sistema a micro kernel, rilasciato sotto \textbf{licenza permissiva} ma non libera. Aveva inoltre scritto un libro che documentava e spiegava MINIX. Ma questo sistema operativo aveva una grossa limitazione: \textbf{mancava un emulatore di terminale}.
 
 \subsection{Linus Torvalds e la nascita di Linux}
 
@@ -275,7 +285,7 @@ Una volta c'erano molti sviluppatori \textit{volontari}, ad oggi il supporto è 
 
 C'era un forte legame tra il mondo degli hackers e il mondo del software libero. Si venne a creare una \textbf{nuova generazione di sviluppatori}. Volevano provare a costruire una distribuzione che fosse fortemente legata a certi principi, che mettesse insieme varie cose, che facesse da collante. A quel punto nacque \textbf{Debian}. Linux da un lato stava procedendo e crescendo velocemente ed aveva molte caratteristiche interessanti, ma dall'altro c'era una lontananza dai principi del software libero e dalla GNU. Questo era percepito come un problema da parte di una fetta della comunità. Ad altri invece la cosa andava più che bene, dunque si venne a creare una \textbf{divergenza}. 
 
-Il progetto Debian venne fondato da Ian Murdock nel 1993, con l'intento di fare una distribuzione di Linux \textbf{completamente libera}. Entrò a far parte del progetto GNU nel 1994-1995. Nel 1994 venne redatto il \textbf{manifesto debian}, nel quale si riassumeva il significato e la filosofia di debian. La prima versione stabile (Debian 1.1 ``Buzz'') venne rilasciata nel 1996. Il project leader della Debian divenne Bruce Perens
+Il progetto Debian venne fondato da Ian Murdock nel 1993, con l'intento di fare una distribuzione di Linux \textbf{completamente libera}. Entrò a far parte del progetto GNU nel 1994-1995. Nel 1994 venne redatto il \textbf{manifesto debian}, nel quale si riassumeva il significato e la filosofia di Debian. La prima versione stabile (Debian 1.1 ``Buzz'') venne rilasciata nel 1996. Il project leader della Debian divenne Bruce Perens
 
 La caratteristica principale di Debian è che pone l'attenzione in modo quasi maniacale alla qualità del software (a volte perdendo anche molto tempo) e al fatto che il software sia libero (solo software DFSG. Si basa su una \textbf{forte comunità} che gestisce (tramite votazioni) tutte le decisioni sullo sviluppo; chiunque può proporre cambiamenti e ognuno è responsabile delle proprie azioni (attenzione alla sicurezza). Un altro cardine su cui puntano gli sviluppatori Debian è una strenua \textbf{disponibilità} del software.
 
