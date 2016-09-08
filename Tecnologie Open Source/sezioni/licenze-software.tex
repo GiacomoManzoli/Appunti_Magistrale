@@ -1,15 +1,5 @@
 \chapter{Licenze software}
 
-\subsection*{Materiale di riferimento}
-
-\begin{itemize}
-
-\item \textit{Understanding Open Source and Free Software Licensing} - Andrew Laurent;
-\item \textit{Open Source Licensing: Software freedom and intellectual property law}.
-\item \textit{GPLv3 English} \url{https://www.gnu.org/licenses/gpl-3.0.en.html}
-
-\end{itemize}
-
 \section{Capisaldi}
 
 Il diritto d'autore arriva fino a 70 anni dopo la morte. Al giorno d'oggi in realtà la grande maggioranza dei libri hanno un utilità che dura pochi anni da quando sono stati prodotti, a meno che non sia un grande classico o un best-seller. La protezione è espressa sotto forma percepibile, dev'essere qualcosa che uno ``ha creato''. Inoltre non c'è nessuna registrazione necessaria per avere il diritto d'autore. Un discorso a parte è il \textbf{work for hire}, ovvero quando qualcuno produce un'opera lavorando per qualcun altro. Quando si lavora come dipendenti, a meno di clausole particolari, tutto ciò che si produce è proprietà del datore di lavoro, viene ceduta la proprietà intellettuale del proprio lavoro all'azienda.  
@@ -29,7 +19,6 @@ Una cosa che vedremo molto spesso sono le \textbf{garanzie}, perché ogni copyri
 È la licenza più basilare, licenza originale di X Windows. Essenzialmente permette di \textit{fare tutto}, libertà di modifica, di copia, di ridistribuzione del software. Il codice sorgente può essere redistribuito liberamente, senza restrizioni sul formato (ad esempio si può scegliere di redistribuirlo solo in forma binaria). Quello che è necessario è \textbf{mantenere la licenza originale}, in modo che la persona possa vedere la licenza con la quale è stato prodotto quel software. Ci sono naturalmente delle clausole di salvaguardia. 	
 
 \begin{lstlisting}[caption=Licenza MIT]
-
 Copyright (c) <year> <copyright holders>
 
 Permission is hereby granted, free of charge, to any person
@@ -55,7 +44,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 \end{lstlisting}
 
-L'obiettivo è quello di \textbf{proteggere} chi ha scritto software sotto questa licenza, ecco perché ci sono tutta una serie di garanzie, in questo modo si evitano problemi futuri dovuti alla redistribuzione. Qualunque tipo di garanzia possibile è \textbf{coperta}, anche se non sempre queste clausole sono valide, ad esempio potrebbero non essere validi in alcuni paesi. Ad ogni modo, nonostante queste garanzie, è una licenza che risulta comunque molto permissiva. 
+\noindent L'obiettivo è quello di \textbf{proteggere} chi ha scritto software sotto questa licenza, ecco perché ci sono tutta una serie di garanzie, in questo modo si evitano problemi futuri dovuti alla redistribuzione. Qualunque tipo di garanzia possibile è \textbf{coperta}, anche se non sempre queste clausole sono valide, ad esempio potrebbero non essere validi in alcuni paesi. Ad ogni modo, nonostante queste garanzie, è una licenza che risulta comunque molto permissiva. 
 
 \section{Licenze BSD}
 
@@ -69,79 +58,81 @@ Sono leggermente più restrittive rispetto alla licenza MIT. In realtà ce ne so
 
 \end{itemize}
 
-Storicamente si sono sviluppate in ordine decrescente, man mano hanno tolto una clausola perché sostanzialmente creava dei problemi. La licenza BSD a quattro clausole si è dimostrata infatti inutilizzabile nella pratica, perché diveniva ingestibile tenere conto di tutti gli autori del software. 
+\noindent Storicamente si sono sviluppate in ordine decrescente, man mano hanno tolto una clausola perché sostanzialmente creava dei problemi. La licenza BSD a quattro clausole si è dimostrata infatti inutilizzabile nella pratica, perché diveniva ingestibile tenere conto di tutti gli autori del software. 
 
 \subsection{BDS a due clausole}
 
 È la licenza di \textbf{NetBSD} e di fatto corrisponde alla MIT license, con l'aggiunta dell'obbligo di inserire la documentazione anche nella redistribuzione.
 
 \begin{lstlisting}[caption=BSD a due clausole (NetBDS)]
-Copyright (c) 2008 The NetBSD Foundation, Inc.
+Copyright (c) <anno>, <proprietario>
 All rights reserved.
 
-This code is derived from software contributed to The NetBSD Foundation
- by 
+La ridistribuzione e l'uso di formule binarie, con o senza modifiche, sono permesse
+purché siano rispettate le seguenti condizioni:
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions
-are met:
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
+1. Le ridistribuzioni di codice originale devono conservare la nota di copyright 
+    sopra riportato, questa lista di condizioni e il seguente disconoscimento.
 
- THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
- ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR CONTRIBUTORS
- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- POSSIBILITY OF SUCH DAMAGE.
+2. Le ridistribuzioni in formule binarie devono riprodurre la nota di copyright 
+    sopra riportata, questa lista di condizioni e il seguente disconoscimento nella
+   documentazione e/o altri materiali forniti con la distribuzione.
 
- \end{lstlisting}
+Questo software è fornito dal <possessore di copyright> "così com'è" e qualsiasi
+garanzia espressa o implicita, che includa, ma che non sia limitata a, garanzie 
+implicite di commerciabilità e idoneità a scopo particolare, viene disconosciuta. 
+In nessun caso il possessore di copyright sarà ritenuto responsabile per qualsiasi 
+danno diretto, indiretto, connesso, particolare, esemplare o conseguente 
+(includente, ma non limitato a, approvvigionamenti di beni o servizi alternativi;
+perdita di utilità, dati o profitti; interruzione di affari) comunque causati e su 
+qualsiasi ipotesi di responsabilità, come da contratto, responsabilità oggettiva, o 
+torto (compresa negligenza o altro) derivante in qualsiasi modo dall'utilizzo di 
+questo software anche se al corrente della possibilità di tale danno.
 
- Essenzialmente si può pensarla come una licenza BSD in cui nella distribuzione in forma binaria bisogna mantenere tutta la documentazione e la licenza. 
+Le volontà e le finalità contenute nel software e nella documentazione sono quelle
+degli autori e non vanno interpretate come rappresentazione delle politiche ufficiali,
+sia espresse che implicite, del progetto FreeBSD.
+\end{lstlisting}
 
- \subsection{BSD a tre clausole}
+\noindent Essenzialmente si può pensarla come una licenza BSD in cui nella distribuzione in forma binaria bisogna mantenere tutta la documentazione e la licenza. 
 
- La BSD a tre clausole ha un'impostazione un po' più innovatoria. Si tratta comunque di una licenza molto ``generosa'', non sono per nulla invasive. Comprende le due clausole precedenti più la seguente:
+\subsection{BSD a tre clausole}
+
+La BSD a tre clausole ha un'impostazione un po' più innovatoria. Si tratta comunque di una licenza molto ``generosa'', non sono per nulla invasive. Comprende le due clausole precedenti più la seguente:
 
  \begin{lstlisting}[caption=BSD a tre clausole]
-
-3. Neither the name of the <organization> nor the
-   names of its contributors may be used to endorse or promote products
-   derived from this software without specific prior written permission.
-
+3. Né il nome della <organizzazione>, né i nomi dei suoi collaboratori possono 
+   essere utilizzati per avallare o promuovere prodotti derivati da questo software
+   senza uno specifico permesso scritto.
 \end{lstlisting} 
 
-In pratica permette di ``fare quello che si vuole'' però non è possibile farsi pubblicità usando il nome del copyright holder a meno che non si abbia un permesso. Ad esempio non si può dire ``il mio software è più sicuro perché è sotto licenza BSD''. È una delle licenze più comuni nei sistemi BSD, non crea nessun problema, ed è approvata dalla OSI.
+\noindent In pratica permette di ``fare quello che si vuole'' però non è possibile farsi pubblicità usando il nome del copyright holder a meno che non si abbia un permesso. Ad esempio non si può dire ``il mio software è più sicuro perché è sotto licenza BSD''. È una delle licenze più comuni nei sistemi BSD, non crea nessun problema, ed è approvata dalla OSI.
 
 \subsection{BSD a quattro clausole}
 
 Ma la licenza originale di BSD unix aveva un'altra clausola che era molto più invasiva. Aveva le stesse clausole già viste, in più:
 
 \begin{lstlisting}[caption=BSD a quattro clausole] 
-
-4. All advertising materials mentioning features or use of this software
-   must display the following acknowledgement:
-   This product includes software developed by the <organization>.
-
+4. Ogni materiale pubblicitario che riporti caratteristiche o uso di questo software
+   deve mostrare la seguente attestazione:
+   Questo prodotto include software sviluppati dalla <organizzazione>.
 \end{lstlisting}
 
-Chiaramente questo valeva per tutti gli autori e le entità che avevano donato il codice, quindi diventava un po' problematico riportarli tutti, tanto è vero che non è stata approvata dalla OSI. Un problema più serio è che non è compatibile con la GPL perché questa clausola aggiuntiva non è prevista dalla GPL. Quindi se si voleva cambiare la licenza del prodotto a GPL si riscontravano grossi problemi in quanto si dovrebbe togliere questa clausola. Da un punto di vista pratico era inoltre molto problematico dover tener traccia di tutti gli autori (gli indirizzi email per esempio possono cambiare nel tempo).
+\noindent Chiaramente questo valeva per tutti gli autori e le entità che avevano donato il codice, quindi diventava un po' problematico riportarli tutti, tanto è vero che non è stata approvata dalla OSI. Un problema più serio è che non è compatibile con la GPL perché questa clausola aggiuntiva non è prevista dalla GPL. Quindi se si voleva cambiare la licenza del prodotto a GPL si riscontravano grossi problemi in quanto si dovrebbe togliere questa clausola. Da un punto di vista pratico era inoltre molto problematico dover tener traccia di tutti gli autori (gli indirizzi email per esempio possono cambiare nel tempo).
 
-\section{Apache license}
+\subsection{Considerazioni OSI/FSF}
+
+La versione originale della licenza BSD, quella con 4 clausole, \textbf{non} viene considerata dalla OSI come licenza Open Source anche se la FSF la considera come una licenza libera ma non compatibile con la GPL.
+
+Le versioni con 2 e 3 clausole sono considerate dalla OSI come licenze Open Source e sono anche compatibili con la GPL.
+
+\section{Apache License}
 
 La Licenza Apache è una licenza di software libero non copyleft scritta dalla \textbf{Apache Software Foundation} (ASF) che obbliga gli utenti a preservare l'informativa di diritto d'autore e d'esclusione di responsabilità nelle versioni modificate.
 
 Come ogni licenza di software libero, la licenza Apache consente agli utenti di usare il software per ogni scopo, di distribuirlo, modificarlo e di distribuire versioni modificate del software.
 
-La licenza Apache non richiede che versioni modificate del software siano distribuite secondo i termini della stessa licenza o come software libero, richiede solo che si includa un'informativa del fatto che si è utilizzato software licenziato secondo i termini della Licenza Apache.
+La licenza Apache \textbf{non richiede che versioni modificate del software siano distribuite secondo i termini della stessa licenza o come software libero}, richiede solo che si includa un'informativa del fatto che si è utilizzato software licenziato secondo i termini della Licenza Apache.
 
 Quindi, a differenza di quanto accade con le licenze copyleft, gli utenti di versioni modificate del software licenziato secondo i termini della Licenza Apache non godono necessariamente delle suddette libertà o, considerando la situazione dal punto di vista del licenziatario, esso ha la libertà di utilizzare il software in ogni modo, anche in prodotti proprietari, a danno degli utilizzatori (vedi l'articolo 4).
 
@@ -152,7 +143,6 @@ Ci sono state tutta una serie di versioni di questa licenza, che è cambiata dal
 Nella versione \textbf{1.1} hanno modificato queste cose, hanno tolto la quarta clausola di BSD, la clausola di rinomina è rimasta, e hanno aggiunto una clausola pubblicitaria sulla documentazione; in pratica era necessario pubblicizzare nella documentazione il fatto che il codice si basasse sul prodotto Apache. 
 
 \begin{lstlisting}[caption=licenza Apache 1.1]
-
  ====================================================================
  The Apache Software License, Version 1.1
 
@@ -212,9 +202,8 @@ Nella versione \textbf{1.1} hanno modificato queste cose, hanno tolto la quarta 
 
 \end{lstlisting}
 
-L'Apache 1.1 non è durata molto, in quanto è subentrata poi l'Apache \textbf{2.0}, che cambia completamente. Mentre dalla 1.0 alla 1.1 hanno cambiato un po' di clausole, con la 2.0 ci sono cambiamenti molto grandi, ed è la prima licenza che analizziamo che affronta il \textbf{problema dei brevetti}. L'idea fondamentale dell'Apache 2.0 è di affrontare il problema dei brevetti. La questione è che le licenze software libere erano state formate in un momento in cui la proprietà intellettuale significava copyright. Questo non era più vero, piano piano era divenuta sempre più pressante il \textbf{problema dei brevetti}. Non si è infatti obbligati a fornire delle licenze per i brevetti, è a discrezione del proprietario. Anche dentro Apache si sono posti dunque il problema di evitare che qualcuno potesse crearsi il proprio web server che aveva tutte le funzionalità di Apache, aggiungergi delle proprie funzionalità (algoritmi) delle quale possedeva i brevetti e reimmettere nel mercato questa nuova versione. Si impose dunque una clausola sui brevetti, in cui quando una persona contribuiva ad Apache forniva anche i propri brevetti. Era necessario di distinguere il concetto di \textbf{modifica} da quello di \textbf{contribuzione}. Si pensa al modello in cui c'è uno \textbf{sviluppo centralizzato}.	
-\linebreak
-\linebreak
+\noindent L'Apache 1.1 non è durata molto, in quanto è subentrata poi l'Apache \textbf{2.0}, che cambia completamente. Mentre dalla 1.0 alla 1.1 hanno cambiato un po' di clausole, con la 2.0 ci sono cambiamenti molto grandi, ed è la prima licenza che analizziamo che affronta il \textbf{problema dei brevetti}. L'idea fondamentale dell'Apache 2.0 è di affrontare il problema dei brevetti. La questione è che le licenze software libere erano state formate in un momento in cui la proprietà intellettuale significava copyright. Questo non era più vero, piano piano era divenuta sempre più pressante il \textbf{problema dei brevetti}. Non si è infatti obbligati a fornire delle licenze per i brevetti, è a discrezione del proprietario. Anche dentro Apache si sono posti dunque il problema di evitare che qualcuno potesse crearsi il proprio web server che aveva tutte le funzionalità di Apache, aggiungergi delle proprie funzionalità (algoritmi) delle quale possedeva i brevetti e reimmettere nel mercato questa nuova versione. Si impose dunque una clausola sui brevetti, in cui quando una persona contribuiva ad Apache forniva anche i propri brevetti. Era necessario di distinguere il concetto di \textbf{modifica} da quello di \textbf{contribuzione}. Si pensa al modello in cui c'è uno \textbf{sviluppo centralizzato}.
+
 I due files che devono essere inclusi nella directory principale dei prodotti software distribuiti sono:
 
 \begin{itemize}
@@ -225,7 +214,6 @@ I due files che devono essere inclusi nella directory principale dei prodotti so
 \end{itemize}
 
 \begin{lstlisting}[caption=licenza Apache 2.0]
-
 Copyright [yyyy] [name of copyright owner]
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -242,15 +230,32 @@ limitations under the License.
 
 \end{lstlisting}
 
-\subsection{Filosofia delle licenze BSD}
+\subsection{Considerazioni OSI/FSF}
 
-Le licenze BSD sono fatte per permettere gli sfruttamenti proprietari. Vanno ovviamente nella direzione opposta di quella del mondo del software libero e non sono appoggiate dalla \textit{FSF}. In genere queste licenze ci sono quando si vuole creare uno standard, ma devono essere consistenti con l'obiettivo dei progetti che le scelgono (esempio X, BSD unix). Questo favorisce la massima diffusione del codice (originale o derivato). Le licenze copyleft hanno come obiettivo invece quello di impedire gli sfruttamenti proprietari. Non si può modificare la licenza in modo proprietario. 
+Tutte le versioni delle licenze Apache sono considerate libere dalla FSF e approvate anche dall'OSI. Tuttavia solo la Apache 2.0 è ritenuta compatibile con la GPLv3.
+
+
+\section{Accademic Free License}
+
+L'Accademic Free License è una licenza permissiva libera simile alla licenza BSD con 3 clausole, ma che permette di rendere il software proprietario.
+
+Vengono però aggiunte alcune clausole per risolvere alcuni problemi:
+
+\begin{itemize}
+	\item Viene reso chiaro quale software viene licenziato, aggiungendo una dichiarazione dopo la definizione del copyright.
+	\item Viene garantita la tutela del copyright e dei \textbf{brevetti} del licenziante.
+	\item Viene specificato che \textbf{nessuno} dei marchi del licenziante viene ceduto.
+\end{itemize}
+
+\subsection{Considerazioni OSI/FSF}
+
+La licenza AFL è approvata sia dalla FSF che dalla OSI, ma non è compatibile con GPL.
 
 \section{GPL v2}
 
 \subsection{Le basi}
 
-La licenza GPL permette la libera copia non modificata, a patto di mantenere le licenze e le clausole di salvaguardia intatte. I prodotti derivati devono essere essi stessi sotto GPL. Questa è la base, ma in verità è una licenza che è stata molto modificata negli anni. La prima cosa che uno potrebbe fare e prendere il programma e distribuirlo (copiarlo), purchè mantenga le licenze e la clausole. Diverso è se io prendo la distribuzione dei sorgenti e li modifico. In questo caso la GPL prevede tutta una serie di clausole sia per la tutela dell'autore originale del software che per gli stessi utenti finali di quel software. L'obbligo è di inserire in ogni singolo file modificato degli avvisi di modifica, spesso nell'intestazione del codice, in modo che chiunque possa vedere quali modifiche sono state fatte, in modo che se sorgono problemi sia identificabile il responsabile. La seconda cosa che si deve fare è mettere il risultato finale sotto GPL. Per sorgenti si intende i file che vengono compilati, gli script utilizzati e il software che viene utilizzato. Il requisito di distribuire il codice sorgente dell'intero programma non si applica a quelle librerie, anche se si distribuisce un eseguibile collegato che le contiene. In altre parole, se le librerie o le componenti (es. compilatori,linker,kernel) di cui l'autore ha bisogno sono distribuite come parte fondamentale di un sistema operativo proprietario, la GPL dice che chi compila il software può collegarlo con queste librerie. Un'ulteriore clausola è che eventuali avvisi interattivi sulla licenza devono rimanere. Per esempio ci sono alcuni programmi che quando vengono lanciati mostrano un \textit{pop-up}, o degli avvisi con alcune informazioni, ad esempio le clausole di salvaguardia. Questo deve rimanere. 
+La licenza GPL permette la libera copia non modificata, a patto di mantenere le licenze e le clausole di salvaguardia intatte. I prodotti derivati devono essere essi stessi sotto GPL. Questa è la base, ma in verità è una licenza che è stata molto modificata negli anni. La prima cosa che uno potrebbe fare e prendere il programma e distribuirlo (copiarlo), purché mantenga le licenze e la clausole. Diverso è se io prendo la distribuzione dei sorgenti e li modifico. In questo caso la GPL prevede tutta una serie di clausole sia per la tutela dell'autore originale del software che per gli stessi utenti finali di quel software. L'obbligo è di inserire in ogni singolo file modificato degli avvisi di modifica, spesso nell'intestazione del codice, in modo che chiunque possa vedere quali modifiche sono state fatte, in modo che se sorgono problemi sia identificabile il responsabile. La seconda cosa che si deve fare è mettere il risultato finale sotto GPL. Per sorgenti si intende i file che vengono compilati, gli script utilizzati e il software che viene utilizzato. Il requisito di distribuire il codice sorgente dell'intero programma non si applica a quelle librerie, anche se si distribuisce un eseguibile collegato che le contiene. In altre parole, se le librerie o le componenti (es. compilatori,linker,kernel) di cui l'autore ha bisogno sono distribuite come parte fondamentale di un sistema operativo proprietario, la GPL dice che chi compila il software può collegarlo con queste librerie. Un'ulteriore clausola è che eventuali avvisi interattivi sulla licenza devono rimanere. Per esempio ci sono alcuni programmi che quando vengono lanciati mostrano un \textit{pop-up}, o degli avvisi con alcune informazioni, ad esempio le clausole di salvaguardia. Questo deve rimanere. 
 
 \subsection{Restrizione sulla distribuzione di binari}
 
@@ -347,7 +352,9 @@ La GPL non va molto bene in alcuni settori, per esempio quando si vuole creare u
 
 È una licenza copyleft molto importante, fatta di recente e che presenta diverse innovazioni per il progetto GNU, il quale non aveva fino ad allora la capacità di coinvolgere una comunità attorno al proprio software. La comunità era molto debole. Bisognava cercare di creare una licenza che fosse il più comunitaria possibile la quale potesse essere discussa dalle persone. Inizialmente fu proposta una licenza iniziale. Venne poi creato un'interfaccia con la quale gli sviluppatori potevano fare proposte sulle singole linee della licenza. Era vitale capire gli interessi delle varie anime della comunità e cercare di fare il meglio per rappresentarle tutte nel miglior modo possibile. In questo modo si andava incontro a tutte le perplessità degli sviluppatori. La GPL v3 ha introdotto diverse modifiche e risolto diversi problemi della versione precedente. 
 
-Il primo problema grosso era la \textbf{tivoizzazione}, legato alla distribuzione del \textbf{TiVo}, un apparecchio che si attacca alla TV e con il quale è possibile registrare i film in alta definizione. Questo chiaramente comporta delle problematiche per i produttori di film, dvd, ecc. Una soluzione che si cercò fu quella di impedire il trasferimento su memoria esterna dal TiVo. Il sistema operativo su cui si appoggiava il TivVo era però Linux, del quale era possibile modificare il kernel, quindi c'era la possibilità di modificare il kernel e permettere il trasferimento. A questo problema si rispose mettendo dunque un controllo nel firmware con un controllo crittografico. In questo modo se il kernel veniva modificato l'apparecchio non partiva e veniva bloccato. Questa cosa ad alcuni andava bene, ma ad altri no. Questo è stato uno dei primi momenti in cui c'è stato uno scisma fra la comunità open-source e la comunità del software libero. La comunità open-source, che è interessata principalmente al software libero come modo per favorire l'interazione con lo sviluppo di un software in modo più efficiente, non aveva grossi problemi con questo blocco per l'utilizzatore finale, dal momento che comunque il kernel era modificabile. La comunità del software libero, al contrario, non era molto permissivo su questo, percepiva il rischio di avere una tivoizzazione completa dell'hardware. Quelli erano anni in cui sempre più periferiche erano bloccate in quel modo.
+Il primo problema grosso era la \textbf{tivoizzazione}, legato alla distribuzione del \textbf{TiVo}, un apparecchio che si attacca alla TV e con il quale è possibile registrare i film in alta definizione. Questo chiaramente comporta delle problematiche per i produttori di film, DVD, ecc. Una soluzione che si cercò fu quella di impedire il trasferimento su memoria esterna dal TiVo. Il sistema operativo su cui si appoggiava il TiVo era però Linux, del quale era possibile modificare il kernel, quindi c'era la possibilità di modificare il kernel e permettere il trasferimento.
+ A questo problema si rispose mettendo dunque un controllo nel firmware con un controllo crittografico. In questo modo se il kernel veniva modificato l'apparecchio non partiva e veniva bloccato. Questa cosa ad alcuni andava bene, ma ad altri no. Questo è stato uno dei primi momenti in cui c'è stato uno scisma fra la comunità open-source e la comunità del software libero. La comunità Open Source, che è interessata principalmente al software libero come modo per favorire l'interazione con lo sviluppo di un software in modo più efficiente, non aveva grossi problemi con questo blocco per l'utilizzatore finale, dal momento che comunque il kernel era modificabile. 
+ La comunità del software libero, al contrario, non era molto permissiva su questo, percepiva il rischio di avere una \textit{tivoizzazione} completa dell'hardware. Quelli erano anni in cui sempre più periferiche erano bloccate in quel modo.
 
 L'altro problema erano due leggi: la \textbf{Digital Millenium Copyright} (\textbf{DRM}) e la \textbf{Act/European Union Copyright Directive}, due leggi create per soccombere a problemi di programmi che miravano alla sicurezza. Secondo queste leggi non era possibile e non era legale prendere un programma e modificarlo in modo da rimuovere una misura di protezione digitale (esempio firmware che impediscono i DVD copiati). Anche questo poneva un problema per la GPL.
 
@@ -360,7 +367,6 @@ La GPL v3 aveva dunque lo scopo di affrontare tutti questi problemi che la GPL v
 Vediamo la legislazione corrente riguardo ai brevetti:
 
 \begin{lstlisting}
-
 European pattern shall be granted for any inventions which are susceptible of industrial application, which are new and which involve an intentive step.
 
 The following in particular shall not be regrated as inventions within the meaning of paragraph 1:
@@ -379,7 +385,6 @@ Methods for treatment of the human or animal body by surgery or therapy and diag
 \subsection{Brevetti software: la realtà}
 
 \begin{lstlisting}
-
 Disclosed is a method of implementing a preview window in an object oriented programming system that includes an application having at least a first panel and a second panel that are selectively displayable on a display screen. The second panel displays underlying information and the first panel displays an abbreviated representation of the underlying information. In the present invention, the user can temporarily display a preview window that contains undelying information while viewing the first panel.
 
 \end{lstlisting}
@@ -388,22 +393,24 @@ Questo è un piccolo esempio di brevetto software. L'EPO ha già assegnato 3000 
 
 \subsection{GPL v3 e brevetti software}
 
-I brevetti software sono un \textbf{problema} per la GPL. Il problema è che i brevetti sono molto diffusi e nel campo del software sono molto generali e tendono a coprire molte cose. Questo creava dei prodotti software che in teoria erano liberi ma che nella pratica non lo erano, magari involontariamente. Ogni software violava qualche brevetto anche senza che lo sviluppatore lo sapesse. È inoltre anche difficile consultare i brevetti che potrebbero impattare il proprio software (pensare ad esempio a dover vedersi tutti i brevetti per sviluppare un programma su Qt).
+I brevetti software sono un \textbf{problema} per la GPL. Il problema è che i brevetti sono molto diffusi e nel campo del software sono molto generali e tendono a coprire molte cose. 
+Questo creava dei prodotti software che in teoria erano liberi ma che nella pratica non lo erano, magari involontariamente. Ogni software violava qualche brevetto anche senza che lo sviluppatore lo sapesse. 
+È inoltre difficile consultare i brevetti che potrebbero impattare il proprio software (pensare ad esempio a dover vedersi tutti i brevetti per sviluppare un programma su Qt).
 
 Una possibile soluzione potrebbe essere rilasciare codice libero ma protetto da brevetti, ma non è la soluzione migliore chiaramente. La soluzione si ha con la GPL v3 che afferma che quando si rilascia un programma sotto questa licenza si \textbf{concede l'uso di brevetti} utilizzati dalla propria versione del programma. Questa è una delle grosse modifiche.
 
 \subsection{Tivoizzazione}
 
-Si stavano creando delle \textbf{chiavi} che bloccavano la modifica del software e che venivano verificate (blocchi del firmware). Questo era chiaramente un problema. La soluzione la si è trovata con la GPL v3, in cui si afferma che chi distribuisce apparecchi datati di software licenziato sotto la GNU GPL v3, deve includere nella distribuzione del codice sorgente tutte le informazioni necessaire - ivi incluse per esempio le chiavi digitali necessarie - per compilare una versione del codice modificato pienamente funzionante sull'hardware distribuito. Questa cosa non si applica all'interno di dispositivi industriali in cui il fatto che nessuno possa modificare il programma è una componente importante.
+Si stavano creando delle \textbf{chiavi} che bloccavano la modifica del software e che venivano verificate (blocchi del firmware). Questo era chiaramente un problema. La soluzione la si è trovata con la GPL v3, in cui si afferma che chi distribuisce apparecchi dotati di software licenziato sotto la GNU GPL v3, deve includere nella distribuzione del codice sorgente tutte le informazioni necessaire - ivi incluse per esempio le chiavi digitali necessarie - per compilare una versione del codice modificato pienamente funzionante sull'hardware distribuito. Questa cosa non si applica all'interno di dispositivi industriali in cui il fatto che nessuno possa modificare il programma è una componente importante.
 
 \subsection{GPL v3 e DMCA/EUCD}
 
-Secondo DMCA/EUCD era \textbf{illegale rimuovere una misure di protezione digitale sul software}. La soluzione adottata fu la seguente: quando viene rilasciato del software sotto GPL v3 si afferma di non considerare le proprie modifiche come protezioni digitali proteggibili. Dal punto di vista del programmatore questo dà una completa libertà, in questo modo non può esser fatta causa all'autore.
+La GPLv3 non impedisce l'uso di tecnologie DRM da parte degli autori di software libero, ma impedisce che le eventuali restrizioni introdotte siano automaticamente imposte a tutti gli utenti, anche di versioni modificate, del software. In altre parole, il software sotto GPLv3 consente a qualsiasi sviluppatore successivo di inserire o eliminare le tecnologie DRM, rispettando la sua libertà.
 
 
 \subsection{Altri aspetti della GPL v3}
 
-Vediamo gli ulteriori miglioramenti. Una prima cosa è che si volle \textbf{internazionalizzare} la licenza, ovvero renderla valida in modo più forte in tutto il mondo. Il linguaggio ufficiale rimane l'inglese, non vi è una traduzione della licenza ma la licenza è stata adattata ai diversi sistemi legali dei vari stati. In questo modo non c'erano ambiguità relative alla nazionalità. 
+Vediamo gli ulteriori miglioramenti. Una prima cosa è che si volle \textbf{internazionalizzare} la licenza, ovvero renderla valida in modo più forte in tutto il mondo. Il linguaggio ufficiale rimane l'inglese, non vi è una traduzione della licenza, ma la licenza è stata adattata ai diversi sistemi legali dei vari stati. In questo modo non c'erano ambiguità relative alla nazionalità. 
 
 Nei diversi paesi il significato attribuito a diversi termini cambia. C'era il rischio che in diversi paesi il termine standard che normalmente veniva assegnato a una certa parola non avesse tutti i requisiti che si voleva che avesse nella GPL. Questo poteva portare a dei buchi dentro i quali si poteva entrare e violare la licenza, e questo voleva essere evitato. Per risolvere questo è stato utilizzato un \textbf{linguaggio neutrale} e più compatibile rispetto ai diversi sistemi giuridici, dando una definizione iniziale a tutti i termini utilizzati.
 
@@ -436,6 +443,10 @@ Originariamente questa licenza era legata appunto a Netscape ed era chiamata \te
 
 Questa fondamentalmente è l'idea che ha permesso a Netscape di essere distribuito e di mantenere allo stesso tempo il codice proprietario integrato. Oltre a ciò fornisce una \textbf{licenza brevettuale} vera e propria.
 
+\subsection{Considerazioni OSI/FSF}
+
+Le licenze MPL sono considerate software libero dalla FSF e sono anche approvate dalla OSI, tuttavia solo va MPL 2.0 è compatibile con GPLv3
+
 \section{Perl Artistic License}
 
 Un'altra licenza importante è la \textbf{Perl Artistic License}, la licenza legata al linguaggio \textbf{Perl}, anche se non è solo legata al linguaggio ma anche a tutte le liberie, moduli e componenti che girano attorno a Perl. È una licenza molto diffusa, in quanto esistono molti siti che si appoggiano ancora al linguaggio Perl. È un linguaggio sicuramente datato ma ancora molto utilizzato dagli sviluppatori. Questa licenza nasce dall'esigenza di permettere a chi crea software di mantenere un controllo ``artistico'' sul programma, ovvero si vuole mantenere un controllo su come il programma viene sviluppato potendo incorporare tutte le modifiche e le aggiunte che vengono ritenute interessanti e allo stesso tempo evitare che ci sia un'\textit{appiattimento} dello sviluppo, cioè il fatto che chi sviluppava fosse solamente il programmatore centrale. Si vuole incentivare lo sviluppo di altre applicazioni, di altri moduli e allo stesso tempo far sì queste modifiche siano incorporabili nel progetto di partenza. 
@@ -464,6 +475,10 @@ C'è una distinzione tra \textbf{copyright holder}, che è colui che ha rilascia
 \item Chi riceva il codice deve anche poterlo redistribuire sotto gli stessi termini con i quali lo ha ricevuto. 
 
 \end{itemize}
+
+La distribuzione delle versioni modificate del pacchetto o dei software all'interno di questo è possibile, in breve, a patto che venga allegata una nota che chiarisca come e quando i singoli file siano stati modificati, in più è obbligatorio che le versioni modificate diventino di pubblico dominio o vengano rinominate e vengano esplicitate chiaramente le differenze rispetto alla versione originale o che vengano utilizzate unicamente all'interno di organizzazioni private. La distribuzione dei programmi del pacchetto in forma eseguibile è possibile, in breve, a patto che venga allegata e indicato dove reperire la versione standard o venga allegata la versione leggibile da computer.
+
+È data facoltà di trarre compenso dalla distribuzione del pacchetto o dal dare supporto all'utilizzo di questo, ma non è possibile trarre profitto dal pacchetto in sé.
 
 \subsection{Redistribuzione di sorgenti}
 
@@ -505,6 +520,12 @@ Esistono una serie di restrizioni particolari quando si utilizza il software per
 \item L'uso del software dev'essere isolato dall'utente.
 
 \end{itemize}
+
+\subsection{Considerazioni OSI/FSF}
+
+L'Artistic License è considerata Open Source dall'OSI, tant'è che AL2.0 è la licenza raccomandata da OSI per i progetti Open Source.
+
+Secondo FSF, l'Artistic License originale non è libera perché è definita in modo troppo vago, tuttavia la versione Chiarificata della licenza, così come la seconda versione sono considerate licenze libere. L'Artistic License 2.0 è anche compatibile con GPLv3.
 
 \section{Mappa di compatibilità}
 
