@@ -1,0 +1,150 @@
+\chapter{Mercurial}
+
+
+Mercurial è un sistema di controllo versione distribuito, ovvero non esiste un unico repository centrale localizzato in un server, ma ogni sviluppatore ha in locale una copia del repository, la quale contiene tutto lo storico delle modifiche.
+Una copia del repository può trovarsi anche su un server, in modo da facilitare la sincronizzazione nel caso di progetti a cui lavorano più persone.
+In ogni caso sta agli utenti scegliere come distribuire le varie copie del repository e i vari criteri di aggiornamento.
+
+\section{Push/Pull, Commit e Update}
+
+Anche in Mercurial ci sono le operazioni di push/pull, con la differenza che è necessario specificare il percorso dal quale eseguire l'operazione. 
+Il percorso può essere relativo sia ad un'altra copia del repository che si trova in locale che su un server remoto.
+Inoltre, le operazioni di push e pull sono tra loro simmetriche: effettuare un push dal repository \textit{A} al repository \textit{B}, equivale a fare un pull sul repository \textit{B} utilizzando come sorgente il repository \textit{A}.
+
+Il comando \texttt{commit} è simile a quello di SVN, ovvero inserisce nel repository le modifiche subite dai file selezionati. La differenza è che le modifiche vengono applicate solo al repository locale.
+
+Il comando \texttt{update} viene invece utilizzato per portare la working directory ad una determinata revisione ed equivale ad effettuare il \texttt{checkout} di una determinata revisione.
+
+\section{Problemi concettuali}
+
+Dal momento che i repository sono distribuiti, non è presente una storia delle modifiche centralizzata. Ogni repository ha la sua storia e la sua sequenza di numeri di revisione.
+Si ha quindi che per identificare una determinata revisione è necessario aggiungere anche un identificatore univoco di revisione. 
+
+Ad esempio \texttt{5:b6fed4f21233}  identifica il changeset \texttt{b6fed4f21233}, che per il repository corrente coincide con la revisione numero 5. La stesso changeset può essere associato ad una revisione diversa in un altro repository.
+
+Con questo sistema si ha che lo storico delle modifiche non è più lineare, ma diventa un DAG a causa dei vari branch che si vengono a creare quando due utenti fanno in parallelo delle modifiche a due copie diverse dello stesso repository.
+
+Si ha quindi che possono esserci varie revisioni/changeset \textit{head}, ovvero nodi del DAG che non hanno archi uscenti verso altri changeset.
+Tra tutte le revisioni \textit{head} è possibile identificare la \textit{tip} che è quella con il numero di revisione locale maggiore, ovvero quella più recente e quella che viene utilizzata di default dai vari comandi.
+Due revisioni \textit{head} possono essere combinate tra loro effettuando un \textit{merge}. \todo{Le slide parlano di revisioni root e merge, ma non ho trovato niente a riguardo}
+
+\section{Comandi principali}
+
+Per interfacciarsi a riga di comando con Mercurial è necessario utilizzare il client \texttt{hg}.
+
+\subsection{Help!}
+
+\texttt{hg help \textit{[comando]}} permette di visualizzare il manuale del comando. \`E il tuo nuovo migliore amico.
+
+\subsection{init}
+
+Il comando \texttt{hg init \textit{name}} permette di creare un nuovo repository locale vuoto nella directory \texttt{\textit{name}}. Se la directory non esiste questa viene creata automaticamente.
+
+All'interno della cartella contenente il repository viene creata anche una cartella \texttt{.hg} contente i file che utilizza Mercurial per mantenere lo storico delle modifiche.
+
+\subsection{Modificare un repository: add, forget, remove e revert}
+
+Per inserire un file esistente all'interno del repository è necessario utilizzare il comando \texttt{hg add \textit{[FILE]...}}, il quale mette in lista i file specificati per essere aggiunti al repository con il prossimo commit.
+
+Se non viene specificato almeno un percorso, vengono aggiunti tutti i file correnti tranne quelli che sono specificati nel file \textit{.hgignore}.
+
+Se per caso viene aggiunto un file in più, questo può essere rimosso dal repository, \textbf{ma non dal filesystem}, con il comando \texttt{hg forget}. Questo comando ha effetto solamente nel branch corrente.
+
+Se invece il file deve essere rimosso anche dal filesystem è possibile utilizzare il comando \texttt{hg remove \textit{FILE...}}, il quale mette in lista i file specificati per la rimozione con il prossimo commit.
+
+Per annullare tutte le modifiche della working copy è possibile utilizzare il comando \texttt{hg revert}, il quale riporta i file al loro stato di checkout. \todo{Alla revisione tip?} Questo comando crea automaticamente dei file di back up. 
+Se si vuole cancellare un merge non ancora committato è necessario utilizzare il comando \texttt{hg update --clean}.
+
+\subsection{Visualizzare le modifiche: log, status, diff}
+
+Il comando \texttt{log} permette di visualizzare lo storico delle recisioni per l'intero repository oppure per qualche file. Utilizzando il flag \texttt{-r REV} è possibile specificare la revisione per la quale si vuole vedere il log, oppure un intervallo di revisioni per il quale interessa lo storico. Se non viene specificato il flag \texttt{-r} viene visualizzato lo storico per \texttt{-r tip:0}, ovvero dalla revisione corrente fino a quella iniziale.
+
+Per tutti i comandi \texttt{hg} è possibile specificare il flag \texttt{-v} o \texttt{--verbose} per ottenere delle informazioni aggiuntive. In particolare aggiungendo questo flag al comando \texttt{log} vengono stampati anche i messaggi dei commit e l'elenco dei file modificati.
+
+Un altro possibile flag per il comando \texttt{log} è \texttt{-p} o \texttt{--patch} che permette di visualizzare anche le parti dei file che sono state modificate con un determinato changeset. In pratica viene mostrato una sorta di \texttt{diff}.
+
+Altri due flag interessanti per il comando \texttt{log} sono \texttt{-l \textit{N}}, per stampare lo storico limitato alle \textit{N} revisioni più recenti e il flag \texttt{--graph} che visualizza in modo grafico il DAG delle revisioni. 
+
+Per ottenere la lista dei file nella working directory che hanno subito modifiche non ancora committate è possibile utilizzare il comando \texttt{hg status}. Con il nome dei file viene anche mostrato un flag che può avere vari valori:
+
+\begin{verbatim}
+M = modified
+A = added
+R = removed
+C = clean
+! = missing (deleted by non-hg command, but still tracked)
+? = not tracked
+I = ignored
+= origin of the previous file (with --copies)
+\end{verbatim}
+
+Se invece si vogliono ottenere informazioni riguardo alle modifiche subite da un file è necessario utilizzare il comando \texttt{hg diff}.
+
+Questo comando può essere utilizzato in tre modi:
+
+\begin{itemize}
+	\item \texttt{hg diff \textit{[FILE]}}: per visualizzare i cambiamenti tra i file della working directory e il changeset dal quale deriva la working directory.
+	\item \texttt{hg diff -c \textit{REV} \textit{[FILE]}}: per visualizzare i cambiamenti apportati da una determinata revisione.
+	\item \texttt{hg diff -r \textit{REV1} -r \textit{REV2} \textit{[FILE]}}: per visualizzare i cambiamenti che sono stati tra le due revisioni.
+\end{itemize}
+
+\subsection{Commit}
+
+Per confermare le modifiche subite dalla working directory e creare un nuovo changeset è necessario effettuare il commit con \texttt{hg commit -m "MESSAGGIO"}. Se non viene specificato alcun file, viene eseguito il commit di tutte le modifiche in attesa di essere applicate, mentre se non viene specificato un messaggio, Mercurial avvia l'editor di testo di default per richiedere l'immissione di un messaggio.
+
+Da notare che, al contrario di SVN, il commit non distribuisce le modifiche alle altre copie del repository., per fare ciò è necessario utilizzare il comando \texttt{push}.
+
+\section{Flussi intra-repositories}
+
+\subsection{Clone}
+
+\texttt{hg clone \textit{SORGENTE [DEST]}} permette di creare una copia di un repository già esistente. Il percorso \textit{\texttt{SORGENTE}} può essere sia un path locale che un URL del tipo \texttt{ssh://...}.
+
+Questo comando configura il repository che viene creato in modo che i push e i pull vengano fatti di default verso il repository sorgente.
+
+\subsection{Aggiornare il repository: incoming, pull e update}
+
+Il commando \texttt{update} viene utilizzato per portare la working directory ad una determinata revisione o, nel caso non venga specificata una revisione, alla \textit{tip} del branch corrente.
+
+Se invece si vuole aggiornare il repository andando ad applicare al repository locale dei changeset presi da un altro repository è necessario utilizzare il comando \texttt{hg pull \textit{[SORGENTE]}}. \`E possibile specificare quale revisione della sorgente \textit{pullare} utilizzando flag \texttt{-r REV}.
+
+Questo flag risulta particolarmente utile se combinato con il comando \texttt{hg incoming} il quale esegue un log dei changeset che verrebbero pullati dalla sorgente.
+Combinando quindi i due comandi è possibile scegliere quale changeset della sorgente pullare.
+
+Da notare che una volta eseguito il pull, viene creata un nuovo branch che ha come \textit{head} il changeset più recente di quelli pullati e per applicare i vari changeset è necessario prima eseguire il comando \texttt{hg merge}.
+
+Una volta effettuato il merge è necessario effettuare un commit per aggiornare il repository locale, oppure è possibile utilizzare il comando \texttt{hg update} per annullare il merge.
+
+\subsection{Pubblicare le modifiche: outgoing e push}
+
+Questi due comandi sono la versione simmetrica di \texttt{incoming} e \texttt{pull} e funzionano in modo analogo.
+Con la differenza che se la destinazione del comando \texttt{push} contiene dei changeset che non sono presenti in locale, l'esecuzione del comando fallisce.
+
+Da notare che se eseguo un push, la working directory del repository remoto non viene aggiornata, è quindi necessario eseguire un \texttt{update} all'ultima revisione all'interno del repository remoto.
+
+\subsection{Cambiare la locazione di default per i push/pull}
+
+Per impostare la localizzazione di default per i push/pull è necessario andare a creare o modificare il file \texttt{hgrc} all'interno della directory \texttt{.hg} del repository locale, aggiungendo le righe:
+
+\begin{lstlisting}
+[paths]
+default = path
+
+# Esempio di path locale
+[paths]
+default = /Users/gmanzoli/asd
+
+# Esempio di path remoto
+[paths]
+default = http://www.selenic.com/repo/hg
+
+\end{lstlisting}
+
+Da notare che il path di default può essere sia un URL remoto che un file path locale.
+
+\section{Altre cose utili}
+
+\begin{itemize}
+	\item \texttt{hg parent} mostra il changeset sul quale si basa la working directory.
+	\item Per riferire un determinato changeset posso usare sia l'id univoco che il numero di revisione locale associato al changeset.
+\end{itemize}
