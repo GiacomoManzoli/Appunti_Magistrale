@@ -73,3 +73,17 @@
 	morecomment=[s]{/*}{*/}, % s is for start and end delimiter
 	morestring=[b]' % defines that strings are enclosed in double quotes
 }
+
+\lstdefinelanguage{RDFA}{
+	language=html,
+	sensitive=true, 
+	alsoletter={<>=-},
+	ndkeywords={
+		% General
+		=,
+		% HTML attributes
+		charset=, id=, width=, height=, property=, about=, rel=, rev=, prefix=, vocab=, content=, datatype=
+	},  
+	morecomment=[s]{<!--}{-->},
+	tag=[s]
+}
