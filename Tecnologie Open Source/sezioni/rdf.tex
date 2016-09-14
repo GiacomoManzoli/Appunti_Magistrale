@@ -451,10 +451,217 @@ Se non viene specificato né un oggetto per la proposizione esterna, né un sogg
 -->
 \end{lstlisting}
 
-\subsection{Esercizi dalle slide}
+\subsubsection{Esercizi dalle slide}
+
+Utilizzando il chaining è possibile utilizzare le così dette \textbf{triple incomplete}:
+
+\begin{center}
+\textit{``Albert Einstein è vissuto in germania e svizzera''}
+\end{center}
+
+\begin{lstlisting}[language=RDFA]]
+<div about="http://dbpedia.org/resource/Albert_Einstein">	
+	<div rel="dbp-owl:residence" resource="http://dbpedia.org/resource/German_Empire">
+	</div>
+	<div rel="dbp-owl:residence" resource="http://dbpedia.org/resource/Switzerland">
+	</div>
+</div>
+<!--
+	<http://dbpedia.org/resource/Albert_Einstein>  dbp-owl:residence <http://dbpedia.org/resource/German_Empire> .
+	<http://dbpedia.org/resource/Albert_Einstein>  dbp-owl:residence <http://dbpedia.org/resource/Switzerland> .
+-->
+\end{lstlisting}
+
+\begin{center}
+	\textit{``La foto ... rappresenta Albert Einstein''}
+\end{center}
+
+\begin{lstlisting}[language=RDFA]
+<div about="http://dbpedia.org/resource/Albert_Einstein" rel="foaf:depiction">
+	<img src="http://dbpedia.org/einstein.jpg" />
+</div>
+<!-- 
+	<http://dbpedia.org/resource/Albert_Einstein> foaf:depiction <http://dbpedia.org/einstein.jpg> .
+	In questo caso è src che identifica l'oggetto perché il predicato è definito con rel
+-->
+\end{lstlisting}
+
+\begin{center}
+	\textit{``Specificare sul proprio sito un insieme di persone che si conoscono insieme ai rispettivi siti web e indirizzi email''}
+\end{center}
+
+\begin{lstlisting}[language=RDFA]
+<ul about="#me">
+	<li rel="foaf:knows" href="http://www.ftapparo.org/#me">
+		<span property="foaf:name">Francesco<span> (<a rel="foaf:mbox" href="mailto:tapparo@math.unipd.it
+">email</a>)
+	</li>
+</ul>
+<!-- 
+	<#me> foaf:knows <http://www.ftapparo.org/#me> .
+	<http://www.ftapparo.org/#me> foaf:name "Francesco" .
+	<http://www.ftapparo.org/#me> foaf:mbox <"mailto:tapparo@math.unipd.it> .
+-->
+\end{lstlisting}
+
+\begin{center}
+	\textit{``Specificare che il proprio post è sotto licenza CC-BY-NC ma che un'immagine contenuta è sotto licenza CC-BY''}
+\end{center}
+
+\begin{lstlisting}[language=RDFA]
+<a rel="license" href="http://www.creativecommons.org/rel/cc-by-nc">CC-BY-NC</a>
+<img about="/img.jpg" src="/img.jpg" rel="license" href="http://www.creativecommons.org/rel/cc-by" />
+<!-- 
+	<http://www.ex.org/> license <http://www.creativecommons.org/rel/cc-by-nc> .
+	<http://www.ex.org/img.jpg) license <http://www.creativecommons.org/rel/cc-by> .
+-->
+\end{lstlisting}
+
+\begin{center}
+	\textit{``Specificare sul proprio sito web i contatti''}
+\end{center}
+
+\begin{lstlisting}[language=RDFA]
+<span rel="dc:creator" resource="[_:me]">
+	<b property="foaf:name">Francesco Tapparo</b> (<em rel="foaf:mbox" href="mailto:myemail@gmail.com">
+contattami</em>) </span>
+<!-- 
+	</> dc:creator _:me .
+	_:me foaf:name "Francesco Tapparo" .
+	_:me foaf:mbox <mailto:myemail@gmail.com> .
+-->
+\end{lstlisting}
 
 \section{RDF Schema}
 
-\section{Dublin Core}
+`E un linguaggio per definire dei vocabolari per RDF.
 
-\section{ccREL}
+Alla base di RDFS c'è \texttt{rdfs:Resource}, tutti gli elementi utilizzati da RDFS sono risorse. Ci sono poi le classi \texttt{rdfs:Class} che definiscono un particolare tipo di risorsa e che possono essere assegnate utilizzando la proprietà \texttt{rdf:type}.
+
+\begin{lstlisting}[language=RDFA]
+	# Definisco la classe Person
+	ex:Person rdf:type rdfs:Class .
+	# Speficifo la classe di una risorsa
+	ex:Giacomo rdf:type ex:Person .
+\end{lstlisting} 
+
+Le proprietà sono invece definite utilizzando la classe \texttt{rdfs:Property} e vengono utilizzate per definire una relazione che c'è tra una risorsa soggetto e una risorsa oggetto.
+
+La definizione di una proprietà viene fatta in modo analogo alla definizione di una classe:
+
+\begin{lstlisting}
+	ex:nome rdf:type rdfs:Property .
+	ex:Giacomo ex:nome "Giacomo" .
+\end{lstlisting}
+
+Una proprietà che è già presente all'interno di RDFS è \texttt{rdfs:subClassOf} che permette di definire delle gerarchie di classi secondo la regola:
+
+\begin{center}
+\textit{``A è sotto classe di B se ogni istanza di A è anche istanza di B''}
+\end{center}
+
+Quindi per dire che la classe \texttt{foaf:Agent} deriva da \texttt{foaf:Person} la sintassi è
+
+\begin{lstlisting}
+	foaf:Person rdfs:subClassOf foaf:Agent .
+\end{lstlisting} 
+
+Le classi RDFS non sono tipate e quindi qualsiasi proprietà può essere associata ad una istanza di una determinata classe.
+Le proprietà invece sono tipate, ovvero possono essere applicate solo a determinate classi di risorse. Per specificare ciò è necessario utilizzare \texttt{rdfs:domain} per impostare il tipo del soggetto e \texttt{rdfs:range} per il tipo dell'oggetto.
+
+\begin{lstlisting}
+	:Book rdf:type rdfs:Class .
+	:bookTitle rdf:type rdf:Property .
+	:bookTitle rdfs:domain :Book .
+	:bookTitle rdfs:range rdfs:Literal .
+	:MyBook rdf:type :Book .
+	:MyBook :bookTitle "My Book" .
+\end{lstlisting}
+
+In RDFS è possibile modellare anche le sotto proprietà, ovvero specificare che tutte le risorse che sono collegate da una proprietà sono anche collegate da un'altra.
+
+\begin{lstlisting}
+	:involves rdfs:subPropertyOf :isTautghtBy
+	<!-- Se un corso è tenuto da una risorsa vale anche il fatto che il corso coinvolge quella risorsa-->
+\end{lstlisting}
+
+Le proprietà \texttt{rdfs:subPropertyOf} e \texttt{rdfs:subClassOf} sono anche transitive.
+
+\subsection{Altri predicati di utilità}
+
+\begin{itemize}
+	\item \texttt{rdfs:comment}: viene utilizzato per fornire una descrizione testuale di una risorsa.
+	\item \texttt{rdfs:label}: viene utilizzato per fornire un nome comprensibile ad una persona per una determinata risorsa.
+	\item \texttt{rdfs:seeAlso}: viene utilizzato per indicare un'altra risorsa che può fornire ulteriori informazioni riguardo il soggetto.
+	\item \texttt{rdfs:isDefinedBy}: viene utilizzato per specificare una risorsa che definisce il soggetto. Viene utilizzata per indicare il vocabolario RDF contenente la definizione della risorsa.
+\end{itemize}
+
+\subsection{Esempio di RDFS}
+
+\begin{lstlisting}
+	:Course rdf:type rdfs:Class .
+	:Lecturer rdf:type rdfs:Class .
+	:AccademicStaffMember rdf:type rdfs:Class .
+	:StaffMember rdf:type rdfs:Class .
+	
+	:StaffMember rdfs:subClassOf :AccademicStaffMember .
+	:AccademicStaffMember rdfs:subClassOf :Lecturer .
+	
+	:isTaughtBy rdf:type rdfs:Property .
+	:involves rdf:type rdfs:Property .
+	
+	:involves rdfs:subPropertyOf :isTaughtBy .
+	:involves rdfs:domain :Course .
+	:involves rdfs:range :Lecturer
+	
+	:Lecturer rdfs:comment "La classe che rappresenta gli insegnati"
+\end{lstlisting}
+
+\subsection{Dublin Core}
+
+Vocabolario che contiene le proprietà relative al contenuto di un opera, alcune di queste sono \texttt{dc:title}, \texttt{dc:subject}, \texttt{dc:description} e \texttt{dc:source}.
+
+Sono inoltre contenute delle altre proprietà che esprimono in modo più dettagliato le informazioni sulla proprietà intellettuale come: \texttt{dc:creator}, \texttt{dc:contributor}, \texttt{dc:publisher} e \texttt{dc:rights}. Quest'ultima viene utilizzata per fornire un link alla licenza.
+
+Un'altro predicato importante è \texttt{dc:mitype} che specifica la tipologia del documento. I valori più utilizzati sono \texttt{dcmitype:Text}, \texttt{dcmitype:Sound}, \texttt{dcmitype:StillImage} e \texttt{dcmitype:MovingImage}.
+
+\subsection{ccREL}
+
+Vocabolario che contiene i termini per la definizione delle licenze.
+
+Le proprietà definite nel vocabolario si dividono in \textbf{work properties} e \textbf{license properties}.
+
+Quelle relative all'opera sono:
+
+\begin{itemize}
+	\item \texttt{cc:license}: utilizzata per specificare l'URI della licenza, equivale ad utilizzare \texttt{xhtml:license} ed è una sotto proprietà di \texttt{dc:license}.
+	\item \texttt{cc:attributionName}: nome da utilizzare per dare credito all'autore dell'opera.
+	\item \texttt{cc:attributionUrl}: URL da utilizzare per dare credito all'autore dell'opera.
+	\item \texttt{cc:morePermission}: URI di una risorsa che descrive ulteriori permessi oppure una licenza alternativa.
+\end{itemize}
+
+Viene inoltre consigliata l'aggiunta dei predicati \texttt{dc:title} e \texttt{dc:mitype}.
+
+Le \textbf{license properties} descrivono invece le condizioni della licenza, quello che viene permesso, i requisiti per utilizzare l'opera e cosa non è possibile fare.
+
+
+\subsubsection{Esempio}
+
+\begin{center}
+	\textit{``Specificare che il brano pippo.mp3 dal titolo 'Pippi Oh' scritto da Pippo è rilasciato sotto licenza CC-BY-NC-ND ma è possibile acquistare ulteriori diritti visitando \texttt{http://www.depippis.org/buy.php}''}
+\end{center}
+
+\begin{lstlisting}[language=RDFA]
+<div about="/pippo.mp3">
+	<span rel="dc:mitype" resource="dcmitype:Sound" />
+	<span rel="dc:title">Pippi Oh</span>
+	<span rel="cc:license" href="http://www.creativecommons.org/rel/cc-by-nc-nd">CC-BY-NC-ND</span>
+	<a rel="cc:morePermission" href="http://www.depippis.org/buy.php">Buy more </a>
+</div>
+<!--
+	</pippo.mp3> dc:mitype dcmitype:Sound .
+	</pippo.mp3> dc:title "Pippi Oh" .
+	</pippo.mp3> cc:license <http://www.creativecommons.org/rel/cc-by-nc-nd> .
+	</pippo.mp3> cc:morePermission <http://www.depippis.org/buy.php> .
+-->
+\end{lstlisting}
