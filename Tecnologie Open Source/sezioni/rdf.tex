@@ -39,7 +39,7 @@ Ad esempio per indicare la classe di vini Merlot è possibile utilizzare l'URI:
 	\texttt{http://www.w3.org/TR/2004/REC-owl-guide-20040210/wine\#Merlot}
 \end{center}
 
-Da notare che non è obbligatorio utilizzare un URL, ma se si vuole creare uno dizionario pubblico per descrivere una determinata categoria di informazioni. Nell'esempio precedente l'URL porta alla definizione del dizionario \texttt{wine}.
+Da notare che non è obbligatorio utilizzare un URL, ma se si vuole creare uno dizionario pubblico per descrivere una determinata categoria di informazioni può essere utile utilizzare un URL che porta alla descrizione del dizionario. Nell'esempio precedente l'URL porta alla definizione del dizionario \texttt{wine}.
 
 Dato che gli URI possono essere molto lunghi e quindi possono rendere il documento di difficile comprensione è possibile utilizzare gli XML Qualified Name per creare un namespace.
 Ad esempio l'URI precendete può essere abbreviato con 
@@ -391,7 +391,7 @@ Un altro modo per impostare il soggetto è dato dall'attributo \texttt{typeof} c
 </div>
 <!--
 	Equivale a:
-	_:n1 rdf:type foaf:person .
+	_:n1 rdf:type foaf:Person .
 	_:n1 foaf:name "Alice" .
 	_:n1 foaf:mbox <mailto:alice@example.com> .
 	_:n1 foaf:phone <tel:0444123456> .
@@ -415,7 +415,7 @@ Si ha quindi che con il chaining l'oggetto dello statement esterno diventa il so
 <div about="#me" rel="foaf:knows">
 	<div 
 		about="http://www.w3.org/People/Ivan/#me"
-		property="foaf:name""
+		property="foaf:name"
 		content="Ivan Herman" />
 </div>
 <!--
@@ -534,7 +534,7 @@ contattami</em>) </span>
 
 \section{RDF Schema}
 
-`E un linguaggio per definire dei vocabolari per RDF.
+\`E un linguaggio per definire dei vocabolari per RDF.
 
 Alla base di RDFS c'è \texttt{rdfs:Resource}, tutti gli elementi utilizzati da RDFS sono risorse. Ci sono poi le classi \texttt{rdfs:Class} che definiscono un particolare tipo di risorsa e che possono essere assegnate utilizzando la proprietà \texttt{rdf:type}.
 
