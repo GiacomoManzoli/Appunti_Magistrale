@@ -536,3 +536,50 @@ Vediamo infine quali licenze sono compatibili con altre:
 \includegraphics[width=100mm]{images/license-compatibility.png}
 \caption{Mappa di compatibilità delle licenze}
 \end{figure}
+
+\section{Riassunto}
+
+\begin{itemize}
+	\item \textbf{MIT}: fai quello che vuoi, ma pubblica sotto la stessa licenza
+	\item \textbf{BSD2}: MIT + pubblica anche la documentazione, sia per il codice che per la parte binaria
+	\item \textbf{BSD3}: BSD2 + non usare il mio nome per pubblicizzare il software
+	\item \textbf{BSD4}: BSD3 + cita tutti quelli che hanno contribuito
+	\item Sia MIT che BSD permettono di ri-licenziare come codice proprietario
+	\item \textbf{Apache}: fai quello che vuoi, non usare il mio nome, puoi anche rendere il software proprietario, specifica però che hai usato SW licenziato Apache
+		\begin{itemize}
+			\item \textbf{1.0}: Devi cambiare il nome del software
+			\item \textbf{1.1}: Pubblicizza la licenza sulla documentazione
+			\item \textbf{2.0}: Devi concedere l’uso dei brevetti
+		\end{itemize}
+	\item \textbf{Academic Free License}: Simile alla BSD3 ma permette di rendere il codice proprietario. Garantisce la tutela dei brevetti e dei marchi del licenziante.
+	\item \textbf{GPL}:
+		\begin{itemize}
+			\item \textbf{v2}:
+				\begin{itemize}
+					\item \textbf{Copia non modificata}: ripubblica con la stessa licenza, senza restrizioni tecnologiche e fornendo anche i sorgenti.
+					\item \textbf{Copia modificata}: come prima + specifica che cosa hai modificato, fornisci tutto il necessario per compilare
+					\item \textbf{Libertà o morte}: se non puoi rispettare le clausole di libertà, non puoi distribuire il software
+					\item Il software derivato da GPLv2 non può essere rilasciato sotto una licenza più restrittiva
+				\end{itemize}
+			\item \textbf{LGPLv2}: Programmi non liberi possono usare il codice, ma devono mantenere la libreria sotto la stessa licenza. Deve essere permesso il reverse engineering del programma non libero
+			\item \textbf{v3}:
+				\begin{itemize}
+					\item \textbf{TiVo}: assieme ad apparecchi hardware che utilizzano software GPL devo fornire tutto il necessario per compilare il codice modificato. Anche eventuali chiavi crittografiche. Fatta eccezione per i casi in cui il fatto che il programma non può essere modificato è importante (apparecchi commerciali)
+					\item \textbf{Brevetti}: chi pubblica sotto GPL concede anche la licenza d’uso dei brevetti
+					\item \textbf{DMCA/DRM}: chiunque può aggiungere e togliere le protezioni DRM a codice GPL
+				\end{itemize}
+			\item \textbf{AGPLv3}: GPLv3 + codice disponibile su server per le applicazioni web
+		\end{itemize}
+	\item \textbf{MPL}: simil-GPL ma applicata file per file. Così posso integrare al programma anche codice proprietario. Va bene anche per i brevetti. Licenza chiave per Netscape.
+	\item \textbf{Perl Artistic License}:
+		\begin{itemize}
+			\item Ridistribuzione del sorgente modificato:
+				\begin{itemize}
+					\item specificare che file ho modificato e come li ho modificati
+					\item rilascio nel dominio pubblico oppure cambio il nome specifico le differenze oppure ne faccio uso privato
+				\end{itemize}
+			\item Ridistribuzione dei binari modificati possibile ma devo specificare dove posso recuperare la versione standard
+			\item Posso commercializzare il prodotto modificato, però non posso venderlo direttamente, ovvero posso integrarlo in software commerciale oppure posso vendere il supporto tecnico.
+		\end{itemize}
+\end{itemize}
+
