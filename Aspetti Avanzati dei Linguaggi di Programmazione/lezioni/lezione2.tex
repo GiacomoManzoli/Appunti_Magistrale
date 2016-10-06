@@ -1,0 +1,165 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 6 Ottobre 2016
+
+\chapter{Il mini linguaggio funzionale}
+
+\section*{Testi di riferimento}
+
+\begin{itemize}
+	\item Types and Programming Languages (B. Pierce) 
+	\item Practical Foundations for Programming Languages - Capitoli 1 e 2, consigliato leggerli prima della prossima lezione
+\end{itemize}
+
+\section{Teoria dei linguaggi di programmazione}
+
+Si vuole descrivere il comportamento dei programmi in un modo preciso e formale, definendo una sintassi e una semantica.
+Definire la sintassi è abbastanza semplice, la semantica è invece più complessa perché può avere varie sfumature:
+
+\begin{itemize}
+	\item \textbf{Semantica operazionale}: descrive come evolve la computazione del programma.
+	\item \textbf{Semantica denotazionale}: descrive il programma in termini matematici, come una relazione tra l'input e l'output.
+	\item \textbf{Semantica assiomatica}: descrive il programma utilizzando delle proprietà che sono vere per un certo programma, per poi utilizzarle per derivarne di nuove.
+\end{itemize}
+
+Noi ci concentreremo sulla semantica operazionale che viene verificate mediante tecniche di analisi statica, sfruttando: sistemi di tipi, logiche temporali e interpretazione astratta.
+Una volta fissato un sistema di tipi, questa verifica del programma può anche essere automatizzata.
+
+\section{Linguaggi funzionali}
+
+Studiare i tipi risulta più semplice sui linguaggi funzionali che su quelli imperativi.
+Inoltre lo stile di programmazione funzionale risulta più elegante perché è concentrato sul \textit{what to do} anziché \textit{how to do}.
+
+\begin{lstlisting}[language=Java, caption=Confronto tra Java5 e Java8: nel secondo caso è subito chiaro l'intento del programmatore in oltre non vengono aggiunte variabili mutable. Tuttavia l'esempio non usa le caratteristiche funzionali di Java8]
+// Java 5
+boolean found = false;
+for(String city : cities){
+	if (city.equals("Chicago")) {
+		found=true;
+		break;
+	}
+}
+System.out.println("Found?" + found);
+	
+// Java 8
+System.out.println("Found?" + cities.contains("Chicago"));
+\end{lstlisting}
+
+\begin{lstlisting}[language = Java, caption=Confronto tra Java 5 e Java 8: l'utlilizzo delle funzioni lambda rende il codice più conciso. Inoltre non vengono usate variabili mutabili e il codice è facilmente parallelizzabile.]
+// Java 5
+Collection<Person> people = ...;
+int maxAge = -1;
+for (Person p : people) {
+	if (p.getGender() == MALE && p.getAge() > maxAge){
+		maxAge = p.getAge();
+	}
+}
+
+// Java 8
+Collection<Person> people = ...;
+final int maxAge = people.stream()
+										      .filter(p -> p.getGender() == MALE)
+										      .mapToInt(p -> p.getAge())
+										      .max();
+\end{lstlisting}
+
+Tra le caratteristiche distintive dei linguaggi funzionali c'è l'\textbf{assenza degli assegnamenti}: ci sono delle variabili ma queste rappresentano dei valori e non delle aree di memoria modificabili. Vengono quindi solamente rappresentati dei valori immutabili.
+
+Segue quindi che non ci sono side-effects: la chiamata di una funzione può essere sostituita con il suo risultato (\textbf{referential transparency}). Questo non è più valido se ad esempio la funzione stampa qualcosa a video e poi ritorna un risultato, pertanto se una funzione è pura, questa non può neanche produrre delle stampe a video.
+
+Sembra una limitazione, ma in realtà così facendo si hanno vari vantaggi:
+\begin{itemize}
+	\item Il codice diventa più affidabile e più riusabile.
+	\item Due funzioni che lavorano su dati diversi come \texttt{f(x)} e \texttt{g(y)} possono essere eseguite in parallelo senza problemi.
+	\item Tutto ciò che entra ed esce dalla funzione può essere sottoposto a type check e quindi al compilatore basta solo il prototipo. Inoltre, se c'è un errore logico nella definizione della funzione è facile che questo si rifletta anche in un errore di tipo.
+\end{itemize}
+
+Un'altra caratteristica chiave è che le funzioni sono oggetti \textbf{first class}, ovvero sono a tutti gli effetti degli oggetti che possono essere passati come parametro ad altre funzioni. 
+Le funzioni che prendono in input altre funzioni vengono chiamate funzioni \textbf{higher order}.
+Ciò permette di scomporre un problema in sotto-problemi, utilizzare delle funzioni semplici per risolvere i sotto-problemi, per poi combinare le funzioni utilizzando delle funzioni higher-order.
+
+\section{Sintassi del nostro linguaggi $\mathcal{L}$}
+
+\begin{align*}
+	x \in Var & &\\
+	n \in Num & &\\
+	Termini \: M, N &::= x &\text{ variabili} \\
+								&|\: n \:|\: \text{true} \:|\: \text{false} &\text{ costanti intere e booleane} \\
+								&|\: M + M \:|\: M - M &\text{ operazioni intere} \\
+								&|\: \text{if} \: M \: &\text{then} \: M \: \text{else} \: M \text{ condizionale} \\
+								&|\: \text{fn } x.M &\text{ dichiarazione di una funzione} \\
+								&|\: M \: M &\text{ applicazione di una funzione}
+\end{align*}
+
+Un programma è quindi un termine chiuso \textit{M}, ovvero che non ha variabili e l'esecuzione del programma equivale a trovare il valore del termine \textit{M}.
+
+Alcuni esempi di programmi:
+
+\begin{align*}
+3 + 2 &\\
+\text{fn} \:  x.x &\:\text{// funzione identità} \\
+\text{fn} \: x.3 &\: \text{// funzione costante 3} \\
+\text{fn} \: x.x+1 &\: \text{// funzione successore} \\
+\text{fn} \: x.x+1 \: 3 &\: \text{// funzione successore applicata al numero 3} \\
+\text{fn} \: x.\text{fn} \: y . x+y &\: \text{// funzione somma con due argomenti (currificata)} \\
+\text{fn} \: x. (\text{fn} \: y . x+y   + 2) &\: \text{// funzione che ritorna la funzione $2+x$} \\
+\underbrace{\text{fn} \: x.\text{fn} y.(x\: y)}_{M} &\: \text{// funzione che applica un'altra funzione} \\
+(M \: \text{fn} \: z.z) \: 5 &\: \text{// applicazione della funzione identità al numero 5} \\
+\text{if} \: 2 \: \text{then} \: \text{fn}\: x.x+x \: \text{else} \: 0 &\: \text{// utilizzo del condizionale, è sinteticamente corretto ma non a livello di tipi}
+\end{align*}
+
+Il comportamento dei programmi dipende poi dalla semantica che viene attribuita alle istruzioni.
+
+\subsection{Variabili libere}
+
+C'è poi il concetto di variabile \textbf{libera} o \textbf{legata}.
+La variabile $x$ nel termine $\text{fn } x.x$ è legata, perché viene dichiarata dal termine, infatti fn è un \textit{binders}.
+
+Nel termine $x+y$ le due variabili sono libere, perché non si riesce ad attribuirgli un valore. Per funzionare un programma non deve avere variabili libere.
+
+Mentre nel termine $\text{fn }y. x\: y$ la variabile $x$ è libera mentre la $y$ è legata. Si ottiene così una \textbf{clojure}, ovvero una funzione che per essere calcolata deve ricevere dei valori per le variabili libere.
+
+Ci sono poi le funzioni \textbf{alpha-equivalenti}, ovvero funzioni che calcolano la stessa cosa, ma che utilizzano variabili legate con nomi diversi. Es: $\text{fn }y.y+1$ e $\text{fn }x.x+1$.
+
+Più formalmente si possono definire le variabili libere in modo induttivo.
+Dato un termine $M$, le variabili libere di $M$ vengono indicate con $fv(M)$ e sono definite induttivamente come:
+
+\begin{align*}
+	fv(x) &= \{ x \} \\
+	fv(n) =fv(\text{true}) = fv(\text{false}) &= \emptyset \\
+	fv(M + N) = fv(M-N) &= fv(M) \cup fv(N) \\
+	fv(\text{if } M_1 \text{ then } M_2 \text{ else }M_3) &= fv(M_1) \cup fv(M_2) \cup fv(M_3) \\
+	fv(\text{fn }x.M) &= fv(M) \setminus \{x\} \\
+	fv(M \: N) &= fv(M) \cup fv(N)
+\end{align*}
+
+Un termine senza variabili libere viene detto \textbf{chiuso} e i programmi sono definiti da dei termini chiusi.
+
+\subsection{Sostituzione}
+
+Definiamo ora l’operazione di sostituzione di una variabile con un termine, necessaria per la definizione della semantica del linguaggio. 
+Indichiamo con $M \{x := N\}$ il termine $M$ in cui la variabile $x$ è stata sostituita con il termine $N$.
+Nel seguito useremo una notazione compatta in cui c varia nell’insieme delle costanti intere e booleane, mentre $op(M_i)_{i\in I}$ varia nell’insieme delle operazioni aritmetiche e booleane.
+
+\begin{align*}
+	x \{x := N\} &= N \\
+	y \{x := N\} &= y \\
+	op(M_i)_{i \in I}\{x := N\}  &= op(M_i\{x := N\} )_{i \in I} \\
+	(M_1 + M_2) \{ x:= N \} &= M_1\{x := N\} + M_2 \{x := N\} \\
+	(\text{fn} \: x.M)\{x := N\} &= \text{fn }x.M \\
+	(\text{fn} \: y.M)\{x := N\}  &= \text{fn }y.M\{x := N\} \text{ if } y \notin fv(N) \\
+	(M_1 \: M_2) \{x := N\}  &= (M_1\{x := N\} \: M_2 \{x := N\} )
+\end{align*}
+
+Quando applico una sostituzione $M\{x := N\}$ devo stare atteno a sostituire solamente le occorrenze libere di $x$ ed è inoltre importante che i termini che vado ad aggiungere non vengano catturati da un altro binder.
+Per evitare questo problema è necessario rinominare le variabili problematiche per alpha conversione.
+
+Ad esempio $(\text{fn }x.x)\{x := 3\}$ \textbf{non} è $\text{fn }x+3 $ ma $\text{fn }x.x$ e allo stesso modo $(\text{fn }y.x+y)\{x := y\}$ \textbf{non} è $\text{fn }y.y+y$ ma $(\text{fn }x.x+z)\{x := y\} = \text{fn }z.y+z$.
+
+
+
+
+
