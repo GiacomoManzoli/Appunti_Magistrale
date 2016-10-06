@@ -1,0 +1,153 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+\documentclass[a4paper, 11pt]{report} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+\usepackage[italian]{babel}      							% Lingua italiana
+\usepackage[margin=.9in]{geometry}             % Imposta i margini del documento
+
+\usepackage[T1]{fontenc} % Required for accented characters
+\usepackage[mathletters]{ucs}    % Caratteri matematici come UTF8
+\usepackage[utf8,utf8x]{inputenc}      % Ancora utf8
+
+\usepackage{eurosym}                %simbolo dell'euro
+\usepackage{listings}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\input{listings}
+
+%\tightlist per compatibilità con pandoc
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+\usepackage[labelfont=bf]{caption}
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage{wrapfig} % Allows in-line images
+
+
+\usepackage{subfig}
+\usepackage{hyperref}
+\usepackage{placeins}
+\usepackage{sourcecodepro}
+\usepackage{hyperref}                   % collegamenti ipertestuali
+
+\usepackage[colorinlistoftodos,prependcaption]{todonotes} %todo
+
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode} % https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmicx_package
+\usepackage{amssymb}  %$\mathbb{N}$ per il simbolo dei numeri naturali 
+
+\usepackage{enumerate} % permette di personalizzare enumerate
+
+\usepackage{xmpincl}	%Aggiunge metadati sulla licenza CC
+\usepackage{xspace}
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+	\begin{flushright} % Right align
+		{\LARGE\@title} % Increase the font size of the title
+		
+		\vspace{50pt} % Some vertical space between the title and author name
+		
+		{\large\@author} % Author name
+		\\\@date % Date
+		
+		\vspace{100pt} % Some vertical space between the author block and abstract
+	\end{flushright}
+}
+
+%% breakablealgorithm http://tex.stackexchange.com/questions/33866/algorithm-tag-and-page-break
+\makeatletter
+\newenvironment{breakablealgorithm}
+{% \begin{breakablealgorithm}
+	\begin{center}
+		\refstepcounter{algorithm}% New algorithm
+		\hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+		\renewcommand{\caption}[2][\relax]{% Make a new \caption
+			{\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+			\ifx\relax##1\relax % #1 is \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+			\else % #1 is not \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+			\fi
+			\kern2pt\hrule\kern2pt
+		}
+	}{% \end{breakablealgorithm}
+	\kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+\end{center}
+}
+\makeatother
+
+\makeatletter % trattino con punto sopra
+\newcommand{\dotminus}{\mathbin{\text{\@dotminus}}}
+
+\newcommand{\@dotminus}{%
+	\ooalign{\hidewidth\raise1ex\hbox{.}\hidewidth\cr$\m@th-$\cr}%
+}
+\makeatother
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+%----------------------------------------------------------------------------------------
+% TITLE
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Metodi e Modelli per l'Ottimizzazione Combinatoria}\\ % Title
+	A.A. 2016-2017 } % Subtitle
+
+\author{\textsc{Giacomo Manzoli}
+	\\ 1130822 % Author
+	\\{\textit{Università degli Studi di Padova}}} % Institution
+
+\date{\today} % Date
+
+%----------------------------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT HEADER
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+	
+	\maketitle % Print the title section
+
+	%----------------------------------------------------------------------------------------
+	% ABSTRACT AND KEYWORDS
+	%----------------------------------------------------------------------------------------
+	
+	%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
+	
+	\clearpage
+	\tableofcontents
+	
+	%\hspace*{3,6mm}\textit{Keywords:} lorem , ipsum , dolor , sit amet , lectus % Keywords
+	
+	\vspace{30pt} % Some vertical space between the abstract and first section
+	
+	%----------------------------------------------------------------------------------------
+	% ESSAY BODY
+	%----------------------------------------------------------------------------------------
+	\clearpage
+	
+	%----------------------------------------------------------------------------------------
+	%	CONTENT
+	%----------------------------------------------------------------------------------------
+	
+	\include{lezioni/lezione1}
+	
+	%\appendix
+	
+	%\input{glossario}
+	
+	
+\end{document}
