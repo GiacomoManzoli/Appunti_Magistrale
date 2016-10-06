@@ -26,3 +26,9 @@ Leggenda:
 ### Sessione di recupero AA 2015-16
 
 - Tecnologie Open Source [LaTeX]: appunti basati su quelli dell'AA 2013-14 di Luca De Franceschi <https://github.com/FIUP/Tecnologie-Open-Source>
+
+### Primo semestre AA 2016-17
+
+- Information Retrieval
+- Metodi e Modelli per l'ottimizzazione combinatoria
+- Aspetti avanzati dei linguaggi di programmazione
