@@ -1,0 +1,251 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+% 7 Ottobre 2016
+
+%chapter introduzione
+%section informazioni pratiche
+
+\chapter{Programmazione lineare}
+
+\section{Modellazione di un problema}
+
+Un \textbf{modello di programmazione matematico} descrive le caratteristiche della soluzione ottima di un problema di ottimizzazione sotto forma di relazione matematiche:
+
+\begin{itemize}
+	\item \textbf{Sets}: raggruppano gli elementi del sistema
+	\item \textbf{Parametri}: i dati del problema, che rappresentano le quantità note che influiscono sul sistema.
+	\item \textbf{Variabili decisionali}: le variabili per le quali si vuole trovare il valore per determinare la soluzione del problema.
+	\item \textbf{Vincoli}: le relazioni matematiche che determinano se la soluzione è feasible o meno.
+	\item \textbf{Funzione obiettivo}: la funzione che deve essere ottimizzata (massimizzata o minimizzata).
+\end{itemize}
+
+I modelli matematici nei quali la funzione obiettivo è lineare e anche i vincoli (constraints) sono un sistema di equazioni o disequazioni lineari, vengono detti lineari.
+I modelli vengono poi classificati come:
+
+\begin{itemize}
+	\item \textbf{Linear programming model}: tutte le variabili possono assumere valori reali.
+	\item \textbf{Integer Linear Programming model}: tutte le variabili possono assumere solo valori interi.
+	\item \textbf{Mixed Integer Linear Programming}: le variabili possono assumere sia valori interi che reali.
+\end{itemize}
+
+La linearità limita l'espressività ma permette di utilizzare delle tecniche di soluzioni più veloci.
+
+\subsubsection{Esempio di modellazione: I profumi}
+
+Una fabbrica che produce profumi può produrre due nuove tipologie di profumi mescolando tre essente: rose, lilly e violet. Per ogni profumo 1 è necessario utilizzare 1.5 litri di lilly e 0.3 litri di violet. Per ogni profumo 2 è necessario utilizzare 1 litro di rose, 1 litro di lilly e 0.5 litri di viole.
+Si hanno in magazzino 27 litri di rose, 21 litri di lilly e 9 litri di rose. La fabbrica ottiene un profitto di 130 euro per i profumi di tipo 1 e 100 per il tipo 2.
+Si vuole determinare la quantità ottima di profumi da produrre per massimizzare i guadagni.
+
+\begin{align*}
+&\max 130 x_{one} + 100 x_{two} & & \quad\text{funzione obiettivo} \\
+\text{s.t. } &1.5 x_{one} + x_{two} &\leq 27 &\\
+					&x_{one} + x_{two} &\leq 21 &\\
+					&0.3 x_{one} + 0.5 x_{two} &\leq 9 &\\
+					&x_{one}, x_{two} &\geq 0 & \quad\text{dominio}
+\end{align*}
+
+\subsubsection{Optimal Production Mix}
+
+Il problema precedentemente trattato è simile a quello del contadino e del telefono.
+Si può quindi identificare un classe di modelli che risolve problemi simili, in questo caso legati alla massimizzazione del guadagno sotto dei vincoli di consumo di risorse.
+
+Si possono quindi individuare:
+
+\begin{itemize}
+	\item Set $I$: contente le risorse, precedentemente $I = \{\text{rose, lilly, violet}\}$
+	\item Set $J$: contente le tipologie di prodotti che possono essere prodotti.
+	\item Parametri $D_i$: disponibilità della risorsa $i \in I$.
+	\item Parametri $P_j$: profitto generato dalla vendita del prodotto $j \in J$.
+	\item Parametri $Q_{i,j}$: risorse di tipo $i \in I$ necessarie per ogni unità di prodotto $j \in J$.
+	\item Variabili $x_j$: quantità di prodotto $j \in J$ da produrre.
+\end{itemize}
+
+I vincoli risultano quindi essere:
+
+\begin{align*}
+	\max &\sum\limits_{j \in J} P_j x_j &\\
+	\text{s.t. } &\sum\limits_{j \in J} Q_{i,j} x_j \leq D_i \quad \forall i \in I \\
+	&x_j \in \mathbb{R}_{+} [\: \mathbb{Z}_{+} \:|\: \{0,1\} \:] \forall j \in J
+\end{align*}
+
+\subsubsection{Minimum cost covering}
+
+Un'altra categoria di problemi sono quelli nei quali c'è una funzione obiettivo da minimizzare, con dei vincoli che impongono di stare sopra determinate soglie.
+Un esempio di questa categoria è il problema della dieta: si vuole preparare una dieta economica, garantendo comunque di assumere un quantitativo minimo di nutrienti.
+
+Gli elementi tipici di questo modello sono:
+
+\begin{itemize}
+	\item Set $I$: risorse disponibili.
+	\item Set $J$: materiale richiesto.
+	\item Parametri $C_i$: costo unitario della risorsa $i \in I$.
+	\item Parametri $R_j$: quantitativo richiesto del materiale $j \in J$.
+	\item Parametri $A_{i,j}$: quantità richiesta del materiale $j \in J$ soddisfatta dalla risorsa $i \in I$.
+	\item Variabili $x_i$: quantità della risorsa $i \in I$.
+\end{itemize}
+
+\begin{align*}
+	\min &\sum\limits_{i \in I} C_i x_i \\
+	\text{s.t. }& \sum\limits_{i \in I} A_{i,j} x_i \geq D_j \quad\forall j \in J \\
+	&x_i \in \mathbb{R}_+ [\:\mathbb{Z}_+ \:|\: \{0,1\}\:] \quad \forall i \in I
+\end{align*}
+
+\paragraph{Esempio: La dieta}
+
+Bisogna preparare una dieta che fornisce almeno 20mg di proteine, 30mg di ferro e 10mg di calcio. Gli alimenti che possono essere acquistati sono verdure (5mg/Kg di proteine, 6mg/Kg di ferro e 5mg/Kg di calcio al costo di 4E/Kg), carne (15mg/Kg di proteine, 10mg/Kg di ferro e 3mg/Kg di calcio al costo di 10E/Kg) e frutta (4mg/Kg di proteine, 5mg/Kg di ferro e 12mg/Kg di calcio al costo di 7E/Kg). Si vuole trovare la dieta di costo minimo.
+
+\begin{align*}
+\min \: & 4x_V + 10 x_M + 7 x_F \\
+\text{s.t. } & 5x_V + 15x_M + 4x_F \geq 20 \\
+&6x_V + 10 x_M + 5 x_F \geq 30 \\
+&5x_V + 3x_M +12x_F \geq 10 \\
+&x_V, x_M, x_F \geq 0
+\end{align*}
+
+\subsubsection{The Transportation problem}
+
+In questo problema ci sono dei produttori di oggetti che devono spostarli verso diverse destinazioni che hanno una determinata richiesta. C'è un costo di trasporto variabile in base a quale sorgente rifornisce quale destinatario e si vuole trovare il piano di trasporto che minimizza i costi.
+
+\begin{itemize}
+	\item Set $I$: sorgenti.
+	\item Set $J$: destinazioni.
+	\item Parametri $O_i$: capacità produttiva della sorgente $i \in I$.
+	\item Parametri $D_j$: richiesta della destinazione $j \in J$.
+	\item Parametri $C_{i,j}$: costo di trasporto da $i$ a $j$.
+	\item Variabili $x_{i,j}$: quantità di materiale da spostare da $i$ a $j$.
+\end{itemize}
+
+I vincoli sono:
+
+\begin{align*}
+	\min \: & \sum\limits_{i \in I} \sum\limits_{j \in J} C_{i,j} x_{i,j} \\
+	\text{s.t. }& \sum\limits_{i \in J} x_{i,j} \geq D_j \quad \forall j \in J \quad \text{vincoli sulla domanda} \\
+	& \sum\limits_{j \in J} x_{i,j} \leq O_i \quad \forall i \in I \quad \text{vincoli sulla produzione} \\
+	x_{i,j} \in \mathbb{R}_+ [\:\mathbb{Z} \:|\: \{0,1\} \:]
+\end{align*}
+
+\paragraph{Esempio: La fabbrica}
+
+Una compagnia produce frigoriferi in tre fabbriche diverse ($A, B, C$) e deve spostarti in 4 magazzini (1,2,3,4). La produzione delle fabbriche è rispettivamente 50, 70 e 20. I magazzini possono contenere 10, 60, 30 e 40 unità. Il costo per spostare i frighi è riportato nella seguente tabella:
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		Costo & 1 & 2 & 3 & 4 \\ \hline
+		A    & 6 & 8 & 3 & 4\\ \hline
+		B    &2 & 3 & 1 &3\\ \hline
+		C    & 2 & 4 & 6 &5\\ \hline
+	\end{tabular}
+\end{table}
+
+Si vuole minimizzare il costo di trasporto.
+
+\subsubsection{Fixed Cost}
+
+Sono problemi del tipo in cui si vogliono prendere delle decisioni riguardo a delle azioni da intraprendere.
+Ogni azione ha un costo fisso, ma produce un certo guadagno.
+Si vuole determinare quali azioni conviene intraprendere sotto qualche vincolo riguardo le azioni.
+
+\begin{itemize}
+	\item Set $I$: possibili azioni.
+	\item Parametro $W$: budget a disposizione per le azioni.
+	\item Parametri $F_i$: costo fisso da pagare per l'esecuzione dell'azione $i \in I$.
+	\item Parametri $C_i$: costo variabile per l'esecuzione dell'azione $i \in I$.
+	\item Parametri $R_i$: guadagno dell'azione $i \in i$.
+	\item Variabili $x_i$: \textit{``quantità''} dell'azione $i \in I$. Ad esempio: apro 200 $\text{m}^2$ di supermercato nella locazione $i$.
+	\item Variabili $y_i$: variabili binarie che prendo il valore 1 se viene intrapresa l'azione $i \in I$.
+\end{itemize}
+
+Sono presenti due variabili di costo perché le azioni possono essere del tipo ``\textit{quanti metri quadri di supermercato aprire}''. Azioni di questo tipo hanno tipicamente un costo fisso, legato in questo caso alla costruzione, e un costo variabile, legato alle spese di gestione del supermercato, le quali dipendono dalla sua dimensione.
+
+I vincoli risultano essere:
+
+\begin{align*}
+	\max &\sum\limits_{i \in I} R_i x_i \\
+	\text{s.t. } &\sum\limits_{i \in I} C_i x_i + F_i y_i \leq W &\quad\text{budget} \\
+	&x_i \leq M y_i  \quad \forall i \in I &\quad\text{vincolo \textbf{BigM}}  \\
+	&\sum\limits_{i \in I} y_i \leq K &\quad\text{vincolo sulle azioni da intraprendere} \\
+	&x_i \in \mathbb{R}_+, y_i \in \{0,1\} \quad \forall i \in I&
+\end{align*}
+
+I vincoli \textbf{BigM} servono per collegare tra loro le due variabili.
+Così facendo quando il risolutore prova a risolvere il problema impostando una variabile $x_i > 0$ è costretto anche ad impostare la variabile $y_i = 1$, perché altrimenti non raggiungerebbe una soluzione feasible. Allo stesso modo se $y_i$ è 0, anche $x_i$ deve essere 0.
+
+Il valore della costante $M$ non è importante durante la modellazione e viene considerato come un valore grande a piacere.
+Nel lato pratico $M$ deve essere sufficientemente grande in modo da non porre vincoli sulle $x_i$, ma allo stesso tempo deve essere il più piccolo possibile, in modo da rendere efficiente la risoluzione del modello.
+
+Una variante di questo modello è quella che prevede un limite superiore $U_i$ alla quantità di azione $i \in I$ che può essere intrapresa. In questo caso si possono sostituire i vincoli BigM con 
+
+$$
+x_i \leq U_i y_i \quad \forall i \in I
+$$
+
+\paragraph{Esempio: il supermercato}
+
+Una catena di supermercati ha un budget $W$ per aprire dei nuovi negozi. Un analisi preliminare ha identificato un set $I$ di possibili locazioni.
+Aprire un negozio in $i \in I$ ha un costo fisso $F_i$ e un costo variabile di $C_i$ per 100 $m^2$ di negozio.
+Una volta aperto, il negozio in $i$ garantisce un guadagno di $R_i$ per $100 m^2$. Determinare il sotto insieme di località dove aprire un negozio e la relativa dimensione in modo da massimizzare il guadagno totale, tenendo conto che al massimo $K$ negozi possono essere aperti.
+
+\subsection{Un problema più complesso}
+
+Una compagnia di costruzioni deve spostare delle impalcature da 3 siti di costruzioni in chiusura ($A,B,C$) che devono essere spostate in 3 nuovi siti in apertura ($1,2,3$).
+Le impalcature consistono di travi di ferro, nei siti \textit{A, B, C} ci sono rispettivamente 7000, 6000 e 4000 travi di ferro, mentre i nuovi siti richiedono rispettivamente 8000, 5000 e 4000 travi. 
+
+Spostare le travi ha un certo costo riportato in tabella.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Costo & 1 & 2 & 3 \\ \hline
+		A    & 9 & 6 & 5 \\ \hline
+		B    & 7 & 4 & 9 \\ \hline
+		C    & 4 & 6 & 3 \\ \hline
+	\end{tabular}
+\end{table}
+
+Per spostare le travi vengono utilizzati dei camion. Ogni camion può trasportare 10000 travi.
+Trovare un modello che permette di minimizzare i costi, tenendo conto di:
+
+\begin{itemize}
+	\item Usare un camion aggiunge un costo di 50 euro.
+	\item Possono essere usati solo 4 camion, e ognuno può essere usato solo una volta.
+	\item Le travi che arrivano al sito 2 non possono venire da $A$ e $B$.
+	\item Si può noleggiare un quinto camion al costo di 65 euro.
+\end{itemize} 
+
+\subsubsection{Modellazione}
+
+Alla base di tutto c'è un problema di trasporto, al quale vengono aggiunti dei vincoli extra che riguardano i camion.
+
+\begin{itemize}
+	\item $I = \{A, B, C\}$.
+	\item $J = \{1,2,3\}$.
+	\item $C_{i,j}$ costo per il trasporto di una singola trave da $i$ a $j$.
+	\item $D_i$: numero di travi disponibili nel sito $i$.
+	\item $R_j$: numero di travi richieste dal sito $j$.
+	\item $F$: costo fisso per l'utilizzo di un camion.
+	\item $L$: costo di noleggio del camion extra.
+	\item $N$: numero di camion.
+	\item $K$: capacità di un camion.
+	\item $x_{i,j}$: variabile che indica la quantità di travi portata dal sito $i$ al sito $j$.
+	\item $y_{i,j}$: variabile binaria che indica l'utilizzo di un camion per portare delle travi dal sito $i$ al sito $j$.
+	\item $z$: variabile binaria che indica l'utilizzo del camion extra.
+\end{itemize}
+
+\begin{align*}
+\min &\underbrace{\sum\limits_{i \in I, j \in J} C_{i,j} x_{i,j}}_{\text{costo fisso di trasporto}}+ F \overbrace{
+\sum\limits_{i \in I, j \in J} y_{i,j}}_{\text{costo variabile per l'utilizzo di un camion}} + \underbrace{(L-F)z}_{\text{costo extra del noleggio}} \\
+\text{s.t. }&\sum\limits_{i \in I} x_{i,j} \geq R_j \quad\forall j \in J\\
+&\sum\limits_{j \in J} x_i,j \leq D_i \quad\forall i \in I \\
+&x_{i,j} \leq K y_{i,j} \quad\forall i \in I, j \in J \quad\text{vincoli di collegamento delle variabili}\\
+&\sum\limits_{i \in I, j \in J} y_{i,j} \leq N + z \quad\text{vincolo sul numero di camion}\\ 
+&\text{Domini:} \\
+&x_{i,j} \in \mathbb{Z}_+  \quad\forall i \in I, j \in J  \\
+&y_{i,j} \in \{0,1\}  \quad\forall i \in I, j \in J  \\
+&z \in \{0,1\}
+\end{align*}
