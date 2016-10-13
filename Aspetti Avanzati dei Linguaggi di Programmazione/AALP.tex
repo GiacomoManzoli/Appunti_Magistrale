@@ -97,12 +97,17 @@
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 
+
+\let\oldtext\text
+\renewcommand{\text}[1]{\oldtext{\normalfont\sffamily #1}}
 \newcommand{\false}{\text{ false }}
 \newcommand{\true}{\text{ true }}
 \newcommand{\fn}{\text{fn }}
 \newcommand{\iif}{\text{ if }}
 \newcommand{\then}{\text{ then }}
 \newcommand{\eelse}{\text{ else }}
+\newcommand{\Nat}{\text{ Nat }}
+\newcommand{\Bool}{\text{ Bool }}
 %----------------------------------------------------------------------------------------
 % TITLE
 %----------------------------------------------------------------------------------------
@@ -149,9 +154,10 @@
 	%	CONTENT
 	%----------------------------------------------------------------------------------------
 	
-	\include{lezioni/lezione1}
-	\include{lezioni/lezione2}
-	\include{lezioni/lezione3}
+	\input{lezioni/lezione1}
+	\input{lezioni/lezione2}
+	\input{lezioni/lezione3}
+	\input{lezioni/lezione4}
 	%\appendix
 	
 	%\input{glossario}
