@@ -47,6 +47,8 @@
 
 \usepackage{xmpincl}	%Aggiunge metadati sulla licenza CC
 \usepackage{xspace}
+\usepackage{makeidx}
+
 \makeatletter
 \renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
 \renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
@@ -97,6 +99,8 @@
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 
+\newcommand{\st}{\text{s.t. }}
+
 %----------------------------------------------------------------------------------------
 % TITLE
 %----------------------------------------------------------------------------------------
@@ -116,7 +120,7 @@
 %----------------------------------------------------------------------------------------
 %	DOCUMENT HEADER
 %----------------------------------------------------------------------------------------
-
+\makeindex
 \begin{document}
 	
 	\maketitle % Print the title section
@@ -143,11 +147,13 @@
 	%	CONTENT
 	%----------------------------------------------------------------------------------------
 	
-	\include{lezioni/lezione1}
-	\include{lezioni/lezione2}	
+	\input{lezioni/lezione1}
+	\input{lezioni/lezione2}
+	\input{lezioni/lezione3}	
 	%\appendix
 	
 	%\input{glossario}
+	\printindex
 	
 	
 \end{document}
