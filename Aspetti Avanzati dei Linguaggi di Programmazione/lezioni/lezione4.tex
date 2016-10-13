@@ -83,84 +83,73 @@ Le ipotesi specificano che tipo devono avere i vari termini affinché valgano le
 La regola \textsc{Fun} dice che il programma sarà ben tipato con il tipo $T_1 \rightarrow T_2$ se il corpo della funzione $M$ ha tipo $T_2$ assumendo il contesto $\Gamma$ e che $x : T_1$. Deve inoltre valere $x \not\in \Gamma$ per evitare conflitti di nomi, se questo non è vero basta effettuare una alpha-conversione sul parametro della funzione.
 
 Alcuni esempi:
+
 $$
 	\emptyset \vdash \iif \true \then 5+7 \eelse 2 : \Nat
 $$
 
+\begin{prooftree}
+	% Ramo 1
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Bool)}}
+	\UnaryInfC{$\emptyset \vdash \true : \Bool	$}
+	% Ramo 2
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Nat)}}
+	\UnaryInfC{$\emptyset \vdash 5 : \Nat$}
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Nat)}}
+	\UnaryInfC{$\emptyset \vdash 7 : \Nat$}
+	\LeftLabel{\textsc{(Sum)}}
+	\BinaryInfC{$\emptyset \vdash 5+7 : \Nat $}
+	% Ramo 3
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Nat)}}
+	\UnaryInfC{$\emptyset \vdash 2 : \Nat$}
+	\LeftLabel{\textsc{(If)}}
+	\TrinaryInfC{$\emptyset \vdash \iif \true \then 5+7 \eelse 2 : \Nat$}
+\end{prooftree}
+
+\vspace{30px}
 
 $$
-\textsc{If} \cfrac{
-	\textsc{(Bool)}\cfrac{
-		\checkmark
-	}{
-		\emptyset \vdash \true : \Bool	
-	} \quad
-	\textsc{(Sum)}\cfrac{
-		\textsc{(Nat)}\cfrac{
-			\checkmark
-		}{
-			\emptyset \vdash 5 : \Nat
-		} \quad
-		\textsc{(Nat)}\cfrac{
-			\checkmark
-		}{
-			\emptyset \vdash 7: \Nat  
-		}
-	}{
-		\emptyset \vdash 5+2 : \Nat   
-	} \quad 
-	\textsc{(Nat)}\cfrac{
-		\checkmark
-	}{
-		\emptyset \vdash 2 : \Nat
-	}
-}{
-	\emptyset \vdash \iif \true \then 5+7 \eelse 2 : \Nat
-}
+\emptyset \vdash \fn x : \Nat.\Big[ (\fn y : \Nat : \true) (x +1)\Big] : (\Nat \rightarrow \Bool)
 $$
 
-$$
-\emptyset \vdash \fn x : \Nat.\Big[ (\fn y : \Nat : \true) (x +1)\Big] : (\Nat \rightarrow \Nat) \rightarrow \Bool)
-$$
+\begin{prooftree}
+	%Ramo App-1
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Bool)}}
+	\UnaryInfC{$x:\Nat, y:\Nat \vdash \true : \Bool $}
+	\LeftLabel{\textsc{(Fun)}}
+	\UnaryInfC{$x : \Nat \vdash \fn y : \Nat . \true :\Bool $}
+	
+	%Ramo App-2
+	% Ramo sum-1
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Nat)}}
+	\UnaryInfC{$x:\Nat \vdash x: \Nat$}
+	% Ramo sum-2
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Nat)}}
+	\UnaryInfC{$x:\Nat \vdash 1: \Nat$}
+	
+	\LeftLabel{\textsc{(Sum)}}
+	\BinaryInfC{$ x: \Nat \vdash x+1 : \Nat  $}
+	\LeftLabel{\textsc{(App)}}
+	\BinaryInfC{$x : \Nat \vdash (\fn y : \Nat . \true) (x +1) : \Bool$}
+	\LeftLabel{\textsc{(Fun)}}
+	\UnaryInfC{$\emptyset \vdash \fn x : \Nat.\Big[ (\fn y : \Nat . \true) (x +1)\Big] : (\Nat \rightarrow \Bool)$}
+\end{prooftree}
+
+\vspace{30px}
 
 $$
-\textsc{(Fun)} \cfrac{
-	\textsc{(App)} \cfrac{
-		\textsc{(Fun)}\cfrac{
-			\textsc{(Bool)} \cfrac{\checkmark}{
-				x:\Nat, y:\Nat \vdash \true : \Bool 
-			}
-		}{
-			x : \Nat \vdash \fn y : \Nat . \true :\Bool 
-		} \quad
-		\textsc{(Sum)} \cfrac{
-			\textsc{(Var)} \cfrac{
-				\checkmark
-			}{
-				 x:\Nat \vdash x: \Nat
-			} \quad 
-			\textsc{(Nat)} \cfrac{
-				\checkmark
-			}{
-				x:\Nat \vdash 1: \Nat
-			}
-		}{
-			x: \Nat \vdash x+1 : \Nat 
-		}
-	}{
-		x : \Nat \vdash (\fn y : \Nat . \true) (x +1) : \Bool
-	}
-}{
-\emptyset \vdash \fn x : \Nat.\Big[ (\fn y : \Nat . \true) (x +1)\Big] : (\Nat \rightarrow \Bool)
-}
-$$
+\text{Definisci }\Gamma \text{ in modo che il programma sia ben tipato }\Gamma \vdash z (x y) : \Bool
+$$\todo{todo}
 
-
-
-$$
-\text{Definisci }\Gamma \text{ in modo che il programma sia ben tipato}\Gamma \vdash z (x y) : \Bool
-$$
+\vspace{30px}
 
 $$
 \Gamma \vdash x \: x : T
-$$
+$$\todo{todo}
