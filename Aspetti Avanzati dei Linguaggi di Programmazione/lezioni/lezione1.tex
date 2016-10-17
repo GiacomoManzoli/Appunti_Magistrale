@@ -30,7 +30,7 @@ La scelta invece viene guidata da vari criteri come:
 	\item espressività
 \end{itemize}
 
-Non sempre tutte queste caratteristiche coesistono, anzi il più delle volte si scontrano tra loro, portando così ad un trade-off.
+\noindent Non sempre tutte queste caratteristiche coesistono, anzi il più delle volte si scontrano tra loro, portando così ad un trade-off.
 
 \subsection{Classificazione dei linguaggi di programmazione}
 
@@ -50,47 +50,48 @@ Un'altra discriminazione può essere fatto sul paradigma:
 	\item \textbf{Concorrente}: descrive flussi di computazione concorrente. \textit{Insieme di messaggi che devono essere inviati e ricevuti}.
 \end{itemize}
 
-Tutto bello, però i linguaggi moderni appartengono a più paradigmi.
+\noindent Tutto bello, però i linguaggi moderni appartengono a più paradigmi.
 
 \section{L'evoluzione dei linguaggi di programmazione}
 
 \begin{enumerate}
-	\item Linguaggi strutturati: sono linguaggi che permettono di strutturare il codice a blocchi. \`E il periodo boom dei PC e viene data a tutti la possibilità di programmare il proprio computer.
-	\item Programmazione ad oggetti: la programmazione OO viene ``scoperta'' prima, ma il boom avviene quando iniziano a comparire i primi programmi corposi, quando è diventato importante il riuso del codice, l'incapsulazione, ecc.
-	\item Linguaggi portabili e sicuri: dalla nascita di Internet si è reso necessario produrre programmi portabili e più sicuri, favorendo i linguaggi come Java/PHP/JavaScript.
-	\item Linguaggi volti alla produttività: nel tempo ci si è accorti che utilizzare i linguaggi non tipati porta a dei problemi di manutenzione. Si sta quindi tornando ad un paradigma tipato.
-	\item Programmi concorrenti: in concetto di concorrenza è nato molto prima di internet, tuttavia non è stato adottato subito a causa della complessità elevata. Ultimamente però, per aumentare l'efficienza dell'hardware ci si sta spostando su architetture concorrenti, rendendo così necessario adottare un paradigma di programmazione concorrente.
-	\item Programmi distribuiti: spinti dal marketing legato al cloud e dalla programmazione reattiva, un paradigma di programmazione secondo il quale il programma deve essere in grado di reagire ad \textbf{eventi}, \textbf{carico} e \textbf{fallimenti}. Si parte quindi da un modello event driven asincrono, tenendo conto che l'evento viene scatenato da un fonte distribuita (\textit{futures, streams, sistemi push}). Vengono poi aggiunti sistemi di reazione al carico: l'applicazione deve adattarsi automaticamente al carico di lavoro che c'è da eseguire, liberando o richiedendo ulteriori CPU. Infine è necessario avere un'applicazione resistente ai fallimenti che possono essere causati da un bug software, da un problema all'hardware o da un problema di comunicazione.
-	\item Big data: c'è la necessità di elaborare grandi quantità di dati in modo efficiente.
+	\item \textbf{Linguaggi strutturati}: sono linguaggi che permettono di strutturare il codice a blocchi. \`E il periodo boom dei PC e viene data a tutti la possibilità di programmare il proprio computer.
+	\item \textbf{Programmazione ad oggetti}: la programmazione OO viene ``scoperta'' prima, ma il boom avviene quando iniziano a comparire i primi programmi corposi, quando è diventato importante il riuso del codice, l'incapsulazione, ecc.
+	\item \textbf{Linguaggi portabili e sicuri}: dalla nascita di Internet si è reso necessario produrre programmi portabili e più sicuri, favorendo i linguaggi come Java/PHP/JavaScript.
+	\item \textbf{Linguaggi volti alla produttività}: nel tempo ci si è accorti che utilizzare i linguaggi non tipati porta a dei problemi di manutenzione. Si sta quindi tornando ad un paradigma tipato.
+	\item \textbf{Programmi concorrenti}: in concetto di concorrenza è nato molto prima di internet, tuttavia non è stato adottato subito a causa della complessità elevata. Ultimamente però, per aumentare l'efficienza dell'hardware ci si sta spostando su architetture concorrenti, rendendo così necessario adottare un paradigma di programmazione concorrente.
+	\item \textbf{Programmi distribuiti}: spinti dal marketing legato al cloud e dalla programmazione reattiva, un paradigma di programmazione secondo il quale il programma deve essere in grado di reagire ad \textbf{eventi}, \textbf{carico} e \textbf{fallimenti}. Si parte quindi da un modello event driven asincrono, tenendo conto che l'evento viene scatenato da un fonte distribuita (\textit{futures, streams, sistemi push}). Vengono poi aggiunti sistemi di reazione al carico: l'applicazione deve adattarsi automaticamente al carico di lavoro che c'è da eseguire, liberando o richiedendo ulteriori CPU. Infine è necessario avere un'applicazione resistente ai fallimenti che possono essere causati da un bug software, da un problema all'hardware o da un problema di comunicazione.
+	\item \textbf{Big data}: c'è la necessità di elaborare grandi quantità di dati in modo efficiente.
 \end{enumerate}
 
-Si può quindi osservare che ogni volta che sorge una nuova esigenza a livello industriale, c'è anche una corrispondente evoluzione nei linguaggi di programmazione mainstream.
+\noindent Si può quindi osservare che ogni volta che sorge una nuova esigenza a livello industriale, c'è anche una corrispondente evoluzione nei linguaggi di programmazione mainstream.
 
 \subsection{Parallelismo e concorrenza}
 
-\textbf{Parallelismo}: programmi che avviano più flussi di controllo paralleli che fanno le stesse operazioni e che non interagiscono tra loro.
+\begin{itemize}
+\item \textbf{Parallelismo}: programmi che avviano più flussi di controllo paralleli che fanno le stesse operazioni e che non interagiscono tra loro.
+\item\textbf{Concorrenza}: programma che avvia più flussi di controllo che devono comunicare e sincronizzarsi tra loro.
+\end{itemize}
 
-\textbf{Concorrenza}: programma che avvia più flussi di controllo che devono comunicare e sincronizzarsi tra loro.
-
-Non è detto che un linguaggio parallelo supporti bene anche il paradigma concorrente e viceversa.
+\noindent Non è detto che un linguaggio parallelo supporti bene anche il paradigma concorrente e viceversa.
 
 Si tratta comunque di paradigmi di programmazione più difficili, sia per via del non determinismo, sia perché non c'è ancora un modello standard per i linguaggi concorrenti, perché ci si trova ancora in una fase di sperimentazione su vari modelli:
 \begin{itemize}
-	\item A memoria condivisa, come fa Java
-	\item A messaggi, come fa Scala
-	\item GP-GPU per il parallelismo utilizzando hardware dedicato
+	\item A memoria condivisa, come fa Java;
+	\item A messaggi, come fa Scala;
+	\item GP-GPU per il parallelismo utilizzando hardware dedicato.
 \end{itemize}
 
 \section{Programma del corso}
 
 \begin{enumerate}
-	\item Studio di un mini linguaggio funzionale: semantica e sistema di tipi per ragionare sul linguaggio. Facendo anche un confronto con la pratica
+	\item Studio di un mini linguaggio funzionale: semantica e sistema di tipi per ragionare sul linguaggio. Facendo anche un confronto con la pratica.
 	\item Arricchimento del linguaggio: riferimenti, eccezioni, polimorfismo e inferenza.
 	\item Mini linguaggio ad oggetti: Featherweight Java, in versione funzionale e imperativo.
 	\item Scala: un mix di paradigma funzionale e OO, confrontandolo con Java 8.
 \end{enumerate}
 
-Ogni tanto ci saranno dei seminari tenuti a sorpresa da persone esterne.
+\noindent Ogni tanto ci saranno dei seminari tenuti a sorpresa da persone esterne.
 
 \subsection{Materiale didattico}
 
@@ -99,7 +100,7 @@ Ogni tanto ci saranno dei seminari tenuti a sorpresa da persone esterne.
 	\item Per la parte su Scala ci saranno le slide.
 \end{itemize}
 
-Si trova tutto sul sito: \url{http://www.math.unipd.it/~crafa/la/}.
+\noindent Si trova tutto sul sito: \url{http://www.math.unipd.it/~crafa/la/}.
 
 \subsection{Esame}
 

@@ -1,0 +1,103 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+\section{Note 2}
+
+\subsection{Esercizio 1.1}
+
+La relazione di riduzione data definisce una strategia di valutazione efficiente per la valutazione del termine \text{if-then-else}, che permette cioè di valutare unicamente il ramo scelto dalla valutazione della guarda booleana. Ridefinire la semantica operazione del linguaggi in modo che adotti una strategia non efficiente per il costrutto \text{if-then-else}, valutando entrambi i rami del costrutto condizionale.
+
+\subsection{Esercizio 1.4} \label{ex:2.1.4}
+
+Dimostrare che la valutazione, cioè l'esecuzione del programma, è deterministica. Ovvero, se $M \rightarrow M'$ e $M \rightarrow M''$ allora $M' = M''$.
+
+\subsubsection{Soluzione}
+
+La dimostrazione viene fatta per induzione sulla struttura di $M$.
+
+\todo{completare}
+\noindent Casi base:
+\begin{itemize}
+	\item $M = \true$, l'implicazione è vera perché la premessa è falsa in quanto dal termine $M$ non si possono derivare altri termini.
+	\item ... continua per tutti i valori del linguaggio \todo{completare}
+\end{itemize}
+
+\noindent Casi induttivi:
+\begin{itemize}
+	\item $M_1 + M_2 \rightarrow M'$ e $M_1 + M_2 \rightarrow M''$ allora $M' = M''$. Per arrivare ad $M'$ posso applicare 3 possibili regole:
+	\begin{itemize}
+		\item \textsc{Sum}: 
+		\item \textsc{Sum-Right}
+		\item \textsc{Sum-Left} \todo{completare}
+	\end{itemize}
+	\item continua per tutti gli assiomi del linguaggio
+\end{itemize}
+
+
+
+
+\subsection{Esercizio 1.5}
+
+Descrivere le valutazione del termine $((\text{fn }x.3) \: (\text{fn }y.y)) \: ((\text{fn }z.\text{if } z \text{ then } 1 \text{ else } 0) \: (\text{false}))$.
+
+Modificare le regole di valutazione in modo tale che, mantenendo una strategia call-by-value, il termine precedente evolva in un termine stuck in meno passi di riduzione. Scrivere le regole di valutazione della strategia call-by-name e valutare il termine precedente secondo questa strategia.
+
+
+\subsection{Esercizio 1.6}
+
+Considerando le seguenti definizioni in Scala:
+
+\begin{lstlisting}[language=scala]
+def square(x:Int) : Int = x*x
+def sumOfSquare(x:Int, y:Int): Int = square(x) + square(y)
+\end{lstlisting}
+
+\begin{itemize}
+	\item Descrivere i passi di riduzione dell'espressione \texttt{sumOfSquare(3,4)} secondo una strategia ca--by-balue analoga a quella definita nella sezione precedente. Descrive inoltre la riduzione della stessa espressione secondo la strategia call-by-name.
+	\item Descrivere i passi di riduzione dell'espression \texttt{sumOfSquare(3, 2+2)} secondo le due strategie.  
+\end{itemize}
+
+\subsection{Esercizio 1.7}
+
+Si consideri la seguente definizione in Scala:
+
+\begin{lstlisting}[language=Scala]
+def test(x : Int, y:Int) : Int = x*x
+\end{lstlisting}
+
+confrontare la velocità (cioè il numero di passi) di riduzione delle seguenti espressioni secondo le strategie call-by-value e call-by-name.
+
+\begin{enumerate}
+	\item \texttt{test(2,3)}
+	\item \texttt{test(3+4,8)}
+	\item \texttt{test(7,2*4)}
+	\item \texttt{test(3+4,2*4)}
+\end{enumerate}
+
+\subsubsection{Soluzione}
+
+\begin{itemize}
+	\item \texttt{test(2,3)}: in questo caso non ci sono differenze tra le due modalità.
+	\item \texttt{test(3+4,8)}: è più veloce call-by-value, perché con call-by-name viene eseguita due volte l'espressione $3+4$.
+	\item \texttt{test(7,2*4)}: è più veloce call-by-name perché non viene eseguito il prodotto.
+	\item \texttt{test(3+4, 2*4)}: non ci sono differenze, call-by-value calcola il prodotto inutilmente mentre call-by-name calcola due volte la stessa somma.
+\end{itemize}
+
+
+\subsection{Esercizio 1.8}
+
+Definire in Scala una funzione \texttt{and} che si comporta come il costrutto logico \texttt{x \&\& y}.
+
+\subsubsection{Soluzione}
+
+\begin{lstlisting}[language=Scala]
+// b2 deve essere passato per nome e non per valore
+def and(b1 : Boolean, b2: =>Boolean) {
+if (b1) {
+return b2
+}
+return false
+}
+\end{lstlisting}

@@ -1,0 +1,60 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+\section{Note 3}
+
+
+\subsection{Esercizio 1.1}
+
+Trovare un contesto $\Gamma$ tale che $\Gamma \vdash f \: x \: y : \text{ Bool}$ sia derivabile.
+
+\subsubsection{Soluzione}
+
+I vincoli sui tipi sono:
+\begin{itemize}
+	\item $ z : T \rightarrow \Bool$
+	\item $ (x\: y) : T $
+	\item $ x : T_1 \rightarrow T$
+	\item $ y : T_1$
+\end{itemize}
+
+dove $T$ e $T_1$ sono due tipi qualsiasi.
+
+Un possibile esempio di contesto è dato da $x : \Nat \rightarrow \Nat$, $y : \Nat$ e $z : \Nat \rightarrow \Nat$:
+
+\begin{prooftree}
+	% Ramo App-1
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Var)}}
+	\UnaryInfC{$\Gamma \vdash z : T_1 \rightarrow \Nat$}
+	
+	% Ramo App-2
+	% Ramo App-1
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(var)}}
+	\UnaryInfC{$\Gamma \vdash x : T_2 \rightarrow T_1$}
+	% Ramo App-2
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Var)}}
+	\UnaryInfC{$\Gamma \vdash y : T_1$}
+	\LeftLabel{\textsc{(App)}}
+	\BinaryInfC{$ \Gamma \vdash x\: y : T_1$}
+	\LeftLabel{\textsc{(App)}}
+	\BinaryInfC{$\Gamma \vdash z \:(x\: y) : \Bool$}
+\end{prooftree}
+
+Agli assiomi si arriva sostituendo a $T_1$ e $T_2$ il tipo$\Nat$.
+
+\subsection{Esercizio 1.2}
+
+Il giudizio $\Gamma \vdash x \: x \: :\: T$ è derivabile? Se si trovare una derivazione, se no dimostrare che non lo è
+
+\subsubsection{Soluzione}
+
+Non si riesce a trovare un tipo per $x$ perché il suo tipo dovrebbe sempre essere di ordine superiore di se stesso, in quanto $x$ è una funzione che riceve se stessa come parametro e dato che il sistema di tipi è ben fondato, non è possibile trovare un tipo per $x$.
+
+$$
+x : T \rightarrow T \text{ con } T = T \rightarrow T
+$$

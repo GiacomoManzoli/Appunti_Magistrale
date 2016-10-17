@@ -22,7 +22,7 @@ Perché il sistema funzioni è necessario avere:
 	\item Un ambiente \textbf{dinamico} per l'esecuzione (run-time) del programma. L'ambiente run-time è strettamente legato alla \textbf{semantica} del programma.
 \end{itemize}
 
-Considerando un insieme di programmi sintatticamente corretti, questo può essere diviso nell'insieme dei programma corretti semanticamente e quelli semanticamente errati. Tra quelli semanticamente \textbf{corretti} ci sono anche i programmi \textbf{ben tipati} che sono quei programmi che hanno anche i tipi corretti. Tipicamente il sotto-insieme dei programmi ben tipati non è completo, ovvero non contiene tutti i programmi semanticamente corretti. Questo però non è un problema.
+\noindent Considerando un insieme di programmi sintatticamente corretti, questo può essere diviso nell'insieme dei programma corretti semanticamente e quelli semanticamente errati. Tra quelli semanticamente \textbf{corretti} ci sono anche i programmi \textbf{ben tipati} che sono quei programmi che hanno anche i tipi corretti. Tipicamente il sotto-insieme dei programmi ben tipati non è completo, ovvero non contiene tutti i programmi semanticamente corretti. Questo però non è un problema.
 
 Un errore semantico di un programma non è altro che un termine stuck, quindi quando un programma è ben tipato si ha la garanzia che l'esecuzione non finisca in un termine stuck.
 
@@ -32,13 +32,16 @@ Il tutto viene formalizzato dal \textbf{Teorema di safety}:
 	Se $M$ è ben tipato allora $M \not\rightarrow^* M'$ con $M'$ termine stuck\footnote{$\rightarrow^*$ indica la chiusura riflessiva transitiva di $\rightarrow$, ovvero indica una sequenza di passi.}
 \end{center}
 
-Per dimostrare la correttezza di questo teorema è necessario introdurre il \textbf{Teorema di Progressione}: se $M$ è ben tipato, allora $M$ non è stuck, cioè o $M$ è un valore, oppure $\exists M' \: M \rightarrow M'$.
+\noindent Per dimostrare la correttezza di questo teorema è necessario introdurre altri due teoremi:
 
-Serve anche il \textbf{Teorema di Preservazione}: se $M$ è ben tipato e $M \rightarrow M'$ allora anche $M'$ è ben tipato.
+\begin{itemize}
+	\item \textbf{Teorema di Progressione}: se $M$ è ben tipato, allora $M$ non è stuck, cioè o $M$ è un valore, oppure $\exists M' \: M \rightarrow M'$.
+	\item \textbf{Teorema di Preservazione}: se $M$ è ben tipato e $M \rightarrow M'$ allora anche $M'$ è ben tipato.
+\end{itemize}
 
-Resta da formalizzare il concetto di ``\textit{ben tipato}''.
-Se abbiamo un programma $M$ semanticamente corretto, sappiamo che data la nostra semantica deterministica o $M \rightarrow^* v$ oppure $M \rightarrow M' \text{stuck}$.
-Si può quindi caratterizzare i possibili $v$ ed utilizzare il loro tipo per determinare il tipo del programma $M$.
+\noindent Resta da formalizzare il concetto di ``\textit{ben tipato}''.
+Se abbiamo un programma $M$ semanticamente corretto, sappiamo che data la nostra semantica deterministica o $M \rightarrow^* v$ oppure $M \rightarrow M' $ stuck.
+Si possono quindi caratterizzare i possibili $v$ ed utilizzare il loro tipo per determinare il tipo del programma $M$.
 
 Per esprimere il tipo di un termine viene utilizzata una \textbf{relazione di typing} $M : T$.
 Nel nostro linguaggio funzionale i tipi possibili sono:
@@ -49,14 +52,14 @@ T ::= \text{Bool} \:|\: \text{Nat} \:|\: T \rightarrow T
 $ \footnote{Nat o Int, cambia poco}
 \end{center}
 
-Esempi di tipi:
+\noindent Esempi di tipi:
 \begin{itemize}
 	\item $\fn x.\iif x \then 1 \eelse 0$ ha come tipo $\text{Bool} \rightarrow \text{Nat}$
 	\item $\fn x.x$ ha più tipi possibili: $\text{Nat} \rightarrow \text{Nat}$, $\text{Bool} \rightarrow \text{Bool}$, ecc. Per gestire questa situazione richiediamo che venga esplicitamente espresso il tipo del parametro della funzione. Ottenendo quindi definizioni del tipo $\fn x : \text{Nat} .x$.
 	\item $\fn y : \text{(Bool} \rightarrow \text{Nat) } . \fn z \text{: Bool }.\iif z \then 1 \eelse (y \: z)$ utilizza la notazione di tipo per i parametri delle due funzioni. Il tipo del programma risulta essere $\text{(Bool}\rightarrow \text{Nat)} \rightarrow \text{(Bool}\rightarrow \text{Nat)}$.
 \end{itemize}
 
-Può capitare che ci siano dei termini con delle variabili libere che devono essere tipate come $x + 1$.
+\noindent Può capitare che ci siano dei termini con delle variabili libere che devono essere tipate come $x + 1$.
 
 In questo caso è necessario definire un \textbf{contesto}, ovvero una lista di tipi per le variabili.
 Il contesto viene indicato formalmente con 
@@ -65,7 +68,7 @@ $$
 \Gamma \vdash M : T
 $$
 
-Nell'esempio precedente si ha
+\noindent Nell'esempio precedente si ha
 
 $$
 x : \text{ Nat } \vdash x + 1 : \text{ Nat}
@@ -76,9 +79,10 @@ $$
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\textwidth]{images/l4-assiomi}
+	\caption{Assiomi del sistema di tipi}
 \end{figure}
 
-Le ipotesi specificano che tipo devono avere i vari termini affinché valgano le regole e gli assiomi.
+\noindent Le ipotesi specificano che tipo devono avere i vari termini affinché valgano le regole e gli assiomi.
 
 La regola \textsc{Fun} dice che il programma sarà ben tipato con il tipo $T_1 \rightarrow T_2$ se il corpo della funzione $M$ ha tipo $T_2$ assumendo il contesto $\Gamma$ e che $x : T_1$. Deve inoltre valere $x \not\in \Gamma$ per evitare conflitti di nomi, se questo non è vero basta effettuare una alpha-conversione sul parametro della funzione.
 
@@ -141,57 +145,3 @@ $$
 	\LeftLabel{\textsc{(Fun)}}
 	\UnaryInfC{$\emptyset \vdash \fn x : \Nat.\Big[ (\fn y : \Nat . \true) (x +1)\Big] : (\Nat \rightarrow \Bool)$}
 \end{prooftree}
-
-\vspace{30px}
-
-$$
-\text{Definisci }\Gamma \text{ in modo che il programma sia ben tipato }\Gamma \vdash z \:(x\: y) : \Bool
-$$
-
-I vincoli sui tipi sono:
-\begin{itemize}
-\item $ z : T \rightarrow \Bool$
-\item $ (x\: y) : T $
-\item $ x : T_1 \rightarrow T$
-\item $ y : T_1$
-\end{itemize}
-
-dove $T$ e $T_1$ sono due tipi qualsiasi.
-
-Un possibile esempio di contesto è dato da $x : \Nat \rightarrow \Nat$, $y : \Nat$ e $z : \Nat \rightarrow \Nat$:
-
-\begin{prooftree}
-	% Ramo App-1
-	\AxiomC{$\checkmark$}
-	\LeftLabel{\textsc{(Var)}}
-	\UnaryInfC{$\Gamma \vdash z : T_1 \rightarrow \Nat$}
-	
-	% Ramo App-2
-		% Ramo App-1
-		\AxiomC{$\checkmark$}
-		\LeftLabel{\textsc{(var)}}
-		\UnaryInfC{$\Gamma \vdash x : T_2 \rightarrow T_1$}
-		% Ramo App-2
-		\AxiomC{$\checkmark$}
-		\LeftLabel{\textsc{(Var)}}
-		\UnaryInfC{$\Gamma \vdash y : T_1$}
-		\LeftLabel{\textsc{(App)}}
-		\BinaryInfC{$ \Gamma \vdash x\: y : T_1$}
-	\LeftLabel{\textsc{(App)}}
-	\BinaryInfC{$\Gamma \vdash z \:(x\: y) : \Bool$}
-\end{prooftree}
-
-Agli assiomi si arriva sostituendo a $T_1$ e $T_2$ il tipo$\Nat$.
-
-
-\vspace{30px}
-
-$$
-\Gamma \vdash x \: x : T
-$$
-
-Non si riesce a trovare un tipo per $x$ perché il suo tipo dovrebbe sempre essere di ordine superiore di se stesso, in quanto $x$ è una funzione che riceve se stessa come parametro e dato che il sistema di tipi è ben fondato, non è possibile trovare un tipo per $x$.
-
-$$
-x : T \rightarrow T \text{ con } T = T \rightarrow T
-$$

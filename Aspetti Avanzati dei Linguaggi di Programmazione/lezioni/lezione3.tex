@@ -25,13 +25,14 @@ $$
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width = 0.7\linewidth]{./images/l3-assiomi}
+	\caption{Assiomi e regole della nostra semantica operazionale}
 \end{figure}
 
-\textsc{Sum}, \text{Minus}, ecc. sono assiomi che descrivono come avanza la computazione.
+\textsc{Sum}, \textsc{Minus}, ecc. sono assiomi che descrivono come avanza la computazione.
 
 \textsc{Sum-Left} e \textsc{Sum-Right} sono delle \textbf{regole} e vengono lette come ``se $M \rightarrow M'$ allora anche il termine più complesso $M + N$ fa un passo in avanti e va su $M' + N$ ($M + N \rightarrow M' +N$). Esiste anche la versione duale \textsc{Minus-Left} e \textsc{Minus-Right}.
 
-Questo insieme di assiomi e regole fornisce una strategia di valutazione per le operazioni del programma, che per come è definita segue un approccio \textit{eager}\todo{Eager? ascoltare registrazione} in quanto vengono valutati solamente i termini necessari alla computazione.
+Questo insieme di assiomi e regole fornisce una strategia di valutazione per le operazioni del programma, che per come è definita segue un approccio \textit{eager} \todo{Eager? ascoltare registrazione} in quanto vengono valutati solamente i termini necessari alla computazione.
 
 Consideriamo il programma 
 
@@ -39,23 +40,21 @@ $$
 \iif \true \then 3+2 \eelse 6+1
 $$
 
-per l'assioma \textsc{If-True} il programma fa un passo di computazione:
+\noindent per l'assioma \textsc{If-True} il programma fa un passo di computazione:
 
 $$
 \iif \true \then 3+2 \eelse 6+1 \rightarrow 3+2
 $$
 
-e per l'assioma \textsc{Sum} c'è un altro passo da fare
+\noindent e per l'assioma \textsc{Sum} c'è un altro passo da fare
 
 $$
 3+2 \rightarrow 5
 $$
 
-così facendo si ottiene il valore che viene calcolato dal programma.
+\noindent così facendo si ottiene il valore che viene calcolato dal programma.
 
-Nell'esempio precedente il termine contenuto nel ramo else dell'if non viene valutato.
-
-\textbf{Esercizio}: definire una semantica \textit{lazy} (a.k.a. versione stupida), ovvero che valuta tutti i termini e provare a dimostrare l'avanzamento dell'esecuzione del programma precedente con questa nuova semantica.
+Nell'esempio precedente il termine contenuto nel ramo \text{else} dell'\text{if} non viene valutato.
 
 \textbf{N.B.}: I termini \textit{eager} e \textit{lazy} vengono per qualche strano motivo utilizzati al contrario, stando alla Crafa hanno un significato ambiguo. Meglio non usarli.
 
@@ -64,116 +63,96 @@ Nell'esempio precedente il termine contenuto nel ramo else dell'if non viene val
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width = 0.7\linewidth]{./images/l3-assiomi-2}
+	\caption{Assiomi e regole per l'applicazione di una funzione}
 \end{figure}
 
-Questo stile di gestire l'applicazione di una funzione prende il nome di \textbf{call-by-value} e viene determinata dall'assioma \textsc{Beta}, perché l'argomento viene valutato prima di essere applicato alla funzione.
+\noindent Questo stile di gestire l'applicazione di una funzione prende il nome di \textbf{call-by-value} e viene determinata dall'assioma \textsc{Beta}, perché l'argomento viene valutato prima di essere applicato alla funzione.
 Al contrario la sintassi \textbf{call-by-name} permette invece di applicare un termine generico al parametro della funzione.
 
 Le regole di per la sintassi call-by-name la regola \textsc{Beta} diventa
 
-$$
-\frac{\textsc{(Beta)}}{\text{fn }x.M \: N \rightarrow M \{ x := N\}}
-$$
+\begin{prooftree}
+	\AxiomC{ }
+	\LeftLabel{(\textsc{Beta})}
+	\UnaryInfC{$\text{fn }x.M \: N \rightarrow M \{ x := N\}$}
+\end{prooftree}
 
-Le regole dell'applicazione cambiano, non è più necessario \textsc{App2} perché serviva per arrivare ad ottenere il valore del parametro.
+\noindent Le regole dell'applicazione cambiano, non è più necessario \textsc{App2} perché serviva per arrivare ad ottenere il valore del parametro.
 
 $$
-	M = (\fn x. x+x+x) \underbrace{5-(2+1)}_{N}
+	M = (\fn x. x+x+x) \: \underbrace{5-(2+1)}_{N}
 $$	
 
-Con la semantica call-by-value è necessario come prima cosa trovare il valore del termine $N$
+\noindent Con la semantica call-by-value è necessario come prima cosa trovare il valore del termine $N$
 
 Per proseguire posso solo applicare \textsc{App2}, perché $M$ è già un valore finale
 
-$$
-\textsc{(App2)}\frac{5-(2+1) \rightarrow 5 -3}{(\fn x.x+x+x) \: 5-(2+1) \rightarrow (\fn x.x+x+x)\: (5-3)}
-$$
+\begin{prooftree}
+	\AxiomC{$5-(2+1) \rightarrow 5 -3$}
+	\LeftLabel{\textsc{(App2)}}
+	\UnaryInfC{$(\fn x.x+x+x) \:\: 5-(2+1) \rightarrow (\fn x.x+x+x)\: (5-3)$}
+\end{prooftree}
 
-La parte sopra della regola è ancora un'ipotesi, quindi devo continuare a derivare fino a che non dimostro che è vera cercando un assioma, in questo caso serve la regola \textsc{Minus-Right}	
+\noindent La parte sopra della regola è ancora un'ipotesi, quindi devo continuare a derivare fino a che non dimostro che è vera cercando un assioma, in questo caso serve la regola \textsc{Minus-Right}	
 
-$$
-\textsc{(App2)} 
-\cfrac{
-	\textsc{(Minus-Right)}
-	\cfrac{
-		2+1 \rightarrow 3
-	}{
-		5-(2+1) \rightarrow 5 -3
-	}
-}{
-	(\fn x.x+x+x) \: 5-(2+1) \rightarrow (\fn x.x+x+x)\: (5-3)
-}
-$$
+\begin{prooftree}
+	\AxiomC{$2+1 \rightarrow 3$}
+	\LeftLabel{\textsc{(Minus-Right)}}
+	\UnaryInfC{$5-(2+1) \rightarrow 5 -3$}
+	\LeftLabel{\textsc{(App2)}}
+	\UnaryInfC{$(\fn x.x+x+x) \: \: 5-(2+1) \rightarrow (\fn x.x+x+x)\: (5-3)$}
+\end{prooftree}
 
-allo stesso modo devo applicare l'assioma \textsc{Sum} per l'ipotesi $2+1\rightarrow3$
 
-$$
-\textsc{(App2)} 
-\cfrac{
-	\textsc{(Minus-Right)}
-	\cfrac{
-		\textsc{(Sum)}
-		\cfrac{
-			\checkmark
-		}{
-			2+1 \rightarrow 3
-		}
-	}{
-		5-(2+1) \rightarrow 5 -3
-	}
-}{
-	(\fn x.x+x+x) \: 5-(2+1) \rightarrow (\fn x.x+x+x)\: (5-3)
-}
-$$
+\noindent allo stesso modo devo applicare l'assioma \textsc{Sum} per l'ipotesi $2+1\rightarrow3$
 
-Sono quindi arrivato a completare un ramo di derivazione, provando l'ipotesi $(\fn x. x+x+x)\: 5-(2+1) \rightarrow (\fn x.x+x+x)\: (5-3)$, ma non ho ancora finito, perché posso applicare ancora \textsc{App2} dato che non ho ancora ottenuto un valore per il parametro della funzione.
+\begin{prooftree}
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{Sum}}
+	\UnaryInfC{$2+1 \rightarrow 3$}
+	\LeftLabel{\textsc{(Minus-Right)}}
+	\UnaryInfC{$5-(2+1) \rightarrow 5 -3$}
+	\LeftLabel{\textsc{(App2)}}
+	\UnaryInfC{$(\fn x.x+x+x) \: \: 5-(2+1) \rightarrow (\fn x.x+x+x)\: (5-3)$}
+\end{prooftree}
 
-$$
-\textsc{(App2)} 
-\cfrac{
-	\textsc{(Minus)}
-	\cfrac{
-		\checkmark
-	}{
-		5-3\rightarrow 2
-	}
-}{
-	(\fn x.x+x+x) \: (5-3) \rightarrow (\fn x.x+x+x)\: 2
-}
-$$
+\noindent Sono quindi arrivato a completare un ramo di derivazione, provando l'ipotesi $(\fn x. x+x+x)\: 5-(2+1) \rightarrow (\fn x.x+x+x)\: (5-3)$, ma non ho ancora finito, perché posso applicare ancora \textsc{App2} dato che non ho ancora ottenuto un valore per il parametro della funzione.
 
-Adesso posso applicare l'assioma \textsc{Beta}:
+\begin{prooftree}
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Minus)}}
+	\UnaryInfC{$5-3\rightarrow 2$}
+	\LeftLabel{\textsc{(App2)}}
+	\UnaryInfC{$(\fn x.x+x+x) \: (5-3) \rightarrow (\fn x.x+x+x)\: 2$}
+\end{prooftree}
 
-$$
-\cfrac{\textsc{(Beta)}}{
-	(\fn x.x+x+x)\: 2 \rightarrow 2+(2+2)
-}
-$$
+\noindent Adesso posso applicare l'assioma \textsc{Beta}:
 
-Da li posso continuare con
+\begin{prooftree}
+	\AxiomC{}
+	\LeftLabel{\textsc{(Beta)}}
+	\UnaryInfC{$(\fn x.x+x+x)\: 2 \rightarrow 2+(2+2)$}
+\end{prooftree}
 
-$$
-\textsc{(Sum-Right)} 
-\cfrac{
-	\textsc{(Sum)}
-	\cfrac{
-		\checkmark
-	}{
-		2+2\rightarrow 4
-	}
-}{
-	2+(2+2) \rightarrow 2+4
-}
-$$
+\noindent e da li posso continuare con
 
-e poi concludo con
+\begin{prooftree}
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Sum)}}
+	\UnaryInfC{$2+2\rightarrow 4$}
+	\LeftLabel{\textsc{(Sum-Right)}}
+	\UnaryInfC{$2+(2+2) \rightarrow 2+4$}
+\end{prooftree}
 
-$$
-\textsc{(Sum)}
-\cfrac{\checkmark}{2+4 \rightarrow 6}
-$$
+\noindent e poi concludo con
 
-quindi con call-by-value si arriva al valore 6 con 5 passi.
+\begin{prooftree}
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Sum)}}
+	\UnaryInfC{$2+4\rightarrow 6$}
+\end{prooftree}
+
+\noindent quindi con call-by-value si arriva al valore 6 con 5 passi.
 
 Utilizzando call-by-name si ottiene sempre lo stesso risultato, con la differenza che viene applicata prima la regola \textsc{Beta} che porta ad avere
 
@@ -181,18 +160,19 @@ $$
 M \rightarrow (5-(2+1)) + [(5-(2+1)) + (5-(2+1))]
 $$
 
-per esercizio continuare l'albero di derivazione. \todo{TODO}
+\noindent per esercizio continuare l'albero di derivazione. \todo{TODO}
 
-$M = (\fn x.x+x+x)\: N $ con 100 passi necessari per arrivare al valore di $N$.
+\vspace{10px}
+
+Consideriamo il termine $M = (\fn x.x+x+x)\: N $ con 100 passi necessari per arrivare al valore di $N$.
 In questo caso utilizzando call-by-name è necessario effettuare 3 volte il calcolo del valore di $N$, perché il valore del parametro $x$ viene usato 3 volte, mentre con la sintassi call-by-value la valutazione di $N$ viene effettuata una sola volta. Questa differenza non è sempre presente.
 
-Considerando il programma $M' = (\fn x.3+5) \:N$ con lo stesso $N$ di prima. Si ha che è più efficiente il call-by-name perché il valore di $N$ non viene utilizzato all'interno della funzione e quindi non viene calcolato, mentre con call-by-value il valore di $N$ viene calcolato.
+Consideriamo invece il programma $M' = (\fn x.3+5) \:N$ con lo stesso $N$ di prima. Si ha che è più efficiente il call-by-name perché il valore di $N$ non viene utilizzato all'interno della funzione e quindi non viene calcolato, mentre con call-by-value il valore di $N$ viene calcolato.
 
 Casi estremi a parte, si è visto che mediamente è più conveniente utilizzare call-by-value.
 
-$\Omega = (\fn x.x x)\: (\fn x. x x)$ sia con call-by-value che call-by-n ottengo $(\fn x.x x)\: (\fn x.x x)$, ovvero ottengo ancora $\Omega$.
+Un altro programma interessante è $\Omega = (\fn x.x \: x)\: (\fn x. x\:x)$ sia con call-by-value che call-by-n ottengo $(\fn x.x x)\: (\fn x.x x)$, ovvero ottengo ancora $\Omega$.
 La semantica di questo programma è divergente, perché l'esecuzione di un passo di computazione porta esattamente alla stessa situazione.
-
 Un'altra cosa interessante di questo esempio è che il parametro viene applicato a se stesso e quindi risulta impossibile trovare un tipo per questo parametro, perché dovrebbe essere sempre un tipo di ordine superiore di se stesso.
 
 \subsection{Errori semantici}
@@ -200,17 +180,17 @@ $M = 5 + \text{false}$ è un programma sintatticamente corretto, ma che non ries
 In questo caso si ha quindi un'errore di programmazione e il termine $M$ prende il nome di termine \textbf{stuck}.
 
 
-$$M = (\fn x.\iif x \then \true \eelse \false) (\iif \false \then \fn y.\true \eelse 4)$$
+$$M = (\fn x.\iif x \text{ then true else false})\: (\text{if false then fn }y.\text{ true else } 4)$$
 
-L'unica regola che posso applicare è \textsc{App2}, perché la prima parte del termine è già un valore.
+\noindent L'unica regola che posso applicare è \textsc{App2}, perché la prima parte del termine è già un valore.
 
-$$(\fn x.\iif x \then \true \eelse \false) (\iif \false \then \fn y.\true \eelse 4) \rightarrow (\fn x.\iif x \then \true \eelse \false) 4$$
+$$(\fn x.\iif x \text{ then true else false}) \:(\text{if false then fn }y.\text{ true else } 4) \rightarrow (\fn x.\iif x \text{ then true else false})\: 4$$
 
-Adesso posso applicare \textsc{Beta}:
+\noindent Adesso posso applicare \textsc{Beta}:
 
-$$(\fn x.\iif x \then \true \eelse \false) 4 \rightarrow \iif 4 \then \true \eelse \false$$
+$$(\fn x.\iif x \text{ then true else false})\: 4 \rightarrow \iif 4 \text{ then true else false}$$
 
-ottenendo un termine stuck perché la guardia dell'if non è booleana.
+\noindent ottenendo un termine stuck perché la guardia dell'\text{if} non è booleana.
 
 \subsection{Deterministicità del linguaggio}
 
@@ -218,43 +198,11 @@ La semantica del linguaggio è \textbf{deterministica}, ovvero per ogni stato c'
 
 Più formalmente se $M \rightarrow M'$ e $M \rightarrow M''$ allora $M' = M''$.
 
-Questo si dimostra per induzione sulla struttura di $M$.
-
-Casi base:
-\begin{itemize}
-	\item $M = \true$, l'implicazione è vera perché la premessa è falsa in quanto dal termine $M$ non si possono derivare altri termini.
-	\item ... continua per tutti i valori del linguaggio \todo{completare}
-\end{itemize}
-
-Casi induttivi:
-\begin{itemize}
-	\item $M_1 + M_2 \rightarrow M'$ e $M_1 + M_2 \rightarrow M''$ allora $M' = M''$. Per arrivare ad $M'$ posso applicare 3 possibili regole:
-	\begin{itemize}
-		\item \textsc{Sum}: 
-		\item \textsc{Sum-Right}
-		\item \textsc{Sum-Left} \todo{completare}
-	\end{itemize}
-	\item continua per tutti gli assiomi del linguaggio
-\end{itemize}
+Questo si dimostra per induzione sulla struttura di $M$ (vedi §\ref{ex:2.1.4}). 
 
 \subsection{Scala: call-by-name e call-by-value}
 
-Consideriamo la funzione definita come
-
-\begin{lstlisting}[language=Scala]
-	def test(x: Int, y: Int) : Int = x * x
-\end{lstlisting}
-
 In Scala è possibile andare a scegliere se utilizzare il passaggio di parametri con call-by-name o call-by-value.
-
-Considerando le chiamate:
-
-\begin{itemize}
-	\item \texttt{test(2,3)}: in questo caso non ci sono differenze tra le due modalità.
-	\item \texttt{test(3+4,8)}: è più veloce call-by-value, perché con call-by-name viene eseguita due volte l'espressione $3+4$.
-	\item \texttt{test(7,2*4)}: è più veloce call-by-name perché non viene eseguito il prodotto.
-	\item \texttt{test(3+4, 2*4)}: non ci sono differenze, call-by-value calcola il prodotto inutilmente mentre call-by-name calcola due volte la stessa somma.
-\end{itemize}
 
 Questo può portare ad un problema a livello pratico, ad esempio se si vuole implementare un meccanismo di asserzioni che può essere disabilitato, ci possono essere dei problemi.
 
@@ -267,14 +215,14 @@ Questo può portare ad un problema a livello pratico, ad esempio se si vuole imp
 	assert(saldoConto() > 0)
 \end{lstlisting}
 
-Un po' di informazioni su Scala:
+\noindent Un po' di informazioni su Scala:
 \begin{itemize}
 	\item In Scala un valore che può essere modificato viene identificato con \texttt{var}.
 	\item Non è necessario specificare il tipo di ritorno di una funzione.
 	\item Se la funzione è composta da una sola espressione non serve il \texttt{return}.
 \end{itemize}
 
-Tornando all'esempio, assumendo di aver disabilitato le asserzioni impostando il flag a \texttt{false} si ha che che con il call-by-value la funzione \texttt{saldoConto()} viene comunque valutata.
+\noindent Tornando all'esempio, assumendo di aver disabilitato le asserzioni impostando il flag a \texttt{false} si ha che che con il call-by-value la funzione \texttt{saldoConto()} viene comunque valutata.
 
 Utilizzando invece call-by-name, la funzione \texttt{saldoConto()} viene calcolata solo se le asserzioni sono abilitate.
 
@@ -283,16 +231,3 @@ Per specificare che un parametro deve essere passato by-name è necessario speci
 \begin{center}
 \texttt{pred : =>Boolean}
 \end{center}
-
-\textbf{Esercizio}: definire una funzione \texttt{and(b1 : Boolean , b2: Boolean)} che implementa l'\textit{and} efficiente, ovvero quello che non valuta il secondo booleano se il primo è falso.
-
-\begin{lstlisting}[language=Scala]
-// b2 deve essere passato per nome e non per valore
-def and(b1 : Boolean, b2: =>Boolean) {
-	if (b1) {
-		return b2
-	}
-	return false
-}
-\end{lstlisting}
-
