@@ -1,0 +1,153 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 18 Ottobre 2016
+
+% section sistemi di tipi
+% subsection fomralizzazione dei tipi
+
+\subsection{Teorema di Safety}
+
+\begin{center}
+	Se $\emptyset \vdash M : T$ è derivabile e $M \rightarrow^* M'$ con $M' \not\rightarrow$ allora $M$ è un valore.
+\end{center}
+
+Come già anticipato, per dimostrare questo problema servono altri teoremi/lemmi.
+
+\subsubsection{Lemmi di inversione}
+
+\begin{enumerate}
+	\item $\Gamma \vdash \text{ true } : T $ è derivabile, allora $T = \Bool $. Lo stesso vale anche per \text{false}.
+	\item $\Gamma \vdash n : T$ è derivabile, allora $T = \Nat$.
+	\item $\Gamma \vdash M + N : T$ è derivabile, allora $T = \Nat$ e sia $\Gamma \vdash M : \Nat$ che $\Gamma \vdash N : \Nat$ sono derivabili. Lo stesso vale anche con il $-$.
+	\item $\Gamma \vdash \iif M_1 \then M_2 \eelse M_3$ è derivabile, allora $\Gamma \vdash M_1 : \Bool$ è derivabile e, sia $\Gamma \vdash M_2 : T $ che $\Gamma \vdash M_3 :T $ sono derivabili e il tipo $T$ è lo stesso.
+	\item $\Gamma \vdash x : T$ è derivabile, allora $x : T \in \Gamma$.
+	\item $\Gamma \vdash \fn x : T_1 . M : T$ è derivabile, allora $\exists T_2 \: | \: T = T_1 \rightarrow T_2, \: \Gamma, x:T_1 \vdash M : T_2$ è derivabile.
+	\item $\Gamma \vdash M \: N$ è derivabile, allora $ \exists T_1 \: | \: \Gamma \vdash M : T_1 \rightarrow T $ e $\Gamma \vdash N : T_1 $ è derivabile.
+\end{enumerate}
+
+\noindent La dimostrazione dei lemmi è triviale perché basta invertire la relativa regola di tipo. Inoltre, questi lemmi tornano utili per fare inferenza sui tipi.
+
+\textbf{Esercizio}: dimostrare che se $M$ è un termine ben tipato, allora tutti i sotto termini di $M$ sono termini ben tipati. Prima è necessario formalizzare per induzione cos'è un sotto termine.
+
+\subsubsection{Teorema di Unicità dei tipi}
+
+\begin{center}
+	Dato un contesto $\Gamma$, se $\Gamma \vdash M : T_1 $ e $\Gamma \vdash M : T_2$ allora $T_1 = T_2$
+\end{center}
+
+\noindent Ovvero in un determinato contesto c'è solo un tipo valido per un termine. Questo vale nel nostro linguaggio non ci sono i sotto-tipi. 
+
+La dimostrazione è banale perché nel nostro sistema di tipi possiamo utilizzare sempre al più una regola ad ogni passo della verifica.
+
+
+\subsubsection{Lemmi delle Forme canoniche}
+
+\begin{enumerate}
+	\item Se $v$ è un valore di tipo $\Bool$, allora $v$ è $\text{true}$ oppure $\text{false}$.
+	\item Se $v$ è un valore di tipo $\Nat$, allora $v$ è $n$.
+	\item Se $v$ è un valore di tipo $T_1 \rightarrow T_2$, allora $v$ è $\fn x : T_1 . M$.
+\end{enumerate}
+
+\subsubsection{Teorema di Progressione}
+
+Se $M$ è un termine chiuso e ben tipato, allora o è un valore oppure posso effettuare un'altro passo di computazione, ovvero $M$ non è mai un termine stuck.
+
+\begin{center}
+Se $\emptyset \vdash M : T$ allora $M$ è un valore oppure $\exists M' \: | \: M \rightarrow M'$
+\end{center}
+
+\noindent La condizione che il termine sia chiuso deriva dal fatto che non si può dimostrare che un termine è ben tipato se ci sono delle variabili libere.
+
+\paragraph{Dimostrazione}
+
+Per derivare il giudizio di tipo $\emptyset \vdash M : T$ devo creare un albero di prova, il quale avrà una certa altezza. La dimostrazione del teorema si fa per induzione sull'altezza dell'albero.
+
+\subparagraph{Casi base} $h = 1$, ovvero il giudizio di tipo è un assioma. Ci sono tanti casi base quanti sono gli assiomi di tipo.
+
+\begin{itemize}
+	\item $\emptyset \vdash \text{true } : \Bool$, in questo caso il teorema è verificato perché $M = \text{true}$ e quindi è un valore. Lo stesso vale per l'assioma con $\text{false}$ e $n :\text{Nat}$.
+	\item $\Gamma \vdash x : T$ non può essere un caso base, perché per essere valido devo avere delle informazioni sul contesto e nell'ipotesi del teorema $\Gamma = \emptyset$.
+\end{itemize} 
+
+\subparagraph{Casi induttivi}: $h+1 \rightarrow h$, ovvero devo dimostrare che se dal giudizio $\emptyset \vdash M : T$ è derivabile in $h+1$ passi allora vale il teorema, utilizzando l'ipotesi induttiva che se $\emptyset \vdash \overline{M} : \overline{T}$ derivabile in $h$ passi, allora $\overline{M}$ è un valore o c'è un altro passo che posso fare.
+Si ragiona quindi per casi sull'ultima regola di derivazione utilizzata.
+
+\begin{itemize}
+	\item \textsc{(Sum)}: in questo caso $M = M_1 +M_2$, $\emptyset \vdash M_1 + M_2 : \Nat$ e sono vere le due ipotesi induttive $\emptyset \vdash M_1 : \Nat$ e $\emptyset \vdash M_2 : \Nat$.
+	Per ipotesi induttiva so quindi che $M_1$ è un valore, oppure $M_1 \rightarrow M_1'$ e lo stesso vale per $M_2$.
+	Ci sono quindi 3 casi possibili:
+	\begin{enumerate}[a]
+		\item $M_1$ e $M_2$ sono entrambi valori e per il Lemma delle Forme canoniche i due termini assumono due valore $m_1$ e $m_2$. Si ha quindi che $M = m_1 + m_2$ che può essere ridotto con la regola \textsc{Sum} in $M' = m$.
+		\item $M_1$ è un valore e $M_2 \rightarrow M_2'$. Si ha quindi che per ipotesi induttiva, $M = m_1 + M_2$ che può essere ridotto in $M' = m_1 + M_2'$ per la regola \textsc{Sum-Right}.
+		\item $M_1 \rightarrow M_1'$ e $M_2$ qualsiasi (valore o $M_2 \rightarrow M_2'$). In entrambi i casi, sotto ipotesi induttiva, posso passare ad $M'$ utilizzando la regola \textsc{Sum-Left}, ottenendo $M' = M_1' + M_2$. 
+	\end{enumerate}
+	\item \textsc{(Minus)}: analogo a \textsc{(Sum)}.
+	\item \textsc{(If)}: $ M = \iif M_1 \then M_2 \eelse M_3$, con ipotesi induttiva $\emptyset \vdash_h M_1 : \Bool$, $\emptyset \vdash_h M_2 : T$ e $\emptyset \vdash_h M_3 : T$. 
+	Partiamo da $M_1$, questo può essere un valore oppure può fare un passo $M_1 \rightarrow M_1'$:
+	\begin{enumerate}[a]
+		\item $M_1$ è un valore, allora per il lemma delle forme canoniche, $M_1$ è \text{true} o \text{false}. Se $M_1 = \text{true}$, allora $M \rightarrow M_2$, mentre se è false $M \rightarrow M_3$.
+		\item $M_1 \rightarrow M_1'$, allora per la regola \textsc{(If)} $M$ fa un passo e va in $M' = \iif M_1' \then M_2 \eelse M_3$.
+	\end{enumerate}
+	\item \textsc{(Fun)}: in questo caso $\emptyset \vdash_{h+1} \underbrace{\fn x: T_1 . M_1}_{M} : T_1 \rightarrow T_2$. $M$ è già un valore perché è una funzione.
+	\item \textsc{(App)}: in questo caso $M = M_1 \: M_2$, $\emptyset \vdash_{h+1} M_1 \: M_2 : T$, $\emptyset\vdash_{h} M_1 : T'\rightarrow T $ e $\emptyset\vdash_h M_2 : T'$. Si ha quindi che per ipotesi induttiva $M_1$ è un valore oppure fa un passo e allo stesso modo $M_2$ è un valore oppure fa un passo.
+	\begin{enumerate}[a]
+		\item Se $M_1$ è un valore di tipo $T' \rightarrow T$, allora per il lemma delle forme canoniche $M_1 = \fn y:T'.N$. Se $M_2$ è anch'esso un valore $v$, ovvero $M = (\fn y:T'.N \: v)$ e quindi posso applicare l'assioma \textsc{Beta} che porta la computazione a $M' = N\{y ::= v\}$.
+		\item Se $M_1$ è un valore e $M_2 \rightarrow M_2'$,ho che $M = (\fn y:T'.N) M_2$ posso utilizzare la regola \textsc{App2} per passare a $M' = (\fn y:T'.N) M_2'$.
+		\item Se $M_1 \rightarrow M_1'$, indipendentemente da $M_2$ viene applicata la regola \textsc{App1} che porta $M = M_1 \: M_2 $ in $M' = M_1' \: M_2$. 
+	\end{enumerate}
+\end{itemize}
+
+\noindent La dimostrazione di questo teorema è solamente lunga e non difficile, quindi ultimamente per verificare i sistemi di tipi vengono utilizzati dei \textit{proof assistant}: dei programmi che si effettuano dimostrazioni di questo tipo basandosi sugli assiomi di tipo.
+
+\subsection{Lemma di Weakening}
+
+Se $\Gamma \vdash M : T $ e $x \notin Dom(\Gamma)$, allora $\Gamma, x : T_1 \vdash M : T$ è ancora derivabile con lo stesso numero di passi (stessa altezza).
+
+Prende il nome di \textit{indebolimento} perché viene aggiunta una nuova assunzione e quindi il giudizio nuovo è più debole.
+
+Non dimostriamo questo lemma.
+
+\subsection{Lemma di Sostituzione}
+
+Se $\Gamma, x: T_1 \vdash M_1 : T$ e $\Gamma \vdash M_2 : T_1$, allora $\Gamma \vdash M_1\{x := M_2\}: T$.
+
+Ovvero se ad un termine ben tipato applico una sostituzione su una sua variabile libera con un termine dello stesso tipo, ottengono un nuovo termine ben tipato con il tipo di partenza. \todo{dimostrare}
+
+\subsection{Teorema di Preservazione (Subject reduction)}
+
+\`E il teorema che collega il sistema di tipi statico con l'evoluzione dinamica dell'esecuzione del programma.
+
+\begin{center}
+	Se $\Gamma \vdash M : T$ è ben tipato e $M \rightarrow M'$ allora anche $\gamma \vdash M' : T$ è ben tipato.
+\end{center}
+
+\paragraph{Dimostrazione}
+
+L'induzione viene fatta sull'altezza di derivazione di $M \rightarrow M'$.
+
+\subparagraph{Casi base} sono quei casi in cui vengono applicati gli assiomi.
+
+\begin{itemize}
+	\item \textsc{(Sum)}: $M = n_1 + n_2 \rightarrow M' = n$. So anche che $\Gamma \vdash n_1 + n_2 : T$ e quindi posso applicare il lemma di inversione per trovare $ T= \Nat$. La tesi in questo caso è che $\Gamma \vdash n : \Nat$. Questa tesi è vera perché è l'assioma $\textsc{Sum}$ delle regole di tipo.
+	\item \textsc{(Minus)}: come per la somma.
+	\item \textsc{(If-True)}: $M \rightarrow M' $ è $\text{if true then }M_1 \text{ else }M_2 \rightarrow M' = M_1$, con $\Gamma \vdash M : T$ e per il lemma di inversione è derivabile anche $\Gamma \vdash M_1 : T$ e quindi anche $M'$ ha tipo $T$.
+	\item \textsc{(If-False)}: uguale a prima, solo che viene utilizzato $M_2$.
+	\item \textsc{(Beta)}: $M \rightarrow M'$ è $M = (\fn x:T_1 . M_1 \: v) $ e $M' = M_1\{x ::= v\}$ e $\Gamma \vdash M : T$, quindi per il lemma di inversione $\Gamma \vdash \fn x: T_1 . M_1 : T_A \rightarrow T_B$ e $v : T_A$. Per un altro lemma di inversione ho che $T_A = T_1$. Sempre per il lemma di inversione $\Gamma, x : T_1 \vdash M_1 : T_B$. Quindi per il lemma di sostituzione ho che $\Gamma \vdash M_1\{x := v\} : T_B$ con $T_B = T$.
+\end{itemize}
+
+\subparagraph{Casi induttivi} 
+
+\begin{itemize}
+	\item \textsc{(Sum-Left)}: se $M_1 \rightarrow_k M_1'$ allora $M_1 + M_2 \rightarrow M_1' + M_2$ con $M = M_1 + M_2$, $\emptyset \vdash M :T $ e per il lemma di inversione $\Gamma \vdash M_1 : T = \Nat$ e $\Gamma \vdash M_2 : T = \Nat$. So inoltre che $M_1 \rightarrow_k M_1'$, per ipotesi induttiva, $\Gamma \vdash M_1' : \Nat = T$ e per la regola $\textsc{(Sum)}$ vale anche $\Gamma \vdash M_1' + M_2 : T = \Nat$ e quindi $M'$ preserva il tipo di $M$.
+	\item \textsc{(Sum-Right)}: se $M_1 \rightarrow M_1'$ allora $v + M_1 \rightarrow v + M_1'$, con $M = v + M_1$ e $M' = v + M_1'$. La dimostrazione è la stessa. Trovo il tipo di $M$, uso la regola per passare ad $M'$ e poi osservo che il tipo di $M'$ è lo stesso..
+	\item \textsc{(App1)}: $M = M_1 \: M_2$ e $M' = M_1' \: M_2$. Per ipotesi $M_1$ e $M_2$ sono ben tipati e per il lemma di inversione $M_1 : T_1 \rightarrow T$ e $M_2 : T_1$. Allora per ipotesi induttiva, $\Gamma \vdash M_1' : T_1 \rightarrow T$, combinando ciò con $\Gamma \vdash M_2 : T_1$, per la regola \textsc{App1} anche il risultato è ben tipato, e quindi $M'$ preserva il tipo $T$.
+	\item \textsc{(App2)}: $M = v \: M_1$ e $M' = v \: M_1'$. la dimostrazione è simile a quella di prima.
+\end{itemize}
+
+
+
+
+
