@@ -93,4 +93,146 @@ $ cplex
 \end{verbatim}
 
 \noindent Nel file \texttt{02.firstModel/cpxmacro.h} ci sono delle macro che facilitano la creazione dell'ambiente e del problema.
-Abbiamo pure un makefile che compila tutto, che bello!
+Abbiamo pure un Makefile che compila tutto, che bello!
+
+Le macro a disposizione permetto di creare facilmente un ambiente e un problema CPLEX:
+
+\begin{itemize}
+	\item \texttt{DECL\_ENV(name)}: dichiara una variabile ambiente CPLEX di nome \texttt{name}.
+	\item \texttt{DECL\_PROB(env, name)}: dichiara una variabile problema CPLEX di nome \texttt{name}. \texttt{env} rappresenta il contesto CPLEX del problema.
+	\item \texttt{CHECKED\_CPX\_CALL(func, env, ...)}: invoca la funzione \texttt{func} nell'ambiente \texttt{env}, passandole i vari parametri extra. Questa macro implementa un controllo sul valore di ritorno della funzione per verificare l'assenza di errori.
+\end{itemize}
+
+\subsection{Definizione delle variabili}
+
+Le variabili di un problema CPLEX vengono anche dette colonne perché nella rappresentazione con la matrice sparsa vengono associate alle colonne della matrice.
+
+Per dichiarare nuove variabili la funzione CPLEX da invocare è
+
+\begin{center}
+\texttt{CPXnewcols (env, lp, ccnt, obj, lb, ub, xctype, colname);}
+\end{center}
+
+\begin{itemize}
+	\item \texttt{env}: l'ambiente CPLEX;
+	\item \texttt{lp}: il problema;
+	\item \texttt{ccnt}: il numero di variabili da aggiungere al problema;
+	\item \texttt{obj}: i coefficienti delle variabili all'interno della funzione obiettivo;
+	\item \texttt{lb/ub}: i lower bound e upper bound del dominio delle variabili;
+	\item \texttt{xctype}: i tipi delle variabili:
+	\begin{itemize}
+		\item \texttt{'C'}: variabile continua (reale);
+		\item \texttt{'B'}: variabile binaria;
+		\item \texttt{'I'}: variabile intera.
+	\end{itemize}
+	\item \texttt{colname}: nomi delle variabili. Se viene passato \texttt{NULL}, CPLEX assegnerà dei nomi di default.
+\end{itemize}
+
+\noindent Da notare che tutti i parametri che descrivono le variabili sono degli array, pertanto è importante che gli elementi degli array siano sempre \textbf{nello stesso ordine}, ovvero in tutti gli array il primo elemento descrive la prima variabile che viene inserita, tutti i secondi elementi descrivono la seconda e così via.
+
+Esempio di chiamata utilizzando le macro:
+
+\begin{lstlisting}[language=C++]
+// Vettore con i costi nella funzione obiettivo
+double objCost[6] = {    2.0, 3.0, 0.0, 0.0, 0.0, 1.0 };
+// variable lower and upper bounds
+// Anche in questo caso l'ordine e' importante
+double lb[6]      = {    0.0         , 0.0 , -CPX_INFBOUND , -CPX_INFBOUND , 0 , 0};
+double ub[6]      = { CPX_INFBOUND, CPX_INFBOUND , 0 , CPX_INFBOUND , 1 , CPX_INFBOUND};
+// variable types 'C' or 'B' or 'I' ...
+// C -> Continuos? Real
+// B -> Binary
+// I -> Integer
+char xtype[6]     =  { 'C', 'C', 'C', 'C', 'B', 'I' };
+
+// Nomi delle variabili
+char ** xname = NULL;
+
+// CPXnewcols e' la funzione da invocare
+CHECKED_CPX_CALL( CPXnewcols, env, lp, 6, &objCost[0], &lb[0], &ub[0], &xtype[0], xname );
+\end{lstlisting}
+
+\subsection{Definizione dei vincoli}
+
+I vincoli di un problema CPLEX vengono anche detti righe perché nella rappresentazione con la matrice sparsa vengono associate alle righe della matrice.
+
+Per dichiarare dei nuovi vincoli la funzione CPLEX da invocare è
+
+\begin{center}
+\texttt{CPXaddrows (env, lp, colcnt, rowcnt, nzcnt, rhs, sense, rmatbeg, rmatind, rmatval , newcolname, newrowname);}
+\end{center}
+
+\begin{itemize}
+	\item \texttt{colcnt}: numero di colonne (variabili) da creare. Posso anche essere aggiunte delle variabili in contemporanea ai vincoli, ma è sconsigliato. Per evitare di aggiungere nuove variabili basta passare 0.
+	\item \texttt{rowcnt}: numero di vincoli da aggiungere.
+	\item \texttt{nzcnt}: numero di coefficienti della matrice sparsa che sono diversi da 0.
+	\item \texttt{rhs}: parametro \texttt{b} del modello, ovvero il vettore con i valori presenti nella parte destra dei vincoli.
+	\item \texttt{sense}: senso dei vincoli: \texttt{'G'} ($\geq$), \texttt{'E'} ($=$), \texttt{'L'} ($\leq$).
+	\item \texttt{rmatbeg}: vettore con gli inizi delle righe della matrice sparsa (\textit{beg}).
+	\item \texttt{rmatind}: vettore con gli indici di riga della matrice sparsa (\textit{idx}).
+	\item \texttt{rmatval}: vettore con i valori della matrice sparsa.
+	\item \texttt{newcolname/newrowname}: nomi per le colonne/righe. 
+\end{itemize}
+
+\noindent Anche in questo caso, l'ordine degli elementi all'interno dei vettori è importante.
+
+Esempio di chiamata utilizzando le macro:
+
+\begin{lstlisting}[language=C++]
+int colcount = 0;
+
+int rowcount = 4;
+
+// NB: se una variabile compare nella parte destra, deve comunque finire nella
+//     matrice dei coefficienti, con il coefficiente di segno opposto.
+int nzcnt = 11;
+
+// right-hand-sides: i vincoli sono stati riscritti in modo che nella parte destra non compaiano variabili
+double rhs[4] = { 0.0, 2, -1, 9 };
+
+// Tipo di vincolo: 'L', 'E', 'G'
+char sense[4] = {'L','E', 'G', 'L'};
+
+// the coefficient matrix will be linearized in a vector and ONLY NON-ZERO coefficients
+//  need to be stored: the following three vectors are used
+// the linearized vector of non-zero coefficients
+// anche in questo caso l'ordine dei vincoli e' importante
+double rmatval[11] = { 1.0, 1.0, -5.0,   1.0, 9.0, 9.0, 8.0,     8.0,      -4.0, 7.0, 5.0 };
+
+// one element for each constraint (row), reporting the index where each row of the coefficient matrix starts
+int rmatbeg[4]    = { 0 , 3, 7, 8};
+
+// one element for each zon-zero ceofficient, reporting its column index 
+//                      x1   x2   z 
+int rmatind[11]    = {  0  , 1  , 4,
+//                      x2  y1  y2  w
+                        1 , 2 , 3 , 5,
+//                      y1
+                        2 ,
+//                      y1  z   w
+                        2 , 4 , 5
+};
+
+char ** newcolnames = NULL;
+char ** rownames = NULL;
+
+CHECKED_CPX_CALL( CPXaddrows, env, lp, colcount, rowcount, nzcnt, &rhs[0], &sense[0], &rmatbeg[0], &rmatind[0], &rmatval[0], newcolnames , rownames );
+\end{lstlisting}
+
+\subsection{Risoluzione del problema}
+
+Come prima cosa è necessario specificare se si tratta di un problema di massimizzazione o di minimizzazione, utilizzando la funzione \texttt{CPXchobjsen}. Di default il problema è una minimizzazione.
+
+Dopodiché per risolvere il problema è necessario specificare quale algoritmo utilizzare. Nel corso noi useremo sempre l'algoritmo MIP.
+
+\begin{lstlisting}[language=C++]
+// configura la massimizzazione
+// MAXimize o MINimize
+CHECKED_CPX_CALL( CPXchgobjsen, env, lp, CPX_MAX );
+
+// Stampa il modello su un file, utile per effettuare il debug
+CHECKED_CPX_CALL( CPXwriteprob, env, lp, "primo.lp", NULL );
+
+// risolve con l'algoritmo MIP
+CHECKED_CPX_CALL( CPXmipopt, env, lp );
+\end{lstlisting}
