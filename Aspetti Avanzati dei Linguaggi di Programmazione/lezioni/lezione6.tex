@@ -1,0 +1,205 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 20 Ottobre 2016
+% \section sistemi di tipi
+% \subsubsection Teorema di Preservazione (Subject reduction)
+
+% Dimostrazione del lemma di sostituzione (spostata al posto corretto in lezione5)
+
+\subsubsection{Corollario di Subject-reduction}
+
+\begin{center}
+	Se $\emptyset \vdash M : T$ e $M \rightarrow^* M'$, allora $\emptyset \vdash M' : T$
+\end{center}
+
+\paragraph{Dimostrazione}
+
+La dimostrazione viene fatta per induzione sul numero di passi che da $M$ portano ad $M'$.
+
+Il caso base è quello con il cammino di lunghezza 0, ovvero quando $M = M'$ e la tesi è trivialmente vera.
+
+Nel caso induttivo ho che $M \rightarrow^{*}_k M_1 \rightarrow M'$, pertanto per ipotesi induttiva ho che $\emptyset \vdash M_1 : T$. 
+
+Ho poi che $M_1 \rightarrow M'$ e quindi posso applicare subject-reduction per ottenere che $\emptyset \vdash M' : T$.
+
+\subsubsection{Teorema di Safety - Completo}
+
+\begin{center}
+	Se $\emptyset M : T $ e $M \rightarrow^* M'$ e $M' \not\rightarrow$, allora $M'$ è un valore.
+\end{center}
+
+\paragraph{Dimostrazione}
+
+Alle due ipotesi posso applicare il corollari di subject-reduction ho che $\emptyset \vdash M' : T$.
+
+Per il teorema di progressione ho poi che $M'$ è un valore oppure $M'$ fa un passo e va in $M''$, ma per ipotesi $M'$ non fa un passo e quindi $M'$ è per forza un valore.
+
+
+\textbf{Nelle note ci sono degli esercizi che possono essere chiesti all'esame}\todo{TODO}
+
+
+\subsection{Esercizio sul typing}
+
+Da notare che nel contesto iniziale non servono giudizi di tipo perché tutte le variabili che compaiono sono all'interno delle funzioni e che, non essendoci informazioni sui tipi, questi sono ignoti e pertanto è necessario fare anche inferenza durante la risoluzione dell'albero.
+
+\begin{prooftree}	
+	
+	% App-1
+	\AxiomC{$\checkmark$ $\textbf{\textit{T}} = \textbf{\textit{T}}_1 \rightarrow \textit{\textbf{T}}_3$}
+	\LeftLabel{(\textsc{Var})}
+	\UnaryInfC{$y : T, x : T' \vdash y : T_1 \rightarrow T_3$}
+	
+	% App-2
+	\AxiomC{*}
+	\LeftLabel{\textsc{(If)}}
+	\UnaryInfC{$y : \textbf{\textit{T}}_1\rightarrow \textbf{\textit{T}}_3, x:T' \vdash \text{if true then }x \text{ else }y \: x : T_1$}
+	\LeftLabel{\textsc{(App)}}
+	\BinaryInfC{$y : T, x: T' \vdash y \: (\text{if true then }x \text{ else }y \: x) : \: T_3$}
+	
+	\LeftLabel{\textsc{(Fun)}}
+	\UnaryInfC{$y : T \vdash \fn x : \textbf{\textit{T'}} . (y \: (\text{if true then }x \text{ else }y \: x)) : \textbf{\textit{T}}_2 = \textbf{\textit{T'}} \rightarrow \textbf{\textit{T}}_3$}
+	
+	\LeftLabel{\textsc{(Fun)}}
+	\UnaryInfC{$\emptyset \vdash \fn y : \textbf{\textit{T}} . \fn x : T' . (y \: (\text{if true then }x \text{ else }x \: y)) : \textbf{\textit{T}} \rightarrow \textbf{\textit{T}}_2$} % T' \rightarrow ?
+\end{prooftree}
+
+\noindent Dal ramo sinistro di \textsc{(App)} riesco a chiudere con $T = T_1 \rightarrow T_3$ e quindi riporto l'informazione anche sul ramo destro.
+La derivazione continua applicando \textsc{(IfThenElse)} e con $\Gamma = y:T_1 \rightarrow T_3, x:T'$:
+
+\begin{prooftree}
+	%if 1
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(True)}}
+	\UnaryInfC{$\Gamma \vdash \true : \Bool$}
+	
+	%if 2
+	\AxiomC{$\checkmark$  $\textbf{\textit{T}}_1 = \textbf{\textit{T'}}$}
+	\LeftLabel{\textsc{(Var)}}
+	\UnaryInfC{$y: T_1 \rightarrow T_3, x:T' \vdash x : T_1$}
+	
+	%if 3
+	\AxiomC{**}
+	\LeftLabel{\textsc{(App)}}
+	\UnaryInfC{$y : \textbf{\textit{T'}} \rightarrow T_3, x:T' \vdash y \: x : \textbf{\textit{T'}}$}
+	% per quello che ho scoperto 
+	\UnaryInfC{$y : T_1 \rightarrow T_3, x:T' \vdash y \: x : T_1$}
+	\LeftLabel{\textsc{(If)}}
+	\TrinaryInfC{(*)$\Gamma \vdash \text{if true then }x \text{ else }y \: x : T_1$}
+\end{prooftree}
+
+\noindent Dal ramo centrale della regola \textsc{(IfThenElse)} scopro che $T_1 = T'$ e quindi aggiorno il ramo destro e il contesto, che ora è  $\Gamma = y:T' \rightarrow T_3, x:T'$.
+
+\begin{prooftree}
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Var)}}
+	\UnaryInfC{$y:T' \rightarrow T_3 , x:T' \vdash y : T_4 \rightarrow T'$}
+	
+	\AxiomC{$\checkmark$}
+	\LeftLabel{\textsc{(Var)}}
+	\UnaryInfC{$y : T' \rightarrow T_3 , x :T'\vdash x : T_4$}
+	
+	\LeftLabel{\textsc{(App)}}
+	\BinaryInfC{(**)$\Gamma \vdash y \: x : T'$}
+\end{prooftree}
+
+\noindent Da quest'ultimo albero trovo che $T' = T_4 = T_3$. Andando a sostituire il tutto trovo che:
+
+\begin{itemize}
+	\item $y : T' \rightarrow T'$
+	\item $x : T'$
+	\item $T_2 = T' \rightarrow T_3 = T' \rightarrow T'$
+	\item $T = T_1 \rightarrow T_3 = T' \rightarrow T'$
+	\item Il tipo del programma è quindi $(T' \rightarrow T') \rightarrow (T' \rightarrow T')$
+\end{itemize}
+
+\section{Estensioni del nostro linguaggio}
+
+\subsection{Unit}
+
+Nei linguaggi funzionali, ogni funzione deve ritornare sempre un valore, tuttavia può capitare che delle funzioni non debbano ritornare un valore. In questo caso viene ritornato il tipo \text{Unit} che può assumere l'\textbf{unico} \textbf{valore} \texttt{()} o \text{unit}.
+
+Ad esempio la funzione \texttt{print} in Scala ritorna un valore di questo tipo:
+
+\begin{lstlisting}[language=Scala]
+def print( x: Any) : Unit = {...}
+\end{lstlisting}
+
+\noindent allo stesso modo anche l'assegnamento in Scala ritorna un valore \text{Unit} mentre in C/C++ viene solitamente ritornato il valore assegnato (per concatenare le operazioni di assegnamento).
+
+Aggiungere \text{Unit} al linguaggio vuol dire estendere la definizione:
+
+\begin{align*}
+	M &::= \ldots \: | \: \text{unit} \: | \: \ldots \\
+	v &::= \ldots \: | \: \text{unit} \: | \: \ldots \\
+	T &::= \ldots \: | \: \text{Unit} \: | \: \ldots 
+\end{align*}
+
+\noindent e allo stesso modo serve una regola di tipo:
+
+\begin{prooftree}
+	\AxiomC{}
+	\UnaryInfC{$\Gamma \vdash \text{unit : Unit}$}
+\end{prooftree}
+
+\noindent La killer-feature del tipo \text{Unit} è la possibilità di implementare il call-by-name utilizzando il call-by-value.
+
+Ad esempio, tornano alle nostre asserzioni in Scala
+
+\begin{lstlisting}[language=Scala, caption=Version ``standard'' delle asserzioni]
+var assEnabled = true
+...
+def assert(pred : Bool) = 
+	if (assEnabled && !pred)
+		throw Exc
+...
+
+assert(saldoConto() > 0)
+\end{lstlisting}
+
+
+\noindent possiamo utilizzare \text{Unit} per far funzionare il codice precedente come se fosse call-by-name ma senza specificarlo:
+
+\begin{lstlisting}[language=Scala, caption=Version ``standard'' delle asserzioni]
+var assEnabled = true
+...
+def assert(pred : Unit => Bool) = 
+	if (assEnabled && pred() == false) /** l'invocazione con () passa Unit*/
+		throw Exc
+...
+assert(fn x:Unit . (saldoConto() > 0) ) /** pseudo scala */
+assert( () =>  (saldoConto() > 0) ) /** sintassi corretta (la funzione anonima non ha parametri) */
+\end{lstlisting}
+
+\noindent In questo caso con la sintassi call-by-value viene calcolato il valore del parametro, ma in questo caso il parametro è una funzione che è già un valore.
+Quindi se le asserzioni sono disabilitate, alla chiamata della funzione \texttt{assert} non viene chiamata la funzione \texttt{saldoConto()} perché la funzione è già un valore.
+
+Per riportare la stessa cosa nel nostro linguaggio funzionale con il call-by-value:
+
+$$
+\fn x:T.M \: N \rightsquigarrow \: \big(\fn y : \text{Unit} \rightarrow T . M\{x := y \: \text{unit}\} \big) \:\:  \big(\fn z : \text{Unit} . N \big)
+$$
+
+\subsubsection{Implementazione del while}
+
+Vogliamo definire una funzione che si comporta come il while in Scala.
+
+\begin{lstlisting}[language=Scala, caption=I parametri devono essere dichiarati come call-by-name oppure  ]
+def WHILE(cond : =>Bool , command : =>Unit ) : Unit = 
+	if (cond == false ) () /** In scala il return è opzionale, () è il valore di Unit*/
+	else {
+		command
+		WHILE(cond, command)
+	}
+
+/** Uso della funzione */
+var a = 0
+WHILE(a < 4 , {print(a); a=a+1})
+\end{lstlisting}
+
+\noindent Dato che sono in call-by-value i parametri vengono valutati prima di invocare per la prima volta il while, quindi o li passo per by-name oppure li passo utilizzando una funzione. 
+Questo perché sia il codice del corpo che la condizione devono poi essere rieseguiti (valutati) nelle successive iterazioni. 
+
+
