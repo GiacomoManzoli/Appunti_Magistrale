@@ -5,7 +5,7 @@
 
 % 21 Ottobre 2016
 
-%\section{Modello di reperimento}
+%\chapter{Modello di reperimento}
 %\subsection{Modello booleano}
 %\subsubsection{Espressione della esigenza informativa}
 
@@ -20,7 +20,7 @@
 
 \noindent Da notare che i documenti non vengono forniti con un ordinamento particolare perché la funzione di reperimento non calcola uno score dei documenti ma associa l'interrogazione al sotto-insieme di documenti che la rendono vera.
 
-\subsubsection{Considerazioni sul modello booleano}
+\subsection{Considerazioni sul modello booleano}
 
 Il modello booleano è molto efficace in ambienti controllati e se l'utente è consapevole di come funziona il sistema e se sa quello che vuole. Magari se l'utente non è esperto può essere aiutato da un intermediario, che può essere un software o una persona.
 
@@ -38,7 +38,7 @@ Il modello può inoltre essere esteso aggiungendo altri operatori, oltre a quell
 
 \noindent Altri operatori possono essere quelli che fornisce Google: \url{https://support.google.com/websearch/answer/2466433?p=adv_operators\&hl=en\&rd=1}.
 
-\subsection{Ordinamento dei risultati in base alla rilevanza}
+\section{Ordinamento dei risultati in base alla rilevanza}
 
 Se il modello può fornire un ordinamento, quindi se si può effettuare il ranking dei documenti, si ha che i documenti formano una lista in cui a ciascun documento è assegnato un \textbf{rango} (o rank).
 
@@ -78,13 +78,26 @@ Si può dire che l'interrogazione è ``più vera'' per D1, perché rende vere en
 
 \textbf{Piccola nota}: l'AND non è proprio un AND, è una sorta di AND-rilassato, perché un documento viene valutato positivamente anche un documento che non soddisfa tutti i termini.
 
+Ad esempio, assumendo di avere i descrittori $A = \{d_1, d_2\}$, $B = \{d_2, d_3\}$, $C =\{d_3\}$ e considerando la query
+
+\begin{center}
+	$A$ AND ($B$ OR $C$)
+\end{center}
+
+\noindent si ha che con il modello booleano l'unico documento fornito in risposta è $d_2$, mentre utilizzando il livello di coordinamento si ha la sequenza
+\begin{enumerate}
+	\item $d_2$ con livello di coordinamento 2, perché rende vera sia $A$ che $C$ OR $B$.
+	\item $d_1$ con livello di coordinamento 1, perché rende vera $A$.
+	\item $d_3$ con livello di coordinamento 1, perché rende vera $C$ OR $B$.
+\end{enumerate}
+
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/l8-cord-gen}
-	\caption{Livello di coordinamento non binario.}
+	\includegraphics[width=0.4\linewidth]{images/l8-cord-gen}
+	\caption{Rappresentazione grafica dell'esempio.}
 \end{figure}
 
-\subsection{Modello vettoriale}
+\section{Modello vettoriale}
 %pacchetto slide 8
 
 Questo modello assume che gli \textit{n} documenti e le interrogazioni appartengano ad uno spazio vettoriale composto da \textit{t} dimensioni, dove \textit{t} è il numero di dei termini indice (parole, frasi, \ldots).
@@ -111,7 +124,7 @@ Una collezione di $n$ documenti può quindi essere rappresentata come una matric
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.5\linewidth]{images/l8-vet}
+	\includegraphics[width=0.25\linewidth]{images/l8-vet}
 \end{figure}
 
 \subsubsection{Metodo di ordinamento}
@@ -142,7 +155,7 @@ Ad esempio, per i documenti $D_1 = (0.5, 0.8, 0.3)$ e $D_2 = (0.9, 0.4, 0.2)$ e 
 	Cosine(D_2, Q) &= 0.97
 \end{align*}
 
-\subsubsection{Pesatura dei termini}
+\subsection{Pesatura dei termini}
 
 Rimane comunque da definire degli schemi di pesatura per i vari termini.
 
@@ -157,5 +170,5 @@ $$
 Tuttavia, così facendo viene dato molto peso ai termini molto frequenti nel documento e si è visto che a livello pratico utilizzare il logaritmo produce risultati migliori.
 
 $$
-tf_{i,k} = \frac{\log (f_{i,k}+1}{\sum\limits_j \log (f_{i,j} +1)}
+tf_{i,k} = \frac{\log (f_{i,k}+1)}{\sum\limits_j \log (f_{i,j} +1)}
 $$

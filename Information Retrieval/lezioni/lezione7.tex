@@ -49,7 +49,7 @@ Tenere lo score può in alcuni casi permettere di risponde più velocemente, per
 
 Tipicamente viene quindi preferita la frequenza, tenendo i posting dell'indice ordinati per documento, in modo da facilitare il calcolo dello score.
 
-\section{Modello di reperimento}\todo{promuovere a Chapter?}
+\chapter{Modello di reperimento}\todo{promuovere a Chapter?}
 
 Un modello di reperimento dell'informazione è un insieme di costrutti che sono stati ideati e formalizzati allo scopo di rendere possibile la rappresentazione del contenuto dei documenti e delle interrogazioni.
 
@@ -65,7 +65,7 @@ Un modello resta comunque un'astrazione del sistema in quanto è uno strumento c
 
 \noindent Non vengono quindi forniti i dettagli implementativi, perché si può sempre pensare di effettuare delle modifiche o di progettare nuove strategie.
 
-\subsubsection{Modello IR contro le Basi di Dati}
+\section{Modello IR contro le Basi di Dati}
 
 Nei database il modello ha lo scopo di fornire un'astrazione della rappresentazione e del contenuto informativo dei dati e delle operazioni di aggiornamento e accesso ai dati.
 Pertanto può succedere che un'utente corrompa i dati presenti oppure che si verifichino situazioni di modifiche concorrenti, ecc.
@@ -96,7 +96,7 @@ Un'altra conseguenza di ciò è presente nel query language: per i database è a
 Tipicamente c'è anche una differenza sulle aspettative dell'utente.
 Con un database ci si aspetta dei risultati esatti, mentre con i sistemi IR vengono forniti i risultati rilevanti per la query.
 
-\subsection{Principali modelli}
+\section{Principali modelli}
 
 \begin{itemize}
 	\item \textbf{Modello booleano} (1950): il modello più semplice che verifica semplicemente la presenza o meno dell'informazione, senza effettuare l'ordinamento dei risultati. Un esempio di questo modello è dato dai sistemi di ricerca delle biblioteche/archivi.
@@ -107,7 +107,7 @@ Con un database ci si aspetta dei risultati esatti, mentre con i sistemi IR veng
 	\item \textbf{Modello basato su reti ipermediali}(1980/1990))
 \end{itemize}
 
-\subsection{Modello booleano}
+\section{Modello booleano}
 
 % set di slide 7
 
@@ -115,7 +115,7 @@ In questo modello i descrittori della posting list sono un'insieme di documenti 
 
 Le interrogazioni vengono quindi formalizzate utilizzando l'algebra booelana.
 
-\subsubsection{Documenti di riferimento}
+\subsection{Documenti di riferimento}
 
 \begin{itemize}
 	\item \textbf{D1}: L’enorme quantità di informazioni presenti nelle pagine Web rende necessario l’uso di strumenti automatici per il recupero di informazioni.
@@ -123,7 +123,7 @@ Le interrogazioni vengono quindi formalizzate utilizzando l'algebra booelana.
 	\item \textbf{D3}: \`E stato presentato nel Web un documento che informa sulle enormi difficoltà che incontra chi usa uno strumento informativo automatico.
 \end{itemize}
 
-\subsubsection{Indicizzazione nel modello booleano}
+\subsection{Indicizzazione nel modello booleano}
 
 I concetti sono rappresentati da descrittori estratti mediante un processo di indicizzazione, quindi un descrittore \textit{t} è l'insieme di tutti e solo i documenti in cui il concetto espresso da \textit{t} è presente.
 
@@ -134,7 +134,7 @@ Effettuando l'indicizzazione viene quindi le informazioni relative alla sinonimi
 	\item \textbf{Polisemia}: in linguistica indica la coesistenza in una parola di significati diversi. Ad esempio la parola ``\textit{riso}'' può indicare il riso da risotto oppure l'atto del ridere. Un'altra sfumatura di questo problema sono gli omonimi, \textit{Paolo Rossi} può indicare molte persone ed è quindi necessario disambiguare richiedendo ulteriori informazioni nella query oppure creando altri indici con informazioni utili alla disambiguazione come il codice fiscale o la data di nascita. Per disambiguare in questo caso è possibile utilizzare degli \textbf{authority file}.
 \end{itemize}
 
-\subsubsection{Indice dei descrittori d'esempio}
+\subsection{Indice dei descrittori d'esempio}
 
 \begin{figure}[htbp]
 	\centering
@@ -150,7 +150,7 @@ C'è da tenere conto che i vari documenti rappresentano un caso ``piccolo'' e qu
 	\caption{Rappresentazione dei documenti sotto forma di insiemi. Sono rappresentati solo alcuni dei termini per questione di spazio.}
 \end{figure}
 
-\subsubsection{Espressione della esigenza informativa}
+\subsection{Espressione della esigenza informativa}
 
 Un sistema basato sul modello booleano permette all'utente di esprimere le proprie esigenze informative utilizzando più descrittori/termini, i quali vengono utilizzati per costruire l'insieme dei documenti che li contiene.
 
