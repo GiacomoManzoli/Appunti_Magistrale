@@ -1,0 +1,181 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 27 Ottobre 2016
+%\section{Estensioni del nostro linguaggio}
+%\subsection{Record}
+% \subsubsection{L'oggetto conto}
+
+\subsection{Tipi variante}
+
+Se i record possono essere visti come tipi congiunzione, che combinano più tipi, i tipi variante possono essere visti come disgiunzione.
+
+Ad esempio possiamo pensare ad un contatto in una rubrica che può avere un indirizzo fisico o virtuale:
+
+$$
+< \text{fisico}: \underbrace{\{ \text{nome : String}, \text{indirizzo: String} \}}_{T_{fisico}} , \: \text{virtuale}: \underbrace{\{ \text{login : String}, \text{email : String} \}}_{T_{virt}} >= T_{ind}
+$$
+
+\noindent Un esempio di valore che ha questo tipo è:
+
+$$
+< \text{fisico} = \{ \text{nome = ``pippo''}, \text{indirizzo =  ``Via rosa''} \} >
+$$
+
+\noindent L'utilità di questi tipi si ha con l'operatore di pattern matching.
+Ad esempio in Scala è possibile definire delle funzione generiche che lavorano sui tipi variante:
+
+\begin{lstlisting}[language=Scala, caption=Utilizzo del pattern matching in Scala]
+def getName(a : Tind) : String = a match{
+	case <fisico = x> => x.nome
+	case <virtuale = x> => x.login
+	/** case <l = x> => ... da errore di compilazione! */
+	/** allo stesso modo viene segnalato se il pattern non copre tutte le possibili etichette */
+}
+
+def getAll(a : List[Tind] ) : List[String] = {
+	var l = new List[String]
+	for (x <- a) l.add(getName(x))
+}
+\end{lstlisting}
+
+\noindent Per inserire nel nostro linguaggio questi valori servono dei nuovi termini:
+
+$$
+M ::= < l = M > \vbar M \text{ match } \{\text{case }l_i = x_i => M_i \:^{i = 1\ldots n}\} \vbar \ldots
+$$
+
+\noindent Da notare che la $x_i$ che viene utilizzata nel \text{match} lega le eventuali occorrenze all'interno di $M_i$.
+
+$$
+<l_1 = 3> \text{ match } \{\text{case } l_1 = x => x+1, \ldots \} \rightarrow 3+1
+$$
+
+\noindent Più formalmente:
+
+$$fv(<l =M>) = fv(M) \qquad \text{e} \qquad fv( M \text{ match } \{\text{case }l_i = x_i => M_i \:^{i = 1\ldots n}\}) = fv(M) \cup \bigcup_{i = 1 \ldots n}\bigg( fv(M_i) \setminus \{x_i\} \bigg) $$
+
+\noindent Servono inoltre dei nuovi valori finali e dei tipi:
+
+\begin{align*}
+	v ::=& <l = v> \vbar \ldots \\
+	T ::=& < l_i : T_i \:^{i = 1 \ldots n}>
+\end{align*}
+
+\noindent La semantica operazionale viene espressa con 3 nuove regole:
+
+\begin{itemize}
+	\item Riduzione del termine interno
+	\begin{prooftree}
+		\AxiomC{$M \rightarrow M'$}
+		\UnaryInfC{$<l = M> \rightarrow <l = M'>$}
+	\end{prooftree}
+	\item Avanzamento in un match:
+	\begin{prooftree}
+		\AxiomC{$M \rightarrow M'$}
+		\UnaryInfC{$M \text{ match } \{\text{case } l_i = x_i => M_i \:^{i = 1 \ldots n}\}$}
+	\end{prooftree}
+	\item Assioma per il match effettivo
+	\begin{prooftree}
+		\AxiomC{$j \in \{1 \ldots n\}$}
+		\UnaryInfC{$<l_j = v> \text{ match } \{\text{case } l_i = x_i => M_i \:^{i = 1 \ldots n}\} \rightarrow M_j\{x_j = v\}$}
+	\end{prooftree}
+\end{itemize}
+
+\noindent Servono inoltre delle regole di tipo, una per l'invariante e l'altra per il match.
+
+\begin{prooftree}
+	\AxiomC{$ \Gamma \vdash M: T_j $}
+	\AxiomC{$ j \in \{1 \ldots n \} $}
+	\BinaryInfC{$\Gamma \vdash <l_j = M> : <l_i : T_i \:^{i=1\ldots n}$}
+\end{prooftree}
+
+\noindent Con questa regola posso assegnare ad un valore infiniti tipi, l'importante è che in questi infiniti tipi ci sia l'etichetta $l_j$ in modo da avere la garanzia di riuscire ad effettuare il pattern matching.
+
+\begin{prooftree}
+	\AxiomC{$\Gamma \vdash M : < l_i : T_i  \:^{i=1\ldots n}>$}
+	\AxiomC{$\Gamma, x_i : T_i \vdash M_i : T \:\: \forall \: i = 1 \ldots n $}
+	\BinaryInfC{$\Gamma \vdash M \text{ match }\{\text{case }l_i = x_i => M_i \:^{i=1\ldots n}\} : T$}
+\end{prooftree}
+
+\noindent Perché un match sia ben tipato è necessario che il termine $M$ sia un valore di tipo variante e che tutti i ``rami'' del match siano termini con lo stesso tipo, aggiungendo anche al contesto la sostituzione che viene effettuata quando viene applicato il match.
+
+Se nel pattern matching ho come premessa della regola $\Gamma \vdash M : < l_i : T_i  \:^{i=1\ldots m}>$ con $m \geq n$ c'è un problema perché possono capitare delle etichette che il costrutto \text{match} non riesce a gestire. Se invece $m \leq n$ non ci sono problemi. Ma anche in questo caso, dato che ho a disposizione infiniti tipi, conviene forzare $m = n$.
+
+Anche se non sembra questi tipi sono presenti nella maggior parte dei linguaggi main-stream, solo che questi vengono nascosti da dello zucchero sintattico. Ad esempio le liste possono essere viste come un tipo variante in quanto sono o una lista vuota o la concatenazione di un elemento e un'altra lista.
+
+$$
+\text{List} = < \text{nil : Unit}, \text{cons} : (\Nat * \text{List}) >
+$$
+
+\noindent Si tratta di un tipo ricorsivo che non è supportato nella nostra grammatica, ma in altre grammatiche è possibile gestirlo.
+
+I valori per questo tipo sono:
+
+$$
+<\text{nil } = \text{unit}>  \quad <\text{cons} = (5, <\text{nil } = \text{unit}>)>
+$$
+
+\noindent Un altro caso d'uso dei valori variante è l'analisi delle dereferenziazioni dei valori null.
+Ad esempio in Java possiamo definire una variabile e assegnarle null:
+
+\begin{lstlisting}[language=Java]
+C c = null;
+
+C find(List<C> l, C a) { ... } // se non trova ritorna null
+
+C c = find(list, s);
+// c può essere null, quindi devo controllare
+// se non controllo potrei finire in un NullPointerException, anche perché il compilatore non controlla questo tipo di eccezioni
+if (c != null) print(c.info());
+else print("non trovato");
+\end{lstlisting}
+
+\noindent Questo approccio non è dei migliori, perché dovrebbe utilizzare le eccezioni personalizzate, ma si è visto che nessuno le usa. Con C\# si sono invece inventati i tipi \texttt{Nullable} che possono avere anche come valore \texttt{Null}, anche per i tipi primitivi.
+
+Un'altra idea è stata quella di introdurre i tipi \texttt{!}: una classe di tipo \texttt{C!} non può assumere come valore null, in modo da sfruttare di più l'analisi statica.
+
+Linguaggio che vai, soluzione che trovi. Altri linguaggi utilizzano i così detti \textbf{null objects}:
+
+\begin{lstlisting}[language=Java]
+class C {
+	...
+	String info() {...}
+	...
+}
+class NullC extends C {
+	...
+	String info() {}
+}
+\end{lstlisting}
+
+\noindent Così facendo c'è un metodo definito da chiamare anche sul valore null, in modo da evitare la NullPointerExcpetion.
+
+Scala e Java8 (e Swift) implementano un'ulteriore versione, gli \textbf{option type}, ovvero un tipo variante che prevede due possibilità: c'è l'oggetto oppure non c'è.
+La definizione di questo tipo è la seguente:
+
+$$
+Option[C] = < \text{none} : Unit, \text{some} : C >
+$$
+
+\noindent Il codice di prima può essere quindi riscritto come
+
+\begin{lstlisting}[language=Scala]
+...
+def find(l : List[C], s : String) : Option[C] = {
+	for(x <- l) 
+		if (x.info() == s) return Some(x)
+	return None 
+}
+...
+find(l, "pippo") match {
+	case Some(x) => print(x.info())
+	case None => print("non trovato")
+}
+\end{lstlisting}
+
+\noindent Si può notare come questa versione del codice è più espressiva e si riesce subito a capire che la funzione \texttt{find} può non trovare l'elemento cercato.
+
+
