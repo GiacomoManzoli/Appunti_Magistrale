@@ -1,0 +1,127 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = InformationRetrieval.tex
+% !TEX spellcheck = it-IT
+
+% 3 Novembre 2016
+%\section{Modello probabilistico}
+%\subsection{Basi di probabilità}
+
+Prendere una decisione, ovvero assegnare ad un documento la classe rilevante o meno, ha un costo che deve essere pagato se il documento viene classificato in modo errato.
+
+Il rischio di errore viene calcolato come:
+
+$$
+R(rel | d) = P(rel | d) \lambda (\underbrace{rel}_{\text{classe predetta}} | \text{rel}_{\text{classe vera}}) + P(\overline{rel} |d) \lambda (rel | \overline{rel})
+$$
+
+\noindent Lambda è un numero che rappresenta il costo da pagare per la classificazione, sia se è errate, sia se è corretta.
+
+Il rischio di classificazione positiva viene poi confrontato con quello di classificazione negativa:
+
+$$
+P(\overline{rel} | d) = P(\overline{rel}|d)\lambda(\overline{rel}|\overline{rel}) + P(rel|d)\lambda(\overline{rel}|rel)
+$$
+
+\noindent ovvero andiamo a classificare come positivo quando vale la disequazione
+
+$$
+R(rel|d) < R(\overline{rel}|d)
+$$
+
+\noindent $\lambda(\cdot, \cdot)$ prende il nome di \textbf{funzione di perdita} e per comodità notazionale indicheremo con $\lambda_{11} = \lambda (rel | rel)$, $\lambda_{1,0} =\lambda (rel | \overline{rel})$, ecc.
+
+Espandendo la disequazione del rischio abbiamo:
+
+\begin{align*}
+P(\overline{rel}|d)(\lambda_{1,0} - \lambda_{0,0}) < P(rel|d)(\lambda_{0,1} - \lambda_{1,1})
+\end{align*}
+
+\noindent Da notare che se $\lambda_{1,1} = \lambda_{0,0} = 0$ (le classificazioni corrette non costano) e se $\lambda_{1,0} = \lambda_{0,1} = 1$, ottengo la formula che utilizza solo le probabilità. Questa particolare funzione di perdita prende il nome di \textbf{zero-one loss function}, perché le classificazioni corrette non hanno costo mentre le classificazioni errate hanno un costo unitario.
+
+\begin{align*}
+P(\overline{rel}|d) < P(rel|d) \frac{(\lambda_{0,1} - \lambda_{1,1})}{(\lambda_{1,0} - \lambda_{0,0})}
+\end{align*}
+
+\noindent Con questa ri-formulazione è possibile andare a modificare i valori $\lambda$ per gestire i casi in cui le classi sono sbilanciate.
+
+Ma in tutto questo che fine ha fatto la query?
+
+\subsection{Probabilistic Ranking Principle}
+
+Oltre che a classificare i documenti, noi vogliamo ordinarli rispetto alla rilevanza nei confronti della query $q$.
+
+\begin{align*}
+P(rel | d, q) &\propto_q \frac{P(rel | d,q)}{P(\overline{rel} | d,q)} \\
+			  &=\frac{ P(d,q|rel)P(rel) / P(d,q)}{P(d,q|\overline{rel})P(\overline{rel})/P(d,q)}
+\end{align*}
+
+\noindent Ma noi abbiamo a disposizione la query, quindi è necessario girare le probabilità in modo che la query condizioni la probabilità.
+
+\begin{align*}
+P(rel | d, q) &\propto_q \frac{P(d|q,rel)P(q|rel)P(rel)}{P(d|q,\overline{rel})P(q,\overline{rel})P(\overline{rel})} \\
+			  &=\frac{P(d|q,rel)P(rel|q)P(q)}{P(d|q,\overline{rel})P(\overline{rel},q)P(q)}
+\end{align*}
+
+\noindent Fissata una query $q$ il rapporto tra $P(rel|q)$ e $P(\overline{rel}|q)$ sono costanti per tutti i documenti della collezione e, dato che a noi interessa l'ordine dei documenti, possiamo semplificare i due termini.\\
+
+$$
+P(rel | d,q) \propto_q \frac{P(d|q,rel)}{P(d|q,\overline{rel})}
+$$
+
+\noindent Quindi se i costi sono del tipo zero-uno, questo è l'approccio ottimo. Se ci fosse un'altra funzione di perdita, sarebbe necessario portarsi dietro anche i vari $\lambda$.
+
+\subsubsection{Come calcolo le probabilità?}
+
+\begin{align*}
+P(d|q,rel) &= \prod\limits_{i = 1}^{|V|} p_{i}^x(1 - p_i)^{1-x_i} \\
+P(d|q,rel) &= \prod\limits_{i = 1}^{|V|} \rho_i{i}^x(1 - \rho_i)^{1-x_i}
+\end{align*}
+
+\noindent Dove $\rho_i$ è il $q_i$ che c'era nelle lezioni precedenti.
+
+Andando a sostituire dentro il proporzionale ottengo:
+
+\begin{align*}
+P(rel|d,q) &\propto_q \prod\limits_{i = 1}^{|V|} \Bigg(\frac{p_i}{1-p_i} \frac{1-\rho_i}{\rho_i}\Bigg) ... \\
+		   &\propto_q ... \\
+		   &\propto_q \sum\limits_{i=1}^{|V|} x_i \log \bigg( \frac{p_i}{1-p_i} \frac{1-\rho_i}{\rho_i} \bigg)
+\end{align*}
+
+\noindent Per i termini del vocabolario che non compaiono all'interno delle query, ho che la probabilità $p_i$ di trovarlo in un documento rilevante è uguale a quella di trovarlo in un documento non rilevante $\rho_i$.
+Sostituendo questa ipotesi ho che all'interno del logaritmo c'è un 1 quando il termine non compare nella query e quindi il termine della sommatoria vale 0.\\
+
+Pertanto posso ridurre il calcolo in:
+
+\begin{align*}
+P(rel|d,q) &\propto_q \sum\limits_{i \in d \cap q}  x_i \log \bigg( \frac{p_i}{1-p_i} \frac{1-\rho_i}{\rho_i} \bigg)
+\end{align*}
+
+\noindent Che è molto meno oneroso in termini di tempo computazionale, perché tipicamente la query utilizza 3 termini.
+Questa è la versione di base del \textbf{Binary Indipendence Model} e funziona solo sotto le ipotesi che:
+
+\begin{itemize}
+	\item i termini sono una variabile binaria, o ci sono nel documento o non ci sono
+	\item la presenza di un termine in un documento è indipendente dalla presenza di altre
+	\item la probabilità che un termine presente nella query compaia nel documento è uguale a quella che non compaia
+\end{itemize}
+
+\noindent Questo modello è molto semplice ed efficiente, ma è molto importante perché è alla base degli altri modelli probabilistici.
+
+\subsubsection{Interpretazione grafica del costo degli errori}
+
+\begin{align*}
+P(rel|d) \frac{(\lambda_{0,1} - \lambda_{1,1})}{(\lambda_{1,0} - \lambda_{0,0})} &> P(\overline{rel}|d) \\
+\Lambda P(rel|d) &>1 -  P(rel|d) \\
+(\Lambda +1 ) P(rel|d) &> 1 \\
+P(rel |d ) &> \frac{1 }{\Lambda +1}
+\end{align*}
+
+\noindent Se $\Lambda = 1$ o che assegno la classe rilevante se la probabilità è maggiore di 0.5.
+
+Se effettuare un'errore di classificazione ha un costo maggiore nel caso in cui si indichi un documento come non rilevante quando è rilavante, la soglia di accettazione tende a spostarsi verso destra ($> 0.5$).\\
+
+Alternativamente posso vedere $P(rel|d)$ come la $X$ di un piano cartesiano e il complementare come la $Y$. Così facendo il valore di $\Lambda$ rappresenta il coefficiente angolare della retta passante per l'origine. Sotto la retta si accetta, sopra no e i valori di soglia vengono trovati con i punti di intersezione con la retta che passa per $(1,0)$ e $(0,1)$.
+Questo però vale per le probabilità originali e che per motivi computazionali non sono calcolabili, perché per riuscire a calcolare le stime noi dobbiamo togliere il fattore di normalizzazione e prendere il logaritmo.
+
+
