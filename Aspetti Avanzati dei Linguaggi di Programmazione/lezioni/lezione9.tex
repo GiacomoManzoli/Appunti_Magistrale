@@ -1,0 +1,171 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 3 Novembre 2016
+%\section{Estensioni del nostro linguaggio}
+%\subsection{Tipi variante}
+
+\subsection{Le eccezioni}
+
+$$
+M ::= \text{throw} \: M \vbar \text{try} \: M \: \text{catch} \: M \vbar \ldots
+$$
+
+$$
+T ::= \TExc \vbar \ldots
+$$
+
+\noindent Alcuni esempi di termini sono:
+
+\begin{itemize}
+	\item $M = \fn x. \IF{pari(x)}{x/2}{\throw{x}}$.
+	\item $\trycatch{(M \: 3)}{\fn y.(y+y)}$: il blocco catch deve essere una funzione, perché in qualche modo deve ricevere l'eccezione.
+	\item $\trycatch{(\fn y.y-z \: (M-5)))}{\fn z.print(z)}$: in questo caso è necessario fare un salto e scartare alcuni valori per arrivare al blocco catch.
+	\item $\trycatch{(\fn y.y-2 \: (\trycatch{(M 5)}{\fn w.w+w}))}{\fn z.print(z)}$: nel caso di handler innestati, l'eccezione deve essere gestita da quella più vicina.
+\end{itemize}
+
+\noindent Abbiamo quindi un po' di regole di semantica da definire.
+
+\noindent Avanzamento del termine dentro il try:
+
+\begin{prooftree}
+\AxiomC{$M \to M'$}
+\LeftLabel{\myrule{Try}}
+\UnaryInfC{$\trycatch{M}{N} \to \trycatch{M'}{N}$}
+\end{prooftree}
+
+\noindent Assioma per l'handling dell'eccezione:
+
+\begin{prooftree}
+\AxiomC{$ $}
+\LeftLabel{\myrule{Try-Handle}}
+\UnaryInfC{$\trycatch{\throw{v}}{M} \to (M \: v)$}
+\end{prooftree}
+
+\noindent Assioma per l'avanzamento nel caso in cui non si sono verificate eccezioni all'interno del blocco try:
+
+\begin{prooftree}
+\AxiomC{$ $}
+\LeftLabel{\myrule{Try-Val}}
+\UnaryInfC{$\trycatch{v}{M} \to v$}
+\end{prooftree}
+
+\noindent Assiomi per l'avanzamento del throw:
+
+\begin{prooftree}
+\AxiomC{$M \to M'$}
+\LeftLabel{\myrule{Raise-1}}
+\UnaryInfC{$\throw{M} \to \throw{M'}$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{$M \to M'$}
+	\LeftLabel{\myrule{Raise-2}}
+	\UnaryInfC{$\throw{\throw{v}} \to \throw{v}$}
+\end{prooftree}
+
+\noindent Regole per la sollevazione delle eccezioni durante l'applicazione di una funzione:
+
+\begin{prooftree}
+	\AxiomC{$ $}
+	\LeftLabel{\myrule{Raise-App-1}}
+	\UnaryInfC{$ \throw{v} \: M \to \throw{v}$ }
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{$ $}
+	\LeftLabel{\myrule{Raise-App-2}}
+	\UnaryInfC{$ v_1 \: \throw{v_2} \to \throw{v_2}$ }
+\end{prooftree}
+
+\noindent Regola per l'eccezione nella guardia dell'if:
+
+\begin{prooftree}
+	\AxiomC{$ $}
+	\LeftLabel{\myrule{Raise-If}}
+	\UnaryInfC{$ \IF{\throw{v}}{M_1}{M_2} \to \throw{v}$ }
+\end{prooftree}
+
+\noindent Regole per la propagazione nella somma (e sottrazione):
+
+\begin{prooftree}
+	\AxiomC{$ $}
+	\LeftLabel{\myrule{Raise-Sum-1}}
+	\UnaryInfC{$ \throw{v} + M \to \throw{v}$ }
+\end{prooftree}
+
+
+\begin{prooftree}
+	\AxiomC{$ $}
+	\LeftLabel{\myrule{Raise-Sum-2}}
+	\UnaryInfC{$ v_1 +\throw{v_2} \to \throw{v_2}$ }
+\end{prooftree}
+
+\noindent Con queste nuove regole l'avanzamento del programma rimane deterministico.
+C'è però una piccola sottigliezza:
+
+$$
+\fn x:\Nat.0 \: \throw{5}
+$$
+
+\noindent in questo caso non posso applicare \myrule{Beta}, perché $\throw{5}$ non è un valore e quindi sono costretto ad applicare \myrule{Raise-App-2}. Se invece il termine $\throw{5}$ fosse anche un valore ci sarebbe l'ambiguità.
+
+%\subsubsection{Avanzamento di un programma}
+% TODO
+%$$
+%M = \trycatch{(\fn y.y-2 \: (M \throw{2}) )}{\fn z.print(z)}
+%$$
+
+Servono inoltre le regole di tipo.
+
+\begin{prooftree}
+	\AxiomC{$ \Gamma \vdash M : \TExc $}
+	\LeftLabel{}
+	\UnaryInfC{$ \Gamma \vdash \throw{M} : T$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{$ \Gamma \vdash M : T $}
+	\AxiomC{$ \Gamma \vdash N : \TExc \to T$}
+	\LeftLabel{}
+	\BinaryInfC{$ \Gamma \vdash \trycatch{M}{N} : T$}
+\end{prooftree}
+
+\noindent Da notare che al $\throw{}$ devo poter dare qualsiasi tipo, altrimenti non avrei possibilità di inserire il termine in ovunque, perdendo così l'unicità di tipo.
+
+Questa è la strategia usata da Java, dato che nella compilazione dell'if richiede che entrambi i rami abbiano lo stesso tipo, ma il codice sotto riportato compila correttamente, anche se il ramo else non ha tipo \texttt{C}.
+
+\begin{lstlisting}[language=Java]
+C foo() throws MyException{
+	if (...){
+		return new C();
+	} else {
+		throw new MyException();
+	}
+}
+\end{lstlisting}
+
+\noindent Se invece l'eccezione fosse di tipo run-time, ovvero non controllate, non vengono controllate dal compilatore, ovvero il compilatore non controlla il tipo delle eccezioni e compila qualsiasi cosa.
+
+Un'ultima cosa strana è il tipo $\TExc$, che in C++ corrisponde agli interi, in Java è una qualsiasi sotto-classe di \texttt{Throwable} e in ML viene implementato come un tipo variante.
+
+\`E necessario modificare il teorema di Subject Reduction aggiungendo i nuovi casi induttivi che vengono aggiunti da parte delle nuove regole.
+
+Il teorema di progressione deve essere modificato perché adesso abbiamo che $\throw{5}$ è un termine chiuso, ben tipato, che non fa nessun passo e non è un valore. Devo quindi estendere il teorema, aggiungendo anche la possibilità che $M$ sia un $\throw{}$.
+
+Anche il teorema di Safety cambia e viene aggiunto il caso in cui $M\to^* \throw{v}$.
+
+Quando un programma si ferma su un termine $\throw{}$ vuol dire che si è verifica un'eccezione non gestita.
+
+In modo simile, anche se impongo che tutti i programmi siano chiusi dentro un grande try-catch, il vecchio teorema di Safaty non funziona, perché può esserci una throw dentro il catch.
+
+
+
+
+
+
+
+
+

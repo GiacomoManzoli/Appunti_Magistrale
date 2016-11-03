@@ -112,8 +112,16 @@
 \newcommand{\Nat}{\text{ Nat }}
 \newcommand{\Bool}{\text{ Bool }}
 
+\newcommand{\IF}[3]{\ensuremath{\text{if}\ #1\ \text{then}\ #2\ \text{else}\ #3}}
+
 \newcommand{\vbar}{\:|\:}
 \newcommand{\proj}{.\_}
+
+\newcommand{\throw}[1]{\ensuremath{\text{throw} \: #1}}
+\newcommand{\trycatch}[2]{\ensuremath{\text{try} \: #1 \: \text{catch} \: #2}}
+\newcommand{\TExc}{\ensuremath{T_{exc}}}
+\newcommand{\myrule}[1]{\textsc{(#1)}}
+
 %----------------------------------------------------------------------------------------
 % TITLE
 %----------------------------------------------------------------------------------------
@@ -168,7 +176,7 @@
 	\input{lezioni/lezione6}
 	\input{lezioni/lezione7}
 	\input{lezioni/lezione8}
-	
+	\input{lezioni/lezione9}	
 	% gli esercizi sono finiti in separata sede
 	%\appendix
 	
