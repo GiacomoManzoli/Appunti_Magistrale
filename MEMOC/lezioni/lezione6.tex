@@ -1,0 +1,122 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+\chapter{Meta-euristiche}
+
+Ci sono due modi per risolvere i problemi di ottimizzazione combinatoria:
+
+\begin{itemize}
+	\item \textbf{Metodi esatti}: viene creato un modello lineare e, mediante un risolutore come CPLEX, viene prodotta una soluzione ottima in modo esatto.
+	\item \textbf{Metodi euristici}: sono metodi che forniscono delle \textit{buone} soluzioni che possono anche essere ottime, ma non riescono a provarne l'ottimalità.  I metodi euristici sono utili perché non sempre è possibile applicare l'approccio esatto.
+\end{itemize}
+
+\noindent Tipicamente prima si prova a creare un modello esatto e di risolverlo con un algoritmo efficiente, ma questo non sempre è possibile oppure per risolvere il modello è necessario troppo tempo.
+Si può quindi a risolvere il problema con un risolutore generico come CPLEX, ma spesso questi problemi sono NP-hard e quindi al crescere della dimensione, il tempo per trovare una soluzione aumenta in modo esponenziale.
+Quando la complessità aumenta troppo entrano in gioco gli approcci euristici.
+
+Ci sono altri casi in cui è preferibile adottare un approccio euristico, ad esempio quando è necessario integrare la risoluzione del modello in un sistema real-time, perché magari l'approccio esatto richiede qualche ora per la risoluzione, ma è necessario avere la risposta in meno di un secondo.
+
+\section{Classificazione dei metodi euristici}
+
+Ci sono due macro categorie di metodi euristici:
+
+\begin{itemize}
+	\item \textbf{Euristiche specifiche}: sono euristiche create ad-hoc per un problema, che sfruttano alcune caratteristiche del problema per renderne la risoluzione più efficiente.
+	\item \textbf{Euristiche generiche}: sono euristiche che forniscono uno schema di risoluzione generico che si è visto funzionare bene su più problemi.
+\end{itemize}
+
+\noindent Le euristiche generiche possono poi essere classificate in:
+
+\begin{itemize}
+	\item \textbf{Constructive heuristics}: sono euristiche che possono essere applicate a problemi nei quali è necessario selezionare un sottoinsieme ottimo a partire da un insieme di elementi. In questo caso si parte dall'insieme vuoto e si cerca di aggiungere iterativamente un elemento alla volta, secondo qualche specifico criterio.
+	\item \textbf{Meta-euristiche}: sono delle euristiche che possono essere applicate a più categorie di problemi, per le quali è necessario definire alcune regole: come trovare una soluzione, come modificare una soluzione per migliorarla, ecc. Alcune di queste meta-euristiche sono: Local Search, Simulated Annealing e Variable Neighborhood Search.
+	\item \textbf{Approximation algorithms}: sono algoritmi che garantiscono di trovare una soluzione con una \textit{percentuale di ottimalità}, ovvero garantiscono che la soluzione che trovano è al massimo peggiore del X\% rispetto la soluzione ottima. Hanno più un interesse teorico.
+	\item \textbf{Iper-heuristics}: sono algoritmi in grado di costruire altri algoritmi che riescono a risolvere in modo efficiente uno specifico problema. Ovvero anziché effettuare una ricerca sullo spazio delle soluzione, cercano sullo spazio degli algoritmi in grado di produrre una soluzione.
+\end{itemize}
+
+\section{Constructive heuristics}
+
+Queste euristiche cercano una soluzione a partire da quella vuota, andando ad aggiungerci iterativamente degli elementi, cercando di limitare il back-tracking. Il criterio con il quale viene scelto l'elemento da aggiungere prende il nome di \textit{expansion criterion}.
+
+L'euristica più semplice è quella greedy, che ad ogni passo sceglie l'elemento che è migliore in quel momento.
+
+\subsection{Algoritmi greedy}
+
+Adottano un criterio di espansione locale, perché la scelta viene effettuata tenendo conto della scelta migliore per lo stato attuale della soluzione.
+
+Lo schema generico è:
+
+\begin{enumerate}
+	\item Inizializza la soluzione \textit{S}.
+	\item Per ogni scelta che deve essere fatta:
+	\begin{enumerate}
+		\item Effettua la scelta migliore per il contesto attuale, tenendo conto dei vincoli del problema.
+	\end{enumerate}
+\end{enumerate}
+
+\noindent Anche se lo schema è molto semplice, questa tipologia di algoritmi viene molto utilizzata, perché è semplice da implementare, efficiente e segue un approccio intuitivo.
+Inoltre, possono essere combinati con altri algoritmi: ovvero viene prima utilizzata una ricerca greedy per trovare una soluzione sub-ottima, per poi utilizzare la ricerca locale per produrre una soluzione migliore.
+
+Una prima modifica a questi algoritmi sta nel introdurre la randomizzazione, ad esempio è possibile scegliere a caso tra le prime mosse migliori, introducendo così la possibilità di effettuare una mossa sub-ottima in modo da ottenere una soluzione diversa.
+Così facendo è possibile eseguire più volte l'algoritmo, che tanto è molto efficiente, per poi scegliere la soluzione migliore tra quelle trovate.
+
+L'approccio che cerca una soluzione a partire da una \textit{soluzione vuota} pernde il nome di \textbf{primal heuristics}, mentre le \textbf{dual heuristics} partono da una soluzione unfeasible e cercano di ridurre il livello di \textit{unfeasibility}.
+
+
+\subsection{Algoritmi che utilizzano metodi esatti}
+
+Questi algoritmi vedono la scelta del miglior elemento da aggiungere come un sotto-problema più facile da risolvere rispetto a quello di partenza.
+Ad esempio è possibile rilassare alcuni vincoli per ottenere una soluzione rilassata.
+
+Questa soluzione viene poi utilizzata per aggiungere nuovi vincoli alla versione rilassata del problema, finché non viene trovata una soluzione sufficientemente buona.
+
+Così facendo è necessario più tempo rispetto alla scelta greedy, ma la soluzione che si ottiene è tipicamente migliore.
+
+
+\subsection{Semplificazione dell'approccio esatto}
+
+Tipicamente gli algoritmi esatti effettuano un'enumerazione delle soluzioni, partendo anch'essi da una soluzione vuota, scegliendo di volta in volta se aggiungere o non aggiungere un elemento (vincolare una variabile) alla soluzione. Viene quindi creato un albero binario di ricerca che deve essere esplorato tutto per avere la garanzia che la soluzione sia ottima.
+
+Un'alternativa per semplificare questo approccio è quella di iniziare l'enumerazione e dopo un tot di iterazioni, iniziare ad effettuare delle scelte greedy per esplorare l'albero in profondità.
+
+Una di queste euristiche prende il nome di \textbf{beam search}: viene prima effettuata una ricerca breath-first parziale, ovvero per ogni nodo aperto vengono creati tutti \textit{b} possibili nodi figli, vengono valutati e sono i \textit{k} migliori vengono espansi.
+Così facendo ogni livello dell'albero ha \textit{k} nodi e quindi non c'è l'esplosione combinatoria.
+
+Se l'albero è alto $n$ e ogni nodo ha $b$ figli, si ha che l'albero ha $O(n \cdot k)$ nodi e in tutto vengono valutati $O(n\cdot k \cdot b)$ nodi.
+Si ha quindi che il tempo d'esecuzione può essere stimato e regolato in base al parametro $k$.
+
+Nella versione base di beam search non è previsto il backtrack, ma nel \textbf{recovery beam search} viene aggiunta questa possibilità, solo che questo può portare alla perdita della complessità polinomiale.
+
+\section{Local Search}
+
+L'idea alla base di questa meta-euristica è quella di partire da una soluzione del problema e di provare a migliorarla, cercando nel suo vicinato.
+Se c'è una soluzione vicina migliore, viene scelta e viene effettuata un'altra iterazione.
+
+Lo schema alla base dell'algoritmo è:
+
+\begin{enumerate}
+	\item Determina una soluzione iniziale $x$
+	\item Finché $\exists x' \in N(x) : f(x') < f(x) $
+	\begin{enumerate}
+		\item $x = x'$
+	\end{enumerate}
+	\item $x$ è la soluzione ottima \textbf{locale}
+\end{enumerate}
+
+Per poter applicare questo algoritmo è necessario definire un po' di componenti:
+
+\begin{itemize}
+	\item un metodo per trovare la soluzione ottima iniziale;
+	\item uno schema di rappresentazione della soluzione;
+	\item una funzione che a partire da una soluzione riesca a generare le soluzioni vicine;
+	\item una funzione di valutazione per le soluzioni;
+	\item una strategia di esplorazione del vicinato.
+\end{itemize}
+
+
+
+
+
+
