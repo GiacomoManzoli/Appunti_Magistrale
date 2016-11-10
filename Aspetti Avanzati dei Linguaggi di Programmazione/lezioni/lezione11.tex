@@ -1,0 +1,119 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 11 Novembre 2016
+%\section{Estensioni del nostro linguaggio}
+%\subsection{Sub-typing}
+
+\chapter{Featherweight Java}
+
+\`E un classico esempio teorico dei linguaggi orientati agli oggetti in quanto rappresenta il core minimo del sistema di typing di Java.
+
+\section{Caratteristiche dei linguaggi OO}
+
+I linguaggi ad oggetti si dividono in class-based e prototype-based. Nei primi ci sono le classi per i vari oggetti, mentre nei secondi ci sono solamente gli oggetti che vengono creati clonando degli oggetti pre-esistenti, che vengono poi modificati aggiungendoci nuovi metodi o campi dati (\textit{SmallTalk, JavaScript, ecc.}).
+
+\begin{itemize}
+	\item \textbf{Diverse implementazione}: è tipico dei linguaggi ad oggetti, che quando viene invocato un metodo, il codice che viene effettivamente eseguito dipende dall'oggetto concreto sul quale viene invocato il metodo. \textit{late/dynamic binding, utilizzo di interfacce comuni.} 
+	\item \textbf{Self-recursion}: un metodo può invocare un altro metodo dello stesso oggetto tramite \texttt{this}. Ovvero ad ogni metodo viene passato un riferimento esplicito o implicito all'oggetto di invocazione. Anche in caso di chiamate self-recursive è possibile applicare il late binding.
+	\item \textbf{Encapsulation}: posso isolare e localizzare il codice per ottenere una maggiore manutenibilità e leggibilità del codice.
+	\item \textbf{Sub-typing}: il tipo di un oggetto rappresenta il suo ``contratto'' che viene utilizzato per manipolare uniformemente gli oggetti di qualsiasi sotto-tipo.
+	\item \textbf{Ereditarietà}: il riuso del codice avviene tramite sub-classing.
+\end{itemize}
+
+\subsection{Static typing e Dynamic type checking}
+
+\paragraph{Static Typing} ogni espressione del programma ha un tipo e le regole di typing sono utilizzate a compile-time per controllare se un programma è ben tipato.
+
+\paragraph{Dynamic Type Checking} variabili, metodi ed espressioni di un programma in genere non sono tipati, ma ogni oggetto e ogni valore \textbf{ha un tipo}. Il sistema di typing controlla a run-time se le operazioni vengono applicate in modo corretto.
+
+\subparagraph{Duck-typing} ``\textit{Quando vedo un uccello che cammina come una papera, che nuota come una papera e che fa quack come una papera, allora quell'uccello è una papera}''.
+
+Python adotta questo sistema di typing: basta che un oggetto abbia un'interfaccia comune con un altro oggetto per poter essere passato ad un funzione. In Java si ottiene un effetto simile con un \textit{adapter}: viene definita una classe astratta, sottoclasse della classe di partenza, che viene poi concretizzata da un adapter per la seconda classe d'interesse. L'approccio del duck-typing è molto flessibile quanto fragile e quindi va bene per programmi di piccoli dimensione. Per software complessi risulta migliore l'approccio statico.
+
+\subsection{Nominal vs Structural Typing}
+
+\paragraph{Type system nominali} In Java e FJ, un tipo è definito insieme al suo nome, e un tipo è un sotto-tipo di un altro solo se viene esplicitato. 
+Il nome dei tipi è utile a run-time. Ogni oggetto run-time ha un tag con il nome del suo tipo, utile per i type-test e per la riflessività. Sono poi utili per definire i tipi ricorsivi.
+
+\paragraph{Type system strutturali} In ML/Haskell, il nome del tipo è irrilevante e il sub-typing è definito direttamente sulla struttura del tipo.
+I tipi strutturali sono più adatti in presenza di feature avanzate come il polimorfismo parametrico o per gli \textit{abstract data type}, funtori, ecc.
+
+Non è ancora chiaro quale sia l'approccio migliore ed è un area di ricerca molto attiva.
+
+\paragraph{Approccio misto} In Scala c'è il typing nominale ereditato da Java ma ci sono anche i tipi strutturali, così facendo viene recuperata parte della flessibilità del duck-typing.
+
+\begin{lstlisting}[language=Scala, caption=Typing strutturale in Scala]
+class File(name:String){
+	def getName():String = name
+	def open() {/*...*/}
+	def close() {println("close")}
+}
+
+def test(f: {def getName():String}){println(f.getName())} /*Definisco un vincolo sulla struttura del tipo*/
+
+test(new File("test.txt"))
+test(new java.io.File("text.txt")) /* Posso passare il tipo java.io.File perché ha come metodo getName() */
+\end{lstlisting}
+
+\noindent L'implementazione di questo sistema è poco efficiente e quindi è sconsigliato farne largo uso.
+
+\section{Featherweight Java}
+
+L'obiettivo di questo linguaggio è di formalizzare in modo preciso la semantica del linguaggio, al fine di enunciare e dimostrare alcune proprietà, in modo da riuscire ad individuare problemi che non sono osservabili a livello informale.
+
+Questo sub-set di Java include:
+
+\begin{itemize}
+	\item \textbf{Classi e sotto-classi}: creazione di oggetti, invocazione di metodi, selezione di campi dati, case e variabili.
+	\item \textbf{Non ci sono campi dato}: gli oggetti che abbiamo a disposizione sono immutabili, ovvero i loro campi dati non possono essere modificati, ottenendo così un linguaggio funzionale (senza funzioni higher-order).
+\end{itemize}
+
+\noindent Già con solo queste cose è possibile definire classi mutuamente ricorsive, fare l'override dei metodi e definire metodi ricorsivi.
+
+Per provare la correttezza formale di altre caratteristiche di Java si parte da questa versione e poi si aggiungono solamente le parti relative alle estensioni che si vogliono formalizzare.
+
+\section{Un programma FJ}
+
+Un programma è rappresentato da una coppia $(CT, t)$, dove $t$ è il termine che descrivere il programma e $CT$ è la class-table, che descrive le varie classi che compaiono nel programma.
+
+\begin{lstlisting}[language=Java]
+class A extends Object { A() {super();} }
+class B extends Object { B() {super();} }
+class Pair extrend Object {
+	Object fst; Object snd;
+	Pair(Object fst, Object snd) {super(); this.fst=fst; this.snd=snd;}
+	Pair SetFst(Object newFst) {return new Pair(newFst, snd);}
+}
+\end{lstlisting}
+
+\noindent Mentre alcuni esempi di programma sono
+
+\begin{lstlisting}[language=Java]
+new Pair(new A(), new B()).snd; // new B()
+new Pair(new A(), new B() ).setFst(new B()); // new Pair(new B(), new B())
+((Pair) new Pair(new Pair(new A(),new B()), new A()).fst)).snd // new B()
+\end{lstlisting}
+
+\subsection{Gli errori run-time}
+
+Quando finisco in un termine stuck viene sollevato un errore run-time. Questo può succedere perché provo ad accedere ad un campo dati o a un metodo che non è definito nella classe corrispondente, oppure quando viene effettuata la chiamata di un metodo con un numero o tipo di parametri errato.
+Anche un cast (down-cast) sbagliato può sollevare un errore run-time, se cerco di convertire il tipo dell'oggetto in un suo sotto-tipo.
+
+Con questa versione di Java e senza considerare le conversioni, continua a valere il teorema di safety. Per le conversioni non si riesce a dimostrare che se il programma di partenza è corretto, allora anche a run-time non ci sono errori e quindi non vale il teorema di safety.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

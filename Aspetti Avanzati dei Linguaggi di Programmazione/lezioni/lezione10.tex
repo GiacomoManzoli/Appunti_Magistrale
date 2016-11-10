@@ -150,7 +150,7 @@ Nel nostro linguaggio ci sono anche dei valori di tipo funzione, e anche li si p
 	
 	\AxiomC{$\vdots$}
 	\LeftLabel{\myrule{Record}}
-	\BinaryInfC{$ \emptyset \vdash \{l=0, l'=1\}: \{l:\Nat, l': \Nat\}$}
+	\UnaryInfC{$ \emptyset \vdash \{l=0, l'=1\}: \{l:\Nat, l': \Nat\}$}
 	\LeftLabel{\myrule{App}}
 	\BinaryInfC{$\emptyset \vdash (\fn x : \{ l : \Nat \} . x.l + 2 ) \: \{l=0, l' = 1\}: \Nat $}
 \end{prooftree}
