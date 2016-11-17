@@ -122,6 +122,27 @@
 \newcommand{\TExc}{\ensuremath{T_{exc}}}
 \newcommand{\myrule}[1]{\textsc{(#1)}}
 
+\newcommand{\class}[3]{\text{class} \: #1 \: \text{extends} \: #2 \: \{\: #3 \:\}}
+\newcommand{\construct}[3]{\ensuremath{#1(#2)\{\: #3\:\}}}
+\newcommand{\this}{\text{this}}
+\newcommand{\super}{\text{super}}
+
+\newcommand{\method}[4]{\ensuremath{#1 \: #2(#3) \: \{ \: \text{return} \: #4;\: \} }}
+\newcommand{\new}[2]{\ensuremath{\text{new}\: #1(  #2  )}}
+
+\newcommand{\stype}{\ensuremath{<:}}
+\newcommand{\fields}[1]{fields(#1)}
+\newcommand{\mbody}[1]{mbody(#1)}
+\newcommand{\mtype}[1]{mtype(#1)}
+\newcommand{\IN}[1]{\text{in} \: #1}
+
+
+% Shorcut per prooftree
+\newcommand{\LL}[1]{\LeftLabel{\myrule{#1}}}
+\newcommand{\AC}[1]{\AxiomC{#1}}
+\newenvironment{bprooftree}
+{\leavevmode\hbox\bgroup}
+{\DisplayProof\egroup}
 %----------------------------------------------------------------------------------------
 % TITLE
 %----------------------------------------------------------------------------------------
@@ -179,6 +200,7 @@
 	\input{lezioni/lezione9}
 	\input{lezioni/lezione10}	
 	\input{lezioni/lezione11}
+	\input{lezioni/lezione12}
 	% gli esercizi sono finiti in separata sede
 	%\appendix
 	

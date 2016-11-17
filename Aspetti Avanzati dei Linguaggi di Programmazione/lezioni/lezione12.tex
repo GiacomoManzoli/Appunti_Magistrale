@@ -1,0 +1,344 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 15 Novembre 2016
+%\chapter{Featherweight Java}
+%\section{Un programma FJ}
+%\subsection{Gli errori run-time}
+
+\section{Sintassi FJ}
+
+Con le lettere maiuscole i nomi delle classi ($A, B, C, D, \ldots$). 
+Ci sono poi le tuple $\tilde{t} = t_1 \ldots t_n$ che consistono in una serie di termini. Ad ogni termine può essere associato anche un relativo tipo, con la notazione $\tilde{A\: f} = A_1 \: f_1 \ldots A_n \: f_n$.
+Quando la serie dei termini indica i campi dati di un oggetto, diamo per assunto che i vari $t_i$ siano distinti.
+
+La definizione di una classe viene fatta con un termine
+
+$$
+CL ::= \class{C}{D}{\tilde{A \: f}; \tilde{K \: M}}
+$$
+
+\noindent Ogni classe eredita sempre da una classe e come base di tutte le gerarchie c'è la classe \texttt{Object}. Assumiamo inoltre che i nomi dei campi dato, metodi, ecc. sono tutti distinti, fatta eccezione per l'over-ride dei metodi della classe base.
+
+Con il termine $K$ viene indicato il costruttore di una classe, definito secondo:
+
+$$
+K ::= \construct{C}{\tilde{A\:g}, \tilde{B\:f}}{\super (\tilde{g}) ; \: \this.\tilde{f} = \tilde{f}}
+$$
+
+\noindent per comodità i parametri del costruttore sono separati in due gruppi, il primo è quello da passare al costruttore dalla classe base, mentre il secondo è quello per i campi dati della classe.
+
+I metodi vengono definiti secondo il termine $M$:
+
+$$
+M ::= \method{C}{m}{\tilde{A \: x}}{t}
+$$
+
+\noindent I termini del linguaggio sono quindi:
+
+$$
+t ::= x \vbar t.f \vbar t.m(\tilde{t}) \vbar \new{C}{\tilde{t}} \vbar (C) \ t
+$$
+
+\noindent i valori diventano gli oggetti che vengono costruiti:
+
+$$
+v ::= \new{C}{\tilde{v}}
+$$
+
+da notare che per gli oggetti teniamo una semantica funzionale e quindi sono immutabili.
+
+Un programma è quindi dato dalla coppia $(CT, t)$ che assumiamo essere sempre ben definita, ovvero che tutte le classi che vengono usate dentro $t$ abbiano una buona definizione dentro $CT$.
+
+\section{Sub-typing}
+
+Il sub-typing è nominale, quindi vale solo se viene specificato nella definizione della classe.
+
+\begin{prooftree}
+	\AxiomC{$CT(C) = \class{C}{D}{\ldots} $}
+	\UnaryInfC{$C \stype D$}
+\end{prooftree}
+
+continuano inoltre a valere la proprietà riflessiva e transitiva.
+Possono quindi essere presenti dei cicli nella definizione di sotto-tipo. Se la class table è ben definita, allora non ci sono cicli ed è sempre possibile verificare ciò perché la class table è sempre finita.
+
+
+\section{La semantica operazionale di FJ}
+
+La prima cosa che si può fare è selezionare il campo dati di un oggetto
+
+\begin{center}
+\begin{bprooftree}
+	\AxiomC{$fields(C) = \tilde{C \: f}$}
+	\AxiomC{$  f_i \in \tilde{f} $}
+	\LeftLabel{\myrule{ProjNew}}
+	\BinaryInfC{$(\new{C}{\tilde{v}}).f_i \to v_i$}
+\end{bprooftree}
+\begin{bprooftree}
+	\AxiomC{$t \to t'$}
+	\LL{Field}
+	\UnaryInfC{$t.f \to t'.f$}
+\end{bprooftree}
+\end{center}
+
+\noindent se il campo dati non è presente tra quelli definiti nella class table si finisce in un termine stuck per un errore del tipo \textit{message not understood}.
+
+Il lookup dei campi viene fatto con la regola
+
+\begin{prooftree}
+	\AxiomC{$CT(C) = \class{C}{D}{\ldots}$}
+	\AxiomC{$fields(D) = \tilde{D \: g}$}
+	\BinaryInfC{$fields(C) = \tilde{D \: g}, \tilde{C \: f}$}
+\end{prooftree}
+
+\noindent L'invocazione di un metodo viene fatta quando un valore oggetto e quando i parametri attuali sono già valutati, ovvero con una semantica call-by-value.
+
+\begin{prooftree}
+	\AxiomC{$\mbody{m, C} = (\tilde{x}, t)$}
+	\AxiomC{$ |\tilde{x}| = |\tilde{v}'|$}
+	\LL{InkvNew}
+	\BinaryInfC{$(\new{C}{\tilde{v}}).m(\tilde{v}') \to t\{ \tilde{x} :=\tilde{v}', \this := \new{C}{\tilde{v}} \}$}
+\end{prooftree}
+
+\noindent Servono quindi anche le regole per la valutazione dei termini e dei parametri attuali:
+
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$t \to t'$}
+		\LL{InvkRecv}
+		\UnaryInfC{$t.m(\tilde{f}) \to t'.m(\tilde{f})$}
+	\end{bprooftree}
+	\begin{bprooftree}
+		\AxiomC{$ t_i \to t_i' $}
+		\LL{InvkArg}
+		\UnaryInfC{$ v.m(\tilde{v}, t_i, \tilde{t}) \to v.m(\tilde{v}, t_i', \tilde{t})$}
+	\end{bprooftree}
+\end{center}
+
+Dato che i costruttori sono definiti diversamente dai metodi, è necessario fornire le regole e assiomi anche per la loro valutazione.
+
+\begin{prooftree}
+	\AxiomC{$ \mbody{m,C} = (\tilde{x},t)$}
+	\AxiomC{$ |\tilde{x}| = |\tilde{v'}| $}
+	\LL{InvkNew}
+	\BinaryInfC{$ (\new{C}{\tilde{v}}).m(\tilde{v}') \to t\{\tilde{x} := \tilde{v}, \this := \new{C}{\tilde{v}} \} $}
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{$ t_i \to t_i' $}
+	\LL{NewArg}
+	\UnaryInfC{$ \new{C}{\tilde{v}, t_i, \tilde{t}} \to \new{C}{\tilde{v}, t_i', \tilde{t}}$}
+\end{prooftree}
+
+\noindent Il lookup dei metodi (e dei costruttori) nella definizione delle classi viene fatto da due regole, la prima per il lookup sulla definizione della classe e la seconda per la ricerca nella super-classe:
+
+\begin{prooftree}
+	\AxiomC{$CT(C) = \class{C}{D}{\tilde{C\:f}; \tilde{K\:M}}$}
+	\AxiomC{$\method{B}{m}{\tilde{B \: x}}{t} \in \tilde{M} $}
+	\BinaryInfC{$\mbody{m,C} = (\tilde{x}, t)$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AxiomC{$CT(C) = \class{C}{D}{\tilde{C\:f}; \tilde{K\:M}}$}
+	\AxiomC{$m \text{ non definito in } M$}
+	\BinaryInfC{$\mbody{m,C} = \mbody{m, D}$}
+\end{prooftree}
+
+\noindent Serve inoltre la semantica per i cast. Il caso ha successo solo alzando il tipo di un oggetto (up-cast), altrimenti il termine evolve in un termine stuck, perché in questa versione semplificata non ci sono le eccezioni. Da notare che i cast hanno effetto solo a livello statico, quindi è corretto non modificare la \texttt{new}.
+
+\begin{center}
+\begin{bprooftree}
+	\AxiomC{$C \stype D$}
+	\LL{CastNew}
+	\UnaryInfC{$(D)\new{C}{\tilde{v}} \to \new{C}{\tilde{v}}$}
+\end{bprooftree}
+\begin{bprooftree}
+	\AxiomC{$t \to t'$}
+	\LL{Cast}
+	\UnaryInfC{$(C)t \to (C)t'$}
+\end{bprooftree}
+\end{center}
+
+\noindent Ad esempio, con $C \stype B \stype A$
+$$
+(B)((A) \new{C}{}) \to (B) \new{C}{} \to \new{C}{}
+$$
+
+\noindent da notare che tutti i cast vanno a buon fine perché faccio sempre dei cast a dei valori che sono sopra $C$, anche se a livello statico c'è anche un down-cast da $A$ verso $C$.
+
+\section{Type system}
+
+Il type system utilizza 3 forme di giudizio di tipo:
+
+\begin{itemize}
+	\item $\Gamma \vdash t : C$. \`E il classico giudizio di tipo che viene utilizzato per dire che $t$ ha tipo $C$.
+	\item $\method{D}{m}{\tilde{C\ x}}{t} \: OK \: \IN{C}$. Per indicare che il metodo $m$ è ben formato se occorre nella classe $C$.
+	\item $ \class{C}{D}{\tilde{C\ f}, \tilde{K \ M}} \: OK$. Per indicare che la classe $C$ è ben formata.
+\end{itemize}
+
+\noindent Non c'è l'assioma di Subsumption, il quale viene incastrato dentro gli altri assiomi/regole (\textbf{typing algoritmico}).
+
+Si ha quindi che un programma $(CT, t)$ è \textbf{ben tipato} se $CT \: OK$ e $\emptyset \vdash t : C$ per qualche $C$.
+
+\begin{itemize}
+	\item Typing di un termine
+	\begin{prooftree}
+		\AxiomC{$x : C \in \Gamma$}
+		\LL{Var}
+		\UnaryInfC{$ \Gamma \vdash x : C$}
+	\end{prooftree}
+	\item Typing di un campo dati
+	\begin{prooftree}
+		\AxiomC{$ \Gamma \vdash t: C$}
+		\AxiomC{$ \fields{C} = \tilde{D \ f}$}
+		\AxiomC{$ f_i \in \tilde{f}$}
+		\LL{Field}
+		\TrinaryInfC{$\Gamma \vdash t.f-i : D_i$}
+	\end{prooftree}
+	\item Typing di un costruttore, da notare che in questo caso come argomenti vanno bene anche dei valori di un sotto-tipo. \`E qui che viene implementato il subsumption.
+	\begin{prooftree}
+		\AxiomC{$ \fields{C} = \tilde{D \ f}$}
+		\AxiomC{$ \Gamma \vdash \tilde{t} : \tilde{A}$}
+		\AxiomC{$ \tilde{A} \stype \tilde{D}$}
+		\LL{New}
+		\TrinaryInfC{$\Gamma \vdash \new{C}{\tilde{t}} : C$}
+	\end{prooftree}
+	\item Typing della chiamata di un metodo
+	\begin{prooftree}
+		\AxiomC{$\Gamma \vdash t' : C$}
+		\AxiomC{$\mtype{m,C} = \tilde{A} \to B$}
+		\AxiomC{$ |\tilde{t}| = |\tilde{A}|$}
+		\AxiomC{$D <: A$}
+		\AxiomC{$ \Gamma \vdash \tilde{t}: \tilde{D} $}
+		\LL{Invk}
+		\QuinaryInfC{$\Gamma \vdash t'.m(\tilde{t}) : B$}
+	\end{prooftree}
+	\noindent da notare che la freccia tra $A~$ e $B$ non è quella classica, perché non è presente il tipo freccia, ma serve ad indicare che la chiamata al metodo ritorna un termine o valore di tipo $B$.
+	La ricerca con $mtype(m,C)$ della presenza del metodo nella class table viene fatta secondo queste due regole:
+	\begin{prooftree}
+		\AC{$CT(C) = \class{C}{D}{\tilde{C \ f}, \tilde{K \ M}} $}
+		\AC{$ \method{B}{m}{\tilde{A \ x}}{t} \in \tilde{M}$}
+		\BinaryInfC{$\mtype{m,C} = \tilde{A} \to B$}
+	\end{prooftree}
+	\begin{prooftree}
+		\AC{$CT(C) = \class{C}{D}{\tilde{C \ f}, \tilde{K \ M}} $}
+		\AC{$ \method{B}{m}{\tilde{A \ x}}{t} \not\in \tilde{M}$}
+		\BinaryInfC{$\mtype{m,C} = \mtype{m,D}$}
+	\end{prooftree}
+	\item Typing delle espressioni di cast, a livello statico basta che i tipi siano tra loro imparentati.
+	\begin{prooftree}
+		\AxiomC{$\Gamma \vdash t : D$}
+		\AxiomC{$D <: C$}
+		\LeftLabel{\myrule{Up-Cast}}
+		\BinaryInfC{$\Gamma \vdash (C)t : C$}
+	\end{prooftree}
+	\begin{prooftree}
+		\AxiomC{$\Gamma \vdash t :D$} \AxiomC{$C <: D$} \AxiomC{$C \neq D$}
+		\LeftLabel{\myrule{Down-Cast}}
+		\TrinaryInfC{$\Gamma \vdash (C)t : C $}
+	\end{prooftree}
+	\item Typing per la class table, controlla che la definizione di una classe sia fatta in modo corretto.
+	\begin{prooftree}
+		\AC{$K = \construct{C}{\tilde{D \ f, \tilde{C \ f}}}{\super(\tilde{g}); \this.\tilde{f} = \tilde{f}}$}
+		\AC{$ \fields{D} = \tilde{D \ g} $}
+		\AC{$ \tilde{M} \ OK \IN{C}$}
+		\LL{C-OK}
+		\TrinaryInfC{$\class{C}{D}{\tilde{C \ f}, K\ \tilde{M}} \ OK$}
+	\end{prooftree}
+	C'è poi la regola per controllare che i metodi definiti all'interno di una class-table siano definiti in modo corretto.
+	\begin{prooftree}
+		\AC{$ \tilde{x} : \tilde{C}, \this : C \vdash t : B $}
+		\AC{$ B \stype A$}
+		\AC{$ CT(C) = \class{C}{D}{\ldots} $}
+		\AC{$ override(m, D, \tilde{C}\to A)$}
+		\LL{M-OK-in-C}
+		\QuaternaryInfC{$ \method{A}{m}{\tilde{C \ x}}{t} \ OK \IN{C} $}
+	\end{prooftree}
+	La ricerca dell'over-ride viene fatta dalla regola ausiliaria:
+	\begin{prooftree}
+		\AC{Se $mtype(m,D) = \tilde{D} \to B$ allora $ \tilde{C} = \tilde{D}$ e $A = B$}
+		\UnaryInfC{$override(m,D,\tilde{C}\to A)$}
+	\end{prooftree}
+
+\end{itemize}
+
+\subsection{Esempio di cast}
+$$
+\emptyset \vdash (B) ((A) new C()): B
+$$
+con $C <: B <: A$
+
+\begin{prooftree}
+	
+	\AC{$\new{C}{} : C$}
+	\LL{Up-Cast}
+	\UnaryInfC{$ \emptyset \vdash (A) \new{C}{}$}
+	
+	\AC{$ B <: A $}
+	\LL{Donw-Cast}
+	\BinaryInfC{$\emptyset \vdash (B) ((A) \new{C}{} : B)$}
+\end{prooftree}
+
+\subsection{Non-validità del teorema di safety}
+
+$$
+(A) ((Object)\new{B}{}) \to (A) \new{B}{}
+$$
+
+con $A$ e $B$ non in relazione.
+
+Si ha che con questo sistema di tipo il giudizio è correttamente derivabile perché:
+
+$$
+(A) ((Object)\new{B}{}) \to (A) \new{B}{}  \to \new{B}{}
+$$
+
+ma a run-time l'esecuzione evolve in un termine stuck perché $A$ e $B$ non sono in relazione.
+
+Il problema deriva dal teorema di Preservazione dei tipi. Perché dopo il primo cast non è più derivabile il secondo giudizio.
+
+La soluzione è l'aggiunta della regola
+
+\begin{prooftree}
+	\AxiomC{$\Gamma \vdash t : D $} \AxiomC{$C \not< : D$} \AxiomC{$D \not<: C $} \AC{$warning$}
+	\LeftLabel{\myrule{StupidCast}}
+	\QuaternaryInfC{$\Gamma \vdash (C)t:C$}
+\end{prooftree}
+
+In questo caso il compilatore permette di tipare come prima, solo che emana un warning della soluzione pericolosa. 
+Da notare che se a compile-time non rilevo warning, possono comunque comparire a run-time.
+Questo sistema il teorema di preservazione, perché il tipo si preserva. \todo{Come?}
+
+
+\section{Proprietà del sistema di tipo}
+
+\subsection{Subject Reduction}
+
+Se $\Gamma \vdash t : C$ e $t \to t'$, allora $\Gamma \vdash t' : C'$ per qualche $C' <:C$. Si dimostra per induzione e si vede la necessità di \myrule{StupidCast}.
+
+\subsection{Progressione}
+
+Sia $t$ un termine chiuso e ben tipato. Allora $t \to t'$, oppure $t$ è un valore, oppure $\exists E$ \textit{evaluation context}, tale che $t = E[(C) \new{D}{\tilde{v}}]$, con $D \not<:C$.
+
+Dove gli \textbf{evalutaion context} sono termini qualsiasi definiti come:
+
+$$
+E ::= [] \vbar E.f \vbar E.m(\tilde{t}) \vbar \ldots
+$$
+
+ovvero rappresentano dei termini ``con il buco'', ovvero un termine normale che al posto di qualche cosa ha un buco, che viene riempito con i \textit{dati passati all'evaluation context}.
+
+
+\subsection{Safety}
+
+Sia $t$ un programma ben tipato (e senza warning), allora $t$ non evolve a run-time ad un termine che contiene un errore di tipo message-not-understood.
+
+In Java, il teorema di Safety è simile, solo che prevede la possibilità di sollevare una ClassCastException e non solleva warning.
+
+
+
+
+
+
