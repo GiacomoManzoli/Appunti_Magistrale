@@ -1,0 +1,399 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 17 Novembre 2016
+
+%\section{Proprietà del sistema di tipo}
+%\subsection{ Safety}
+
+\section{Imperative FJ}
+
+Non c'è una pubblicazione ufficiale per il linguaggio, ma è definito aggregando vari paper.
+
+In questa versione viene preso in considerazione:
+
+\begin{itemize}
+	\item Dichiarazione di variabili;
+	\item Assegnamenti;
+	\item Sequenze di istruzioni.
+\end{itemize}
+
+La \textbf{sintassi} cambia un po', in particolare quella delle espressioni, che diventa:
+
+$$
+e ::= v \vbar x \vbar e.f \vbar e;e \vbar C \ x = e ; e \vbar x = e \vbar e.f = e \vbar \underline{NPE}
+$$
+
+\noindent $\underline{NPE}$ serve per modellare le null-pointer-exception e può comparire solo dinamicamente. Per questo motivo è sottolineato.
+
+Allo stesso modo cambia anche il trattamento dei valori, che non sono più dei costruttori ma diventano
+
+$$
+v ::= \Null \vbar \underline{o}
+$$
+
+\noindent Dove $\underline{o}$ rappresenta un indirizzo della memoria virtuale (\textbf{object identifier}) che ha senso solo a run-time, in quanto rappresenta un riferimento ad un oggetto costruito.
+
+La modellazione dei linguaggi imperativi richiede anche la modellazione dei cambiamenti della memoria:
+
+$$
+\sigma ::= \underline{\emptyset \vbar \sigma \cdot [x \rat v] \vbar \sigma \cdot [o \rat (C, \tilde{f \ v})]}
+$$
+
+\noindent dove il termine $ \sigma \cdot [x \rightarrowtail v]$ rappresenta l'aggiunta di un nuovo valore sulla memoria associato alla variabile $x$ e $\sigma \cdot [o \rightarrowtail (C, \tilde{f \ v})]$ l'aggiunta di un nuovo oggetto di classe $C$ con i relativi valori per i campi dati $\tilde{f \ v}$. Da notare che in memoria non sono presenti i metodi perché si trovano solamente nella class-table.
+
+Alcuni esempi sono:
+
+\begin{itemize}
+	\item $\sigma_1 = [o \rightarrowtail Object]\cdot[x \rightarrowtail o] \cdot [y \rightarrowtail o] $: creazione di un oggetto con due variabili che lo riferiscono.
+	\item $ \sigma_2 = [o_1 \rightarrowtail Object] \cdot [x \rightarrowtail o_1] \cdot  [o_2 \rightarrowtail Object]\cdot [y \rightarrowtail o_2]$: creazione di due oggetti e relativi riferimenti.
+	\item $\sigma_3 = [x \rightarrowtail \Null]$: memoria mal formata con puntatore a null.
+\end{itemize}
+
+\noindent \`E inoltre presente il concetto di configurazione, il quale associa un'espressione alla memoria.
+
+$$
+F ::= \langle \sigma, e\rangle 
+$$
+
+\noindent La configurazione iniziale ha $\sigma = \emptyset$.
+
+\textbf{NB}: a livello di notazione:
+\begin{itemize}
+	\item $	\sigma \cdot [\ldots]$: rappresenta l'\textbf{estensione} della memoria con un nuovo ``\textit{record}''.
+	\item $ \sigma[o.f_i \to v_i']$ rappresenta l'\textbf{aggiornamento} di un campo dati all'interno della memoria.
+	
+\end{itemize}
+
+\subsection{Semantica operazione}
+
+La semantica del linguaggio definirà come si evolve l'insieme delle configurazioni.
+
+L'assioma \myrule{NewObj} descrive come viene effettuata la creazione di un nuovo oggetto. Viene richiesto che l'oggetto abbia un nome diverso da quelli già presenti nello heap e che l'oggetto sia costruito in modo corretto.
+
+\begin{prooftree}
+	\AC{$ o \not\in Dom(\sigma)$}
+	\AC{$ \fields{C} = \tilde{ A \ f} $}
+	\LL{NewObj}
+	\BinaryInfC{$ \LA \sigma, \new{C}{\tilde{v}} \RA \to \LA \sigma \cdot [o \rat (C, \tilde{f : v}),o]\RA $}
+\end{prooftree}
+
+\noindent L'assioma \myrule{Field} descrive come effettuare l'accesso ad un campo dato dell'oggetto per leggerne il valore. Viene richiesto che l'oggetto sia presente in memoria e che abbia il campo dati.
+
+\begin{prooftree}
+	\AC{$ \sigma(o) = (C, \tilde{f : v}) $}
+	\AC{$ f_i \in \tilde{f} $}
+	\LL{Field}
+	\BinaryInfC{$ \LA \sigma, o.f_i \RA \to \LA \sigma, v_i\RA $}
+\end{prooftree}
+
+\noindent L'assioma \myrule{AssegnCampi} descrive come effettuare la scrittura di un valore sul campo dati. Anche in questo caso viene richiesto che l'oggetto sia presente nello heap e che il campo dati sia effettivamente presente. Viene quindi aggiornato il contenuto della memoria e il termine risultate è il valore assegnato, così come avviene in Java/C++.
+
+\begin{prooftree}
+	\AC{$ \sigma(o) = (C, \tilde{f : v}) $}
+	\AC{$ f \in \tilde{f} $}
+	\LL{Field}
+	\BinaryInfC{$ \LA \sigma, o.f = v' \RA \to \LA \sigma[o.f = v'], v'\RA $}
+\end{prooftree}
+
+\noindent L'assioma \myrule{Seq} descrive la valutazione di una sequenza e non fa altro che scartare il valore completamente valutato, per poi passare alla valutazione del termine successivo.
+
+\begin{prooftree}
+	\AC{$ $}
+	\LL{Seq}
+	\UnaryInfC{$ \LA \sigma, v;e \RA \to \LA \sigma , e\RA $}
+\end{prooftree}
+
+\noindent L'assioma \myrule{Var} descrive il recupero del valore di un oggetto de-referenziando la relativa variabile.
+
+\begin{prooftree}
+	\AC{$ $}
+	\LL{Var}
+	\UnaryInfC{$ \LA \sigma, x \RA \to \LA \sigma , \sigma(x)\RA $}
+\end{prooftree}
+
+\noindent L'assioma \myrule{Assegn} descrive l'assegnazione generica di una variabile. Serve per aggiornare i riferimenti o i valori standard.
+
+\begin{prooftree}
+	\AC{$ $}
+	\LL{Assegn}
+	\UnaryInfC{$ \LA \sigma, x = v\RA \to \LA \sigma[x \rat v] , v\RA $}
+\end{prooftree}
+
+\noindent L'assioma \myrule{DichiaraVar} descrive la dichiarazione/creazione di una nuova variabile in memoria. Da notare che la dichiarazione di una variabile deve poi essere seguita da un'altra espressione, ovvero non può essere l'ultima istruzione.
+
+\begin{prooftree}
+	\AC{$ x \not\in Dom(\sigma)$}
+	\LL{DicharVar}
+	\UnaryInfC{$ \LA \sigma, C \ x = v ; e \RA \to \LA \sigma[x \rat v] , e\RA $}
+\end{prooftree}
+
+\noindent L'assioma \myrule{MethodCall} descrive la chiamata di un metodo, la quale può essere fatta quando l'oggetto di invocazione è completamente valutato (è una $o$). 
+Tra le varie premesse c'è la necessità che il metodo invocato sia presente nella classe dell'oggetto. 
+Viene anche richiesto che la chiamata sia effettuata con i parametri corretti. 
+Da notare che non è necessario effettuare la sostituzione dei parametri attuali, perché è possibile accedere ai valori sfruttando i riferimenti alla memoria.
+
+\begin{prooftree}
+	\AC{$ \sigma(o) = (C, \ldots)$}
+	\AC{$\mbody{m,C} = (\tilde{x}, e)$}
+	\AC{$ \tilde{x} \not\in Dom(\sigma)$}
+	\LL{MethodCall}
+	\TrinaryInfC{$\LA \sigma, o.m(\tilde{v})\RA \to \LA \sigma \cdot [\tilde{x}\rat \tilde{v}], e\{\this := o\} \RA$}
+\end{prooftree}
+
+\noindent Con \myrule{MethodCall} viene creata della spazzatura nella memoria quando l'esecuzione del metodo termina. \`E possibile quindi imporre che venga sempre fatta una alpha-conversion dei nomi dei parametri per evitare conflitti, oppure è possibile fare garbage collection. Per comodità scegliamo la prima.
+
+Un modo di fare garbage collection è quello di imporre che la regola \myrule{GarbageCollecion} venga eseguita ogni volta che termina l'esecuzione di un metodo.
+Tuttavia questo complica notevolmente la sintassi, perché deve essere forzata la garbage collection alla fine dell'esecuzione del codice.
+Da notare che come condizione per l'assioma viene posto che le variabili che vengono rimosse non siano libere in $e$, ovvero che non siano necessarie per il termine.
+
+\begin{prooftree}
+	\AC{$x \not\in fv(e)$}
+	\LL{GarbageCollection}
+	\UnaryInfC{$ \LA \sigma \cdot [x \rat v], e\RA \to \LA \sigma , e\RA $}
+\end{prooftree}
+
+\noindent Un'alternativa è un'altra regola che viene applicata in modo non-deterministico durante l'esecuzione del programma e che toglie i blocchi di memoria che non sono referenziati da delle variabili, un po' come funziona realmente. Questa strategia è però rischiosa perché potrebbero essere cancellati dei blocchi ancora utili.
+
+\begin{prooftree}
+	\AC{$o \not\in fref(e)$}
+	\LL{AltGarbageCollection}
+	\UnaryInfC{$ \LA \sigma \cdot [o \rat (C, \tilde{f : v})], e\RA \to \LA \sigma , e\RA $}
+\end{prooftree}
+
+\noindent dove $fref(e)$ è l'insieme degli oggetti presenti in memoria utilizzanti dal termine $e$. 
+
+Questa regola però ha un problema, perché un oggetto sia riferito dal campo dati di un altro oggetto, non se ne accorge e lo elimina.
+
+Serve quindi una regola più avanzata che controlla anche la presenza di questi riferimenti prima di cancellare parte della memoria.
+
+\begin{prooftree}
+	\AC{$o \not\in fref(e)$}
+	\AC{$o \not\in Codom(\sigma)$}
+	\LL{AltGarbageCollection}
+	\BinaryInfC{$ \LA \sigma \cdot [o \rat (C, \tilde{f : v})], e\RA \to \LA \sigma , e\RA $}
+\end{prooftree}
+
+\noindent Per quanto riguarda le regole di avanzamento della semantica operazionale, ce ne sarebbero un sacco, ma possono essere tutte riassunte da
+
+\begin{prooftree}
+	\AC{$ \langle \sigma, e\rangle \to \langle\sigma', e' \rangle$}
+	\LL{Cong}
+	\UnaryInfC{$\langle \sigma , E[e]\rangle \to \langle \sigma', E[e']\rangle$}
+\end{prooftree}
+
+\noindent dove $E$ è un evaluation context:
+
+$$
+E ::= [] \vbar E.f \vbar E;e \vbar x = E \vbar E.f = e \vbar o.f = E \vbar \new{C}{\tilde{v}, E, \tilde{e}} \vbar E.m(\tilde{e}) \vbar o.m(\tilde{v}, E, \tilde{e}) \vbar C \ x = E
+$$
+
+\noindent Ad esempio:
+
+\begin{prooftree}
+	\AxiomC{$ \LA \sigma, e_1 \RA \to \LA \sigma', e_1' \RA$}
+	\LL{Cong}
+	\UnaryInfC{$ \LA \sigma, \new{C}{v_1, e_1, e_2}.m(e_3) \RA \to \LA \sigma', \new{C}{v_1, e_1', e_2}.m(e_3)\RA $}
+\end{prooftree}
+
+\noindent con $E[] = \new{C}{v_1, [], e_2}.m(e_3) $.
+
+\subsubsection{Gestione di NULL e NPE}
+
+Servono inoltre degli assiomi per la gestione del valore null. 
+
+\begin{enumerate}
+	\item Accesso al campo dati di un oggetto null.
+	\begin{prooftree}
+		\AC{}
+		\LL{Err-Null-1}
+		\UnaryInfC{$ \LA \sigma, \Null.f \RA \to \LA \sigma, NPE \RA $}
+	\end{prooftree}
+	\item Assegnazione di un valore al campo dati di un oggetto null.
+	\begin{prooftree}
+		\AC{}
+		\LL{Err-Null-2}
+		\UnaryInfC{$ \LA \sigma, \Null.f = v\RA \to \LA \sigma, NPE \RA $}
+	\end{prooftree}
+	\item Chiamata di un metodo di un oggetto null.
+	\begin{prooftree}
+		\AC{}
+		\LL{Err-Null-3}
+		\UnaryInfC{$ \LA \sigma, \Null.m(\tilde{v}) \RA \to \LA \sigma, NPE \RA $}
+	\end{prooftree}
+\end{enumerate}
+
+\noindent Questi errori possono comparire all'interno di qualsiasi contesto di valutazione, pertanto serve una regola che ne permetta il \textit{sollevamento}.
+
+\begin{prooftree}
+	\AC{}
+	\LL{Err}
+	\UnaryInfC{$\LA \sigma, E[NPE]\RA \to \LA\sigma, NPE \RA$}
+\end{prooftree}
+
+\subsection{Type system}
+
+Anche in questo linguaggio i tipi sono dati dai nomi delle classi, solo che all'interno del contesto possono comparire anche degli oggetti.
+
+$$
+\Gamma ::= \emptyset \vbar \Gamma, x :C \vbar \Gamma o:C
+$$
+
+\noindent Il subtyping è uguale a quello della versione funzionale, mentre le regole di typing vengono estese per il controllo delle configurazioni e dei contesti di valutazione.
+
+\begin{itemize}
+	\item $ \method{D}{m}{\tilde{C \ x}}{e} OK \ \IN{C} $. Vengono utilizzate le stesse regole di FJ.
+	
+	\item $\Gamma \vdash \LA\sigma, e\RA$: per indicare che la configurazione è ben tipata in $\Gamma$.
+	
+	\item $\Gamma \vdash e : C$: per indicare che il termine $e$ ha tipo $C$ in $\Gamma$.
+
+	\item $\Gamma \vdash \sigma$: per indicare che lo store è ben tipato in $\Gamma$. Da notare che non è presente un tipo.
+\end{itemize}
+
+\noindent Il controllo sul tipo \myrule{Config} per la configurazione di memoria non prevede la verifica di un particolare tipo, ma controlla che sia la memoria che il termine della configurazione siano ben tipate.
+
+\begin{prooftree}
+	\AC{$ \Gamma \vdash e : C$}
+	\AC{$ \Gamma \vdash \sigma$}
+	\LL{Config}
+	\BinaryInfC{$\Gamma \vdash \LA \sigma, e\RA$}
+\end{prooftree}
+
+\noindent Ci sono poi le regole per il typing della memoria che controlla che tutte le variabili siano associate a dei valori del tipo corretto. In modo simile viene fatto il controllo per gli object identifier che sono presenti nella memoria.
+
+\begin{prooftree}
+	\AC{}
+	\LL{EmptyStore}
+	\UnaryInfC{$\Gamma \vdash \emptyset$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AC{$\Gamma \vdash \sigma$}
+	\AC{$x \not\in Dom(\sigma)$}
+	\AC{$ \Gamma \vdash x : C $}
+	\AC{$\Gamma \vdash v : D$}
+	\AC{$D <: C$}
+	\LL{VarStore}
+	\QuinaryInfC{$\Gamma \vdash \sigma \cdot [x\rat v]$}
+\end{prooftree}
+
+\begin{prooftree}
+	\AC{$\Gamma \vdash \sigma$}
+	\AC{$o \not\in Dom(\sigma)$}
+	\AC{$ \fields{C} = \tilde{A \: f} $}
+	\AC{$\Gamma \vdash \tilde{v} : \tilde{B}$}
+	\AC{$\tilde{B} <: \tilde{A}$}
+	\LL{ObjectIdStore}
+	\QuinaryInfC{$\Gamma \vdash \sigma \cdot [o\rat (C, \tilde{f : v})]$}
+\end{prooftree}
+
+\noindent Ci sono poi gli assiomi per il typing di null, delle variabili e degli object-identifier. In particolare il valore null può essere di qualsiasi tipo
+
+\begin{center}
+	\begin{bprooftree}
+		\AC{$ $}
+		\LL{Null}
+		\UnaryInfC{$ \Gamma \vdash \Null : C$}
+	\end{bprooftree}
+	\begin{bprooftree}
+		\AC{$ o : C \in \Gamma $}
+		\LL{ObjectId}
+		\UnaryInfC{$ \Gamma \vdash o : C$}
+	\end{bprooftree}
+		\begin{bprooftree}
+		\AC{$ x : C \in \Gamma$}
+		\LL{Var}
+		\UnaryInfC{$ \Gamma \vdash x : C$}
+	\end{bprooftree}
+\end{center}
+
+\noindent Una sequenza è ben tipata secondo \myrule{Seq} quando il secondo pezzo ritorna il tipo corretto. Il tipo del primo pezzo non è rilevante perché tanto viene scartato.
+
+\begin{prooftree}
+	\AC{$ \Gamma \vdash e_1 : C$}
+	\AC{$ \Gamma \vdash e_2 : D$}
+	\LL{Seq}
+	\BinaryInfC{$ \Gamma \vdash e_1;e_2 :D $}
+\end{prooftree}
+
+\noindent All'assegnazione viene dato lo stesso tipo del valore che viene assegnato alla variabile.
+
+\begin{prooftree}
+	\AC{$ \Gamma \vdash e :C$}
+	\AC{$ C \stype D$}
+	\AC{$ \Gamma \vdash x : D$}
+	\LL{Assegn}
+	\TrinaryInfC{$ \Gamma \vdash x = e: C$}
+\end{prooftree}
+
+\noindent Alla dichiarazione di una variabile viene controllato anche che la seconda parte della sequenza sia ben tipata, tenendo conto anche della presenza della nuova variabile.
+
+\begin{prooftree}
+	\AC{$ \Gamma \vdash e : C$}
+	\AC{$ C <: D$}
+	\AC{$ \Gamma, x : D \vdash e' : C'$}
+	\LL{Dichiar}
+	\TrinaryInfC{$ \Gamma \vdash D \ x = e;e' :C' $}
+\end{prooftree}
+
+\noindent Le regole per tipare l'accesso ai campi dati di un oggetto sono le stesse di FJ, viene però aggiunta la regola per la scrittura del valore di un campo dati, la quale richiede che sia del valore corretto.
+
+\begin{prooftree}
+	\AC{$\Gamma \vdash e.f : D$}
+	\AC{$ C <: D$}
+	\AC{$ \Gamma \vdash e' :C$}
+	\LL{FieldAssign}
+	\TrinaryInfC{$ \Gamma \vdash e.f = e':C $}
+\end{prooftree}
+
+\noindent Da notare che il type system non dice niente riguardo $NPE$, perché in questo linguaggio l'errore non è gestibile dato che non ci sono le eccezioni.
+
+\subsection{Teoremi per il type system}
+
+\begin{itemize}
+	\item \textbf{Substitution}: Se $\Gamma, \this : C \vdash e :D$ e $\Gamma \vdash o:C'$ con $C' <: C$ allora $\Gamma \vdash e\{\this := o \} : D'$ per qualche $D' <: D$.
+	\item \textbf{Subject reduction} viene esteso introducendo il concetto di configurazione e di contesto di valutazione e continua a valere nel caso che non si verifichi un $NPE$.
+	\begin{enumerate}
+		\item Se $\Gamma \vdash e : C$ e $\Gamma \vdash \sigma$ ed inoltre $\LA \sigma,e\RA \to \LA\sigma, e'\RA$ con $e' \neq E[NPE]$, allora $\Gamma \vdash e' :C' $ con $C' \stype C$ e $\Gamma \vdash \sigma'$
+		\item Se $\Gamma \vdash \LA \sigma, e\RA$ e $\LA \sigma, e\RA \to \LA \sigma', e'\RA $ con $e'\neq E[NPE]$, allora $\Gamma \vdash \LA \sigma', e'\RA$
+	\end{enumerate}
+	
+	\item \textbf{Progressione} continua a funzionare, però con delle piccole modifiche.
+	Se $\LA \sigma, e\RA$ è \textbf{chiusa}, ovvero la memoria associa un valore ad ogni variabile libera di $e$ e ogni object id in $e$ è definito in $\sigma$, e ben tipata, allora $e=v$ oppure $\exists \sigma',e' . \LA \sigma, e\RA \to \LA \sigma', e'\RA$
+\end{itemize}
+
+Continua quindi a valere \textbf{Safety}, con la differenza che se il programma compila o ottengo un valore valido o si blocca su un $NPE$. 
+
+\subsection{Cosa considerare come errore?}
+
+Cosa considerare come errore da prevenire staticamente o farlo diventare un eccezione a run-time è una scelta di design che dipende da come viene utilizzato il linguaggio.
+
+In Java si prevengono staticamente i message-not-understood e tutte le eccezioni definite dall'utente, mentre vengono considerati a run-time tutte le RuntimeException, quindi $NPE$ e $CCE$.
+
+In ogni caso non può essere controllato tutto staticamente.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
