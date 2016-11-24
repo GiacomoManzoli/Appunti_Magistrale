@@ -1,0 +1,178 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 22 Novembre 2016
+
+\chapter{Scala}
+
+Il testo di riferimento per questa parte è \textit{Programming in Scala}.
+
+\section{Caratteristiche di scala}
+
+Nel progettare Scala si è cercato di prendere il meglio dai linguaggi già presenti
+
+\begin{itemize}
+	\item \textbf{Java}: sintassi, aspetti di base, librerie.
+	\item \textbf{Ruby}: codice conciso.
+	\item \textbf{ML/Haskell}: paradigma funzionale.
+	\item \textbf{SmallTalk/Eiffel}: Uniform Object Model e Uniform Access Model	
+\end{itemize}
+
+Alcune delle scelte effettuate per Scala hanno poi influenzato anche lo sviluppo di altri linguaggi come C\# e Java8.
+
+Il linguaggio così ottenuto è quindi:
+
+\begin{itemize}
+	\item Staticamente tipato con una correttezza provata, ma si è scelto di tenere una sintassi leggera, ovvero non sempre è necessario esplicitare i tipi, i quali vengono inferiti dal compilatore.
+	\item Integrazione della programmazione ad oggetti con quella funzionale: viene utilizzato un modello di oggetti uniforme (tutto è un oggetto e tutte le chiamate sono chiamate ad un metodo), considerando anche le funzioni come oggetti \textit{higher order} e che possono essere definite secondo pattern matching.
+	\item Scalabile, perché permette sia di definire degli script che software a livello enterprise. 
+	\item Supporto efficace alla programmazione concorrente, con l'utilizzo di \textit{futures} e \textit{actors}, anche se il modello ad attori viene implementato da una libreria esterna.
+\end{itemize}
+
+Scala compila in bytecode compatibile con la JVM ed è interoperabile con Java a livello di sorgente.
+
+\begin{lstlisting}[language=Scala, caption=\texttt{Author.scala}: Utizzo di Java all'interno di Scala. Da notare che i generics vengono specificati con le parentesi quadre al posto di quelle angolate. Le chiamate di metodi possono anche essere fatte con la notazione infissa.]
+class Author(val firstName : String, val lastName: String) extends Comparable[Author] {
+	override def compareTo(that : Author) = {
+		val lastNameComp = this.lastName compareTo that.lastName
+		if (lastNameCome != 0) lastNameComp
+		else this.firstName compareTo tata.firstName
+	}
+}
+
+object Author {
+	def loadAuthorFromFile(file : java.io.File) : List[Author] = ...
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java, caption=\texttt{App.java} utilizzo di Scala all'interno di Java.]
+import static scala.collection.JavaConversions.asJavaCollection;
+
+public class App {
+	public List<Author> loadAuthFromFile(File file) {
+		return new ArrayList<Authro>(asJavaCollection(Author.loadAutoFromFile(file)));
+	}
+	
+	public void sortAuth(List<Author> ats){ Collections.sort(ats);}
+	
+	public void displaySortedAythors(File file) {
+		List<Author> authors = loadAuthFormFile(file);
+		sortAuthors(authors);
+		...
+	}
+}
+\end{lstlisting}
+
+C'era poi anche un compilatore per .NET, ma adesso non è più sviluppato perché c'è C\# e F\#.
+Tuttavia il compilatore attuale è abbastanza lento perché è progetto male, si sta quindi sviluppando un nuovo compilatore Dotty che produce sempre bytecode, oppure c'è Scala Native che produce codice LLVM.
+
+L'IDE di riferimento è Simple Build Tool, ma vengono supportati anche IntellJ e co.
+
+Scala viene usato con combo con Akka per i programmi ad attori, con Apache Spark per fare data analysis o con Scala.js per convertirlo in JavaScript.
+
+Il boom di Scala è stato comunque spinto dal mondo concorrente e dalla programmazione funzionale. Questo perché la gestire la concorrenza è molto difficile da gestire tra data races, deadlocks e side effects. Ci sono inoltre i problemi legati all'interlieaving non deterministico dei thread che accedono alla memoria condivisa.
+Per semplificare questa giungla si possono usare delle strutture dati immutabili e la programmazione funzionale è adatta per lavorare con questo tipo di strutture.
+Inoltre, con Scala è possibile applicare le caratteristiche della programmazione OOP, utilizzando futures e attori al posto dei thread.
+
+
+\begin{lstlisting}[language=Scala]
+val x = future { someExpensiveComputation()}
+val y = future { someOtherExpensiveComputatuon()}
+val z = for (a <- x, b <- y) yield a*b
+for (c <- x) println(c)
+println("the main thread goes on")
+\end{lstlisting}
+
+Nell'esempio di utilizzo dei futures si ha che \texttt{x}, \texttt{y} e \texttt{z} hanno tipo \texttt{Future[T]} e il loro calcolo viene fatto in un altro thread. La keyword \texttt{yield} viene utilizzata per impostare il calcolo di \texttt{z} quando viene completato il calcolo di \texttt{x} e \texttt{y}.
+
+% aggiungi immagine dalle slide
+
+\section{Esempi di codice}
+
+Il codice Scala può essere eseguito tramite una shell interattiva che valuta le espressioni, da interprete che esegue uno script o da un compilatore che compila un programma.
+
+\subsection{Hello, World!}
+
+\begin{lstlisting}[language=Scala, caption=Hello world come script.]
+println("Hello world")
+\end{lstlisting}
+
+\begin{lstlisting}[language=Scala, caption=Hello world come programma]
+object HelloWorld{
+	def main(args: Array[String]) {
+		println("Hello world")
+	}
+}
+\end{lstlisting}
+
+Con \texttt{object} viene definito un singleton object: una classe che ha una sola istanza.
+
+Da notare che per eseguire la prima versione serve il comando:
+
+\begin{center}
+	\texttt{\$ scala hello.scala}
+\end{center}
+
+mentre per il secondo il comando cambia e viene prodotto un file \texttt{.class}:
+
+\begin{center}
+	\texttt{\$ scalac hello.scala}
+\end{center}
+
+
+\subsection{Definizione di una classe}
+
+\begin{lstlisting}[language=Scala, caption=Definizione di una classe; non serve esplicitare il costruttore]
+class Person( val name : String, var age : Int ) ()
+...
+
+val b = new Person("Pippo", 10)
+println(b.age)
+\end{lstlisting}
+
+Da notare che \texttt{val} definisce un valore costante, mentre \texttt{var} definisce una variabile. Una variabile \texttt{val} deve essere subito inizializzata.
+Anche i parametri formali dei metodi sono implicitamente \texttt{val}.
+
+Se si vuole adottare lo stile Scala, tutto quello che può essere un \texttt{val} deve essere marcato \texttt{val}.
+
+
+\subsection{Caratteristiche funzionali di Scala}
+
+\begin{lstlisting}[language=Scala, caption=Caratteristiche funzionali di Scala]
+val people : Array[Person] = ...
+val (minors, adults) = people partition (_age < 18)
+\end{lstlisting}
+
+Da notare che è possibile utilizzare la sintassi infissa per la chiamata dei metodi e che è possibile fare pattern matching sulle coppie di valori.
+
+Il metodo \texttt{partition} è definito per la classe \texttt{Array[T]} come:
+
+\begin{lstlisting}[language=Scala]
+def partition(p : T=>Boolean) : (Array[T], Array[T])
+\end{lstlisting}
+
+ovvero è una funzione che prende come parametro una funzione da utilizzare come criterio di partizionamento e ritorna una coppia contente le due partizioni.
+
+Per definire la funzione di partizione è stato sfruttato un po' di zucchero sintattico.
+
+\begin{lstlisting}[language=Scala, caption=Definzione di una funzione anonima.]
+(_age < 18)
+// equivale a 
+def fun(x){ x.age< 18}
+\end{lstlisting}
+
+Da notare che in Scala non è obbligatori specificare la keyword \texttt{return}.
+
+
+
+
+
+
+
+
+
+
+
+

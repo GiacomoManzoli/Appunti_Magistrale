@@ -1,0 +1,193 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 24 Novembre 2016
+
+% section Esempi di codice
+%subsection definizione di una classe
+
+\subsection{Ricerca in una stringa}
+
+\begin{lstlisting}[language=Scala]
+val name : String = ...
+val haMaiuscolo = name.exists(_.isUpperCase)
+\end{lstlisting}
+
+\noindent \texttt{exists} è un \textbf{combinatore}, una funzione di ordine superiore, che prende come parametro un'altra funzione.
+
+Da notare che in Scala \texttt{String} è rappresentata come una sequenza di caratteri in cui si possono testare dei predicati (funzioni che ritornano booleani). Dietro alle quinte c'è comunque un'iterazione sui caratteri, ma la porzione di codice che vede il programmatore è molto dichiarativo.
+L'implementazione di ciò prende il nome di \textbf{struttura di controllo}.
+
+Java 8 ha fatto qualche passo verso la programmazione funzionale.
+
+\begin{lstlisting}[language=Scala]
+interface Predicate<T> { boolean test(T x); } // interfaccia presente in Java8
+
+static boolean exists(String s, Predicate<Character> prop) {
+	boolean trovato = false;
+	for (int i = 0; i < s.lenght, i++){
+		if (prop.test(s.charAt(i))) trovato = true;
+	}
+	return trovato;
+}
+
+// Da qualche parte
+String name = ...;
+boolean haMaiuscolo = exists(name, ch -> Character.isUppercase(ch));
+\end{lstlisting}
+
+Tuttavia in Java8 non sono stati inseriti i tipi freccia per evitare stravolgere il sistema di typing, quindi la notazione è zucchero sintattico per la definizione di un'interfaccia e la creazione di una classe anonima (\textbf{lambda expression}).
+
+Un'alternativa è quella di passare in \textbf{method reference} con
+
+\begin{center}
+	\texttt{exists(name, Character::isUppercase);}
+\end{center}
+
+e questo permette di evitare di definire delle lambda expression che invocano semplicemente un metodo.
+
+\subsection{Java-style Scala}
+
+\begin{lstlisting}[language = Scala]
+object Example1 {
+	def main(args : Array[String]) {
+		val b = new StringBuilder() // costruttore di stringhe mutable
+		for (i <- 0 until args.lenght){
+			if (i > 0) b.dappend(" ")
+			b.append(args(i).toUpperCase) // L'acesso all'array si fa con le ( ) e non con le [  ]
+		}
+		Console.println(b.toString)
+	}
+}
+\end{lstlisting}
+
+Il \texttt{for} in Scala si scrive sempre con una variabile freccia e un tipo range. I tipi range possono essere costruiti con \texttt{until} (estremo destro incluso) o \texttt{to} (estremo destro escluso).
+
+Tra l'altro $i$ può anche essere di tipo diverso: ogni collezione Scala è anche un sotto-tipo di range, e quindi $i$ può referenziare direttamente un elemento della collezione. 
+
+\begin{lstlisting}[language=Scala]
+object Example2 {
+	def main(args : Array[String]){
+		println(args
+					.map(_.toUpperCase)
+					.mkString(" "))
+	}
+}
+\end{lstlisting}
+
+Questa seconda versione è in Scala-style, perché utilizza le funzioni higher-order al posto dei loop.
+
+\subsection{Pensare in Scala}
+
+Per scrivere Scala in Scala-like è necessario utilizzare quando possibile \texttt{val} al posto di \texttt{var} e utilizzare metodi senza side-effects.
+Infatti un metodo dovrebbe comunicare all'esterno solamente con il valore di ritorno, in modo da ottenere la \textbf{referntial transparency}: sostituendo la chiamata di un metodo con il suo valore di ritorno, il comportamento del programma non cambia.
+
+Questo porta dei vantaggi perché il comportamento dei metodi viene sottoposto a type-check e tipicamente un errore logico si riflette anche su un errore di typing, quindi è possibile trovare a compile time alcuni errori logici.
+
+Inoltre, i dati dovrebbero essere tutti immutable. Non ci sono problemi di spreco di memoria, perché trattandosi di dati immutable è possibile adottare delle tecniche ottimizzate di gestione delle memoria che sono in grado di limitare gli sprechi.
+
+\subsection{Array, List e Map}
+
+In Scala gli array sono \textbf{mutable}:
+
+\begin{lstlisting}[language=Scala]
+val a = Array("zero", "uno", "due)
+a(0) = "dieci"
+\end{lstlisting}
+
+mentre le liste sono \textbf{immutable}:
+
+\begin{lstlisting}[language=Scala]
+val l1 = List(1,2,3)
+... // COPIA dalle slide
+\end{lstlisting}
+
+Sui dati immutabili è possibile usare la funzione \texttt{map}
+
+\begin{lstlisting}
+// import scala.collection.immutable.Map //opzionale
+val numeriRomani = Map(
+	1 -> "I", 2->"II", /*...*/
+) // Non c'è notazione di tipo perché viene inferito dal compilatore
+
+importa scala.collection.mutable.Map // serve per richiedere la versione mutable
+
+val mappaTesoro = Map[Int, String]()
+mappaTesoro += (1 -> "Vai sull'isola")
+mappaTesoro += (2 -> "Trova la x")
+\end{lstlisting}
+
+Da notare che in Scala i metodi possono essere chiamati anche con dei simboli, ad esempio il metodo \texttt{->} viene invocato su un valore, passandogli un altro valore e viene utilizzato per creare una coppia chiave-valore.
+
+\begin{lstlisting}[language=Scala]
+import scala.collection.immutable.Map
+
+val numeriRomani = Map(/*...*/)
+var nR = numeriRomani
+numeriRomani += (4 -> "IV") // ERRORE: è un val
+nR += (4 -> "IV") //OK: viene creato un nuovo oggetto immutable con un valore extra. 
+                  // L'oggetto di partenza non viene modificato.
+\end{lstlisting}
+
+
+Da notare che \texttt{var} definisce un riferimento modificabile e non ha niente a che fare con mutable o immutable.
+
+\begin{lstlisting}[language=Scala]
+val mappaTesoro = scala.collection.mutable.Map[Int, String]()
+// popola la mappa
+var mappa = mappaTesoro
+
+mappaTesoro += ... // OK: viene modificata la struttura dati
+mappa += ... // BO! TODO
+\end{lstlisting}
+
+Conviene utilizzare dati immutabili perché è più facile testare i codice e renderlo concorrente.
+
+\section{OOP meets FP}
+
+La programmazione funzionale ha delle caratteristiche interessanti: funzioni higher-order, tipi astratti, pattern matching e poliformismo parametrico.
+La programmazione ad oggetti è comoda per il riuso del codice e per progettare sistemi complessi.
+Con Scala è possibile cogliere i vantaggi di entrambi gli stili.
+
+Per implementare l'Abstract Data Type e il modello ad oggetti si è imposto che ogni valore sia un oggetto e che ogni operazione effettuata sia una chiamata ad un metodo. Anche la somma di due numeri viene fatta utilizzando due oggetti e un metodo.
+
+Il pattern matching può essere utilizzato su qualsiasi classe che viene marcata come \texttt{case}:
+
+\begin{lstlisting}[language=Scala]
+abstract class Expr
+case class Number(n : Int) extends Expr
+case class Sum(e1:Expr, e2:Expr) extends Expr
+
+val o = new Sum(new Number(1),
+                new Sum( new Number(3),
+                         new Number(7)  )) 
+// o = 1 + (3+7)
+def eval (e : Expr) : Int = e match {
+	case Number(n) -> n
+	case Sum(l,r) -> eval(l) + eval(r)
+}
+\end{lstlisting}
+
+Il pattern matching può essere utilizzato anche come \texttt{instanceOf}
+
+\begin{lstlisting}[language=Scala]
+def matcher(arg:Any) :String = arg match {
+	case "pippo" -> "Sempre lui"
+	case s:String -> "E' una stringa " +s
+	case x:Int -> x
+	cae Number(n) -> n
+	case _ -> "Default"
+}
+\end{lstlisting}
+
+Da notare che il compilatore controlla se il caso di default (o qualche altro caso) non può verificarsi e in quel caso segnarla un errore di compilazione. Se invece viene passato ad valore che non matcha viene sollevato a run-time.
+C'è anche da tenere in considerazione che l'ordine di definizione dei case segue quello di valutazione, quindi i primi sono quelli testati per primi.\\
+
+
+
+
+
+
+
