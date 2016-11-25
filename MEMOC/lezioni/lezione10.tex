@@ -1,0 +1,292 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+\section{Definizione del problema duale}
+
+Dato un problema di programmazione lineare in forma di standard, si vuole fornire una limitazione inferiore ai possibili valori che la funzione obiettivo può assumer nella regione di ammissibilità.
+
+\begin{align*}
+	(PL) \quad z* = &\min x = c^T x \\
+	                &\st Ax = b \\
+	                &\quad x \geq 0
+\end{align*}
+
+dove $A \in \Rmn$, $c \in \Rn$, $b \in \Rm$ e $x$ è un vettore di variabili in $\Rn$.
+
+Un limite inferiore per un problema in forma standard è un valore $l \in \R$ che è minore o uguale del valore di tutte le soluzioni ammissibili per $PL$.
+Più formalmente:
+
+$$
+l \leq c^T x \quad \forall x \text{ ammissibile}
+$$
+
+Per ottenere un lower bound  si può partire da un vettore $u \in \Rm$ e imporre la condizione di lower bound a partire dall'equazione $Ax = b$.
+
+$$
+u^TAx= u^Tb \quad\forall x \text{ ammissibile}
+$$
+
+Perché $u$ rappresenti un lower bound è necessario che $u^TA \leq c^T $ e questo deriva dal fatto che il valore della funzione obiettivo $c^Tx$ deve essere maggiore del lower bound:
+
+$$
+u^T A x \leq c^T x\quad\forall x \text{ ammissibile, inoltre } u^T A x = u^T b 
+$$
+
+Si noti che $x\geq0$ e quindi la disuguaglianza continua a valere.
+Inoltre, una volta trovato un lower bound $l$ si ha che se c'è una soluzione ammissibile $\tilde{x}$ tale che $c^T\tilde{x} = l$, si ha che $\tilde{x}$ è anche una soluzione ottima.
+Risulta quindi importante avere il lower bound più alto possibile e questo lo si fa scegliendo in modo opportuno il vettore $u$.
+
+La scelta di questo vettore può essere vista come un problema di massimizzazione, in cui le variabili decisionali sono contenute nel vettore $u$:
+
+\begin{align*}
+		(DL) \quad \omega* = &\max \omega = u^T b \\
+						&\st u^T A \leq c^T \\
+						&\quad u \text{ libero}
+\end{align*}
+
+Questo nuovo problema prende il nome di \textbf{problema duale} ed è strettamente legato alla forma del problema primale.
+Si può infatti notare che viene introdotta:
+
+\begin{itemize}
+	\item Una variabile duale in corrispondenza di ogni vincolo primale.
+	\item Un vincolo duale in corrispondenza di ogni variabile primale.
+\end{itemize}
+
+Un esempio di coppia primale-duale è:
+
+
+\begin{align*}
+	(PL) \min\:& 2x_1 - 3x_2 +x_3 \\
+	\st  & x_1 - x_2 = 6 \\
+	 	 & 4x_1 +2 x_3 = 4 \\
+	     & x_1, x_2, x_3 \geq 0 \\
+	     &\\
+	(DL) \max\:&6u_1 + 4u_2 \\
+	     \st  & x_1 - x_2 = 6 \\
+	     & u_1 + 4u_2 \leq 2 \\
+	     & -u_1 \leq -3 \\
+	     & 2u_2 \leq 1 \\
+	     & u_1, u_2 \in \R
+\end{align*}
+
+\section{Teoremi della dualità}
+
+\subsection{Dualità debole}
+
+Data una soluzione $\tilde{x}$ ammissibile per il $PL$ e una soluzione $\tilde{u}$ ammissibile per il $DL$, allora si ha, per costruzione del problema duale, che:
+
+$$
+\underbrace{c^T \tilde{x}}_{\text{f.o. in }\tilde{x}} \geq \underbrace{\tilde{u}^T b}_{\text{lb associato a }\tilde{u}}
+$$
+
+Pertanto segue che se si ha un'uguaglianza, $\tilde{x}$ è una soluzione ottima per $PL$ e $\tilde{u}$ è una soluzione ottima per $DL$, perché $\tilde{x}$ è ammissibile ed è uguale al lower bound del problema e quindi è ottima e, in modo simile, $\tilde{u}$ è una soluzione ottima per $DL$ perché è uguale ad un upper bound del problema.
+Infatti, con un ragionamento simile a quello fatto per ottenere il problema duale a partire dal primale, è possibile ottere quello primale a partire dal duale, ragionando sugli upper bound.
+
+Vale inoltre che:
+
+\begin{itemize}
+	\item Se $PL$ è illimitato, non è possibile trovare un lower bound e quindi $DL$ è inammissibile.
+	\item Se $DL$ è illimitato, non è possibile trovare un upper bound e quindi $PL$ è inammissibile.
+	\item Il fatto che un problema sia inammissibile non implica che l'altro sia illimitato, infatti possono essere entrambi inammissibili.
+\end{itemize}
+
+\subsection{Dualità forte}
+
+\begin{center}
+	$PL$ ammette soluzione ottima $x^* \Leftrightarrow DL$ ammette soluzione ottima $u^*$ e $c^Tx^* = u^{*T}b$ 
+\end{center}
+
+Il verso $PL\Rightarrow DL$ si dimostra basandosi sulla teoria del simplesso.
+
+Se $PL$ ha una ammette soluzione ottima, allora ne avrà una di base che può essere ricavata con il metodo del simplesso ($x^*$) a partire dalla quale si può costruire un vettore $u \in \Rm$ che è soluzione ammissibile e ottima per il duale.
+
+$$
+x^* = \begin{bmatrix}
+x_{B}^* \\
+x_{F}^*
+\end{bmatrix}
+$$
+
+Essendo $x^*$ una soluzione trovata con il simplesso, i costi ridotti delle variabili in base saranno nulli ($\overline{c}_B = 0$) e quelli delle variabili fuori base saranno maggiori o uguali di 0 ($\overline{c}_F \geq 0$).
+
+Poniamo
+
+$$
+u^T = c_{B}^TB^{-1}
+$$
+
+Per la definizione di costo ridotto si ha che
+
+\begin{align*}
+\overline{c}_{F}^T = &c_F - c_{B}^TB^{-1}F & \\
+				   = &c_F - u^T F \geq 0 \\
+					  &c_F \geq u^T F	                
+\end{align*}
+
+Possiamo quindi scrivere:
+
+\begin{align*}
+	u^T A &= u^T[B|F] \\
+	      &= [u^TB |u^T F] \\
+	      &= [c_{B}^TB^{-1} B |u^T F] \\
+	      &= [c_{B}^T |u^T F] \leq [c_{B}^T | c_{F}^T] = c^T \\
+    u^T A &\leq c^T
+\end{align*}
+
+Ovvero la soluzione $u^T$ è ammissibile per il problema duale e il suo corrispondente valore della funzione obiettivo è:
+
+\begin{align*}
+	u^T b &= c_{B}^T B^{-1} b \\
+	      &= c_{B}^T x_{B}^* \\
+	      &= c^Tx*
+\end{align*}
+
+I valori delle due funzioni obiettivo sono uguali e quindi per il corollario del teorema della dualità debole, le due soluzioni sono entrambe ottime.
+
+\section{Trasformazione da Primale a Duale}
+
+Per effettuare il passaggio dal problema primale a quello duale non è necessario che il problema primale sia in forma standard, l'unica cosa importante è che sia rispettata la catena di maggiorazioni:
+
+$$
+c^T x \geq u^T Ax \geq u^Tb
+$$
+
+\noindent Per semplificarci la vita, la trasformazione può essere fatta utilizzando la seconda tabella. Da notare che la tabella si legge da sinistra a destra se si ha un problema primale in forma di minimo e da destra a sinistra se si ha un problema primale in forma di massimo.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\multicolumn{1}{|r|}{\textbf{Primale} $\min c^T x$} & \textbf{Duale} $\max u^Tb$ \\ \hline
+		$a_{i}^T x \geq b_i$    & $u_i \geq 0$    \\ \hline
+		$a_{i}^T x \leq b_i$    & $u_i \leq 0$     \\ \hline
+		$a_{i}^T x = b_i$       & $u_i \text{ libera}$     \\ \hline
+		$x_j \geq 0$            & $u^TA_j \leq c_j$     \\ \hline
+		$x_j \leq 0$            & $u^TA_j \geq c_j$       \\ \hline
+		$x_j \text{ libera}$    & $u^TA_j = c_j$       \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\noindent Ad esempio:
+
+\begin{align*}
+(PL)\max\:& 3x_1 +2x_2 -2x_3 \\
+     \st  & 4x_1 -6x_2 +x_3 = 1 \quad (u_1)\\
+          & 2x_1 +2x_2 +3x_3 \leq 3 \quad (u_2) \\
+          & x_1 \geq 0, x_2 \leq 0, x_3 \text{ libera} \\
+          & \\
+(DL)\min\:& 1u_1 + 3u_2 \\
+	 \st  & 4u_1 +2u_2 \geq 3 \quad (x_1)\\
+		  & -6u_1 +2u_2 \leq 2 \quad (x_2)\\
+		  & 1 u_1 +3 u_2 = -2 \quad (x_3)\\
+		  & u_1 \text{ libera}, u_2 \geq 0
+\end{align*} 
+
+\section{Condizioni di complementarietà primale-duale}
+
+Il teorema della dualità forte fornisce delle \textbf{condizioni di ottimalità}: $x^*$ e $u^*$ sono soluzioni ottime per la coppia di problemi se e solo se ($\Leftrightarrow$)
+
+\begin{itemize}
+	\item $x^*$ è ammissibile primale, ovvero $Ax^* \geq b \wedge x^* \geq 0$
+	\item $u^*$ è ammissibile duale, ovvero $u^{*T}A \leq c^T \wedge u^* \geq 0$
+	\item vale la dualità forte, ovvero $c^Tx^* = u^{*T}b$
+\end{itemize}
+
+Si può quindi pensare di applicare direttamente le condizioni di ottimalità primale-duale, impostando un sistema di equazioni lineari contenete i vincoli del primale (uguaglianze), i vincoli del duale (sempre le uguaglianze) e aggiungere come ultimo vincolo l'uguaglianza delle funzioni obiettivo.
+
+Più formalmente si possono riscrivere le condizioni di ottimalità come:
+
+\begin{align*}
+	\text{(ammisibilità primale)}\quad&Ax^* \geq b \wedge x^* \geq 0 \\
+	\text{(ammisibilità duale)}\quad&u^{*T}A \leq c^T \wedge u^* \geq 0 \\
+	\text{(ortogonalità)}\quad&\begin{cases}
+	u^T(Ax -b) = 0 \\
+	(c^T - u^T A) x = 0
+	\end{cases}
+\end{align*}
+
+dove è possibile espandere i termini
+
+\begin{align*}
+	u^T(Ax -b) &= \sum\limits_{i=1}^{m} u_i (a_{i}^Tx -b_i) = 0\\
+	(c^T - u^T A) x &=\sum\limits_{j=1}^{n} (c_j - u^TA-J)x_j = 0
+\end{align*}
+
+Tenendo presente che per l'ammissibilità dei problemi, tutti i fattori delle sommatorie devono essere $\geq 0$, si ha che all'ottimo vale:
+
+\begin{align*}
+u_i (a_{i}^Tx -b_i) &= 0 \quad \forall i = 1 \ldots m\\
+(c_j - u^TA-J)x_j   &= 0\quad \forall j = 1 \ldots n
+\end{align*}
+
+Queste condizioni sono rispettate per ciascun vincolo/variabile primale/duale.
+Ovvero, due soluzioni $x$ e $u$ sono ottime se e solo se:
+
+\begin{enumerate}
+	\item Ogni variabile primale positiva $x_j > 0$ implica il vincolo duale saturo $u^TA_j = c_j$
+	\item Ogni vincolo duale lasco $u^TA_j < c_j$ implica la variabile primale nulla $x_j = 0$
+	\item Ogni variabile duale positiva $u_i > 0$ implica il vincolo primale saturo $a_{i}^Tx = b_i$
+	\item Ogni vincolo primale lasco $a_{i}^Tx > b_i$ implica la variabile duale nulla $u_i = 0$
+\end{enumerate}
+
+Grazie a queste condizioni possiamo andare a verificare che una soluzione data sia ottima o meno, provando a costruire una soluzione duale che è complementare a quella primale data.
+
+\subsection{Esempio}
+
+Dato il problema
+
+\begin{align*}
+    \min\:& 2x_1 + 3x_2 \\
+     \st  & 3x_1 + x_2 \geq 11 \quad (u_1)\\
+          & x_2 \geq 2 \quad (u_2) \\
+          & x_1 \geq 1 \quad (u_3) \\
+          & x_1, x_2 \geq 0
+\end{align*}
+
+vogliamo verificare se la soluzione $\overline{x} = (3,2)$ è ottima, applicando le condizioni di complementarietà.
+
+Come prima cosa è necessario provare se la soluzione è ammissibile, andando a sostituire all'interno dei vincoli i valori della soluzione. Se tutti i vincoli sono rispettati la soluzione è ammissibile. Lo è.
+
+Perché la soluzione sia anche ottima è quindi necessario trovare una soluzione complementare per il problema duale.
+
+\begin{align*}
+\max\:& 11u_1 + 2u_2 + u_3 \\
+ \st  & 3u_1 + u_3 \leq 2 \\
+      & u_1 + u_2 \leq 3\\
+      & u_1, u_2, u_3 \geq 0
+\end{align*}
+
+Dobbiamo quindi trovare delle equazioni da mettere in sistema per trovare la soluzione duale.
+
+\begin{itemize}
+	\item Il vincolo $3x_1 + x_2 \geq 11$ è già all'uguaglianza con la soluzione $x_1 = 3$ e $x_2 = 2$, quindi \textbf{non da} informazioni aggiuntive.
+	\item Anche $x_2 \geq 2$ è già all'uguaglianza con $x_2 = 2$.
+	\item Il vincolo $ x_1 \geq 1 $ non è all'uguaglianza e quindi, per rendere soddisfatta la condizione di complementarietà, la variabile duale associata al vincolo deve essere nulla. Pertanto ricavo $u_3 = 0$.
+	\item Entrambe le variabili primali sono strettamente maggiori di 0 e quindi posso imporre le due equazioni associate alle variabili a 0: $ 3u_1 + u_3 = 2$ e $u_1 + u_2 = 3$
+\end{itemize}
+
+Il sistema di equazioni finali che ho ottenuto è:
+
+$$
+\begin{cases}
+u_3 = 0 \\
+3u_1 + u_3 = 2 \\
+u_1 + u_2 = 3 \\
+\end{cases} \quad \text{da cui ricavo } \quad \begin{cases}
+u_1 = 2/3 \\
+u_2 = 7/3 \\
+u_3 = 0
+\end{cases}
+$$
+
+Non ho ancora finito, perché per essere sicuro che sia ottima, devo controllare che è ammissibile. In questo caso lo è, e quindi che entrambe le soluzioni primale/duale sono ammissibili e sono tra loro complementari, allora sono anche entrambe ottime.
+
+
+
+
+
+
+
