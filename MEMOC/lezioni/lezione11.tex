@@ -1,0 +1,282 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+%section Condizioni di complementarietà primale-duale
+
+\subsection{Modifiche al problema}
+
+Supponiamo di avere trovato la soluzione ottima di un problema primale-duale con il procedimento appena visto.
+
+Può capitare che il problema pratico dietro al modello cambi e che sia quindi necessario trovare una soluzione ottima per il nuovo problema.
+Ovviamente non si vuole ri-ottimizzare il problema, ma si vuole capire se una soluzione per il nuovo modello è ottimo.
+
+Supponiamo che venga aggiunta al problema precedente la variabile $x_3$ e che questa compaia nella funzione obiettivo con coefficiente 2:
+
+\begin{align*}
+\min\:& 2x_1 + 3x_2 +2x_3\\
+\st  & 3x_1 + x_2 +2x_3\geq 11 \quad (u_1)\\
+& x_2 \geq 2 \quad (u_2) \\
+& x_1 +x_3\geq 1 \quad (u_3) \\
+& x_1, x_2, x_3 \geq 0
+\end{align*}
+
+La soluzione ammissibile data per questa variante è la stessa precedente con $x_3 = 0$.
+
+Dato che è stata aggiunta una variabile al problema primale, il duale ottine un nuovo vincolo:
+
+\begin{align*}
+\max\:& 11u_1 + 2u_2 + u_3 \\
+\st  & 3u_1 + u_3 \leq 2 \\
+& u_1 + u_2 \leq 3\\
+& 2u_1 + u_3 \leq 2\\
+& u_1, u_2, u_3 \geq 0
+\end{align*}
+
+La precedente soluzione del duale non cambia e rimane ammissibile perché soddisfa anche il nuovo vincolo.
+
+In questo caso so anche che sono ottime, perché la soluzione duale è stata costruita in in modo complementare e l'unica cosa che rimane da verificare è che la complementarietà sia valida anche per la nuova coppia variabile primale-vincolo duale introdotta, la quale è soddisfatta perché nella soluzione $x_3 = 0$.
+
+Può capitare però che la soluzione duale diventi non ammissibile. Ad esempio, se aggiungiamo al problema un'altra variabile $x_5$\footnote{$x_4$ è persa per strada}:
+
+\begin{align*}
+\min\:& 2x_1 + 3x_2 +2x_3 + 5.5x_5\\
+\st  & 3x_1 + x_2 +2x_3 +2x_5\geq 11 \quad (u_1)\\
+& x_2 +2x_5\geq 2 \quad (u_2) \\
+& x_1 +x_3 +2x_5\geq 1 \quad (u_3) \\
+& x_1, x_2, x_3 \geq 0
+\end{align*}
+
+Il problema duale diventa:
+
+\begin{align*}
+\max\:& 11u_1 + 2u_2 + u_3 \\
+\st  & 3u_1 + u_3 \leq 2 \\
+& u_1 + u_2 \leq 3\\
+& 2u_1 + u_3 \leq 2\\
+& 2u_1 + 2u_2 +2_u3 \leq 5.5 \\
+& u_1, u_2, u_3 \geq 0
+\end{align*}
+
+Se nella soluzione primale ottima di partenza aggiungiamo anche $x_5 =0$ otteniamo ancora una soluzione ottima ammissibile in scarti complementari con quella duale.
+Il problema è che a causa del nuovo vincolo, la soluzione duale non è più ammissibile.
+
+L'unica cosa che si può fare in questo caso è eseguire una nuova ottimizzazione.
+
+Riassumendo: se una nuova variabile (colonna) viene aggiunta al problema primale, la soluzione $\tilde{x}$ rimane ottima solo se la soluzione duale $\tilde{u}$ soddisfa il nuovo vincolo duale.
+
+\section{Metodi basati sulla generazione di colonne}
+
+Sono metodi che formalizzano l'idea della sezione precedente.
+Per presentare questi metodi utilizziamo come problema di riferimento il problema di taglio dei tondini.
+
+\subsection{Taglio dei tondini di ferro}
+
+Un'azienda metallurgica produce tondini di ferro di 15mm di diametro e della lunghezza standard di 11 metri. L'azienda si occupa anche del taglio dei tondini per i clienti, che richiedono tondini di lunghezza diversa. In questo momento, l'azienda deve soddisfare la seguente commessa:
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Pezzo & Lunghezza (m) & pezzi richiesti \\ \hline
+		1     & 2,0           & 48              \\ \hline
+		c2    & d4,5          & 35              \\ \hline
+		e3    & f5,0          & 24              \\ \hline
+		g4    & h5,5          & 10              \\ \hline
+		i5    & l7,5          & 8               \\ \hline
+	\end{tabular}
+\end{table}
+
+Determinare il numero minimo di tondini in stock da utilizzare per soddisfare la commessa, limitando gli sprechi.
+
+Il modello è composto da due set:
+\begin{itemize}
+	\item $I = \{1,2,3,4,5\}$: insieme con le varie tipologie di pezzi;
+	\item $J$: insieme degli schemi di taglio, ovvero dei possibili modi di tagliare i tondini in stock.
+\end{itemize}
+
+e dai seguenti parametri:
+
+\begin{itemize}
+	\item $W$: lunghezza dei tondini in stock. Tutti i tondini hanno la stessa lunghezza.
+	\item $L_i$: lunghezza del pezzo $i \in I$.
+	\item $R_i$: numero di pezzi richiesti per il tipo $i \in I$.
+	\item $N_{i,j}$: numero di pezzi di tipo $i \in I$ nello schema di taglio $j \in J$.
+\end{itemize}
+
+Le uniche variabili decisionali sono $x_j$: numero di tondini in stock da tagliare secondo lo schema $j \in J$.
+
+Ci sono vari modelli, ma quello più diffuso è il seguente:
+
+\begin{align*}
+\min\:& \sum\limits_{j \in J} x_j  \\
+\st  & \sum\limits_{j \in J} N_{ij}x_j \geq R_i  \quad \forall\: i \in I\\
+& x_j \in \mathbb{Z}^+ \quad \forall \: j \in J \geq 0
+\end{align*}
+
+Viene comunque presupposto di avere a disposizione l'insieme $J$ e i vari $N_{ij}$, che devono essere generati tenendo in considerazioni tutte le possibili configurazioni di taglio.
+Il modello risulta molto elegante in quanto non c'è da preoccuparsi dei vincoli di ammissibilità dei tagli, dato che la matrice con le possibili combinazioni contiene solo quelle valide. Ci sono però due problemi: le variabili intere e il fatto che la matrice dei tagli potrebbe essere troppo grande.
+
+\subsection{Soluzione del problema rilassato}
+
+Per gestire la matrice di gradi dimensioni si può partire da una versione rilassata del problema che utilizza un sotto-insieme dei possibili schemi di taglio. \`E importante scegliere questi schemi in modo che esista una soluzione ammissibile per il problema rilassato.
+
+Una soluzione ammissibile per questo problema rilassato può essere fatta considerando gli schemi di taglio che dato un tondino producono solamente una tipologia di pezzo ($J'$), producendone il maggior numero possibile ($\lfloor W /L_i \rfloor$).
+Si ha quindi che il numero di volte che è necessario applicare un determinato schema di taglio può essere ottenuto arrotondando per eccesso il rapporto tra la richiesta del pezzo e il numero di pezzi prodotti dallo schema ($\lceil R_i /N_{ii} \rceil$).
+
+La versione rilassata per l'istanza di riferimento è:
+
+\begin{align*}
+\min\:& x_1+x_2+x_3+x_4+x_5 \\
+\st &5x_1 \geq 48 \\
+	&2x_2 \geq 35 \\
+	&2x_3 \geq 24 \\
+	&2x_4 \geq 10 \\
+	&x_5 \geq 8 \\
+	&x_1,x_2,x_3,x_4,x_5\geq 0 \\
+\end{align*}
+
+Una soluzione ottima per questo problema può essere ottenuta con il simplesso, dato che si tratta di un modello molto semplice:
+
+\begin{verbatim}
+x [*] := 
+1 9.6
+2 17.5 
+3 12 
+4 5 
+5 8
+\end{verbatim}
+
+Da notare che la soluzione contiene dei valori reali che non possono essere usati in pratica. 
+Una buona euristica è quella di arrotondare per eccesso questi valori.
+
+C'è però da dire che considerando altri pattern di taglio, si potrebbero trovare delle soluzioni migliori.
+
+Si può quindi pensare di aggiungere un pattern, per provare ad ottenere una soluzione migliore.
+Un possibile pattern è:
+$$
+ A_6 = \begin{bmatrix}
+	&1& \\
+	&0& \\
+	&0& \\
+	&0& \\
+	&1&
+\end{bmatrix}
+$$
+
+Abbiamo quindi una nuova variabile $x_6$ e quindi dobbiamo andare a controllare che la soluzione duale continui ad essere ammissibile, soddisfando anche il nuovo vincolo:
+
+$$
+u_1 + u_5 \leq 1
+$$
+
+La soluzione duale del problema rilassato (senza $x_6$) è:
+
+\begin{verbatim}
+Fill.dual [*] =
+20 0.2
+45 0.5
+50 0.5
+55 0.5
+75 1.0
+\end{verbatim}
+
+Il nuovo quindi vincolo viene violato e pertanto la soluzione che pone $x_6 = 0$ non è ottima. 
+\`E \textbf{desiderabile} ottenere ciò, perché vuol dire che c'è margine di miglioramento per la soluzione primale rilassata.
+
+La stessa cosa può essere osservata andando a calcolare il costo ridotto di $x_6$ è negativo e quindi che se viene messa in base si può ottenere una soluzione migliore.
+
+$$
+\overline{c}_6 = c_6 - u^TA_6 = 1 - \begin{bmatrix}
+0,2 & 0,5 & 0,5 & 0,5 & 1
+\end{bmatrix} \begin{bmatrix}
+&1& \\
+&0& \\
+&0& \\
+&0& \\
+&1&
+\end{bmatrix} = -0,2
+$$
+
+Si può quindi risolvere il nuovo problema che utilizza anche $x_6$ con il simplesso in modo da ottenere una nuova soluzione ammissibile e ottima per il problema rilassato, per poi ripetere lo stesso procedimento fino a che non viene trovata una soluzione rilassata ottima che non può essere più migliorata.
+
+Il problema diventa quindi quello di capire quali colonne scegliere, dato che il set è molto grande e non sono definite in modo esplicito.
+Questo problema può essere formulato come problema di ottimizzazione: per giudicare l'esistenza di un costo ridotto negativo, possiamo calcolare il minimo tra tutti i costi ridotti delle potenziali variabili del problema:
+
+\begin{align*}
+\min \:& \overline{c} = 1 - u^T z \\
+\st    & z \text{ è una possibile colonna della matrice dei vincoli}
+\end{align*}
+
+Tenendo a mente che ogni colonna è un possibile schema di taglio ammissibile, possiamo implementare il vincolo come:
+
+$$
+\sum\limits_{i \in I} L_i z_i \leq W \quad z \in \mathbb{Z}_{+}^{card(I)}
+$$
+
+Il problema poi può essere ri-modellato passando ad una funzione di massimo e togliendo la costante 1:
+
+\begin{align*}
+\max \:& \sum\limits_{i \in I} u_i z_i \\
+\st    & \sum\limits_{i \in I} L_i z_i \leq W \\
+	   &z \in \mathbb{Z}_{+}^{card(I)}
+\end{align*}
+
+\subsection{Riassunto dell'algoritmo}
+
+\subsubsection{Passo 0 - Inizializzazione}
+
+Scegli un sotto-insieme $J'$ di schemi di taglio, tale che il problema ammetta soluzione.
+Un esempio di sotto-insieme è dato da tutti gli schemi mono-taglio.
+
+\subsubsection{Passo 1 - Risoluzione del problema master}
+
+Risolvi il problema master, tenendo in considerazione solo il sotto-insieme di schemi precedentemente definito.
+Si ottiene così una soluzione ottima primale $x^*$ e una soluzione ottima duale $u^*$ corrispondente, cioè in scarti complementari.
+Questo procedimento può essere fatto con il metodo del simplesso
+
+\begin{align*}
+\min\:& \sum\limits_{j \in J'} x_j  \\
+\st  & \sum\limits_{j \in J'} N_{ij}x_j \geq R_i  \quad \forall\: i \in I\\
+& x_j \in \mathbb{Z}^+ \quad \forall \: j \in J' \geq 0
+\end{align*}
+
+\subsubsection{Passo 2 - Soluzione del sotto-problema (problema slave)}
+
+Risolvi il problema slave per la determinazione della colonna da introdurre (ovvero la soluzione ottima $z^*$).
+Il problema ha $card(I)$ variabili e un solo vincolo.
+
+\begin{align*}
+\max \:& \sum\limits_{i \in I} u_{i}^* z_i \\
+\st    & \sum\limits_{i \in I} L_i z_i \leq W \\
+&z \in \mathbb{Z}_{+}^{card(I)}
+\end{align*}
+
+\subsubsection{Passo 3 - Test di ottimalità}
+
+Se $\sum\limits_{i \in I} u_{i}^* z_i \leq 1$ fermati, $x^*$ è la \textbf{soluzione ottima} del rilassamento continuo, esteso a tutto $J$.
+
+Altrimenti aggiorna il problema master aggiungendo a $J'$ lo schema di taglio $\gamma$ tale che:
+
+$$
+N_{i\gamma} = z_{i}^* \quad \forall i
+$$
+
+Ovvero aggiungi allo schema di taglio la colonna $z^*$ e torna al passo 1.
+
+\subsubsection{Passo 4 - Soluzione euristica del problema di partenza}
+
+Per ottenere una soluzione per il problema di partenza è necessario applicare qualche euristica per rendere utilizzabile la soluzione del rilassamento continuo.
+Alcune possibilità sono:
+
+\begin{itemize}
+	\item Arrotondare per eccesso le componenti di $x^*$. Il risultato risulta migliore se le componenti di $x^*$ assumo valori elevati (c'è meno spreco).
+	\item Applicare un metodo di programmazione lineare intera all'ultimo problema master generato. Questo equivale a risolvere il problema di partenza considerando solo i pattern buoni ottenuti con la risoluzione dei sotto-problemi.
+\end{itemize}
+
+In entrambi i casi si perde la garanzia dell'ottimalità della soluzione, ma si ottiene comunque una soluzione ragionevolmente buona.
+
+
+
+
