@@ -1,0 +1,121 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+\section{Recap sul branch and bound}
+
+Termino quando non ci sono più nodi. In questo caso la soluzioni ottima è quella incumbent. Tipicamente però non si raggiunge la terminazione dell'algoritmo per questioni di tempo o memoria.
+
+Se mi fermo prima della terminazione ho la garanzia che incumbent è almeno una soluzione feasible. Sappiamo inoltre che, dato che i valori rilassati sono numeri reali, la soluzione ottima per il problema intero è compresa tra il valore della soluzione incumbent e il più grande upper-bound.
+Si può quindi definire un intervallo di ottimalità e fermarsi quando questo gap è inferiore di una certa soglia.
+Anche se il gap è molto piccolo, non vuol dire che si è vicini alla soluzione ottima, infatti il branch and bound fa fatica a chiudere i gap piccoli.
+
+Si parte quindi dal problema iniziale $P_0$ che è il problema originale senza i vincoli di integrità, lo si risolve e poi si aggiunge un nuovo vincolo del tipo $x_i \leq k_i$. Si ripete quindi questo procedimento fino a quando non si raggiunge la condizione di stop.
+
+Ovviamente non conviene far ripartire da capo la risoluzione del problema lineare rilassato, ma è meglio utilizzare una strategia simile alla column-generation.
+Tuttavia non possiamo far ripartire il simplesso dalla soluzione corrente $\overline{x}_{LR}$  (il pedice $LR$ sta per linear relaxation), perché il nuovo vincolo che è stato aggiunto è stato scelto appositamente per rendere infeasible la soluzione corrente.
+Tuttavia, la soluzione del problema duale $\overline{u}$ rimane ottima e anche per il nuovo problema duale. Si può quindi utilizzare un metodo del \textit{dual-simplex} per ottenere una soluzione ottima per il nuovo problema primale in poche iterazioni.
+
+(Nelle dispense c'è una grande parte che a noi non interessa)
+
+
+\section{Polyheadral approch to LP}
+
+\`E un altro modo per risolvere un problema di programmazione lineare intera (o mista).
+
+Come riferimento utilizziamo il classico problema di minimizzazione in forma standard, con un sotto-insieme di variabili $x_i$ tali che $x_i \in \mathbb{Z}\: \forall i \in I$.
+
+L'insieme dei vincoli e delle condizioni di integralità definiscono la feasibile-region del problema, una griglia di punti interi che sono racchiusi in un poliedro definito dal sistema $Ax = b, x \geq 0$.
+
+Ma il poliedro $Ax=b, x \geq 0$ non è l'unico. Questo può essere visto a livello grafico: la nuova di punti della feasibile-region può essere racchiusa anche da un poliedro diverso da $Ax = b, x\geq 0$, che può essere genericamente definito come $A'x = b', x\geq0$.
+
+Ricapitolando:
+\begin{itemize}
+	\item La feasible region è l'insieme dei punti feasibile per il problema LP.
+	\item Una forumulation è un qualsiasi poliedro che racchiude tutti e soli i punti della feasible region. Per una stessa feasibile region è possibile trovare un numero infinito di formulation.
+\end{itemize}  
+
+Quindi in MILP ogni problema ha un numero infinito di possibili formulazioni e queste possono essere viste come i rilassamenti del branch and bound.
+Pertanto sarebbe conveniente scegliere come rilassamento un poliedro che è il più possibile vicino alla soluzione intera ottima, perché poliedri (formulation) più piccoli danno bound migliori.
+C'è da tenere conto che non sempre è possibile determinare se una formulation è più grande o più piccola dell'altra, perché può succedere che nessuna delle due contenga esattamente l'altra.
+
+Più formalmente, la formulazione $\{Ax = b, x\geq0\}$ è \textbf{migliore} di un'altra formulazione $\{A'x = b', x\geq0\}$ per lo stesso problema quando:
+
+$$
+\underbrace{\{Ax = b, x\geq0\}}_{polyhedron} \subseteq \{A'x = b', x\geq0\}
+$$
+
+ovvero i punti di un poliedro sono tutti contenuti all'interno dell'altro poliedro. Ovviamente questo può essere determinato in modo algebrico.
+
+Come problema d'esempio prendiamo \textbf{Uncapacitated Facility Location} (\textbf{UFL}): ci sono $n$ location $i = 1, \ldots, n$ dove possiamo costruire delle facilities. Ci sono $m$ utenti da soddisfare con le facilities $j = 1 \ldots m$. Ogni utente deve essere soddisfatto da solamente una facility. Servire un utente ha un costo $c_{ij}$. C'è anche un costo fisso $f_i$ da pagare se viene aperta una facility in location $i$.
+
+La formulazione del problema è
+
+\begin{itemize}
+	\item $y_i = \begin{cases}
+	1\quad&\text{apro una facility in }i \\
+	0\quad&\text{altrimenti }i \\
+	\end{cases}$
+	\item $x_{ij} = \begin{cases}
+	1\quad&\text{se la facility \textit{i} serve l'utente \textit{j}}\\
+	0\quad&\text{altrimenti}
+	\end{cases}$
+	\item FO: $$
+		\min \sum \limits_{i=1}^{n} f_i y_i + \sum\limits_{i,j} c_{ij}x_{i,j}
+	$$
+	\item ST: 
+	\begin{itemize}
+		\item $ \sum\limits_{i} x_{ij} = 1 \quad \forall j = 1 \ldots m$
+		\item $x_{ij} \leq y_i \: \forall \: i,j$ oppure $\sum\limits_{j} x_{i,j} \leq M y_i  \:\forall i $
+		\item $ 0 \leq x_{ij} \leq 1$, $ 0 \leq y_i \leq 1 \forall i,j$ 
+		\item $ x_{ij}, y_i \in \mathbb{Z} $
+	\end{itemize}
+\end{itemize}
+
+Le due formulazioni sono equivalenti, ma la prima richiede un maggior numero di vincoli. Come valore di $M$ per la seconda formulazione possiamo utilizzare il numero di utenti $m$, perché il massimo valore della sommatoria è $m$ ed avere un $M$ minimo porta ad avere dei buoni vincoli.
+
+Ma quale delle due soluzioni conviene scegliere? Tipicamente meno vincoli ci sono, più è facile da risolvere il problema, ma avere tanti vincoli può portare ad avere un poliedro più piccolo.
+
+Si può verificare che la prima formulazione è migliore, nel senso che definisce un poliedro più piccolo, perché se $(\overline{x},\overline{y})$ soddisfa la prima formulazione, questa soddisfa anche la seconda formulazione. 
+
+Perché la coppia soddisfa tutti i vincoli del tipo
+$$
+\overline{x}_{ij} \forall\:i\forall\:j (*)
+$$
+e, fissato un $i$, la sommatoria di tutti quei vincoli su $j$ diventa:
+
+$$
+\sum\limits_{j} \overline{x}_{ij} \leq m \overline{y}_i
+$$
+
+ovvero $(\overline{x},\overline{y})$ soddisfa anche il vincolo della seconda formulazione.
+Si può anche dimostrare che il contrario non vale.
+
+Rimane comunque il dubbio su quale sia conveniente implementare, perché quando la formulazione geometricamente migliore è quella con più vincoli, c'è il rischio che il risolutore faccia comunque più fatica a trovarla. L'unica cosa che si può fare è provare.
+
+A livello geometrico è comunque possibile definire la \textbf{formulazione ideale}, ovvero quella che è geometricamente migliore.
+La soluzione ideale è quindi il \textbf{convex hull} della feasibile region, ovvero il minimo \textbf{convex set} che contenente la feasbile-region.
+Un convex set $C$ è un insieme di punti, tali che $\forall x,y \in C$, il segmento che li congiunge è completamente contenuto in $C$.
+Tutti i poliedri associati ad una formulation sono sempre dei convex set. 
+
+Il \textbf{Fundamental theorem of Integer Linear Programming} dice che dato un (M)ILP (sotto forma di massimo), tale che la matrice $A$ contenga solo valori razionali\footnote{un calcolatore non riesce ad implementare i numeri razionali.}, il convex hull della feasible region è un poliedro, ovvero può essere espresso come $\{Cx\leq d, x\geq0 \}$. Non dimostriamo questo teorema.
+
+Quindi dato un (M)ILP di massimo che definisce una feasbile region $X$, per questo teorema $convex(X)$ è un poliedro, ovvero $convex(X) = \{Cx\leq d, x \geq 0 \}$ che è anche la formulazione ideale.
+
+La formulazione ideale gode di una \textbf{proprietà fondamentale}: se massimizzo o minimizzo $c^Tx$ utilizzando la formulazione ideale ($convex(X)$) ottengo sempre una soluzione ottima intera anche se risolvo il rilassamento continuo con il simplesso. Ovvero posso utilizzare variabili continue al posto di quelle intere, semplificando così il problema, e ottenere comunque una soluzione intera.
+
+Serve quindi un modo per ottenere $convex(X)$, che non è cosa semplice (NP-Complete).
+
+
+
+
+
+
+
+
+
+
+
+
+
