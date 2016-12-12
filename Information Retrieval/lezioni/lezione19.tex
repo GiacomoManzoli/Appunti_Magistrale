@@ -1,0 +1,69 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = InformationRetrieval.tex
+% !TEX spellcheck = it-IT
+
+\chapter{Modello probabilistico 2: Il ritorno}
+
+$$
+P(rel | d,q) sibolo tipo alpha P(d|rel, q)/P(d|not-rel, q) \approx \prod_{i \in V} P(TF=tf_i|rel,q)/P(tf=tf_i | not-rel, q)\approx P(TF = Tf_i|rel)/P(TF=Tf_i|not-rel)
+$$
+
+ma la produttoria non può essere calcolata perché lavora con numero troppo piccoli, quindi considero i logaritmi.
+
+$$
+\sum_q \underbrace{\log \Big( P(TF=Tf_i | rel) /P(TF=Tf_i \Big)}_{U(Tf_i)} = \sum_{q,tf_i > 0} U(Tf_i) + \sum_{q,Tf_i = 0} U(0)
+$$
+
+C'è un passaggio strano che l'autore l'ha motivato così: tutti i modelli prima del '76 partono dall'idea che ci sono le frequenze dei termini da sommare per calcolare lo score del documento. Ma non viene presa in considerazione l'assenza dei termini.
+Questo per motivi di efficienza perché nel '76 la potenza di calcolo era ridotta.
+
+$$
+\sum_{q,tf_i > 0} U(Tf_i) + \sum_{q,Tf_i = 0} U(0) = \sum_{q,tf_i > 0} U(Tf_i) + \underbrace{\sum_{q,Tf_i = 0} U(0) + \sum_{q, tf > 0} U(0)}_{\text{possono essere raggruppate}} - \sum_{q, tq > 0} U(0) = \sum_{q, Tf>0} U(Tf_i) - U(0) + \underbrace{\sum_q U(0)}_{\text{è 0}}
+$$
+
+$$
+P(Tf = 1 | REL) = p \quad P(Tf = 1 | not-rel) = q
+$$
+
+vado a sostituire sulla formula precedente e ottendo
+
+$$
+\sum \log p/q - \sum \log (1-p)/(1-q) = \sum \log p(1-q)/q(1-p)
+$$
+
+ovvero hanno ottenuto lo stesso risultato del modello binario.
+
+...
+
+$$
+P(\lambda) = \lambda^k e^{-k} / k!
+$$
+
+Ci sono termini che appaiono poche volte $\mu$ e altri che ne compaiono molte $\lambda$. Si ha quindi che preso un documento a caso, la probabilità di osservare un termine rilevante è una mistura di $\mu$ e $\lambda$.
+
+L'assunzione statistica è che tanto più sarà frequente sarà il termine nel documento, tanto più quel documento sarà specifico (\textit{d'elite}).
+
+...
+
+...
+
+...
+
+...
+
+- non posso chiedervi di  calcolare delle formule con bm25
+
+- posso chiedervi che data, una collezione di documenti con tf e rilevanza, calcolare qual'è il documento più rilevante (calcolo di log p/q (1-q)/(1-p), con numeri appropriati in modo che non serva la calcolatrice.
+
+- posso chiedervi le ipotesi di partenza da 2-poisson a bm25. Interessa il ragionamento. Dato il formulone generale, quali sono le ipotesi semplificative che permettono di arrivare a bm25.
+
+- dell'articolo sul bm25 interessano solo le prime
+
+
+
+
+
+
+
+
