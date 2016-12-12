@@ -33,7 +33,7 @@ Una volta fissato un sistema di tipi, questa verifica del programma può anche e
 Studiare i tipi risulta più semplice sui linguaggi funzionali che su quelli imperativi.
 Inoltre, lo stile di programmazione funzionale risulta più elegante perché è concentrato sul \textit{``what to do''} anziché \textit{``how to do''}.
 
-\begin{lstlisting}[language=Java, caption=Confronto tra Java 5 e Java 8: nel secondo caso è subito chiaro l'intento del programmatore in oltre non vengono aggiunte variabili \textit{mutable}. Tuttavia l'esempio non usa le caratteristiche funzionali di Java8]
+\begin{lstlisting}[language=Java, caption=Confronto tra Java 5 e Java 8: nel secondo caso è subito chiaro l'intento del programmatore inoltre non vengono aggiunte variabili \textit{mutable}. Tuttavia l'esempio non usa le caratteristiche funzionali di Java8]
 // Java 5
 boolean found = false;
 for(String city : cities){
@@ -89,12 +89,12 @@ Ciò permette di scomporre un problema in sotto-problemi, utilizzare delle funzi
 	Termini \: M, N &::= x &\text{ variabili} \\
 								&|\: n \:|\: \text{true} \:|\: \text{false} &\text{ costanti intere e booleane} \\
 								&|\: M + M \:|\: M - M &\text{ operazioni intere} \\
-								&|\: \text{if} \: M \: &\text{then} \: M \: \text{else} \: M \text{ condizionale} \\
+								&|\: \text{if} \: M \: \text{then} \: M \: \text{else} \: M &\text{ condizionale} \\
 								&|\: \text{fn } x.M &\text{ dichiarazione di una funzione} \\
 								&|\: M \: M &\text{ applicazione di una funzione}
 \end{align*}
 
-\noindent Un programma è quindi un termine chiuso \textit{M}, ovvero che non ha variabili e l'esecuzione del programma equivale a trovare il valore del termine \textit{M}.
+\noindent Un programma è quindi un termine chiuso \textit{M}, ovvero che non ha variabili libere e l'esecuzione del programma equivale a trovare il valore del termine \textit{M}.
 
 Alcuni esempi di programmi:
 
@@ -106,7 +106,7 @@ Alcuni esempi di programmi:
 \text{fn} \: x.x+1 \: 3 &\: \text{// funzione successore applicata al numero 3} \\
 \text{fn} \: x.\text{fn} \: y . x+y &\: \text{// funzione somma con due argomenti (currificata)} \\
 \text{fn} \: x. (\text{fn} \: y . x+y   + 2) &\: \text{// funzione che ritorna la funzione $2+x$} \\
-\underbrace{\text{fn} \: x.\text{fn} y.(x\: y)}_{M} &\: \text{// funzione che applica un'altra funzione} \\
+\underbrace{\text{fn} \: x.\text{fn}\ y.(x\: y)}_{M} &\: \text{// funzione che applica un'altra funzione} \\
 (M \: \text{fn} \: z.z) \: 5 &\: \text{// applicazione della funzione identità al numero 5} \\
 \text{if} \: 2 \: \text{then} \: \text{fn}\: x.x+x \: \text{else} \: 0 &\: \text{// utilizzo del condizionale, è sinteticamente corretto ma non a livello di tipi}
 \end{align*}

@@ -12,7 +12,7 @@
 Useremo la semantica operazionale small-step la quale descrive i passi di esecuzione del programma in termini di una relazione di transizione $M \rightarrow M'$.
 Questi termini $M$ possono essere visti come gli stati di una macchina astratta.
 
-Un \textbf{valore} rappresenta uno stato finale della macchina astratta e tipicamente sono un sotto insieme di termini. Come notazione usiamo $v$ al posto di $M$.
+Un \textbf{valore} rappresenta uno stato finale della macchina astratta e tipicamente appartiene ad un sotto insieme dei termini. Come notazione per i valori usiamo $v$ al posto di $M$.
 
 Nel nostro linguaggi i valori sono:
 
@@ -160,7 +160,7 @@ $$
 M \rightarrow (5-(2+1)) + [(5-(2+1)) + (5-(2+1))]
 $$
 
-\noindent per esercizio continuare l'albero di derivazione. \todo{TODO}
+\noindent per esercizio continuare l'albero di derivazione.
 
 \vspace{10px}
 
@@ -171,7 +171,7 @@ Consideriamo invece il programma $M' = (\fn x.3+5) \:N$ con lo stesso $N$ di pri
 
 Casi estremi a parte, si è visto che mediamente è più conveniente utilizzare call-by-value.
 
-Un altro programma interessante è $\Omega = (\fn x.x \: x)\: (\fn x. x\:x)$ sia con call-by-value che call-by-n ottengo $(\fn x.x x)\: (\fn x.x x)$, ovvero ottengo ancora $\Omega$.
+Un altro programma interessante è $\Omega = (\fn x.x \: x)\: (\fn x. x\:x)$ sia con call-by-value che call-by-n ottengo $(\fn x.x\ x)\: (\fn x.x\ x)$, ovvero ottengo ancora $\Omega$.
 La semantica di questo programma è divergente, perché l'esecuzione di un passo di computazione porta esattamente alla stessa situazione.
 Un'altra cosa interessante di questo esempio è che il parametro viene applicato a se stesso e quindi risulta impossibile trovare un tipo per questo parametro, perché dovrebbe essere sempre un tipo di ordine superiore di se stesso.
 
@@ -198,21 +198,21 @@ La semantica del linguaggio è \textbf{deterministica}, ovvero per ogni stato c'
 
 Più formalmente se $M \rightarrow M'$ e $M \rightarrow M''$ allora $M' = M''$.
 
-Questo si dimostra per induzione sulla struttura di $M$ (vedi §\ref{ex:2.1.4}). 
+Questo si dimostra per induzione sulla struttura di $M$. 
 
 \subsection{Scala: call-by-name e call-by-value}
 
 In Scala è possibile andare a scegliere se utilizzare il passaggio di parametri con call-by-name o call-by-value.
 
-Questo può portare ad un problema a livello pratico, ad esempio se si vuole implementare un meccanismo di asserzioni che può essere disabilitato, ci possono essere dei problemi.
+Questo può portare problemi a a livello pratico, ad esempio se si vuole implementare un meccanismo di asserzioni che può essere disabilitato.
 
 \begin{lstlisting}[language=Scala]
-	var assEnabled = true
-	def assert(pred: Boolean) = 
-		if (assEnabled && !pred)
-			throw new AssException
-	...
-	assert(saldoConto() > 0)
+var assEnabled = true
+def assert(pred: Boolean) = 
+	if (assEnabled && !pred)
+		throw new AssException
+...
+assert(saldoConto() > 0)
 \end{lstlisting}
 
 \noindent Un po' di informazioni su Scala:

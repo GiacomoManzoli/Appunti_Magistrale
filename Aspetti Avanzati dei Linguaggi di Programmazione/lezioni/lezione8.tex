@@ -8,7 +8,7 @@
 %\subsection{Record}
 % \subsubsection{L'oggetto conto}
 
-\subsection{Tipi variante}
+\section{Tipi variante}
 
 Se i record possono essere visti come tipi congiunzione, che combinano più tipi, i tipi variante possono essere visti come disgiunzione.
 
@@ -55,14 +55,17 @@ $$
 
 \noindent Più formalmente:
 
-$$fv(<l =M>) = fv(M) \qquad \text{e} \qquad fv( M \text{ match } \{\text{case }l_i = x_i => M_i \:^{i = 1\ldots n}\}) = fv(M) \cup \bigcup_{i = 1 \ldots n}\bigg( fv(M_i) \setminus \{x_i\} \bigg) $$
+\begin{itemize}
+	\item $fv(<l =M>) = fv(M)$
+	\item $fv( M \text{ match } \{\text{case }l_i = x_i => M_i \:^{i = 1\ldots n}\}) = fv(M) \cup \bigcup_{i = 1 \ldots n}\bigg( fv(M_i) \setminus \{x_i\} \bigg) $
+\end{itemize}
+
 
 \noindent Servono inoltre dei nuovi valori finali e dei tipi:
 
-\begin{align*}
-	v ::=& <l = v> \vbar \ldots \\
-	T ::=& < l_i : T_i \:^{i = 1 \ldots n}>
-\end{align*}
+$$
+v ::= <l = v> \vbar \ldots \qquad T ::= < l_i : T_i \:^{i = 1 \ldots n}>
+$$
 
 \noindent La semantica operazionale viene espressa con 3 nuove regole:
 
@@ -70,16 +73,19 @@ $$fv(<l =M>) = fv(M) \qquad \text{e} \qquad fv( M \text{ match } \{\text{case }l
 	\item Riduzione del termine interno
 	\begin{prooftree}
 		\AxiomC{$M \rightarrow M'$}
+		\LL{Variant}
 		\UnaryInfC{$<l = M> \rightarrow <l = M'>$}
 	\end{prooftree}
 	\item Avanzamento in un match:
 	\begin{prooftree}
 		\AxiomC{$M \rightarrow M'$}
-		\UnaryInfC{$M \text{ match } \{\text{case } l_i = x_i => M_i \:^{i = 1 \ldots n}\}$}
+		\LL{Red-Match}
+		\UnaryInfC{$M \text{ match } \{\text{case } l_i = x_i => M_i \:^{i = 1 \ldots n}\} \to M' \text{ match } \{\text{case } l_i = x_i => M_i \:^{i = 1 \ldots n}\}$}
 	\end{prooftree}
 	\item Assioma per il match effettivo
 	\begin{prooftree}
 		\AxiomC{$j \in \{1 \ldots n\}$}
+		\LL{Match}
 		\UnaryInfC{$<l_j = v> \text{ match } \{\text{case } l_i = x_i => M_i \:^{i = 1 \ldots n}\} \rightarrow M_j\{x_j = v\}$}
 	\end{prooftree}
 \end{itemize}
@@ -89,7 +95,8 @@ $$fv(<l =M>) = fv(M) \qquad \text{e} \qquad fv( M \text{ match } \{\text{case }l
 \begin{prooftree}
 	\AxiomC{$ \Gamma \vdash M: T_j $}
 	\AxiomC{$ j \in \{1 \ldots n \} $}
-	\BinaryInfC{$\Gamma \vdash <l_j = M> : <l_i : T_i \:^{i=1\ldots n}$}
+	\LL{Type-Variant}
+	\BinaryInfC{$\Gamma \vdash <l_j = M> : <l_i : T_i \:^{i=1\ldots n}>$}
 \end{prooftree}
 
 \noindent Con questa regola posso assegnare ad un valore infiniti tipi, l'importante è che in questi infiniti tipi ci sia l'etichetta $l_j$ in modo da avere la garanzia di riuscire ad effettuare il pattern matching.
@@ -97,6 +104,7 @@ $$fv(<l =M>) = fv(M) \qquad \text{e} \qquad fv( M \text{ match } \{\text{case }l
 \begin{prooftree}
 	\AxiomC{$\Gamma \vdash M : < l_i : T_i  \:^{i=1\ldots n}>$}
 	\AxiomC{$\Gamma, x_i : T_i \vdash M_i : T \:\: \forall \: i = 1 \ldots n $}
+	\LL{Type-Match}
 	\BinaryInfC{$\Gamma \vdash M \text{ match }\{\text{case }l_i = x_i => M_i \:^{i=1\ldots n}\} : T$}
 \end{prooftree}
 
@@ -104,7 +112,7 @@ $$fv(<l =M>) = fv(M) \qquad \text{e} \qquad fv( M \text{ match } \{\text{case }l
 
 Se nel pattern matching ho come premessa della regola $\Gamma \vdash M : < l_i : T_i  \:^{i=1\ldots m}>$ con $m \geq n$ c'è un problema perché possono capitare delle etichette che il costrutto \text{match} non riesce a gestire. Se invece $m \leq n$ non ci sono problemi. Ma anche in questo caso, dato che ho a disposizione infiniti tipi, conviene forzare $m = n$.
 
-Anche se non sembra questi tipi sono presenti nella maggior parte dei linguaggi main-stream, solo che questi vengono nascosti da dello zucchero sintattico. Ad esempio le liste possono essere viste come un tipo variante in quanto sono o una lista vuota o la concatenazione di un elemento e un'altra lista.
+Anche se non sembra questi tipi sono presenti nella maggior parte dei linguaggi main stream, solo che questi vengono nascosti da dello zucchero sintattico. Ad esempio le liste possono essere viste come un tipo variante in quanto sono o una lista vuota o la concatenazione di un elemento e un'altra lista.
 
 $$
 \text{List} = < \text{nil : Unit}, \text{cons} : (\Nat * \text{List}) >
@@ -157,7 +165,7 @@ Scala e Java8 (e Swift) implementano un'ulteriore versione, gli \textbf{option t
 La definizione di questo tipo è la seguente:
 
 $$
-Option[C] = < \text{none} : Unit, \text{some} : C >
+Option[C] = < \text{none} : \text{Unit}, \text{some} : C >
 $$
 
 \noindent Il codice di prima può essere quindi riscritto come

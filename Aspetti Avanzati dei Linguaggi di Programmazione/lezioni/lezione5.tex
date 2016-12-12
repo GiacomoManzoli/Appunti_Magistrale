@@ -20,6 +20,8 @@ Come già anticipato, per dimostrare questo problema servono altri teoremi/lemmi
 
 \subsubsection{Lemmi di inversione}
 
+Questi lemmi ``spiegano'' come è stato derivato il giudizio di tipo di ogni termine del linguaggio, utilizzando espressioni della forma ``\textit{Se un termine M è ben tipato, allora i suoi sotto-termini devono avere queste forme}''.
+
 \begin{enumerate}
 	\item $\Gamma \vdash \text{ true } : T $ è derivabile, allora $T = \Bool $. Lo stesso vale anche per \text{false}.
 	\item $\Gamma \vdash n : T$ è derivabile, allora $T = \Nat$.
@@ -31,8 +33,6 @@ Come già anticipato, per dimostrare questo problema servono altri teoremi/lemmi
 \end{enumerate}
 
 \noindent La dimostrazione dei lemmi è triviale perché basta invertire la relativa regola di tipo. Inoltre, questi lemmi tornano utili per fare inferenza sui tipi.
-
-\textbf{Esercizio}: dimostrare che se $M$ è un termine ben tipato, allora tutti i sotto termini di $M$ sono termini ben tipati. Prima è necessario formalizzare per induzione cos'è un sotto termine.
 
 \subsubsection{Teorema di Unicità dei tipi}
 
@@ -46,6 +46,8 @@ La dimostrazione è banale perché nel nostro sistema di tipi possiamo utilizzar
 
 
 \subsubsection{Lemmi delle Forme canoniche}
+
+Questi lemmi definiscono quali sono i valori per i vari tipi del linguaggio.
 
 \begin{enumerate}
 	\item Se $v$ è un valore di tipo $\Bool$, allora $v$ è $\text{true}$ oppure $\text{false}$.
@@ -74,11 +76,11 @@ Per derivare il giudizio di tipo $\emptyset \vdash M : T$ devo creare un albero 
 	\item $\Gamma \vdash x : T$ non può essere un caso base, perché per essere valido devo avere delle informazioni sul contesto e nell'ipotesi del teorema $\Gamma = \emptyset$.
 \end{itemize} 
 
-\subparagraph{Casi induttivi}: $h+1 \rightarrow h$, ovvero devo dimostrare che se dal giudizio $\emptyset \vdash M : T$ è derivabile in $h+1$ passi allora vale il teorema, utilizzando l'ipotesi induttiva che se $\emptyset \vdash \overline{M} : \overline{T}$ derivabile in $h$ passi, allora $\overline{M}$ è un valore o c'è un altro passo che posso fare.
+\subparagraph{Casi induttivi} $h+1 \rightarrow h$, ovvero devo dimostrare che se dal giudizio $\emptyset \vdash M : T$ è derivabile in $h+1$ passi allora vale il teorema, utilizzando l'ipotesi induttiva che se $\emptyset \vdash \overline{M} : \overline{T}$ derivabile in $h$ passi, allora $\overline{M}$ è un valore o c'è un altro passo che posso fare.
 Si ragiona quindi per casi sull'ultima regola di derivazione utilizzata.
 
 \begin{itemize}
-	\item \textsc{(Sum)}: in questo caso $M = M_1 +M_2$, $\emptyset \vdash M_1 + M_2 : \Nat$ e sono vere le due ipotesi induttive $\emptyset \vdash M_1 : \Nat$ e $\emptyset \vdash M_2 : \Nat$.
+	\item \textsc{(Sum)}: in questo caso $M = M_1 +M_2$, $\emptyset \vdash M_1 + M_2 : \Nat$ e sono vere le due ipotesi induttive $\emptyset \vdash M_1 : \Nat$ e $\emptyset \vdash M_2 : \Nat$ perché ottenute con un albero di derivazione di altezza inferiore.
 	Per ipotesi induttiva so quindi che $M_1$ è un valore, oppure $M_1 \rightarrow M_1'$ e lo stesso vale per $M_2$.
 	Ci sono quindi 3 casi possibili:
 	\begin{enumerate}[a]
@@ -126,7 +128,7 @@ Viene fatta per induzione sull'altezza di derivazione del giudizio $\Gamma , x :
 I casi base sono per gli assiomi:
 
 \begin{itemize}
-	\item \textsc{(True)} $\Gamma , x : S \vdash \true : \Bool$, in questo caso applicando la sostituzione il termine \text{true} non cambia e quindi la tesi è trivialmente soddisfatta. Lo stesso vale per gli assiomi relativi a \text{false} e \text{nat}.
+	\item \textsc{(True)} $\Gamma , x : S \vdash \true : \Bool$, in questo caso applicando la sostituzione il termine \text{true} non cambia e quindi la tesi è trivialmente soddisfatta. Lo stesso vale per gli assiomi relativi a \text{false} e \textit{n}.
 	\item \textsc{(Var)} $\Gamma , x : S \vdash y : T$. In questo caso ci sono due sotto-casi:
 	\begin{enumerate}[a]
 		\item $y = x$:  $\Gamma , x : S \vdash x : T$. Per il lemma di inversione, il giudizio deriva da un'asserzione presente nel contesto e quindi per forza $S = T$. Si ha quindi che considerando la sostituzione $\Gamma \vdash x\{x:=N\}:T $. Ma $N$ ha tipo $S$ e $S = T$, quindi la tesi continua a valere.
@@ -137,19 +139,41 @@ I casi base sono per gli assiomi:
 \noindent I casi induttivi riguardano l'ultima regola applicata.
 
 \begin{itemize}
-	\item \textsc{(Sum)}: $\Gamma, x : S \vdash_{k+1} M_1 + M_2 : \Nat$ e $M = M_1 + M_2$, da $\Gamma, x : S \vdash_k M_1 :\Nat$ e $\Gamma, x : S \vdash_k M_2 :\Nat$. Da entrambi i giudizi, per ipotesi induttiva ho che $\Gamma \vdash M_1\{x := N\} : \Nat$ e $\Gamma \vdash M_2\{x := N\} : \Nat$. Combinando le due cose con la regola \textsc{(Sum)} ottengo $\Gamma \vdash M_1\{x := N\} + M_2\{x:=N\} : \Nat$ e quindi anche $M\{x:=N\}: \Nat$.
-	\item \textsc{(Fun)}: $\Gamma, x: S \vdash \underbrace{\fn y : T_1 . M_1}_{M} : \underbrace{T_1 \rightarrow T_2}_{T}$. Posso scegliere un parametro della funzione qualsiasi, quindi prendo $y \neq x$ e $y \notin \text{fv}(N)$. \textit{Per un qualche lemma} $\Gamma, x: S, y:T_1 \vdash_k M_1:T_2$. Al giudizio su $N$, posso applicare il lemma del weakening ottenendo $\Gamma, y : T_1 \vdash N : S$. Combinando quest'ultimo con $\Gamma, x: S, y:T_1 \vdash_k M_1:T_2$ posso applicare l'ipotesi induttiva per dire che è derivabile il giudizio $\Gamma, y : T_1 \vdash M_1\{x:=N\} :T_2$ (Ho applicato il weakening per avere lo stesso contesto nei due giudizi). Applicando \textsc{(Fun)} a quest'ultimo giudizio ottengo $\Gamma \vdash \fn y : T_1 . (M_1\{x:=N\}):T_1\rightarrow T_2$, ovvero la tesi.
+	\item \textsc{(Sum)}: $\Gamma, x : S \vdash_{k+1} M_1 + M_2 : \Nat$, $M = M_1 + M_2$ e quindi sono derivabili anche i giudizi $\Gamma, x : S \vdash_k M_1 :\Nat$ e $\Gamma, x : S \vdash_k M_2 :\Nat$. 
 	
-	\item \textsc{(App)}: \todo{guardare dalle note, da notare che @25 minuti c'è la crafa che spiega lo schema generico.} 
+	Da entrambi i giudizi, per ipotesi induttiva ho che $\Gamma \vdash M_1\{x := N\} : \Nat$ e $\Gamma \vdash M_2\{x := N\} : \Nat$. 
+	
+	Combinando le due cose con la regola \textsc{(Sum)} ottengo $\Gamma \vdash M_1\{x := N\} + M_2\{x:=N\} : \Nat$ e quindi anche $M\{x:=N\}: \Nat$.
+	
+	\item \myrule{Minus}, \myrule{IfThenElse}: uguali al caso precedente.
+	
+	\item \textsc{(Fun)}: $\Gamma, x: S \vdash \underbrace{\fn y : T_1 . M_1}_{M} : \underbrace{T_1 \rightarrow T_2}_{T}$. 
+	Dato che il parametro della funzione può avere qualsiasi nome, scelgo un $y \neq x$ e $y \notin \text{fv}(N)$. 
+	
+	Per il Lemma di Inversione deve valere il giudizio $\Gamma, x: S, y:T_1 \vdash_k M_1:T_2$. Il giudizio poi può essere riscritto per effetto del Lemma di Permutazione come $\Gamma, y:T_1, x: S \vdash_k M_1:T_2$
+	
+	Al giudizio su $N$ posso applicare il Lemma di Weakening ottenendo $\Gamma, y : T_1 \vdash N : S$. 
+	
+	Combinando quest'ultimo con $\Gamma, x: S, y:T_1 \vdash_k M_1:T_2$ posso applicare l'ipotesi induttiva per dire che è derivabile il giudizio $\Gamma, y : T_1 \vdash M_1\{x:=N\} :T_2$ (Ho applicato il Weakening per avere lo stesso contesto nei due giudizi). 
+	
+	Applicando \textsc{(Fun)} a quest'ultimo giudizio ottengo $\Gamma \vdash \fn y : T_1 . (M_1\{x:=N\}):T_1\rightarrow T_2$, ovvero la tesi.
+
+	
+	\item \textsc{(App)}: $ \Gamma, x : S \vdash \underbrace{M_1 \ M_2}_{M} : T$, quindi per il Lemma di inversione $\Gamma, x : S \vdash M_1 : T_1 \to T$ e $\Gamma, x : S \vdash M_2 : T_1$, con un albero di derivazione di altezza inferiore.
+	
+	Per ipotesi induttiva sono quindi derivabili i giudizi $\Gamma, x : S \vdash M_1\{x := N \} : T_1 \to T$ e $\Gamma, x : S \vdash M_2\{x := N\} : T_1$.
+	
+	Si può quindi derivare il giudizio $\Gamma, x : S \vDash M \{x := N\}$ con la regola \myrule{App}, ottenendo così la tesi.
 \end{itemize}
 
+\noindent Quando è necessario effettuare una dimostrazione per induzione sull'altezza dell'albero di derivazione di un giudizio di tipo lo schema da seguire è sempre quello: prima è necessario dimostrare i casi base, ovvero dimostrare che la proprietà vale per gli assiomi delle regole di tipo e poi dimostrare i casi induttivi, ovvero dimostrare che la proprietà vale per tutte le altre regole di tipo. Questo viene fatto ragionando sull'ultima regola di tipo che viene applicata alla derivazione e sfruttando il fatto che la derivazione delle ipotesi della regole viene fatta con un albero di altezza inferiore e quindi per le ipotesi della regola è possibile applicare l'ipotesi induttivva.
 
 \subsubsection{Teorema di Preservazione (Subject reduction)}
 
 \`E il teorema che collega il sistema di tipi statico con l'evoluzione dinamica dell'esecuzione del programma.
 
 \begin{center}
-	Se $\Gamma \vdash M : T$ è ben tipato e $M \rightarrow M'$ allora anche $\gamma \vdash M' : T$ è ben tipato.
+	Se $\Gamma \vdash M : T$ è ben tipato e $M \rightarrow M'$ allora anche $\Gamma \vdash M' : T$ è ben tipato.
 \end{center}
 
 \paragraph{Dimostrazione}

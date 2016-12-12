@@ -7,7 +7,7 @@
 %\section{Estensioni del nostro linguaggio}
 %\subsection{Unit}
 
-\subsection{Sequenzialità delle operazioni}
+\section{Sequenzialità delle operazioni}
 
 Nei linguaggi imperativi c'è la possibilità di definire una sequenza di operazioni da svolgere, tipicamente separando i termini con un punto e virgola.
 
@@ -17,15 +17,19 @@ $$
 
 \noindent Le regole di riduzione per il nostro linguaggio funzionale sarebbero
 
-\begin{prooftree}
-	\AxiomC{$M_1 \rightarrow M_1'$}
-	\UnaryInfC{$M_1 ; M_2 \rightarrow M_1' ; M_2$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$ \: $}
-	\UnaryInfC{$v ; M_2 \rightarrow M_2$}
-\end{prooftree}
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$M_1 \rightarrow M_1'$}
+		\LL{Seq}
+		\UnaryInfC{$M_1 ; M_2 \rightarrow M_1' ; M_2$}
+	\end{bprooftree}
+	$\qquad$
+	\begin{bprooftree}
+		\AxiomC{$ \: $}
+		\LL{Seq-Next}
+		\UnaryInfC{$v ; M_2 \rightarrow M_2$}
+	\end{bprooftree}
+\end{center}
 
 \noindent da notare che il valore calcolato dal primo termine viene scartato, cosa che avviene anche nei linguaggi imperativi, con la differenza che non ci sono side-effect.
 Altra cosa importante è che nell'aggiunta di nuovi costrutti servono sempre degli assiomi che specificano come viene calcolato il costrutto e delle regole che ne propagano l'effetto.
@@ -50,125 +54,146 @@ $$
 
 Per evitare però di definire tante regole per i possibili valori di $T_1$ conviene imporre $T_1 = \text{ Unit}$ perché tanto il valore calcolato dal termine $M_1$ viene scartato.
 
-\subsection{Coppie di valori}
+\section{Coppie di valori}
 
 Vengono aggiunti al nostro linguaggio funzionale:
-
-$$
+\begin{center}
+$
 M ::= (M_1, M_2) \vbar M.\_1 \vbar M.\_2 \vbar \ldots
-$$
-
-$$
+\qquad
 v ::= (v_1, v_2) \vbar \ldots
-$$
-
-$$
+\qquad
 T ::= \underbrace{T_1 * T_2}_{\text{tipo coppia}} \vbar \ldots
-$$
+$
+\end{center}
 
 \noindent Bisogna poi definire una semantica per la valutazione del tipo coppia.
 
 Come prima cosa ci sono gli assiomi per la proiezione.
 
-\begin{prooftree}
+\begin{center}
+\begin{bprooftree}
 	\AxiomC{$ $}
+	\LL{Pair-1}
 	\UnaryInfC{$(v_1, v_2)\proj 1 \rightarrow v_1$}
-\end{prooftree}
-
-\begin{prooftree}
+\end{bprooftree}
+$\qquad$
+\begin{bprooftree}
 	\AxiomC{$ $}
+	\LL{Pair-2}
 	\UnaryInfC{$(v_1, v_2)\proj 2 \rightarrow v_2$}
-\end{prooftree}
+\end{bprooftree}
+\end{center}
+
 
 \noindent Ci sono poi le regole per il calcolo dei due valori della coppia:
 
-\begin{prooftree}
-	\AxiomC{$M_1 \rightarrow M_1' $}
-	\UnaryInfC{$(M_1, M_2)\proj 1 \rightarrow (M_1', M_2)\proj 1$}
-\end{prooftree}
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$M_1 \rightarrow M_1' $}
+		\UnaryInfC{$(M_1, M_2)\proj 1 \rightarrow (M_1', M_2)\proj 1$}
+	\end{bprooftree}
+	$\qquad$
+	\begin{bprooftree}
+		\AxiomC{$M_2 \rightarrow M_2' $}
+		\UnaryInfC{$(v_1, M_2)\proj 1 \rightarrow (v_1, M_2')\proj 1$}
+	\end{bprooftree}
+\end{center}
 
-\begin{prooftree}
-	\AxiomC{$M_2 \rightarrow M_2' $}
-	\UnaryInfC{$(v_1, M_2)\proj 1 \rightarrow (v_1, M_2')\proj 1$}
-\end{prooftree}
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$M_1 \rightarrow M_1' $}
+		\UnaryInfC{$(M_1, M_2)\proj 2 \rightarrow (M_1', M_2)\proj 2$}
+	\end{bprooftree}
+	$\qquad$
+	\begin{bprooftree}
+		\AxiomC{$M_2 \rightarrow M_2' $}
+		\UnaryInfC{$(v_1, M_2)\proj 2 \rightarrow (v_1, M_2')\proj 2$}
+	\end{bprooftree}
+\end{center}
 
-\begin{prooftree}
-	\AxiomC{$M_1 \rightarrow M_1' $}
-	\UnaryInfC{$(M_1, M_2)\proj 2 \rightarrow (M_1', M_2)\proj 2$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$M_2 \rightarrow M_2' $}
-	\UnaryInfC{$(v_1, M_2)\proj 2 \rightarrow (v_1, M_2')\proj 2$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$M_1 \rightarrow M_1' $}
-	\UnaryInfC{$(M_1, M_2) \rightarrow (M_1', M_2)$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$M_2 \rightarrow M_2' $}
-	\UnaryInfC{$(v_1, M_2) \rightarrow (v_1, M_2')$}
-\end{prooftree}
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$M_1 \rightarrow M_1' $}
+		\UnaryInfC{$(M_1, M_2) \rightarrow (M_1', M_2)$}
+	\end{bprooftree}
+	$\qquad$
+	\begin{bprooftree}
+		\AxiomC{$M_2 \rightarrow M_2' $}
+		\UnaryInfC{$(v_1, M_2) \rightarrow (v_1, M_2')$}
+	\end{bprooftree}
+\end{center}
 
 \noindent Mancano ancora delle regole generiche per quando ho un termine più grande:
 
-\begin{prooftree}
-	\AxiomC{$M \rightarrow M' $}
-	\UnaryInfC{$M\proj 1 \rightarrow M'\proj 1$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$M \rightarrow M' $}
-	\UnaryInfC{$M\proj 2 \rightarrow M'\proj 2$}
-\end{prooftree}
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$M \rightarrow M' $}
+		\UnaryInfC{$M\proj 1 \rightarrow M'\proj 1$}
+	\end{bprooftree}
+	$\qquad$
+	\begin{bprooftree}
+		\AxiomC{$M \rightarrow M' $}
+		\UnaryInfC{$M\proj 2 \rightarrow M'\proj 2$}
+	\end{bprooftree}
+\end{center}
 
 \noindent Ovviamente si può fare di meglio \textbf{considerando solamente} le regole:
 
-\begin{prooftree}
-	\AxiomC{$M \rightarrow M' $}
-	\UnaryInfC{$M\proj 1 \rightarrow M'\proj 1$}
-\end{prooftree}
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$M \rightarrow M' $}
+		\LL{Project-1}
+		\UnaryInfC{$M\proj 1 \rightarrow M'\proj 1$}
+	\end{bprooftree}
+	$\qquad$
+	\begin{bprooftree}
+		\AxiomC{$M \rightarrow M' $}
+		\LL{Project-2}
+		\UnaryInfC{$M\proj 2 \rightarrow M'\proj 2$}
+	\end{bprooftree}
+	\\
+	\begin{bprooftree}
+		\AxiomC{$M_1 \rightarrow M_1' $}
+		\LL{Eval-Pair-1}
+		\UnaryInfC{$(M_1, M_2) \rightarrow (M_1', M_2)$}
+	\end{bprooftree}
+	$\qquad$
+	\begin{bprooftree}
+		\AxiomC{$M_2 \rightarrow M_2' $}
+		\LL{Eval-Pair-2}
+		\UnaryInfC{$(v, M_2) \rightarrow (v, M_2')$}
+	\end{bprooftree}
+\end{center}
 
-\begin{prooftree}
-	\AxiomC{$M \rightarrow M' $}
-	\UnaryInfC{$M\proj 2 \rightarrow M'\proj 2$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$M_1 \rightarrow M_1' $}
-	\UnaryInfC{$(M_1, M_2) \rightarrow (M_1', M_2)$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$M_2 \rightarrow M_2' $}
-	\UnaryInfC{$(v, M_2) \rightarrow (v, M_2')$}
-\end{prooftree}
-
-Con queste regole vengono prima valutate entrambi i termini e poi viene effettuata la proiezione su uno dei due valori. Volendo si può trovare una semantica alternativa che fa la valutazione lazy, calcolando solo il termine sul quale viene effettuata la proiezione.
+\noindent Con queste regole vengono prima valutati entrambi i termini e poi viene effettuata la proiezione su uno dei due valori. Volendo si può trovare una semantica alternativa che fa la valutazione lazy, calcolando solo il termine sul quale viene effettuata la proiezione.
 
 Servono infine le regole di tipo:
 
-\begin{prooftree}
-	\AxiomC{$ \Gamma \vdash M_1 : T_1$}
-	\AxiomC{$ \Gamma \vdash M_2 : T_2$}
-	\BinaryInfC{$\Gamma \vdash (M_1, M_2) : T_1 * T_2$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$\Gamma \vdash M : T*S$}
-	\UnaryInfC{$\Gamma M\proj 1 :T$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$\Gamma \vdash M : S*T$}
-	\UnaryInfC{$\Gamma M\proj 2 :T$}
-\end{prooftree}
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$ \Gamma \vdash M_1 : T_1$}
+		\AxiomC{$ \Gamma \vdash M_2 : T_2$}
+		\LL{Pair}
+		\BinaryInfC{$\Gamma \vdash (M_1, M_2) : T_1 * T_2$}
+	\end{bprooftree}
+	$\ \ $
+	\begin{bprooftree}
+		\AxiomC{$\Gamma \vdash M : T*S$}
+		\LL{Project-1}
+		\UnaryInfC{$\Gamma M\proj 1 :T$}
+	\end{bprooftree}
+	$\ \ $
+	\begin{bprooftree}
+		\AxiomC{$\Gamma \vdash M : S*T$}
+		\LL{Project-2}
+		\UnaryInfC{$\Gamma M\proj 2 :T$}
+	\end{bprooftree}
+\end{center}
 
 \noindent Con queste regole di tipo è necessario andare a verificare che il teorema di safety regga.
 
-\subsection{Record}
+\section{Record}
 
 Sono termini del tipo
 
@@ -184,42 +209,41 @@ $$
 
 \noindent Dato che le funzioni sono valori di primo ordine, il tipo record inizia ad essere una sorta di oggetto.
 
-La sintassi per i record nel nostro linguaggio è la seguente:
+La sintassi per i record nel nostro linguaggio è la seguente, dove con $l_i$ viene indicata un'etichetta per il campo dati:
 
 $$
 M ::= \{l_i = M_i \:^{i = 1 \ldots n}\} \vbar M.l \vbar \ldots
-$$
-
-\noindent con $l_i$ viene indicata un'etichetta per il campo dati.
-
-$$
+\quad
 v ::= \{l_i : v_i  \:^{i = 1 \ldots n} \} \vbar \ldots
-$$
-
-$$
+\quad
 T ::= \{ l_i : T_i  \:^{i = 1 \ldots n} \} \vbar \ldots
 $$
 
 \noindent Ad esempio:
 
 $$
-\Bigg(\bigg(\{ \text{a} = 3, \text{b} = \fn x.\fn y. (x+y) \}.\text{b} \bigg) 5 \Bigg) 6
+\Bigg(\bigg(\Big\{ \text{a} = 3, \text{b} = \fn x.\fn y. (x+y) \Big\}.\text{b} \bigg) 5 \Bigg) 6
 $$
 
-La semantica operazionale risulta essere:
+\noindent La semantica operazionale risulta essere:
 
-\begin{prooftree}
-	\AxiomC{$j \in \{1 \ldots m \} $}
-	\UnaryInfC{$\{ l_i = v_i \:^{i = 1 \ldots n} \}.l_j \rightarrow v_j$}
-\end{prooftree}
-
-\begin{prooftree}
-	\AxiomC{$M \rightarrow M'$}
-	\UnaryInfC{$M.l \rightarrow M'.l$}
-\end{prooftree}
+\begin{center}
+	\begin{bprooftree}
+		\AxiomC{$j \in \{1 \ldots m \} $}
+		\LL{Select}
+		\UnaryInfC{$\{ l_i = v_i \:^{i = 1 \ldots n} \}.l_j \rightarrow v_j$}
+	\end{bprooftree}
+	$\quad$
+	\begin{bprooftree}
+		\AxiomC{$M \rightarrow M'$}
+		\LL{Eval-Select}
+		\UnaryInfC{$M.l \rightarrow M'.l$}
+	\end{bprooftree}
+\end{center}
 
 \begin{prooftree}
 	\AxiomC{$ M_j \rightarrow M'_j$}
+	\LL{Eval-Record}
 	\UnaryInfC{$ \{ l_i = v_i \:^{i = 1 \ldots j-1}, l_j = M_j, l_k = M_k \:^{k = j+1\ldots n}\} \rightarrow \{ l_i = v_i \:^{i = 1 \ldots j-1}, l_j = M'_j, l_k = M_k \:^{k = j+1\ldots n}\}$}
 \end{prooftree}
 
@@ -227,14 +251,15 @@ La semantica operazionale risulta essere:
 
 \begin{prooftree}
 	\AxiomC{$\Gamma \vdash M_i : T_i \: \: \forall \: i = 1\ldots n$}
+	\LL{Type-Record}
 	\UnaryInfC{$\Gamma \vdash \{ l_i = v_i \:^{i = 1 \ldots n} \} : \{ l_i : T_i \:^{i = 1 \ldots n} \}$}
 \end{prooftree}
 
 \begin{prooftree}
 	\AxiomC{$ \Gamma \vdash M : \{ l_i : T_i \:^{i = 1 \ldots n}\} \:\: j \in \{1 \ldots n\} $}
+	\LL{Type-Select}
 	\UnaryInfC{$ \Gamma \vdash M.l_j : T_j$}
 \end{prooftree}
-
 
 \noindent Siamo già vicini al sistema di classi/oggetti in Java, solo che al momento il tipo dell'oggetto dipende dalla struttura del record che lo rappresenta.
 Ma ci siamo anche abbastanza lontani, ad esempio ci mancano ancora i metodi.
@@ -245,11 +270,11 @@ Ma ci siamo anche abbastanza lontani, ad esempio ci mancano ancora i metodi.
 \big\{& \\
 	\quad & \text{nConto} = 123,  \\
 	\quad &\text{saldo} = 1000, \\
-	\quad &\text{deposita} = \fn x_{this} : T_O . \fn y : \Nat  x_{this}.\text{saldo} + y  \\
+	\quad &\text{deposita} = \fn x_{this} : T_O . \fn y : \Nat.  x_{this}.\text{saldo} + y  \\
 \big\}&
 \end{align*}
 
-Ad esempio per chiamare il metodo \text{deposita} la sintassi sarebbe:
+\noindent Ad esempio per chiamare il metodo \text{deposita} la sintassi sarebbe:
 
 \begin{align*}
 \quad &\bigg( (obj.\text{deposita}) \: obj \bigg) \: 50  \\
@@ -281,12 +306,12 @@ La definizione corretta del ``oggetto'' è quindi:
 \rightarrow\: & \{ \text{nConto} = 123, \text{saldo} = 1050, \text{deposita} = \fn \ldots \} 
 \end{align*}
 
-\noindent Questo modo di definire gli oggetti prende il nome di \textbf{functional objects} ed viene utilizzato da vari linguaggi perché combina i vantaggi della programmazione ad oggetti (riuso) con quelli della programmazione funzionale (immutabilità).
+\noindent Questo modo di definire gli oggetti prende il nome di \textbf{functional objects} e viene utilizzato da vari linguaggi perché combina i vantaggi della programmazione ad oggetti (riuso) con quelli della programmazione funzionale (immutabilità).
 
 Tuttavia c'è ancora qualcosa da definire, perché al momento per indicare il tipo dell'oggetto stiamo utilizzando $T_O$, che in realtà è un segna posto per:
 
 $$
-T_O = \big\{ \text{nConto}: \Nat, \text{salto} : \Nat, \text{deposita}: T_O \rightarrow \Nat \rightarrow T_O \big\}
+T_O = \big\{ \text{nConto}: \Nat, \text{saldo} : \Nat, \text{deposita}: T_O \rightarrow \Nat \rightarrow T_O \big\}
 $$
 
 \noindent che è un'equazione di tipo ricorsivo e non è supportata dal nostro sistema di tipi.

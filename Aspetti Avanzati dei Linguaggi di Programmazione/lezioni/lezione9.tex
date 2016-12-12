@@ -7,15 +7,17 @@
 %\section{Estensioni del nostro linguaggio}
 %\subsection{Tipi variante}
 
-\subsection{Le eccezioni}
+\section{Le eccezioni}
 
 $$
 M ::= \text{throw} \: M \vbar \text{try} \: M \: \text{catch} \: M \vbar \ldots
-$$
-
-$$
+\qquad
 T ::= \TExc \vbar \ldots
 $$
+
+Il termine $\throw{M}$ indica il sollevamento di un'eccezione con delle informazioni aggiuntive, rappresentate dal termine $M$, che vengono utilizzate dal gestore dell'eccezione.
+
+La cattura di un'eccezione viene fatta dal \text{catch} $N$, il quale sarà una funzione dato che dovrà ricevere le informazioni relative all'eccezione che si è verificata.
 
 \noindent Alcuni esempi di termini sono:
 
@@ -28,114 +30,111 @@ $$
 
 \noindent Abbiamo quindi un po' di regole di semantica da definire.
 
-\noindent Avanzamento del termine dentro il try:
-
-\begin{prooftree}
-\AxiomC{$M \to M'$}
-\LeftLabel{\myrule{Try}}
-\UnaryInfC{$\trycatch{M}{N} \to \trycatch{M'}{N}$}
-\end{prooftree}
-
-\noindent Assioma per l'handling dell'eccezione:
-
-\begin{prooftree}
-\AxiomC{$ $}
-\LeftLabel{\myrule{Try-Handle}}
-\UnaryInfC{$\trycatch{\throw{v}}{M} \to (M \: v)$}
-\end{prooftree}
-
-\noindent Assioma per l'avanzamento nel caso in cui non si sono verificate eccezioni all'interno del blocco try:
-
-\begin{prooftree}
-\AxiomC{$ $}
-\LeftLabel{\myrule{Try-Val}}
-\UnaryInfC{$\trycatch{v}{M} \to v$}
-\end{prooftree}
-
-\noindent Assiomi per l'avanzamento del throw:
-
-\begin{prooftree}
-\AxiomC{$M \to M'$}
-\LeftLabel{\myrule{Raise-1}}
-\UnaryInfC{$\throw{M} \to \throw{M'}$}
-\end{prooftree}
-
-\begin{prooftree}
+\begin{itemize}
+	\item Avanzamento del termine dentro il \text{try}:
+	\begin{prooftree}
 	\AxiomC{$M \to M'$}
-	\LeftLabel{\myrule{Raise-2}}
-	\UnaryInfC{$\throw{\throw{v}} \to \throw{v}$}
-\end{prooftree}
-
-\noindent Regole per la sollevazione delle eccezioni durante l'applicazione di una funzione:
-
-\begin{prooftree}
+	\LeftLabel{\myrule{Try}}
+	\UnaryInfC{$\trycatch{M}{N} \to \trycatch{M'}{N}$}
+	\end{prooftree}
+	
+	\item Assioma per l'handling dell'eccezione:
+	\begin{prooftree}
 	\AxiomC{$ $}
-	\LeftLabel{\myrule{Raise-App-1}}
-	\UnaryInfC{$ \throw{v} \: M \to \throw{v}$ }
-\end{prooftree}
-
-\begin{prooftree}
+	\LeftLabel{\myrule{Try-Handle}}
+	\UnaryInfC{$\trycatch{\throw{v}}{M} \to (M \: v)$}
+	\end{prooftree}
+	
+	\item Assioma per l'avanzamento nel caso in cui non si sono verificate eccezioni all'interno del blocco \text{try}:
+	\begin{prooftree}
 	\AxiomC{$ $}
-	\LeftLabel{\myrule{Raise-App-2}}
-	\UnaryInfC{$ v_1 \: \throw{v_2} \to \throw{v_2}$ }
-\end{prooftree}
+	\LeftLabel{\myrule{Try-Val}}
+	\UnaryInfC{$\trycatch{v}{M} \to v$}
+	\end{prooftree}
+	
+	\item Assiomi per l'avanzamento del \text{throw}:
+	\begin{center}
+		\begin{bprooftree}
+		\AxiomC{$M \to M'$}
+		\LeftLabel{\myrule{Raise-1}}
+		\UnaryInfC{$\throw{M} \to \throw{M'}$}
+		\end{bprooftree}
+		$\quad$
+		\begin{bprooftree}
+			\AxiomC{$M \to M'$}
+			\LeftLabel{\myrule{Raise-2}}
+			\UnaryInfC{$\throw{\throw{v}} \to \throw{v}$}
+		\end{bprooftree}
+	\end{center}
 
-\noindent Regola per l'eccezione nella guardia dell'if:
+	\item Regole per la sollevazione delle eccezioni durante l'applicazione di una funzione:
+	\begin{center}
+		\begin{bprooftree}
+			\AxiomC{$ $}
+			\LeftLabel{\myrule{Raise-App-1}}
+			\UnaryInfC{$ \throw{v} \: M \to \throw{v}$ }
+		\end{bprooftree}
+		$\quad$
+		\begin{bprooftree}
+			\AxiomC{$ $}
+			\LeftLabel{\myrule{Raise-App-2}}
+			\UnaryInfC{$ v_1 \: \throw{v_2} \to \throw{v_2}$ }
+		\end{bprooftree}
+	\end{center}
 
-\begin{prooftree}
-	\AxiomC{$ $}
-	\LeftLabel{\myrule{Raise-If}}
-	\UnaryInfC{$ \IF{\throw{v}}{M_1}{M_2} \to \throw{v}$ }
-\end{prooftree}
+	\item Regola per l'eccezione nella guardia dell'\text{if}:
+	\begin{prooftree}
+		\AxiomC{$ $}
+		\LeftLabel{\myrule{Raise-If}}
+		\UnaryInfC{$ \IF{\throw{v}}{M_1}{M_2} \to \throw{v}$ }
+	\end{prooftree}
+	
+	\item Regole per la propagazione nella somma (ci sono anche quelle per la sottrazione):
+	\begin{center}
+		\begin{prooftree}
+			\AxiomC{$ $}
+			\LeftLabel{\myrule{Raise-Sum-1}}
+			\UnaryInfC{$ \throw{v} + M \to \throw{v}$ }
+		\end{prooftree}
+	
+		\begin{prooftree}
+			\AxiomC{$ $}
+			\LeftLabel{\myrule{Raise-Sum-2}}
+			\UnaryInfC{$ v_1 +\throw{v_2} \to \throw{v_2}$ }
+		\end{prooftree}
+	\end{center}
 
-\noindent Regole per la propagazione nella somma (e sottrazione):
+\end{itemize}
 
-\begin{prooftree}
-	\AxiomC{$ $}
-	\LeftLabel{\myrule{Raise-Sum-1}}
-	\UnaryInfC{$ \throw{v} + M \to \throw{v}$ }
-\end{prooftree}
+\noindent Con queste nuove regole l'avanzamento del programma rimane deterministico, perché $\throw{v}$ è un termine in forma normale (non riducibile) e non un valore.
 
-
-\begin{prooftree}
-	\AxiomC{$ $}
-	\LeftLabel{\myrule{Raise-Sum-2}}
-	\UnaryInfC{$ v_1 +\throw{v_2} \to \throw{v_2}$ }
-\end{prooftree}
-
-\noindent Con queste nuove regole l'avanzamento del programma rimane deterministico.
-C'è però una piccola sottigliezza:
+Pertanto in alcune situazioni potenzialmente ambigue, come:
 
 $$
 \fn x:\Nat.0 \: \throw{5}
 $$
 
-\noindent in questo caso non posso applicare \myrule{Beta}, perché $\throw{5}$ non è un valore e quindi sono costretto ad applicare \myrule{Raise-App-2}. Se invece il termine $\throw{5}$ fosse anche un valore ci sarebbe l'ambiguità.
+\noindent In questo caso la decisione della regola da applicare rimane deterministica, perché $\throw{5}$ non è un valore e quindi sono costretto ad applicare \myrule{Raise-App-2} e non posso applicare \myrule{Beta}. 
+Se invece il termine $\throw{5}$ fosse anche un valore ci sarebbe l'ambiguità.
 
-%\subsubsection{Avanzamento di un programma}
-% TODO
-%$$
-%M = \trycatch{(\fn y.y-2 \: (M \throw{2}) )}{\fn z.print(z)}
-%$$
-
-Servono inoltre le regole di tipo.
+\subsection{Regole per il sistema di typing}
 
 \begin{prooftree}
 	\AxiomC{$ \Gamma \vdash M : \TExc $}
-	\LeftLabel{}
+	\LL{Raise}
 	\UnaryInfC{$ \Gamma \vdash \throw{M} : T$}
 \end{prooftree}
 
 \begin{prooftree}
 	\AxiomC{$ \Gamma \vdash M : T $}
 	\AxiomC{$ \Gamma \vdash N : \TExc \to T$}
-	\LeftLabel{}
+	\LL{Try}
 	\BinaryInfC{$ \Gamma \vdash \trycatch{M}{N} : T$}
 \end{prooftree}
 
-\noindent Da notare che al $\throw{}$ devo poter dare qualsiasi tipo, altrimenti non avrei possibilità di inserire il termine in ovunque, perdendo così l'unicità di tipo.
+\noindent Da notare che al $\throw{}$devo poter dare qualsiasi tipo, altrimenti non avrei possibilità di inserire il termine in ovunque, perdendo così l'unicità di tipo.
 
-Questa è la strategia usata da Java, dato che nella compilazione dell'if richiede che entrambi i rami abbiano lo stesso tipo, ma il codice sotto riportato compila correttamente, anche se il ramo else non ha tipo \texttt{C}.
+Questa è la strategia usata da Java, dato che nella compilazione dell'\text{if} richiede che entrambi i rami abbiano lo stesso tipo, ma il codice sotto riportato compila correttamente, anche se il ramo \text{else} non ha tipo \texttt{C}.
 
 \begin{lstlisting}[language=Java]
 C foo() throws MyException{
@@ -147,19 +146,30 @@ C foo() throws MyException{
 }
 \end{lstlisting}
 
-\noindent Se invece l'eccezione fosse di tipo run-time, ovvero non controllate, non vengono controllate dal compilatore, ovvero il compilatore non controlla il tipo delle eccezioni e compila qualsiasi cosa.
+\noindent Se invece l'eccezione fosse di tipo run-time, ovvero una di quelle che non viene controllata dal compilatore, quest'ultimo compila qualsiasi cosa, senza controllare che il metodo dichiari nel suo prototipo che possono essere sollevate delle eccezioni.
 
 Un'ultima cosa strana è il tipo $\TExc$, che in C++ corrisponde agli interi, in Java è una qualsiasi sotto-classe di \texttt{Throwable} e in ML viene implementato come un tipo variante.
 
-\`E necessario modificare il teorema di Subject Reduction aggiungendo i nuovi casi induttivi che vengono aggiunti da parte delle nuove regole.
+\subsubsection{Modifiche ai teoremi}
 
-Il teorema di progressione deve essere modificato perché adesso abbiamo che $\throw{5}$ è un termine chiuso, ben tipato, che non fa nessun passo e non è un valore. Devo quindi estendere il teorema, aggiungendo anche la possibilità che $M$ sia un $\throw{}$.
+\`E necessario modificare il teorema di \textbf{Subject Reduction} aggiungendo i nuovi casi induttivi relativi alle nuove regole.
 
-Anche il teorema di Safety cambia e viene aggiunto il caso in cui $M\to^* \throw{v}$.
+Il teorema di \textbf{Progressione} deve essere modificato perché adesso abbiamo che $\throw{5}$ è un termine chiuso, ben tipato, che non fa nessun passo e non è un valore.
+\`E quindi necessario estendere il teorema, aggiungendo anche la possibilità che $M$ sia un $\throw{}$:
 
-Quando un programma si ferma su un termine $\throw{}$ vuol dire che si è verifica un'eccezione non gestita.
+\begin{center}
+	\textit{Sia $M$ un termine chiuso, ben tipato ed in forma normale ($M \not\to$). Allora $M$ è un valore oppure $M = \throw{v}$ per un qualche valore $v$.}
+\end{center}
 
-In modo simile, anche se impongo che tutti i programmi siano chiusi dentro un grande try-catch, il vecchio teorema di Safaty non funziona, perché può esserci una throw dentro il catch.
+\noindent Anche il teorema di Safety cambia e viene aggiunto il caso in cui $M\to^* \throw{v}$:
+
+\begin{center}
+	\textit{Sia $M$ un termine chiuso e ben tipato. Allora $M$ non evolve ad un termine stuck, ma $\exists v$ tale che $M \to^* v$ oppure $M \to^* \throw{v}$. } 
+\end{center}
+
+\noindent Da notare che quando un programma si ferma su un termine $\throw{}$ vuol dire che si è verifica un'eccezione non gestita.
+
+Questa modifica al teorema di Safety è necessaria perché, anche se impongo che tutti i programmi siano chiusi dentro un grande \text{try-catch}, il vecchio teorema di Safety non funziona in quanto può esserci una \text{throw} dentro il \text{catch}.
 
 
 

@@ -1,0 +1,136 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+% 29 Novembre 2016
+
+%\section{OOP meets FP}
+
+Il pattern viene utilizzato anche per la gestione delle funzioni.
+
+
+Le funzioni vengono implementate come oggetti e per ogni arietà è definita una classe che le rappresenta. Non sono proprio classi, ma \texttt{trait}, una sorta di interfacce.
+
+\begin{lstlisting}[language=Scala]
+trait Function1[-A, +B] {
+	def apply(x:A) : B
+}
+\end{lstlisting}
+
+Nella definizione dei parametri di tipo sono presenti anche dei simboli \texttt{+} e \texttt{-}. Si tratta di due operatori che permetto di annotare la varianza dei tipi. Con questa configurazione si a che:
+
+\begin{center}
+\texttt{Fun[A',B']} $<:$ \texttt{Fun[A,B]} se $A <: A'$ e $B' <: B$
+\end{center}
+
+Ovvero il sub-typing per le funzioni segue la classica definizione.
+
+Dato che le funzioni sono classi, potrei anche pensare di definire un array come una funzione.
+
+
+\section{Static vs dynamic typing}
+
+In Scala viene adottato un sistema di typing statico, ma la sua verbosità viene ridotta dalla type-inference effettuata dal compilatore.
+
+Tuttavia si può anche introdurre il dynamic typing per alcune classi. Ciò viene fatto utilizzando il trait \texttt{Dynamic}. Così facendo, quando il compilatore deve valutare la chiamata su un riferimento \texttt{Dynamic}, prova a fare la verifica statica, ma se non ci riesce predispone un controllo a run-time della presenza.
+Ad esempio la chiamata \texttt{ref.sel(arg)} viene riscritta in byte-code come \texttt{ref.applyDynamic("sel")(args)}.
+
+\chapter{Java 8}
+
+Con Java 8 sono state aggiunte in Java delle caratteristiche della programmazione funzionale, come la possibilità di definire delle funzioni anonime. 
+
+Queste caratteristiche permettono di rinnovare il framework delle collezioni, ad esempio per supportare la parallelizzazione delle operazioni sulle collezioni.
+
+Ad esempio per effettuare l'iterazione con il for-each si può utilizzare la valutazione \textbf{interna} della collezione.
+
+\begin{lstlisting}[language=Java]
+Collection<Person> people = ...
+int maxAge = people.stream()
+                          .filter(p -> p.getGender() == MALE)
+                          .mapToInt(p -> p.getAge())
+                          .max();
+\end{lstlisting}
+
+Da notare che così facendo non si perde efficienza, perché ad ogni chiamata non viene creata una nuova collezione, ma viene effettuata una valutazione lazy che può anche essere parallelizzata.
+
+Per ottenere questo risultato è stato necessario aggiungere al linguaggio:
+
+\begin{itemize}
+	\item Lambda Expression
+	\item Stream
+	\item Method References
+	\item Type inferece
+	\item Default methods
+	\item Functional Interfaces
+\end{itemize}
+
+Il tutto mantenendo la retro-compatibilità con le precedenti versioni.
+
+\section{Lambda Expressions}
+
+Non è stato possibile aggiungere un tipo freccia in Java perché altrimenti si sarebbe persa la retro-compatibilità.
+
+Pertanto è stato necessario definire delle interfacce che hanno un solo metodo come
+
+\begin{lstlisting}
+interface Fun {double apply(int i);}
+\end{lstlisting}
+
+Tutte queste interfacce sono definite nel package \texttt{java.util.function} e prendono il nome di \textbf{functional interfaces}.
+Da notare che anche le interfacce già esistenti, come \texttt{Runnable}, rientrano in questa categoria.
+
+\begin{lstlisting}[language=Java]
+public interface Function<T,R> {R apply(T t);}
+public interface Predicate<T> {boolean test(T t);}
+public interface Supplier<T> {T get();}
+...
+public interface Runnable {public void run();}
+\end{lstlisting}
+
+Si perde però il sub-typing diretto tra i tipi freccia, ma si può ottenere qualcosa di simile utilizzando le wild-card per le classi generiche.
+
+Alcuni esempi:
+
+\begin{lstlisting}[language=Java]
+ToIntFunction<Integer> f1 = z -> z*10;
+int x1 = f1.applyAsInt(18);
+
+ToIntBiFunction<Integer, Integer> f2 = (x,y) -> x -y; // C'è un maggior lavoro di type-inference
+int x2 = f2.applyAsInt(20,4);
+
+BiPredicate<String, String> f3 = (s1,s2) -> s1.equals(s2);
+boolean x3 = f3.test("pippo", "pluto");
+\end{lstlisting}
+
+Da notare che con questa definizione anche le interfacce dei vari action listener possono essere istanziate con delle lamba expression.
+
+\begin{lstlisting}[language=Java, caption=Da notare che la variabile frame della lamba expression è libera e prende un valore dal contesto di invocazione del metodo.]
+button.addActionListener(event -> JOptionPane.showMessageDialog(frame, "Hai cliccato"));
+
+// mentre prima bisognava scrivere
+button.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent event) {
+		JOptionPane.showMessageDialog(frame, "Hai cliccato");
+	}
+})
+\end{lstlisting}
+
+Con le lambda expression possono essere utilizzate delle variabili libere, che utilizzando i riferimenti del contesto di esecuzione per dare un valore ai riferimenti liberi (\textbf{Clojure}).
+
+Lo stesso vale per Scala. Ad esempio sul REPL di Scala si possono fare le seguenti operazioni:
+
+\begin{lstlisting}[language = Scala]
+> (x : Int) => x + more
+> Error: not found : value more
+
+> val more = 1
+more : Int = 1 
+> val addMore = (x: Int) => x + more
+
+// todo copiare anche l'esempio con var
+\end{lstlisting}
+
+Sia in Java che in Scala, le \textbf{clojure}, ovvero l'espressione e i riferimenti all'ambienti di esecuzione vengono tenuti assieme. In particolare i riferimenti non sono dereferenziati ma rimangono tali. Quindi se in una clojure vengono utilizzate delle \texttt{var} esterne 
+
+

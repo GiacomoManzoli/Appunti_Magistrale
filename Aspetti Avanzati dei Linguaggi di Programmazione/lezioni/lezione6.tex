@@ -28,18 +28,14 @@ Ho poi che $M_1 \rightarrow M'$ e quindi posso applicare subject-reduction per o
 \subsubsection{Teorema di Safety - Completo}
 
 \begin{center}
-	Se $\emptyset M : T $ e $M \rightarrow^* M'$ e $M' \not\rightarrow$, allora $M'$ è un valore.
+	Se $\emptyset \vdash M : T $ e $M \rightarrow^* M'$ e $M' \not\rightarrow$, allora $M'$ è un valore.
 \end{center}
 
 \paragraph{Dimostrazione}
 
-Alle due ipotesi posso applicare il corollari di subject-reduction ho che $\emptyset \vdash M' : T$.
+Alle due ipotesi posso applicare il corollario di subject-reduction, ottenendo che $\emptyset \vdash M' : T$.
 
 Per il teorema di progressione ho poi che $M'$ è un valore oppure $M'$ fa un passo e va in $M''$, ma per ipotesi $M'$ non fa un passo e quindi $M'$ è per forza un valore.
-
-
-\textbf{Nelle note ci sono degli esercizi che possono essere chiesti all'esame}\todo{TODO}
-
 
 \subsection{Esercizio sul typing}
 
@@ -115,9 +111,9 @@ La derivazione continua applicando \textsc{(IfThenElse)} e con $\Gamma = y:T_1 \
 	\item Il tipo del programma è quindi $(T' \rightarrow T') \rightarrow (T' \rightarrow T')$
 \end{itemize}
 
-\section{Estensioni del nostro linguaggio}
+\chapter{Estensioni del linguaggio funzionale}
 
-\subsection{Unit}
+\section{Unit}
 
 Nei linguaggi funzionali, ogni funzione deve ritornare sempre un valore, tuttavia può capitare che delle funzioni non debbano ritornare un valore. In questo caso viene ritornato il tipo \text{Unit} che può assumere l'\textbf{unico} \textbf{valore} \texttt{()} o \text{unit}.
 
@@ -141,6 +137,7 @@ Aggiungere \text{Unit} al linguaggio vuol dire estendere la definizione:
 
 \begin{prooftree}
 	\AxiomC{}
+	\LL{Unit}
 	\UnaryInfC{$\Gamma \vdash \text{unit : Unit}$}
 \end{prooftree}
 
@@ -174,7 +171,7 @@ assert( () =>  (saldoConto() > 0) ) /** sintassi corretta (la funzione anonima n
 \end{lstlisting}
 
 \noindent In questo caso con la sintassi call-by-value viene calcolato il valore del parametro, ma in questo caso il parametro è una funzione che è già un valore.
-Quindi se le asserzioni sono disabilitate, alla chiamata della funzione \texttt{assert} non viene chiamata la funzione \texttt{saldoConto()} perché la funzione è già un valore.
+Quindi, se le asserzioni sono disabilitate, alla chiamata della funzione \texttt{assert} non viene chiamata la funzione \texttt{saldoConto()} perché la funzione è già un valore.
 
 Per riportare la stessa cosa nel nostro linguaggio funzionale con il call-by-value:
 
@@ -182,7 +179,7 @@ $$
 \fn x:T.M \: N \rightsquigarrow \: \big(\fn y : \text{Unit} \rightarrow T . M\{x := y \: \text{unit}\} \big) \:\:  \big(\fn z : \text{Unit} . N \big)
 $$
 
-\subsubsection{Implementazione del while}
+\subsection{Implementazione del while}
 
 Vogliamo definire una funzione che si comporta come il while in Scala.
 
