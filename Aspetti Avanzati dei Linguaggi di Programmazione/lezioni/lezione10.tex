@@ -43,13 +43,13 @@ Quindi se $S <: T$, ovvero $S$ è un sotto tipo di $T$, posso usare un valore di
 
 \AxiomC{$\checkmark$}
 \UnaryInfC{$x:\{ l:\Nat\}$}
-\LeftLabel{\myrule{Select}}
+%\LeftLabel{\myrule{Select}}
 \UnaryInfC{$x:\{l : \Nat \} \vdash x.l: T$}
 \AxiomC{$ \checkmark$}
 \UnaryInfC{$x: \{l : \Nat\}  \vdash 2 : \Nat$}
-\LeftLabel{\myrule{Sum}}
+%\LeftLabel{\myrule{Sum}}
 \BinaryInfC{$x : \{l : \Nat\} \vdash x.l+2 : T$}
-\LeftLabel{\myrule{Fun}}	
+%\LeftLabel{\myrule{Fun}}	
 \UnaryInfC{$ \emptyset \vdash \fn x : \{ l : \Nat \} . x.l + 2 : \{l : \Nat\} \to T$}
 
 
@@ -57,14 +57,14 @@ Quindi se $S <: T$, ovvero $S$ è un sotto tipo di $T$, posso usare un valore di
 \UnaryInfC{$\emptyset \vdash 0 : \Nat$}
 \AxiomC{$ \checkmark$}
 \UnaryInfC{$\emptyset \vdash 1 : \Nat$}
-\LeftLabel{\myrule{Record}}
+%\LeftLabel{\myrule{Record}}
 \BinaryInfC{$\emptyset \vdash \{l=0, l'=1\} : \{l: \Nat, l':\Nat \}$}
 \AxiomC{$ $}
 \UnaryInfC{$\{l:\Nat , l' : \Nat\}$}
 
-\LeftLabel{\myrule{Sumbumption}}
+%\LeftLabel{\myrule{Subs}}
 \BinaryInfC{$ \emptyset \vdash \{l=0, l'=1\}: \{l:\Nat\}$}
-\LeftLabel{\myrule{App}}
+%\LeftLabel{\myrule{App}}
 \BinaryInfC{$\emptyset \vdash (\fn x : \{ l : \Nat \} . x.l + 2 ) \: \{l=0, l' = 1\}: T $}
 \end{prooftree}
 
@@ -73,6 +73,7 @@ Quindi se $S <: T$, ovvero $S$ è un sotto tipo di $T$, posso usare un valore di
 Un tipo è sotto-tipo di se stesso.
 \begin{prooftree}
 	\AxiomC{ }
+	\LL{Reflex}
 	\UnaryInfC{$T <: T$}
 \end{prooftree}
 
@@ -80,6 +81,7 @@ Un tipo è sotto-tipo di se stesso.
 \begin{prooftree}
 	\AxiomC{$T_1 <: T_2$}
 	\AxiomC{$T_2 <: T_3$}
+	\LL{Trans}
 	\BinaryInfC{$T_1 <: T_3$}
 \end{prooftree}
 
@@ -108,13 +110,14 @@ Un tipo è sotto-tipo di se stesso.
 
 \noindent Tutte le regole possono essere riunite in un'unica regola, ma noi le teniamo separate perché alla fine ognuna giustifica il sub-typing con una motivazione diversa.
 
-Da notare che in Java non è presenta la regola \myrule{Sub-Depth}, ma ce n'è una molto più forte che rende vero se i valori di ritorno sono tra di loro sotto-tipi.
+Da notare che in Java non è presenta la regola \myrule{Sub-Depth}, ma ce n'è una molto più forte valida solo per i metodi che è soddisfatta solo se i valori di ritorno sono tra di loro sotto-tipi.
 
 Nel nostro linguaggio ci sono anche dei valori di tipo funzione, e anche li si può definire una relazione di sub-typing.
 
 \begin{prooftree}
 	\AxiomC{$ T_1 <: S_1 $}
 	\AxiomC{$ S_2 <: T_2$}
+	\LL{Arrow}
 	\BinaryInfC{$S_1 \to S_2 <: T_1 \to T_2 $}
 \end{prooftree}
 
@@ -133,7 +136,7 @@ Nel nostro linguaggio ci sono anche dei valori di tipo funzione, e anche li si p
 \begin{prooftree}
 	
 	\AxiomC{$\vdots$}
-	\LeftLabel{\myrule{Fun}}
+	%\LeftLabel{\myrule{Fun}}
 	\UnaryInfC{$ \emptyset \vdash \fn x.\{l:\Nat\} . x.l+2 : \{l:\Nat\} \to \Nat $}
 	
 		\AxiomC{$\checkmark$}
@@ -141,17 +144,17 @@ Nel nostro linguaggio ci sono anche dei valori di tipo funzione, e anche li si p
 		
 		\AxiomC{$\checkmark$}
 		\UnaryInfC{$ \Nat <: \Nat $}
-		\LeftLabel{\myrule{Subsumption}}
+		%\LeftLabel{\myrule{Subsumption}}
 		\BinaryInfC{$\{ l: \Nat \} \to \Nat <: \{ l : \Nat, l':\Nat \}$}
 	
-	\LeftLabel{\myrule{Subsumption}}	
+	%\LeftLabel{\myrule{Subsumption}}	
 	\BinaryInfC{$ \emptyset \vdash \fn x : \{ l : \Nat \} . x.l + 2 : \{l : \Nat , l':\Nat \} \to \Nat$}
 	
 	
 	\AxiomC{$\vdots$}
-	\LeftLabel{\myrule{Record}}
+	%\LeftLabel{\myrule{Record}}
 	\UnaryInfC{$ \emptyset \vdash \{l=0, l'=1\}: \{l:\Nat, l': \Nat\}$}
-	\LeftLabel{\myrule{App}}
+	%\LeftLabel{\myrule{App}}
 	\BinaryInfC{$\emptyset \vdash (\fn x : \{ l : \Nat \} . x.l + 2 ) \: \{l=0, l' = 1\}: \Nat $}
 \end{prooftree}
 
@@ -161,31 +164,35 @@ A causa di queste nuove regole è necessario andare ad estendere il \textbf{Lemm
 
 \begin{enumerate}
 	\item Se $\Gamma \vdash x : T $, allora $\exists S. x: S \in \Gamma \text{ e } S<: T$. ($S$ può anche essere uguale a $T$).
-	\item Se $\Gamma \vdash \fn x.S_1.M : T$, allora $\exists T_1, T_2 . T = T_1 \to T_2, T_1 <: S_1, \Gamma, x:S_1 \vdash M : T_2$.
-	\item (Continua sulle note)
+	\item Se $\Gamma \vdash \fn x.S_1.M : T$, allora $\exists T_1, T_2\ .\ T = T_1 \to T_2,\  T_1 <: S_1,\ \Gamma, x:S_1 \vdash M : T_2$.
+	\item Se $\Gamma \vdash \{ k_r = M_r ^{r \in 1 \ldots m} \} : T$ è derivabile, allora $\exists T_i, i= 1\ldots n$, tali che $T = \{ l_i : T_i ^{i \in 1\ldots n} \}$ con $\{ l_i ^{i \in 1\ldots n} \} \subseteq \{ k_r ^{r \in 1\ldots m} \}$ e $\Gamma \vdash M_r : T_i$ per ogni etichetta in comune $k_r = l_i$.
 \end{enumerate}
 
 \noindent Ci sono poi dei \textbf{Lemmi di Inversione del Sub-Typing}:
 
 \begin{enumerate}
-	\item Se $S <: T_1 \to T_2$, allora $\exists S_1, S_2. S = S_1 \to S_2, T_1 <: S_1, S_2 <: T_2 $.
-	\item Se $S <: \{l_i : T_i \:^{i = 1 \ldots n} \}$, allora $S = \{ k_j : S_j \:^{j = 1 \ldots n} \}$ con gli $S_j$ corretti (vedi note).
+	\item Se $S <: T_1 \to T_2$, allora $\exists S_1, S_2 \ .\  S = S_1 \to S_2,\ T_1 <: S_1,\ S_2 <: T_2 $.
+	\item Se $S <: \{l_i : T_i \:^{i = 1 \ldots n} \}$, allora $S = \{ k_j : S_j \:^{j = 1 \ldots m} \}$ con gli $S_j$ corretti, ovvero $\{ l_i ^{i \in 1\ldots n} \} \subseteq \{ k_j ^{j \in 1\ldots n} \}$ e $S_j \stype T_i$ per ogni etichetta in comune $l_i = k_j$.
 \end{enumerate}
 
 \noindent Anche il \textbf{Lemma delle forme canoniche} deve essere aggiustato:
 
 \begin{enumerate}
 	\item Se $v$ è un valore di tipo $T_1 \to T_2$, allora $v = \fn x : S_1.M$
-	\item \textit{c'è anche una cosa simile per i record}
+	\item Se $v$ è un valore di tipo $ \{ l_i : T_i ^{i \in 1 \ldots n} \} $, allora $v$ è della forma $\{ k_j = v_j ^{j \in 1 \ldots m} \}$ tale che $\{ l_i ^{i \in 1\ldots n} \} \subseteq \{ k_j ^{j \in 1\ldots m} \}$
 \end{enumerate}
 
-\noindent Con queste modifiche ai lemmi, continuano a valere sia progressione che subject-reduction, e quindi continua a valere il teorema di safety.
+\noindent Con queste modifiche ai lemmi, continuano a valere sia progressione che subject-reduction, e quindi continua a valere il teorema di safety, cambia però la loro dimostrazione.
 
-Una volta introdotto il sub-typing risulta utile definire un tipo generico che funziona da super-tipo per tutti gli altri tipi, sia del linguaggio che definiti dagli utenti.
+\subsection{Tipi massimi e minimi}
+
+Una volta introdotto il sub-typing risulta utile definire un tipo generico che funziona da super-tipo per tutti gli altri tipi, sia per quelli del linguaggio che per quelli definiti dagli utenti.
 Infatti, in Scala c'è il tipo \texttt{Any} che è sopra-tipo di \texttt{AnyRef}, il sopra-tipo di tutti gli oggetti, e \texttt{AnyVal}, il sopra-tipo di tutti i valori.
 
-In modo simile, può tornare utile avere un sotto-tipo \texttt{Bot} che funziona da sotto-tipo per tutti gli altri tipi. Questo tipo può tornare utile per dare un tipo al termine $\throw{v}: \text{Bot}$. In Scala esiste questo tipo e si chiama \texttt{Nothing} e c'è un metodo predefinito, \texttt{def error(msg : String): Nothing}, che viene utilizzato per lanciare le eccezioni run-time. 
-Da notare che non possono esserci valori di tipo \texttt{Nothing}, perché sennò non sarebbe un tipo bottom. Serve solo per far tipare le espressioni.
+In modo simile, può tornare utile avere un sotto-tipo \texttt{Bot} che funziona da sotto-tipo per tutti gli altri tipi. 
+Questo tipo può tornare utile per dare un tipo al termine $\throw{v}: \text{Bot}$. In Scala esiste questo tipo e si chiama \texttt{Nothing} e c'è un metodo predefinito, \texttt{def error(msg : String): Nothing}, che viene utilizzato per lanciare le eccezioni run-time. 
+Da notare che non possono esserci valori di tipo \texttt{Nothing}, perché sennò non sarebbe un tipo bottom. 
+Serve solo per far tipare le espressioni.
 
 
 

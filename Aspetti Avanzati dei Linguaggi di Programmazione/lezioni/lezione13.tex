@@ -20,7 +20,7 @@ In questa versione viene preso in considerazione:
 	\item Sequenze di istruzioni.
 \end{itemize}
 
-La \textbf{sintassi} cambia un po', in particolare quella delle espressioni, che diventa:
+\noindent La \textbf{sintassi} cambia un po', in particolare quella delle espressioni, che diventa:
 
 $$
 e ::= v \vbar x \vbar e.f \vbar e;e \vbar C \ x = e ; e \vbar x = e \vbar e.f = e \vbar \underline{NPE}
@@ -50,6 +50,7 @@ Alcuni esempi sono:
 	\item $\sigma_1 = [o \rightarrowtail Object]\cdot[x \rightarrowtail o] \cdot [y \rightarrowtail o] $: creazione di un oggetto con due variabili che lo riferiscono.
 	\item $ \sigma_2 = [o_1 \rightarrowtail Object] \cdot [x \rightarrowtail o_1] \cdot  [o_2 \rightarrowtail Object]\cdot [y \rightarrowtail o_2]$: creazione di due oggetti e relativi riferimenti.
 	\item $\sigma_3 = [x \rightarrowtail \Null]$: memoria mal formata con puntatore a null.
+	\item $\sigma_4 = [x \rat \text{Object}]$: memoria mal formata perché la variabile $x$ non ha come valore un object identifier ma l'oggetto.
 \end{itemize}
 
 \noindent \`E inoltre presente il concetto di configurazione, il quale associa un'espressione alla memoria.
@@ -71,12 +72,12 @@ $$
 
 La semantica del linguaggio definirà come si evolve l'insieme delle configurazioni.
 
-L'assioma \myrule{NewObj} descrive come viene effettuata la creazione di un nuovo oggetto. Viene richiesto che l'oggetto abbia un nome diverso da quelli già presenti nello heap e che l'oggetto sia costruito in modo corretto.
+L'assioma \myrule{New} descrive come viene effettuata la creazione di un nuovo oggetto. Viene richiesto che l'oggetto abbia un nome diverso da quelli già presenti nello heap e che l'oggetto sia costruito in modo corretto.
 
 \begin{prooftree}
 	\AC{$ o \not\in Dom(\sigma)$}
 	\AC{$ \fields{C} = \tilde{ A \ f} $}
-	\LL{NewObj}
+	\LL{New}
 	\BinaryInfC{$ \LA \sigma, \new{C}{\tilde{v}} \RA \to \LA \sigma \cdot [o \rat (C, \tilde{f : v}),o]\RA $}
 \end{prooftree}
 
@@ -94,7 +95,7 @@ L'assioma \myrule{NewObj} descrive come viene effettuata la creazione di un nuov
 \begin{prooftree}
 	\AC{$ \sigma(o) = (C, \tilde{f : v}) $}
 	\AC{$ f \in \tilde{f} $}
-	\LL{Field}
+	\LL{AssegnCampi}
 	\BinaryInfC{$ \LA \sigma, o.f = v' \RA \to \LA \sigma[o.f = v'], v'\RA $}
 \end{prooftree}
 
@@ -106,7 +107,7 @@ L'assioma \myrule{NewObj} descrive come viene effettuata la creazione di un nuov
 	\UnaryInfC{$ \LA \sigma, v;e \RA \to \LA \sigma , e\RA $}
 \end{prooftree}
 
-\noindent L'assioma \myrule{Var} descrive il recupero del valore di un oggetto de-referenziando la relativa variabile.
+\noindent L'assioma \myrule{Var} descrive il recupero del valore di un oggetto de-referenziando la relativa variabile. La dereferenziazione è indicata dalla funzione $\sigma(\cdot)$.
 
 \begin{prooftree}
 	\AC{$ $}
@@ -143,7 +144,7 @@ Da notare che non è necessario effettuare la sostituzione dei parametri attuali
 	\TrinaryInfC{$\LA \sigma, o.m(\tilde{v})\RA \to \LA \sigma \cdot [\tilde{x}\rat \tilde{v}], e\{\this := o\} \RA$}
 \end{prooftree}
 
-\noindent Con \myrule{MethodCall} viene creata della spazzatura nella memoria quando l'esecuzione del metodo termina. \`E possibile quindi imporre che venga sempre fatta una alpha-conversion dei nomi dei parametri per evitare conflitti, oppure è possibile fare garbage collection. Per comodità scegliamo la prima.
+\noindent Con \myrule{MethodCall} viene creata della spazzatura nella memoria quando l'esecuzione del metodo termina, perché vengono aggiunte nello store le variabili per i parametri formali. \`E possibile quindi imporre che venga sempre fatta una alpha-conversione dei nomi dei parametri per evitare conflitti, oppure è possibile fare garbage collection. Per comodità scegliamo la prima.
 
 Un modo di fare garbage collection è quello di imporre che la regola \myrule{GarbageCollecion} venga eseguita ogni volta che termina l'esecuzione di un metodo.
 Tuttavia questo complica notevolmente la sintassi, perché deve essere forzata la garbage collection alla fine dell'esecuzione del codice.
@@ -157,9 +158,11 @@ Da notare che come condizione per l'assioma viene posto che le variabili che ven
 
 \noindent Un'alternativa è un'altra regola che viene applicata in modo non-deterministico durante l'esecuzione del programma e che toglie i blocchi di memoria che non sono referenziati da delle variabili, un po' come funziona realmente. Questa strategia è però rischiosa perché potrebbero essere cancellati dei blocchi ancora utili.
 
+Da notare che la regola \myrule{GarbageCollection} pulisce lo store dalle variabili inutile, ma non elimina gli oggetti che non sono più referenziati da delle variabili. Per ottenere una pulizia migliore serve quindi un'ulteriore regola:
+
 \begin{prooftree}
 	\AC{$o \not\in fref(e)$}
-	\LL{AltGarbageCollection}
+	\LL{RefGarbageCollection}
 	\UnaryInfC{$ \LA \sigma \cdot [o \rat (C, \tilde{f : v})], e\RA \to \LA \sigma , e\RA $}
 \end{prooftree}
 
@@ -172,7 +175,7 @@ Serve quindi una regola più avanzata che controlla anche la presenza di questi 
 \begin{prooftree}
 	\AC{$o \not\in fref(e)$}
 	\AC{$o \not\in Codom(\sigma)$}
-	\LL{AltGarbageCollection}
+	\LL{RefGarbageCollectionAdv}
 	\BinaryInfC{$ \LA \sigma \cdot [o \rat (C, \tilde{f : v})], e\RA \to \LA \sigma , e\RA $}
 \end{prooftree}
 

@@ -150,6 +150,9 @@
 \newenvironment{bprooftree}
 {\leavevmode\hbox\bgroup}
 {\DisplayProof\egroup}
+\newenvironment{scprooftree}[1]%
+{\gdef\scalefactor{#1}\begin{center}\proofSkipAmount \leavevmode}%
+	{\scalebox{\scalefactor}{\DisplayProof}\proofSkipAmount \end{center} }
 %----------------------------------------------------------------------------------------
 % TITLE
 %----------------------------------------------------------------------------------------

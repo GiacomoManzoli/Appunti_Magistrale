@@ -146,7 +146,7 @@ Dato che i costruttori sono definiti diversamente dai metodi, è necessario forn
 	\BinaryInfC{$\mbody{m,C} = \mbody{m, D}$}
 \end{prooftree}
 
-\noindent Serve inoltre la semantica per i cast. Il caso ha successo solo alzando il tipo di un oggetto (up-cast), altrimenti il termine evolve in un termine stuck, perché in questa versione semplificata non ci sono le eccezioni. Da notare che i cast hanno effetto solo a livello statico, quindi è corretto non modificare la \texttt{new}.
+\noindent Serve inoltre la semantica per i cast. Il cast ha successo solo alzando il tipo di un oggetto (up-cast), altrimenti il termine evolve in un termine stuck, perché in questa versione semplificata non ci sono le eccezioni. Da notare che i cast hanno effetto solo a livello statico, quindi è corretto non modificare la \texttt{new}.
 
 \begin{center}
 \begin{bprooftree}
@@ -166,7 +166,7 @@ $$
 (B)((A) \new{C}{}) \to (B) \new{C}{} \to \new{C}{}
 $$
 
-\noindent da notare che tutti i cast vanno a buon fine perché faccio sempre dei cast a dei valori che sono sopra $C$, anche se a livello statico c'è anche un down-cast da $A$ verso $C$.
+\noindent da notare che tutti i cast vanno a buon fine perché faccio sempre dei cast a dei valori che sono sopra $C$, anche se a livello statico c'è un down-cast da $A$ verso $C$.
 
 \section{Type system}
 
@@ -178,7 +178,7 @@ Il type system utilizza 3 forme di giudizio di tipo:
 	\item $ \class{C}{D}{\tilde{C\ f}, \tilde{K \ M}} \: OK$. Per indicare che la classe $C$ è ben formata.
 \end{itemize}
 
-\noindent Non c'è l'assioma di Subsumption, il quale viene incastrato dentro gli altri assiomi/regole (\textbf{typing algoritmico}).
+\noindent Non c'è l'assioma di \myrule{Subsumption}, il quale viene implementato direttamente negli assiomi/regole in cui è possibile utilizzare il sub-typing (\textbf{typing algoritmico}).
 
 Si ha quindi che un programma $(CT, t)$ è \textbf{ben tipato} se $CT \: OK$ e $\emptyset \vdash t : C$ per qualche $C$.
 
@@ -195,9 +195,9 @@ Si ha quindi che un programma $(CT, t)$ è \textbf{ben tipato} se $CT \: OK$ e $
 		\AxiomC{$ \fields{C} = \tilde{D \ f}$}
 		\AxiomC{$ f_i \in \tilde{f}$}
 		\LL{Field}
-		\TrinaryInfC{$\Gamma \vdash t.f-i : D_i$}
+		\TrinaryInfC{$\Gamma \vdash t.f_i : D_i$}
 	\end{prooftree}
-	\item Typing di un costruttore, da notare che in questo caso come argomenti vanno bene anche dei valori di un sotto-tipo. \`E qui che viene implementato il subsumption.
+	\item Typing di un costruttore, da notare che in questo caso come argomenti vanno bene anche dei valori di un sotto-tipo. \`E qui che viene implementato il \myrule{Subsumption}.
 	\begin{prooftree}
 		\AxiomC{$ \fields{C} = \tilde{D \ f}$}
 		\AxiomC{$ \Gamma \vdash \tilde{t} : \tilde{A}$}
@@ -248,14 +248,14 @@ Si ha quindi che un programma $(CT, t)$ è \textbf{ben tipato} se $CT \: OK$ e $
 		\TrinaryInfC{$\class{C}{D}{\tilde{C \ f}, K\ \tilde{M}} \ OK$}
 	\end{prooftree}
 	C'è poi la regola per controllare che i metodi definiti all'interno di una class-table siano definiti in modo corretto.
-	\begin{prooftree}
+	\begin{scprooftree}{0.8}
 		\AC{$ \tilde{x} : \tilde{C}, \this : C \vdash t : B $}
 		\AC{$ B \stype A$}
 		\AC{$ CT(C) = \class{C}{D}{\ldots} $}
 		\AC{$ override(m, D, \tilde{C}\to A)$}
 		\LL{M-OK-in-C}
 		\QuaternaryInfC{$ \method{A}{m}{\tilde{C \ x}}{t} \ OK \IN{C} $}
-	\end{prooftree}
+	\end{scprooftree}
 	La ricerca dell'over-ride viene fatta dalla regola ausiliaria:
 	\begin{prooftree}
 		\AC{Se $mtype(m,D) = \tilde{D} \to B$ allora $ \tilde{C} = \tilde{D}$ e $A = B$}
@@ -266,7 +266,7 @@ Si ha quindi che un programma $(CT, t)$ è \textbf{ben tipato} se $CT \: OK$ e $
 
 \subsection{Esempio di cast}
 $$
-\emptyset \vdash (B) ((A) new C()): B
+\emptyset \vdash (B) ((A) \new{C}{}): B
 $$
 con $C <: B <: A$
 
@@ -277,7 +277,7 @@ con $C <: B <: A$
 	\UnaryInfC{$ \emptyset \vdash (A) \new{C}{}$}
 	
 	\AC{$ B <: A $}
-	\LL{Donw-Cast}
+	\LL{Down-Cast}
 	\BinaryInfC{$\emptyset \vdash (B) ((A) \new{C}{} : B)$}
 \end{prooftree}
 
@@ -287,7 +287,7 @@ $$
 (A) ((Object)\new{B}{}) \to (A) \new{B}{}
 $$
 
-con $A$ e $B$ non in relazione.
+\noindent con $A$ e $B$ non in relazione.
 
 Si ha che con questo sistema di tipo il giudizio è correttamente derivabile perché:
 
@@ -295,7 +295,7 @@ $$
 (A) ((Object)\new{B}{}) \to (A) \new{B}{}  \to \new{B}{}
 $$
 
-ma a run-time l'esecuzione evolve in un termine stuck perché $A$ e $B$ non sono in relazione.
+\noindent ma a run-time l'esecuzione evolve in un termine stuck perché $A$ e $B$ non sono in relazione.
 
 Il problema deriva dal teorema di Preservazione dei tipi. Perché dopo il primo cast non è più derivabile il secondo giudizio.
 
@@ -309,31 +309,43 @@ La soluzione è l'aggiunta della regola
 
 In questo caso il compilatore permette di tipare come prima, solo che emana un warning della soluzione pericolosa. 
 Da notare che se a compile-time non rilevo warning, possono comunque comparire a run-time.
-Questo sistema il teorema di preservazione, perché il tipo si preserva. \todo{Come?}
+Questo sistema il teorema di preservazione, perché il tipo si preserva ed è possibile discriminare la presenza di uno \myrule{StupidCast}.
 
 
-\section{Proprietà del sistema di tipo}
+\section{Proprietà del sistema di tipi}
 
 \subsection{Subject Reduction}
 
-Se $\Gamma \vdash t : C$ e $t \to t'$, allora $\Gamma \vdash t' : C'$ per qualche $C' <:C$. Si dimostra per induzione e si vede la necessità di \myrule{StupidCast}.
+\begin{center}
+	\textit{Se $\Gamma \vdash t : C$ e $t \to t'$, allora $\Gamma \vdash t' : C'$ per qualche $C' <:C$. }
+\end{center}
+
+Si dimostra per induzione e si vede la necessità di \myrule{StupidCast} perché se un programma è chiuso e ben tipato finisce in un termine stuck è perché contiene o un \myrule{DownCast} o uno \myrule{StupidCast}.
 
 \subsection{Progressione}
 
-Sia $t$ un termine chiuso e ben tipato. Allora $t \to t'$, oppure $t$ è un valore, oppure $\exists E$ \textit{evaluation context}, tale che $t = E[(C) \new{D}{\tilde{v}}]$, con $D \not<:C$.
+\begin{center}
+	\textit{Sia $t$ un termine chiuso e ben tipato. Allora $t \to t'$, oppure $t$ è un valore, oppure $\exists E$ \textit{evaluation context}, tale che $t = E[(C) \new{D}{\tilde{v}}]$, con $D \not<:C$.}
+\end{center}
 
-Dove gli \textbf{evalutaion context} sono termini qualsiasi definiti come:
+Dove gli \textbf{evaluation context} sono termini qualsiasi definiti come:
 
 $$
-E ::= [] \vbar E.f \vbar E.m(\tilde{t}) \vbar \ldots
+E ::= [] \vbar E.f \vbar E.m(\tilde{t}) \vbar v.m(\tilde{v}, E, \tilde{t}) \vbar \new{C}{\tilde{v}, E, \tilde{t}} \vbar (C)E
 $$
 
-ovvero rappresentano dei termini ``con il buco'', ovvero un termine normale che al posto di qualche cosa ha un buco, che viene riempito con i \textit{dati passati all'evaluation context}.
+\noindent ovvero rappresentano dei termini ``con il buco'': un termine normale che al posto di qualche cosa ha un buco, che viene riempito con i \textit{dati passati all'evaluation context}.
+
+Viene quindi aggiunto al teorema il caso in cui si verifica un \myrule{DownCast} o \myrule{StupidCast} che fanno bloccare l'esecuzione del programma.
 
 
 \subsection{Safety}
 
-Sia $t$ un programma ben tipato (e senza warning), allora $t$ non evolve a run-time ad un termine che contiene un errore di tipo message-not-understood.
+\begin{center}
+	\textit{Sia $t$ un programma ben tipato (e senza warning), allora $t$ non evolve a run-time ad un termine che contiene un errore di tipo message-not-understood.}
+\end{center}
+
+Inoltre, se nel programma compaiono solamente \myrule{UpCast}, il programma si dice \textbf{cast safe} e continua a valere il classico Teorema di Safety.
 
 In Java, il teorema di Safety è simile, solo che prevede la possibilità di sollevare una ClassCastException e non solleva warning.
 

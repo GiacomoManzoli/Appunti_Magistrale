@@ -16,7 +16,7 @@
 I linguaggi ad oggetti si dividono in class-based e prototype-based. Nei primi ci sono le classi per i vari oggetti, mentre nei secondi ci sono solamente gli oggetti che vengono creati clonando degli oggetti pre-esistenti, che vengono poi modificati aggiungendoci nuovi metodi o campi dati (\textit{SmallTalk, JavaScript, ecc.}).
 
 \begin{itemize}
-	\item \textbf{Diverse implementazione}: è tipico dei linguaggi ad oggetti, che quando viene invocato un metodo, il codice che viene effettivamente eseguito dipende dall'oggetto concreto sul quale viene invocato il metodo. \textit{late/dynamic binding, utilizzo di interfacce comuni.} 
+	\item \textbf{Diverse implementazione}: è tipico dei linguaggi ad oggetti che, quando viene invocato un metodo, il codice che viene effettivamente eseguito dipende dall'oggetto concreto sul quale viene invocato il metodo. \textit{late/dynamic binding, utilizzo di interfacce comuni.} 
 	\item \textbf{Self-recursion}: un metodo può invocare un altro metodo dello stesso oggetto tramite \texttt{this}. Ovvero ad ogni metodo viene passato un riferimento esplicito o implicito all'oggetto di invocazione. Anche in caso di chiamate self-recursive è possibile applicare il late binding.
 	\item \textbf{Encapsulation}: posso isolare e localizzare il codice per ottenere una maggiore manutenibilità e leggibilità del codice.
 	\item \textbf{Sub-typing}: il tipo di un oggetto rappresenta il suo ``contratto'' che viene utilizzato per manipolare uniformemente gli oggetti di qualsiasi sotto-tipo.
