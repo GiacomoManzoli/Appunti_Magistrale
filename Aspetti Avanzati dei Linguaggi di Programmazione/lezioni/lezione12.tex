@@ -10,7 +10,7 @@
 
 \section{Sintassi FJ}
 
-Con le lettere maiuscole i nomi delle classi ($A, B, C, D, \ldots$). 
+Indichiamo con le lettere maiuscole i nomi delle classi ($A, B, C, D, \ldots$). 
 Ci sono poi le tuple $\tilde{t} = t_1 \ldots t_n$ che consistono in una serie di termini. Ad ogni termine può essere associato anche un relativo tipo, con la notazione $\tilde{A\: f} = A_1 \: f_1 \ldots A_n \: f_n$.
 Quando la serie dei termini indica i campi dati di un oggetto, diamo per assunto che i vari $t_i$ siano distinti.
 
@@ -48,7 +48,7 @@ $$
 v ::= \new{C}{\tilde{v}}
 $$
 
-da notare che per gli oggetti teniamo una semantica funzionale e quindi sono immutabili.
+\noindent da notare che per gli oggetti teniamo una semantica funzionale e quindi sono immutabili.
 
 Un programma è quindi dato dalla coppia $(CT, t)$ che assumiamo essere sempre ben definita, ovvero che tutte le classi che vengono usate dentro $t$ abbiano una buona definizione dentro $CT$.
 
@@ -61,7 +61,7 @@ Il sub-typing è nominale, quindi vale solo se viene specificato nella definizio
 	\UnaryInfC{$C \stype D$}
 \end{prooftree}
 
-continuano inoltre a valere la proprietà riflessiva e transitiva.
+\noindent continuano inoltre a valere la proprietà riflessiva e transitiva.
 Possono quindi essere presenti dei cicli nella definizione di sotto-tipo. Se la class table è ben definita, allora non ci sono cicli ed è sempre possibile verificare ciò perché la class table è sempre finita.
 
 
@@ -120,13 +120,6 @@ Il lookup dei campi viene fatto con la regola
 Dato che i costruttori sono definiti diversamente dai metodi, è necessario fornire le regole e assiomi anche per la loro valutazione.
 
 \begin{prooftree}
-	\AxiomC{$ \mbody{m,C} = (\tilde{x},t)$}
-	\AxiomC{$ |\tilde{x}| = |\tilde{v'}| $}
-	\LL{InvkNew}
-	\BinaryInfC{$ (\new{C}{\tilde{v}}).m(\tilde{v}') \to t\{\tilde{x} := \tilde{v}, \this := \new{C}{\tilde{v}} \} $}
-\end{prooftree}
-
-\begin{prooftree}
 	\AxiomC{$ t_i \to t_i' $}
 	\LL{NewArg}
 	\UnaryInfC{$ \new{C}{\tilde{v}, t_i, \tilde{t}} \to \new{C}{\tilde{v}, t_i', \tilde{t}}$}
@@ -142,7 +135,7 @@ Dato che i costruttori sono definiti diversamente dai metodi, è necessario forn
 
 \begin{prooftree}
 	\AxiomC{$CT(C) = \class{C}{D}{\tilde{C\:f}; \tilde{K\:M}}$}
-	\AxiomC{$m \text{ non definito in } M$}
+	\AxiomC{$m \text{ non definito in } \tilde{M}$}
 	\BinaryInfC{$\mbody{m,C} = \mbody{m, D}$}
 \end{prooftree}
 
@@ -307,7 +300,7 @@ La soluzione è l'aggiunta della regola
 	\QuaternaryInfC{$\Gamma \vdash (C)t:C$}
 \end{prooftree}
 
-In questo caso il compilatore permette di tipare come prima, solo che emana un warning della soluzione pericolosa. 
+\noindent In questo caso il compilatore permette di tipare come prima, solo che emana un warning della soluzione pericolosa. 
 Da notare che se a compile-time non rilevo warning, possono comunque comparire a run-time.
 Questo sistema il teorema di preservazione, perché il tipo si preserva ed è possibile discriminare la presenza di uno \myrule{StupidCast}.
 

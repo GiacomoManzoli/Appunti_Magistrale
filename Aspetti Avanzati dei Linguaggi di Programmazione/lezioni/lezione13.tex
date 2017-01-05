@@ -128,7 +128,7 @@ L'assioma \myrule{New} descrive come viene effettuata la creazione di un nuovo o
 \begin{prooftree}
 	\AC{$ x \not\in Dom(\sigma)$}
 	\LL{DicharVar}
-	\UnaryInfC{$ \LA \sigma, C \ x = v ; e \RA \to \LA \sigma[x \rat v] , e\RA $}
+	\UnaryInfC{$ \LA \sigma, C \ x = v ; e \RA \to \LA \sigma \cdot [x \rat v] , e\RA $}
 \end{prooftree}
 
 \noindent L'assioma \myrule{MethodCall} descrive la chiamata di un metodo, la quale può essere fatta quando l'oggetto di invocazione è completamente valutato (è una $o$). 
@@ -158,7 +158,7 @@ Da notare che come condizione per l'assioma viene posto che le variabili che ven
 
 \noindent Un'alternativa è un'altra regola che viene applicata in modo non-deterministico durante l'esecuzione del programma e che toglie i blocchi di memoria che non sono referenziati da delle variabili, un po' come funziona realmente. Questa strategia è però rischiosa perché potrebbero essere cancellati dei blocchi ancora utili.
 
-Da notare che la regola \myrule{GarbageCollection} pulisce lo store dalle variabili inutile, ma non elimina gli oggetti che non sono più referenziati da delle variabili. Per ottenere una pulizia migliore serve quindi un'ulteriore regola:
+Da notare che la regola \myrule{GarbageCollection} pulisce lo store dalle variabili inutili, ma non elimina gli oggetti che non sono più referenziati da delle variabili. Per ottenere una pulizia migliore serve quindi un'ulteriore regola:
 
 \begin{prooftree}
 	\AC{$o \not\in fref(e)$}
@@ -241,7 +241,7 @@ Servono inoltre degli assiomi per la gestione del valore null.
 Anche in questo linguaggio i tipi sono dati dai nomi delle classi, solo che all'interno del contesto possono comparire anche degli oggetti.
 
 $$
-\Gamma ::= \emptyset \vbar \Gamma, x :C \vbar \Gamma o:C
+\Gamma ::= \emptyset \vbar \Gamma, x :C \vbar \Gamma, o:C
 $$
 
 \noindent Il subtyping è uguale a quello della versione funzionale, mentre le regole di typing vengono estese per il controllo delle configurazioni e dei contesti di valutazione.
@@ -360,7 +360,7 @@ $$
 	\item \textbf{Substitution}: Se $\Gamma, \this : C \vdash e :D$ e $\Gamma \vdash o:C'$ con $C' <: C$ allora $\Gamma \vdash e\{\this := o \} : D'$ per qualche $D' <: D$.
 	\item \textbf{Subject reduction} viene esteso introducendo il concetto di configurazione e di contesto di valutazione e continua a valere nel caso che non si verifichi un $NPE$.
 	\begin{enumerate}
-		\item Se $\Gamma \vdash e : C$ e $\Gamma \vdash \sigma$ ed inoltre $\LA \sigma,e\RA \to \LA\sigma, e'\RA$ con $e' \neq E[NPE]$, allora $\Gamma \vdash e' :C' $ con $C' \stype C$ e $\Gamma \vdash \sigma'$
+		\item Se $\Gamma \vdash e : C$ e $\Gamma \vdash \sigma$ ed inoltre $\LA \sigma,e\RA \to \LA\sigma', e'\RA$ con $e' \neq E[NPE]$, allora $\Gamma \vdash e' :C' $ con $C' \stype C$ e $\Gamma \vdash \sigma'$
 		\item Se $\Gamma \vdash \LA \sigma, e\RA$ e $\LA \sigma, e\RA \to \LA \sigma', e'\RA $ con $e'\neq E[NPE]$, allora $\Gamma \vdash \LA \sigma', e'\RA$
 	\end{enumerate}
 	

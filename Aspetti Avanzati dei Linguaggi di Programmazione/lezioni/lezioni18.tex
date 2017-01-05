@@ -1,0 +1,33 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+
+\section{Lezione 18}
+
+Con le \textbf{class extension} è possibile aggiungere al volo dei metodi ad una classe.
+
+Una funzione o metodo che prende in input un valore di un tipo e lo utilizza per costruire un valore di un altro tipo, può essere visto come un convertitore di tipo. Un metodo di questo genere può essere marcato come \texttt{implicit}, in questo modo il compilatore, anziché non compilare una conversione di tipo, utilizza questo metodo per effettuarla.
+
+Per effettuare una class extension è necessario definire una sotto-classe del tipo da estendere la quale definisce i nuovi metodi da aggiungere e anche un metodo \texttt{implict} per convertire il tipo originale nel tipo esteso.
+
+
+Nel sub-classing c'è la necessità di specificare la keyword override. Questo aiuta a gestire il problema della classe base fragile, che si verifica quando vengono aggiunti dei metodi alle classi base della gerarchia.
+
+I \textbf{traits} sono un'approssimazione di una classe astratta/interfaccia: possono contenere sia del codice concreto che del codice astratto e non possono essere istanziati.
+Sta alle classi implementare (\textit{mix-in}) uno o più traits.
+
+Un trait può estendere una classe \textit{A}, in questo caso il trait può essere mixato solamente con le sotto-classi di $A$.
+
+I trait hanno binding dinamico sia su \texttt{this} che su \texttt{super}.
+
+I mixin non sono commutativi, l'ordine con i quali li definiscono influisce sull'oggetto. L'ultimo trait che ho mixato è il primo ad essere eseguito.
+
+
+
+
+
+
+
+
+

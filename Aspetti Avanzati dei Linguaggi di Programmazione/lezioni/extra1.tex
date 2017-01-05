@@ -1,0 +1,63 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+\chapter{Cose utili per l'orale}
+
+\section{Lemmi vari}
+
+\begin{itemize}
+	\item \textbf{Lemma di Inversione}: mi dice che se riesco a tipare un termine con una certa regola di tipo, allora anche i vari sotto-termini sono ben tipati.
+	\item \textbf{Lemma delle Forme Canoniche}: collega il tipo di un termine ai possibili valori per quel tipo.
+\end{itemize}
+
+\section{Teoremi notevoli}
+
+\begin{itemize}
+	\item \textbf{Teorema di Progressione}: se $M$ è un termine chiuso e ben tipato($\emptyset \vdash M :T $), allora $M$ è un valore oppure $\exists M'$ tale che $M \to M'$. Si dimostra per induzione sulla derivazione del giudizio di tipo.
+	\item \textbf{Teorema di Preservazione (subject-reduction)}: Se $M$ è un termine ben tipato ($\Gamma \vdash M :T $) e $M \to M'$, allora anche $M'$ è ben tipato con tipo $T$ ($\Gamma \vdash M' : T$). Si dimostra per induzione sulla derivazione del giudizio di tipo, oppure sulla derivazione $M \to M'$.
+	\item \textbf{Corollario di Preservazione} Se $\emptyset \vdash M : T$ e $M \to^* M'$, allora $\emptyset M':T$.
+	\item \textbf{Teorema di Safety}: Se $M$ è un termine chiuso e ben tipato, $M \to M'$ con $M' \not\to$, allora $M'$ è un valore.
+\end{itemize}
+
+\section{Dimostrazione per induzione sulla struttura dei termini}
+
+\begin{itemize}
+	\item \textbf{Casi base}: li definisco per i termini che non hanno sotto-termini. Ad esempio se devo dimostrare che l'esecuzione di un programma è deterministica, i casi base dimostrano che i valori del linguaggi, che sono i termini senza sotto-termini, non possono ridursi ulteriormente e quindi per loro il teorema è banalmente provato.
+	\item \textbf{Casi induttivi}: per ogni possibile termine del linguaggio ragiono sulla sua struttura, sfruttando l'ipotesi induttiva sui sotto-termini del termine in esame. Continuando con il precedente esempio: se $M = A + B$, prima osservo quali regole di riduzione posso applicare e poi nell'applicarle uso l'ipotesi induttiva, perché sfruttando il fatto che l'evoluzione dei sotto-termini ($A \to A'$) di $M$ è deterministica. Ottengo quindi che, dato che posso applicare solo una regola alla volta, l'esecuzione rimane deterministica.
+\end{itemize}
+
+\section{Dimostrazione per induzione sulla derivazione $\Gamma \vdash M : T$}
+
+\begin{itemize}
+	\item \textbf{Casi base}: dimostro il teorema su tutti gli assiomi del sistema di typing. Ad esempio per dimostrare i casi base del Teorema di Preservazione, parto dagli assiomi di tipi, i quali sono relativi ai valori del linguaggio e osservo che in quel caso il teorema è valido perché i valori non possono essere ridotti ulteriormente.
+	\item \textbf{Casi induttivi}: dimostro il teorema per tutte le regole di tipo del sistema di typing, sfruttando il fatto che i sotto-alberi che partono dalla derivazione del giudizio sono di altezza inferiore e quindi posso applicare l'ipotesi induttiva. Ad esempio, per il caso relativo alla regola di tipo \myrule{Sum} nella dimostrazione di Preservazione so che il termine $M$ ha tipo $\Nat$ e che i due sotto-termini hanno tipo $\Nat$ (perché $M$ è ben tipato). Osservo poi che il termine può evolvere con 3 possibili regole: \myrule{Sum}, \myrule{SumLeft} e \myrule{SumRight}. Prendiamo per esempio il caso \myrule{SumLeft} e quindi $M' = A' + B$. So già che $B : \Nat$ perché compare in $M$, mentre per $A'$ posso sfruttare l'ipotesi induttiva, perché $A \to A'$ e $\Gamma \vdash A : \Nat$ è una derivazione più corta rispetto a quella di partenza. Quindi anche $A' : \Nat$ e pertanto posso ottenere che $M'$ è di tipo $\Nat$ applicando la regola \myrule{Sum}. 
+\end{itemize}
+
+\section{Dimostrazione per induzione sulla riduzione $M\to M'$}
+
+\begin{itemize}
+	\item \textbf{Casi base}: sono quelli in cui la riduzione $M \to M'$ avviene per effetto di un assioma. Devo quindi dimostrare il teorema per ogni assioma della SOS.
+	
+	Ad esempio nella dimostrazione del teorema di Preservazione, nel caso base \myrule{Sum} ho $M = n_1 + n_2$ e che $M$ è ben tipato con tipo $T$. In primo luogo applico il lemma di inversione per ottenere che $T = \Nat$. 
+	Inoltre, $M' \equiv n$ per effetto della regola semantica \myrule{Sum} e sempre per il lemma di Inversione $M'$ ha tipo $\Nat$. Segue quindi che $M\to M'$ e $M'$ ha lo stesso tipo di $M$, ovvero il teorema di Preservazione è valido anche per questo caso.
+	
+	\item \textbf{Casi induttivi}: sono quelli in cui la riduzione $M \to M'$ avviene per effetto di una regola della SOS. Devo quindi dimostrare il teorema per ognuna di queste regole.
+	
+	Ad esempio nella dimostrazione del teorema di Preservazione, nel caso induttivo \myrule{SumLeft}, ho che $M = A + B$ e che $M$ è ben tipato. Per il Lemma di Inversione $M$ deve essere di tipo $\Nat$ e lo stesso vale per i suoi sotto-termini $A$ e $B$. 
+	Per effetto della regola \myrule{SumLeft} ho che $M' = A' +B$ con $A \to A'$.
+	Dato che la derivazione $A \to A'$ richiede meno passi, posso assumere che sia valida l'ipotesi induttiva e che quindi anche $A'$ abbia tipo $\Nat$.
+	Posso quindi tipare $M'$ con la regola di tipo \myrule{Sum} e quindi anche $M'$ è di tipo $\Nat$.
+	Segue quindi che $M$ e $M'$ hanno lo stesso tipo e pertanto è provato il teorema di preservazione.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@
 \subsection{Teorema di Safety}
 
 \begin{center}
-	Se $\emptyset \vdash M : T$ è derivabile e $M \rightarrow^* M'$ con $M' \not\rightarrow$ allora $M$ è un valore.
+	Se $\emptyset \vdash M : T$ è derivabile e $M \rightarrow^* M'$ con $M' \not\rightarrow$ allora $M'$ è un valore.
 \end{center}
 
 \`E il core-business della situazione in quanto collega la correttezza a statica a quella runtime, tutta
@@ -84,7 +84,7 @@ Si ragiona quindi per casi sull'ultima regola di derivazione utilizzata.
 	Per ipotesi induttiva so quindi che $M_1$ è un valore, oppure $M_1 \rightarrow M_1'$ e lo stesso vale per $M_2$.
 	Ci sono quindi 3 casi possibili:
 	\begin{enumerate}[a]
-		\item $M_1$ e $M_2$ sono entrambi valori e per il Lemma delle Forme canoniche i due termini assumono due valore $m_1$ e $m_2$. Si ha quindi che $M = m_1 + m_2$ che può essere ridotto con la regola \textsc{Sum} in $M' = m$.
+		\item $M_1$ e $M_2$ sono entrambi valori e per il Lemma delle Forme canoniche i due termini assumono due valori $m_1$ e $m_2$. Si ha quindi che $M = m_1 + m_2$ che può essere ridotto con la regola \textsc{Sum} in $M' = m$.
 		\item $M_1$ è un valore e $M_2 \rightarrow M_2'$. Si ha quindi che per ipotesi induttiva, $M = m_1 + M_2$ che può essere ridotto in $M' = m_1 + M_2'$ per la regola \textsc{Sum-Right}.
 		\item $M_1 \rightarrow M_1'$ e $M_2$ qualsiasi (valore o $M_2 \rightarrow M_2'$). In entrambi i casi, sotto ipotesi induttiva, posso passare ad $M'$ utilizzando la regola \textsc{Sum-Left}, ottenendo $M' = M_1' + M_2$. 
 	\end{enumerate}
@@ -116,11 +116,10 @@ Non dimostriamo questo lemma.
 
 \subsubsection{Lemma di Sostituzione}
 
-Se $\Gamma, x: T_1 \vdash M_1 : T$ e $\Gamma \vdash M_2 : T_1$, allora $\Gamma \vdash M_1\{x := M_2\}: T$.
+Se $\Gamma, x: S \vdash M_1 : T$ e $\Gamma \vdash M_2 : S$, allora $\Gamma \vdash M_1\{x := M_2\}: T$.
 
 Ovvero se ad un termine ben tipato applico una sostituzione su una sua variabile libera con un termine dello stesso tipo, ottengono un nuovo termine ben tipato con il tipo di partenza.
 
-% da lezione 6:
 \paragraph{Dimostrazione}
 
 Viene fatta per induzione sull'altezza di derivazione del giudizio $\Gamma , x : S \vdash M : T$.
