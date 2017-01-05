@@ -1,0 +1,108 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+% 16 Dicembre 2016
+
+\section{Branch-and-cut}
+
+L'idea è quella di combinare il branch-and-bound con i piani di taglio, partendo dal rilassamento continuo del problema al quale vengono aggiunti dei piani di taglio.
+Lo stesso vale per i sotto problemi che vengono generati dal branch-and-bound, ai quali vengono aggiunti altri piani di taglio.
+Questa idea può essere applicata in vari modi: tagliare solo all'inizio, tagliare prima di fare il branch, ecc.
+
+Quando possiamo essere sicuri che la formulazione $Ax \leq b, x \geq 0$ è ideale?
+
+Definisco una matrice $A$ come \textbf{totalmente unimodulare} se ogni sotto-matrice quadrata di $A$ di qualsiasi dimensione ha determinante uguale a -1, 0 o 1. Da notare che le sotto-matrici non devono essere necessariamente composte da colonne e righe contigue.
+
+Come conseguenza di questa definizione si ha che ogni elemento di una matrice totalmente unimodulare deve essere 0, 1 o -1, perché anche le sotto-matrici di $1\times1$ devono soddisfare la condizione sul determinante.
+
+\textbf{Teorema}: se $A$ è una matrice $m\times n$ totalmente unimodulare e $b$ è un $m$-dim vettore di interi, allora tutte le soluzioni di base del sistema $Ax = b$ sono intere, ovvero la formulazione è ideale.
+
+\textbf{Dimostrazione}:
+
+Avere una soluzione di base vuol dire che c'è una base $B$ con delle rispettive variabili che sono in base: $\overline{x}_B = B^{-1}b$ e $\overline{x}_N = 0$.
+
+C'è una formula che permette di calcolare l'inverso di una matrice in funzione dei determinanti delle sue sotto-matrici.
+
+Tenendo conto che $A$ è totalmente unimodulare, $A$ contiene solamente numeri iteri ed essendo $B$ una sotto-matrice di $A$, anche lei ha solo numeri interi. Quindi anche il determinate di $B$ è delle sotto-matrici di $B$ sono numeri interi. 
+Tra l'altro per qualche motivo il determinante di $B$ è diverso da 0, perché è invertibile, quindi dato che $A$ è TU, $det(B)$ = 1,-1.
+
+Tutto per dire che anche $B^{-1}$ ha valori interni (deriva da come viene calcolata la matrice inversa).
+
+Ma allora anche $B^{-1}b$ è un vettore di interi, e quindi la soluzione in base è su un vertice intero del poliedro.
+
+
+Da notare che se $A$ è una matrice totalmente unimodulare, quando porto il sistema in forma standard $Ax + Is = b$, è facile osservare che se $A$ è TU, allora anche $[A I]$ rimane TU e quindi il teorema precedente continua a valere. (Sulle note c'è la dimostrazione)  
+
+
+C'è un caso speciale in cui si ha una matrice contenenti valori tutti uguali a 0 o 1 e tali che tutte le colonne contengono al massimo due valori uguale a 1. Per tutte queste matrici, se le righe possono essere partizionate in due classi rosse e blu, tali che tutte le colonne con 2 valori uguali a 1 abbiano un 1 rosso e un 1 nero, allora la matrice è totalmente unimodulare.
+
+Per provare questo teorema bisogna osservare che se $B$ è una sotto-matrice $k \times k$ di $A$, allora $det(B) = $1,0 e lo si fa per induzione su $k$.
+Con $k = 1$, $B$ è $1 \times 1$ e quindi il determinante è uguale al valore del singolo elemento che è o 1 o 0. Quindi il caso base è valido.
+Nel caso induttivo, assumiamo che il teorema sia vero per $(k-1) \times (k-1)$ e $B$ è di dimensione $k \times k$. Ci sono 3 possibili casi:
+
+\begin{enumerate}
+	\item $B$ ha una o più colonne contenente solo 0. Il determinante di $B$ è quindi 0 e pertanto il teorema è provato.
+	\item $B$ ha una colonna con solamente un valore uguale a 1. In questo caso il determinate di $B$ è uguale a +- il determinate delle sotto-matrice senza la colonna in esame, il determinate della sotto-matrice è 0,1,-1, e quindi anche il determinate di $B$ varia in quel range. Probabilmente questo vale per ipotesi induttiva.
+	\item Rimane il caso in cui tutte le colonne hanno esattamente 2 elementi uguali a $1$, uno rosso e uno blu. Si ha quindi che considerano + righe rosse - righe blu si ottiene una combinazione lineare delle righe che fornisce un vettore di 0 e quindi per una proprietà dell'algebra lineare il determinate di $B$ è 0.
+\end{enumerate}
+
+\section{Assignment problem}
+
+Ho un grafo bipartito tale che $|V_1| = |V_2|$ e $V = V_1 \cup V_2$. Essendo bipartito non ci sono coppie di vertici appartenenti ad un set collegate da un arco.
+
+Questi due set possono essere visti come \textit{workers} e \textit{task} da eseguire e gli archi $(worker \to task)$ specificano i task che un worker può fare. Ad ogni arco è associato un costo, che rappresenta quanto costa assegnare un determinato task allo specifico worker.
+
+L'obiettivo è quello di assegnare a TUTTI i lavoratori $V_1$ gli elementi di $V_2$  e viceversa, in modo da minimizzare il costo. (senza effettuare assegnamenti doppi.) Ovvero voglio trovare un match perfetto tra i due set di nodi.
+
+Per ogni arco $uv$ con $u \in V_1$ $v \in V_2$ ho che 
+
+$$
+x_{uv} = \begin{cases}
+1 if u \to v\\
+0 otherwise
+\end{cases}
+$$
+
+La funzione obiettivo è definita come
+
+$$
+\min \sum_{uv \in E} C_{uv}x_{uv}
+$$
+
+Con i vincoli
+
+$$
+\sum_{v \in V_2, uv \in E} x_{uv} = 1 \forall u \in V_1
+$$
+
+$$
+\sum_{u \in V_1, uv \in E} x_{uv} = 1 \forall v \in V_2
+$$
+
+Le variabili devono essere $x_{uv} \geq 0$, $\forall uv \in E$ e $x_{uv} \in \mathbb{Z}$. Non serve specificare che le variabili sono binarie perché questo viene forzato dai due vincoli (non possono esserci valori negativi nelle due sommatorie).
+
+Questa formulazione del problema è \textbf{ideale}, quindi posso scartare il vincolo di integralità sulle variabili e quindi posso risolvere il modello utilizzando il metodo del simplesso.
+
+Si ha inoltre che la matrice dei vincoli ottenuta è totalmente unimodulare (la prima metà delle righe e rossa e la seconda è blu). Questa matrice prende il nome di \textbf{matrice d'incidenza del grafo} (indiretto) e vale anche per i grafi che non sono bipartiti.
+
+Se il grafo è bipartito la matrice delle incidenze è TU.
+
+Per rappresentare in questo modo i grafi orientati il discorso è leggermente diverso. Utilizzo -1 nella riga relativa al nodo di partenza e +1 nella riga del nodo di arrivo.
+Per un grado diretto, la matrice delle incidenze è sempre TU, anche se non è bipartito.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+% 22 Dicembre 2016
+
+\section{TSP: Travelling Salesman Problem}
+
+L'obiettivo è quello di trovare un ciclo Hamiltoniano di costo minimo su un grafo che può essere orientato o meno.
+Un ciclo Hamiltoniano è un ciclo che visita tutti i nodi del grafo esattamente una volta.
+
+\`E un problema molto comune nel mondo reale.
+
+Il grafo sul quale è definito il problema può essere orientato o non orientato. Se il grafo è orientato, il problema diventa asimmetrico, perché passare da un nodo ad un altro può avere un costo diverso in base alla direzione in cui percorro l'arco. Se il grafo è invece diretto il costo è lo stesso per entrambe le direzioni e il problema diventa simmetrico.
+
+Possiamo assumere che il grafo sia sempre \textbf{completo}, perché tanto se manca qualche arco, possiamo aggiungerlo con un costo infinito, che tanto non verrà mai scelto.
+\`E utile assumere che il grafo sia completo perché semplifica la notazione.
+
+\subsection{Versione asimmetrica}
+
+Il grafo di riferimento è completo e diretto, $D = (N,A)$.
+
+$$
+\forall(i,j) \in A \quad x_{ij} = \begin{cases}
+1 \quad \text{se l'arco è nel ciclo} \\
+0 \quad \text{altrimenti}
+\end{cases}
+$$
+
+La funzione obiettivo è la minimizzazione dei costi:
+
+$$
+\min \sum_{(i,j) \in A} C_{ij} x_{ij}
+$$
+
+Mentre i vincoli sono:
+
+\begin{itemize}
+	\item $ \forall v \in n, \sum_{(v,j) \in A} x_{vj} = 1 $: ogni nodo deve avere un solo arco in uscita.
+	\item $ \forall v \in n, \sum_{(i,v) \in A} x_{iv} = 1 $: ogni arco deve avere solo un arco in ingresso.
+	\item $ \forall S \subset N, \sum_{i, j \in S, (i,j) \in A} \leq |S|-1$: con i vincoli precedenti possono esserci dei \textbf{sub-tour} \textit{S}, ovvero dei cicli che non coprono tutti i nodi. In questo modo li elimino, perché impongo che in ogni sub-set ci sia esattamente un arco in meno, così facendo non può esserci un ciclo completo. Da notare che l'inclusione è \textbf{stretta}, perché sennò perderei tutte le soluzioni. (\textbf{subtour elimination constraint})
+\end{itemize}
+
+Da notare che se vengono tolti i vincoli di subtour ma viene mantenuta l'integralità del modello, si ottiene un problema di assegnamento, dove le due parti del grafico sono le città da visitare (ogni parte del grafico contiene una copia di ogni città).
+Questo è utile, perché per assignment problem abbiamo che la matrice associata ai vincoli è TU e quindi possiamo utilizzare il metodo del simplesso per ottenere una soluzione intera.
+C'è però il problema, perché la soluzione così trovata può contenere dei subtour.
+
+Una prima versione dell'algoritmo può essere:
+
+\begin{enumerate}
+	\item Rimuovere dal problema i vincoli di SEC e risolverlo come Assignment Problem con il simplesso per ottenere una soluzione intera $\overline{x}$.
+	\item Se $\overline{x}$ è un ciclo hamiltoniano, allora abbiamo una soluzione che vale anche per il problema completo.
+	\item Altrimenti abbiamo uno o più subtour, tra questi ne selezioniamo uno ($S$).
+	\item Aggiungiamo al modello un vincolo SEC per eliminare $S$.
+	\item Ripeti tutto finché non trovi una soluzione $\overline{x}$.
+\end{enumerate}
+
+La speranza di questo algoritmo è quella di riuscire a trovare una soluzione per TSP senza dover aggiungere tutti i vincoli SEC.
+
+C'è un \textbf{problema}. L'aggiunta del nuovo vincolo al termine delle iterazioni fa perdere la proprietà della matrice, la quale non è più TU e quindi non è più possibile utilizzare il simplesso.
+Si ha quindi che alle iterazioni successive è necessario risolvere un ILP.
+
+Nelle iterazioni successive conviene utilizzare un branch and bound \textbf{speciale}, che utilizza delle regole di branch diverse.
+
+L'idea è quella di:
+\begin{enumerate}
+	\item Rimuovi tutti i SEC e risolvi con il simplesso $\overline{x}$.
+	\item Se $\overline{x}$ contiene uno o più subtour, selezioniamo quello più piccolo $S$ e facciamo branch imponendo che uno degli archi che compaiono nel subtour non deve essere utilizzato (un ramo per ogni arco del subtour). Ad esempio se il subtour è composto dai due archi $x_{23}$ e $x_32$, vengono fatti due rami di branch, uno con $x_{23} =0$ e l'altro con $x_{32} = 0$. Così facendo viene rimosso il subtour e non vengono perse soluzioni, perché un ciclo hamiltoniano non potrà mai contenere entrambi gli archi. Ad ogni nodo dell'albero è poi possibile associare il costo della soluzione trovata, in modo da tenere traccia del lower bound.
+	
+	Nel fare branching, anziché aggiungere un nuovo vincolo, possiamo porre il costo dell'arco da rimuovere a $+\infty$. Così facendo la matrice dei vincoli non cambia e quindi resta TU. Pertanto è sempre possibile applicare il simplesso per trovare una soluzione intera.
+\end{enumerate}
+
+\subsection{Versione simmetrica}
+
+Ho un grafo indiretto $G = (V,E)$.
+
+La versione naive di risoluzione è quella di dividere ogni arco in due archi orientati e risolvere il problema come se fosse asimmetrico. Questo però raddoppia il numero di variabili.
+
+Conviene quindi definire un nuovo modello:
+
+$$
+\forall e \in E \quad x_e = \begin{cases}
+1 \quad \text{se l'arco \textit{e} è nel ciclo} \\
+0 \quad \text{altrimenti}
+\end{cases}
+$$
+
+La funzione obietto è sempre quella:
+
+$$
+\min \sum_{e \in E} C_e x_e
+$$
+
+e i vincoli diventano:
+
+\begin{itemize}
+	\item $\sum_{e \in \delta(v)} x_e = 2 \quad \forall v \in V$: dobbiamo imporre che per ogni nodo ci siano esattamente due spigoli indicenti. $\delta(\cdot)$ è l'insieme dei vertici incidenti nel vertice $v$.
+	\item $ \forall S \subset V \sum_{e \in E(S)} x_e \leq |S|-1 \quad 3 \leq |S| \leq |V|-1$: SEC in modo simile a quella asimmetrica, cambiando la notazione delle variabili. Con questa versione si può praticamente utilizzare lo stesso processo di risoluzione per il caso asimmetrico.\\
+	\item $ \sum_{e \in \delta(S) x_e \geq 2} \forall S \subset V, 3 \leq |S| \leq |V|-1  $ : SEC v2. Un altro modo per imporre SEC è quello di imporre come vincolo che per ogni subset di vertici ci sia almeno un arco che collega un vertice del subset con un vertice esterno al subset. $\delta(S)$ indica l'insieme di questi archi. Nel vincolo conviene utilizzare $\geq2$ perché per avere un ciclo hamiltonaniano deve esserci un arco che \textit{esce} da $S$ e uno che entra.
+\end{itemize} 
+
+La risoluzione di questo modello (SECv2) può essere fatta con il classico branch and bound, facendo il rilassamento continuo sulle variabili frazionarie.
+
+La risoluzione del rilassamento continuo viene fatta con:
+
+\begin{enumerate}
+	\item Rimuovi i vincoli di integralità e di SEC. (L'integralità viene rimpiazzata con $0 \leq x_e \leq 1$). Utilizzare il simplesso per ottenere una soluzione rilassata continua $\overline{x}^R$.
+	\item Trova un SEC violato da $\overline{x}^R$ e aggiungi un vincolo per rimuoverlo e ripeti, oppure dimostra che nessun SEC è violato.
+\end{enumerate}
+
+Per provare che nessun SEC è violato, senza andare a cercare i sotto-cicli, perché in questo caso le variabili associate agli archi sono frazionarie e quindi non è chiaro se un arco è usato o meno nella soluzione.
+
+Quindi per evitare di provare i vincoli uno a uno l'approccio è quello di verificare se c'è un subset $S$ tale che $\sum_{e \in \delta(s)} \overline{x_e}^R < 2$.
+
+La ricerca di $S$ può essere impostata come un problema di ottimizzazione combinatoria:
+
+$$
+\min_{S \subset V} \sum_{e \in \delta(S)} \overline{x_e}^R  \leq 2
+$$
+
+Questo problema è chiamato \textbf{Minimum cut problem} per il quale è noto un buon sistema di risoluzione che dovrebbe essere descritto nelle note.
+
+
+
+
+
+
+
+
