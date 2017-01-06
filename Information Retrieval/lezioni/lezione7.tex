@@ -13,15 +13,15 @@
 In ogni caso non c'è un modello di ranking ottimo, perché l'ottimo dipende da cosa vogliamo fornire all'utente.
 
 I modelli visti finora non tenevano conto dell'ordine delle parole e quindi rispondevano allo stesso modo sia a ``\textit{tropical fish}'' che a ``\textit{fish tropical}''.
-Per discriminare questi due casi è necessario estendere l'indice in modo che contenga anche la posizione delle parole, aggiungiamo quindi un posting per ogni occorrenza di una parola.
+Per discriminare questi due casi è necessario estendere l'indice in modo che contenga anche la posizione delle parole, aggiungiamo quindi alle varie posting list dei termini anche la posizione interna del documento in cui compaiono, ottenendo l'indice riportato in figura \ref{fig:index-pos}.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\textwidth]{./images/l7-indice-pos}
-	\caption{Indice contenente anche le informazioni relative alla posizione delle parole nei documenti.}
+	\caption{Indice contenente anche le informazioni relative alla posizione delle parole nei documenti.}\label{fig:index-pos}
 \end{figure}
 
-\noindent Con questo nuovo indice è possibile è possibile \textit{allineare} le posting list dei due termini e osservare quando il secondo compare subito dopo il primo.
+Con questo nuovo indice è possibile è possibile \textit{allineare} le posting list dei due termini e osservare quando il secondo compare subito dopo il primo.
 Possono ovviamente capitare dei casi nei quali compare solo uno dei due termini.
 
 Questa tecnica può essere poi estesa per gestire frasi più lunghe oppure utilizzare altri operatori di prossimità: frase esatta, parole ad una certa distanza, ecc.
@@ -49,7 +49,7 @@ Tenere lo score può in alcuni casi permettere di risponde più velocemente, per
 
 Tipicamente viene quindi preferita la frequenza, tenendo i posting dell'indice ordinati per documento, in modo da facilitare il calcolo dello score.
 
-\chapter{Modello di reperimento}\todo{promuovere a Chapter?}
+\chapter{Modelli di reperimento}
 
 Un modello di reperimento dell'informazione è un insieme di costrutti che sono stati ideati e formalizzati allo scopo di rendere possibile la rappresentazione del contenuto dei documenti e delle interrogazioni.
 
@@ -77,7 +77,7 @@ Nel modello IR non ci sono questi problemi perché le operazioni di aggiornament
 	\begin{tabular}{l|l|l|}
 		\cline{2-3}
 		& Data Retrieval & Information Retrieval            \\ \hline
-		\multicolumn{1}{|l|}{Matching}            & Exact match    & Partial/Best match\textbackslash \\ \hline
+		\multicolumn{1}{|l|}{Matching}            & Exact match    & Partial/Best match\\ \hline
 		\multicolumn{1}{|l|}{Inference}           & Deduction      & Induction                        \\ \hline
 		\multicolumn{1}{|l|}{Model}               & Deterministic  & Probabilistic                    \\ \hline
 		\multicolumn{1}{|l|}{Classification}      & Monothetic     & Ploythetic                       \\ \hline
@@ -100,7 +100,7 @@ Con un database ci si aspetta dei risultati esatti, mentre con i sistemi IR veng
 
 \begin{itemize}
 	\item \textbf{Modello booleano} (1950): il modello più semplice che verifica semplicemente la presenza o meno dell'informazione, senza effettuare l'ordinamento dei risultati. Un esempio di questo modello è dato dai sistemi di ricerca delle biblioteche/archivi.
-	\item \textbf{Modello vettoriale} (1960): modello che tiene conto delle varie feature dei documenti per pesare i risultati, in modo da effettuare l'ordinamento. I primi motori di ricerca si basavano su questo modello.
+	\item \textbf{Modello vettoriale} (1960 \textit{Gerald Salton}): modello che tiene conto delle varie feature dei documenti per pesare i risultati, in modo da effettuare l'ordinamento. I primi motori di ricerca si basavano su questo modello.
 	\item \textbf{Modello probabilistico} (1970): modello sperimentale ancora poco utilizzato.
 	\item \textbf{Modello di analisi della semantica latente} (1980)
 	\item \textbf{Modello statistico della lingua} (1990)
@@ -127,7 +127,7 @@ Le interrogazioni vengono quindi formalizzate utilizzando l'algebra booelana.
 
 I concetti sono rappresentati da descrittori estratti mediante un processo di indicizzazione, quindi un descrittore \textit{t} è l'insieme di tutti e solo i documenti in cui il concetto espresso da \textit{t} è presente.
 
-Effettuando l'indicizzazione viene quindi le informazioni relative alla sinonimia e polisemia.
+Effettuando l'indicizzazione vengono quindi perse le informazioni relative alla sinonimia e polisemia.
 
 \begin{itemize}
 	\item \textbf{Sinonima}: in linguistica indica la condizione di sostituibilità di un elemento linguistico con un altro nel contesto e nella situazione dati, senza che ne consegue un'alterazione del significato. Fortunatamente la sinonima è assoluta è di fatto inesistente nella lingua naturale. Ad esempio se l'utente cerca ``\textit{viso}'' ma tutti i documenti contengo ``\textit{faccia}'', se il modello non gestisce i sinonimi, non vengono trovati risultati.

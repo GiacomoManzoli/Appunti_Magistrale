@@ -38,7 +38,7 @@ Per introdurre le strutture dati degli indici trasporti ci baseremo su un modell
 
 Un altro sinonimo di termini indice è \textbf{features} che deriva più dall'apprendimento automatico.
 
-Nel nostro modello di ranking d'esempio vengono prese in considerazione due categoria di features, quelle \textbf{topical}, che riguardano il contenuto (topic) del documento, e quelle \textbf{quality}, che descrivono delle qualità/caratteristiche del documento, come il numero di link entranti o i giorni dall'ultimo aggiornamento.
+Nel nostro modello di ranking d'esempio vengono prese in considerazione due categorie di features, quelle \textbf{topical}, che riguardano il contenuto (topic) del documento, e quelle \textbf{quality}, che descrivono delle qualità/caratteristiche del documento, come il numero di link entranti o i giorni dall'ultimo aggiornamento.
 
 Una possibile funzione di ordinamento è data da:
 
@@ -61,22 +61,22 @@ Da notare che nella sommatoria gli indici $i$ riguardano le caratteristiche dell
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\textwidth]{./images/l6-modello-2}
-	\caption{Le Topical features della query che sembrano ``extra'' sono aggiunti dal modello di indicizzazione che è una black-box. Tipicamente quelle extra vengono aggiunte dal modello perché riconosce che sono spesso utilizzate assieme alla query o perché derivano da possibili errori di battitura. Le quality features invece funzionano da \textbf{pesi} per le quality features dei documenti.}
+	\caption{Le Topical features della query che sembrano ``extra'' sono aggiunte dal modello di indicizzazione che è una black-box. Tipicamente quelle extra vengono aggiunte dal modello perché riconosce che sono spesso utilizzate assieme alla query o perché derivano da possibili errori di battitura. Le quality features invece funzionano da \textbf{pesi} per le quality features dei documenti.}
 \end{figure}
 
 \subsubsection{Inverted Index e posting}
 
-Ricapitolando: l'indice serve alla memorizzazione dell'elenco delle parole presenti nei documenti e viene prodotto dalla fase di indicizzazione, tuttavia i sistemi moderni utilizzano l'inverted index. 
+Ricapitolando: l'indice serve per memorizzazione l'elenco delle parole presenti nei documenti e viene prodotto dalla fase di indicizzazione, tuttavia i sistemi moderni utilizzano l'inverted index, il quale ad ogni termine associa la lista dei documenti in cui compare e eventualmente la frequenza con cui compare. 
 
 \todo{a 1.04 potrebbe esserci qualcosa riguardo ai test}
 
 Il ranking model considera che ogni documento è composto da feature e nell'inverted index ogni parola corrisponde ad una feature, segue quindi che l'inverted index viene utilizzato per calcolare lo score di un documento.
 
-Ricapitolando: ogni termine indice (index term) ha la sia lista trasposta (inverted list) che mantiene i dati relativi al termine.
-Ogni elemento di questa lista viene chiamato \textbf{posting} e contiene varie informazioni che possono essere utilizza per calcolare in modo efficiente lo score del documento, tra queste informazioni c'è un riferimento al documento di appartenenza che prende il nome di \textbf{pointer}.
-Ogni pointer fa riferimento al documento mediante il suo identificativo univico, che non è detto sia un numero intero.
+In più ogni termine indice (\textbf{index term}) ha la sua lista trasposta (\textbf{inverted list}/\textbf{posting list}) che mantiene i dati relativi al termine.
+Ogni elemento di questa lista viene chiamato \textbf{posting} e contiene varie informazioni che possono essere utilizzate per calcolare in modo efficiente lo score del documento, tra queste informazioni c'è un riferimento al documento di appartenenza che prende il nome di \textbf{pointer}.
+Ogni pointer fa riferimento al documento mediante il suo identificativo univoco, che non è detto sia un numero intero.
 
-Quasi sempre le informazioni dei posti sono ordinate in base al numero dei documenti perché per certe funzioni i calcoli possono essere effettuati in modo più efficiente oppure la risulta più semplice comprimerle.
+Quasi sempre le informazioni dei posting sono ordinate in base al numero dei documenti perché per certe funzioni i calcoli possono essere effettuati in modo più efficiente oppure la risulta più semplice comprimerle.
 
 Un altro vantaggio dell'inverted index è quello che per rispondere ad una query non è necessario scorrerlo tutto, ma basta considerare il sotto-insieme relativo ai termini che compaiono nella query.
 
@@ -99,12 +99,12 @@ Documenti di partenza:
 
 \noindent Considerando la query \textit{``tropical fish''} e l'indice precedente verrebbero forniti come risposta i documenti \textbf{S1}, \textbf{S2} e \textbf{S3}, senza avere idea di quale possa essere il migliore.
 
-Considerando anche la frequenza dei termini (\textbf{TF}) si ottiene un indice più complesso, come il seguente.
+Considerando anche la frequenza dei termini (\textbf{TF}) si ottiene un indice più complesso, come quello in figura \ref{fig:index-freq}.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\textwidth]{./images/l6-index-2}
-	\caption{Indice contente anche la frequenza dei termini.}
+	\caption{Indice contente anche la frequenza dei termini.}\label{fig:index-freq}
 \end{figure}
 
 \noindent Con le informazioni relative alla frequenza riusciamo a dare maggiore importanza al documento \textbf{S2} dato che contiene più volte i vari termini.

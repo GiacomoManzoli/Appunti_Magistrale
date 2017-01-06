@@ -56,27 +56,31 @@ Il livello di coordinamento più semplice è quello \textbf{binario}, che vale 1
 	\begin{minipage}[b]{0.45\linewidth}
 		\centering
 		\includegraphics[width=0.7\linewidth]{images/l8-set-1}
-		\caption{Livello di coordinamento con \textit{AND}}
+		\caption{Livello di coordinamento binario con \textit{AND}}
 		
 	\end{minipage}
 	\quad
 	\begin{minipage}[b]{0.45\linewidth}
 		\centering
 		\includegraphics[width=0.7\linewidth]{images/l8-set-2}
-		\caption{Livello di coordinamento con \textit{OR}}
+		\caption{Livello di coordinamento binario con \textit{OR}}
 	\end{minipage}
 \end{figure}
 
-\noindent Volendo si può uscire dalla logica booleana a due valori, introducendo un livello di coordinamento non binario, andando a considerare il numero di termini della query che sono in presenti nel documento.
+Volendo si può uscire dalla logica booleana a due valori, introducendo un livello di coordinamento non binario, andando a considerare il numero di termini della query che sono in presenti nel documento.
 Si può quindi utilizzare questo livello per ordinare i documenti forniti in risposta (a volte detto anche \textbf{simple matching}).
-
-\textit{Questo vale solo con l'operatore AND}
 
 Ad esempio si consideri l'interrogazione \textit{``pagine AND web''} per il nostro insieme di documenti.
 
 Si può dire che l'interrogazione è ``più vera'' per D1, perché rende vere entrambe le proposizioni atomiche ``pagine'' e ``web'', che formano l'interrogazione, mentre D3 ne rende vera solo una e D2 nessuna.
 
-\textbf{Piccola nota}: l'AND non è proprio un AND, è una sorta di AND-rilassato, perché un documento viene valutato positivamente anche un documento che non soddisfa tutti i termini.
+\textbf{Piccola nota}: l'AND non è proprio un AND, è una sorta di AND-rilassato, perché un documento viene valutato positivamente anche un documento che non soddisfa tutti i termini. Questa notazione confusa deriva dal fatto che il livello di coordinamento è uguale al \textbf{simple matching coefficient}:
+
+$$
+\text{simple matching coefficient} = |\ D \cap Q \ |
+$$
+
+\noindent Ossia alla cardinalità dell'intersezione tra i termini della query $Q$ e quelli presenti nel documento $D$.
 
 Ad esempio, assumendo di avere i descrittori $A = \{d_1, d_2\}$, $B = \{d_2, d_3\}$, $C =\{d_3\}$ e considerando la query
 
@@ -100,7 +104,7 @@ Ad esempio, assumendo di avere i descrittori $A = \{d_1, d_2\}$, $B = \{d_2, d_3
 \section{Modello vettoriale}
 %pacchetto slide 8
 
-Questo modello assume che gli \textit{n} documenti e le interrogazioni appartengano ad uno spazio vettoriale composto da \textit{t} dimensioni, dove \textit{t} è il numero di dei termini indice (parole, frasi, \ldots).
+Questo modello assume che gli \textit{n} documenti e le interrogazioni appartengano ad uno spazio vettoriale composto da \textit{t} dimensioni, dove \textit{t} è il numero di dei termini indice (parole, frasi, $\ldots$).
 
 Di conseguenza il documento $D_i$ è rappresentato da un vettore
 
@@ -110,13 +114,31 @@ $$
 
 \noindent dove l'elemento $d_{i,j}$ rappresenta il peso del termine $j$-esimo nel documento $i$-esimo.
 
-Anche la query viene considerata come un documento. L'idea alla base di questo è che l'utente vorrebbe trovare un documento uguale alla query che sta scrivendo.
+Anche la query viene considerata come un documento e quindi anche ad essa viene associato un vettore $Q$ che ha come elementi i pesi dei termini che compaiono nella query.
+
+$$
+Q = (q_{1},q_{2},\ldots,q_{j}, \ldots q_{t})
+$$
+
+L'idea alla base di questo è che l'utente vorrebbe trovare un documento uguale alla query che sta scrivendo.
 
 Una collezione di $n$ documenti può quindi essere rappresentata come una matrice dove ogni riga rappresenta un documento e ogni colonna contiene i pesi che sono associati ad un termine in un determinato documento.
 
+$$
+\begin{matrix}
+& Term_1 & Term_2 & \ldots & Term_j & \ldots &Term_t \\ 
+Doc_1 & d_{11} & d_{12}& \ldots & d_{1j} & \ldots & d_{1t} \\ 
+Doc_2 & d_{21} & d_{22}& \ldots & d_{2j} & \ldots & d_{2t} \\ 
+\vdots & \vdots &\vdots  &  & \vdots && \vdots\\ 
+Doc_i & d_{i1} & d_{i2}& \ldots & d_{ij} & \ldots & d_{it} \\ 
+\vdots & \vdots &\vdots  &  & \vdots && \vdots\\ 
+Doc_n & d_{n1} & d_{n2}& \ldots & d_{nj} & \ldots & d_{nt} \\ 
+\end{matrix}
+$$
+
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.5\linewidth]{images/l8-mod-vet}
+	\includegraphics[width=0.6\linewidth]{images/l8-mod-vet}
 	\caption{Nell'esempio viene utilizzato la frequenza della parola come peso del termine. Sono state inoltre rimosse le stop-word e viene fatto lo stemming dei plurali \textbf{NB:} la matrice riportata è trasposta rispetto a quella definita precedentemente.}
 \end{figure}
 
@@ -124,7 +146,7 @@ Una collezione di $n$ documenti può quindi essere rappresentata come una matric
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.25\linewidth]{images/l8-vet}
+	\includegraphics[width=0.3\linewidth]{images/l8-vet}
 \end{figure}
 
 \subsubsection{Metodo di ordinamento}
@@ -141,7 +163,7 @@ La cosa interessante di questa misura è che quando i vettori sono normalizzati 
 \end{itemize} 
 
 $$
-Cosine(D_i, Q) = \frac{\sum\limits_j (d_{i,j} \cdot q_j)}{\sqrt{\sum\limits_j d_{i,j}^2 \cdot \sum\limits_j q_{j}^2}}
+Cosine(D_i, Q) = \frac{\sum\limits_j (d_{i,j} \cdot q_j)}{\sqrt{\sum\limits_j d_{i,j}^2} \cdot \sqrt{\sum\limits_j q_{j}^2}}
 $$
 
 \noindent con $j$ che varia da 1 a $t$.
@@ -151,9 +173,11 @@ $$
 Ad esempio, per i documenti $D_1 = (0.5, 0.8, 0.3)$ e $D_2 = (0.9, 0.4, 0.2)$ e per la query $Q = (1.5, 1, 0)$ si ottengono le similarità:
 
 \begin{align*}
-	Cosine(D_1,Q) &= 0.87 \\
-	Cosine(D_2, Q) &= 0.97
+	Cosine(D_1,Q) &= \frac{0.5 \cdot 1.5 + 0.8 \cdot 1 + 0.3 \cdot 0}{\sqrt{0.25+0.64+0.09}\cdot \sqrt{2.25+1+0}} = \frac{1.55}{1.78} = 0.87 \\
+	Cosine(D_2, Q) &= \frac{0.9\cdot 1.5 + 0.4 \cdot 1 + 0.2 \cdot 0}{\sqrt{0.81 + 0.16 + 0.04}\cdot \sqrt{2.25 + 1 +0}} = \frac{1.75}{1.81} = 0.97
 \end{align*}
+
+\textbf{{\color{Red} Possibile esercizio:}} Dati due documenti ed una query, calcolare la similarità coseno.
 
 \subsection{Pesatura dei termini}
 
@@ -171,4 +195,10 @@ Tuttavia, così facendo viene dato molto peso ai termini molto frequenti nel doc
 
 $$
 tf_{i,k} = \frac{\log (f_{i,k}+1)}{\sum\limits_j \log (f_{i,j} +1)}
+$$
+
+Anche se tipicamente viene omesso il denominatore, calcolando \textit{tf} con
+
+$$
+tf_{i,k} = \log (f_{i,k}+1)
 $$

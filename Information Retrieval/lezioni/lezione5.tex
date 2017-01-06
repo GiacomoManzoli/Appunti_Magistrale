@@ -18,7 +18,7 @@ Questi dizionari possono essere utilizzati ad esempio per riconoscere che \texti
 C'è però un problema con l'aggiornamento del dizionario, perché nella lingua naturale vengono aggiunte in continuazione nuove parole.
 Si può quindi creare il dizionario in modo automatico effettuando un'analisi statistica dei testi del documento, oppure si può scegliere di utilizzare in modo combinato uno stemmer algoritmico e uno basato su dizionario.
 
-\subsubsection{Composizione dei termini}
+\subsubsection{Fase 4: Composizione dei termini}
 
 In alcuni contesti può essere importante ricostruire alcune frasi o termini, come nella ricerca dei documenti scritti da una determinata persona.
 Inoltre la maggior parte delle query effettuate dagli utenti sono costituite da varie parole e in alcuni casi questo insieme deve essere considerato come una frase.
@@ -30,7 +30,7 @@ L'analisi e la ricostruzione delle frasi è computazionalmente onerosa, pertanto
 
 Il come e quando ricostruire le frasi e le relative conseguenze dipendono molto dal modello che viene utilizzato, pertanto l'argomento verrà trattato più avanti.
 
-\subsubsection{Creazione dell'indice}
+\subsubsection{Fase 5: Creazione dell'indice}
 
 Il modo più semplice di costruire l'indice è quello di utilizzare una matrice binaria che ha come righe le parole o gli stem, come colonne i vari documenti e in una determinata cella viene messo un 1 solo se la parola compare nel documento.
 Così facendo però non viene tenuto conto della frequenza e del contenuto informativo della parola, inoltre non è possibile trovare un modo per ordinare i risultati della ricerca.
@@ -78,6 +78,8 @@ Tipicamente viene utilizzato un \textbf{posting file} (o \textbf{inverted index}
 	\includegraphics[width=0.3\linewidth]{images/l5-index-4}
 	\caption{Esempio di posting file}
 \end{figure}
+
+\textbf{{\color{Red} Possibile esercizio:}} Dati dei documenti testuali si effettui la loro indicizzazione automatica creando l'indice dei descrittori. Si descriva una possibile strategia per la costruzione di una stop-list corrispondente ai documenti forniti.
 
 \section{Ranking}
 

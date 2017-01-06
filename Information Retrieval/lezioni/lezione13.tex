@@ -27,7 +27,7 @@ Servono quindi dei test scientifici che permettano di capire come il sistema si 
 \section{Le basi della valutazione}
 
 L'approccio \textbf{Cranfield} è uno standard per la valutazione dei sistemi IR.
-\`E stato inventato dal bibliotecario del college di Cranfield e da un groppo di persone che lavoravano con lui, senza l'utilizzo di computer, siamo nel 1958. 
+\`E stato inventato da Cyril Cleverdon, il bibliotecario del college di Cranfield e da un groppo di persone che lavoravano con lui, senza l'utilizzo di computer, siamo nel 1958. 
 Sono stati elaborati due test:
 
 \subsection{Cranfield 1} 
@@ -37,12 +37,13 @@ Si voleva testare il funzionamento di 4 diversi metodi di indicizzazione manuale
 All'epoca l'unico modo di accesso all'informazione era manuale e avveniva mediante degli indici suddivisi per argomento e creati dai bibliotecari.
 La proposta di Cranfield 1 contiene 18.000 articoli e rapporti da indicizzare, secondo 4 criteri di indicizzazione (per soggetto, a faccette, Classificazione Decimale Universale, Coordinate and Unitrem Index Systems). L'indicizzazione doveva essere fatta da delle persone competenti ed in modo sistematico.
 	
-All'epoca però non c'era il concetto di reperimento, quindi ad un'interrogazione bastava recuperare uno documento che di sicuro era rilevante per la domanda (\textbf{known item searching}). Le domande venivano pensate dagli autori dei documenti che erano indicizzati, in questo modo si sapeva già quali dovevano essere le risposte.
+All'epoca però non c'era il concetto di reperimento, quindi ad un'interrogazione bastava recuperare un documento che di sicuro era rilevante per la domanda (\textbf{known item searching}). Le domande venivano pensate dagli autori dei documenti che erano indicizzati, in questo modo si sapeva già quali dovevano essere le risposte.
 	
 Del processo di ricerca manuale sull'indice è stata tenuta traccia del tempo per effettuare la ricerca e dell'esito della ricerca. Dall'esperimento effettuato, il 35\% delle ricerche non è andata a buon fine e non ha dimostrato una differenza tra i 4 sistemi.
-Parte di questo risultato è però dovuto ad errori degli indicizzatori.
+Parte di questo risultato è però dovuto ad errori degli indicizzatori, infatti l'indicizzazione manuale è una pratica molto tediosa che ha richiesto 2 anni.
 	
-Dai risultati l'esperimento sembra mal riuscito ma ha fatto emergere la \textbf{failure analysis}, ovvero la documentazione dei fallimenti e l'utilizzo di questa per evitare di fare altri errori simili. Le considerazioni erano riguardanti anche il formato dei descrittori, la quantità, se questi portavano a uno o più risultati e sull'assenza dei pesi per i descrittori.
+Dai risultati l'esperimento sembra mal riuscito ma ha fatto emergere la \textbf{failure analysis}, ovvero la documentazione dei fallimenti e l'utilizzo di questa per evitare di fare altri errori simili. 
+Le considerazioni erano riguardanti anche il formato dei descrittori, la quantità, se questi portavano a uno o più risultati e sull'assenza dei pesi per i descrittori.
 	
 \subsection{Cranfield 2}
 
@@ -52,7 +53,17 @@ Per indicizzare la collezione sono stati utilizzati tutti i 33 metodi noti, che 
 
 Le metriche utilizzate sono note come \textbf{Precision} e \textbf{Recall} e vengono rappresentate in una \textbf{tabella di contingenza}.
 
-% inserimento della tabella di contingenza slide 20
+\begin{table}[htbp]
+	\centering	
+	\begin{tabular}{cccc}
+		\cline{2-3}
+		\multicolumn{1}{c|}{}                & \multicolumn{1}{c|}{Rilevante} & \multicolumn{1}{c|}{Non rilevante} &     \\ \cline{1-3}
+		\multicolumn{1}{|c|}{Recuperato}     & \multicolumn{1}{c|}{$a$}         & \multicolumn{1}{c|}{$b$}             & $a+b$ \\ \cline{1-3}
+		\multicolumn{1}{|c|}{Non recuperato} & \multicolumn{1}{c|}{$c$}         & \multicolumn{1}{c|}{$d$}             & $c+d$ \\ \cline{1-3}
+		& $a+c$                            & $b+d$                                & $N$  
+	\end{tabular}
+	\caption{Tabella di contingenza}
+\end{table}
 
 \noindent \textbf{Recall} rappresenta il rapporto tra i documenti rilevanti che recuperiamo in risposta ad un'interrogazione e tutti i documenti rilevanti della collezione. Ovviamente più vicino a 1 è meglio.
 
@@ -69,26 +80,28 @@ $$
 Nell'esperimento di Cranfield, queste misure sono state calcolate tutte le 221 domande (\textbf{run}).
 Ci fu quindi il problema di combinare i risultati ottenuti. Questo è stato fatto con il \textbf{micro-averaging method}: vengono fatte le somme totali dei numeri dei rilevati e dei recuperati di tutte le domante e poi sono state divisi per il numero di domande.
 
-Dai risultati riporta in figura \ref{l13:fig1} è emerso che i sistemi di indicizzazione migliori erano quelli che utilizzavano i singoli termini presi dai vari documenti. Quindi era meglio utilizzare i termini dei documenti piuttosto che delle combinazioni fittizie create a priori (\textbf{Paradigma Cranfield}). 
+Dai risultati riporta in figura \ref{l13:fig1} è emerso che i sistemi di indicizzazione migliori erano quelli che utilizzavano i singoli termini presi dai vari documenti. Quindi era meglio utilizzare i termini dei documenti piuttosto che delle combinazioni fittizie create a priori.
+
+Da questo esperimento è poi nato il così detto \textbf{Paradigma Cranfield} per la valutazione di un sistema di reperimento. Il quale prevede di utilizzare per effettuare i test, delle collezioni fisse in modo che questi siano ripetibili e paragonabili. 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=.6\textwidth]{images/l13-fig-1.png}
-	\label{l13:fig1}
+	\caption{Risultati di Cranfiled 2}\label{l13:fig1}
 \end{figure}
 
 \subsection{Il sistema SMART}
 
-Nel 1961 ad Harvard hanno il primo sistema automatico di reperimento dell'informazione SMART ad opera di Gerald Salton.
+Nel 1961 ad Harvard hanno il primo sistema automatico di reperimento dell'informazione SMART ad opera di Gerald Salton, lo stesso che ha proposto il modello vettoriale.
 
 Gli esperimenti eseguiti con SMART producevano liste ordinate o semi-ordinate e pertanto non era possibile utilizzare precision e recall. 
-Sono state quindi proposte nuove metriche come \textbf{rank recall}, \textbf{log precision}, \textbf{normalized recall} e \textbf{normalized precision}. Queste metriche sono più complesse perché prendono in vengono calcolati sui primi \textit{N} risultati. 
+Sono state quindi proposte nuove metriche come \textbf{rank recall}, \textbf{log precision}, \textbf{normalized recall} e \textbf{normalized precision}. Queste metriche sono più complesse perché prendono in vengono calcolati sui primi \textit{n} risultati. 
 
-\section{Il paradgima Cranfield}
+\section{Il paradigma Cranfield}
 
 In linea di massima si tratta di effettuare una simulazione utente/task.
 
-Cleverdon ha modellato il \textbf{task di ricerca} di un insieme di documenti costruendo una collezione di test da usare ripetutamente in diversi esperimenti di laboratorio invece di eseguire uno studio d'utente diverso per ogni metodo di indicizzazione da valutare.
+Cleverdon ha modellato il \textbf{task di ricerca} di un insieme di documenti costruendo {\color{Red}una collezione di test da usare ripetutamente in diversi esperimenti di laboratorio} invece di eseguire uno studio d'utente diverso per ogni metodo di indicizzazione da valutare.
 Serve quindi una collezione coerente con il task di ricerca d'interesse.
 
 Questo metodo permette di riusare una collezione di test per molti esperimenti, permettendoci di \textbf{ripeterli} e di crearne di nuovi che prima non erano stati immaginati alla creazione della collezione.
@@ -99,7 +112,7 @@ Alcuni esempi sono delle ricerche ad-hoc su una collezione di documenti su uno s
 
 Per definire un test è quindi necessario specificare il \textbf{corpus di documenti} pertinenti al task, l'insieme di domande alle quali si vuole rispondere (\textbf{topic}) e i \textbf{giudizi di rilevanza}, in modo che sia possibile dire se un documento è rilevante o meno rispetto ad un dato topic.
 
-Tutto questo prende il nome di \textbf{collezione sperimetnale di reperimento dell'informazione} o \textbf{test collection}, ed è una tripla:
+Tutto questo prende il nome di \textbf{collezione sperimentale di reperimento dell'informazione} o \textbf{test collection}, ed è una tripla:
 
 $$
 C = \langle D, T, RJ\rangle

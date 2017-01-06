@@ -31,7 +31,7 @@ Si può notare anche la presenza di lettere maiuscole all'interno della frase, c
 \caption{Fasi del processo di indicizzazione. Vengono applicate sia ai documenti che alle query effettuate dall'utente.}
 \end{figure}
 
-\subsubsection{Analisi lessicale}
+\subsubsection{Fase 1: Analisi lessicale}
 
 Viene fatta la scansione dei documenti al fine di estrarre dei \textbf{token}, delle parole che sono potenziali descrittori del documento.
 
@@ -41,10 +41,10 @@ La gestione delle date, specialmente se queste sono rilevanti, risulta essere mo
 
 Ovviamente l'analisi lessicale dipende fortemente dalla lingua, perché per essere efficace deve tenere in considerazione le regole grammaticali.
 
-Nella produzione dei token bisogna tenere conto che questi vengono ordinati in ordine alfabetico e che il più delle volte le parole hanno un significato diverso in base all'ordine in cui sono state scritte. 
+Nella produzione dei token bisogna tenere conto che questi \textbf{vengono ordinati in ordine alfabetico} e che il più delle volte le parole hanno un significato diverso in base all'ordine in cui sono state scritte. 
 Si può quindi scegliere di sacrificare alcune informazioni e tenere l'ordine lessicografico oppure si può fare un'analisi più complessa e tenere traccia anche dell'ordine dei token.
 
-\paragraph{Documenti dopo l'analisi lessicale}
+\paragraph{Documenti dopo l'analisi lessicale} La lista dei token ordinata in ordine lessicografico dei documenti di riferimento è:
 
 \begin{itemize}
 	\item \textbf{D1}: automatici di di di enorme il informazioni
@@ -62,19 +62,18 @@ Rimangono poi i problemi legati alla lingua, che può avere delle notazioni part
 
 Infine ci sono tutte le problematiche legate all'implementazione, quindi tipi di dato, buffer, memoria impiegata, ecc.
 
-\subsubsection{Rimozione delle stop word} 
+\subsubsection{Fase 2: Rimozione delle stop word} 
 
 Le parole funzionali sono le parole che non portano informazioni ma servono per rendere comprensibili le frasi. Si tratta quindi di articoli, pronomi personali, preposizioni e congiunzioni.
+Queste parole vengono anche dette \textbf{stop word}, perché quando vengono incontrate è necessario fermarsi e decidere se tenerle o meno.
 
-Queste parole vengono anche dette \textbf{stopword}, perché quando vengono incontrate è necessario fermarsi e decidere se tenerle o meno.
+Nel caso di collezioni di documenti specifici possono essere considerate come stop word anche delle parole comuni per quel determinato argomento.
 
-Nel caso di collezioni di documenti specifici possono essere considerate come stopword anche delle parole comuni per quel determinato argomento.
-
-Per il caso generale sono disponibili delle \textbf{stop list} pre-compilate che contengono le stopword tipiche per una determinata lingua e che vengono redatte da dei linguisti.
+Per il caso generale sono disponibili delle \textbf{stop list} pre-compilate che contengono le stop word tipiche per una determinata lingua e che vengono redatte da dei linguisti.
 
 Tipicamente conviene rimuovere le stopword perché così facendo diminuisce notevolmente la dimensione dell'indice, questo perché sono poche parole ma molto frequenti.
 
-Una possibile lista di stopword per i nostri documenti è data da:
+Una possibile lista di stop word per i nostri documenti è data da:
 
 \begin{center}
 	\textit{che chi del dell’ di e è hanno i il in l’ le ma nel
@@ -82,7 +81,8 @@ Una possibile lista di stopword per i nostri documenti è data da:
 \end{center}
 
 Da notare che nella lista compaiono anche l'ausiliare ``è'' e il sostantivo ``stato''.
-Il risultato una volta rimosse le stopword il risultato è:
+
+\paragraph{Documenti dopo la rimozione delle stop word} Una volta rimosse le stop word il risultato è:
 
 \begin{itemize}
 	\item \textbf{D1}: automatici enorme informazioni informazioni necessario pagine presenti quantità recupero rende strumenti uso web 
@@ -94,11 +94,11 @@ Il risultato una volta rimosse le stopword il risultato è:
 
 Rimuovere le parole riduce pesantemente la dimensione dell'indice, ma questo richiede di avere a disposizione una stop list per ogni lingua con cui si vuole lavorare e la ricerca all'interno della lista deve essere fatta in modo efficiente.
 
-C'è però un problema perché se dall'indice non si riesce più a ricostruire la semantica della frase di partenza. Una possibile soluzione è di tenere una copia dell'elenco che contiene anche le stopword, sennò se questo non è possibile si può ridurre al minimo il numero di stopword da eliminare.
+C'è però un problema perché dall'indice non si riesce più a ricostruire la semantica della frase di partenza. Una possibile soluzione è di tenere una copia dell'elenco che contiene anche le stopword, sennò se questo non è possibile si può ridurre al minimo il numero di stop word da eliminare.
 
-\subsubsection{Stemming}
+\subsubsection{Fase 3: Stemming}
 
-Lo \textbf{stemming} o \textbf{conglation} è una fase dell'indicizzazione in cui vengono gestite le forme varianti di una parola, come le forme singolare/plurale oppure tutte quelle parole che hanno una radice in comune.
+Lo \textbf{stemming} o \textbf{conflation} è una fase dell'indicizzazione in cui vengono gestite le forme varianti di una parola, come le forme singolare/plurale oppure tutte quelle parole che hanno una radice in comune.
 
 Lo specifico obiettivo è quello di ridurre le forme differenti di una parola ad una radice semantica comune al fine di ridurre la dimensione dell'indice.
 
@@ -117,17 +117,16 @@ Lo stemmer prende il nome di \textbf{suffix-stemmer} quando riduce le parole ing
 
 Lo stemming è un processo intuitivo e che permette di ampliare il automaticamente il range dell'interrogazione effettuata dall'utente, perché viene applicato anche alla query. A volte questo effetto può essere desiderato, altre volte no, ma tipicamente è preferibile fornire più documenti per un discorso di frustrazione dell'utente.
 
-Ci sono però dei casi in cui lo stemming crea confusione, ad esempio con i termini ``\textit{dentellato}'' e ``\textit{dentrifricio}'' perché hanno la stessa radice ma hanno un significato diverso.
+Ci sono però dei casi in cui lo stemming crea confusione, ad esempio con i termini ``\textit{dentellato}'' e ``\textit{dentifricio}'' perché hanno la stessa radice ma hanno un significato diverso.
 
-\paragraph{L'esempio dopo lo stemming}
+\paragraph{Documenti dopo lo stemming}
+Sono rimaste 20 radici distinte, ma il contenuto dei documenti è quasi impossibile da capire.
 
 \begin{itemize}
 	\item \textbf{D1}: autom enorm inform inform necessar pagin present quantit recuper rend strument us web
 	\item \textbf{D2}: concord descr enorm fas inform present quantit recuper relitt strument tip us
 	\item \textbf{D3}: autom diffic document enorm incontr inform inform present strument us web
 \end{itemize}
-
-Sono rimaste 20 radici distinte, ma il contenuto dei documenti è quasi impossibile da capire.
 
 Volendo si può scegliere di tenere più di un'indice, uno in cui viene fatto lo stemming e uno in cui non viene fatto o viene fatto in modo più leggero. Così facendo si può scegliere quale dei due utilizzare in base all'utente, tanto al giorno d'oggi non ci sono problemi di memoria secondaria.
 

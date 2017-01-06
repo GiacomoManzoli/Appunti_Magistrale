@@ -42,7 +42,7 @@ Sistema open-source dell'Apache Software Foundation, creato del 1999, tipicament
 
 Sviluppato dal gruppo di ricerca dell'Università di Glasgow a partire dal 2001.
 
-L'implementazione del sistema è quello che è, perché viene sviluppato a pezzi da vari studenti/ricercatori.
+L'implementazione del sistema è quello che è, perché viene sviluppato a pezzi da vari studenti e ricercatori.
 
 L'utilizzo tipico di questo sistema è in ambito accademico o nel mondo della ricerca.
 
@@ -71,9 +71,7 @@ Dopo l'installazione, che alla fine è la decompressione di un pacchetto, vengon
 \subsection{Properties}
 
 Il file con tutta la configurazione di sistema si trova su \texttt{etc/terrier}.
-IN questo file è possibile specificare quali file indicizzare, quale tokenizer utilizzare, stop-list, stemmer, ecc.
-
-\todo{Nel progetto conviene utilizzare un file properties simile.}
+In questo file è possibile specificare quali file indicizzare, quale tokenizer utilizzare, stop-list, stemmer, ecc.
 
 \subsection{Documentazione}
 
@@ -93,21 +91,51 @@ Viene poi creato l'indice inverso che contiene un po' di informazioni relative a
 
 \subsection{Un esempio di indicizzazione}
 
-Supponiamo di voler indicizzare i file presenti all'url \url{http://www.dei.unipd.it/~silvello/IR2016-2017/small_test_collections/text/} e che siano presenti in locale nel percorso \texttt{ /IR2016-2017/collections/text/}.
+Supponiamo di voler indicizzare i file presenti all'url \url{http://www.dei.unipd.it/~silvello/IR2016-2017/small_test_collections/text/} e che siano presenti in locale nel percorso \texttt{/IR2016-2017/collections/text/}.
 
 Il primo passo è andare a specificare all'interno del file \texttt{etc/collection.spec} quali file indicizzare, indicandone il percorso assoluto.
 Si può fare a mano, oppure si può fare in modo automatico utilizzando uno script bash:
 
 \begin{center}
-	\texttt{sh bin/trec\_setup.sh /path-to-collection/}
+	\texttt{\$ sh bin/trec\_setup.sh /path-to-collection/}
 \end{center}
 
 \noindent Serve poi ri-configurare il file di properties, perché ad ogni esecuzione di \texttt{trec\_steup} viene inizializzato.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.8\linewidth]{images/l12-fig-2.png}
-\end{figure}
+\begin{lstlisting}
+#default controls for query expansion
+querying.postprocesses.order=QueryExpansion
+querying.postprocesses.controls=qe:QueryExpansion
+#default controls for the web-based interface. SimpleDecorate
+#is the simplest metadata decorator. For more control, see Decorate.
+querying.postfilters.order=SimpleDecorate,SiteFilter,Scope
+querying.postfilters.controls=decorate:SimpleDecorate,site:SiteFilter,scope:Scope
+
+#default and allowed controls
+querying.default.controls=
+querying.allowed.controls=scope,qe,qemodel,start,end,site,scope
+
+#document tags specification
+#for processing the contents of
+#the documents, ignoring DOCHDR
+TrecDocTags.doctag=DOC
+TrecDocTags.idtag=DOCNO
+TrecDocTags.skip=DOCHDR
+#set to true if the tags can be of various case
+TrecDocTags.casesensitive=false
+
+#query tags specification
+TrecQueryTags.doctag=TOP
+TrecQueryTags.idtag=NUM
+TrecQueryTags.process=TOP,NUM,TITLE
+TrecQueryTags.skip=DESC,NARR
+
+#stop-words file
+stopwords.filename=stopword-list.txt
+
+#the processing stages a term goes through
+termpipelines=Stopwords,PorterStemmer
+\end{lstlisting}
 
 \noindent Il primo blocco (1-11) riguarda le funzionalità di query expansion e la possibilità di utilizzare Terrier come applicazione web. A noi questa cosa non ci interessa.
 
@@ -127,7 +155,7 @@ Per usare il nostro stemmer dovremmo specificare un \texttt{LookupStemmer}, ment
 	\item \textbf{Documenti}: specificati nel file \texttt{collection.spec}
 	\item \textbf{Analisi lessicale}:
 	\begin{itemize}
-		\item \texttt{tokeniser=EnglishTokenize}: che tokenizer utilizzare, dipende dalla lingua dei documenti.
+		\item \texttt{tokeniser=EnglishTokeniser}: che tokenizer utilizzare, dipende dalla lingua dei documenti.
 		\item \texttt{trec.encoding=UTF-8}: codifica dei caratteri, noi utilizziamo UTF-8 perché dobbiamo gestire anche le lettere accentate e i caratteri in cirillico. Utilizzare UTF-16 è un over-kill, può essere utile con le lingue giapponesi.
 		\item \texttt{trec.collecion.class=SimpleFileCollection} e \texttt{trec.document.class=FileDocument}: specificano le classi Java da utilizzare per fare la tokenizzazione (analisi lessicale). In questo caso \texttt{SimpleFileDocument} permette di indicizzare file di testo, mentre per utilizzare documenti strutturati serve un'altra classe.
 	\end{itemize}
@@ -147,21 +175,20 @@ Per usare il nostro stemmer dovremmo specificare un \texttt{LookupStemmer}, ment
 
 \noindent Per avviare l'indicizzazione viene utilizzato lo script:
 
-\begin{centering}
+\begin{center}
 	\texttt{\$ sh bin/trec\_terrier.sh -i}
-\end{centering}
-
+\end{center}
 
 \noindent L'indice così prodotto viene messo nella cartella \texttt{var/index}, ma può essere modificata dal file properties.
 
-Al comando di creazione dell'indice è possibile passare dei flag per fargli stampare un po' di informazioni:
+Dopo aver creato l'indice è possibile ri-eseguire il comando di creazione dell'indice per ricavare alcune informazioni dall'indice, passandogli uno dei seguenti flag:
 
 \begin{itemize}
-	\item \texttt{--printlexicon} contenuto del ``lexicon''
-	\item \texttt{--printinverted} contenuto dell'``inverted file''
-	\item \texttt{--printdirect} contenuto del ``direct file''
-	\item \texttt{--printstats} statistiche
-	\item \texttt{--printmeta} the meta structure
+	\item \texttt{- -printlexicon} contenuto del ``lexicon''
+	\item \texttt{- -printinverted} contenuto dell'``inverted file''
+	\item \texttt{- -printdirect} contenuto del ``direct file''
+	\item \texttt{- -printstats} statistiche
+	\item \texttt{- -printmeta} the meta structure
 \end{itemize}
 
 \noindent Una possibile riga del lexion prodotto è
@@ -170,7 +197,7 @@ Al comando di creazione dell'indice è possibile passare dei flag per fargli sta
 	\textit{direct,term55 Nt=5 TF=8 \@{0 122 2}}
 \end{center}
 
-\noindent La prima cosa è il termine stemmato, il secondo è l'identificatore progressivo, c'è poi il numero di documenti contenti il termine (\textit{Nt}) e la term frequency (\textit{TF}) nella collezione. L'ultima parte è un'informazione interna di Terrier.
+\noindent La prima cosa è il termine stemmato, il secondo è l'identificatore progressivo, c'è poi il numero di documenti contenti il termine (\textit{Nt}) e la term frequency \textbf{nella collezione}. L'ultima parte è un'informazione interna di Terrier.
 
 Nell'indice trasposto le informazioni sono memorizzate con un'identificativo interno del documento.
 Una riga dell'indice trasposto è:
@@ -180,7 +207,7 @@ Una riga dell'indice trasposto è:
 \end{center}
 
 \noindent Dove il primo campo è l'identificativo del termine, mentre le coppie contengono l'identificativo del documento e la \textit{TF} del termine all'interno del documento.
-Da notare che il l'identificativo del termine (\textit{es: 513}) non viene inserito all'interno del lexicon, è necessario fare affidamento al numero di rigua.
+Da notare che il l'identificativo del termine (\textit{es: 513}) non viene inserito all'interno del lexicon, è necessario fare affidamento al numero di riga.
 
 \section{Indicizzazione e interrogazione di documenti non in inglese}
 
@@ -203,12 +230,12 @@ Una volta creato lo stemmer statistico, per farlo utilizzare a Terrier dobbiamo 
 termpipeline=LookupStemmer
 lookupstemmer.filename=<pathToFile> // verso il file prodotto dal nostro script
 lookupstemmer.encoding=UTF-8
-tokenizer=UTFTokenizer
+tokeniser=UTFTokeniser
 \end{lstlisting}
 
 \noindent Per generare il dizionario completo delle parole non dobbiamo specificare lo stemmer.
 
-Per il progetto non è richiesto l'uso di stop-list, ma se si voglio fare dei test extra è possibile utilizzarle.
+Per il progetto non è richiesto l'uso di stop-list, ma se si vogliono fare dei test extra è possibile utilizzarle.
 
 
 

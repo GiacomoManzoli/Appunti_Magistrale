@@ -6,16 +6,14 @@
 % 27 Ottobre 2016
 % \subsection{Pesatura dei termini}
 
-%% recupera da slide 8.21. stavo dormendo
-
 Un altro modo per calcolare i pesi dei termini è l'\textbf{inverse document frequency} (\textbf{idf}) che riflette l'importanza di un termine nella collezione dei documenti.
 
 L'idea alla base è che se un termine è presente in tanti documenti, questo sarà meno utile per discriminare i vari documenti e quindi è poco importante anche per il reperimento.
 
-La tipica forma dell'idf è
+La tipica forma dell'\textit{idf} è
 
 $$
-idf_k = \log(N / n_k)
+idf_k = \log\bigg(\frac{N}{n_k}\bigg)
 $$
 
 \noindent dove $k$ è l'indice del termine, $N$ è la dimensione della collezione e $n_k$ è il numero delle occorrenze di $k$ all'interno della collezione.
@@ -25,13 +23,13 @@ Questo modello di calcolo è stato sviluppato in modo intuitivo e sperimentale, 
 Quindi per calcolare il peso del termine $k$ nel documento $i$ si usa la formula:
 
 $$
-d_{i,k} = \log (f_{i,k} +1 ) \cdot \log(N/n_k)
+d_{i,k} = \underbrace{\log (f_{i,k} +1 )}_{tf_k} \cdot \underbrace{\log\bigg(\frac{N}{n_k}\bigg)}_{idf_k}
 $$
 
-\noindent Un'alternativa è quella di utilizzare solamente la frequenza del termine:
+\noindent E in modo analogo può essere calcolata per la query, con la differenza che il più delle volte viene considerato solamente $idf_k$ perché tipicamente nella query ogni termine compare una volta sola.
 
 $$
-q_k = \log(f_k +1 )\cdot \log (N/n_k)
+q_k = \log(f_k +1 )\cdot \log \bigg(\frac{N}{n_k}\bigg)
 $$
 
 \noindent Ovviamente i pesi devono essere calcolati solamente per i termini che sono presenti nella query.
