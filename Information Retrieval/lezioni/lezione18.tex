@@ -3,6 +3,8 @@
 % !TEX root = InformationRetrieval.tex
 % !TEX spellcheck = it-IT
 
+% 1 Dicembre 2016
+
 % \subsection{La dimensione del web}
 % continua...
 
@@ -17,7 +19,7 @@ Così facendo, dati due motori di ricerca $A$ e $B$ possiamo andare a stimare l'
 Si può quindi stimare la probabilità che un URL presente in un motore di ricerca $A$ sia contenuto anche nell'intersezione:
 
 $$
-P(A \cap B | A) = \frac{\text{NUmero di URL nell'intersezione}}{\text{numero di URL in }A}
+P(A \cap B | A) = \frac{\text{Numero di URL nell'intersezione}}{\text{numero di URL in }A}
 $$
 
 Inoltre, se è nota la dimensione di $A$ si può anche stimare la dimensione dell'intersezione e di $B$:
@@ -87,6 +89,8 @@ Quindi solo se le limitazioni lo consentono vengono scaricate le pagine web per 
 La profondità di visita dei siti web può essere un parametro stabilito dal progettatore del crawler oppure può essere specificata nel file \texttt{robot.txt} del sito.
 
 Sempre nello stesso file è possibile trovare una limitazione temporale all'intervallo di richiesta delle pagine al server, ad esempio una richiesta ogni 5 secondi, questo per evitare di sovraccaricare il server e intralciare la navigazione degli utenti normali.
+
+\textbf{{\color{Red} Possibile esercizio:}} Si definisca che cosa è un agente web; si descrivano i componenti e i compiti di un Web Crawler.
 
 
 

@@ -18,7 +18,7 @@ Ad ogni grado di rilevanza è possibile associare un peso, che prende il nome di
 	\item \textit{Not Relevenant} $\to 0$
 \end{itemize}
 
-\noindent Il sistema di pesi prende il nome di relevance schema e può variare.
+\noindent Il sistema di pesi prende il nome di \textbf{relevance schema} e può variare.
 
 \subsection{Cumulative Gain (CG)}
 
@@ -31,16 +31,16 @@ Utilizzando più gradi di rilevanza, l'assesment di una run diventa leggermente 
 	\includegraphics[width=0.5\textwidth]{images/l16-fig-1.png}
 \end{figure}
 
-\noindent Formalmente, sia $R(t)$ una run di lunghezza $N \in \mathbb{N}^+$, dove $t$ è un dato topic, $RB_t$ la sua recall base e $j \in \mathbb{N}^+ | 1 \leq j \leq N$. $CG[j]$ è definito come:
+\noindent Formalmente, sia $R(t)$ una run di lunghezza $N \in \mathbb{N}^+$, dove $t$ è un dato topic, $RB_t$ la sua recall base e $j \in \mathbb{N}^+ \ |\ 1 \leq j \leq N$. $CG[j]$ è definito come:
 
 $$
-CG[j] = cg_{r_t}[j] = \sum\limits_{k=1}^j \tilde{r}_t[k]
+CG[j] = cg_{\mathbf{r}_t}[j] = \sum\limits_{k=1}^j \tilde{\mathbf{r}}_t[k]
 $$
 
 \noindent Ad esempio si ha che, per la run dell'immagine precedente viene calcolato con:
 
 $$
-CG[j] = cg_{r_t}[j] = \sum\limits_{k=1}^{20} \tilde{r}_{401}[k] = 75
+CG[j] = cg_{\mathbf{r}_t}[j] = \sum\limits_{k=1}^{20} \tilde{\mathbf{r}}_{401}[k] = 75
 $$
 
 \noindent ovvero è la somma dei pesi dei vari giudizi.
@@ -69,15 +69,15 @@ Questa misura è una variante top-heavy di $CG$ che utilizza una \textbf{discoun
 Partendo sempre da una run $R(t)$ di lunghezza $N$ e da una base logaritmica $b \in \mathbb{N}^+$, per tutti i $k \in [1,N]$ il \textbf{discounted gain} è definito come:
 
 $$
-dg_{r_t}^b[h] = \begin{cases}
-\tilde{r}_t[k] \quad &\text{se } k < b \\
-\cfrac{\tilde{r}_t[k]}{\log_b k} &\text{altrimenti}
+dg_{\mathbf{r}_t}^b[k] = \begin{cases}
+\tilde{\mathbf{r}}_t[k] \quad &\text{se } k < b \\
+\cfrac{\tilde{\mathbf{r}}_t[k]}{\log_b k} &\text{altrimenti}
 \end{cases}
 $$
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.4\textwidth]{images/l16-fig-4.png}
+	\includegraphics[width=0.5\textwidth]{images/l16-fig-4.png}
 	\caption{Esempio di calcolo di discounted gain.}
 \end{figure}
 
@@ -99,7 +99,7 @@ $$
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.4\textwidth]{images/l16-fig-6.png}
+	\includegraphics[width=0.5\textwidth]{images/l16-fig-6.png}
 	\caption{Plot dei confronti tra le curve.}
 \end{figure}
 
@@ -115,26 +115,28 @@ Quindi calcolando $CG$ o $DCG$ sulla run ideale ottengo il valore massimo, che p
 Più formalmente la run ideale $I(t) = i_t$ è una run che soddisfa i seguenti vincoli:
 
 \begin{enumerate}
-	\item \textit{recall base}: $\forall t \in T \big | \{ j \in [1,N] | GT(t,i_t[j]) \geq min(REL) \} \big | = RB_t$
-	\item \textit{ordinamento}: $\forall t \in T, \forall j,k \in [1,N] | j < k \Rightarrow \hat{i_t}[j] \geq \hat{i_t}[k]$
+	\item \textit{recall base}: $\forall t \in T\  \big | \ \{ j \in [1,N] | GT(t,\mathbf{i}_t[j]) \geq min(REL) \}\ \big | \ = RB_t$
+	\item \textit{ordinamento}: $\forall t \in T, \forall j,k \in [1,N] \ | \ j < k \Rightarrow \hat{\mathbf{i}_t}[j] \geq \hat{\mathbf{i}_t}[k]$
 \end{enumerate}
+
+Ovvero è la run che recupera tutti i documenti rilevanti, ordinati secondo il loro grado di rilevanza. Da notare che per definizione la recall di questa run è 1.
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.4\textwidth]{images/l16-fig-7.png}
-	\caption{Esempio di run ideale, da notare che servono solo le informazioni sul ground truth}
+	\includegraphics[width=0.5\textwidth]{images/l16-fig-7.png}
+	\caption{Esempio di run ideale, da notare può essere calcolata utilizzando solamente le informazioni sul ground truth}
 \end{figure}
 
 Il \textbf{Cumulative Gain normalizzato (nGC)} viene calcolato con:
 
 $$
-nGC[j] = \frac{cg_{r_t}[j]}{cg_{i_t}[j]}
+nGC[j] = \frac{cg_{\mathbf{r}_t}[j]}{cg_{\mathbf{i}_t}[j]}
 $$
 
 ed in modo simile \textbf{DCG normalizzato} viene calcolato con:
 
 $$
-nDCG^b[j] = \frac{\sum_{k=1}^j dg_{r_t}^b[k]}{dg_{i_t}^b[k]}
+nDCG^b[j] = \frac{\sum_{k=1}^j dg_{\mathbf{r}_t}^b[k]}{dg_{\mathbf{i}_t}^b[k]}
 $$
 
 Riassumendo, $n(D)CG$ è un valore compreso tra 0 e 1 che permette di confrontare diverse run sullo stesso topic e di fare la media dei valori per run cross-topic, in questo caso prende il nome di \textbf{average $n(D)CG$}
