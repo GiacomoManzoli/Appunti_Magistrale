@@ -1,0 +1,42 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = AALP.tex
+% !TEX spellcheck = it-IT
+\section{Programmazione concorrente}
+
+Discorso sul supporto del linguaggio alla programmazione concorrente.
+
+Idealmente un linguaggio ottimizzato per il parallelismo dovrebbe fornire delle primitive efficienti e pattern d'uso di queste primitive. Inoltre, è cosa gradita avere anche un tool di verifica per il testing.
+
+Modelli di concorrenza (in ordine crescente di astrazione):
+
+\begin{itemize}
+	\item Lock-free programming: Ci sono dei dati condivisi senza primitive di sincronizzazione. Ci sono data-race ma non ci sono lock. Se ci sono delle sezioni critiche è necessario effettuare il controllo che la memoria non sia corrotta.
+	\item Modello a thread: Quello di Java. con sincronizzazioni per l'accesso ai dati condivisi. Ci sono i problemi con i lock e deadlock. \`E un modello difficile da testare e molto error-prone.
+	\item Software transactional memory: Vengono specificate ad alto livello delle sezioni critiche che devono essere eseguite in modo atomico. Dietro le quinte usa il modello a thread oppure converte il codice in codice lock-free
+	\item Future e promises (programmazione asincrona)
+	\item Reactive exension, JavaRX (programmazione asincrona): cambia il paradigma di programmazione, anziché aspettare che un'operazione sia completata, reagisco all'evento del completamento. Ovvero prima viene richiesto l'esecuzione e poi quando è completa faccio quello che dovevo fare, nel mentre l'esecuzione del programma può continuare normalmente.
+	\item Parallel collections, ma si tratta di programmazione sincrona.
+	\item Modello ad attori: Mantiene gli oggetti mutabili, ma li incapsula.
+\end{itemize}
+
+I primi tre modelli sono più concentrati nella gestione dell'accesso dei dati.
+I secondi tre riguardano per lo più la parte relativa al comportamento, che sta bene con i dati immutabili e con il paradigma funzionale.
+
+\subsection{Il modello ad attori}
+
+Un attore è un processo concorrente molto semplice ma che è dotato di un nome, ovvero ha una sua identità.
+Può eseguire una sequenza di istruzioni:
+
+\begin{enumerate}
+	\item Spedire messaggi: solamente verso attori di cui conosce il nome. Mandare messaggi serve per \textbf{delegare} delle attività.
+	\item Ricevere messaggi: definisce come gestire i messaggi che riceve, ad esempio con il pattern matching sui possibili messaggi che può ricevere.
+	\item Modificare il proprio comportamento: può modificare il set di messaggi che è in grado di ricevere.
+	\item Creare un nuovo attore figlio: crea un nuovo attore a cui inviare i messaggi.
+\end{enumerate}
+
+L'esecuzione degli attori è sequenziale, ma deve essere semplice.
+L'invio di messaggi e la creazione di nuovi attori è asincrona, l'attore invia il messaggio e continua la sua esecuzione. Allo stesso modo, la recezione di un messaggio non interrompe il lavoro dell'attore, ma il messaggio viene messo nella \textbf{mailbox} dell'attore. Solo quando il destinatario non sta facendo niente, controlla la posta in ordine d'arrivo e controlla se può rispondere. Nel caso lo fa.
+\`E prevista la possibilità di ritardi nella consegna dei messaggio, quindi il sistema è in grado di scalare bene anche su macchine distribuite.
+
+
