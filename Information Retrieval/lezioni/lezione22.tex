@@ -4,4 +4,78 @@
 % !TEX spellcheck = it-IT
 % 22 Dicembre 2016
 
-\todo[inline]{Recuperare lezione 22 dicembre - Web search}
+%\section{Web Crawler}
+
+Lo sviluppo di un crawler richiede permanenze di telecomunicazioni, di algoritmica e di persistenza dei dati. Perché è necessario organizzare il lavoro di recupero dei dati dal web e memorizzarli in locale.
+
+Il crawler è un insieme di programmi indipendenti dal motore di ricerca. In base alle pagine fornite dal crawler, il motore può fornire risultati diversi, ma le due implementazioni sono scorrelate.
+
+\subsection{Domain Name Transaltion}
+
+Il primo blocco del crawler è quello che si occupa di effettuare la traduzione degli URL in indirizzi IP mediante DNS forward resolution.
+
+Da notare che i DNS sono stati progettati per interagire con degli umani (anche se vengono interrogati dal browser) e quindi può essere che un DNS fornisca delle risposte ad un ritmo ``rallentato'' rispetto a quello del crawler. Per questo motivo tipicamente viene tenuta una cache delle traduzioni.
+La cache risulta utile anche perché durante l'esplorazione del sito, l'ip del server non cambia nel breve termine. 
+Questa cache ogni tanto deve essere aggiornata, perché il sito potrebbe cambiare host. La frequenza di aggiornamento deve tenere conto che le politiche di aggiornamento degli IP varia da organizzazione ad organizzazione.
+
+\subsection{Robot Exclusion Protocol}
+
+L'idea di base di questo protocollo deriva dalla necessità di alcuni siti web di voler evitare l'indicizzazione di tutto il sito o di una parte ridotta.
+Da notare che \textbf{nessuno} può impedire di scaricare un file presente sul web, quindi una volta che un file è stato scaricato, il crawler lo può scaricare, sta alla \textit{fairness} dello sviluppatore decidere se scaricare tutto o meno.
+Le limitazioni vengono convenzionalmente espresse in un file \texttt{robots.txt} codificato in ASCII a 7 bit e seguono un determinato protocollo disponibile su \url{http://www.robotstxt.org/robotstxt.html}.
+Tipicamente un crawler non riscarica ogni volta lo stesso file \texttt{robots.txt}, ma utilizza una cache dei file.
+Anche in questo caso è necessario impostare opportunamente la frequenza di aggiornamento perché un sito può essere esteso oppure le politiche dell'organizzazione possono cambiare.
+
+\subsection{Download}
+
+Dopo aver analizzato il file \texttt{robot.txt} si può passare a scaricare le informazioni dal sito.
+Usiamo il termine informazioni perché una pagina web può essere una pagina HTML oppure può essere un file multimediale.
+La tipologia della pagina viene discriminata da un MIME-TYPE.
+
+Tipicamente i crawler si concentrano sulle pagine HTML, perché alla fine sono quelli che vengono indicizzati dal motore. Tuttavia, in base al motore di ricerca che si deve ``popolare'' si possono prendere in considerazione anche i documenti PDF o immagini.
+Un'altra idea è quella di considerare il PDF alla stregua di una pagina HTML.
+
+Bisogna anche scegliere quante pagine scaricare dello stesso sito web. Se fermarsi al primo livello o andare più in profondità. Tipicamente i crawler si fermano al secondo livello, ma questo può variare in base al tipo di servizio che si vuole dare all'utente.
+
+Infine, può capitare che il sito web re-indirizzi il crawler su un altro sito e in quel caso bisogna scegliere se seguirla o meno. La ridirezione può essere effettuata anche in JavaScript e quindi il crawler deve essere in grado di interpretare il JavaScript.
+
+\subsection{Post Processing}
+
+Dopo aver scaricato la pagina, il crawler la inserisce nell'archivio che viene utilizzato per l'indicizzazione del sistema di reperimento.
+
+Bisogna però aggiornare sistematicamente le pagine che possono cambiare e quindi l'indice del sistema IR è estremamente dinamico, perché deve essere aggiornato ogni volta che vengono aggiornate le pagine del crawler.
+
+Si può anche scegliere di tenere uno storico delle versioni delle pagine, sia per avere una copia di cache da utilizzare in caso di malfunzionamento del sito, che per fare una stima della frequenza di aggiornamento delle pagine del sito.
+
+Il crawler deve essere anche in grado di leggere le il contenuto delle pagine che scarica, perché all'interno dei meta tag della pagina possono esserci delle indicazioni interessanti per il crawler. Uno di questi è \texttt{<meta name="robots" content="noindex"/>} che indica al crawler di non indicizzare la pagina. Un'altro è nei link che possono essere marcati con l'attributo \texttt{rel="nofollow"}, per sconsigliare di seguire un link.
+
+Gli URL che vengono trovati all'interno delle pagine vengono poi inseriti in una \textbf{priority queue} per essere visitati dal crawler. 
+Dato che questa coda può diventare molto lunga è necessario prendere in considerazione la necessità di aggiornare frequentemente i dati di alcune pagine.
+Inoltre, può capitare di ritrovare un URL che è già presente in coda e questo può far cambiare la sua priorità.
+
+\subsection{Raccomandazioni W3C}
+
+Il W3C ha fornito delle linee guida per definire dei buoni crawler che si basano su HTTP.
+Alcuni dei consigli che danno sono:
+
+\begin{itemize}
+	\item Leggere la specifica HTTP (RFC2016)
+	\item Rispettare le informazioni di cache del protocollo HTTP, come \texttt{Last-Modified}
+	\item Specificare che la richiesta HTTP viene da un crawler con l'header HTTP \texttt{User-Agent}
+	\item Rispettare il \texttt{robot.txt}, aggiungendo un ritardo tra le varie richieste verso lo stesso server.
+	\item Negoziare la banda disponibile con l'host del sito, in modo da non occuparne troppa e rallentare il servizio del sito verso gli altri utenti
+\end{itemize}
+
+\noindent Tipicamente se questi consigli non vengono rispettati c'è il rischio che il crawler venga categorizzato come \textit{bad crawler} e gli venga impedito l'accesso al sito.
+
+
+
+
+
+
+
+
+
+
+
+

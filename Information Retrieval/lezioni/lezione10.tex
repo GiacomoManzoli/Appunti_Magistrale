@@ -28,7 +28,7 @@ Da notare che $P(D|\rel)$ è un'abbreviazione per $P(W = x, W = \overline{x}, W 
 
 \noindent dove:
 \begin{itemize}
-	\item $n_{tR} = \sum\limits_{j = 1}^n x_j$ è il numero di volte che ho osservato il termine $x$ tra i documenti rilevanti.
+	\item $N_{tR} = \sum\limits_{j = 1}^n x_j$ è il numero di volte che ho osservato il termine $x$ tra i documenti rilevanti.
 	\item $N_R = \sum\limits_{j = 1}^n 1$ è il numero di documenti rilevanti.
 \end{itemize}
 
@@ -191,18 +191,30 @@ $$
 Inoltre, il logaritmo della parte sinistra soffre delle stesso problema che si aveva nel caso in cui un termine non compare mai all'interno di un documento.
 Quindi di solito si aggiungo delle costanti ($+0.5$) sia al numeratore che al denominatore, ottenendo così il \textbf{relevance weight} di un termine:
 
+\begin{align*}
+	relevance \ weight_i  &\approxeq \log\bigg( \frac{p_i(1-q_i)}{(1-p_i)q_i} \bigg)	 \\
+						  &= \log\bigg( \frac{N_{t_iR} + 0.5}{N_R - N_{t_iR} + 0.5} \frac{N_{NR} - N_{t_{iNR}}+ 0.5}{N_{t_iNR}+ 0.5} \bigg)		        
+\end{align*}
+
+\noindent Così facendo quando non ho informazioni riguardanti i documenti rilevanti nel motore di ricerca o classificatore, ovvero $N_R = N_{t_iR} = 0 $, riesco comunque a fornire un peso per il termine. 
+
 $$
-\boxed{relevance \ weight = \log\bigg( \frac{N_{t_iR} + 0.5}{N_R - N_{t_iR} + 0.5} \frac{N_{NR} - N_{t_{iNR}}+ 0.5}{N_{t_iNR}+ 0.5} \bigg)}
+relevance \ weight_i = \log\bigg( \frac{N_{NR} - N_{t_{iNR}}+ 0.5}{N_{t_iNR}+ 0.5} \bigg)
 $$
 
-\todo{Capire IDF}
-\noindent Così facendo quando non ho dati nel motore di ricerca o classificatore, ovvero $N_R = N_{t_iR} = 0 $, riesco comunque a fornire un peso per il termine. 
-Inoltre, così facendo ottengo una giustificazione probabilistica per \textbf{IDF}.
+\noindent Inoltre, così facendo ottengo una giustificazione probabilistica per \textbf{IDF}.
 
 \begin{align*}
-\log\big(P(t_i)\big) &= \log\big(\frac{N_t}{N}\big) \quad\text{// document frequency}\\
-	&= - \log\big( \frac{N}{N_t}\big) \quad\text{// inverse document frequency}  \\ 
-	&\approx \log\bigg( \frac{N_{t_iR} + 0.5}{N_R - N_{t_iR} + 0.5} \frac{N_{NR} - N_{t_iNR}+ 0.5}{N_{t_iNR}+ 0.5} \bigg) 
+idf(t_i)				&=  \frac{N}{N_t} \\
+\log\big(idf(t_i) \big) &= \log\big( \frac{N}{N_t}\big) 
+\end{align*}
+
+dato che $N_{t_{iNR}} \ll N_{NR}$, perché sono nell'ipotesi che non ci sono informazioni riguardo i documenti rilevanti ($N_{NR} = N$) e il numero di documenti in cui compare il termine $t_i$ è tipicamente molto minore del numero totale di documenti, ottengo:
+
+\begin{align*}
+w_i &=\log\bigg( \frac{N_{NR} - N_{t_{iNR}}+ 0.5}{N_{t_iNR}+ 0.5} \bigg) \\
+    &\approxeq \log\bigg( \frac{N_{NR} + 0.5}{N_{t_iNR}+ 0.5} \bigg) \\
+    &\approxeq log\big( \frac{N}{N_t}\big) = \log\big(idf(t_i) \big)
 \end{align*}
 
 
