@@ -42,9 +42,9 @@ Considerando che TREC-1 ha 741856 documenti e 50 topic, si ha che i giudizi di r
 
 \subsection{run}
 
-Definiamo $D = \{d_1, d_2, \ldots, d_n \}$ un'insieme di documenti e $T = \{ t_1, t_2, \ldots, t_m \}$ un insieme di topic con $m << n$.
+Definiamo $D = \{d_1, d_2, \ldots, d_n \}$ un'insieme di documenti e $T = \{ t_1, t_2, \ldots, t_m \}$ un insieme di topic con $m \ll n$.
 
-Dato un numero naturale $N \in \mathbf{N}^+$ chiamato lunghezza della run, una \textbf{run} è definita come la funzione
+Dato un numero naturale $N \in \mathbb{N}^+$ chiamato lunghezza della run, una \textbf{run} è definita come la funzione
 
 \begin{align*}
 R : T &\to D^N \\
@@ -53,7 +53,7 @@ R : T &\to D^N \\
 
 \noindent tale che $\forall t \in T$, $\forall j,k \in [1,N] \ | \ j \neq k \Rightarrow \mathbf{r}_t[j] \neq  \mathbf{r}_t[k]$, dove $ \mathbf{r}_t[j]$ indica il $j$-esimo elemento del vettore.
 
-Ovvero è una funzione che dato un topic $t \in T$ gli associato un sotto-insieme di documenti di cardinalità $N$ tale che tutti gli elementi del sotto-insieme siano distinti.
+Ovvero è una funzione che dato un topic $t \in T$ gli associa un sotto-insieme di documenti di cardinalità $N$ tale che tutti gli elementi del sotto-insieme siano distinti.
 
 \begin{figure}[htbp]
 	\centering

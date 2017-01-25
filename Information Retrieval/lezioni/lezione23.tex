@@ -11,7 +11,7 @@ Il linguaggio HTML non è stato pensato per i motori di ricerca e per farci repe
 
 Il \textbf{ranking statico} viene definito nel momento dell'indicizzazione effettuando l'analisi del contenuto e dei link presenti nella pagina web.
 
-L'indicizzazione e l'uso dei link, se fatta in modo accorto, la struttura della pagina deve riflettere la qualità, l'autorevolezza e la popolarità di una pagina web. 
+Questo dipende dall'uso dei link e dalla struttura della pagina, la quale deve riflettere la qualità, l'autorevolezza e la popolarità di una pagina web. 
 Migliore è la qualità della pagina, maggiore è il rank statico calcolato dal motore per la pagina.
 
 Da notare che se un motore di ricerca fornisce tra i primi risultati una pagina autorevole non implica che è un motore che funziona bene.
@@ -70,8 +70,8 @@ Altri aspetti che invece si è visto che vengono considerati negativamente sono:
 	\item La presenza dei trattini (hypens) nell'URL. Non si sa bene il perché.
 	\item Lunghezza dell'URL. Se l'URL è lungo, vuol dire che si sta andando in profondità del sito e quindi il contenuto è stato messo in disparte, appunto perché è in profondità.
 	\item Lunghezza del tag \texttt{<title>}, non deve essere né troppo lungo, né troppo corto.
-	\item Quantità di pubblicità presente nella pagina. Se ce n'è troppa la pagina, questa viene penalizzata.
-	\item Numero di immagini e video. Non solo la pesantezza, ma anche la dimensione.
+	\item Quantità di pubblicità presente nella pagina. Se ce n'è troppa la pagina viene penalizzata.
+	\item Numero di immagini e video. Non solo la pesantezza, ma anche lo spazio che occupano sullo schermo.
 \end{itemize}
 
 Ci sono poi altri aspetti che influenzano il ranking. Questi si dividono in due categorie:
@@ -107,7 +107,7 @@ Non c'è la certezza, ma sembra che vengano apprezzati dai motori di ricerca.
 La presenza delle immagini deve essere anche limitata perché i crawler raccolgono solo una parte della pagina, e se la parte della pagina comprende tante immagini, queste non forniscono informazioni utili.
 \`E inoltre sconsigliato utilizzare delle immagini come testi per i link.
 
-\paragraph{Struttura della pagina} I crawler preferiscono le pagine poco profonde, con una struttura semplice perché risultano più semplici da indicizzare. \`E quindi sconsigliato utilizza le tabelle HTML ed è incentivato l'uso dei \texttt{<div>} opportunamente stilati con i CSS.
+\paragraph{Struttura della pagina} I crawler preferiscono le pagine poco profonde, con una struttura semplice perché risultano più semplici da indicizzare. \`E quindi sconsigliato utilizzare le tabelle HTML ed è incentivato l'uso dei \texttt{<div>} opportunamente stilati con i CSS.
 Tutto lo stile della pagina dovrebbe essere contenuto in un file CSS seprato, sia per una questione di separazione della presentazione dal contenuto, sia perché questo alleggerisce le dimensioni della pagina.
 \`E inoltre importante prestare attenzione alla \textbf{site crawlability} della pagina, ovvero i contenuti dovrebbero essere facilmente accessibili dal crawler, quindi attenzione al JavaScript che potrebbe nascondere delle informazioni e niente Adobe Flash.
 Sempre per facilitare il lavoro del crawler è utile specificare nel file \texttt{robot.txt} quali pagine non indicizzare, questo perché il tempo del crawler sul sito è limitato ed è meglio che eviti di sprecarlo su pagine inutili. L'utilizzo di una sitemap può agevolare ulteriormente il crawler.

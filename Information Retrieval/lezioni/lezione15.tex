@@ -16,7 +16,7 @@ Il richiamo misura quanti documenti rilevanti sono stati recuperati, rispetto la
 	\includegraphics[width=0.6\textwidth]{images/l15-fig-1.png}
 \end{figure}
 
-Il valore $|D^*|$ rappresenta il numero di documenti rilevanti per il topic presenti nel pool e viene anche chiamato \textbf{recall base} per un determinato topic. Come già detto è valore fisso che dipende dal numero di documenti rilevanti presenti nel pool o ground truth.
+Il valore $|D^*|$ rappresenta il numero di documenti rilevanti per il topic presenti nel pool e viene anche chiamato \textbf{recall base} per un determinato topic. Si tratta di un valore fisso che dipende dal topic e viene determinato analizzando il pool.
 
 Più formalmente, sia $D$ un insieme finito di documenti, $T$ un insieme finito di topic, $GT$ la ground truth definita su $D$ e $T$ e $REL$ un insieme totalmente ordinato di giudizi di rilevanza. La \textbf{recall base} è definita come:
 
@@ -25,7 +25,8 @@ Più formalmente, sia $D$ un insieme finito di documenti, $T$ un insieme finito 
 		t &\to RB_t = \Big| \big\{ d \in D \ | \ GT(t,d) \succ \min(REL) \big\} \Big|
 \end{align*}
 
-\noindent Ovvero come la cardinalità dell'insieme dei documenti $D$ che per per il topic $t$ hanno un giudizio di rilevanza maggiore del minimo, dove il minimo giudizio di rilevanza è quello associato ad un documento non rilevante.
+\noindent Ovvero come la cardinalità dell'insieme dei documenti $D$ che per il topic $t$ hanno un giudizio di rilevanza maggiore del minimo, dove il minimo giudizio di rilevanza è quello associato ad un documento non rilevante.
+La recall base è un riferimento importante per l'analisi delle prestazione di un sistema IR, perché per essere perfetto un sistema deve recuperare tutti i documenti rilevanti, ordinati per giudizio di rilevanza decrescente.
 
 \begin{figure}[htbp]
 	\centering
@@ -45,7 +46,7 @@ Più formalmente, sia $D$ un insieme finito di documenti, $T$ un insieme finito 
 \end{figure}
 
 Se l'intersezione è vuota, ottengo un \textit{E-measure} uguale a 1, che è il caso di retrieval pessimo.
-Se invece l'\textit{E-measure} è 1, i due insiemi coincidono e quindi il retrieval è perfetto.
+Se invece l'\textit{E-measure} è 0, i due insiemi coincidono e quindi il retrieval è perfetto.
 
 Siccome questa misura è contro-intuitiva si è scelto di utilizzare
 
@@ -55,11 +56,15 @@ $$
 
 Tuttavia, anche questa misura, come precision e recall, non è una misura ranked, perché non viene preso in considerazione l'ordine.
 \FloatBarrier
-\section{Precisione con cut-off}
+\section{Precisione e richiamo con cut-off}
 
 Per alcuni task di ricerca è importante tenere in considerazione l'ordine dei risultati e quindi è utile avere delle misure che tengano conto anche di questo.
 
 L'idea quindi è quella di calcolare la precisione solamente sui primi $k$ elementi recuperati. Questa nuova misura prende il nome di $perc@k$.
+
+$$
+prec@k = \frac{1}{k}\sum\limits_{j=1}^{k} \mathbf{\tilde{r}}_t[j]
+$$
 
 Un caso particolare è quello di $p[RB_t] = prec@RB_t$ che è la precision con cut-off dato dalla dimensione della recall base per un dato topic. Questa misura prende anche il nome di \textbf{R-Prec}.
 
@@ -70,6 +75,12 @@ Un caso particolare è quello di $p[RB_t] = prec@RB_t$ che è la precision con c
 \end{figure}
 
 \textbf{{\color{Red} Possibile domanda:}} Si definiscano le misure di Precisione a cut-off 10 e precisione alla recall base. Se ne descrivano le principali differenze.
+
+Lo stesso ragionamento può essere effettuato per il richiamo:
+
+$$
+recall@k = \frac{1}{RB_t} \sum\limits_{j=1}^{k} \mathbf{\tilde{r}}_t[j]
+$$
 
 \FloatBarrier
 \section{Curva Richiamo-Precisione}
@@ -87,19 +98,28 @@ Quindi per il primo livello di rango viene calcolata la \textit{recall} come se 
 
 Questa curva però ha un sacco di problemi, perché intanto non è una funzione, inoltre non è possibile utilizzarla per comparare due run distinte. C'è poi anche da tenere in considerazione che uno stesso sistema può produrre run diverse.
 
-Una variante è la curva \textbf{interpolata}: una curva simile che viene ottenuta considerando 11 punti fissi di richiamo (\textbf{11-point recall-precision}):
+Una variante è la curva \textbf{interpolata}: una curva simile che viene ottenuta considerando 11 punti fissi di richiamo (\textbf{11-point recall-precision}).
+
+Come prima cosa viene definito un set di punti che rappresentano dei livelli di richiamo:
 
 $$
-rp \in \{ 0, 0.1, 0.2, \ldots 1 \}
+RP = \{ 0, 0.1, 0.2, \ldots 1 \}
 $$
 
-e viene calcolata come 
+\noindent dopodiché viene calcolato per ogni punto $rp \in RP$ la \textbf{precisione interpolata a \textit{rp}}:
 
 $$
 IP_{rp} = \max_{1 \leq r \leq N | Rec(r) \geq rp} Prec(r)
 $$
 
-ovvero, ad ognuno dei punti dell'insieme $rp$ viene associato il più alto valore di precisione ottenuto sui primi $r$ valori della run che hanno un richiamo maggiore del punto.
+\noindent ovvero ad ognuno dei punti dell'insieme $rp$ viene associato il più alto valore di precisione ottenuto sui primi $r$ valori della run che hanno un richiamo maggiore del punto.
+
+Quindi nel lato pratico:
+
+\begin{enumerate}
+	\item Per ogni livello di rango $r$ della run calcolo $rec@r$ e $prec@r$
+	\item Per ogni punto $rp$ calcolo $IP_{rp}$ come il \textbf{massimo} valore di $prec@r$ tale che $rec@r > rp$
+\end{enumerate}
 
 \begin{figure}[htbp]
 	\centering
@@ -123,8 +143,7 @@ $$
 $$
 
 C'è però un'effetto indesiderato perché la precisione a valori alti di richiamo ha lo stesso peso di quelli a livelli bassi, mentre si vorrebbe dare maggiore peso alla precisione ai livelli più alti di rank, ovvero sui primi documenti della run.
-
-Tipicamente si usa quindi l'\textbf{Average Precision} che è la misura attualmente più utilizzata.
+Tipicamente si usa quindi l'\textbf{Average Precision}.
 
 Dato un topic $t \in T$, una recall base $RB_t$, $REL =\{ nr, r \}$ e una run $\mathbf{r}_t$ di lunghezza $N$ tale che:
 
@@ -135,10 +154,10 @@ $$
 \end{cases}
 $$
 
-l'average precision è quindi definita come:
+\noindent l'average precision è definita come:
 
 $$
-AP = \frac{1}{RB_t}\sum\limits_{k=1}^{N}\tilde{\mathbf{r}}_t[k]\frac{\sum\limits_{h=1}^{k} \tilde{\mathbf{r}}_t[h]}{k}
+AP = \frac{1}{RB_t}\sum\limits_{k=1}^{N} \underbrace{\tilde{\mathbf{r}}_t[k]}_{\text{relevance weight dell'elemento \textit{k}}} \overbrace{\frac{\sum\limits_{h=1}^{k} \tilde{\mathbf{r}}_t[h]}{k}}^{prec@k}
 $$
 
 Le misure di questo tipo prendo il nome di \textbf{top heavy} perché danno più peso ai documenti rilevanti in posizioni alte del rank.

@@ -19,7 +19,7 @@ Il fatto di avere la struttura dell'inverted index correlata alla funzione di ra
 
 La gestione dei termini indice influenza l'elaborazione delle query degli utenti, è quindi importante effettuare un query processing efficiente visto che occorre gestire numeri consistenti di documenti.
 
-La strategia di query processing dipende dal modello IR che viene adottato e che influenza la scelta della tipologia di indice trasposto da adottare. 
+La strategia di query processing dipende dal modello IR che viene adottato, che a sua volta influenza la scelta della tipologia di indice trasposto da adottare. 
 Si può sempre scegliere di utilizzare più indici trasposti in modo da supportare algoritmi diversi di query-processing.
 
 Ovviamente non ha senso prendere in considerazione un modello IR che non permette di effettuare query processing in modo efficiente ed efficace.
@@ -67,8 +67,6 @@ Da notare che nella sommatoria gli indici $i$ riguardano le caratteristiche dell
 \subsubsection{Inverted Index e posting}
 
 Ricapitolando: l'indice serve per memorizzazione l'elenco delle parole presenti nei documenti e viene prodotto dalla fase di indicizzazione, tuttavia i sistemi moderni utilizzano l'inverted index, il quale ad ogni termine associa la lista dei documenti in cui compare e eventualmente la frequenza con cui compare. 
-
-\todo{a 1.04 potrebbe esserci qualcosa riguardo ai test}
 
 Il ranking model considera che ogni documento è composto da feature e nell'inverted index ogni parola corrisponde ad una feature, segue quindi che l'inverted index viene utilizzato per calcolare lo score di un documento.
 

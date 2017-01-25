@@ -48,7 +48,7 @@ Tra i tag definiti nel dublin core ci sono quelli per definire l'autore della pa
 
 Tipicamente le query web sono composte da poche parole, mediamente 2 o 3, e gli argomenti sono molto generici.
 
-Fino a poco tempo, come modello di riferimento veniva utilizzato un modello booleano che metteva in \textit{and} tutti i termini presenti nella query. I documenti trovati venivano poi ordinati i risultati per rilevanza.
+Fino a poco tempo fa, come modello di riferimento veniva utilizzato un modello booleano che metteva in \textit{and} tutti i termini presenti nella query. I documenti trovati venivano poi ordinati per rilevanza.
 Tuttavia in questo ultimo periodo la prima parte è stata rilassata: non viene più effettuato un exact-match, ma vengono presi in considerazione anche i sinonimi. Inoltre, nel ranking viene tenuto conto anche della rete sociale e dello storico dell'utente.
 
 Si ha inoltre che la distribuzione delle query effettuate dall'utente ha una coda lunga, ovvero ci sono poche query che vengono effettuate molto frequentemente e tante query che vengono effettuate raramente.
@@ -79,13 +79,12 @@ Un web crawler o agente web è un programma che attraversa automaticamente la st
 \end{figure}
 
 
-Il crawler ha bisogno di alcuni URL di partenza che prende il nome di \textbf{lista di seed}, la quale definisce una serie di URL e le politiche di visita degli indirizzi.
+Il crawler ha bisogno una lista di URL di partenza che prende il nome di \textbf{lista di seed}, la quale definisce una serie di URL e le politiche di visita degli indirizzi.
 Ad esempio si può configurare il crawler in modo che visiti solamente le pagine presenti su alcuni domini.
 
-\`E necessario poi andare a tradurre l'URL in un IP mediante un servizio DNS o una chace. Una volta fatto ciò si può richiedere la pagina web al server, tenendo però conto del file \texttt{robot.txt} il quale contiene la descrizione dei vincoli per l'indicizzazione del contenuto del sito (\textbf{robot esclusion}).
+\`E necessario poi andare a tradurre l'URL in un IP mediante un servizio DNS o una cache. Una volta fatto ciò si può richiedere la pagina web al server, tenendo però conto del file \texttt{robot.txt} il quale contiene la descrizione dei vincoli per l'indicizzazione del contenuto del sito (\textbf{robot esclusion}).
 \`E buona norma rispettare le restrizioni, perché altrimenti il server potrebbe bloccare del tutto l'accesso al robot.
-
-Quindi solo se le limitazioni lo consentono vengono scaricate le pagine web per essere analizzate e processate. Durante l'analisi vengono estratti altri URL che il web crawler visiterà oltre ai seed, secondo un certa coda di priorità.
+Quindi, solo se le limitazioni lo consentono, vengono scaricate le pagine web per essere analizzate e processate. Durante l'analisi vengono estratti altri URL che il web crawler visiterà oltre ai seed, secondo un certa coda di priorità.
 La profondità di visita dei siti web può essere un parametro stabilito dal progettatore del crawler oppure può essere specificata nel file \texttt{robot.txt} del sito.
 
 Sempre nello stesso file è possibile trovare una limitazione temporale all'intervallo di richiesta delle pagine al server, ad esempio una richiesta ogni 5 secondi, questo per evitare di sovraccaricare il server e intralciare la navigazione degli utenti normali.

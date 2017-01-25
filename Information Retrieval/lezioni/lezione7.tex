@@ -13,7 +13,7 @@
 In ogni caso non c'è un modello di ranking ottimo, perché l'ottimo dipende da cosa vogliamo fornire all'utente.
 
 I modelli visti finora non tenevano conto dell'ordine delle parole e quindi rispondevano allo stesso modo sia a ``\textit{tropical fish}'' che a ``\textit{fish tropical}''.
-Per discriminare questi due casi è necessario estendere l'indice in modo che contenga anche la posizione delle parole, aggiungiamo quindi alle varie posting list dei termini anche la posizione interna del documento in cui compaiono, ottenendo l'indice riportato in figura \ref{fig:index-pos}.
+Per discriminare questi due casi è necessario estendere l'indice in modo che contenga anche la posizione delle parole. Aggiungiamo quindi alle varie posting list dei termini anche la posizione interna del documento in cui compaiono, ottenendo l'indice riportato in figura \ref{fig:index-pos}.
 
 \begin{figure}[htbp]
 	\centering
@@ -67,7 +67,7 @@ Un modello resta comunque un'astrazione del sistema in quanto è uno strumento c
 
 \section{Modello IR contro le Basi di Dati}
 
-Nei database il modello ha lo scopo di fornire un'astrazione della rappresentazione e del contenuto informativo dei dati e delle operazioni di aggiornamento e accesso ai dati.
+Nei database il modello ha lo scopo di fornire un'astrazione della rappresentazione, del contenuto informativo dei dati e delle operazioni di aggiornamento e accesso ai dati.
 Pertanto può succedere che un'utente corrompa i dati presenti oppure che si verifichino situazioni di modifiche concorrenti, ecc.
 
 Nel modello IR non ci sono questi problemi perché le operazioni di aggiornamento vengono effettuate solamente da utenti speciali, mentre le operazioni fatte dagli utenti \textit{normali} sono solo quelle di lettura.
@@ -104,7 +104,7 @@ Con un database ci si aspetta dei risultati esatti, mentre con i sistemi IR veng
 	\item \textbf{Modello probabilistico} (1970): modello sperimentale ancora poco utilizzato.
 	\item \textbf{Modello di analisi della semantica latente} (1980)
 	\item \textbf{Modello statistico della lingua} (1990)
-	\item \textbf{Modello basato su reti ipermediali}(1980/1990))
+	\item \textbf{Modello basato su reti ipermediali} (1980/1990)
 \end{itemize}
 
 \section{Modello booleano}
@@ -161,7 +161,7 @@ Per combinare i descrittori in modo da definire concetti più complessi vengono 
 \begin{itemize}
 	\item \textit{or}: richiede che sia presente all'interno del documento almeno uno dei due termini. \`{E} quindi possibile che vengano forniti dei documenti in eccesso.
 	\item \textit{and}: richiede che all'interno del documento siano presenti i entrambi i termini. Tipicamente la cardinalità dell'insieme dei documenti fornito è molto minore rispetto a quella dei due insiemi dei termini.
-	\item \textit{not}: richiede che non che il termine non compaia nel documento. Non è però possibile rispondere con tutti i documenti che lo contengono e tipicamente l'utente non vuole tutti i documenti che lo contengo. Questo perché l'utente non ha il concetto di ``\textit{universo dei documenti}''.
+	\item \textit{not}: richiede che il termine non compaia nel documento. Non è però possibile rispondere con tutti i documenti che lo contengono e tipicamente l'utente non vuole tutti i documenti che lo contengo. Questo perché l'utente non ha il concetto di ``\textit{universo dei documenti}''.
 \end{itemize}
 
 

@@ -21,7 +21,7 @@ Questa cache ogni tanto deve essere aggiornata, perché il sito potrebbe cambiar
 \subsection{Robot Exclusion Protocol}
 
 L'idea di base di questo protocollo deriva dalla necessità di alcuni siti web di voler evitare l'indicizzazione di tutto il sito o di una parte ridotta.
-Da notare che \textbf{nessuno} può impedire di scaricare un file presente sul web, quindi una volta che un file è stato scaricato, il crawler lo può scaricare, sta alla \textit{fairness} dello sviluppatore decidere se scaricare tutto o meno.
+Da notare che \textbf{nessuno} può impedire di scaricare un file presente sul web, quindi una volta che un file è stato caricato, il crawler lo può scaricare, sta alla \textit{fairness} dello sviluppatore decidere se scaricare tutto o meno.
 Le limitazioni vengono convenzionalmente espresse in un file \texttt{robots.txt} codificato in ASCII a 7 bit e seguono un determinato protocollo disponibile su \url{http://www.robotstxt.org/robotstxt.html}.
 Tipicamente un crawler non riscarica ogni volta lo stesso file \texttt{robots.txt}, ma utilizza una cache dei file.
 Anche in questo caso è necessario impostare opportunamente la frequenza di aggiornamento perché un sito può essere esteso oppure le politiche dell'organizzazione possono cambiare.
@@ -47,7 +47,7 @@ Bisogna però aggiornare sistematicamente le pagine che possono cambiare e quind
 
 Si può anche scegliere di tenere uno storico delle versioni delle pagine, sia per avere una copia di cache da utilizzare in caso di malfunzionamento del sito, che per fare una stima della frequenza di aggiornamento delle pagine del sito.
 
-Il crawler deve essere anche in grado di leggere le il contenuto delle pagine che scarica, perché all'interno dei meta tag della pagina possono esserci delle indicazioni interessanti per il crawler. Uno di questi è \texttt{<meta name="robots" content="noindex"/>} che indica al crawler di non indicizzare la pagina. Un'altro è nei link che possono essere marcati con l'attributo \texttt{rel="nofollow"}, per sconsigliare di seguire un link.
+Il crawler deve essere anche in grado di leggere il contenuto delle pagine che scarica, perché all'interno dei meta tag della pagina possono esserci delle indicazioni interessanti per il crawler. Una di queste è \texttt{<meta name="robots" content="noindex"/>} che indica al crawler di non indicizzare la pagina. Un'altra è nei link che possono essere marcati con l'attributo \texttt{rel="nofollow"}, per sconsigliare di seguire un link.
 
 Gli URL che vengono trovati all'interno delle pagine vengono poi inseriti in una \textbf{priority queue} per essere visitati dal crawler. 
 Dato che questa coda può diventare molto lunga è necessario prendere in considerazione la necessità di aggiornare frequentemente i dati di alcune pagine.
