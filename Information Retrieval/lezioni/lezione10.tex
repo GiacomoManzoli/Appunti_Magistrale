@@ -14,17 +14,17 @@ Si ha che la probabilità $P(D|\rel)$ prende il nome di \textbf{likelihood} e ch
 
 Da notare che $P(D|\rel)$ è un'abbreviazione per $P(W = x, W = \overline{x}, W = x \ldots | C = \rel)$.
 
-\begin{align*}
-	&\frac{\partial}{\partial p} \log \Big( (D|\rel) \Big) = 0\\
-	&\frac{\partial}{\partial p} \log \Big( \prod\limits_{j = 1}^n p^{x_j}(1-p)^{1-x_j} \Big) = 0\\
-	&\frac{\partial}{\partial p} \sum\limits_{j = 1}^n \log \Big( p^{x_j}(1-p)^{1-x_j} \Big) = 0 \\
-	&\frac{\partial}{\partial p} \sum\limits_{j = 1}^n \log \Big( p^{x_j}\Big) + \sum\limits_{j = 1}^n \log \Big((1-p)^{1-x_j} \Big) = 0 \\
-	&\frac{\partial}{\partial p} \sum\limits_{j = 1}^n x_j \log \Big( p\Big) + \sum\limits_{j = 1}^n (1-x_j)\log \Big(1-p \Big) = 0 \\
-	&\frac{1}{p}\sum\limits_{j = 1}^n x_j + \sum\limits_{j = 1}^n (1-x_j) \frac{1}{1-p}(-1)= 0 \\
-	&\frac{n_{tR}}{p}  =  \frac{N_R}{1-p} - \frac{N_{tR}}{1-p}\\
-	&(1-p)N_{tR} = (N_r - N_{tR}) p  = N_Rp - N_{tR}p\\
+\begin{align}
+	&\frac{\partial}{\partial p} \log \Big( (D|\rel) \Big) = 0\nonumber\\
+	&\frac{\partial}{\partial p} \log \Big( \prod\limits_{j = 1}^n p^{x_j}(1-p)^{1-x_j} \Big) = 0\nonumber\\
+	&\frac{\partial}{\partial p} \sum\limits_{j = 1}^n \log \Big( p^{x_j}(1-p)^{1-x_j} \Big) = 0 \nonumber\\
+	&\frac{\partial}{\partial p} \sum\limits_{j = 1}^n \log \Big( p^{x_j}\Big) + \sum\limits_{j = 1}^n \log \Big((1-p)^{1-x_j} \Big) = 0 \nonumber\\
+	&\frac{\partial}{\partial p} \sum\limits_{j = 1}^n x_j \log \Big( p\Big) + \sum\limits_{j = 1}^n (1-x_j)\log \Big(1-p \Big) = 0 \nonumber\\
+	&\frac{1}{p}\sum\limits_{j = 1}^n x_j + \sum\limits_{j = 1}^n (1-x_j) \frac{1}{1-p}(-1)= 0 \nonumber\\
+	&\frac{n_{tR}}{p}  =  \frac{N_R}{1-p} - \frac{N_{tR}}{1-p} \nonumber\\
+	&(1-p)N_{tR} = (N_r - N_{tR}) p  = N_Rp - N_{tR}p \nonumber\\
 	&\boxed{p = \frac{N_{tR}}{N_R}}
-\end{align*}
+\end{align}
 
 \noindent dove:
 \begin{itemize}
@@ -40,9 +40,9 @@ Da notare che $P(D|\rel)$ è un'abbreviazione per $P(W = x, W = \overline{x}, W 
 
 Gli stessi conti possono essere ripetuti per calcolare $q$, ottenendo:
 
-$$
+\begin{align}
 \boxed{q = \frac{N_{tNR}}{N_{NR}}}
-$$
+\end{align}
 
 \noindent Dove $N_{tNR}$ è il numero di volte che ho osservato il termine $x$ tra i documenti non rilevanti e $N_{NR}$ è il numero di documenti non rilevanti.
 
@@ -70,7 +70,7 @@ Il tutto sotto l'ipotesi di una \textbf{zero-one loss function}, ovvero nel caso
 
 Tutto questo vale però se abbiamo solo una moneta (o parola).
 
-\paragraph{Smoothing delle probabilità} C'è un problema se $N_{tR} = 0$, perché il questo caso si ha che $P(C = \rel | D) = 0$. Ovvero, se non ci sono documenti rilevanti con quel termine, la probabilità che un documento con quel termine diventa 0, ma può essere che $N_{tR}$ sia 0 perché non sono ancora stati osservati documenti con rilevanti contenenti quel termine e non perché il termine non è significativo per la rilevanza del documento.
+\paragraph{Smoothing delle probabilità} C'è un problema se $N_{tR} = 0$, perché il questo caso si ha che $P(C = \rel | D) = 0$. Ovvero, se non ci sono documenti rilevanti con quel termine, la probabilità che un documento con quel termine sia rilevante diventa 0, ma può essere che $N_{tR}$ sia 0 perché non sono ancora stati osservati documenti con rilevanti contenenti quel termine e non perché il termine non è significativo per la rilevanza del documento.
 
 La probabilità $p$ viene quindi calcolata con dei termini di smoothing:
 
@@ -117,7 +117,7 @@ Per gestire questo problema viene fatta un'assunzione d'indipendenza: la cosi de
 Grazie a questa assunzione posso semplificare il calcolo in:
 
 $$
-P(C = \rel | D=(T_1, T_2, T_3)) = \prod\limits_{i = 1}^{|V|}P(T_i|C=\rel)
+P(D=(T_1, T_2, T_3) | C = \rel) = \prod\limits_{i = 1}^{|V|}P(T_i|C=\rel)
 $$
 
 \noindent dove $V$ è il vocabolario dei termini, $V = \{ T_1, T_2, \ldots T_m\}$.
@@ -142,7 +142,7 @@ P(D | C=\rel) &= \prod\limits_{j=1}^n P((T_{1},T_{2},\ldots T_{m})_j|C=\rel) \\
 \noindent Per calcolare le singole probabilità possiamo utilizzare le formule precedentemente viste:
 
 $$
-p_i = \frac{N_{t_iR}}{N_R} \qquad \text{e} \qquad q_i = \frac{N_{t_iNR}}{N_{NR}}
+\boxed{p_i = \frac{N_{t_iR}}{N_R}} \qquad \text{e} \qquad \boxed{q_i = \frac{N_{t_iNR}}{N_{NR}}}
 $$
 
 \noindent Dove $N_{t_iR}$ indica il numero di documenti rilevanti contenenti il termine $t_i$. Anche in questo caso possono essere applicati dei termini di smoothing specifici per ogni termine.

@@ -129,7 +129,7 @@ P(C = s | W = \ell) = \frac{P(W = \ell | C = s)P(C=s)}{P(W = \ell)}
 $$
 
 \noindent Il vantaggio di questa nuova formulazione è che possiamo calcolarci sia $P(W = \ell | C = s)$ che $P(w = \ell)$ andando a controllare le mail presenti nella cartella spam.
-Andando a controllare abbiamo osservato che $P(W = \ell | C = s) = 3/5$ e quindi possiamo calcolarci la probabilità di interesse.
+Così facendo abbiamo osservato che $P(W = \ell | C = s) = 3/5$ e quindi possiamo calcolarci la probabilità di interesse.
 
 Tuttavia bisogna tenere conto che possono capitare dei casi limite in cui la parola ``lottery'' non viene mai trovata nelle mail già classificate come spam, oppure è presente su tutte. Per gestire questi casi è quindi necessario utilizzare dei fattori di correzione.
 
@@ -180,7 +180,7 @@ Questo è il nostro caso tipico, perché il più delle volte ci chiederemo se un
 	P(W = x | C = \notrel) &= q^x(1-q)^{1-x}
 \end{align*}
 
-\noindent questa probabilità noi riusciamo a calcolare con un \textbf{processo fisico}, ovvero possiamo andare a prendere dei documenti dalla ``\textit{scatola}'' dei documenti rilevanti e non rilevanti e osservare se i documenti estratti contengono o meno la parola $W = x$.
+\noindent queste probabilità noi riusciamo a calcolarle con un \textbf{processo fisico}, ovvero possiamo andare a prendere dei documenti dalla ``\textit{scatola}'' dei documenti rilevanti e non rilevanti e osservare se i documenti estratti contengono o meno la parola $W = x$.
 A partire da questi dati, noi vogliamo effettuare il \textbf{processo inverso}, ovvero dato un documento che contiene (o non contiene) delle parole $W$ vogliamo riuscire a capire qual'è la categoria più probabile.
 
 \begin{align*}
@@ -188,10 +188,10 @@ A partire da questi dati, noi vogliamo effettuare il \textbf{processo inverso}, 
 	             &= \frac{P(W|C=\rel)P(C = \rel)}{\sum\limits_c P(W|C = c)|P(C = c)}
 \end{align*}
 
-e in modo simile possiamo calcolare
+\noindent e in modo simile possiamo calcolare
 
 $$
-	P(C=\notrel |W) = \frac{P(W|C=\notrel)P(C = \notrel)}{P(W)}
+P(C=\notrel |W) = \frac{P(W|C=\notrel)P(C = \notrel)}{P(W)}
 $$
 
 Se $P(C=\rel |W) > P(C=\notrel |W)$ allora possiamo dire che il documento in esame è rilevante.

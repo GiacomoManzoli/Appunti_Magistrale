@@ -137,7 +137,7 @@ $$
 
 Il tutto per dire che per pesare un termine bisogna tenere in considerazione sia la rilevanza del documento che l'éliteness ed entrambe le caratteristiche sono influenzate dalla frequenza del termine. 
 
-Inoltre, dato che l'èliteness e la rilevanza sono due cose distinte, ci possono essere dei documenti d'élite per un certo argomento ma che non sono rilevanti per la query.
+Inoltre, dato che l'éliteness e la rilevanza sono due cose distinte, ci possono essere dei documenti d'élite per un certo argomento ma che non sono rilevanti per la query.
 Si ha poi che un documento è d'élite per un determinato termine se questo termine è molto presente, senza prendere in considerazione la rilevanza.
 Quindi:
 
@@ -174,7 +174,7 @@ Risulta quindi necessario utilizzare un'approssimazione della funzione di peso d
 Per fare questa approssimazione si può osservare che:
 
 \begin{enumerate}
-	\item Se $tf_i = 0$, anche $W_i(0) = $.
+	\item Se $tf_i = 0$, anche $W_i(0) = 0$.
 	\item La funzione cresce in monotonicamente come $tf_i$.
 	\item C'è un massimo asintotico.
 	\item Il massimo è simile al sistema di pesi del BIM:
@@ -183,15 +183,21 @@ Per fare questa approssimazione si può osservare che:
 	$$
 \end{enumerate}
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/l19-fig-1.png}
+	\caption{A sinistra: alcune possibile funzioni di saturazione che sono compatibili con i 4 punti dell'elenco. A destra: funzioni di saturazione generate dal 2-Poisson.}
+\end{figure}
+
 Quindi se l'éliteness fosse osservabile, sarebbe possibile trattarla come un attributo binario e utilizzare la stessa funzione di pesatura del BIM.
 Questo a livello asintotico ha senso. Perché dato che l'unica associazione tra $tf_i$ e la rilevanza passa attraverso l'éliteness, la miglior informazione che possiamo sperare di ottenere da un termine è che il documento è d'élite per quel termine. In realtà la nostra informazione riguardo questo score è probabilistica, e quindi il peso del termine viene ridotto secondo la questa probabilità. Questo comportamento prende il nome di \textbf{saturazione}.
 Da notare che l'unico caso in cui non vale la saturazione è quando la rilevanza e l'éliteness coincidono, ottenendo un limite infinito e rendendo il peso del termine lineare rispetto alla frequenza, come avviene con $tf\cdot idf$.
 
 Gli autori di BM25 hanno quindi deciso di approssimare l'effetto dell'éliteness utilizzando la curva
 
-$$
-\frac{tf_i}{k + tf_i}
-$$
+\begin{align}
+\frac{tf_i}{k + tf_i} \ref{eq:raw}
+\end{align}
 
 \noindent per qualche $k > 0$.
 
@@ -202,14 +208,14 @@ W_i(tf_i) &= \frac{tf_i}{k + tf_i}  w_i^{RSJ} \\
 &=\frac{tf_i}{k + tf_i}  \log \bigg( \frac{N_{t_iR} + 0.5}{N_R - N_{t_iR} + 0.5} \frac{N - N_R - N_{t_i} + N_{tR + 0.5}}{N_{t_i} + N_{t_iR} +0.5} \bigg)
 \end{align*}
 
-\noindent dove $w_i^{RSJ}$ deriva dall'equazione \ref{eq:wrsj} e è una versione semplificata del BM15.
+\noindent dove $w_i^{RSJ}$ deriva dall'equazione \ref{eq:wrsj} ed è una versione semplificata del BM15.
 
 Tutto questo funziona se assumiamo che i documenti hanno la stessa lunghezza perché consideriamo quante volte compare un termine all'interno di un documento, senza preoccuparci del numero totale di termini. Ovviamente non possiamo fare tale assunzione.
 
 I primi modelli che tenevano in considerazione la lunghezza del documento, modificavano la frequenza del termine dividendola per la lunghezza del documento $dl$, effettuando una normalizzazione della frequenza.
 
 $$
-dl = \sum\limits_{i in V} tf_i
+dl = \sum\limits_{i \in V} tf_i
 $$
 
 \noindent Si è quindi ottenuto un BM-qualcosa.
@@ -229,6 +235,13 @@ $$
 
 \noindent dove $avgdl$ è la lunghezza media dei documenti della collezione.
 Quindi se $b=1$ viene fatta la normalizzazione completa, dando maggiore probabilità di retrieval ai documenti corti mentre se $b=0$ viene data maggiore probabilità di retrieval ai documenti lunghi, in quanto non viene fatta la normalizzazione.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/l19-fig-2.png}
+	\caption{A sinistra: funzioni di saturazione generate con l'equazione \ref{eq:raw}. A destra: funzioni di saturazione generate normalizzando $tf_i$ con $B$ ($k=1, b=0.5$).}
+\end{figure}
+
 
 Mettendo tutto assieme si ottiene il BM25 semplificato: 
 
