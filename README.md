@@ -31,4 +31,4 @@ Leggenda:
 
 - Information Retrieval
 - Metodi e Modelli per l'ottimizzazione combinatoria
-- Aspetti avanzati dei linguaggi di programmazione
+- Aspetti avanzati dei linguaggi di programmazione [Completato][LaTeX - solo prima parte]
