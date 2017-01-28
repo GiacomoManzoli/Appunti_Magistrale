@@ -68,9 +68,8 @@ Da notare che nella sommatoria gli indici $i$ riguardano le caratteristiche dell
 
 Ricapitolando: l'indice serve per memorizzazione l'elenco delle parole presenti nei documenti e viene prodotto dalla fase di indicizzazione, tuttavia i sistemi moderni utilizzano l'inverted index, il quale ad ogni termine associa la lista dei documenti in cui compare e eventualmente la frequenza con cui compare. 
 
-Il ranking model considera che ogni documento è composto da feature e nell'inverted index ogni parola corrisponde ad una feature, segue quindi che l'inverted index viene utilizzato per calcolare lo score di un documento.
-
-In più ogni termine indice (\textbf{index term}) ha la sua lista trasposta (\textbf{inverted list}/\textbf{posting list}) che mantiene i dati relativi al termine.
+Il ranking model considera che ogni documento è composto da feature e nell'inverted index ogni parola corrisponde ad una feature, quindi l'inverted index viene utilizzato per calcolare lo score di un documento.
+In più, ogni termine indice (\textbf{index term}) ha la sua lista trasposta (\textbf{inverted list}/\textbf{posting list}) che mantiene i dati relativi al termine.
 Ogni elemento di questa lista viene chiamato \textbf{posting} e contiene varie informazioni che possono essere utilizzate per calcolare in modo efficiente lo score del documento, tra queste informazioni c'è un riferimento al documento di appartenenza che prende il nome di \textbf{pointer}.
 Ogni pointer fa riferimento al documento mediante il suo identificativo univoco, che non è detto sia un numero intero.
 

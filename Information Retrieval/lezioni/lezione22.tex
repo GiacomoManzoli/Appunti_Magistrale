@@ -6,7 +6,7 @@
 
 %\section{Web Crawler}
 
-Lo sviluppo di un crawler richiede permanenze di telecomunicazioni, di algoritmica e di persistenza dei dati. Perché è necessario organizzare il lavoro di recupero dei dati dal web e memorizzarli in locale.
+Lo sviluppo di un crawler richiede competenze di telecomunicazioni, di algoritmica e di persistenza dei dati. Perché è necessario organizzare il lavoro di recupero dei dati dal web e memorizzarli in locale.
 
 Il crawler è un insieme di programmi indipendenti dal motore di ricerca. In base alle pagine fornite dal crawler, il motore può fornire risultati diversi, ma le due implementazioni sono scorrelate.
 
@@ -21,7 +21,7 @@ Questa cache ogni tanto deve essere aggiornata, perché il sito potrebbe cambiar
 \subsection{Robot Exclusion Protocol}
 
 L'idea di base di questo protocollo deriva dalla necessità di alcuni siti web di voler evitare l'indicizzazione di tutto il sito o di una parte ridotta.
-Da notare che \textbf{nessuno} può impedire di scaricare un file presente sul web, quindi una volta che un file è stato caricato, il crawler lo può scaricare, sta alla \textit{fairness} dello sviluppatore decidere se scaricare tutto o meno.
+Da notare che \textbf{nessuno} può impedire di scaricare un file presente sul web, quindi una volta che un file è stato caricato, il crawler lo può scaricare. Sta alla \textit{fairness} dello sviluppatore decidere se scaricare tutto o meno.
 Le limitazioni vengono convenzionalmente espresse in un file \texttt{robots.txt} codificato in ASCII a 7 bit e seguono un determinato protocollo disponibile su \url{http://www.robotstxt.org/robotstxt.html}.
 Tipicamente un crawler non riscarica ogni volta lo stesso file \texttt{robots.txt}, ma utilizza una cache dei file.
 Anche in questo caso è necessario impostare opportunamente la frequenza di aggiornamento perché un sito può essere esteso oppure le politiche dell'organizzazione possono cambiare.

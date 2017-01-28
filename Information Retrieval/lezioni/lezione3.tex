@@ -11,7 +11,7 @@
 Tutto è iniziato quando George K. \textbf{Zipf}, uno studioso americano di linguistica ha formulato delle leggi empiriche che mettono in relazione la \textbf{frequenza di una parola} con la sua \textbf{forma} e \textbf{significato}. 
 Solo in un secondo momento queste leggi sono state applicate all'indicizzazione dei documenti.
 
-L'osservazione di partenza è stata quella che ci sono poche parole che sono veramente molto frequenti, come gli articoli e che sono poche significative rispetto il contenuto informativo del documento, e che ci sono tante parole poco frequenti, alcune delle quali sono fortemente correlate al contenuto informativo del documento. Il gioco è quindi quello di sfruttare al meglio tali parole.
+L'osservazione di partenza è stata quella che ci sono poche parole che sono veramente molto frequenti, come gli articoli, e che sono poco significative rispetto il contenuto informativo del documento. Ci sono poi tante parole poco frequenti, alcune delle quali sono fortemente correlate al contenuto informativo del documento. Il gioco è quindi quello di sfruttare al meglio tali parole.
 
 Questo andamento può essere rappresentato graficamente, prima andando a contare le frequenze delle singole parole, per poi andare ad ordinarle da quella più frequente a quella meno frequente. La distribuzione così ottenuta è intera, ma può essere approssimata da un'iperbole.
 
@@ -69,8 +69,8 @@ Si ha quindi che i passi per applicare le indicazioni di Luhn sono:
 \begin{itemize}
 	\item Si calcoli la frequenza di ogni descrittore in ogni documento della collezione di riferimento. C'è inoltre da scegliere come trattare le parti di contorno dei documenti come l'indice, la premessa, ecc. tali parti tipicamente non vengono considerate.
 	\item Si calcoli la frequenza totale di ogni descrittore.
-	\item Si ordino i descrittore per frequenza decrescente.
-	\item Si scelga una soglia di \textit{upper cut-off} e si rimuovano dalla lista i descrittore con frequenza superiore alla soglia. In questo modo si rimuovono gli articoli, le preposizioni, ecc.
+	\item Si ordino i descrittori per frequenza decrescente.
+	\item Si scelga una soglia di \textit{upper cut-off} e si rimuovano dalla lista i descrittori con frequenza superiore alla soglia. In questo modo si rimuovono gli articoli, le preposizioni, ecc.
 	\item Si scelga un'altra soglia di \textit{lower cut-off} e si rimuovano dalla lista i descrittori con frequenza inferiore al valore di soglia. In questo modo si rimuovono i descrittori ``rumore''  o che non apportano alcun contribuito alla descrizione del contenuto.
 \end{itemize}
 
@@ -96,7 +96,7 @@ L'indicizzazione può essere svolta:
 	\item in modo semi-automatico, quando è necessario intervenire all'interno del processo per prendere delle decisioni che non possono essere prese in modo automatico.
 \end{itemize}
 
-\noindent Tutti questi metodi funzionano estraendo direttamente dal documento le informazioni, tuttavia possono essere estesi in modo che vengano presi in considerazione anche dei dizionari o delle meta-informazioni.
+\noindent Tutti questi metodi funzionano estraendo direttamente dal documento le informazioni. Tuttavia possono essere estesi in modo che vengano presi in considerazione anche dei dizionari o delle meta-informazioni.
 
 \begin{figure}[htbp]
 	\centering

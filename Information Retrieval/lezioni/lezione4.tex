@@ -13,7 +13,7 @@ Non devono essere necessariamente eseguite tutte le fasi, perché ogni fase port
 
 \subsection{Fasi del processo di indicizzazione}
 
-Come set di documenti di riferimento utilizziamo i seguenti documenti:
+Come collezione di riferimento utilizziamo i seguenti documenti:
 
 \begin{itemize}
 	\item \textbf{D1}: L’enorme quantità di informazioni presenti nelle pagine Web rende necessario l’uso di strumenti automatici per il recupero di informazioni
@@ -33,7 +33,7 @@ Si può notare anche la presenza di lettere maiuscole all'interno della frase, c
 
 \subsubsection{Fase 1: Analisi lessicale}
 
-Viene fatta la scansione dei documenti al fine di estrarre dei \textbf{token}, delle parole che sono potenziali descrittori del documento.
+Viene fatta la scansione dei documenti al fine di estrarre dei \textbf{token}: delle parole che sono potenziali descrittori del documento.
 
 I token vengono individuati nel testo tramite dei caratteri di separazione come lo spazio, la tabulazione, ecc. In base alla collezione di documenti può anche essere utile considerare altri caratteri di separazione, come i simboli matematici, le date, ecc.
 
@@ -115,7 +115,7 @@ Lo stemmer prende il nome di \textbf{suffix-stemmer} quando riduce le parole ing
 
 \paragraph{Effetti dello stemming}
 
-Lo stemming è un processo intuitivo e che permette di ampliare il automaticamente il range dell'interrogazione effettuata dall'utente, perché viene applicato anche alla query. A volte questo effetto può essere desiderato, altre volte no, ma tipicamente è preferibile fornire più documenti per un discorso di frustrazione dell'utente.
+Lo stemming è un processo intuitivo che permette di ampliare il automaticamente il range dell'interrogazione effettuata dall'utente, perché viene applicato anche alla query. A volte questo effetto può essere desiderato, altre volte no, ma tipicamente è preferibile fornire più documenti per un discorso di frustrazione dell'utente.
 
 Ci sono però dei casi in cui lo stemming crea confusione, ad esempio con i termini ``\textit{dentellato}'' e ``\textit{dentifricio}'' perché hanno la stessa radice ma hanno un significato diverso.
 

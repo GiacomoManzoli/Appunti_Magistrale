@@ -150,6 +150,13 @@ $$
 \boxed{ P(rel|d,q) \propto_q \sum\limits_{i \in d \cap q} \log \bigg( \frac{N_{t_iR} + 0.5}{N_R - N_{t_iR} + 0.5} \frac{N - N_R - N_{t_i} + N_{tR + 0.5}}{N_{t_i} + N_{t_iR} +0.5} \bigg) }
 $$
 
+La funzione di pesatura di un termine del BIM risulta quindi essere\footnote{RSJ sta per Robertson/Sparck Jones, gli autori.}:
+
+\begin{align}
+\boxed{
+w_i^{RSJ} = \log \bigg( \frac{N_{t_iR} + 0.5}{N_R - N_{t_iR} + 0.5} \frac{N - N_R - N_{t_i} + N_{tR + 0.5}}{N_{t_i} + N_{t_iR} +0.5} \bigg) \label{eq:wrsj}
+}
+\end{align}
 
 \subsubsection{Interpretazione grafica del costo degli errori}
 

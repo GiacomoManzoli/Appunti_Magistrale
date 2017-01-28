@@ -22,8 +22,8 @@ Da notare che $P(D|\rel)$ è un'abbreviazione per $P(W = x, W = \overline{x}, W 
 	&\frac{\partial}{\partial p} \sum\limits_{j = 1}^n x_j \log \Big( p\Big) + \sum\limits_{j = 1}^n (1-x_j)\log \Big(1-p \Big) = 0 \\
 	&\frac{1}{p}\sum\limits_{j = 1}^n x_j + \sum\limits_{j = 1}^n (1-x_j) \frac{1}{1-p}(-1)= 0 \\
 	&\frac{n_{tR}}{p}  =  \frac{N_R}{1-p} - \frac{N_{tR}}{1-p}\\
-	&(1-p)n_{tR} = (N_r - n_{tR}) p  = N_Rp - n_{tR}p\\
-	&\boxed{p = \frac{n_{tR}}{N_R}}
+	&(1-p)N_{tR} = (N_r - N_{tR}) p  = N_Rp - N_{tR}p\\
+	&\boxed{p = \frac{N_{tR}}{N_R}}
 \end{align*}
 
 \noindent dove:
@@ -41,7 +41,7 @@ Da notare che $P(D|\rel)$ è un'abbreviazione per $P(W = x, W = \overline{x}, W 
 Gli stessi conti possono essere ripetuti per calcolare $q$, ottenendo:
 
 $$
-\boxed{q = \frac{n_{tNR}}{N_{NR}}}
+\boxed{q = \frac{N_{tNR}}{N_{NR}}}
 $$
 
 \noindent Dove $N_{tNR}$ è il numero di volte che ho osservato il termine $x$ tra i documenti non rilevanti e $N_{NR}$ è il numero di documenti non rilevanti.
@@ -49,7 +49,7 @@ $$
 Si ha quindi che 
 
 $$
-N = N_R + N_{NR} \qquad \text{e} \qquad n_t = n_{tR} + n_{tNR}
+N = N_R + N_{NR} \qquad \text{e} \qquad N_t = N_{tR} + N_{tNR}
 $$
 
 e che $q$ può essere espresso come:

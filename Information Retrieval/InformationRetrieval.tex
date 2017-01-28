@@ -32,6 +32,38 @@
 \usepackage{placeins}
 \usepackage[scaled=0.8]{sourcecodepro}
 \usepackage{hyperref}                   % collegamenti ipertestuali
+\hypersetup{
+	%hyperfootnotes=false,
+	%pdfpagelabels,
+	%draft,	% = elimina tutti i link (utile per stampe in bianco e nero)
+	colorlinks=true,
+	linktocpage=true,
+	pdfstartpage=1,
+	pdfstartview=FitV,
+	% decommenta la riga seguente per avere link in nero (per esempio per la stampa in bianco e nero)
+	%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=1, pdfstartview=FitV,
+	breaklinks=true,
+	pdfpagemode=UseNone,
+	pageanchor=true,
+	pdfpagemode=UseOutlines,
+	plainpages=false,
+	bookmarksnumbered,
+	bookmarksopen=true,
+	bookmarksopenlevel=1,
+	hypertexnames=true,
+	pdfhighlight=/O,
+	%nesting=true,
+	%frenchlinks,
+	urlcolor=Cerulean,
+	linkcolor=RoyalBlue,
+	citecolor=Cerulean,
+	%pagecolor=RoyalBlue,
+	%urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,
+	pdfsubject={},
+	pdfkeywords={},
+	pdfcreator={pdfLaTeX},
+	pdfproducer={LaTeX}
+}
 
 \usepackage[colorinlistoftodos,prependcaption]{todonotes} %todo
 
@@ -100,6 +132,8 @@
 
 \newcommand{\rel}{\ensuremath{rel}}
 \newcommand{\notrel}{\ensuremath{\overline{\rel}}}
+\newcommand{\elite}{\ensuremath{\textit{élite}}}
+\newcommand{\notelite}{\ensuremath{\overline{\rel}}}
 
 %----------------------------------------------------------------------------------------
 % TITLE

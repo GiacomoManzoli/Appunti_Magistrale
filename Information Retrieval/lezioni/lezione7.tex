@@ -67,7 +67,7 @@ Un modello resta comunque un'astrazione del sistema in quanto è uno strumento c
 
 \section{Modello IR contro le Basi di Dati}
 
-Nei database il modello ha lo scopo di fornire un'astrazione della rappresentazione, del contenuto informativo dei dati e delle operazioni di aggiornamento e accesso ai dati.
+Nei database il modello ha lo scopo di fornire un'astrazione della rappresentazione del contenuto informativo dei dati e delle operazioni di aggiornamento e accesso ai dati.
 Pertanto può succedere che un'utente corrompa i dati presenti oppure che si verifichino situazioni di modifiche concorrenti, ecc.
 
 Nel modello IR non ci sono questi problemi perché le operazioni di aggiornamento vengono effettuate solamente da utenti speciali, mentre le operazioni fatte dagli utenti \textit{normali} sono solo quelle di lettura.
@@ -130,7 +130,7 @@ I concetti sono rappresentati da descrittori estratti mediante un processo di in
 Effettuando l'indicizzazione vengono quindi perse le informazioni relative alla sinonimia e polisemia.
 
 \begin{itemize}
-	\item \textbf{Sinonima}: in linguistica indica la condizione di sostituibilità di un elemento linguistico con un altro nel contesto e nella situazione dati, senza che ne consegue un'alterazione del significato. Fortunatamente la sinonima è assoluta è di fatto inesistente nella lingua naturale. Ad esempio se l'utente cerca ``\textit{viso}'' ma tutti i documenti contengo ``\textit{faccia}'', se il modello non gestisce i sinonimi, non vengono trovati risultati.
+	\item \textbf{Sinonima}: in linguistica indica la condizione di sostituibilità di un elemento linguistico con un altro nel contesto e nella situazione dati, senza che ne consegue un'alterazione del significato. Fortunatamente la sinonima assoluta è di fatto inesistente nella lingua naturale. Ad esempio se l'utente cerca ``\textit{viso}'' ma tutti i documenti contengo ``\textit{faccia}'' e il modello non gestisce i sinonimi, non vengono trovati risultati.
 	\item \textbf{Polisemia}: in linguistica indica la coesistenza in una parola di significati diversi. Ad esempio la parola ``\textit{riso}'' può indicare il riso da risotto oppure l'atto del ridere. Un'altra sfumatura di questo problema sono gli omonimi, \textit{Paolo Rossi} può indicare molte persone ed è quindi necessario disambiguare richiedendo ulteriori informazioni nella query oppure creando altri indici con informazioni utili alla disambiguazione come il codice fiscale o la data di nascita. Per disambiguare in questo caso è possibile utilizzare degli \textbf{authority file}.
 \end{itemize}
 
