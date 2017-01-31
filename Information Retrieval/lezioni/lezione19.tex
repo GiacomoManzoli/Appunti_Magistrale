@@ -196,7 +196,7 @@ Da notare che l'unico caso in cui non vale la saturazione è quando la rilevanza
 Gli autori di BM25 hanno quindi deciso di approssimare l'effetto dell'éliteness utilizzando la curva
 
 \begin{align}
-\frac{tf_i}{k + tf_i} \ref{eq:raw}
+\frac{tf_i}{k + tf_i} \label{eq:raw}
 \end{align}
 
 \noindent per qualche $k > 0$.
@@ -252,7 +252,7 @@ Mettendo tutto assieme si ottiene il BM25 semplificato:
 \end{align}
 
 Tipicamente come parametri viene utilizzato $k_1=1.5$ e $b=0.75$, tuttavia possono essere ottimizzati ad hoc in modo sperimentale.
-Tuttavia questo modello avrebbe un'ulteriore componente che tiene conto della frequenza dei termini della query. Tale fattore viene però tenuto tipicamente uguale a 1, perché salvo rari casi la frequenza dei termini nella query è sempre 1, salvo rari casi in cui la query è rappresentata da un documento.
+Questo modello avrebbe un'ulteriore componente che tiene conto della frequenza dei termini della query. Tale fattore viene però tenuto tipicamente uguale a 1, perché la frequenza dei termini nella query è sempre 1, salvo i rari casi in cui la query è rappresentata da un documento.
 C'è poi un'altra variante che sostituisce moltiplica il numeratore per $k_1+1$.
 
 La versione "completa" del BM25 è quindi:
@@ -261,7 +261,7 @@ La versione "completa" del BM25 è quindi:
 W_i^{BM25}(tf_i) = \frac{(k_1+1)tf_i}{k_1\bigg((1-b)+ b\cfrac{dl}{avgdl}\bigg) + tf_i } \times \frac{(k_3+1)qtf_i}{k_3 + qtf_i} \times w_i^{RSJ}
 \end{align}
 
-\noindent Da notare che manca il termine $k_2$, questo perché era un parametro del modello che c'era una volta, ma tutti gli esperimenti che hanno visto che i risultati migliori si trovano con $k_2=0$ e quindi non viene più considerato.
+\noindent Da notare che manca il termine $k_2$, questo perché era un parametro del modello che è stato rimosso in quanto tutti gli esperimenti che sono stati fatti hanno provato che i risultati migliori si trovano con $k_2=0$ e quindi non viene più considerato.
 
 \begin{itemize}
 \item non posso chiedervi di  calcolare delle formule con bm25

@@ -66,7 +66,7 @@ Per risolvere questi problemi si posso utilizzare dei pesi per le varie parole, 
 \end{figure}
 
 
-La pesatura può assegnare a ciascuno termine la frequenza di occorrenza del termine in un documento (\textbf{Term Frequency}) oppure la frequenza di occorrenza del termine all'interno della collezione (\textbf{Inverse Document Frequency}). Entrambi gli schemi verranno approfonditi più avanti.
+La pesatura può assegnare a ciascun termine la sua frequenza di occorrenza in un documento (\textbf{Term Frequency}) oppure la sua frequenza di occorrenza all'interno della collezione (\textbf{Inverse Document Frequency}). Entrambi gli schemi verranno approfonditi più avanti.
 
 Tipicamente nell'indice vengono memorizzati i dati grezzi, ovvero la frequenza assoluta, per calcolare i pesi in fase di reperimento, questo perché se l'indice contenesse direttamente i pesi, all'aggiunta di un nuovo documento sarebbe necessario andare a ricalcolare tutti i pesi di tutti i documenti. Un altro motivo è dato dal fatto che il peso serve solo per le parole che compaiono all'interno della query e quindi il calcolo non è oneroso e può essere fatto online.
 

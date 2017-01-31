@@ -18,7 +18,7 @@ Questo andamento può essere rappresentato graficamente, prima andando a contare
 Tipicamente in inglese:
 \begin{itemize}
 	\item Le due parole più frequenti sono \textit{the} e \textit{of}, mediamente sono il 10\% delle parole del documento.
-	\item Le 6 parole più frequenti corrispondo a circa il 20\% delle occorrente e le 50 parole più frequenti corrispondo a circa il 40\% dei testi. Questo deriva dal fatto che la lingua deve essere ridondante in modo che sia facile da capire.
+	\item Le 6 parole più frequenti corrispondo a circa il 20\% delle occorrenze e le 50 parole più frequenti corrispondo a circa il 40\% dei testi. Questo deriva dal fatto che la lingua deve essere ridondante in modo che sia facile da capire.
 	\item Considerando un'insieme di documenti molto ampio, circa la metà delle singole parole di quel campione compare una sola volta. Queste sono parole più significative dal punto di vista dell'informazione. Tuttavia è necessario tenere conto che in questo insieme di parole possono comparire anche gli errori di battitura.
 \end{itemize}
 
@@ -60,9 +60,9 @@ Ogni parola ha un certo \textbf{resolving power}, ovvero una certa capacità di 
 	\caption{Plot della curva $r \times f$ che evidenzia la posizione delle parole significative.}
 \end{figure}
 
-Questo vale per le collezioni generiche dei documenti, mentre se si parla di un argomento specifico si può dare maggiore peso a determinate parole. Ad esempio può capitare in che se viene preso in esame un manuale di MySQL è ovvio che le parole ``MySQL'' e  ``table'' compariranno tante volte anche se non sono articoli.
+Questo vale per le collezioni generiche dei documenti, mentre se si parla di un argomento specifico si può dare maggiore peso a determinate parole. Ad esempio può capitare che se viene preso in esame un manuale di MySQL è ovvio che le parole ``MySQL'' e  ``table'' compariranno tante volte anche se non sono articoli.
 
-C'è anche un altro discorso relativo alla forma plurale, che in conteggio di frequenza vengono considerate come diverse, quando in realtà può essere che abbia lo stesso valore informativo della forma singolare. In alcuni casi è quindi opportuno sommare le occorrenze della forma plurale e di quella singolare.
+C'è anche un altro discorso relativo alla forma plurale delle parole, che in conteggio di frequenza viene considerata come una parola diversa, quando in realtà può essere che abbia lo stesso valore informativo della forma singolare. In alcuni casi è quindi opportuno sommare le occorrenze della forma plurale e di quella singolare.
 
 Si ha quindi che i passi per applicare le indicazioni di Luhn sono:
 
@@ -84,8 +84,7 @@ Le parole che vengo eliminate dalle soglie di cut-off vengono nominate \textbf{s
 \section{Indicizzazione}
 
 L'indicizzazione ha l'obiettivo di rappresentare il contenuto informativo di un documento e nel tempo questo processo ha preso una struttura a fasi.
-
-Il documento viene rappresentato da dei descrittori che vengono utilizzati per la costruzione degli indici, utili al reperimento dell'informazione.
+Il documento viene rappresentato da dei descrittori che vengono utilizzati per la costruzione degli indici utili al reperimento dell'informazione.
 
 Quindi l'indicizzazione fornisce automaticamente una rappresentazione più compatta e direttamente utilizzabile del contenuto informativo del documento. Gli indici sono utilizzati come surrogati del contenuto del documento durante la fase di reperimento.
 
