@@ -79,11 +79,13 @@ Quali sono le differenze più significative fra il reperimento delle informazion
 Le collezioni testuali sono più statiche, è difficile che una volta che un documento è stato indicizzato il suo contenuto cambi. Quindi l'indicizzazione di una collezione locale viene fatta una sola volta e ogni tanto si aggiorna l'indice. 
 Si riesce inoltre ad avere un'idea precisa della dimensione della collezione e dell'autorevolezza dei documenti che contiene. 
 
-Nel web i documenti sono le singole pagine, ce ne sono tante e possono cambiare molto rapidamente, è quindi necessario aggiornare in continuazione l'indice. Non è garantita l'autorevolezza della collezione e non è nota la dimensione della collezione, quindi è difficile stimare le risorse (tempo e spazio) necessarie per indicizzarla.
+Nel web i documenti sono le singole pagine, ce ne sono tante e possono cambiare molto rapidamente, è quindi necessario aggiornare in continuazione l'indice. Non è garantita l'autorevolezza della collezione e non è nota la dimensione della collezione, quindi è difficile stimare le risorse (tempo e spazio) necessarie per indicizzarla. Le pagine però sono strutturate con i tag html i quali possono essere usati per valorizzare in modo diverso i termini contenuti nella pagina.
 
 Sempre in termini di risorse, nell'ambito Web è necessario tenere conto della banda necessaria e del tempo che serve per scaricare una pagina, la quale può trovarsi in un angolo remoto del modo. Dopo aver scaricato le pagine è necessario inoltre avere sufficiente spazio per tenerle tutte in memoria. Con i documenti testuali invece non c'è bisogno di tenere conto della banda, perché al massimo è una risorsa che viene utilizzata una tantum, solamente per recuperare la prima volta la collezione (assumendo che questa viene scaricata da Internet e non copiata a livello fisico)-
 
 Un'altra differenza può essere dovuta al fatto che la collezione di documenti sia cartacea e che quindi deve essere digitalizzata prima di poter essere indicizzata, mentre con le pagine web si ha la certezza del formato digitale.
+
+C'è poi da considerare che l'utente tipo è diverso ed ha esigenze informative diverse. L'utente che cerca su una collezione testuale potrebbe cercare un documento specifico, effettuare delle query lunghe e tipicamente potrebbe essere disposto ad analizzare con più calma i risultati della ricerca. Nel contesto web l'utente è più impaziente, meno informato e quindi effettua delle query più corte.
 
 \subsection{Domanda 3}
 
@@ -177,6 +179,7 @@ Fanno parte di questa categoria:
 	\item La struttura della pagina: la sintassi deve essere valida e facilmente analizzabile dal crawler, quindi con pochi tag innestati (no tabelle, a meno che non sia necessario) e uso limitato di JavaScript e Adobe Flash.
 	\item Il peso della pagina: la pagina deve essere veloce a caricarsi, se ci mette tanto fa perdere tempo sia all'utente che al crawler. Tra le varie cose che si possono fare c'è il separare i CSS dal HTML.
 	\item Struttura dell'url: la presenza di una keyword nell'URL aumenta il ranking. Ma anche la profondità alla quale si trova una pagina lo influenza. Una pagina tanto profonda può essere sinonimo di una pagina ``nascosta'' perché poco interessante.
+	\item La presenza del file robot.txt e di una sitemap: un crawler sta poco tempo nel sito, la sitemap lo aiuta nello spostarsi tra le pagine e il robot.txt permette di segnalare alcune pagine che non ha senso che vengano indicizzate.
 \end{itemize}
 
 
