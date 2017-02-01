@@ -1,0 +1,229 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = InformationRetrieval.tex
+% !TEX spellcheck = it-IT
+
+\section{Esame 2016-07-05}
+
+\subsection{Domanda 1}
+
+L'indicizzazione automatica dei documenti testuali si basa sulla capacità di discriminare il contenuto in funzione della frequenza dei termini, come indicato da Luhn. Si illustri questo concetto che sta alla base della rappresentazione dei contenuti della rappresentazione testuale.
+
+\subsubsection{Soluzione}
+
+Secondo Luhn è possibile individuare un sotto-insieme di parole limitato che compaiono molto frequentemente all'interno dei documenti della collezione e un sotto-insieme di parole molto più grande che contiene le parole che appaiono meno frequentemente.
+Le parole di questo secondo sotto-insieme possono essere usate per discriminare il contenuto informativo dei documenti in cui compaiono, stando però attenti agli errori di battitura.
+
+Zipf ha formalizzato la distribuzione di questi termini, fornendo un modello: come prima cosa è necessario calcolare tutte le occorrenze dei vari termini, per poi ordinarli per frequenza decrescente, assegnando rango massimo al termine più frequente. Così facendo si ha che
+
+$$
+r \times tf_r = k
+$$
+
+Luhn ha quindi proposto di determinare due soglie di cut-off e di rimuovere durante l'indicizzazione tutte le parole che hanno frequenza superiore alla soglia massima, per rimuovere le parole scarsamente informative, e tutte quelle con frequenza inferiore alla soglia minima per evitare gli errori di battitura. Viene quindi presa in considerazione solamente la "\textit{parte centrale}" dell'iperbole di Zipf, ovvero le parole che hanno un resolving power maggiore (capacità di discriminare il contenuto di un documento).
+
+\subsection{Domanda 2}
+
+Siano dati i seguenti documenti testuali
+
+\begin{itemize}
+	\item \textbf{D1}: Il codice sorgente esprime l'algoritmo del programma tradotto nel linguaggio di programmazione.
+	\item \textbf{D2}: Un programma è un insieme di istruzioni che, una volta eseguite, produce soluzione per una data classe di problemi.
+	\item \textbf{D3}: Con il termine istruzione in informatica si intende il comando impartito ad un esecutore utilizzando un linguaggio ad esso comprensibile
+\end{itemize}
+
+Si effettui la loro indicizzazione automatica creando l'indice dei descrittori. Si descriva una possibile strategia per la costruzione di una stop list corrispondente ai documenti forniti.
+
+\subsubsection{Soluzione}
+
+L'indicizzazione automatica è composta dalle seguenti fasi:
+\begin{enumerate}
+	\item Analisi lessicale/tokenizzazione
+	\item Rimozione delle stop word
+	\item Stemming
+	\item Composizione dei termini
+\end{enumerate}
+
+\paragraph{Fase 1: Analisi lessicale}
+
+Creo i token, considerando come separatore ``,``, ``.'',``''' e lo spazio, rimuovo i separatori e rendo tutto minuscolo.
+
+\begin{itemize}
+	\item \textbf{D1}: algoritmo codice del di esprime il l linguaggi nel programma programmazione sorgente
+	\item \textbf{D2}: che classe data di di è eseguite insieme istruzioni problemi produce programma soluzione un un una una
+	\item \textbf{D3}: ad ad comando comprensibile con esecutore esso il il impartito in informatica intende linguaggio si termine un un utilizzando  
+\end{itemize}
+
+\paragraph{Fase 2: rimozione delle stopword}
+
+Come stop word è possibile considerare tutte le parole funzionali della lingua della collezione, in questo caso l'italiano, così come si possono applicare le indicazioni di Luhn, andando a scartare, e quindi considerare come stop word, le parole tanto frequenti e le parole poco frequenti.
+
+In questo caso, tutte le parole sarebbero poco frequenti, quindi vengono rimosse solamente quelle funzionali.
+
+\begin{itemize}
+	\item \textbf{D1}: algoritmo codice esprime linguaggio programma programmazione sorgente
+	\item \textbf{D2}: classe data eseguite insieme istruzioni problemi produce programma soluzione
+	\item \textbf{D3}: comando comprensibile esecutore impartito informatica intende linguaggio termine utilizzando
+\end{itemize}
+
+\paragraph{Fase 3: Stemming} 
+
+Lo stemming consiste nel ridurre i termini ad una radice comune, in modo da raggruppare le forme varianti di una parola in un unico termine. Ci sono vari modi di algoritmi di stemming, alcuni generici e altri specifici per una determinata lingua. In alternativa si possono usare dei dizionari creati da persone esperte. Durante questa fase bisogna stare attenti a non stemmare troppo o troppo poco.
+
+Per motivi pratici, lo stemming viene fatto riducendo le parole tutte alla forma singolare, i verbi alla forma infinita e abbreviando sia ``programma'' che ``programmazione'' in ``programm''.
+
+\begin{itemize}
+	\item \textbf{D1}: algoritmo codice esprimere linguaggio programm programm sorgente
+	\item \textbf{D2}: classe data eseguire insieme istruzione problema produrre programm soluzione
+	\item \textbf{D3}: comando comprensibile esecutore impartire informatica intendere linguaggio termine utilizzare
+\end{itemize}
+
+\paragraph{Fase 4: Composizione dei termini}
+
+In questa fase alcuni termini che hanno senso solo se compaiono in una determinata sequenza vengono composti tra loro, creando dei nuovi termini. Questa cosa è computazionalmente onerosa e pertanto raramente viene fatta. In questo caso non consideriamo questa fase
+
+\paragraph{Fase 5: Creazione dell'indice}
+
+L'indice può essere fatto considerando gli stem oppure i termini non stemmati e allo stesso modo può contenere un valore binario o con la frequenza con la quale gli stem compaiono nel documento.
+In questo caso viene scelto di usare gli stem con la frequenza.
+L'indice risultante è riportato in tabella \ref{ex:index}
+
+\begin{table}[htpb]
+	\centering
+	\caption{Indice}
+	\label{ex:index}
+\begin{tabular}{c|c|c|c|c|c|c|c|}
+	\cline{2-8}
+	& \multicolumn{3}{c|}{\textbf{Documenti}} & \multicolumn{4}{c|}{\textbf{(cont'd)}}                     \\ \hline
+	\multicolumn{1}{|c|}{\textbf{Termini}} & \textbf{D1} & \textbf{D2} & \textbf{D3} & \textbf{Termini} & \textbf{D1} & \textbf{D2} & \textbf{D3} \\ \hline
+	\multicolumn{1}{|c|}{algoritmo}        & 1           & 0           & 0           & istruzione       & 0           & 1           & 0           \\ \hline
+	\multicolumn{1}{|c|}{classe}           & 0           & 1           & 0           & intendere        & 0           & 0           & 1           \\ \hline
+	\multicolumn{1}{|c|}{codice}           & 1           & 0           & 0           & linguaggio       & 1           & 0           & 1           \\ \hline
+	\multicolumn{1}{|c|}{comando}          & 0           & 0           & 1           & problema         & 0           & 1           & 0           \\ \hline
+	\multicolumn{1}{|c|}{comprensibile}    & 0           & 0           & 1           & produrre         & 0           & 1           & 0           \\ \hline
+	\multicolumn{1}{|c|}{esecutore}        & 0           & 0           & 1           & programm         & 2           & 1           & 0           \\ \hline
+	\multicolumn{1}{|c|}{eseguire}         & 0           & 1           & 0           & soluzione        & 0           & 1           & 0           \\ \hline
+	\multicolumn{1}{|c|}{esprimere}        & 1           & 0           & 0           & sorgente         & 1           & 0           & 0           \\ \hline
+	\multicolumn{1}{|c|}{impartire}        & 0           & 0           & 1           & termine          & 0           & 0           & 1           \\ \hline
+	\multicolumn{1}{|c|}{informatica}      & 0           & 0           & 1           & utilizzare       & 0           & 0           & 1           \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Domanda 3}
+
+Si considerino i due documenti
+
+\begin{itemize}
+	\item \textbf{D1} $(0.7, 0.2, 0.1, 0.5)$
+	\item \textbf{D2} $(0.9, 0.4, 0.2, 0.2)$
+\end{itemize}
+
+Indicizzati da quattro termini dove i valori indicano i pesi associati ai termini.
+
+Sia data la query $Q = (1.0, 1.2, 0.1, 0)$ indicizzata dagli stessi termini. Si calcolino le misure "coseno" per i due documenti.
+
+\subsubsection{Soluzione}
+
+\begin{align*}
+S(D1, Q) &= \frac{
+	\sum_j d_{ij}q_j
+}{
+	\sqrt{\sum_j d_{ij}^2}\sqrt{\sum_j q_{j}^2}
+} \\
+&= \frac{
+	0.7\cdot 1.0 + 0.2 \cdot 1.2 + 0.1 \cdot 0.1 + 0.5 \cdot 0
+}{
+ \sqrt{(0.49 + 0.04 + 0.01 + 0.25)} \sqrt{(1 + 1.04 + 0.01 + 0)}
+}\\
+&= \frac{0.7 + 0.24 + 0.05}{\sqrt{0.79} \cdot \sqrt{2.05}} = \frac{0.99}{0.88 \cdot 1.43} = 0.7
+\end{align*}
+
+\begin{align*}
+S(D1, Q) &= \frac{
+	\sum_j d_{ij}q_j
+}{
+	\sqrt{\sum_j d_{ij}^2}\sqrt{\sum_j q_{j}^2}
+} \\
+&= \frac{
+	0.9 + 0.48+ 0.02
+}{
+	\sqrt{0.81 + 0.16 + 0.04 + 0.04}\cdot 1.43
+}\\
+&= \frac{
+	1.4
+}{
+	\sqrt{1.05}\cdot 1.43
+} = \frac{1.4}{1.46} = 0.96
+\end{align*}
+
+\subsection{Domanda 4}
+
+Si definisca cos'è un agente web; si descrivano i componenti e i compiti che svolge un web crawler.
+
+\subsubsection{Soluzione}
+
+Un agente web o crawler è un programma che ``esplora'' il web per scaricare le varie pagine (e/o contenuti multimediali) in modo che possano essere indicizzate da un sistema di information retrieval.
+La ``navigazione'' del crawler parte da una lista di URL che prendere il nome di lista di seed e prosegue seguendo i link presenti nelle pagine visitate dal crawler.
+
+Un crawler è composto da vari elementi:
+
+\begin{itemize}
+	\item \textbf{Coda di URL}: è una coda a priorità che contiene gli URL che il crawler deve ancora visitare. La priorità di un URL è dinamica in quanto si può scegliere di far aumentare la priorità di un URL se questo viene trovato su più pagine oppure se lo si vuole rivisitare più in fretta. Questo perché se una pagina che viene aggiornata frequentemente è tanto indietro nella coda, magari possono venire perse delle informazioni utili all'utente del sistema e pertanto viene fatta ``saltare la fila'' all'URL. L'implementazione di questa coda non è banale, perché gli URL sono delle stringhe e quindi occupano svariati byte in memoria e, date le dimensioni del web, la coda si popola molto velocemente.
+	\item \textbf{DNS translator}: gli URL sono relativi ad un dominio, ma per poter contattare il server è necessario conoscere l'IP, serve quindi un componente che si occupa di dialogare con un DNS per tradurre il dominio in un IP. Dato che i DNS non sono pensati per rispondere ad alte velocità, è necessario configurare il crawler in modo che mandi richieste troppo velocemente, altrimenti si rischia di far le richieste del crawler come un tentativo di attacco DoS. Per velocizzare il processo si può mantenere una cache delle traduzioni, perché durante la visita di un sito, il dominio, pertanto il server con le pagine è sempre quello e quindi basta richiedere la traduzione dell'indirizzo una sola volta. \`E inoltre ragionevole pensare che nel breve periodo l'IP associato ad un dominio non cambi, quindi la cache può essere mantenuta per un certo periodo di tempo, solo che ogni tanto deve essere comunque aggiornata.
+	\item \textbf{Robot-protocol interpreter}: tipicamente i server contengo un file \texttt{robot.txt} che definisce delle limitazioni per i crawler. Serve quindi un componente che sia in grado di interpretare il file. Ad esempio il file può ``vietare'' l'accesso a determinate aree del sito, oppure definire un intervallo temporale alle richieste delle pagine per evitare di intasare il server e rovinare l'esperienza degli utenti normali. Nessuno obbliga a rispettare tali norme, ma è fortemente consigliato, per evitare che il server blocchi l'IP del crawler.
+	\item \textbf{Processatore delle pagine}: dopo aver tradotto l'url e interpretato il \texttt{robot.txt}, si può scaricare la pagina. Una volta che questa è scaricata viene passata al sistema di IR in modo che venga indicizzata. La pagina però deve essere anche esaminata dal crawler, in modo da identificare eventuali URL da reinserire in coda (oppure si può scegliere di non reinserirli, perché troppo profondi nella gerarchia del sito) . C'è da prestare attenzione anche all'eventuale meta tag \texttt{no-index} o alle ancore marcate come \texttt{no-follow}. Infine, la pagina potrebbe contenere del JavaScript (o altro) che reindirizza l'utente su un'altra pagina oppure che carica dinamicamente il contenuto via AJAX oppure che contiene frame html, c'è quindi la necessità che il crawler sia in grado di distinguere questi casi e, a scelta dello sviluppatore, di gestirli.
+\end{itemize}
+
+\subsection{Domanda 5}
+
+\begin{enumerate}
+	\item Si definiscano le misure 11-Point Average Precision e Average Precision e si descrivano le principali caratteristiche (vantaggi e svantaggi) delle due misure di efficacia.
+	\item Si definisca il concetto di recall base.
+	\item Si definiscano le misure di Precisione a cut-off 10 e di precisione alla recall base e se ne descrivano le principali differenze.
+\end{enumerate}
+
+\subsubsection{Soluzione}
+
+\begin{enumerate}
+	\item 11-Point AP è la media delle precisioni interpolate sugli 11 punti di recall. Ovvero sia $RP=\{0, 0.1, \ldots 1\}$ un insieme di valori di recall e $rp \in RP$ un punto dell'insieme. La precisione interpolata in quel punto di recall è definita come:
+	$$
+	IP_{rp} = \max\limits_{1 \leq r \leq N | rec@r \geq rp} prec@r
+	$$
+	
+	ovvero come il massimo valore di precisione con cut-off al ragno $r$, tale che la recall al rango $r$ sia maggiore o uguale al valore del punto $rp$.
+	
+	L'11-pt AP è quindi definita come la media aritmetica dei vari valori di $IP_{rp}$ per $rp \in RP$.
+	
+	$$
+	11AP = \frac{1}{11}\sum\limits_{rp \in RP} IP_{rp}
+	$$
+	
+	L'average precision è invece la media alla recall-base di tutti i valori di precisione con cut-off a $r$, moltiplicati per il peso del giudizio di rilevanza binario del documento di rango $r$, ovvero:
+	
+	\begin{align*}
+	AP &= \frac{1}{RB} \sum\limits_{r = 1}^{N} \tilde{\mathbf{r}}_t[r]\cdot prec@r \\
+	&= \frac{1}{N} \sum\limits_{r = 1}^{N} \tilde{\mathbf{r}}_t[r]\cdot \frac{\sum\limits_{j = 1}^{r} \tilde{\mathbf{r}}_t[r]}{r}
+	\end{align*}
+	
+	La prima misura nasce come versione quantitativa della curva richiamo-precisione e permette di confrontare due run distinte per uno stesso topic, pesando allo stesso tutti i valori di precisione interpolata.
+	
+	L'AP permette sempre di valutare due run diverse, con la differenza che viene dato maggior peso ai documenti rilevanti che si trovano alle posizioni più alte del rank. Questo perché se il rank è alto, la precisione a quel valore di rank sarà maggiore rispetto a quella in posizioni più basse.\todo{altro?}
+	
+	\item La recall base per un topic $t$ è il numero di documenti rilevanti presenti nella collezione. Formalmente, sia $REL$ un insieme di giudizi di rilevanza totalmente ordinato, $GT$ la ground-truth, allora $RB$ è una funzione tale che
+	
+	\begin{align*}
+		RB:&T \to \mathbb{N} \\
+			& t \to RB_t =  |\{ d \in D | min(REL) \prec GT(d, REL) \}|
+	\end{align*}
+
+	\item La precisione con cut-off a $k$ è la precisione calcolata sui primi $k$ elementi di rango massimo della run.
+	
+	$$
+	prec@k = \frac{\sum\limits_{r = 1}^{k} \tilde{\mathbf{r}}_t}{k}
+	$$
+	
+	$prec@10$ è quindi la precisione sui primi 10 documenti recuperati, mentre $prec@RB_t$ è la precisione considerando tanti documenti quanti ce ne sono nella recall base per quel dato topic.
+	
+	Entrambe le misure sono simili in quanto sono casi di $prec@k$, solo che la prima può essere migliore per confrontare sistemi di reperimento che lavorano in ambito web (tipicamente la SERP contiene 10 elementi), mentre la seconda è più generica e simile al richiamo: se $prec@RB_t$ è 1 vuol dire che ho trovato tutti i documenti rilevanti e li ho messi nelle prime posizioni della run (la run completa può comunque essere più lunga e avere documenti non rilevanti), se invece ho che la $prec$ normale è 1, vuol dire che il sistema ha trovato esattamente tutti i documenti rilevanti. \todo{c'è altro da dire?}
+	
+\end{enumerate}

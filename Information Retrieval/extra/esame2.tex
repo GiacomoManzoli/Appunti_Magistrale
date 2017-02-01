@@ -1,0 +1,191 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = InformationRetrieval.tex
+% !TEX spellcheck = it-IT
+
+\section{Esame 2016-09-06}
+
+\subsection{Domanda 1}
+
+Data una collezione testuale di 7 documenti
+
+\begin{table}[htbp]
+	\centering
+	
+	\begin{tabular}{c|c|c|c|}
+		\cline{2-4}
+		& \textbf{$t_1$}                                 & \textbf{$t_2$}                                 & \textbf{$t_3$}                                 \\ \hline
+		\rowcolor[HTML]{EFEFEF} 
+		\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{32CB00} $d_1$}} & {\color[HTML]{32CB00} 1}                      & {\color[HTML]{32CB00} 0}                      & {\color[HTML]{32CB00} 2}                      \\ \hline
+		\rowcolor[HTML]{EFEFEF} 
+		\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}$d_2$}                        & 0                                             & 5                                             & 1                                             \\ \hline
+		\rowcolor[HTML]{EFEFEF} 
+		\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{32CB00} $d_3$}} & {\color[HTML]{32CB00} 2}                      & {\color[HTML]{32CB00} 0}                      & {\color[HTML]{32CB00} 2}                      \\ \hline
+		\rowcolor[HTML]{EFEFEF} 
+		\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}$d_4$}                        & 0                                             & 3                                             & 1                                             \\ \hline
+		\multicolumn{1}{|c|}{$d_5$}                                                & 3                                             & 0                                             & 1                                             \\ \hline
+		\multicolumn{1}{|c|}{$d_6$}                                                & 2                                             & 2                                             & 0                                             \\ \hline
+		\multicolumn{1}{|l|}{{\color[HTML]{32CB00} $d_7$}}                         & \multicolumn{1}{l|}{{\color[HTML]{32CB00} 3}} & \multicolumn{1}{l|}{{\color[HTML]{32CB00} 2}} & \multicolumn{1}{l|}{{\color[HTML]{32CB00} 1}} \\ \hline
+	\end{tabular}
+\end{table}
+
+Stimare i parametri del BIM utilizzando $d_1,d_2, d_3$ e $d_4$ come documenti di training. Sappiamo inoltre che per la query $\{t_2, t_3\}$ risultano rilevanti $d_1$, $d_3$ e $d_7$.
+
+Calcolare:
+
+\begin{enumerate}
+	\item $p_i$ e $q_i$, tenendo conto che $N_R = N_{NR} = 2$
+	\item $P(\rel | d,q)$ per i documenti di test utilizzando il classico $relevance \ weight = \log\bigg(\frac{p_i}{1-p_i} \frac{1- q_i}{q_i}\bigg)$
+	\item la lista ordinata per rilevanza.
+\end{enumerate}
+
+\subsubsection{Soluzione}
+
+$$
+p_i = \frac{N_{t_iR}}{N_R}
+$$
+
+\begin{align*}
+P(\rel|d,q)&=\frac{P(d|\rel,q)\times P(\rel|q)}{P(d|q)}\\
+&\propto \sum_{i \in q \cap d} w_i
+\end{align*}
+
+%  \log(\frac{p_i+0.5}{1-p_i+0.5} \frac{1-q_i+0.5}{q_i+0.5}) 
+
+\begin{enumerate}
+	\item 
+	\begin{itemize}
+		\item $p_1 = \frac{2}{2} = 1 \qquad q_1 = \frac{0}{2} = 0$
+		\item $p_2 = \frac{0}{2} = 0 \qquad q_2 = \frac{2}{2} = 1$
+		\item $p_3 = \frac{2}{2} = 1 \qquad q_3 = \frac{2}{2} = 1$
+	\end{itemize}
+	\item Devo ricordarmi che il BIM usa lo smoothing, altrimenti ci sono dei casi (come questo) in cui ho delle divisioni per 0.
+	\begin{itemize}
+		\item $P(\rel | d_5, q) \propto \log(\frac{p_3+0.5}{1-p_3+0.5} \frac{1-q_3+0.5}{q_3+0.5}) = \log(\frac{1+0.5}{1-1 +0.5} \frac{1-1+0.5}{1+0.5}) = \log(1) = 0 $ Da notare che ha senso perché $t_3$ compare in tutti i documenti di training e quindi non è significativo.
+		\item $P(\rel | d_6, q) \propto \log(\frac{p_2+0.5}{1-p_2+0.5}\frac{1-q_2+0.5}{q_2+0.5}) = \log(\frac{0+0.5}{1-0+0.5}\frac{1-1+0.5}{1+0.5}) = \log(\frac{1}{9}) (< 0)$. 
+		\item $P(\rel | d_7, q) \propto \log(\frac{p_2+0.5}{1-p_2+0.5}\frac{1-q_2+0.5}{q_2+0.5}) +\log(\frac{p_3+0.5}{1-p_3+0.5}\frac{1-q_3+0.5}{q_3+0.5}) = \log(\frac{1}{9}) + \log(1)= \log(\frac{1}{9})$
+	\end{itemize}
+	\item La lista ordinata è quindi $d_5, d_6, d_7$ e questo in qualche modo a senso, perché per le informazioni che ha a disposizione il modello, si ha che $t_3$ non discrimina perché è presente su tutti, $t_2$ compare solo sui non rilevanti e $t_1$ compare solo sui rilevanti. Quindi la presenza di $t_1$ aumenta lo score del documento, la presenza di $t_2$ lo abbassa e la presenza di $t_3$ non lo modifica. 
+	Pertanto, siccome la query contiene solo $t_2$ e $t_3$ il ranking viene fatto senza considerare $t_1$ nel calcolo dello score. Quindi rank più alto viene dato a $d_5$, perché non contiene $t_2$ e poi seguono $d_6$ e $d_7$ che sono penalizzati per la presenza di $t_2$.
+\end{enumerate}
+
+
+\subsection{Domanda 2}
+
+Quali sono le differenze più significative fra il reperimento delle informazioni su collezioni di documenti testuali disponibili localmente e per il reperimento web?
+
+\subsubsection{Soluzione}
+
+Le collezioni testuali sono più statiche, è difficile che una volta che un documento è stato indicizzato il suo contenuto cambi. Quindi l'indicizzazione di una collezione locale viene fatta una sola volta e ogni tanto si aggiorna l'indice. 
+Si riesce inoltre ad avere un'idea precisa della dimensione della collezione e dell'autorevolezza dei documenti che contiene. 
+
+Nel web i documenti sono le singole pagine, ce ne sono tante e possono cambiare molto rapidamente, è quindi necessario aggiornare in continuazione l'indice. Non è garantita l'autorevolezza della collezione e non è nota la dimensione della collezione, quindi è difficile stimare le risorse (tempo e spazio) necessarie per indicizzarla.
+
+Sempre in termini di risorse, nell'ambito Web è necessario tenere conto della banda necessaria e del tempo che serve per scaricare una pagina, la quale può trovarsi in un angolo remoto del modo. Dopo aver scaricato le pagine è necessario inoltre avere sufficiente spazio per tenerle tutte in memoria. Con i documenti testuali invece non c'è bisogno di tenere conto della banda, perché al massimo è una risorsa che viene utilizzata una tantum, solamente per recuperare la prima volta la collezione (assumendo che questa viene scaricata da Internet e non copiata a livello fisico)-
+
+Un'altra differenza può essere dovuta al fatto che la collezione di documenti sia cartacea e che quindi deve essere digitalizzata prima di poter essere indicizzata, mentre con le pagine web si ha la certezza del formato digitale.
+
+\subsection{Domanda 3}
+
+Si considerino i due documenti $D1 = (0.7, 0.2, 0.1, 0.5)$ e $D2 = (0.9, 0.4, 0.2, 0.2)$ indicizzati da quattro termini dove i valori indicano i pesi associati ai termini. 
+Sia data la query $Q = (1.0, 1.2, 0.1, 0)$ indicizzata dagli stessi termini. Calcolare la similarità coseno. 
+
+\subsubsection{Soluzione}
+
+Si considerino i due documenti
+
+\begin{itemize}
+	\item \textbf{D1} $(0.7, 0.2, 0.1, 0.5)$
+	\item \textbf{D2} $(0.9, 0.4, 0.2, 0.2)$
+\end{itemize}
+
+Indicizzati da quattro termini dove i valori indicano i pesi associati ai termini.
+
+Sia data la query $Q = (1.0, 1.2, 0.1, 0)$ indicizzata dagli stessi termini. Si calcolino le misure "coseno" per i due documenti.
+
+\subsubsection{Soluzione}
+
+\begin{align*}
+S(D1, Q) &= \frac{
+	\sum_j d_{ij}q_j
+}{
+	\sqrt{\sum_j d_{ij}^2}\sqrt{\sum_j q_{j}^2}
+} \\
+&= \frac{
+	0.7\cdot 1.0 + 0.2 \cdot 1.2 + 0.1 \cdot 0.1 + 0.5 \cdot 0
+}{
+	\sqrt{(0.49 + 0.04 + 0.01 + 0.25)} \sqrt{(1 + 1.04 + 0.01 + 0)}
+}\\
+&= \frac{0.7 + 0.24 + 0.05}{\sqrt{0.79} \cdot \sqrt{2.05}} = \frac{0.99}{0.88 \cdot 1.43} = 0.7
+\end{align*}
+
+\begin{align*}
+S(D1, Q) &= \frac{
+	\sum_j d_{ij}q_j
+}{
+	\sqrt{\sum_j d_{ij}^2}\sqrt{\sum_j q_{j}^2}
+} \\
+&= \frac{
+	0.9 + 0.48+ 0.02
+}{
+	\sqrt{0.81 + 0.16 + 0.04 + 0.04}\cdot 1.43
+}\\
+&= \frac{
+	1.4
+}{
+	\sqrt{1.05}\cdot 1.43
+} = \frac{1.4}{1.46} = 0.96
+\end{align*}
+
+\subsection{Domanda 4}
+
+La rappresentazione automatica del contenuto di un documento testuale si può basare sulla legge di Zipf e sulla regola di Luhn per scegliere i descrittori migliori. Si illustri come si può effettuare la rappresentazione automatica del contenuto dei documenti testuali utilizzando i metodi indicati da Zipf e Luhn.
+
+\subsubsection{Soluzione}
+
+Zipf ha modellato la distribuzione della frequenza delle parole secondo
+
+$$
+r \times f_r = k
+$$
+
+ovvero, una volta ordinati i vari termini per frequenza decrescente, si può osservare che al decrescere del rango, la frequenza con cui appaiono i termini nei documenti diminuisce secondo un andamento iperbolico.
+
+Luhn ha quindi osservato che questo andamento può essere utilizzato per discriminare i termini che hanno un resolving power maggiore, ovvero che caratterizzano maggiormente il contenuto informativo del documento. Secondo Luhn i termini di rango alto non sono utili per discriminare gli argomenti trattati nei documenti, perché probabilmente sono termini funzionali o generici che vanno bene in vari contesti. Sempre secondo Luhn,  i termini poco frequenti sono più utili, in quanto è facile che compaiano solo in alcuni documenti e che quindi li caratterizzino. Bisogna però stare attenti agli errori di battitura i quali rientrano in questa categoria, ma non sono utili per discriminare il contenuto del documento.
+
+L'idea per l'indicizzazione automatica è quindi quella di ordinare i termini per la loro frequenza all'interno della collezione di documenti, per poi andare a scartare tutti quelli che hanno frequenza superiore ad una certa soglia ed inferiore ad un'altra soglia.
+
+Così facendo vengono tenuti solamente i termini ``centrali'' dell'iperbole di Zipf, che sono quelli che secondo Luhn hanno un resolving power maggiore. 
+
+\subsection{Domanda 5}
+
+Nell'ambito del SEO si descrivano le principali differenze fra i segnali ``on the page'' e quelli ``off the page''
+
+\subsubsection{Soluzione}
+
+I segnali ``off the page'' sono i fattori che influenzano il ranking statico di una pagina web sui quali l'autore del sito web non ha un controllo diretto. Fanno parte di questa categoria i link entranti verso la pagina e l'autorevolezza/qualità di queste pagine, le referenze dai social network come i like su facebook, tweet, condivisioni, ecc.
+
+I segnali ``on the page'' racchiudono invece i fattori che dipendono dalla struttura della pagina web e quindi possono essere controllati direttamente dall'autore della pagina.
+Fanno parte di questa categoria:
+
+\begin{itemize}
+	\item Il contenuto della pagina: meglio se è originale e diverso da quello di altre pagine in rete. Meglio se è lungo.
+	\item La presenza di contenuti multimediali: che deve essere limitata per rendere il caricamento della pagina veloce. Anche l'occupazione ``a video'' viene presa in considerazione. Inoltre, se una pagina è composta da solo immagini, può essere che il crawler/motore di ricerca non riescano ad estrarre informazioni relative al contenuto della pagina e quindi la reputino come poco interessante.
+	\item Il testo delle ancore in uscita contenente delle keyword. Questo perché se l'autore della pagina decide di linkare una risorsa esterna è facile che quella risorsa sia utile e quindi se l'autore la linka, vuol dire che vuole fare una pagina di qualità.
+	\item Il corretto utilizzo del tag title e dei tag strong/di heading: la presenza di una keyword in questi elementi aumenta il peso del termini.
+	\item Il corretto utilizzo dei meta-tag per fornire informazioni aggiuntive, come la lingua, se indicizzare o meno la pagina e la data dell'ultimo aggiornamento.
+	\item La struttura della pagina: la sintassi deve essere valida e facilmente analizzabile dal crawler, quindi con pochi tag innestati (no tabelle, a meno che non sia necessario) e uso limitato di JavaScript e Adobe Flash.
+	\item Il peso della pagina: la pagina deve essere veloce a caricarsi, se ci mette tanto fa perdere tempo sia all'utente che al crawler. Tra le varie cose che si possono fare c'è il separare i CSS dal HTML.
+	\item Struttura dell'url: la presenza di una keyword nell'URL aumenta il ranking. Ma anche la profondità alla quale si trova una pagina lo influenza. Una pagina tanto profonda può essere sinonimo di una pagina ``nascosta'' perché poco interessante.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
