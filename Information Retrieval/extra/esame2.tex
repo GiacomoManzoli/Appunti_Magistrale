@@ -25,7 +25,7 @@ Data una collezione testuale di 7 documenti
 		\multicolumn{1}{|c|}{\cellcolor[HTML]{EFEFEF}$d_4$}                        & 0                                             & 3                                             & 1                                             \\ \hline
 		\multicolumn{1}{|c|}{$d_5$}                                                & 3                                             & 0                                             & 1                                             \\ \hline
 		\multicolumn{1}{|c|}{$d_6$}                                                & 2                                             & 2                                             & 0                                             \\ \hline
-		\multicolumn{1}{|l|}{{\color[HTML]{32CB00} $d_7$}}                         & \multicolumn{1}{l|}{{\color[HTML]{32CB00} 3}} & \multicolumn{1}{l|}{{\color[HTML]{32CB00} 2}} & \multicolumn{1}{l|}{{\color[HTML]{32CB00} 1}} \\ \hline
+		\multicolumn{1}{|c|}{{\color[HTML]{32CB00} $d_7$}}                         & {\color[HTML]{32CB00} 3} & {\color[HTML]{32CB00} 2} & {\color[HTML]{32CB00} 1} \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -35,35 +35,37 @@ Calcolare:
 
 \begin{enumerate}
 	\item $p_i$ e $q_i$, tenendo conto che $N_R = N_{NR} = 2$
-	\item $P(\rel | d,q)$ per i documenti di test utilizzando il classico $relevance \ weight = \log\bigg(\frac{p_i}{1-p_i} \frac{1- q_i}{q_i}\bigg)$
+	\item $P(\rel | d,q)$ per i documenti di test utilizzando il classico $relevance \ weight = \log\bigg(\cfrac{p_i}{1-p_i} \cfrac{1- q_i}{q_i}\bigg)$
 	\item la lista ordinata per rilevanza.
 \end{enumerate}
 
 \subsubsection{Soluzione}
 
-$$
-p_i = \frac{N_{t_iR}}{N_R}
-$$
 
-\begin{align*}
-P(\rel|d,q)&=\frac{P(d|\rel,q)\times P(\rel|q)}{P(d|q)}\\
-&\propto \sum_{i \in q \cap d} w_i
-\end{align*}
 
 %  \log(\frac{p_i+0.5}{1-p_i+0.5} \frac{1-q_i+0.5}{q_i+0.5}) 
 
 \begin{enumerate}
 	\item 
+	$$
+	\boxed{p_i = \frac{N_{t_iR} + \alpha_i}{N_R + \alpha_i + \beta_i}} \quad \text{e} \quad \boxed{q_i = \frac{N_{t_iNR} + \alpha_i}{N_{NR} + \alpha_i + \beta_i}}
+	$$
+	
+	con $\alpha_i = \beta_i = 0.5$ che deriva da \ref{eq:smoothing}.
 	\begin{itemize}
-		\item $p_1 = \frac{2}{2} = 1 \qquad q_1 = \frac{0}{2} = 0$
-		\item $p_2 = \frac{0}{2} = 0 \qquad q_2 = \frac{2}{2} = 1$
-		\item $p_3 = \frac{2}{2} = 1 \qquad q_3 = \frac{2}{2} = 1$
+		\item $p_1 = \cfrac{N_{t_iR} + 0.5}{N_R + 0.5 + 0.5} =\cfrac{2 + 0.5}{2 + 0.5 + 0.5} = \cfrac{5}{6} \qquad q_1 = \cfrac{0 + 0.5}{2 + 0.5 + 0.5} = \cfrac{1}{6}$
+		\item $p_2 = \cfrac{1}{6} \qquad q_2 = \cfrac{5}{6}$
+		\item $p_3 = \cfrac{5}{6} \qquad q_3 = \cfrac{5}{6}$
 	\end{itemize}
-	\item Devo ricordarmi che il BIM usa lo smoothing, altrimenti ci sono dei casi (come questo) in cui ho delle divisioni per 0.
+	\item In questo caso posso o usare i $p_i$ e $q_i$ precedentemente calcolati:
+	
+	$$P(\rel|d,q) \propto_q \sum_{i \in q \cap d}w_i = \sum_{i \in q \cap d}\log\bigg(\cfrac{p_i}{1-p_i} \cfrac{1- q_i}{q_i}\bigg)$$
+	
+	oppure utilizzare la formula \ref{eq:wrsj}.
 	\begin{itemize}
-		\item $P(\rel | d_5, q) \propto \log(\frac{p_3+0.5}{1-p_3+0.5} \frac{1-q_3+0.5}{q_3+0.5}) = \log(\frac{1+0.5}{1-1 +0.5} \frac{1-1+0.5}{1+0.5}) = \log(1) = 0 $ Da notare che ha senso perché $t_3$ compare in tutti i documenti di training e quindi non è significativo.
-		\item $P(\rel | d_6, q) \propto \log(\frac{p_2+0.5}{1-p_2+0.5}\frac{1-q_2+0.5}{q_2+0.5}) = \log(\frac{0+0.5}{1-0+0.5}\frac{1-1+0.5}{1+0.5}) = \log(\frac{1}{9}) (< 0)$. 
-		\item $P(\rel | d_7, q) \propto \log(\frac{p_2+0.5}{1-p_2+0.5}\frac{1-q_2+0.5}{q_2+0.5}) +\log(\frac{p_3+0.5}{1-p_3+0.5}\frac{1-q_3+0.5}{q_3+0.5}) = \log(\frac{1}{9}) + \log(1)= \log(\frac{1}{9})$
+		\item $P(\rel | d_5, q) \propto \log\bigg(\cfrac{p_3}{1-p_3}\cfrac{1-q_3}{q_3}\bigg) = \log\bigg(\cfrac{\frac{5}{6}}{1-\frac{5}{6}}\cfrac{1-\frac{5}{6}}{\frac{5}{6}}\bigg) = \log(1) = 0 $ Da notare che ha senso perché $t_3$ compare in tutti i documenti di training e quindi non è significativo.
+		\item $P(\rel | d_6, q) \propto \log\bigg(\cfrac{p_2}{1-p_2}\cfrac{1-q_2}{q_2}\bigg) = \log\bigg(\cfrac{\frac{1}{6}}{1-\frac{1}{6}}\cfrac{1-\frac{5}{6}}{\frac{5}{6}}\bigg) = \log\bigg(\cfrac{1}{25}\bigg)$. 
+		\item $P(\rel | d_7, q) \propto \log\bigg(\cfrac{p_3}{1-p_3}\cfrac{1-q_3}{q_3}\bigg) +\log\bigg(\cfrac{p_2}{1-p_2}\cfrac{1-q_2}{q_2}\bigg) = \log\bigg(\cfrac{1}{25}\bigg)+ \log(1)= \log\bigg(\cfrac{1}{25}\bigg)$
 	\end{itemize}
 	\item La lista ordinata è quindi $d_5, d_6, d_7$ e questo in qualche modo a senso, perché per le informazioni che ha a disposizione il modello, si ha che $t_3$ non discrimina perché è presente su tutti, $t_2$ compare solo sui non rilevanti e $t_1$ compare solo sui rilevanti. Quindi la presenza di $t_1$ aumenta lo score del documento, la presenza di $t_2$ lo abbassa e la presenza di $t_3$ non lo modifica. 
 	Pertanto, siccome la query contiene solo $t_2$ e $t_3$ il ranking viene fatto senza considerare $t_1$ nel calcolo dello score. Quindi rank più alto viene dato a $d_5$, perché non contiene $t_2$ e poi seguono $d_6$ e $d_7$ che sono penalizzati per la presenza di $t_2$.
