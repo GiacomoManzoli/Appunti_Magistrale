@@ -29,6 +29,6 @@ Leggenda:
 
 ### Primo semestre AA 2016-17
 
-- Information Retrieval
+- Information Retrieval [Completato]
 - Metodi e Modelli per l'ottimizzazione combinatoria
 - Aspetti avanzati dei linguaggi di programmazione [Completato][LaTeX - solo prima parte]

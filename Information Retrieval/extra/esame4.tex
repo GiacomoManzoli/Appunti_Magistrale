@@ -1,0 +1,44 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = InformationRetrieval.tex
+% !TEX spellcheck = it-IT
+
+\section{Esame 2015-06-18}
+
+\subsection{Domanda 4}
+
+L'approccio o il paradigma Cranfield è spesso citato come uno standard per la valutazione dei sistemi di IR: si dica che cos'è e come è stato originato.
+
+Si dica che cos'è una collezione sperimentale di IR, quando deve essere costruita, da che elementi è composta e quali solo le metriche di base quella quale si basa.
+
+\subsubsection{Soluzione}
+
+Il paradigma Cranfield è un modus operandi per la valutazione dei sistemi di IR. Consiste nella modellazione di un task di ricerca di un utente, definendo a priori la collezione di documenti sulla quale si andrà a fare reperimento, le domande che verranno poste al sistema e quali sono le risposte corrette.
+Così facendo è possibile replicare gli esperimenti in un secondo momento con un sistema diverso ottenendo dei risultati comparabili oppure riutilizzare le stesse collezioni per progettare nuovi esperimenti.
+
+Questo sistema è nato per testare 4 metodi di indicizzazione per la biblioteca di Cranfield ad opera di Clevedron, il quale ha prima creato la collezione di documenti da indicizzare e definito (rivolgendosi agli autori dei documenti) le domande e le relative rispose corrette. Il primo esperimento ha richiesto 2 anni non ha fatto emergere nessun differenza tra i vari sistemi di indicizzazione a causa degli errori fatti dagli indicizzatori (era fatto tutto a mano). Tuttavia la documentazione degli esperimenti ha dato origine alla pratica della failure analisys. 
+
+Qualche anno dopo è stato fatto un nuovo esperimento analogo, che ha tenuto conto degli errori commessi nell'impostazione del primo che ha portato alla luce delle differenze interessanti tra i vari sistemi di indicizzazione testati.
+
+Una collezione sperimentale di IR è un'insieme di documenti per i quali sono stati definiti dei topic e dei giudizi di rilevanza (o ground truth).
+
+$$
+C = (D, T, GT)
+$$
+
+dove 
+
+\begin{itemize}
+	\item $D$ è l'insieme dei documenti della collezione
+	\item $T$ è l'insieme dei topic, ovvero degli argomenti che sono trattati dai documenti della collezione.
+	\item $GT$ è una funzione che associa ad un documento un giudizio di rilevanza. Sia $REL$ un insieme completamente ordinato di giudizi di rilevanza, $d \in D$ un documento e $t \in T$ un topic. $GT$ è definita come:
+	\begin{align*}
+		GT:  D\times T &\to REL \\
+		    (d, t) &\to rel
+	\end{align*}
+\end{itemize}
+
+Secondo il paradigma Cranfield la collezione di test deve essere definita prima di definire gli esperimenti, così facendo la stessa collezione può essere riutilizzata più volte, portando ad un notevole risparmio di tempo, dato che la costruzione di una collezione è molto onerosa.
+
+Le metriche inizialmente utilizzate da Clevedron sono la precision e la recall, ma con il tempo ne sono state proposte di migliori, che prendono in considerazione anche l'andamento medio su più topic e i casi in cui i giudizi di rilevanza abbiamo più di due possibili valori.
+

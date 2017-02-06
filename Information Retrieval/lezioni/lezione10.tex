@@ -148,7 +148,7 @@ $$
 \noindent Dove $N_{t_iR}$ indica il numero di documenti rilevanti contenenti il termine $t_i$. Anche in questo caso possono \textbf{essere applicati dei termini di smoothing} specifici per ogni termine.
 
 $$
-\boxed{p_i = \frac{N_{t_iR} + \alpha_i}{N_R \alpha_i + \beta_i}} \qquad \text{e} \qquad \boxed{q_i = \frac{N_{t_iNR} + \alpha_i}{N_{NR}\alpha_i + \beta_i}}
+\boxed{p_i = \frac{N_{t_iR} + \alpha_i}{N_R + \alpha_i + \beta_i}} \qquad \text{e} \qquad \boxed{q_i = \frac{N_{t_iNR} + \alpha_i}{N_{NR} + \alpha_i + \beta_i}}
 $$
 
 Quindi, per sapere se un documento $D$ che contiene i termini $t_1$ e $t_3$ ma non $t_2$ è rilevante, possiamo utilizzare:
