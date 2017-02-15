@@ -1,0 +1,575 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+\chapter{Domande riassuntive}
+
+\section{Simplesso}
+
+\begin{itemize}
+	\item \textbf{Poliedro delle soluzioni}: ogni soluzione può essere vista come un punto in uno spazio $n$-dimensionale $P = \{x \in \Rn : Ax = b \}$. L'insieme dei punti determina un poliedro convesso. \textbf{Vertice ottimo}: se il poliedro delle soluzioni ammissibili non è vuoto e limitato, allora esiste almeno una soluzione ottima corrispondente con un vertice di $P$.
+	\item \textbf{Forma standard}: problema di minimo, vincoli di uguaglianza, variabili $\geq 0$, termini noti $b \geq 0$.
+	$$
+	PL =  \min\{ c^T x: Ax=b, x\geq 0\}
+	$$
+	\item \textbf{Base di una matrice}: una base di $A$ è una sottomatrice quadrata $B$ di rango massimo composta da colonne linearmente indipendenti di $A$. $A$ può quindi essere scritta come combinazione di una sua base $B$ e il resto delle colonne $F$.
+	Una soluzione di $Ax = b \Rightarrow Bx_B + Fx_F = b$ è data da
+	$$
+	x = \begin{bmatrix}
+	x_B \\
+	x_F
+	\end{bmatrix} = \begin{bmatrix}
+	B^{-1}b \\
+	0
+	\end{bmatrix}
+	$$
+	\item \textbf{Corrispondenza vertici-soluzioni di base}: Dato un sistema di equazioni $Ax = b$ e il corrispondente poliedro $P$, $x$ è soluzione di base del sistema $\Leftrightarrow$ $x$ è un vertice del poliedro.
+	\item \textbf{Teorema fondamentale della programmazione lineare}: se esiste una soluzione ottima, allora esiste una soluzione ammissibile di base ottima.
+	\item \textbf{Metodo del simplesso}: parte da un problema in forma standard e da una soluzione ammissibile ed esplora le varie soluzioni di base, finché non ne trova una ottima.
+	\begin{enumerate}
+		\item \textit{Scrittura del problema in forma canonica}: nei vincoli le variabili di base sono espresse solamente nei termini delle variabili non di base
+		$$
+		Ix_B + \underbrace{B^{-1}F}_{\overline{F}}x_F = \underbrace{B^{-1}b}_{\overline{b}}
+		$$
+		la funzione obiettivo scritta in termini delle variabili non di base
+		$$
+		\min z = c^Tx = c_{B}^Tx_B + c_{F}^Tx_F = \underbrace{c_{B}^TB^{-1}b}_{z_B} + (\underbrace{c_{F}^T - c_{B}^TB^{-1}F}_{\overline{c}_{F}^T})x_F
+		$$
+		\item \textit{Scelta della variabile entrante per il cambio di base}: scelgo una qualsiasi di quelle fuori base a costo ridotto $\overbrace{c}_{F_{j}}$ negativo, in modo da migliorare la FO. Se ho più scelte conviene prendere la variabile con indice minore per evitare di ciclare.
+		\item \textit{Scelta della variabile uscente}: scelgo quella che pone un limite più stretto alla variabile entrante $x_{F_j}$, ovvero quella che minimizza
+		$$
+		\min\limits_{i :\overline{a}_{iF_j} > 0} \bigg\{ \frac{\overline{b}_i}{\overline{a}_{iF_j}} \bigg\}
+		$$
+		$\overline{a}_{iF_j}$ è il coefficiente della variabile $x_{F_j}$ nel vincolo $i$. Questo per garantire l'ammissibilità della nuova base (\textbf{regola del quoziente}).
+		\item \textit{Cambio di base}: effettuo il pivot del tableau del simplesso in modo che nella colonna relativa a $x_{F_j}$ compaia solamente un $1$ nella riga $\beta[k]$, dove $\beta[k]$ è l'indice della variabile uscente. Il pivot viene effettuato mediante trasformazioni elementari della matrice. Ovvero riporto la matrice in forma canonica
+		\item \textit{Terminazione}: Se non ci sono più costi ridotti negativi ho una soluzione ottima, se $\overline{a}_{ij}\leq 0$ il problema è illimitato. 
+	\end{enumerate}
+	\item \textbf{Metodo delle due fasi}: a partire da un problema in forma standard creo un problema artificiale aggiungendo un vettore di variabili $y \in \Rm$.
+	$$
+	PA = \min w\{ 1^Ty : Ax+Iy=b, x,y\geq 0 \}
+	$$
+	Il problema è ammissibile perché $x = 0, y = b$ è soluzione ammissibile ed è limitato perché la FO è una sommatoria di termini che devono essere per forza $\geq 0$.
+	Risolto questo problema con il metodo del simplesso, se $w^* = 0$, il problema di partenza non è ammissibile e non ha senso risolverlo.Se $w^* > 0$. Il tableau finale individua una possibile soluzione ammissibile per il problema di partenza, è necessario portare fuori base le $y$ e poi creare un nuovo tableau in forma canonica per il problema di partenza utilizzando come base quella appena ottenuta.
+	\item Tutte le operazioni del simplesso possono anche essere espresse in forma matriciale.
+\end{itemize}
+
+
+\section{Dualità}
+
+\begin{itemize}
+	\item Si vuole fornire un limite inferiore al valore che può prendere la FO nella regione ammissibile.
+	\item $$
+	PL = z = \min\{  c^Tx : Ax = b, x\geq 0 \}
+	$$
+	\item \textbf{Lower bound} $l \in \R$ è un lower bound per $PL \Leftrightarrow l \leq c^Tx \forall x$ ammissibile.
+	\item Scelgo $u \in \Rm$ tale che
+	$$
+	c^T > u^T A
+	$$
+	per ogni $x$ ammissibile vale $Ax=b$ e $x \geq 0$, quindi
+	$$
+	u^TA x = u^Tb \quad\text{e}\quad c^Tx \geq u^TAx
+	$$
+	pertanto
+	$$
+	c^Tx \geq u^Tb
+	$$
+	ovvero $u^Tb$ è un lower bound per $PL$.
+	\item La ricerca di $u$ può essere impostata come un problema di massimizzazione (bound più stretto)
+	$$
+	DL = w^* = \max \{ u^Tb : u^TA \leq c^T, u \text{ libero} \}
+	$$
+	questo problema prende il nome di problema duale ed ha una variabile duale per ogni vincolo del primale e un vincolo duale per ogni variabile del primale.
+	\item \textbf{Dualità debole}: se $x$ è soluzione ammissibile primale e $u$ è ammissibile duale, allora vale $c^Tx \geq u^{T}b$. Se vale l'uguaglianza allora le due soluzioni sono anche ottime. $PL$ illimitato $\Leftarrow$ $DL$ inammissibile, $DL$ illimitato $\Leftarrow$ $PL$ inammissibile.
+	\item \textbf{Dualità forte}: $PL$ ammette soluzione ottima $\Leftrightarrow$ $DL$ ammette soluzione ottima. \textbf{Dimostrazione $\Leftarrow$} $x^*$ ottima con simplesso $= \begin{bmatrix}
+	x^*_B \\
+	0
+	\end{bmatrix}$, $\overline{c}_{B}^T = 0,\overline{c}_{F}^T \geq 0$. Per la definizione di costo ridotto:
+	\begin{align*}
+	\overline{c}_{F}^T &= c_F - \underbrace{\overline{c}_{B}^TB^{-1}}_{u^T}F \\
+					   &= c_F - u^T F \geq 0 \text{ perché $x^*$ è ottima} \Leftarrow c_F \geq u^TF
+	\end{align*}
+	Ho quindi una soluzione duale. Verifico l'ammissibilità
+	\begin{align*}
+		u^T A &= u^T[B|F] \\
+		      &= [u^TB | u^T F] \\
+		      &= [\overline{c}_{B}^TB^{-1} B | u^T F] \\
+		      &= [\overline{c}_{B}^T | u^T F] \text{ ma $u^T F \leq c_F$ quindi }\\
+		      &\leq [\overline{c}_{B}^T | \overline{c}_{F}^T] = c^T
+	\end{align*}
+	ovvero è ammissibile ed inoltre
+	\begin{align*}
+		u^T b &= \overline{c}_{B}^TB^{-1}b \\
+		      &= \overline{c}_{B}^T x_B \\
+		      &= c^T x^*
+	\end{align*}
+	ovvero è anche ottima perché uguale al valore della soluzione primale.
+	\item Per trovare il duale non è necessario che il primale sia in forma standard, basta che la valga al catena di disequazioni
+	$$
+	c^T x \geq u^T A x \geq u^T b
+	$$
+	\item \textbf{Condizioni di ortogonalità - scarti complementari}: perché una coppia di soluzioni sia ottima, devono essere entrambe ammissibili e deve valere la dualità forte, ovvero devono valere le seguenti condizioni:
+	\begin{itemize}
+		\item $Ax \geq b, x \geq 0$ per l'ammissibilità primale.
+		\item $u^TA \geq c^T, u \geq 0$ per l'ammissibilità duale.
+		\item $u^T(Ax-b) = 0$ ortogonalità 1.
+		\item $(u^T A - c^T)x = 0$ ortogonalità 2.
+	\end{itemize}
+	Le condizioni possono essere espresse come
+	\begin{itemize}
+		\item $u^T(Ax-b) = \sum\limits_{i = 1}^m u_i (a_{i}^Tx - b_i) = 0$
+		\item $(u^T A - c^T)x = \sum\limits_{j = 1 }^n (u^T A_{j} - c_{j})x_j = 0$ ortogonalità 2.
+	\end{itemize}
+	per l'ammissibilità tutti i fattori delle sommatorie sono $\geq 0$ e quindi, perché le due soluzioni siano ottime devono valere le seguenti condizioni:
+	\begin{itemize}
+		\item Variabile primale positiva $x_j > 0$ allora $u^TA_j = c_j$ vincolo duale saturo
+		\item Vincolo duale lasco $u^TA_j > c_j$ allora $x_j = 0$ variabile primale nulla
+		\item Variabile duale positiva $u_i > 0$ allra $a_{i}^T = x $ vincolo primale saturo 
+		\item Vincolo primale lasco $a_{i}^T > x$ allora $u_i = 0$ variabile duale nulla
+	\end{itemize}
+	\item Se ho una soluzione ammissibile primale, possono provare a costruire una soluzione ammissibile duale in scarti complementari. Se anche la soluzione duale è ammissibile, allora entrambe sono ottime. Da notare che se il primale è in forma standard le ultime due condizioni non sono utili.
+\end{itemize}
+
+\section{Generazione di colonne}
+
+\begin{itemize}
+	\item Ci sono dei problemi che hanno un elevato numero di variabili oppure le cui variabili non sono note a priori. L'idea è quella di risolvere un problema Master che ha un numero di variabili ridotto, per poi controllare mediante un problema Slave se la soluzione del Master è ottima anche per il problema di partenza.
+	
+	Il controllo dell'ottimo viene fatto verificando la presenza di una possibile variabile con costi ridotti negativi che non è considerata nel problema Master, andando a controllare se l'aggiunta di questa nuova colonna rende inammissibile la soluzione master duale (l'introduzione della colonna primale crea un nuovo vincolo duale).
+	
+	\item Algoritmo di massima per la coppia primale-duale in forma standard:
+	\begin{enumerate}
+		\item Determinare una sottomatrice $E$ di $A$ che ha meno colonne. Il problema associato alla matrice $E$ deve essere ammissibile e limitato.
+		\item Risolvi $Ex = b$ ottenendo una soluzione ottima per il Master $x_{E}^M$. Da notare che $x = \begin{bmatrix} x_{E}^M \\
+		x_{H}^M = 0
+		\end{bmatrix}$ è una soluzione ammissibile del problema di partenza e $u = u^M$ è la soluzione del relativo duale. $u^M$ e $x_{E}^M$ sono ammissibili e in scarti complementari.
+		\item Imposto il problema Slave per determinare un vettore $z \in \Rm$ che rappresenta una possibile colonna di $A_j$ di $A$ associata alla variabile $x_j$. L'altro vincolo su $z$ è che deve essere una colonna a costo ridotto negativo
+		$$
+		c_j - (u^M)^T z < 0
+		$$
+		\item Se il problema Slave non ha soluzione \textbf{Stop}. $x = \begin{bmatrix} x_{E}^M \\
+		x_{H}^M = 0
+		\end{bmatrix}$ è una soluzione ottima per il problema di partenza, considerando tutte le variabili. Altrimenti aggiungi la colonna $z$ al Master e ripeti.
+	\end{enumerate}
+	\item Perché funzioni è necessario che il problema Slave sia veloce da risolvere. Il Master deve essere sempre ammissibile e limitato (posso aggiungere dei vincoli extra). Possono essere necessarie più esecuzioni quindi possono generare più colonne alla volta. La convergenza è garantita dalla teoria del simplesso. Posso avere comunque troppe colonne $\Leftarrow$ pool di colonne attive.
+	\item \textbf{Esempio}: taglio dei tondini
+	\begin{enumerate}
+		\item Genero $J'$ schemi di taglio, ad esempio quelli mono pezzo.
+		\item Risolvo il problema Master
+		$$
+		\min \{ \sum_{j \in J'} x_j : \sum_{j \in J'} N_{ij}x_j \geq R_i \forall i, x_j \in \R^+ \}
+		$$
+		ottenendo $x^*$ e $u^*$.
+		\item Imposto il problema Slave:
+		$$
+		\min \{\overline{c} - (u^*)^Tz = 1 - \sum_{i \in I} u_{i}^*z_i : L_iz_i \leq W, z_i \in \mathbb{Z}^+ \}
+		$$
+		che può essere riformulato come
+		$$
+		\max \{\sum_{i \in I} u_{i}^*z_i : L_iz_i \leq W, z_i \in \mathbb{Z}^+ \}
+		$$
+		ottenendo $z^*$.
+		\item Se $\sum_{i \in I} u_{i}^*z_i < 1$: Stop $x^*$ è ottima. Altrimenti aggiungi $z^*$ al problema e riparti.
+	\end{enumerate} 
+	Il problema iniziale sarebbe di programmazione lineare intera, quindi è necessario trasformare la soluzione $x^*$ da frazionaria in intera con un'euristica o con il branch-and-bound.
+\end{itemize}
+
+
+\section{Branch and bound}
+
+\begin{itemize}
+	\item Metodo per la risuoluzione di ILP o MILP che partiziona la regione ammissibile del problema e ne determina dei bound risolvendo il rilassamento lineare ($z^I \leq z^L$ se il problema è di massimo).
+	\begin{align*}
+		z_{I}^K &= \max \{ c^T x | x \in X_k \} \text{ dove $k$ è una partizione di $X$} \\
+		z_I &= \max \limits_{k \in 1\ldots n} x_{I}^k
+	\end{align*}
+	\item L'idea è quindi quella di andare a risolvere prima il rilassamento lineare del problema, in modo da determinare una soluzione ottima $x_L$. Se questa soluzione ha delle componenti frazionarie è necessario fare branching, ovvero viene scelta una componente di $x_L$ che è frazionaria e vengono creati due nuovi problemi figli, ognuno con un vincolo che rende inammissibile le soluzioni con quel valore frazionario. Es: se $x_2 = 2.4$ un problema avrà $x_2 \leq 2$ e l'altro $x_2 \geq 3$.
+	Da notare che $x_L$ fornisce un upper bound per l'ottimo globale.
+	
+	Se invece $x_L$ è intera, allora è anche soluzione ottima per il sotto-problema intero e per sapere se è ottima per il problema di partenza è necessario completare l'esplorazione dell'albero.
+	Una soluzione intera fornisce un lower bound al valore ottimo.
+	
+	Avere dei buoni bound è importante, perché quando viene valutata una foglia, se questa ha un upper bound peggiore del lower bound, può essere scartata, in quanto conterrà solamente soluzioni peggiori rispetto a quella corrente.
+	
+	\item Algoritmo:
+	\begin{enumerate}
+		\item Se esiste un nodo attivo in $T$, scegli un nodo attivo $P_k$, altrimenti ritorna la soluzione ottima corrente $x^*$.
+		\item Risolvi il rilassamento lineare di $P_k$:
+		\begin{itemize}
+			\item Se il rilassamento è inammissibile, pota il nodo per inammissibilità.
+			\item Se la soluzione $z_L$ di $P_k$ è peggiore di $x^*$ pota il nodo per bound.
+			\item Se la soluzione $z_L$ è intera e migliore di $x^*$ aggiorna $x^*$ e pota il nodo per ottimalità.
+			\item Se non si verifica nessuno dei casi precedenti. Scegli una componente frazionaria di $z_L$ e fai branching. Aggiungi i due nuovi nodi alla coda dei nodi attivi e riparti.
+		\end{itemize}
+	\end{enumerate}
+	\item Considerazioni sull'efficienza e efficacia
+	\begin{itemize}
+		\item Per ogni nodo è necessario risolvere un PL che ha sempre un vincolo in più, questo può essere fatto in modo efficiente con il metodo del simplesso duale.
+		\item \textbf{Scelta del nodo attivo}: posso scegliere di esplorare l'albero in profondità (DFS) in modo da trovare più in fretta un lower bound, oppure posso esplorarlo in best-node, ovvero ad ogni iterazione esploro il nodo con upper-bound migliore, in modo da aumentare la possibilità di trovare una soluzione buona. Questo secondo modo può portare a problemi di memoria, in quanto la coda dei nodi attivi può diventare tanto lunga. Nel caso pratico si combinano i due approcci.
+		\item \textbf{Valutazione di sol. ammissibili}: avere una soluzione ammissibile è importante per avere un bound. Posso aspettare di trovare una foglia intera, oppure posso approssimare le componenti frazionarie della soluzione del rilassamento lineare, oppure posso costruirne una con delle euristiche.
+		\item \textbf{Criterio d'arresto}: mi fermo quando ho esplorato tutto l'albero (sol. ottima) oppure dopo tot. tempo, fornendo una soluzione che può non essere ottima, ma con optimality gap. Posso anche fermarmi quando l'opt-gap è sotto una certa soglia.
+	\end{itemize}
+	\item Il metodo del branch and bound può essere esteso a tutti i problemi di ottimizzazione combinatoria, basta avere:
+	\begin{itemize}
+		\item un'operazione di branch per la costruzione dell'albero (regole di branching)
+		\item una soluzione ammissibile che fornisca un bound (calcolo del bound)
+		\item un'operazione di bound per esplorare l'albero in modo efficiente (regole di fathoming)
+		\item Regole di esplorazione dell'albero
+		\item Regole per la valutazione di una sol ammissibile.
+		\item Criterio di stop.
+	\end{itemize}
+\end{itemize}
+
+\section{Formulazione ideale}
+
+\begin{itemize}
+	\item Dato un PLI
+	$$
+	z_I = \max \{ c^Tx : Ax \leq b, x \geq 0, x_i \in Z \forall i \in I\}
+	$$
+	la sua regione ammissibile è definita come
+	$$
+	X = \{ x \in \Rn | Ax \leq b, x \geq 0, x_i \in Z \forall i \in I \}
+	$$
+	La stessa regione può essere definita dalla formulazione alternativa $A'x \leq b'$ se vale
+	$$
+	X = \{ x \in \Rn | A'x \leq b', x \geq 0, x_i \in Z \forall i \in I \}
+	$$
+	e quindi anche il problema
+	$$
+	\max \{ c^Tx: A'x \leq b', x\geq 0 \}
+	$$
+	è un rilassamento lineare di $z_I$.
+	\item Diciamo che una formulazione è buona, ovvero migliore rispetto ad un'altra se contiene meno punti. Questo perché il rilassamento lineare dato da una buona formulazione fornisce un bound più stretto. Per capire se una formulazione è migliore di un'altra è necessario andare a valutare l'appartenenza o meno dei punti. La dimensione della formulazione dipende dai vincoli. Ad esempio è preferibile utilizzare i singoli vincoli piuttosto che quelli aggregati:
+	$$
+	x_{ij} \leq y_i \forall i,j \quad\text{piuttosto che}\quad \sum_{j}x_{ij}\leq y_i \forall i
+	$$
+	\item \textbf{Formulazione ideale} di $X$: ovvero la formulazione per la quale il rilassamento lineare ha regione ammissibile minimale.
+	Dato che la regione ammissibile di un PL può essere rappresentata da un poliedro convesso $P = \{x | Ax \leq b, x \leq 0 \}$, la formulazione può essere riscritta come $X = \{ x \in P | x_i \in \Z \forall i \in I \}$.
+	
+	Il più piccolo poliedro convesso in grado di contenere tutto un insieme $X$ è l'inviluppo convesso $conv(X)$ ed è più piccolo di qualsiasi poliedro $P$, pertanto rappresenta la \textbf{formulazione ideale.}
+	
+	\item \textbf{Teorema Fondamentale della PLI}: Dato un problema PLI e la sua formulazione $X$, allora $conv(X)$ è un poliedro, ovvero esiste $\tilde{A}$ e $\tilde{b}$ tali che:
+	$$
+	conv(X) = \{ x \in \Rn | \tilde{A}x \leq \tilde{b}, x \geq 0 \}
+	$$
+	\item Se il problema viene trasformato in forma standard, se $(x^*, s^* = \tilde{b} - \tilde{A}x^*)$ è una soluzione di base ottima per la forma standard, allora $x^*$ è una soluzione di base ottima per il problema di partenza e quindi $\tilde{A}x \leq \tilde{b}$ ammette almeno una soluzione ottima.
+	\item \textbf{Teorema}: Sia $X$ una formulazione. Il sistema $\tilde{A}x \leq \tilde{b}, x\geq 0$ è la formulazione ideale di $X$ $\Leftrightarrow$ tutte le sue soluzioni di base sono elementi di $X$, pertanto per ogni $x \in \Rn$ soluzione di $\tilde{A}x \leq \tilde{b}$ vale $z_I = \tilde{z}$. Ovvero tutte le soluzioni di base del sistema (vertici del poliedro) sono intere.
+	\item Se risolvo il rilassamento continuo della formulazione ideale ottengono comunque solo soluzioni intere.
+	\item La formulazione ideale non è nota oppure potrebbe essere composta da troppi vincoli
+\end{itemize}
+
+\section{Piano di taglio e Tagli di Gomory}
+
+\begin{itemize}
+	\item L'idea è quella di andare ad aggiungere dei vincoli in modo che il rilassamento lineare approssimi la formulazione ideale del problema.
+	\item \textbf{Disuguaglianza valida}: $\alpha^T x \leq \beta$ è valida per una formulazione $X$ se per ogni $x \in X$ è soddisfatta.
+	\item \textbf{Taglio}: data una disuguaglianza valida e un punto $x^* \not\in conv(X)$, la disuguaglianza taglia $x^*$ se $x^*$ non la soddisfa.
+	\item Algoritmo per risolvere il rilassamento lineare $\max \{ c^T x | Ax \leq b, x \geq 0 \}$
+	\begin{enumerate}
+		\item Risolvi il rilassamento lineare e ottieni $x^*$.
+		\item Se $x^*$ è intera, stop.
+		\item Determina una disuguaglianza valida per $X$ che tagli $x^*$.
+		\item Aggiungi la disuguaglianza ai vincoli del problema è riparti.
+	\end{enumerate}
+	\item Serve un modo per generare le disuguaglianze valide.
+	\item \textbf{Tagli di Gomory}: applicabili solo a problemi di programmazione lineare intera pura.
+	
+	Prima viene risolto il rilassamento lineare del problema $Ax = b, x\geq 0$ in modo da determinare con il simplesso $x^* = \begin{bmatrix}
+	x_{\beta[i]}^* = \overline{b}_i \forall i = 1\ldots n \\
+	x_{j}^* = 0
+	\end{bmatrix}$.
+	Inoltre, al termine dell'esecuzione del simplesso, si avrà un tableau composto da equazioni della forma
+	$$
+	x_{\beta[i]} + \sum_{j \in F} \overline{a}_{ij}x_j = \overline{b}_i \quad \forall i \in 1 \ldots m
+	$$
+	Se $x^*$ ha delle componenti frazionarie, ne scegliamo una $h$.
+	Abbiamo quindi che
+	$$
+	\overline{b}_h = x_{\beta[h]} + \sum_{j \in F} \overline{a}_{hj}x_j \geq  x_{\beta[h]} + \sum_{j \in F} \lfloor\overline{a}_{hj}\rfloor x_j
+	$$
+	Siccome il problema è intero, tutto $\overline{b}$ deve essere intero, quindi ogni soluzione del problema deve soddisfare per forza
+	$$
+	 \underbrace{x_{\beta[h]} + \sum_{j \in F} \lfloor \overline{a}_{hj} \rfloor x_j}_{\text{è un numero intero}} \leq  \lfloor \overline{b}_h\rfloor \qquad\text{\textbf{Taglio di Gomory}}
+	$$
+	
+	Quest'ultima disuguaglianza è quindi valida per $Ax = b$ e taglia $x^*$.
+	
+	Posso poi riformulare il taglio aggiungendo una nuova variabile $s\geq 0$ intera:
+	$$
+	 x_{\beta[h]} + \sum_{j \in F} \lfloor \overline{a}_{hj} \rfloor x_j + s =  \lfloor \overline{b}_h\rfloor
+	$$
+	
+	Così facendo posso andare a sottrarre all'equazione di partenza il taglio di Gomory ottenendo:
+	$$
+	\sum_{j\in F}(\lfloor \overline{a}_{hj} \rfloor-  \overline{a}_{hj}-)x_j + s = \lfloor \overline{b}_h\rfloor -\overline{b}_h \quad \text{Taglio di Gomory in forma frazionaria}
+	$$
+	
+	che può essere inserita all'interno del tableau del simplesso, il quale definisce una base ammissibile duale e pertanto è possibile applicare il simplesso duale per risolvere il problema. Da notare che non è ammissibile primale perché $\lfloor \overline{b}_h\rfloor -\overline{b}_h < 0$ 
+\end{itemize}
+
+
+\section{Matrici totalmente unimodulari}
+
+\begin{itemize}
+	\item Una matrice $A$ è totalmente unimodulare se per ogni sotto-matrice quadrata $B$ di $A$ si ha $det(B) = \{0, 1, -1\}$.
+	\item Se la matrice $A$ associata ai vincoli di un MILP è TU, allora tutte le soluzioni di base del rilassamento lineare sono intere.
+	\item Se $B$ è invertibile e $B^{ji}$ indica la matrice $B$ senza la riga $j$ e la colonna $i$, allora
+	$$
+	(B^{-1})_{ij} = (-1)^{i+j} \frac{det(B^{ji})}{det(B)}
+	$$	
+	quindi se $B$ è intera anche $B^{-1}$ è intera.
+	\item \textbf{Teorema}: Sia $Ax = b, x\geq 0$ un MILP, $A$ totalmente unimodulare, con $b \in \Rm$ ma con solo componenti intere. Allora tutte le soluzioni di base sono del sistema sono intere. 
+	
+	\textbf{Dimostrazione}: $x^* = \begin{bmatrix} x_{B}^* = B^{-1}b
+	x_{F}^* = 0
+	\end{bmatrix}$. $B^{-1}$ è intera per quanto asserito prima, $b$ è interno per ipotesi e quindi anche $x_{B}^*$ è intero.
+	
+	\item \textbf{Teorema}: sia $A$ una matrice binaria tale che in ogni colonna compaiano al massimo 2 elementi uguali a 1. Se le righe possono essere partizionate in due insiemi $V_1$ e $V_2$ tali che per ogni colonna un 1 sia in $V_1$ e l'altro in $V_2$, allora $A$ è TU.
+	
+	\textbf{Dimostrazione}: Sia $B$ una sottomatrice quadrata di $A$ di dimensione $k$. Se $k = 1$, $B$ contiene o un 1 o uno 0 e quindi è TU perché $det(B) = \{0,1\}$. Se invece $k > 2$, possono verificarsi 3 casi:
+	\begin{itemize}
+		\item $B$ ha una colonna di tutti 0, $det(B)=0$.
+		\item $B$ ha almeno una colonna con solo l'elemento in posizione $B_{ij} = 1$. $det(B) = (-1)^{i+j}det(B^{ij})$. Dato che $B^{ij}$ è di dimensione $k-1$ posso applicare l'ipotesi induttiva per ottenere che $det(B^{ij}) = \{ 0,1,-1 \}$ e quindi anche $B$ ha $det(B) = \{0, 1, -1\}$.
+		\item Tutte le colonne hanno di $B$ hanno esattamente due elementi uguali a $1$, quindi per le ipotesi del teorema, se è possibile trovare i due insiemi $V_1$ e $V_2$, allora la somma di tutte le righe di $V_1$ che compaiono in $B$ meno la somma di tutte le righe di $V_2$ che compaiono in $B$ deve dare 0, ovvero le righe di $B$ sono tutte linearmente dipendenti e quindi $det(B) = 0$.
+	\end{itemize}
+	Siccome $det(B)$ è sempre $\in \{0, 1, -1\}$, allora $A$ è TU.
+	\item Per una matrice TU valgono le seguenti proprietà:
+	\begin{enumerate}
+		\item Ogni matrice ottenuta permutando righe o colonne di $A$ è TU.
+		\item Ogni matrice ottenuto moltiplicando righe o colonne di $A$ è TU.
+		\item $A^T$ è TU, perché $det(B) = det(B^T)$.
+		\item $(A, I)$ è TU perché può essere scritta come $\begin{pmatrix}
+		C & 0 \\
+		D & I
+		\end{pmatrix}$
+		\item $\begin{pmatrix}
+		A \\
+		I
+		\end{pmatrix}$ è TU.
+	\end{enumerate}
+	\item \textbf{Teorema}: sia $A \in \Rmn$ una matrice TU e $b \in \Rm$ un vettore interno, tutte le soluzione di base del sistema $Ax \leq b$ sono intere. \textbf{Dimostrazione}:  $x^* = \begin{bmatrix}
+	x_{B}^* \\
+	0
+	\end{bmatrix}$ è soluzione ottima del sistema se $(x^*, s^* = b - Ax^*)$ è soluzione del sistema $Ax + Is = b$. Per le proprietà precedenti anche $Ax+Is$ è TU e quindi le soluzioni di base del sistema sono intere, e di conseguenza anche $x^*$ è intera.
+	\item Se $A$ contiene anziché due 1, un 1 e un -1, è ancora TU. C'è la stessa dimostrazione cambia solo che nel caso 3 viene fatta la somma e non la differenza.
+	\item La matrice delle adiacenze \footnote{Ha tante righe quanti sono i nodi e tante colonne quanti sono gli spigoli} di un grafo bipartito è TU per costruzione, quindi dato che il problema dell'assegnamento può essere scritto come $\min \{ c^Tx A(G)x = 1, x \geq 0, x \in \Z^{|E|} \}$, posso risolvere il rilassamento continuo ed ottenere comunque una soluzione intera.
+	\item Anche la matrice dei vincoli di un problema di flusso massimo su un grafo orientato ha la stessa proprietà.
+	
+\end{itemize}
+
+
+\section{ATSP}
+
+$$
+\begin{matrix}
+	\min \: & \sum\limits_{(i,j) \in A} c_{ij}x_{ij} & \\
+	\st \: & \sum\limits_{i \in N : (i,v) \in A} x_{iv} &=1 \quad \forall v \in N  \quad \text{Solo un arco entrante}\\
+	       & \sum\limits_{j \in N : (v,j) \in A} x_{vj} &=1 \quad \forall v \in N  \quad \text{Solo un arco uscente}\\
+	       & \sum\limits_{i \in S, j \in S: (i,j) \in A} x_{ij} &\leq |S|-1 \quad \forall S \subset N : 2 \leq |S| \leq |N|-1 \\
+	       & x_{ij} \in \{0,1\} \forall \: (i,j) \in A
+\end{matrix}
+$$
+
+\begin{itemize}
+	\item Il terzo tipo di vincoli prende il nome di \textit{subtour elimination constraints} e sono un numero esponenziale.
+	\item Se risolvo ATSP rilassato, senza i vincoli di subtour, ottengono una soluzione ammissibile che può essere ottima se non ci sono cicli, oppure che può essere utile come lower bound.
+	\item Sempre se tolgo i vincoli di subtour e se duplico i nodi, ottengo il problema dell'assegnamento e quindi posso usare il simplesso per risolvere il rilassamento continuo, avendo comunque la garanzia di trovare una soluzione intera.
+	\item Se la soluzione del rilassamento ha dei cicli, posso aggiungere solamente i vincoli che eliminano i cicli che contiene, perdendo però la TU. Se la soluzione ha un ciclo $C$ posso rimuoverlo con il vincolo:
+	$$
+	\sum_{(i,j) \in C} x_{ij} \leq |C| -1 
+	$$
+	Per gestire il fatto che perdo la TU, posso aggiungere i vincoli di integralità solo sulle variabili che compaiono nei vincoli di subtour-elimination che man mano aggiungo. Questo metodo converge ad una soluzione, perché nella peggiore delle ipotesi vengono aggiunte tutti i vincoli.
+	\item Algoritmo 1:
+	\begin{enumerate}
+		\item Riformulo il problema come problema dell'assegnamento
+		\item Risolvo il rilassamento, se la soluzione ottima non ha cicli: Stop.
+		\item Individuo uno o più cicli e aggiungo i vincoli per rimuoverli e i vincoli di interezza per le variabili che compaiono.
+		\item Risolvo il MILP e riparto da 2.
+	\end{enumerate}
+	\item Si può fare di meglio. Posso osservare che per togliere un sotto-ciclo basta imporre che la soluzione non contenga un arco $(i,j)$ che costituisce il ciclo, ovvero forzare $x_{ij} = 0$ e questo lo posso fare senza aggiungere vincoli, andando a modificare il costo dell'arco $c_{ij} = +\infty$.
+	\item In modo analogo posso forzare l'utilizzo di un arco $x_{ij} = 1$, andando a settare a $+\infty$ il costo di tutti gli altri archi uscenti dal nodo $i$: $c_{ik} = +\infty \forall k \neq j$.
+	\item Imposto quindi un branch and bound che parte dal rilassamento continuo del problema di assegnamento relativo (senza vincoli di subtour elimination) e man mano fa branching rompendo i cicli che incontra, come precedentemente descritto. In questo modo la matrice dei vincoli rimane TU e quindi ad ogni passo posso usare il simplesso.
+	\item Devo stare attendo a non perdere delle soluzioni durante il branching e al fatto che alcuni nodi possono sovrapporsi. 
+	Come regola di branching conviene utilizzare: dato un ciclo $C$ presente nella soluzione corrente, si sceglie un arco $(i,j) \in C$ e si generano $|C| - 1 $ nodi figli. Il primo avrà $x_{ij} = 0$ e i restanti $x_{ij} =1$ e un'altro arco che compare in $C$ posto a 0. Così facendo raggiungo un buon compromesso tra la limitazione della sovrapposizione e la ramificazione dell'albero.
+\end{itemize}
+
+\section{TSP}
+
+$$
+\begin{matrix}
+\min \: & \sum\limits_{e \in E} c_ex_e &\\
+\st \:  & \sum\limits_{e \in \varDelta(v) } x_e &=2 \quad \forall v \in V \quad \text{STSP:1} \\
+        & \sum\limits_{e \in E(S)} x_e & \leq  |S| -1 \quad \forall S \subset V : 3 \leq |S| \leq |V| - 1 \quad \text{STSP:2} \\
+        & x_e \in \{0,1\}\  \forall e \in E \quad \text{STSP:3}
+\end{matrix}
+$$
+
+\begin{itemize}
+	\item Posso trasformare STSP in ATSP e risolverlo con l'algoritmo precedente, ma raddoppio il numero di variabili.
+	\item Anche in questo caso si può pensare ad un approccio che aggiunge man mano i vincoli di eliminazione dei cicli.
+	\item Algoritmo 1:
+	\begin{enumerate}
+		\item Risolvi STSP senza vincoli di subtour elimination. \`E un MILP perché ci sono i vincoli di integrità.
+		\item Controlla cercando se nella soluzione ci sono dei cicli. Il controllo viene effettuato cercando le componenti connesse definite dalla soluzione. Se non ci sono cicli, stop la soluzione è ottima. Se ci sono aggiungi i vincoli che li tolgono e riparti.
+	\end{enumerate}
+	\item Non funziona un bene, perché ci sono vari MILP da risolvere.
+	\item Si può pensare di risolvere il rilassamento continuo, ma con la soluzione frazionaria serve un altro modo per determinare il problema di separazione, in quanto le componenti connesse non sono più utilizzabili.
+	\item Come prima cosa conviene riscrivere STSP:2 come
+	$$
+	\sum\limits_{e \in \varDelta(S)} x_e \geq 2 \quad \forall S \subset V : 3 \leq |S| \leq |V| -1
+	$$
+	dove $\varDelta(S)$ è l'insieme degli spigoli che hanno solo un estremo in $V$.
+	\item Come problema di separazione per individuare i vincoli di subtour elimination si può impostare un problema di massimo flusso, a partire dal grafo del TSP e utilizzando come capacità degli archi il valore della soluzione del rilassamento $x_{R}^*$. A partire da un nodo $s$ fissato vengono impostati $|V|-1$ problemi di massimo flusso in cui cambia sempre il pozzo. Se per uno di questi problemi il flusso massimo è inferiore di $2$, allora c'è un ciclo. Perché così viene individuato un sottoinsieme di nodi $S$ che è connesso con i restanti $V\setminus S$ nodi da meno di 2 spigoli. Il tutto può essere fatto in modo efficiente.
+	\item Algoritmo v2: Rilassamento continuo
+	\begin{enumerate}
+		\item Risolvi il rilassamento continuo senza i vincoli STSP:2.
+		\item Controlla se la soluzione ottima ha dei cicli (problema di flusso massimo). Se non ci sono Stop, la soluzione è ottima per il rilassamento continuo, devo ripristinare i vincoli di integrità, ad esempio risolvendo un MILP con i vincoli STSP:2 finora individuati.
+		\item Aggiungi i vincoli relativi ai cicli violati e ripeti.
+	\end{enumerate}
+	\item Da notare che durante la risoluzione del MILP finale, possono comparire dei nuovi cicli.
+	\item Algoritmo 3:
+	\begin{enumerate}
+		\item Risolvi il rilassamento continuo con l'algoritmo 2 finché non trovi una soluzione $x_{R}^*$ ottima e senza cicli.
+		\item Risolvi il MILP utilizzando i vincoli STSP:2 precedentemente trovati.
+		\item Individua eventuali cicli mediante le componenti connesse. Se non ci sono, stop: la soluzione è ottima.
+		\item Aggiungi i vincoli che rimuovono i cicli e riparti da 2.
+	\end{enumerate}
+	\item Il tutto funziona perché la prima parte, così come i problemi di massimo flusso possono essere effettuati in modo efficiente. Però possono volerci tante iterazioni di MILP.
+	\item Algoritmo v4: Branch and cut:
+	\begin{enumerate}
+		\item Risolvi il rilassamento continuo con l'algoritmo 2.
+		\item Applica il branch and bound facendo branching sulle variabili frazionari. Ad ogni nodo usa il rilassamento continuo per trovare un lower bound e fai branch sulle comonenti frazionarie della soluzione del rilassamento ottima, $x_{R}^*(e) = 0$ e $x_{R}^*(e) = 1$.
+	\end{enumerate}
+	\item Ogni rilassamento del B\&B viene risolto con l'algoritmo 2.
+	\item Funziona, perché vengono ereditati i vincoli sui nodi figli e vengono tagliate le soluzioni frazionarie.
+	\item \textbf{Branch and cut}: l'approccio di aggiungere disuguaglianze valide durante la risoluzione dei nodi del branch and bound prende il nome di branch and cut. Perché funzioni deve essere possibile determinare in modo efficiente tali disequazioni.
+\end{itemize}
+
+\section{Cover Inequalites}
+
+\begin{itemize}
+	\item Ci sono dei problemi, come quello dello zaino, per i quali il rilassamento continuo è molto lontano dalla formulazione ideale. L'idea è quindi quella di andare a definire dei vincoli per approssimarla.
+	\item Una \textbf{Cover} per il problema dello zaino è un qualunque sottoinsieme di oggetti $C$ che non può essere contenuto completamente nello zaino
+	$$
+	\sum_{i \in C} \alpha_i \geq \beta +1
+	$$
+	segue quindi che per avere una soluzione ammissibile, almeno uno degli oggetti appartenente alla cover non deve essere inserito nello zaino.
+	$$
+	\sum_{i \in C} x_i \leq |C|-1
+	$$
+	\item \textbf{Problema di separazione delle cover}: data una soluzione del rilassamento lineare, determinare se questa viola una cover, ovvero se esiste $C$ tale che:
+	\begin{enumerate}
+		\item $\sum_{i \in C} \alpha_i \geq \beta +1$
+		\item $ 	\sum_{i \in C} x_i \leq |C|-1$
+	\end{enumerate}
+	La ricerca può essere fatta formulando il seguente problema di massimo, dove $z \in \Zn$ rappresenta una possibile cover:
+	$$
+	\max \{ \sum_{i \in 1\ldots n}(1 - x_{i}^*)z_i : \sum_{i \in 1 \ldots n} \alpha_i z_i \geq \beta +1 \}
+	$$
+	Se il valore ottimo è \textbf{minore di 1} allora la cover definita da $z^*$ \textbf{è violata} da $x^*$, altrimenti non esistono cover violate da $x^*$.
+	\item Lo stesso ragionamento applicabile per il problema dello zaino può essere riportato su qualsiasi problema lineare binario.
+	$$
+	\max \{  c^Tx : Ax \leq b, x \in \Zn, x_i \in {0,1} \}
+	$$
+	Questo perché ogni singolo vincolo del problema può essere visto come un problema dello zaino.
+	Posso quindi definire un algoritmo generico per generare le cover inequalities.
+	\begin{enumerate}
+		\item Risolvo il rilassamento lineare per trovare $x^*$
+		\item Se $x^*$ è intera, stop.
+		\item Per ogni vincolo del sistema, determino se $x^*$ viola una cover inqualities, considerando un solo vincolo alla volta.
+		\item Se per tutti i problemi di separazione ottengo $FO \geq 1$, ovvero non ci sono cover violate: Stop.
+		\item Altrimenti aggiungo le cover violate al rilassamento lineare e riparto da capo.
+	\end{enumerate}
+	Da notare che al termine dell'algoritmo non ho la garanzia che $x^*$ sia intera, questo perché aggiungere anche tutte le cover inequelities non permette di raggiungere la formulazione ideale del problema. Devo quindi accontentarmi di una soluzione euristica o applicare il branch and bound, partendo però da una formulazione migliore (branch and cut).
+	\item Da notare che perché tutto questo funzioni in modo efficiente è necessario riuscire a determinare le cover inequalities violate in modo efficiente e questo è possibile perché il problema che si va a risolvere è si un ILP ma è tra i più semplici possibili.
+\end{itemize}
+
+\section{Metaeuristiche}
+
+\begin{itemize}
+	\item Non sempre è possibile usare l'approccio esatto.
+	\item A volte può basta una soluzione buona o i parametri del modello sono soggetti ad errore.
+	\item \textbf{Euristiche costruttive}: costruiscono in modo greedy una soluzione al problema. Applicabili quando la soluzione is può ottenere come un sottoinsieme di alcuni elementi.
+	\item \textbf{Algoritmi metaeuristici}: schemi di algoritmi che hanno delle componenti specifiche che devono essere instanziate per poter essere utilizzati.
+	\item \textbf{Algoritmi approssimati}
+	\item \textbf{Ipereuristiche}
+\end{itemize}
+
+\subsection{Algoritmi greedy}
+
+\begin{itemize}
+	\item Si tratta di algoritmi costruttivi che come \textit{criterio di espansione} scelgono sempre la mossa migliore in quel momento.
+	\item L'algoritmo simula il comportamento più intuitivo ed è semplice da implementare.
+	\item Il tempo di calcolo è tipicamente polinomiale.
+	\item Tipicamente viene integrato all'interno di altri algoritmi.
+	\item \textbf{Dispatching rule} o criterio di espansione: definisce l'ordine in cui gli elementi che compongono la soluzione vengono considerati. Ad ogni mossa viene associato uno score che può essere statico (precalcolato all'inizio) o dinamico (dipende dallo stato attuale). Il criterio di espansione può essere anche randomizzato.
+	\item Tipicamente l'approccio è quello primale, ovvero vengono fatte scelte che rispettano i vincoli. Ci sono anche versioni duali che tentano di rendere ammissibile una soluzione duale non ammissibile.
+	\item Il criterio di espansione può essere basta su \textbf{tecniche esatte} per la risoluzione di problemi semplici che permettono di effettuare scelte migliori.
+	\item \textbf{Beam Search}: semplificazione del branch and bound. Ad ogni livello dell'albero vengono espansi solo i $k$ nodi più promettenti. In questo modo la dimensione dell'albero è polinomiale. Il valore di $k$ è da regolare in base al tempo a disposizione, ecc. Non viene fatto backtracking, ma ci sono varianti che lo prevedono.
+\end{itemize}
+
+\subsection{Ricerca Locale}
+
+\begin{itemize}
+	\item Si parte da una soluzione ammissibile e si ragiona sul suo vicinato $N(s)$.
+	\item Gli algoritmi di ricerca locale cercano all'interno del vicinato una soluzione migliore di quella corrente, fino a che non trovano un ottimo locale.
+	\item \textbf{Determinazione della soluzione iniziale}: la soluzione iniziale è importante che sia ammissibile, per il resto può essere generata casualmente, in modo greedy o altro. Tipicamente vengono provate più soluzioni iniziali per campionare meglio lo spazio di ricerca.
+	\item \textbf{Rappresentazione della soluzione}: il vicinato viene definito come delle trasformazioni della soluzione. \`E quindi necessario definire prima come rappresentare la soluzione. Per passare dalla rappresentazione alla soluzione del problema può essere necessaria una codifica/decodifica.
+	\item \textbf{Definizione del vicinato}: viene ottenuto modificando la soluzione corrente con delle mosse. La tipologia delle mosse determina la dimensione del vicinato. Un vicinato grande potrebbe richiedere troppo tempo per essere esplorato, mentre un vicinato piccolo potrebbe convergere ad ottimi locali di scarsa qualità. \textbf{Forza del vicinato}: un vicinato forte produce soluzioni di qualità. \`E preferibile lavorare con vicinati connessi, ovvero per i quali esiste una sequenza di mosse che collega due soluzioni.
+	
+	Il vicinato deve anche essere veloce da valutare. \`E preferibile poter fare una valutazione incrementale a partire dalla soluzione centrale, ma perché questo sia possibile è necessario che le mosse siano limitate.
+	
+	La \textbf{complessità del vicinato} è data dalla dimensione del vicinato moltiplicata per il tempo necessario per la valutazione.
+	
+	\item \textbf{Valutazione di una soluzione}: si può usare la funzione obiettivo, così come la si può combinare con altri fattori, come il grado di inamissibilità della soluzione (se si permettono anche soluzioni non ammissibili).
+	
+	\item \textbf{Strategie di esplorazione}: ci si può spostare sul primo vicino migliore (\textit{first improvement}) così come si può valutare tutto il vicinato e spostarsi sul vicino migliore (\textit{steepest descent}). La scelta può anche essere randomizzata.
+	
+	\item Volendo si possono effettuare più ricerche locali a partire da soluzioni iniziali diverse (random multistart), oppure si può modificare dinamicamente il vicinato, aumentando le possibili mosse se non vengono trovate soluzioni migliori.
+	
+	\item \textbf{Simulated Annealing}: vengono permesse mosse che peggiorano la funzione obiettivo con una certa probabilità che dipende da quanto peggiorativa è la mossa. Col passare del tempo, la probabilità di effettuare una mossa peggiorativa diminuisce. A livello storico è importante perché è stato il primo. Sotto forti assunzioni, la probabilità di ritornare un ottimo globale tende a 1.
+	
+	\item \textbf{Tabu Search}: mantiene in memoria lo storico delle ultime soluzioni visitate o mosse effettuate (\textit{tabu list} di lunghezza \textit{t}). Così posso permettere all'algoritmo di spostarsi su soluzioni non miglioranti senza correre il rischio di ciclare. Il parametro $t$ deve essere opportunamente calibrato, se è troppo corto ciclo, se è troppo lungo ho problemi di memoria/efficienza e potrei esaurire le soluzioni buone presenti nel vicinato. Nella tabu list conviene memorizzare le mosse effettuate piuttosto che le soluzioni visitate. Ad esempio se su TSP uso mosse 2-opt posso memorizzare quali archi ho swappato.
+	Possono inoltre essere definiti dei \textit{criteri di aspirazione}, ovvero dei criteri che permettono di scavalcare la tabu list: una soluzione che è tabu ma che soddisfa questi criteri può essere comunque valutata, in questo modo evito di scartare soluzioni buone ma che verrebbero raggiunte con una mossa tabu.
+	
+	Come criterio d'arresto posso o fissare un limite massimo di iterazioni/tempo, oppure un numero massimo di iterazioni senza miglioramenti, oppure continuare finché non esaurisco tutto il vicinato.
+	
+	\item \textbf{Intensificazione e diversificazione}: potrei voler andare ad esplorare in modo più approfondito le soluzioni di una determinata area, oppure potrei voler visitare aree poco esplorate dello spazio. Per intesificare potrei andare ad enumerare tutte le possibili soluzioni con determinate caratteristiche, oppure cambiare il vicinato, oppure penalizzando soluzioni diverse da quelle che voglio esplorare. Per diversificare potrei ampliare il vicinato (da 2-opt a 3-opt), modificare la funzione di valutazione, ripartire da una soluzione molto diversa da quella corrente, ecc. Nella tabu search posso regolare in modo dinamico il parametro $t$.
+\end{itemize}
+
+\subsection{Algoritmi Genetici}
+
+\begin{itemize}
+	\item Anziché tenere una sola soluzione ne tengo una popolazione.
+	\item Simulo l'avanzamento della specie, dove i singoli individui sono le soluzioni. Semplici da implementare e richiedono poche conoscenze del dominio applicativo.
+	\item \textbf{Codifica degli individui}: ogni soluzione viene rappresentata dal sul cromosoma, composto da vari geni che tipicamente corrispondono alle variabili. Ci sono varie codifiche che possono essere utilizzate. La scelta è importante perché il resto delle operazioni si basa sulla codifica adottata.
+	\item \textbf{Popolazione iniziale}: serve un pool iniziale di soluzioni che possono essere generate in modo casuale oppure greedy. \`E importante che il pool sia omogeneo in modo che riesca a coprire la maggior parte delle caratteristiche genetiche.
+	\item \textbf{Funzione di fitness}: si può usare la funzione obiettivo, così come la si può combinare con il grado di inammissibilità o di diversificazione.
+	\item \textbf{Operatori di selezione}: servono per selezionare le soluzioni da utilizzare per generare la nuova generazione. La selezione può essere fatta casualmente, secondo la funzione di fitness (montecarlo), secondo il ranking o secondo un torneo $N$ (scelgo $N$ soluzioni a caso dalla popolazione, prendo la migliore).
+	\item \textbf{Crossover}: specifica come vengono ereditate le caratteristiche dei genitori. \textbf{Uniforme}: viene fatto a livello dei singoli geni, viene scelto il gene di un genitore o dell'altro casualmente o in base al fitness dei due. \textbf{cut-point}: i geni vengono ereditati a blocchi, secondo $k$ punti di taglio determinati casualmente. 
+	\item \textbf{Mutazione}: per garantire una certa diversificazione della popolazione si può introdurre un operatore di mutazione che modifica casualmente le soluzioni con una probabilità molto bassa. Contrasta la convergenza.
+	\item \textbf{Integrazione con la ricerca locale}: si può scegliere di migliorare alcuni individui con tecniche di ricerca locale.
+	\item \textbf{Figli non ammissibili}: si possono rifiutare, si possono correggere e rendere ammissibili oppure si possono tenere in modo da preservare alcuni geni che potrebbero essere interessanti. Infine si può utilizzare una codifica che non permetta la comparsa di figli inammissibili.
+	\item \textbf{Sostituzione della popolazione}: Ad ogni iterazione dell'algoritmo il numero della popolazione viene tipicamente mantenuto costante, si può quindi scegliere di rimpiazzare tutta la popolazione, rimpiazzarne solo alcuni elementi, tenere solamente alcuni dei migliori della generazione precedente oppure scegliere a caso o i migliori tra le $N+R$ soluzioni che sono presenti nella popolazione al termine di un'iterazione.
+	\item \textbf{Criteri di arresto}: tempo limite oppure iterazioni massime, iterazioni massime senza un miglioramento, convergenza della popolazione. 
+	\item \textbf{Parametri}: questi algoritmi sono composti da tanti parametri, che devono essere opportunamente ottimizzati in modo da garantire delle buone prestazioni. Tipicamente l'ottimizzazione viene effettuata dal progettatore dell'algoritmo e non dall'utente finale. Nel scegliere i valori per i parametri è necessario cercare di favorire la diversificazione della popolazione.
+\end{itemize}
+
+
+\subsection{Criteri di valutazione degli algoritmi metaeuristici}
+
+\begin{itemize}	
+	\item Semplicità implementativa
+	\item Tempi di calcolo ed efficienza computazionale
+	\item Qualità delle soluzioni ottenute (optimality gap)
+	\item Robustezza rispetto alle scelte casuali.
+	\item Nel testare gli algoritmi con componenti casuali può essere necessario effettuare più esecuzioni e considerare il tempo medio.
+\end{itemize}
+
+
+
+
+
+

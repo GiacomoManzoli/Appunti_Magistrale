@@ -11,6 +11,8 @@ L'idea è quella di combinare il branch-and-bound con i piani di taglio, partend
 Lo stesso vale per i sotto problemi che vengono generati dal branch-and-bound, ai quali vengono aggiunti altri piani di taglio.
 Questa idea può essere applicata in vari modi: tagliare solo all'inizio, tagliare prima di fare il branch, ecc.
 
+\section{Problemi con matrici unimodulari}
+
 Quando possiamo essere sicuri che la formulazione $Ax \leq b, x \geq 0$ è ideale?
 
 Definisco una matrice $A$ come \textbf{totalmente unimodulare} se ogni sotto-matrice quadrata di $A$ di qualsiasi dimensione ha determinante uguale a -1, 0 o 1. Da notare che le sotto-matrici non devono essere necessariamente composte da colonne e righe contigue.
@@ -48,7 +50,7 @@ Nel caso induttivo, assumiamo che il teorema sia vero per $(k-1) \times (k-1)$ e
 	\item Rimane il caso in cui tutte le colonne hanno esattamente 2 elementi uguali a $1$, uno rosso e uno blu. Si ha quindi che considerano + righe rosse - righe blu si ottiene una combinazione lineare delle righe che fornisce un vettore di 0 e quindi per una proprietà dell'algebra lineare il determinate di $B$ è 0.
 \end{enumerate}
 
-\section{Assignment problem}
+\subsection{Assignment problem}
 
 Ho un grafo bipartito tale che $|V_1| = |V_2|$ e $V = V_1 \cup V_2$. Essendo bipartito non ci sono coppie di vertici appartenenti ad un set collegate da un arco.
 

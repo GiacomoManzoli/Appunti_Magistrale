@@ -30,8 +30,40 @@
 \usepackage{subfig}
 \usepackage{hyperref}
 \usepackage{placeins}
-\usepackage{sourcecodepro}
+\usepackage[scaled=0.8]{sourcecodepro}
 \usepackage{hyperref}                   % collegamenti ipertestuali
+\hypersetup{
+	%hyperfootnotes=false,
+	%pdfpagelabels,
+	%draft,	% = elimina tutti i link (utile per stampe in bianco e nero)
+	colorlinks=true,
+	linktocpage=true,
+	pdfstartpage=1,
+	pdfstartview=FitV,
+	% decommenta la riga seguente per avere link in nero (per esempio per la stampa in bianco e nero)
+	%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=1, pdfstartview=FitV,
+	breaklinks=true,
+	pdfpagemode=UseNone,
+	pageanchor=true,
+	pdfpagemode=UseOutlines,
+	plainpages=false,
+	bookmarksnumbered,
+	bookmarksopen=true,
+	bookmarksopenlevel=1,
+	hypertexnames=true,
+	pdfhighlight=/O,
+	%nesting=true,
+	%frenchlinks,
+	urlcolor=Cerulean,
+	linkcolor=RoyalBlue,
+	citecolor=Cerulean,
+	%pagecolor=RoyalBlue,
+	%urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,
+	pdfsubject={},
+	pdfkeywords={},
+	pdfcreator={pdfLaTeX},
+	pdfproducer={LaTeX}
+}
 
 \usepackage[colorinlistoftodos,prependcaption]{todonotes} %todo
 
@@ -104,6 +136,14 @@
 \newcommand{\Rn}{\ensuremath{\mathbb{R}^n}}
 \newcommand{\Rm}{\ensuremath{\mathbb{R}^m}}
 \newcommand{\Rmn}{\ensuremath{\mathbb{R}^{m \times n}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Zn}{\ensuremath{\mathbb{Z}^n}}
+\newcommand{\Zm}{\ensuremath{\mathbb{Z}^m}}
+\newcommand{\Zmn}{\ensuremath{\mathbb{Z}^{m \times n}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Qn}{\ensuremath{\mathbb{Q}^n}}
+\newcommand{\Qm}{\ensuremath{\mathbb{Q}^m}}
+\newcommand{\Qmn}{\ensuremath{\mathbb{Q}^{m \times n}}}
 
 %----------------------------------------------------------------------------------------
 % TITLE
@@ -151,27 +191,33 @@
 	%	CONTENT
 	%----------------------------------------------------------------------------------------
 	\part{Teoria}
-	\input{lezioni/lezione1}
-	\input{lezioni/lezione2}
-	\input{lezioni/lezione3}	
-	\input{lezioni/lezione4}
-	\input{lezioni/lezione5}
-	\input{lezioni/lezione6}
-	\input{lezioni/lezione7}
-	\input{lezioni/lezione8}
-	\input{lezioni/lezione9}
+	\input{lezioni/lezione1} % Introduzione
+	\input{lezioni/lezione2} % Cap1 - intro ai modelli
+	%\input{lezioni/lezione3} % Vuota, spostata in appendice
+	%\input{lezioni/lezione4} % Vuota, spostata in appendice
+	%\input{lezioni/lezione5} % Vuota, spostata in appendice
+
+	\input{lezioni/lezione9} % Simplesso e dualità 1
 	\input{lezioni/lezione10}
-	\input{lezioni/lezione11}
-	\input{lezioni/lezione12}
-	\input{lezioni/lezione13}
-	\input{lezioni/lezione14}
-	\input{lezioni/lezione15}
-	\input{lezioni/lezione16}
-	%\appendix
+	\input{lezioni/lezione11} % Generazione di colonne
+	\input{lezioni/lezione12} % Metodi risolutivi per la PLI
+	\input{lezioni/lezione13} % Formulazione ideale
+	\input{lezioni/lezione14} % Vuota
+	\input{lezioni/lezione15} % Branch and cut + Matrici UNImodulari / Assegnam
+	\input{lezioni/lezione16} % TSP
+	
+	
+	
+	\input{lezioni/lezione6} % Metaeuristiche - 1
+	\input{lezioni/lezione7} % Metaeuristiche - 2
+	\input{lezioni/lezione8} % Metaeuristiche - 3	
+	
 	\part{Laboratorio}
 	\input{lezioni/laboratorio1}
 	\input{lezioni/esercitazione1}
-	
+	\part{Altre cose utili}
+	\input{lezioni/extra-1} % Esempi di modelli notevoli
+	\input{lezioni/extra-2} % Possibili domande MEMOC
 	
 	
 	

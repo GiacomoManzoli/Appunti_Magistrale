@@ -8,9 +8,9 @@
 Dato un problema di programmazione lineare in forma di standard, si vuole fornire una limitazione inferiore ai possibili valori che la funzione obiettivo può assumer nella regione di ammissibilità.
 
 \begin{align*}
-	(PL) \quad z* = &\min x = c^T x \\
-	                &\st Ax = b \\
-	                &\quad x \geq 0
+(PL)\:z^* = \min \:& z=c^Tx \\
+\st& Ax=b \\
+&x\geq 0
 \end{align*}
 
 dove $A \in \Rmn$, $c \in \Rn$, $b \in \Rm$ e $x$ è un vettore di variabili in $\Rn$.
@@ -28,16 +28,23 @@ $$
 u^TAx= u^Tb \quad\forall x \text{ ammissibile}
 $$
 
-Perché $u$ rappresenti un lower bound è necessario che $u^TA \leq c^T $ e questo deriva dal fatto che il valore della funzione obiettivo $c^Tx$ deve essere maggiore del lower bound:
+Perché $u$ rappresenti un lower bound è necessario che $c^T \geq u^TA $ e questo deriva dal fatto che il valore della funzione obiettivo $c^Tx$ deve essere maggiore del lower bound:
 
 $$
-u^T A x \leq c^T x\quad\forall x \text{ ammissibile, inoltre } u^T A x = u^T b 
+c^T x \geq u^TAx \quad\forall x \text{ ammissibile}
 $$
+
+ovvero se $c^T \geq u^TA$ allora $u^Tb$ è un lower bound perché:
+
+\begin{align}
+c^T x &\geq u^TAx \quad\forall x \text{ ammissibile} \\
+	&\geq u^Tb
+\end{align}
 
 Si noti che $x\geq0$ e quindi la disuguaglianza continua a valere.
 Inoltre, una volta trovato un lower bound $l$ si ha che se c'è una soluzione ammissibile $\tilde{x}$ tale che $c^T\tilde{x} = l$, si ha che $\tilde{x}$ è anche una soluzione ottima.
-Risulta quindi importante avere il lower bound più alto possibile e questo lo si fa scegliendo in modo opportuno il vettore $u$.
 
+Risulta quindi importante avere il lower bound più alto possibile e questo lo si fa scegliendo in modo opportuno il vettore $u$.
 La scelta di questo vettore può essere vista come un problema di massimizzazione, in cui le variabili decisionali sono contenute nel vettore $u$:
 
 \begin{align*}
@@ -81,8 +88,9 @@ $$
 \underbrace{c^T \tilde{x}}_{\text{f.o. in }\tilde{x}} \geq \underbrace{\tilde{u}^T b}_{\text{lb associato a }\tilde{u}}
 $$
 
-Pertanto segue che se si ha un'uguaglianza, $\tilde{x}$ è una soluzione ottima per $PL$ e $\tilde{u}$ è una soluzione ottima per $DL$, perché $\tilde{x}$ è ammissibile ed è uguale al lower bound del problema e quindi è ottima e, in modo simile, $\tilde{u}$ è una soluzione ottima per $DL$ perché è uguale ad un upper bound del problema.
-Infatti, con un ragionamento simile a quello fatto per ottenere il problema duale a partire dal primale, è possibile ottere quello primale a partire dal duale, ragionando sugli upper bound.
+Pertanto segue che se si ha un'uguaglianza, $\tilde{x}$ è una soluzione ottima per $PL$ e $\tilde{u}$ è una soluzione ottima per $DL$.
+Perché $\tilde{x}$ è ammissibile ed è uguale al lower bound del problema e quindi è ottima, in modo simile, $\tilde{u}$ è una soluzione ottima per $DL$ perché è uguale ad un upper bound del problema.
+Infatti, con un ragionamento simile a quello fatto per ottenere il problema duale a partire dal primale, è possibile ottenere quello primale a partire dal duale, ragionando sugli upper bound.
 
 Vale inoltre che:
 
@@ -140,7 +148,7 @@ Ovvero la soluzione $u^T$ è ammissibile per il problema duale e il suo corrispo
 \begin{align*}
 	u^T b &= c_{B}^T B^{-1} b \\
 	      &= c_{B}^T x_{B}^* \\
-	      &= c^Tx*
+	      &= c^Tx^*
 \end{align*}
 
 I valori delle due funzioni obiettivo sono uguali e quindi per il corollario del teorema della dualità debole, le due soluzioni sono entrambe ottime.
@@ -217,19 +225,19 @@ dove è possibile espandere i termini
 
 Tenendo presente che per l'ammissibilità dei problemi, tutti i fattori delle sommatorie devono essere $\geq 0$, si ha che all'ottimo vale:
 
-\begin{align*}
-u_i (a_{i}^Tx -b_i) &= 0 \quad \forall i = 1 \ldots m\\
-(c_j - u^TA-J)x_j   &= 0\quad \forall j = 1 \ldots n
-\end{align*}
+\begin{align}
+u_i (a_{i}^Tx -b_i) &= 0 \quad \forall i = 1 \ldots m \label{eq:v1}	\\
+(c_j - u^TA-J)x_j   &= 0\quad \forall j = 1 \ldots n \label{eq:v2}
+\end{align}
 
 Queste condizioni sono rispettate per ciascun vincolo/variabile primale/duale.
 Ovvero, due soluzioni $x$ e $u$ sono ottime se e solo se:
 
 \begin{enumerate}
-	\item Ogni variabile primale positiva $x_j > 0$ implica il vincolo duale saturo $u^TA_j = c_j$
-	\item Ogni vincolo duale lasco $u^TA_j < c_j$ implica la variabile primale nulla $x_j = 0$
-	\item Ogni variabile duale positiva $u_i > 0$ implica il vincolo primale saturo $a_{i}^Tx = b_i$
-	\item Ogni vincolo primale lasco $a_{i}^Tx > b_i$ implica la variabile duale nulla $u_i = 0$
+	\item Ogni variabile primale positiva $x_j > 0$ implica il vincolo duale saturo $u^TA_j = c_j$ perché \ref{eq:v2} deve valere 0.
+	\item Ogni vincolo duale lasco $u^TA_j < c_j$ implica la variabile primale nulla $x_j = 0$ perché \ref{eq:v2} deve valere 0.
+	\item Ogni variabile duale positiva $u_i > 0$ implica il vincolo primale saturo $a_{i}^Tx = b_i$ perché \ref{eq:v1} deve valere 0.
+	\item Ogni vincolo primale lasco $a_{i}^Tx > b_i$ implica la variabile duale nulla $u_i = 0$ perché \ref{eq:v1} deve valere 0.
 \end{enumerate}
 
 Grazie a queste condizioni possiamo andare a verificare che una soluzione data sia ottima o meno, provando a costruire una soluzione duale che è complementare a quella primale data.

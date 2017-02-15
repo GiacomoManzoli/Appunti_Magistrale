@@ -1,0 +1,720 @@
+% !TEX encoding = UTF-8
+% !TEX program = pdflatex
+% !TEX root = MEMOC.tex
+% !TEX spellcheck = it-IT
+
+\chapter{Modelli di PL notevoli}
+
+
+
+\section{Optimal Production Mix}
+
+Il problema precedentemente trattato è simile a quello del contadino e del telefono.
+Si può quindi identificare un classe di modelli che risolve problemi simili, in questo caso legati alla massimizzazione del guadagno sotto dei vincoli di consumo di risorse.
+
+Si possono quindi individuare:
+
+\begin{itemize}
+	\item Set $I$: contente le risorse, precedentemente $I = \{\text{rose, lilly, violet}\}$
+	\item Set $J$: contente le tipologie di prodotti che possono essere prodotti.
+	\item Parametri $D_i$: disponibilità della risorsa $i \in I$.
+	\item Parametri $P_j$: profitto generato dalla vendita del prodotto $j \in J$.
+	\item Parametri $Q_{i,j}$: risorse di tipo $i \in I$ necessarie per ogni unità di prodotto $j \in J$.
+	\item Variabili $x_j$: quantità di prodotto $j \in J$ da produrre.
+\end{itemize}
+
+I vincoli risultano quindi essere:
+
+\begin{align*}
+	\max &\sum\limits_{j \in J} P_j x_j &\\
+	\text{s.t. } &\sum\limits_{j \in J} Q_{i,j} x_j \leq D_i \quad \forall i \in I \\
+	&x_j \in \mathbb{R}_{+} [\: \mathbb{Z}_{+} \:|\: \{0,1\} \:] \forall j \in J
+\end{align*}
+
+\section{Minimum cost covering}
+
+Un'altra categoria di problemi sono quelli nei quali c'è una funzione obiettivo da minimizzare, con dei vincoli che impongono di stare sopra determinate soglie.
+Un esempio di questa categoria è il problema della dieta: si vuole preparare una dieta economica, garantendo comunque di assumere un quantitativo minimo di nutrienti.
+
+Gli elementi tipici di questo modello sono:
+
+\begin{itemize}
+	\item Set $I$: risorse disponibili.
+	\item Set $J$: materiale richiesto.
+	\item Parametri $C_i$: costo unitario della risorsa $i \in I$.
+	\item Parametri $R_j$: quantitativo richiesto del materiale $j \in J$.
+	\item Parametri $A_{i,j}$: quantità richiesta del materiale $j \in J$ soddisfatta dalla risorsa $i \in I$.
+	\item Variabili $x_i$: quantità della risorsa $i \in I$.
+\end{itemize}
+
+\begin{align*}
+	\min &\sum\limits_{i \in I} C_i x_i \\
+	\text{s.t. }& \sum\limits_{i \in I} A_{i,j} x_i \geq D_j \quad\forall j \in J \\
+	&x_i \in \mathbb{R}_+ [\:\mathbb{Z}_+ \:|\: \{0,1\}\:] \quad \forall i \in I
+\end{align*}
+
+\subsection{La dieta}
+
+Bisogna preparare una dieta che fornisce almeno 20mg di proteine, 30mg di ferro e 10mg di calcio. Gli alimenti che possono essere acquistati sono verdure (5mg/Kg di proteine, 6mg/Kg di ferro e 5mg/Kg di calcio al costo di 4E/Kg), carne (15mg/Kg di proteine, 10mg/Kg di ferro e 3mg/Kg di calcio al costo di 10E/Kg) e frutta (4mg/Kg di proteine, 5mg/Kg di ferro e 12mg/Kg di calcio al costo di 7E/Kg). Si vuole trovare la dieta di costo minimo.
+
+\begin{align*}
+\min \: & 4x_V + 10 x_M + 7 x_F \\
+\text{s.t. } & 5x_V + 15x_M + 4x_F \geq 20 \\
+&6x_V + 10 x_M + 5 x_F \geq 30 \\
+&5x_V + 3x_M +12x_F \geq 10 \\
+&x_V, x_M, x_F \geq 0
+\end{align*}
+
+\section{The Transportation problem}
+
+In questo problema ci sono dei produttori di oggetti che devono spostarli verso diverse destinazioni che hanno una determinata richiesta. C'è un costo di trasporto variabile in base a quale sorgente rifornisce quale destinatario e si vuole trovare il piano di trasporto che minimizza i costi.
+
+\begin{itemize}
+	\item Set $I$: sorgenti.
+	\item Set $J$: destinazioni.
+	\item Parametri $O_i$: capacità produttiva della sorgente $i \in I$.
+	\item Parametri $D_j$: richiesta della destinazione $j \in J$.
+	\item Parametri $C_{i,j}$: costo di trasporto da $i$ a $j$.
+	\item Variabili $x_{i,j}$: quantità di materiale da spostare da $i$ a $j$.
+\end{itemize}
+
+I vincoli sono:
+
+\begin{align*}
+	\min \: & \sum\limits_{i \in I} \sum\limits_{j \in J} C_{i,j} x_{i,j} \\
+	\text{s.t. }& \sum\limits_{i \in J} x_{i,j} \geq D_j \quad \forall j \in J \quad \text{vincoli sulla domanda} \\
+	& \sum\limits_{j \in J} x_{i,j} \leq O_i \quad \forall i \in I \quad \text{vincoli sulla produzione} \\
+	x_{i,j} \in \mathbb{R}_+ [\:\mathbb{Z} \:|\: \{0,1\} \:]
+\end{align*}
+
+\subsection{Esempio: La fabbrica}
+
+Una compagnia produce frigoriferi in tre fabbriche diverse ($A, B, C$) e deve spostarti in 4 magazzini (1,2,3,4). La produzione delle fabbriche è rispettivamente 50, 70 e 20. I magazzini possono contenere 10, 60, 30 e 40 unità. Il costo per spostare i frighi è riportato nella seguente tabella:
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		Costo & 1 & 2 & 3 & 4 \\ \hline
+		A    & 6 & 8 & 3 & 4\\ \hline
+		B    &2 & 3 & 1 &3\\ \hline
+		C    & 2 & 4 & 6 &5\\ \hline
+	\end{tabular}
+\end{table}
+
+Si vuole minimizzare il costo di trasporto.
+
+\section{Fixed Cost}
+
+Sono problemi del tipo in cui si vogliono prendere delle decisioni riguardo a delle azioni da intraprendere.
+Ogni azione ha un costo fisso, ma produce un certo guadagno.
+Si vuole determinare quali azioni conviene intraprendere sotto qualche vincolo riguardo le azioni.
+
+\begin{itemize}
+	\item Set $I$: possibili azioni.
+	\item Parametro $W$: budget a disposizione per le azioni.
+	\item Parametri $F_i$: costo fisso da pagare per l'esecuzione dell'azione $i \in I$.
+	\item Parametri $C_i$: costo variabile per l'esecuzione dell'azione $i \in I$.
+	\item Parametri $R_i$: guadagno dell'azione $i \in i$.
+	\item Variabili $x_i$: \textit{``quantità''} dell'azione $i \in I$. Ad esempio: apro 200 $\text{m}^2$ di supermercato nella locazione $i$.
+	\item Variabili $y_i$: variabili binarie che prendo il valore 1 se viene intrapresa l'azione $i \in I$.
+\end{itemize}
+
+Sono presenti due variabili di costo perché le azioni possono essere del tipo ``\textit{quanti metri quadri di supermercato aprire}''. Azioni di questo tipo hanno tipicamente un costo fisso, legato in questo caso alla costruzione, e un costo variabile, legato alle spese di gestione del supermercato, le quali dipendono dalla sua dimensione.
+
+I vincoli risultano essere:
+
+\begin{align*}
+	\max &\sum\limits_{i \in I} R_i x_i \\
+	\text{s.t. } &\sum\limits_{i \in I} C_i x_i + F_i y_i \leq W &\quad\text{budget} \\
+	&x_i \leq M y_i  \quad \forall i \in I &\quad\text{vincolo \textbf{BigM}}  \\
+	&\sum\limits_{i \in I} y_i \leq K &\quad\text{vincolo sulle azioni da intraprendere} \\
+	&x_i \in \mathbb{R}_+, y_i \in \{0,1\} \quad \forall i \in I&
+\end{align*}
+
+I vincoli \textbf{BigM} servono per collegare tra loro le due variabili.
+Così facendo quando il risolutore prova a risolvere il problema impostando una variabile $x_i > 0$ è costretto anche ad impostare la variabile $y_i = 1$, perché altrimenti non raggiungerebbe una soluzione feasible. Allo stesso modo se $y_i$ è 0, anche $x_i$ deve essere 0.
+
+Il valore della costante $M$ non è importante durante la modellazione e viene considerato come un valore grande a piacere.
+Nel lato pratico $M$ deve essere sufficientemente grande in modo da non porre vincoli sulle $x_i$, ma allo stesso tempo deve essere il più piccolo possibile, in modo da rendere efficiente la risoluzione del modello.
+
+Una variante di questo modello è quella che prevede un limite superiore $U_i$ alla quantità di azione $i \in I$ che può essere intrapresa. In questo caso si possono sostituire i vincoli BigM con 
+
+$$
+x_i \leq U_i y_i \quad \forall i \in I
+$$
+
+\subsection{Esempio: il supermercato}
+
+Una catena di supermercati ha un budget $W$ per aprire dei nuovi negozi. Un analisi preliminare ha identificato un set $I$ di possibili locazioni.
+Aprire un negozio in $i \in I$ ha un costo fisso $F_i$ e un costo variabile di $C_i$ per 100 $m^2$ di negozio.
+Una volta aperto, il negozio in $i$ garantisce un guadagno di $R_i$ per $100 m^2$. Determinare il sotto insieme di località dove aprire un negozio e la relativa dimensione in modo da massimizzare il guadagno totale, tenendo conto che al massimo $K$ negozi possono essere aperti.
+
+\section{Un problema più complesso}
+
+Una compagnia di costruzioni deve spostare delle impalcature da 3 siti di costruzioni in chiusura ($A,B,C$) che devono essere spostate in 3 nuovi siti in apertura ($1,2,3$).
+Le impalcature consistono di travi di ferro, nei siti \textit{A, B, C} ci sono rispettivamente 7000, 6000 e 4000 travi di ferro, mentre i nuovi siti richiedono rispettivamente 8000, 5000 e 4000 travi. 
+
+Spostare le travi ha un certo costo riportato in tabella.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Costo & 1 & 2 & 3 \\ \hline
+		A    & 9 & 6 & 5 \\ \hline
+		B    & 7 & 4 & 9 \\ \hline
+		C    & 4 & 6 & 3 \\ \hline
+	\end{tabular}
+\end{table}
+
+Per spostare le travi vengono utilizzati dei camion. Ogni camion può trasportare 10000 travi.
+Trovare un modello che permette di minimizzare i costi, tenendo conto di:
+
+\begin{itemize}
+	\item Usare un camion aggiunge un costo di 50 euro.
+	\item Possono essere usati solo 4 camion, e ognuno può essere usato solo una volta.
+	\item Le travi che arrivano al sito 2 non possono venire da $A$ e $B$.
+	\item Si può noleggiare un quinto camion al costo di 65 euro.
+\end{itemize} 
+
+\subsection{Modellazione}
+
+Alla base di tutto c'è un problema di trasporto, al quale vengono aggiunti dei vincoli extra che riguardano i camion.
+
+\begin{itemize}
+	\item $I = \{A, B, C\}$.
+	\item $J = \{1,2,3\}$.
+	\item $C_{i,j}$ costo per il trasporto di una singola trave da $i$ a $j$.
+	\item $D_i$: numero di travi disponibili nel sito $i$.
+	\item $R_j$: numero di travi richieste dal sito $j$.
+	\item $F$: costo fisso per l'utilizzo di un camion.
+	\item $L$: costo di noleggio del camion extra.
+	\item $N$: numero di camion.
+	\item $K$: capacità di un camion.
+	\item $x_{i,j}$: variabile che indica la quantità di travi portata dal sito $i$ al sito $j$.
+	\item $y_{i,j}$: variabile binaria che indica l'utilizzo di un camion per portare delle travi dal sito $i$ al sito $j$.
+	\item $z$: variabile binaria che indica l'utilizzo del camion extra.
+\end{itemize}
+
+\begin{align*}
+\min &\underbrace{\sum\limits_{i \in I, j \in J} C_{i,j} x_{i,j}}_{\text{costo fisso di trasporto}}+ F \overbrace{
+\sum\limits_{i \in I, j \in J} y_{i,j}}_{\text{costo variabile per l'utilizzo di un camion}} + \underbrace{(L-F)z}_{\text{costo extra del noleggio}} \\
+\text{s.t. }&\sum\limits_{i \in I} x_{i,j} \geq R_j \quad\forall j \in J\\
+&\sum\limits_{j \in J} x_i,j \leq D_i \quad\forall i \in I \\
+&x_{i,j} \leq K y_{i,j} \quad\forall i \in I, j \in J \quad\text{vincoli di collegamento delle variabili}\\
+&\sum\limits_{i \in I, j \in J} y_{i,j} \leq N + z \quad\text{vincolo sul numero di camion}\\ 
+&\text{Domini:} \\
+&x_{i,j} \in \mathbb{Z}_+  \quad\forall i \in I, j \in J  \\
+&y_{i,j} \in \{0,1\}  \quad\forall i \in I, j \in J  \\
+&z \in \{0,1\}
+\end{align*}
+
+\subsection{Alcune varianti}
+
+Entrambe le varianti presenti risolte anche nel file \texttt{m01.modelli.00.en.pdf}, esercizio 1.
+
+\subsubsection{Capacità dei camion limitata}
+
+Una possibile variante di questo problema può essere l'aggiunta dei vincoli riguardo la capacità massima $K$ dei camion. Precedentemente era assunto che $K$ fosse sufficientemente alto per garantire che un camion fosse in grado si spostare tutto il necessario.
+
+Per gestire questa situazione è necessario cambiare le variabili $y_{i,j} \in \{0,1\}$ in variabili intere, che rappresentano quanti camion servono in una determinata tratta.
+
+Di conseguenza cambiano anche alcuni vincoli:
+
+\begin{align*}
+	\min &\sum\limits_{i \in I, j \in J} C_{i,j} x_{i,j} + F \sum\limits_{i \in I, j \in J} w_{i,j}+ (L-F)z \\
+	&\vdots \\
+	&x_{i,j} \leq K w_{i,j} \quad\forall i \in I, j \in J 
+\end{align*}
+
+\subsubsection{Costi fissi per il caricare i camion}
+
+\`E necessario pagare un costo fisso $A_i$ per caricare le travi in $i \in I$.
+
+Per modellare ciò viene utilizzata una variabile binaria che vale 1 se nel sito $i$ viene caricata della merce.
+
+Le modifiche al modello riguardano la funzione obiettivo e i vincoli di attivazione per le nuove variabili $v_i \in {0,1}$:
+
+\begin{align*}
+\min &\sum\limits_{i \in I, j \in J} C_{i,j} x_{i,j} + F \sum\limits_{i \in I, j \in J} w_{i,j}+ (L-F)z +\sum\limits_{i \in I}A_i v_i \\
+&\vdots \\
+&\sum\limits_{j \in J} x_i,j \leq D_i v_i \quad\forall i \in I
+\end{align*}
+
+\section{Servizi di pronto intervento}\index{set covering}
+
+Una rete di ospedali deve garantire in una certa area il servizio di pronto intervento. L'area è divisa in 6 zone e per ogni zona è stata individuata una sede locale per il servizio. La distanza media in minuti da ogni zona verso la sede locale è riportata nella seguente tabella.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|l|l|l|l|l|l|}
+		\hline
+		& Loc. 1 & Loc. 2 & Loc. 3 & Loc. 4 & Loc. 5 & Loc. 6 \\ \hline
+		Zona 1 & 5 & 10 & 20 & 30 & 30 & 20 \\ \hline
+		Zona 2 & 10 & 5 & 25 & 35 & 20 & 10 \\ \hline
+		Zona 3 & 20 & 25 & 5 & 15 & 30 & 20 \\ \hline
+		Zona 4 & 30 & 35 & 15 & 5 & 15 & 25 \\ \hline
+		Zona 5 & 30 & 20 & 30 & 15 & 5 & 14 \\ \hline
+		Zona 6 & 20 & 10 & 20 & 25 & 14 & 5 \\ \hline
+	\end{tabular}
+\end{table}
+
+\noindent \`E richiesto che ogni zona abbia una distanza media da una sede di 15 minuti. Gli ospedali chiedono dove aprire queste sedi e ne vogliono aprire il minor numero possibile.
+
+\subsection{Modellazione}
+
+Questo tipologia di modello prende il nome di \textbf{covering schema}. Per risolverlo basta porre dei vincoli che ogni area sia servita da almeno un sito. Nei vincoli relativi ad una determinata area vengono prese in considerazione solamente le sedi che riescono a soddisfare il vincolo dei 15 minuti.
+
+\begin{itemize}
+	\item Set $I = \{1,2, \ldots , 6 \}$ con le possibili sedi.
+	\item Variabili $x_i \in \{0,1\} \: \forall\: i \in I$. Quando una variabile vale 1 viene aperta la sede nella relativa area.
+\end{itemize}
+
+\begin{align*}
+\min &\sum\limits_{i \in I} x_i \\ 
+\st &x_1 + x_2 \geq 1 &\text{Sedi che servono l'area 1} \\
+	&x_1 + x_2 + x_6 \geq 1 &\text{Sedi che servono l'area 2} \\
+	&x_3 + x_4 \geq 1 &\text{Sedi che servono l'area 3} \\
+	&x_3 + x_4 + x_5 \geq 1 &\text{Sedi che servono l'area 4} \\
+	&x_4 + x_5+x_6 \geq 1 &\text{Sedi che servono l'area 5} \\
+	&x_2 + x_5 + x_6 \geq 1 &\text{Sedi che servono l'area 6} \\
+\end{align*}
+
+\section{TLC: localizzazione delle antenne}\index{TLC}
+
+Una compagnia telefonica vuole installare delle antenne in alcuni siti per coprire 6 aree. Sono stati identificati 5 possibili siti per le antenne. Dopo alcune simulazioni, è stata stimata l'intensità del segnale proveniente dalle antenne posizionate nei vari siti e i risultati sono riportati nella tabella seguente
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|l|l|l|l|l|l|l|}
+		\hline
+		& Area 1 & Area 2 & Area 3 & Area 4 & Area 5 & Area 6 \\ \hline
+		Sito A & 10 & 20 & 16 & 25 & 0 & 10 \\ \hline
+		Sito B & 0 & 12 & 18 & 23 & 11 & 6 \\ \hline
+		Sito C & 21 & 8 & 5 & 6 & 23 & 19 \\ \hline
+		Sito D & 16 & 15 & 15 & 8 & 14 & 18 \\ \hline
+		Sito E & 21 & 13 & 13 & 17 & 18 & 22 \\ \hline
+	\end{tabular}
+\end{table}
+
+\noindent I ricevitori riconoscono solamente i segnali con intensità maggiore di 18. Inoltre, non è possibile avere in un area più di un segnare con intensità maggiore di 18, perché altrimenti ci sarebbero delle interferenze. Infine, un'antenna può essere messa in $E$, solo se è presente anche un'antenna in $D$.
+
+La compagnia vuole determinare in quali siti posizionare le antenne in modo da coprire il maggior numero possibile di aree.
+
+\subsection{Modellazione}
+
+Il problema è simile a quello precedente, anche se ci sono dei vincoli leggermente diversi.
+
+Ci sono un set $I$ con le possibili siti e un set $J$ con le possibili aree.
+L'intensità del segnale nell'area $j \in J$ proveniente dall'antenna del sito $i \in I$ viene modellata dai parametri $\sigma_{i,j}$. C'è poi il parametro $T$ che rappresenta l'intensità minima del segnale (18) e $N$ che è il massimo numero di segnali che si possono sovrapporre in un'area (1).
+
+La prima differenza con il problema precedente riguarda la funzione obiettivo, prima si voleva minimizzare il costo mentre adesso si vuole massimizzare la copertura. La seconda differenza riguarda i vincoli, che in questo caso sono relativi alla sovrapposizione del segnale e alla soglia minima.
+
+La scelta, e quindi le variabili, riguarda dove andare a posizionare un'antenna, vengono quindi usate delle variabili binarie $x_i$ che valgono 1 se viene posizionata un'antenna nel sito $i$.
+
+Tuttavia, utilizzando solo $x_i$ non si riesce ad esprimere bene la funzione obiettivo, serve quindi un altro gruppo di variabili binarie che indicano se una determinata area $j$ è coperta ($z_j$).
+
+Il modello risulta quindi essere:
+
+\begin{align*}
+\max \quad & \sum\limits_{j \in J} z_j \\
+\st & \sum\limits_{i \in I, \sigma_{i,j} \geq T} x_i \geq x_j \quad \forall \: j \in J &\text{(1)}\\
+	& \sum\limits_{i \in I, \sigma_{i,j} \geq T} x_i \leq N + M_j(1-z_j) \quad \forall j \in J &\text{(2)} \\
+	& x_d \geq x_e & \text{vincolo sui siti E e D}
+\end{align*}
+
+\noindent I vincoli (1) collegano le variabili relative alla copertura di una determinata area con le antenne che sono in grado di coprirla.
+I vincoli (2) impongono che un'area sia coperta da al massimo $N$ segnali (1 per questa istanza del problema). 
+La seconda parte di questi vincoli riguarda le aree che non siamo interessati a coprire, ovvero quelle aree per cui $z_j = 0$, e quindi se si verificano delle interferenze non ci sono problemi. Ciò funziona perché quando $z_j = 0$, il vincolo diventa $\sum x_i\leq N+M_j$ dove $M_j$ è un numero grande abbastanza da rendere il vincolo ridondante e non va a limitare lo spazio delle soluzioni.
+Un valore ottimo per $M_j$ è la cardinalità dell'insieme dei siti che coprono l'area $j$, ovvero $M_j = | \: \{i \in I : \sigma_{i,j} \geq T \: |$.
+
+La soluzione del problema si trova anche sul file \texttt{m01.modelli.00.en.pdf}, esercizio 2.
+
+\section{La lettura dei giornali : JSSP}\index{job shop scheduling}
+
+Ci sono 4 amici che devono leggere 4 giornali. Ognuno vuole leggere i giornali in un determinato ordine. L'idea è di metterci il meno tempo possibile a leggere i giornali.
+
+Il testo completo è nel file \texttt{m01.modelli.00.en.pdf}, esercizio 4.
+
+\subsection{Modellazione}
+
+Questo problema è un'istanza del \textbf{Job Shop Scheduling Problem}: ci sono dei \textit{jobs} (persone) che devono essere eseguiti da delle \textit{machine} (i giornali). Ogni \textit{job} richiede un certo tempo per essere processato ed è composto da vari step che devono essere eseguiti in ordine dalle varie macchine (lettura dei giornali). I vari \textit{jobs} sono anche caratterizzati da un tempo d'inizio.
+L'obiettivo è quello di minimizzare il \textit{makespan}, che in questo caso coincide con il tempo necessario per leggere tutti i giornali. 
+
+Ci sono quindi due set $I$ contenente le persone e $K$ i giornali.
+
+Il problema poi ha vari parametri:
+\begin{itemize}
+	\item $D_{ik}$: tempo in minuti necessario alla persona $i$ per leggere il giornale $k$.
+	\item $R_i$: dopo quanti minuti la persona $i$ si sveglia. Il tempo è espresso in minuti a partire dalle $8:30$.
+	\item $M$: un numero sufficientemente grande da essere maggiore del makespan ottimo.
+	\item $\sigma_{i,l}$: giornale letto dalla persona $i$ in posizione $l \in \{1,2,\ldots, |K| \}$. Questo parametro definisce la sequenza in cui devono essere letti i giornali dalla persona $i$. Da notare che $\sigma_{i,l} \in K$ e quindi il valore di uno di questi parametri può essere utilizzato come indice di un altro di questi parametri.
+\end{itemize}
+
+\noindent Le variabili necessario sono:
+\begin{itemize}
+	\item $h_{i,k}$: tempo in minuti a partire dalla $8:30$ al quale la persona $i$ inizia a leggere il giornale $k$.
+	\item $y$: makespan.
+	\item $x_{i,j,k}$: variabile binaria che vale 1 se la persona $i$ legge il giornale $k$ prima della persona $j$. Sono le variabili che determinano l'ordine di lettura dei giornali in una soluzione.
+\end{itemize}
+
+\noindent L'insieme dei vincoli risulta quindi essere:
+
+\begin{align*}
+\min \quad & y \\
+\st & y \geq h_{i, \sigma_{i,|K|}} + D_{i, \sigma_{i,|K|}} \quad \forall \: i \in I &(1) \\
+	& h_{i, \sigma_{i,l} } \geq h_{i, \sigma_{i,l-1} } + D_{i , \sigma_{i, l-1}} \quad \forall \:i \in I, l = 2 \ldots K &(2) \\
+	& h_{i, \sigma_{i,1}} \geq R_i \quad \forall \: i \in I &(3) \\
+	& h_{i,k} \geq h_{j,k} + D_{j,k} - M x_{i,j,k} \quad \forall i,j,k \: i \neq j &(4) \\
+	& h_{j,k} \geq h_{i,k} + D_{i,k} - M (1 -x_{i,j,k} )\quad \forall i,j,k \: i \neq j &(5) \\
+\end{align*}
+
+\noindent Il significato degli insiemi di vincoli è:
+\begin{enumerate}[(1)]
+	\item Il makespan deve essere maggiore o uguale del tempo di completamento dell'ultima attività di ogni persona. In alte parole questi vincoli assicurano che tutti finiscano di leggere prima dell'istante $y$.
+	\item Evita che due step della stessa attività si sovrappongano tra loro. Una persona non può leggere due giornali contemporaneamente.
+	\item Il primo step non può essere effettuato prima dell'inizio dell'attività. Una persona non riesce a leggere mentre dorme.
+	\item Impone che, se la persona $i$ legge il giornale $k$ prima della persona $j$, l'istante in cui $i$ inizia a leggere $k$ sia un'istante qualsiasi, mentre se $i$ non legge $k$ prima di $j$ ($x_{i,j,k}=0$), allora $i$ deve iniziare a leggere $k$ dopo che $j$ ha finito.
+	\item Impone che, se la persona $i$ legge il giornale $k$ prima della persona $j$, l'istante in cui $j$ inizia a leggere $k$ sia successivo all'instante in cui $i$ finisce. Questo e il vincolo precedente sono mutamente esclusivi.
+\end{enumerate}
+
+\section{Costruzione di una barca (Esercizio 3)}
+
+La costruzione di una barca da diporto comporta il completamento delle operazioni indicate nella tabella che segue, che ne riporta anche la durata in giorni.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{ccc}
+		\textbf{Operazione} & \textbf{Durata} & \textbf{Precedenze} \\ \hline
+		A                   & 2               & nessuna             \\ 
+		B                   & 4               & A                   \\ 
+		C                   & 2               & A                   \\ 
+		D                   & 5               & A                   \\ 
+		E                   & 3               & B,C                 \\ 
+		F                   & 3               & E                   \\ 
+		G                   & 2               & E                   \\ 
+		H                   & 7               & D,E,G               \\ 
+		I                   & 4               & F,G                 \\ 
+	\end{tabular}
+\end{table}
+
+Si consideri che alcune operazioni sono in alternativa. In particolare, bisogna eseguire solo una tra le operazioni B e C, e solo una tra le operazioni F e G. Inoltre, se si eseguono sia C che G, la durata dell'operazione I si allunga di 2 giorni.
+La tabella indica anche, per ogni operazione, l'insieme delle precedenze (operazioni che devono essere completate prima di poter eseguire l'operazione stessa).
+Scrivere un modello di programmazione lineare per decidere quali operazioni in alternativa eseguire, con l'obiettivo di minimizzare la durata complessiva delle operazioni di costruzione.
+
+\subsection{Modellazione}
+
+Le scelte in questo caso riguardano quali attività svolgere, tra quelle che possono essere eseguite in alternativa al fine di minimizzare il makespan.
+
+Dal momento che si vuole minimizzare la durata, conviene scegliere dopo quanti giorni dall'inizio dei lavori deve terminare una determinata attività:
+
+$$
+t_i \quad \text{dopo quanti giorni termina l'attività }i \in A = \{A, \ldots, I \}
+$$
+
+\noindent Così risulta facile definire la funzione obiettivo
+
+$$
+\min z
+$$
+
+\noindent dove \textit{z} è il makespan, ovvero il giorno in cui termina l'ultima attività da eseguire. Per specificare ciò nel modello serve il vincolo
+
+$$
+z \geq t_I
+$$
+
+\noindent \`E necessario poi modellare le varie precedenze tra le attività e il fatto che non due attività non possono essere eseguite in parallelo.
+Questo viene fatto con una serie di vincoli del tipo:
+
+$$
+t_i \geq t_{j} + d_{i} \forall \: i \in A, j \in prec(i)
+$$
+
+\noindent dove $d_i$ è la durata dell'attività $i$ e $prec(i)$ è l'insieme delle attività che devono essere svolte prima di $i$. Ad esempio: $prec(H) = \{D,E,G\}$.
+
+Resta poi da modellare il fatto che alcune attività possono essere svolte in alternativa. In questo servono delle variabili binarie $y_i$, una per ogni attività che può essere eseguita e che indicano l'attività viene svolta o meno.
+
+Per vincolare la scelta tra due attività è necessario aggiungere i vincoli del tipo
+
+$$
+y_i + y_j = 1
+$$
+
+\noindent dove $i$ e $j$ sono due attività che possono essere eseguite in alternativa.
+
+\`E inoltre necessario modificare alcuni dei vincoli riguardo le precedenze, perché se un'attività non viene svolta, questa non deve essere presa in considerazione nella pianificazione:
+
+$$
+t_i \geq t_{j} + d_i - M(1 - y_i)
+$$ 
+
+\noindent Così facendo, se la soluzione prevede che l'attività $i$ non venga svolta ($y_i = 0$), il vincolo diventa ridondante e non va ad influenzare il makespan.
+Con i dati del problema alcuni di questi vincoli sono:
+
+\begin{align*}
+	t_B &\geq t_{A} + d_B - M(1 - y_B) \\
+	t_C &\geq t_{A} + d_C - M(1 - y_C)
+\end{align*}
+
+C'è inoltre da modellare il fatto che se vengono eseguite determinate attività la durata di altre attività aumenta.
+
+Serve quindi una variabile booleana $c$ che specifica se questa condizione si verifica. Questa variabile viene poi utilizzata per aggiornare i vincoli relativi alle attività interessate. Ad esempio per i dati del problema si ha
+
+\begin{align*}
+	&y_C + y_G \leq 1 + c \quad \text{attivazione di \textit{c}} \\
+	&t_I \geq t_F + d_I + 2c \quad \text{aumento della durata per l'attività \textit{I} se vale \textit{c}} \\ 
+	&t_I \geq t_G + d_I + 2c \quad \text{''} \\
+\end{align*}
+
+\noindent Rimane infine da specificare i domini delle variabili:
+
+\begin{align*}
+	t_i &\in \mathbb{R} \: \forall \: i \in A \\
+	y_i, c, &\in \{0,1\} \\
+	z &\in \mathbb{R}
+\end{align*}
+
+\noindent Servono poi i parametri $d_i \in \mathbb{R}$ che rappresentano le durate e la costante $M$ che rappresenta un numero sufficientemente grande in grado di rendere ridondanti i vincoli in cui compare.
+
+\section{Turni delle farmacie (Esercizio 5)}
+
+La federazione dei farmacisti vuole organizzare i turni festivi delle farmacie sul territorio regionale. 
+\`E stabilito a priori il numero dei turni, che devono essere bilanciati in termini di numero di farmacie, considerando che ciascuna farmacia deve appartenere, per equità, a un solo turno. 
+Ad esempio, se il numero complessivo di farmacie è 12 e si vogliono organizzare tre turni, ciascun turno sarà formato da quattro farmacie. 
+Sia le farmacie che gli utenti si considerano distribuiti sul territorio e concentrati in centroidi (corrispondenti in genere con comuni o quartieri). 
+Per ogni centroide sono noti il numero di utenti e il numero di farmacie. \`E inoltre nota la distanza tra ogni coppia ordinata di centroidi. 
+In prima istanza, si trascurano problemi relativi alla congestione e si assume che gli utenti, in ciascun turno, si servano dalla farmacia aperta più vicina. 
+Si vuole determinare la distribuzione dei turni festivi che minimizza la distanza complessiva percorsa dagli utenti per il servizio festivo.
+
+\subsection{Modellazione}
+
+In questo caso vogliamo decidere quale farmacia fa quale turno, in modo che ci sia una buona copertura del territorio, assumendo che le persone vadano nella farmacia più vicina.
+
+L'obiettivo è quindi quello di minimizzare la strada che devono fare le persone per raggiungere le farmacie di turno.
+
+Di sicuro serve una variabile che specifica quale farmacia è aperta in quale turno.
+
+$$
+y_{i,k} = \begin{cases}
+1 \quad &\text{la farmacia \textit{i} è aperta nel turno \textit{k}} \\
+0 \quad &\text{altrimenti}
+\end{cases}
+$$
+
+\noindent con $i \in P$ e $k \in 1 \ldots K$. Dove $P$ è l'insieme delle farmacie e $K$ è il numero di turni che si voglio fare.
+
+Per esprimere la nostra funzione obiettivo servono altre variabili, perché dobbiamo anche prendere in considerazione la distanza delle farmacie, in modo da poterla minimizzare.
+
+Ci sarà quindi il set $C$ di clienti che devono essere serviti e dei parametri che specificano la distanza $D_{j,i}$ che c'è tra un cliente $j \in C$ e la farmacia $i \in P$.
+Tuttavia la distanza che l'utente deve fare \textbf{dipende dalle farmacie aperte} in un determinato turno e quindi non conviene utilizzare direttamente il parametro, in quanto in base al turno la distanza è variabile.
+
+Conviene quindi aggiungere una variabile che specifica quanta strada il cliente $j$ deve fare durante il turno $k$ per raggiungere la farmacia più vicina aperta.
+
+$$
+d_{j,k} \: \text{distanza tra il cliente \textit{j} e la farmacia più vicina durante il turno \textit{k}}
+$$
+
+\noindent Bisogna però in qualche modo collegare le variabili $d_{j,k}$ con l'apertura/chiusura delle farmacie.
+
+Serve quindi un modo per discriminare in quale farmacia va l'utente in un determinato turno:
+
+$$
+x_{j,i,k} = \begin{cases}
+1 \quad & \text{se \textit{j} va nella farmacia \textit{i} durante il turno \textit{k}} \\
+0 \quad &\text{altrimenti}
+\end{cases}
+$$
+
+\noindent Così facendo risulta semplice trovare un valore per i $d_{j,k}$, perché basta il vincolo:
+
+$$
+d_{j,k} = \sum\limits_{i \in P} D_{j,i} x_{j,i,k} \quad \forall \:j \in C, k \in K
+$$
+
+\noindent Con questo vincolo viene presa in considerazione solo una distanza per ogni turno, perché durante un turno il cliente va sempre nella farmacia più vicina e quindi, fissati un $j$ e un $k$, ci sarà solo un $x_{j,i,k}$ che vale 1.
+Quest'ultima cosa il risolutore non lo sa e quindi bisogna aggiungere gli opportuni vincoli:
+
+$$
+\sum\limits_{i \in P} x_{j,i,k} = 1 \quad \forall \: j \in C, k \in K
+$$
+
+\noindent Manca ancora il vincolo che ogni farmacia faccia esattamente un turno, il quale può essere semplicemente aggiunto con una sommatoria sulle $y_{i,k}$:
+
+$$
+\sum\limits_{k = 1}^{K} y_{i,k} = 1 \quad \forall \: i \in P
+$$
+
+\noindent Per completare il modello rimane da collegare le $x$ con le $y$, perché ovviamente un cliente non può andare in una farmacia chiusa.
+
+$$
+x_{j,i,k} \leq y_{j,k} \quad \forall \: i,j,k
+$$
+
+\noindent La funzione obiettivo risulta quindi essere:
+
+$$
+\min \sum\limits_{j \in C}\sum\limits_{k = 1}^{K} d_{j,k}
+$$
+
+\noindent Rimane inoltre da imporre che ogni turno sia bilanciato, ovvero che ci sia sempre un numero simile di farmacie aperte:
+
+$$
+\bigg\lfloor \frac{|P|}{K} \bigg\rfloor \leq \sum\limits_{i \in P} y_{i,k} \leq  \bigg\lceil \frac{|P|}{K} \bigg\rceil \quad \forall \: k
+$$
+
+\noindent Rimane da specificare i domini delle variabili:
+
+\begin{align*}
+	y_{i,k} &\in \{0,1\} \\
+	x_{j,i,k} &\in \{0,1\} \\
+	d_{j,k} &\in \mathbb{R}
+\end{align*}
+
+\noindent Peccato che ci sia un problema. Con i vincoli attuali abbiamo espresso che per ogni turno un cliente va sempre nella stessa farmacia e che quella farmacia deve essere aperta, ma non viene specificato che il cliente va alla farmacia più vicina.
+
+In realtà questo non è un problema, perché è durante il processo di ottimizzazione che viene impostata che le varie distanze vengono minimizzate.
+
+Questo perché \textbf{l'obiettivo di un modello è quello di descrivere le caratteristiche di una soluzione}, mentre è il risolutore che cercando la soluzione ottima effettua la minimizzazione. Infatti, una soluzione che manda un cliente in una farmacia diversa da quella aperta che gli è più vicina, è comunque una soluzione accettabile, ma di sicuro non è ottima e quindi viene scartata.
+
+\subsubsection{Osservazione - Simmetrie}
+
+Una volta trovata una soluzione ottima per questo problema si può osservare che permutando l'ordine dei turni ottenuto si ottiene un'altra soluzione ottima con un ordine diverso.
+
+Questo è causato dal fatto che una volta scelte le farmacie che sono aperte nei vari turni, l'ordine in cui sono effettuati i turni è indifferente, ottenendo così una soluzione simmetrica. 
+La presenza di queste simmetrie è tipicamente un problema perché può portare ad un'esplosione combinatoria delle soluzioni.
+
+L'origine di queste simmetrie è tipicamente causata dal modello, in questo caso il problema deriva dal fatto che viene dato ``\textit{un nome}'' ai turni e non sempre è possibile ri-modellare il problema in modo che non ci siano simmetrie.
+
+\subsection{Modellazione alternativa}
+
+Dato che abbiamo un'insieme di farmacie $P$ e che ogni farmacia fa solo un turno, possiamo vedere un turno come un sottoinsieme di $P$.
+
+La scelta dei turni diventa quindi una scelta di quali sottoinsiemi selezionare dall'insieme delle parti $2^P$.
+
+Questa scelta può essere modellata con una variabile binaria
+
+$$
+x_J = \begin{cases}
+1 \quad& \text{se il sottoinsieme \textit{J} è un turno} \\
+0 \quad&\text{altrimenti}
+\end{cases} \quad \forall \: J \subset P, J \in 2^P
+$$
+
+\noindent Con questa variabile non ci sono simmetrie in quanto la variabile è direttamente collegata al turno che rappresenta.
+
+La minimizzazione da fare diventa quindi ($j$ rappresenta i clienti, $J$ il turno)
+
+$$
+\min \sum\limits_{J \in 2^P} \sum\limits_{j \in C} D_{j,J}x_J
+$$
+
+\noindent Nella funzione obiettivo non compare più la variabile $d_{j,k}$, ma compare un parametro $D_{j,J}$, questo perché nella formulazione precedente la composizione dei vari turni era variabile e di conseguenza anche la distanza cambiava in base alla composizione del turno, mentre con questo nuovo modello so a priori quali sono le farmacie che appartengono ad un determinato turno e quindi per ogni turno e per ogni cliente posso pre-calcolare la distanza minima.
+
+Ci sono poi altri vincoli che devono essere ri-formulati.
+
+Per specificare che si siano esattamente $K$ turni, basta effettuare la sommatoria sulle $x_J$.
+
+$$
+\sum\limits_{J \in 2^P} x_J = K
+$$
+
+\noindent Bisogna inoltre imporre il vincolo che ogni farmacia faccia esattamente un turno, perché al momento la stessa farmacia può comparire in più turni (sottoinsiemi).
+
+In questo caso serve un'ulteriore \textbf{parametro} che specifichi se una farmacia è in un determinato turno.
+
+$$
+A_{i,J} = \begin{cases}
+1 \quad &\text{se } i \in J \\
+0 \quad &\text{altriment}
+\end{cases} \quad \forall \: J \in 2^P
+$$
+
+\noindent Da notare che è un parametro e non una variabile perché è un valore che può essere pre-calcolato quando viene costruito l'insieme delle parti.
+
+Con questi parametri risulta semplice porre il vincolo che una farmacia faccia al massimo un turno.
+
+$$
+\sum\limits_{J \in 2^P} A_{i,J} x_J = 1 \quad \forall \: i \in P
+$$
+
+\noindent Rimane da modellare il fatto che i turni devono essere bilanciati, ma per fare questo non servono nuovi vincoli. Infatti basta considerare, al posto di tutto l'insieme delle parti $2^P$, un suo sottoinsieme $G$ composto solamente dai sottoinsiemi di $P$ che hanno cardinalità simile.
+
+$$
+G = \bigg\{x \:  | \: x \in 2^P, \bigg\lfloor \frac{|P|}{K} \bigg\rfloor \leq |\:x\:|\leq  \bigg\lceil \frac{|P|}{K} \bigg\rceil \bigg\}
+$$
+
+\noindent Questo modello non ha simmetrie ed è molto semplice, tuttavia soffre di un grande problema: se ci sono $100$ farmacie, il calcolo dell'insieme delle parti di $P$ e dei parametri può richiedere troppo tempo a causa della crescita esponenziale della cardinalità dell'insieme delle parti.
+
+\section{Problema sui grafi - Minimum cost network flow}
+
+Una compagni di distribuzione elettrica ha varie stazioni di distribuzione connesse tramite la rete cablata. Ogni stazione \textit{i} può:
+
+\begin{itemize}
+	\item produrre $p_i$ kW di energia.
+	\item distribuire energia in una sotto rete che ha domanda $d_i$ kW.
+	\item trasferire energia da una stazione ad un'altra.
+\end{itemize}
+
+\noindent i cavi che collegano la stazione $i$ alla stazione $j$ hanno una capacità massima di $u_{i,j}$ e un costo $c_{i,j}$ euro per ogni kW di energia trasportata dai cavi.
+
+La compagnia vuole determinare il piano di distribuzione di costo minimo, sotto l'assunzione che la totalità dell'energia prodotta sia pari a quella richiesta da tutte le sotto reti.
+
+subsection{Modellazione}
+
+Per pianificare la distribuzione dobbiamo decidere la quantità di energia che viene trasferita da una stazione all'altra.
+
+$$
+x_{i,j} = \text{ quantità di energia trasferita da \textit{i} a \textit{j}}
+$$
+
+\noindent Una caratteristica interessante di questo problema è che può essere modellato come un grafo $G = (N,A)$ i cui nodi corrispondo alle stazioni energetiche e gli archi rappresentano le connessioni tra le varie stazioni.
+
+Per semplificare la modellazione del problema è possibile aggiungere un parametro $b_v$ per ogni nodo $v \in N$ della rete che rappresenta la differenza tra la domanda che al stazione deve soddisfare e la quantità di energia che può produrre:
+
+\begin{itemize}
+	\item se $b_v$ è un valore positivo, la domanda è superiore alla capacità della stazione e quindi è necessario trasferire energia da altre stazioni.
+	\item se $b_v$ è un valore negativo, la stazione produce più energia di quella necessaria e quindi l'energia in eccesso deve essere inviata alle altre stazioni.
+	\item se $b_v = 0$, la stazione è autosufficiente oppure è un nodo di trasmissione perché $p_v = d_v = 0$.
+\end{itemize}
+
+\noindent Risulta semplice definire la funzione obiettivo:
+
+$$
+\min \sum\limits_{(i,j) \in A} c_{i,j} x_{i,j}
+$$
+
+\noindent Bisogna ora porre il vincolo che vengano ricevuti da ogni nodo esattamente $b_v$ unità di flusso (negative se devono essere tolte) (\textbf{node balance constraint}).
+
+$$
+\underbrace{\sum\limits_{(i,v) \in A} x_{i,v}}_{\text{flusso in ingresso}} - \underbrace{\sum\limits_{(v,j) \in A} x_{v,j}}_{\text{flusso in uscita}} = b_v \quad \forall \: v \in N
+$$ 
+
+\noindent Infine, è necessario imporre il limite sulla capacità dei cavi (\textbf{arc capacity constraint}):
+
+$$
+x_{i,j} \leq u_{i,j} \quad (i,j) \in A
+$$
+
+\paragraph{Shortest path problem} Un altro problema tipico dei grafi è quello di cercare il percorso di lunghezza minima tra due nodi con dei costi variabili assegnati agli archi.
+Questo problema può essere visto come una variante del problema precedente. Basta porre 1 unità di flusso nel nodo di partenza, -1 nel nodo destinazione e 0 in tutte le altre. Quest'unità rappresenta la persona che si deve spostare.
+Possono però essere presenti più percorsi ottimi e quindi è necessario rendere le $x_{i,j}$ delle variabili binarie.
+
+\paragraph{SP + Flow} Una combinazione dei due problemi può essere quella di dover pianificare il flusso di energia nella rete, soddisfacendo il vincolo che la distanza massima percorsa dal flusso sia $H$ archi.
+In questo caso le $x_{i,j}$ non possono essere binarie, perché devono modellare la quantità di flusso. \`E quindi necessario introdurre una nuova variabile binaria $y_{i,j}$ per definire i vincoli:
+
+$$
+\underbrace{\sum\limits_{(i,j) \in A} y_{i,j} \leq H}_{\text{vincolo sulla lunghezza massima}} \qquad x_{i,j}\leq M y_{i,j} \qquad x_{i,j} \leq u_{i,j} y_{i,j}
+$$
+
+\paragraph{Diversi tipi di energia} Una variante del problema è quella in cui ci sono ogni stazione gestisce vari tipi di energia e il costo di trasporto dipende dal tipo. La capacità degli archi non è influenzata dal tipo di energia che passa.
+La risoluzione di questo problema è analoga a quella della versione classica, con la differenza che viene utilizzato un altro indice per i parametri e per le variabili che discrimina il tipo di energia.
+
+\begin{align*}
+	\min & \sum\limits_{k \in K}\sum\limits_{(i,j) \in A} c_{i,j}^k x_{i,j}^k \\
+	\st & \sum\limits_{(i,v) \in A}x_{i,v}^k - \sum\limits_{(v,j) \in A}x_{v,j}^k = b_{v}^k \quad\forall \: v \in N, k \in K\\
+	& \sum\limits_{k \in K} x_{i,j}^k \leq u_{i,j}^k \quad\forall \: (i,j) \in A
+\end{align*}
+
+\noindent Questa variante del problema prende il nome di \textbf{multi-commodity flow problem} e risulta più complessa da risolvere perché servono molte più variabili e vincoli dato che i flussi dipendono l'uno dall'altro. Se questi fossero indipendenti sarebbe possibile scomporre questo problema in $|K|$ problemi di flusso minimo e poi combinare tra loro le varie soluzioni.

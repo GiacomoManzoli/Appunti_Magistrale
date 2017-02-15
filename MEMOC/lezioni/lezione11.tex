@@ -80,11 +80,11 @@ Un'azienda metallurgica produce tondini di ferro di 15mm di diametro e della lun
 	\begin{tabular}{|c|c|c|}
 		\hline
 		Pezzo & Lunghezza (m) & pezzi richiesti \\ \hline
-		1     & 2,0           & 48              \\ \hline
-		c2    & d4,5          & 35              \\ \hline
-		e3    & f5,0          & 24              \\ \hline
-		g4    & h5,5          & 10              \\ \hline
-		i5    & l7,5          & 8               \\ \hline
+		1    & 2,0          & 48              \\ \hline
+		2    & 4,5          & 35              \\ \hline
+		3    & 5,0          & 24              \\ \hline
+		4    & 5,5          & 10              \\ \hline
+		5    & 7,5          & 8               \\ \hline
 	\end{tabular}
 \end{table}
 
@@ -105,7 +105,7 @@ e dai seguenti parametri:
 	\item $N_{i,j}$: numero di pezzi di tipo $i \in I$ nello schema di taglio $j \in J$.
 \end{itemize}
 
-Le uniche variabili decisionali sono $x_j$: numero di tondini in stock da tagliare secondo lo schema $j \in J$.
+\noindent Le uniche variabili decisionali sono $x_j$: numero di tondini in stock da tagliare secondo lo schema $j \in J$.
 
 Ci sono vari modelli, ma quello più diffuso è il seguente:
 
@@ -115,14 +115,16 @@ Ci sono vari modelli, ma quello più diffuso è il seguente:
 & x_j \in \mathbb{Z}^+ \quad \forall \: j \in J \geq 0
 \end{align*}
 
-Viene comunque presupposto di avere a disposizione l'insieme $J$ e i vari $N_{ij}$, che devono essere generati tenendo in considerazioni tutte le possibili configurazioni di taglio.
-Il modello risulta molto elegante in quanto non c'è da preoccuparsi dei vincoli di ammissibilità dei tagli, dato che la matrice con le possibili combinazioni contiene solo quelle valide. Ci sono però due problemi: le variabili intere e il fatto che la matrice dei tagli potrebbe essere troppo grande.
+Viene comunque presupposto di avere a disposizione l'insieme $J$ e i vari $N_{ij}$, che devono essere generati tenendo in considerazione tutte le possibili configurazioni di taglio.
+Il modello risulta molto elegante in quanto non c'è da preoccuparsi dei vincoli di ammissibilità dei tagli, dato che la matrice con le possibili combinazioni contiene solo quelle valide. 
+Ci sono però due problemi: le variabili intere e il fatto che la matrice dei tagli potrebbe essere troppo grande.
 
 \subsection{Soluzione del problema rilassato}
 
 Per gestire la matrice di gradi dimensioni si può partire da una versione rilassata del problema che utilizza un sotto-insieme dei possibili schemi di taglio. \`E importante scegliere questi schemi in modo che esista una soluzione ammissibile per il problema rilassato.
+\`E inoltre ragionevole scartare i vincoli di integralità, perché nei casi reali, avere degli scarti di produzione è normale.
 
-Una soluzione ammissibile per questo problema rilassato può essere fatta considerando gli schemi di taglio che dato un tondino producono solamente una tipologia di pezzo ($J'$), producendone il maggior numero possibile ($\lfloor W /L_i \rfloor$).
+Una soluzione ammissibile per questo problema rilassato può essere determinata considerando gli schemi di taglio che, dato un tondino, producono solamente una tipologia di pezzo ($J'$), producendone il maggior numero possibile ($\lfloor W /L_i \rfloor$).
 Si ha quindi che il numero di volte che è necessario applicare un determinato schema di taglio può essere ottenuto arrotondando per eccesso il rapporto tra la richiesta del pezzo e il numero di pezzi prodotti dallo schema ($\lceil R_i /N_{ii} \rceil$).
 
 La versione rilassata per l'istanza di riferimento è:
@@ -152,9 +154,9 @@ Da notare che la soluzione contiene dei valori reali che non possono essere usat
 Una buona euristica è quella di arrotondare per eccesso questi valori.
 
 C'è però da dire che considerando altri pattern di taglio, si potrebbero trovare delle soluzioni migliori.
-
 Si può quindi pensare di aggiungere un pattern, per provare ad ottenere una soluzione migliore.
 Un possibile pattern è:
+
 $$
  A_6 = \begin{bmatrix}
 	&1& \\
@@ -165,7 +167,7 @@ $$
 \end{bmatrix}
 $$
 
-Abbiamo quindi una nuova variabile $x_6$ e quindi dobbiamo andare a controllare che la soluzione duale continui ad essere ammissibile, soddisfando anche il nuovo vincolo:
+Abbiamo quindi una nuova variabile $x_6$ e quindi dobbiamo andare a controllare che la soluzione duale continui ad essere ammissibile, ovvero che soddisfi anche il nuovo vincolo:
 
 $$
 u_1 + u_5 \leq 1
@@ -182,10 +184,10 @@ Fill.dual [*] =
 75 1.0
 \end{verbatim}
 
-Il nuovo quindi vincolo viene violato e pertanto la soluzione che pone $x_6 = 0$ non è ottima. 
+Il nuovo vincolo duale viene quindi violato e pertanto la soluzione che pone $x_6 = 0$ non è ottima. 
 \`E \textbf{desiderabile} ottenere ciò, perché vuol dire che c'è margine di miglioramento per la soluzione primale rilassata.
 
-La stessa cosa può essere osservata andando a calcolare il costo ridotto di $x_6$ è negativo e quindi che se viene messa in base si può ottenere una soluzione migliore.
+La stessa cosa può essere osservata andando a calcolare il costo ridotto di $x_6$ il quale risulta essere negativo e quindi se viene messa in base la variabile $x_6$ si può ottenere una soluzione migliore.
 
 $$
 \overline{c}_6 = c_6 - u^TA_6 = 1 - \begin{bmatrix}
@@ -276,6 +278,102 @@ Alcune possibilità sono:
 \end{itemize}
 
 In entrambi i casi si perde la garanzia dell'ottimalità della soluzione, ma si ottiene comunque una soluzione ragionevolmente buona.
+
+\subsection{Versione generica}
+
+Lo stesso approccio può essere utilizzato per altri problemi di programmazione lineare, avendo la garanzia che la soluzione ottenuta sia ottima, grazie alla teoria del simplesso.
+
+Dato un generico problema
+
+\begin{align*}
+(P) \min \: & c^Tx \\
+\st& Ax = b \\
+&x\geq 0
+\end{align*}
+
+\noindent tale che il numero di variabili/colonne di $A$ sia molto elevato o non noto a priori, l'algoritmo diventa il seguente: sia $(D)$ il problema duale
+
+\begin{align*}
+(D) \max \: & u^Tb \\
+\st& u^TA = c^T \\
+&u \text{ libero}
+\end{align*}
+
+\subsubsection{Passo 0: Inizializzazione}
+
+Si espliciti un sotto insieme delle colonne di $A$ e si consideri la sotto matrice $E$ composta da tali colonne. \`E importante che il problema associato alla matrice $E$ sia ammissibile e limitato.
+
+\subsection{Passo 1: Soluzione del problema Master}
+
+\begin{align*}
+(MP) \min \: & c_{E}^Tx_E \\
+\st& Ex_E = b \\
+&x_E\geq 0
+\end{align*}
+
+In modo da ottenere la coppia di soluzioni $x_{E}^M$ e $u^{M}$.
+Da notare che $x = \begin{bmatrix}
+x_{E}^M\\ 
+0
+\end{bmatrix}$ è una soluzione ammissibile per il problema di partenza e, allo stesso modo $u^M$ è una soluzione del problema duale a quello di partenza.
+
+
+\subsection{Passo 2: Soluzione del problema Slave}
+
+Determinare uno o più vettori $z \in \Rm$ che rappresentano i coefficienti nei vincoli di una variabile $x_j$, ovvero una possibile colonna di $A$ con costo ridotto $c_j$, tale che:
+
+$$
+c_j - (u^M)^T z < 0
+$$
+
+Per garantire l'efficienza dell'algoritmo è necessario che questo passo venga eseguito velocemente e, per limitare il numero di iterazioni, si può scegliere di generare più di una colonna per volta.
+Inoltre, l'algoritmo da applicare varia da problema a problema.
+
+\subsubsection{Passo 3: Test di ottimalità}
+
+Se al passo precedente non è stata trovata alcuna nuova colonna, vuol dire che la soluzione $x = \begin{bmatrix}
+x_{E}^M\\ 
+0
+\end{bmatrix}$ è ottima per il problema $(P)$ di partenza.
+
+Il fatto che non vengono trovate nuove colonne, implica che non ci sono vincoli del problema duale che sono stati violati e quindi anche la soluzione duale $u^M$ è ottima per il duale.
+
+\subsection{Passo 4: Iterazione}
+
+Se sono state generate delle nuove colonne queste devono essere aggiunte alla matrice e l'algoritmo deve ripartire dal passo 1.
+
+Da notare che col proseguire dell'esecuzione dell'algoritmo il problema $(MP)$ potrebbe diventare troppo complesso, quindi si può scegliere di mantenere un pool di colonne attive.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
