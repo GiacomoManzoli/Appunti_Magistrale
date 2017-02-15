@@ -36,7 +36,7 @@
 		$$
 		\min z = c^Tx = c_{B}^Tx_B + c_{F}^Tx_F = \underbrace{c_{B}^TB^{-1}b}_{z_B} + (\underbrace{c_{F}^T - c_{B}^TB^{-1}F}_{\overline{c}_{F}^T})x_F
 		$$
-		\item \textit{Scelta della variabile entrante per il cambio di base}: scelgo una qualsiasi di quelle fuori base a costo ridotto $\overbrace{c}_{F_{j}}$ negativo, in modo da migliorare la FO. Se ho più scelte conviene prendere la variabile con indice minore per evitare di ciclare.
+		\item \textit{Scelta della variabile entrante per il cambio di base}: scelgo una qualsiasi di quelle fuori base a costo ridotto $\overline{c}_{F_{j}}$ negativo, in modo da migliorare la FO. Se ho più scelte conviene prendere la variabile con indice minore per evitare di ciclare.
 		\item \textit{Scelta della variabile uscente}: scelgo quella che pone un limite più stretto alla variabile entrante $x_{F_j}$, ovvero quella che minimizza
 		$$
 		\min\limits_{i :\overline{a}_{iF_j} > 0} \bigg\{ \frac{\overline{b}_i}{\overline{a}_{iF_j}} \bigg\}
@@ -50,7 +50,7 @@
 	PA = \min w\{ 1^Ty : Ax+Iy=b, x,y\geq 0 \}
 	$$
 	Il problema è ammissibile perché $x = 0, y = b$ è soluzione ammissibile ed è limitato perché la FO è una sommatoria di termini che devono essere per forza $\geq 0$.
-	Risolto questo problema con il metodo del simplesso, se $w^* = 0$, il problema di partenza non è ammissibile e non ha senso risolverlo.Se $w^* > 0$. Il tableau finale individua una possibile soluzione ammissibile per il problema di partenza, è necessario portare fuori base le $y$ e poi creare un nuovo tableau in forma canonica per il problema di partenza utilizzando come base quella appena ottenuta.
+	Risolto questo problema con il metodo del simplesso, se $w^* > 0$, il problema di partenza non è ammissibile e non ha senso risolverlo (perché vuol dire che c'è un vincolo che non può essere soddisfatto solamente dalle $x$). Se $w^* = 0$. Il tableau finale individua una possibile soluzione ammissibile per il problema di partenza, è necessario portare fuori base le $y$ e poi creare un nuovo tableau in forma canonica per il problema di partenza utilizzando come base quella appena ottenuta.
 	\item Tutte le operazioni del simplesso possono anche essere espresse in forma matriciale.
 \end{itemize}
 
@@ -65,7 +65,7 @@
 	\item \textbf{Lower bound} $l \in \R$ è un lower bound per $PL \Leftrightarrow l \leq c^Tx \forall x$ ammissibile.
 	\item Scelgo $u \in \Rm$ tale che
 	$$
-	c^T > u^T A
+	c^T \geq u^T A
 	$$
 	per ogni $x$ ammissibile vale $Ax=b$ e $x \geq 0$, quindi
 	$$
@@ -81,14 +81,14 @@
 	DL = w^* = \max \{ u^Tb : u^TA \leq c^T, u \text{ libero} \}
 	$$
 	questo problema prende il nome di problema duale ed ha una variabile duale per ogni vincolo del primale e un vincolo duale per ogni variabile del primale.
-	\item \textbf{Dualità debole}: se $x$ è soluzione ammissibile primale e $u$ è ammissibile duale, allora vale $c^Tx \geq u^{T}b$. Se vale l'uguaglianza allora le due soluzioni sono anche ottime. $PL$ illimitato $\Leftarrow$ $DL$ inammissibile, $DL$ illimitato $\Leftarrow$ $PL$ inammissibile.
-	\item \textbf{Dualità forte}: $PL$ ammette soluzione ottima $\Leftrightarrow$ $DL$ ammette soluzione ottima. \textbf{Dimostrazione $\Leftarrow$} $x^*$ ottima con simplesso $= \begin{bmatrix}
+	\item \textbf{Dualità debole}: se $x$ è soluzione ammissibile primale e $u$ è ammissibile duale, allora vale $c^Tx \geq u^{T}b$. Se vale l'uguaglianza allora le due soluzioni sono anche ottime. $PL$ illimitato $\Rightarrow$ $DL$ inammissibile, $DL$ illimitato $\Rightarrow$ $PL$ inammissibile.
+	\item \textbf{Dualità forte}: $PL$ ammette soluzione ottima $\Leftrightarrow$ $DL$ ammette soluzione ottima. \textbf{Dimostrazione $\Rightarrow$} $x^*$ ottima con simplesso $= \begin{bmatrix}
 	x^*_B \\
 	0
 	\end{bmatrix}$, $\overline{c}_{B}^T = 0,\overline{c}_{F}^T \geq 0$. Per la definizione di costo ridotto:
 	\begin{align*}
 	\overline{c}_{F}^T &= c_F - \underbrace{\overline{c}_{B}^TB^{-1}}_{u^T}F \\
-					   &= c_F - u^T F \geq 0 \text{ perché $x^*$ è ottima} \Leftarrow c_F \geq u^TF
+					   &= c_F - u^T F \geq 0 \text{ perché $x^*$ è ottima} \Rightarrow c_F \geq u^TF
 	\end{align*}
 	Ho quindi una soluzione duale. Verifico l'ammissibilità
 	\begin{align*}
@@ -125,8 +125,8 @@
 	\begin{itemize}
 		\item Variabile primale positiva $x_j > 0$ allora $u^TA_j = c_j$ vincolo duale saturo
 		\item Vincolo duale lasco $u^TA_j > c_j$ allora $x_j = 0$ variabile primale nulla
-		\item Variabile duale positiva $u_i > 0$ allra $a_{i}^T = x $ vincolo primale saturo 
-		\item Vincolo primale lasco $a_{i}^T > x$ allora $u_i = 0$ variabile duale nulla
+		\item Variabile duale positiva $u_i > 0$ allra $a_{i}^Tx = b $ vincolo primale saturo 
+		\item Vincolo primale lasco $a_{i}^T-x > b$ allora $u_i = 0$ variabile duale nulla
 	\end{itemize}
 	\item Se ho una soluzione ammissibile primale, possono provare a costruire una soluzione ammissibile duale in scarti complementari. Se anche la soluzione duale è ammissibile, allora entrambe sono ottime. Da notare che se il primale è in forma standard le ultime due condizioni non sono utili.
 \end{itemize}
@@ -144,7 +144,7 @@
 		\item Risolvi $Ex = b$ ottenendo una soluzione ottima per il Master $x_{E}^M$. Da notare che $x = \begin{bmatrix} x_{E}^M \\
 		x_{H}^M = 0
 		\end{bmatrix}$ è una soluzione ammissibile del problema di partenza e $u = u^M$ è la soluzione del relativo duale. $u^M$ e $x_{E}^M$ sono ammissibili e in scarti complementari.
-		\item Imposto il problema Slave per determinare un vettore $z \in \Rm$ che rappresenta una possibile colonna di $A_j$ di $A$ associata alla variabile $x_j$. L'altro vincolo su $z$ è che deve essere una colonna a costo ridotto negativo
+		\item Imposto il problema Slave per determinare un vettore $z \in \Rm$ che rappresenta una possibile colonna $A_j$ di $A$ associata alla variabile $x_j$. L'altro vincolo su $z$ è che deve essere una colonna a costo ridotto negativo
 		$$
 		c_j - (u^M)^T z < 0
 		$$
@@ -152,7 +152,7 @@
 		x_{H}^M = 0
 		\end{bmatrix}$ è una soluzione ottima per il problema di partenza, considerando tutte le variabili. Altrimenti aggiungi la colonna $z$ al Master e ripeti.
 	\end{enumerate}
-	\item Perché funzioni è necessario che il problema Slave sia veloce da risolvere. Il Master deve essere sempre ammissibile e limitato (posso aggiungere dei vincoli extra). Possono essere necessarie più esecuzioni quindi possono generare più colonne alla volta. La convergenza è garantita dalla teoria del simplesso. Posso avere comunque troppe colonne $\Leftarrow$ pool di colonne attive.
+	\item Perché funzioni è necessario che il problema Slave sia veloce da risolvere. Il Master deve essere sempre ammissibile e limitato (posso aggiungere dei vincoli extra). Possono essere necessarie più esecuzioni quindi possono generare più colonne alla volta. La convergenza è garantita dalla teoria del simplesso. Posso avere comunque troppe colonne $\Rightarrow$ pool di colonne attive.
 	\item \textbf{Esempio}: taglio dei tondini
 	\begin{enumerate}
 		\item Genero $J'$ schemi di taglio, ad esempio quelli mono pezzo.
@@ -226,15 +226,15 @@
 \begin{itemize}
 	\item Dato un PLI
 	$$
-	z_I = \max \{ c^Tx : Ax \leq b, x \geq 0, x_i \in Z \forall i \in I\}
+	z_I = \max \{ c^Tx : Ax \leq b, x \geq 0, x_i \in \Z \forall i \in I\}
 	$$
 	la sua regione ammissibile è definita come
 	$$
-	X = \{ x \in \Rn | Ax \leq b, x \geq 0, x_i \in Z \forall i \in I \}
+	X = \{ x \in \Rn | Ax \leq b, x \geq 0, x_i \in \Z \forall i \in I \}
 	$$
 	La stessa regione può essere definita dalla formulazione alternativa $A'x \leq b'$ se vale
 	$$
-	X = \{ x \in \Rn | A'x \leq b', x \geq 0, x_i \in Z \forall i \in I \}
+	X = \{ x \in \Rn | A'x \leq b', x \geq 0, x_i \in \Z \forall i \in I \}
 	$$
 	e quindi anche il problema
 	$$
@@ -250,7 +250,7 @@
 	
 	Il più piccolo poliedro convesso in grado di contenere tutto un insieme $X$ è l'inviluppo convesso $conv(X)$ ed è più piccolo di qualsiasi poliedro $P$, pertanto rappresenta la \textbf{formulazione ideale.}
 	
-	\item \textbf{Teorema Fondamentale della PLI}: Dato un problema PLI e la sua formulazione $X$, allora $conv(X)$ è un poliedro, ovvero esiste $\tilde{A}$ e $\tilde{b}$ tali che:
+	\item \textbf{Teorema Fondamentale della PLI}: Dato un problema PLI e la sua formulazione $X$, allora $conv(X)$ è un poliedro, ovvero esiste $\tilde{A} \in \Qmn$ e $\tilde{b} \in \Qn$ tali che:
 	$$
 	conv(X) = \{ x \in \Rn | \tilde{A}x \leq \tilde{b}, x \geq 0 \}
 	$$
@@ -277,7 +277,7 @@
 	\item \textbf{Tagli di Gomory}: applicabili solo a problemi di programmazione lineare intera pura.
 	
 	Prima viene risolto il rilassamento lineare del problema $Ax = b, x\geq 0$ in modo da determinare con il simplesso $x^* = \begin{bmatrix}
-	x_{\beta[i]}^* = \overline{b}_i \forall i = 1\ldots n \\
+	x_{\beta[i]}^* = \overline{b}_i \forall i = 1\ldots m \\
 	x_{j}^* = 0
 	\end{bmatrix}$.
 	Inoltre, al termine dell'esecuzione del simplesso, si avrà un tableau composto da equazioni della forma
@@ -303,7 +303,7 @@
 	
 	Così facendo posso andare a sottrarre all'equazione di partenza il taglio di Gomory ottenendo:
 	$$
-	\sum_{j\in F}(\lfloor \overline{a}_{hj} \rfloor-  \overline{a}_{hj}-)x_j + s = \lfloor \overline{b}_h\rfloor -\overline{b}_h \quad \text{Taglio di Gomory in forma frazionaria}
+	\sum_{j\in F}(\lfloor \overline{a}_{hj} \rfloor-  \overline{a}_{hj})x_j + s = \lfloor \overline{b}_h\rfloor -\overline{b}_h \quad \text{Taglio di Gomory in forma frazionaria}
 	$$
 	
 	che può essere inserita all'interno del tableau del simplesso, il quale definisce una base ammissibile duale e pertanto è possibile applicare il simplesso duale per risolvere il problema. Da notare che non è ammissibile primale perché $\lfloor \overline{b}_h\rfloor -\overline{b}_h < 0$ 
@@ -314,7 +314,7 @@
 
 \begin{itemize}
 	\item Una matrice $A$ è totalmente unimodulare se per ogni sotto-matrice quadrata $B$ di $A$ si ha $det(B) = \{0, 1, -1\}$.
-	\item Se la matrice $A$ associata ai vincoli di un MILP è TU, allora tutte le soluzioni di base del rilassamento lineare sono intere.
+	\item Se la matrice $A$ associata ai vincoli di un MILP è TU e il vettore $b$ contiene solo interni, allora tutte le soluzioni di base del rilassamento lineare sono intere.
 	\item Se $B$ è invertibile e $B^{ji}$ indica la matrice $B$ senza la riga $j$ e la colonna $i$, allora
 	$$
 	(B^{-1})_{ij} = (-1)^{i+j} \frac{det(B^{ji})}{det(B)}
@@ -322,7 +322,7 @@
 	quindi se $B$ è intera anche $B^{-1}$ è intera.
 	\item \textbf{Teorema}: Sia $Ax = b, x\geq 0$ un MILP, $A$ totalmente unimodulare, con $b \in \Rm$ ma con solo componenti intere. Allora tutte le soluzioni di base sono del sistema sono intere. 
 	
-	\textbf{Dimostrazione}: $x^* = \begin{bmatrix} x_{B}^* = B^{-1}b
+	\textbf{Dimostrazione}: $x^* = \begin{bmatrix} x_{B}^* = B^{-1}b \\
 	x_{F}^* = 0
 	\end{bmatrix}$. $B^{-1}$ è intera per quanto asserito prima, $b$ è interno per ipotesi e quindi anche $x_{B}^*$ è intero.
 	
@@ -338,7 +338,7 @@
 	\item Per una matrice TU valgono le seguenti proprietà:
 	\begin{enumerate}
 		\item Ogni matrice ottenuta permutando righe o colonne di $A$ è TU.
-		\item Ogni matrice ottenuto moltiplicando righe o colonne di $A$ è TU.
+		\item Ogni matrice ottenuto moltiplicando righe o colonne di $A$ per $-1$ è TU.
 		\item $A^T$ è TU, perché $det(B) = det(B^T)$.
 		\item $(A, I)$ è TU perché può essere scritta come $\begin{pmatrix}
 		C & 0 \\
@@ -354,7 +354,7 @@
 	0
 	\end{bmatrix}$ è soluzione ottima del sistema se $(x^*, s^* = b - Ax^*)$ è soluzione del sistema $Ax + Is = b$. Per le proprietà precedenti anche $Ax+Is$ è TU e quindi le soluzioni di base del sistema sono intere, e di conseguenza anche $x^*$ è intera.
 	\item Se $A$ contiene anziché due 1, un 1 e un -1, è ancora TU. C'è la stessa dimostrazione cambia solo che nel caso 3 viene fatta la somma e non la differenza.
-	\item La matrice delle adiacenze \footnote{Ha tante righe quanti sono i nodi e tante colonne quanti sono gli spigoli} di un grafo bipartito è TU per costruzione, quindi dato che il problema dell'assegnamento può essere scritto come $\min \{ c^Tx A(G)x = 1, x \geq 0, x \in \Z^{|E|} \}$, posso risolvere il rilassamento continuo ed ottenere comunque una soluzione intera.
+	\item La matrice delle adiacenze \footnote{Ha tante righe quanti sono i nodi e tante colonne quanti sono gli spigoli} di un grafo bipartito è TU per costruzione, quindi dato che il problema dell'assegnamento può essere scritto come $\min \{ c^Tx : A(G)x = 1, x \geq 0, x \in \Z^{|E|} \}$, posso risolvere il rilassamento continuo ed ottenere comunque una soluzione intera.
 	\item Anche la matrice dei vincoli di un problema di flusso massimo su un grafo orientato ha la stessa proprietà.
 	
 \end{itemize}
