@@ -87,21 +87,21 @@
 	0
 	\end{bmatrix}$, $\overline{c}_{B}^T = 0,\overline{c}_{F}^T \geq 0$. Per la definizione di costo ridotto:
 	\begin{align*}
-	\overline{c}_{F}^T &= c_F - \underbrace{\overline{c}_{B}^TB^{-1}}_{u^T}F \\
+	\overline{c}_{F}^T &= c_F - \underbrace{c_{B}^TB^{-1}}_{u^T}F \\
 					   &= c_F - u^T F \geq 0 \text{ perché $x^*$ è ottima} \Rightarrow c_F \geq u^TF
 	\end{align*}
 	Ho quindi una soluzione duale. Verifico l'ammissibilità
 	\begin{align*}
 		u^T A &= u^T[B|F] \\
 		      &= [u^TB | u^T F] \\
-		      &= [\overline{c}_{B}^TB^{-1} B | u^T F] \\
-		      &= [\overline{c}_{B}^T | u^T F] \text{ ma $u^T F \leq c_F$ quindi }\\
-		      &\leq [\overline{c}_{B}^T | \overline{c}_{F}^T] = c^T
+		      &= [c_{B}^TB^{-1} B | u^T F] \\
+		      &= [c_{B}^T | u^T F] \text{ ma $u^T F \leq c_F$ quindi }\\
+		      &\leq [c_{B}^T | c_{F}^T] = c^T
 	\end{align*}
 	ovvero è ammissibile ed inoltre
 	\begin{align*}
-		u^T b &= \overline{c}_{B}^TB^{-1}b \\
-		      &= \overline{c}_{B}^T x_B \\
+		u^T b &= c_{B}^TB^{-1}b \\
+		      &= c_{B}^T x_B \\
 		      &= c^T x^*
 	\end{align*}
 	ovvero è anche ottima perché uguale al valore della soluzione primale.
@@ -109,7 +109,13 @@
 	$$
 	c^T x \geq u^T A x \geq u^T b
 	$$
-	\item \textbf{Condizioni di ortogonalità - scarti complementari}: perché una coppia di soluzioni sia ottima, devono essere entrambe ammissibili e deve valere la dualità forte, ovvero devono valere le seguenti condizioni:
+	Quindi se il problema primale è di minimo si ha che le variabili duali hanno lo stesso verso dei vincoli primali (es: vincolo primale di maggiore $\Rightarrow u_i \geq 0$) mentre i vincoli duali hanno verso opposto a quello delle variabili (es: $x_j \geq 0 \Rightarrow$ vincolo duale minore). Se il primale è una massimizzazione, le frasi vanno lette al contrario.
+	\item \textbf{Condizioni di ortogonalità - scarti complementari}:
+	\begin{align*}
+		&\min \{ c^T x : Ax \mathbin{\textcolor{green}{\geq}} b, x \mathbin{\textcolor{red}{\geq}} 0 \} \\
+		&\max \{ u^T b : u^TA \mathbin{\textcolor{red}{\leq}} c^T, u \mathbin{\textcolor{green}{\geq}} 0 \}
+	\end{align*}
+	perché una coppia di soluzioni sia ottima, devono essere entrambe ammissibili e deve valere la dualità forte, ovvero devono valere le seguenti condizioni:
 	\begin{itemize}
 		\item $Ax \geq b, x \geq 0$ per l'ammissibilità primale.
 		\item $u^TA \geq c^T, u \geq 0$ per l'ammissibilità duale.
@@ -243,10 +249,10 @@
 	è un rilassamento lineare di $z_I$.
 	\item Diciamo che una formulazione è buona, ovvero migliore rispetto ad un'altra se contiene meno punti. Questo perché il rilassamento lineare dato da una buona formulazione fornisce un bound più stretto. Per capire se una formulazione è migliore di un'altra è necessario andare a valutare l'appartenenza o meno dei punti. La dimensione della formulazione dipende dai vincoli. Ad esempio è preferibile utilizzare i singoli vincoli piuttosto che quelli aggregati:
 	$$
-	x_{ij} \leq y_i \forall i,j \quad\text{piuttosto che}\quad \sum_{j}x_{ij}\leq y_i \forall i
+	x_{ij} \leq y_i \ \forall i =1 \ldots n,j = 1 \ldots m \quad\text{piuttosto che}\quad \sum_{j = 1 \ldots m}x_{ij}\leq ,y_i  \ \forall i = 1 \ldots n
 	$$
 	\item \textbf{Formulazione ideale} di $X$: ovvero la formulazione per la quale il rilassamento lineare ha regione ammissibile minimale.
-	Dato che la regione ammissibile di un PL può essere rappresentata da un poliedro convesso $P = \{x | Ax \leq b, x \leq 0 \}$, la formulazione può essere riscritta come $X = \{ x \in P | x_i \in \Z \forall i \in I \}$.
+	Dato che la regione ammissibile di un PL può essere rappresentata da un poliedro convesso $P = \{x | Ax \leq b, x \geq 0 \}$, la formulazione può essere riscritta come $X = \{ x \in P | x_i \in \Z \forall i \in I \}$.
 	
 	Il più piccolo poliedro convesso in grado di contenere tutto un insieme $X$ è l'inviluppo convesso $conv(X)$ ed è più piccolo di qualsiasi poliedro $P$, pertanto rappresenta la \textbf{formulazione ideale.}
 	
@@ -264,7 +270,7 @@
 
 \begin{itemize}
 	\item L'idea è quella di andare ad aggiungere dei vincoli in modo che il rilassamento lineare approssimi la formulazione ideale del problema.
-	\item \textbf{Disuguaglianza valida}: $\alpha^T x \leq \beta$ è valida per una formulazione $X$ se per ogni $x \in X$ è soddisfatta.
+	\item \textbf{Disuguaglianza valida}: $\alpha^T x \leq \beta$ è valida per una regione ammissibile $X$ se per ogni $x \in X$ è soddisfatta.
 	\item \textbf{Taglio}: data una disuguaglianza valida e un punto $x^* \not\in conv(X)$, la disuguaglianza taglia $x^*$ se $x^*$ non la soddisfa.
 	\item Algoritmo per risolvere il rilassamento lineare $\max \{ c^T x | Ax \leq b, x \geq 0 \}$
 	\begin{enumerate}
@@ -306,7 +312,7 @@
 	\sum_{j\in F}(\lfloor \overline{a}_{hj} \rfloor-  \overline{a}_{hj})x_j + s = \lfloor \overline{b}_h\rfloor -\overline{b}_h \quad \text{Taglio di Gomory in forma frazionaria}
 	$$
 	
-	che può essere inserita all'interno del tableau del simplesso, il quale definisce una base ammissibile duale e pertanto è possibile applicare il simplesso duale per risolvere il problema. Da notare che non è ammissibile primale perché $\lfloor \overline{b}_h\rfloor -\overline{b}_h < 0$ 
+	che può essere inserita all'interno del tableau del simplesso, il quale definisce una base ammissibile duale (perché i costi ridotti sono ancora non negativi) e pertanto è possibile applicare il simplesso duale per risolvere il problema. Da notare che non è ammissibile primale perché $\lfloor \overline{b}_h\rfloor -\overline{b}_h < 0$ 
 \end{itemize}
 
 
@@ -380,7 +386,7 @@ $$
 	$$
 	\sum_{(i,j) \in C} x_{ij} \leq |C| -1 
 	$$
-	Per gestire il fatto che perdo la TU, posso aggiungere i vincoli di integralità solo sulle variabili che compaiono nei vincoli di subtour-elimination che man mano aggiungo. Questo metodo converge ad una soluzione, perché nella peggiore delle ipotesi vengono aggiunte tutti i vincoli.
+	Per gestire il fatto che perdo la TU, posso aggiungere i vincoli di integralità solo sulle variabili che compaiono nei vincoli di subtour-elimination che man mano aggiungo. Questo metodo converge ad una soluzione, perché nella peggiore delle ipotesi vengono aggiunti tutti i vincoli.
 	\item Algoritmo 1:
 	\begin{enumerate}
 		\item Riformulo il problema come problema dell'assegnamento
@@ -395,7 +401,7 @@ $$
 	Come regola di branching conviene utilizzare: dato un ciclo $C$ presente nella soluzione corrente, si sceglie un arco $(i,j) \in C$ e si generano $|C| - 1 $ nodi figli. Il primo avrà $x_{ij} = 0$ e i restanti $x_{ij} =1$ e un'altro arco che compare in $C$ posto a 0. Così facendo raggiungo un buon compromesso tra la limitazione della sovrapposizione e la ramificazione dell'albero.
 \end{itemize}
 
-\section{TSP}
+\section{STSP}
 
 $$
 \begin{matrix}
@@ -420,7 +426,7 @@ $$
 	$$
 	\sum\limits_{e \in \varDelta(S)} x_e \geq 2 \quad \forall S \subset V : 3 \leq |S| \leq |V| -1
 	$$
-	dove $\varDelta(S)$ è l'insieme degli spigoli che hanno solo un estremo in $V$.
+	dove $\varDelta(S)$ è l'insieme degli spigoli che hanno solo un estremo in $S$.
 	\item Come problema di separazione per individuare i vincoli di subtour elimination si può impostare un problema di massimo flusso, a partire dal grafo del TSP e utilizzando come capacità degli archi il valore della soluzione del rilassamento $x_{R}^*$. A partire da un nodo $s$ fissato vengono impostati $|V|-1$ problemi di massimo flusso in cui cambia sempre il pozzo. Se per uno di questi problemi il flusso massimo è inferiore di $2$, allora c'è un ciclo. Perché così viene individuato un sottoinsieme di nodi $S$ che è connesso con i restanti $V\setminus S$ nodi da meno di 2 spigoli. Il tutto può essere fatto in modo efficiente.
 	\item Algoritmo v2: Rilassamento continuo
 	\begin{enumerate}
@@ -440,7 +446,7 @@ $$
 	\item Algoritmo v4: Branch and cut:
 	\begin{enumerate}
 		\item Risolvi il rilassamento continuo con l'algoritmo 2.
-		\item Applica il branch and bound facendo branching sulle variabili frazionari. Ad ogni nodo usa il rilassamento continuo per trovare un lower bound e fai branch sulle comonenti frazionarie della soluzione del rilassamento ottima, $x_{R}^*(e) = 0$ e $x_{R}^*(e) = 1$.
+		\item Applica il branch and bound facendo branching sulle variabili frazionarie. Ad ogni nodo usa il rilassamento continuo per trovare un lower bound e fai branch sulle componenti frazionarie della soluzione del rilassamento ottima, $x_{R}^*(e) = 0$ e $x_{R}^*(e) = 1$.
 	\end{enumerate}
 	\item Ogni rilassamento del B\&B viene risolto con l'algoritmo 2.
 	\item Funziona, perché vengono ereditati i vincoli sui nodi figli e vengono tagliate le soluzioni frazionarie.
@@ -448,6 +454,10 @@ $$
 \end{itemize}
 
 \section{Cover Inequalites}
+
+$$
+\max \bigg\{ \sum\limits_{i=1}^n p_ix_i : \sum\limits_{i=1}^n \alpha_i x_i \leq \beta, 0 \leq x \leq 1, x \in \Zn  \bigg\}
+$$
 
 \begin{itemize}
 	\item Ci sono dei problemi, come quello dello zaino, per i quali il rilassamento continuo è molto lontano dalla formulazione ideale. L'idea è quindi quella di andare a definire dei vincoli per approssimarla.
@@ -462,16 +472,16 @@ $$
 	\item \textbf{Problema di separazione delle cover}: data una soluzione del rilassamento lineare, determinare se questa viola una cover, ovvero se esiste $C$ tale che:
 	\begin{enumerate}
 		\item $\sum_{i \in C} \alpha_i \geq \beta +1$
-		\item $ 	\sum_{i \in C} x_i \leq |C|-1$
+		\item $ 	\sum_{i \in C} x_i > |C|-1$
 	\end{enumerate}
 	La ricerca può essere fatta formulando il seguente problema di massimo, dove $z \in \Zn$ rappresenta una possibile cover:
 	$$
-	\max \{ \sum_{i \in 1\ldots n}(1 - x_{i}^*)z_i : \sum_{i \in 1 \ldots n} \alpha_i z_i \geq \beta +1 \}
+	\max \bigg\{ \sum_{i \in 1\ldots n}(1 - x_{i}^*)z_i : \sum_{i \in 1 \ldots n} \alpha_i z_i \geq \beta +1 \bigg\}
 	$$
 	Se il valore ottimo è \textbf{minore di 1} allora la cover definita da $z^*$ \textbf{è violata} da $x^*$, altrimenti non esistono cover violate da $x^*$.
 	\item Lo stesso ragionamento applicabile per il problema dello zaino può essere riportato su qualsiasi problema lineare binario.
 	$$
-	\max \{  c^Tx : Ax \leq b, x \in \Zn, x_i \in {0,1} \}
+	\max \{  c^Tx : Ax \leq b, x \in \Zn, x_i \in \{0,1\} \}
 	$$
 	Questo perché ogni singolo vincolo del problema può essere visto come un problema dello zaino.
 	Posso quindi definire un algoritmo generico per generare le cover inequalities.
@@ -482,7 +492,7 @@ $$
 		\item Se per tutti i problemi di separazione ottengo $FO \geq 1$, ovvero non ci sono cover violate: Stop.
 		\item Altrimenti aggiungo le cover violate al rilassamento lineare e riparto da capo.
 	\end{enumerate}
-	Da notare che al termine dell'algoritmo non ho la garanzia che $x^*$ sia intera, questo perché aggiungere anche tutte le cover inequelities non permette di raggiungere la formulazione ideale del problema. Devo quindi accontentarmi di una soluzione euristica o applicare il branch and bound, partendo però da una formulazione migliore (branch and cut).
+	Da notare che al termine dell'algoritmo non ho la garanzia che $x^*$ sia intera, questo perché aggiungere anche tutte le cover inequelities non permette di raggiungere la formulazione ideale del problema. Devo quindi accontentarmi di una soluzione euristica o applicare il branch and bound, partendo però da una formulazione migliore (cut and branch).
 	\item Da notare che perché tutto questo funzioni in modo efficiente è necessario riuscire a determinare le cover inequalities violate in modo efficiente e questo è possibile perché il problema che si va a risolvere è si un ILP ma è tra i più semplici possibili.
 \end{itemize}
 
@@ -490,7 +500,7 @@ $$
 
 \begin{itemize}
 	\item Non sempre è possibile usare l'approccio esatto.
-	\item A volte può basta una soluzione buona o i parametri del modello sono soggetti ad errore.
+	\item A volte può bastare una soluzione buona o i parametri del modello sono soggetti ad errore.
 	\item \textbf{Euristiche costruttive}: costruiscono in modo greedy una soluzione al problema. Applicabili quando la soluzione is può ottenere come un sottoinsieme di alcuni elementi.
 	\item \textbf{Algoritmi metaeuristici}: schemi di algoritmi che hanno delle componenti specifiche che devono essere instanziate per poter essere utilizzati.
 	\item \textbf{Algoritmi approssimati}
