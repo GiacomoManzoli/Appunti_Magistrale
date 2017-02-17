@@ -30,5 +30,9 @@ Leggenda:
 ### Primo semestre AA 2016-17
 
 - Information Retrieval [Completato]
-- Metodi e Modelli per l'ottimizzazione combinatoria
+- Metodi e Modelli per l'Ottimizzazione Combinatoria [Completato][Lezioni Mancanti]
 - Aspetti avanzati dei linguaggi di programmazione [Completato][LaTeX - solo prima parte]
+
+### Secondo semestre AA 2016-17
+
+- Mobile Programming [Coming soon..]
